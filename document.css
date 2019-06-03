@@ -1,0 +1,270 @@
+@import url(https://cdn.rawgit.com/dreampulse/computer-modern-web-font/master/fonts.css);
+
+body {
+	font-family: "Computer Modern Serif", serif;
+	counter-reset: section;
+	max-width: 40rem;
+	margin: auto;
+	font-size: 12pt;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-rendering: optimizeLegibility;
+}
+
+h1 {
+	font-weight: normal;
+	font-size: 2.5rem;
+	text-align: center;
+	margin: 3.236rem 0 2rem 0;
+	page-break-after: avoid;
+}
+
+h2, h3, h4, h5, h6 {
+	margin: 1.618rem 0 1rem 0;
+	page-break-after: avoid;
+}
+
+h2 {
+	font-size: 1.5rem;
+	counter-reset: subsection;
+}
+h2:before {
+	content: counter(section) "\0000a0\0000a0";
+	counter-increment: section;
+}
+h2.nocount:before {
+	content: none;
+	counter-increment: none;
+}
+
+h3 {
+	counter-reset: subsubsection;
+}
+h3:before {
+	content: counter(section) "." counter(subsection) "\0000a0\0000a0";
+	counter-increment: subsection;
+}
+h3.nocount:before {
+	content: none;
+	counter-increment: none;
+}
+
+h4:before {
+	content: counter(section) "." counter(subsection) "." counter(subsubsection) "\0000a0\0000a0";
+	counter-increment: subsubsection;
+}
+h4.nocount:before {
+	content: none;
+	counter-increment: none;
+}
+
+p {
+	text-align: justify;
+	margin: 1rem 0 1rem 0;
+	text-indent: 1.6rem;
+}
+
+ul {
+	list-style-type: none;
+}
+
+ul > li::before {
+	content: "\2014\a0";
+}
+
+figure {
+	max-width: 100%;
+	margin: 1rem auto 1rem auto;
+}
+
+figure > img {
+	width: 100%;
+}
+
+figure > figcaption {
+	text-align: center;
+}
+pre[class*="language-"].line-numbers {
+	position: relative;
+	padding-left: 3.8em;
+	counter-reset: linenumber;
+}
+
+pre[class*="language-"].line-numbers > code {
+	position: relative;
+	white-space: inherit;
+}
+
+.line-numbers .line-numbers-rows {
+	position: absolute;
+	pointer-events: none;
+	top: 0;
+	font-size: 100%;
+	left: -3.8em;
+	width: 3em; /* works for line-numbers below 1000 lines */
+	letter-spacing: -1px;
+	border-right: 1px solid #999;
+
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+
+}
+
+	.line-numbers-rows > span {
+		pointer-events: none;
+		display: block;
+		counter-increment: linenumber;
+	}
+
+		.line-numbers-rows > span:before {
+			content: counter(linenumber);
+			color: #999;
+			display: block;
+			padding-right: 0.8em;
+			text-align: right;
+		}
+
+/**
+ * prism.js default theme for JavaScript, CSS and HTML
+ * Based on dabblet (http://dabblet.com)
+ * @author Lea Verou
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: black;
+	background: none;
+	text-shadow: 0 1px white;
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+pre[class*="language-"]::-moz-selection, pre[class*="language-"] ::-moz-selection,
+code[class*="language-"]::-moz-selection, code[class*="language-"] ::-moz-selection {
+	text-shadow: none;
+	background: #b3d4fc;
+}
+
+pre[class*="language-"]::selection, pre[class*="language-"] ::selection,
+code[class*="language-"]::selection, code[class*="language-"] ::selection {
+	text-shadow: none;
+	background: #b3d4fc;
+}
+
+@media print {
+	code[class*="language-"],
+	pre[class*="language-"] {
+		text-shadow: none;
+	}
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #f5f2f0;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: slategray;
+}
+
+.token.punctuation {
+	color: #999;
+}
+
+.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #905;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #690;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+	color: #9a6e3a;
+	background: hsla(0, 0%, 100%, .5);
+}
+
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+	color: #07a;
+}
+
+.token.function,
+.token.class-name {
+	color: #DD4A68;
+}
+
+.token.regex,
+.token.important,
+.token.variable {
+	color: #e90;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+
+
+/*# sourceMappingURL=/document.css.map */
