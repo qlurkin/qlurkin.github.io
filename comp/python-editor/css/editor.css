@@ -1,0 +1,130 @@
+:host {
+    display: block;
+    width: 100%;
+    background-color: #15232d;
+    border: 1px solid #0d3a58;
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.console {
+    min-height: 5em;
+    color: white;
+    background-color: #122738;
+    overflow-x: auto;
+    margin: 0;
+    padding: 5px;
+}
+.CodeMirror {
+    border-bottom: 1px solid #ffc600;
+}
+
+button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5em 0.7em;
+    background-color: transparent;
+    color: #c5c5c5;
+    border: none;
+}
+
+tab button {
+    padding: 0.5em 0.3em;
+}
+
+tab button:first-child {
+    padding-left: 1em;
+}
+
+tab button:last-child {
+    padding-right: 1em;
+}
+
+button:focus {
+    border: none;
+    outline-style: none;
+}
+
+button::before {
+    content: "\200b";
+} 
+
+button svg {
+    display: inline-block;
+    height: 1em;
+}
+
+button svg polygon {
+    fill: #c5c5c5;
+    stroke: none;
+}
+
+header {
+    display: flex;
+    background-color: #193549;
+    border-bottom: 1px solid black;
+}
+
+header nav {
+    flex-grow: 1;
+    display: flex;
+    justify-content: flex-start;
+}
+
+header .actions {
+    display: flex;
+}
+
+header nav .tab {
+    border-right: 1px solid black;
+}
+
+header nav .tab.active {
+    border-bottom: 1px solid #ffc600;
+    margin-bottom: -1px;
+    padding-bottom: 1px;
+    background-color: #122738;
+}
+
+.content .tab-content {
+    display: none;
+}
+
+.content .tab-content.active {
+    display: block;
+}
+
+.tab {
+    display: flex;
+}
+
+#overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+#overlay.show {
+    display: flex;
+}
+
+#overlay form {
+    background-color: #0d3a58;
+    border: 1px solid #ffc600;
+    display: flex;
+}
+
+#overlay form input {
+    background-color: #122738;
+    border: none;
+    padding-left: 0.7em;
+    color: #c5c5c5;
+}
