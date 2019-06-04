@@ -994,7 +994,7 @@ const setupWorker = () => {
 	return new Promise((resolve) => {
 		console.log("Start Python Thread");
 		emit("init");
-		pyodideWorker = new Worker('/comp/python-editor/webworker.js');
+		pyodideWorker = new Worker('https://qlurkin.github.io/comp/python-editor/webworker.js');
 		pyodideWorker.onmessage = (e) => {
 			if (e.data.stdout) {
 				resolve();
