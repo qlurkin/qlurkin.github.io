@@ -11324,11 +11324,9 @@ class PythonEditor extends HTMLElement {
 	
 	_render() {
 		return html`
-			<!--<link rel='stylesheet' href='comp/python-editor/css/codemirror.css'/>
-			<link rel='stylesheet' href='comp/python-editor/css/cobalt.css'/>
-			<link rel='stylesheet' href='comp/python-editor/css/editor.css'/>-->
 			<style>
-				/* BASICS */
+
+/* BASICS */
 
 .CodeMirror {
   /* Set height, width, borders, and global font properties here */
@@ -11675,9 +11673,8 @@ div.CodeMirror-dragcursors {
 /* Help users use markselection to safely style text background */
 span.CodeMirror-selectedtext { background: none; }
 
-			</style>
-			<style>
-				.cm-s-cobalt.CodeMirror { background: #002240; color: white; }
+
+.cm-s-cobalt.CodeMirror { background: #002240; color: white; }
 .cm-s-cobalt div.CodeMirror-selected { background: #b36539; }
 .cm-s-cobalt .CodeMirror-line::selection, .cm-s-cobalt .CodeMirror-line > span::selection, .cm-s-cobalt .CodeMirror-line > span > span::selection { background: rgba(179, 101, 57, .99); }
 .cm-s-cobalt .CodeMirror-line::-moz-selection, .cm-s-cobalt .CodeMirror-line > span::-moz-selection, .cm-s-cobalt .CodeMirror-line > span > span::-moz-selection { background: rgba(179, 101, 57, .99); }
@@ -11703,9 +11700,8 @@ span.CodeMirror-selectedtext { background: none; }
 .cm-s-cobalt .CodeMirror-activeline-background { background: #002D57; }
 .cm-s-cobalt .CodeMirror-matchingbracket { outline:1px solid grey;color:white !important; }
 
-			</style>
-			<style>
-				:host {
+
+:host {
     display: block;
     width: 100%;
     background-color: #15232d;
@@ -11722,6 +11718,7 @@ span.CodeMirror-selectedtext { background: none; }
     margin: 0;
     padding: 5px;
 }
+
 .CodeMirror {
     border-bottom: 1px solid #ffc600;
 }
@@ -11752,10 +11749,6 @@ button:focus {
     border: none;
     outline-style: none;
 }
-
-button::before {
-    content: "\200b";
-} 
 
 button svg {
     display: inline-block;
@@ -11835,6 +11828,7 @@ header nav .tab.active {
     padding-left: 0.7em;
     color: #c5c5c5;
 }
+
 			</style>
 			<div>
 				<div id='top'>
