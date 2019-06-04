@@ -11324,9 +11324,14 @@ class PythonEditor extends HTMLElement {
 	
 	_render() {
 		return html`
-			<link rel='stylesheet' href='comp/python-editor/css/codemirror.css'/>
+			<!--<link rel='stylesheet' href='comp/python-editor/css/codemirror.css'/>
 			<link rel='stylesheet' href='comp/python-editor/css/cobalt.css'/>
-			<link rel='stylesheet' href='comp/python-editor/css/editor.css'/>
+			<link rel='stylesheet' href='comp/python-editor/css/editor.css'/>-->
+			<style>
+				@import "/comp/python-editor/css/codemirror.css";
+				@import "/comp/python-editor/css/cobalt.css";
+				@import "/comp/python-editor/css/editor.css";
+			</style>
 			<div>
 				<div id='top'>
 					<header>
