@@ -1,5 +1,5 @@
-self.languagePluginUrl = '/pyodide/'
-importScripts('/pyodide/pyodide.js')
+self.languagePluginUrl = '<§origin§>/pyodide/'
+importScripts('<§origin§>/pyodide/pyodide.js')
 
 var onmessage = function(e) {
 	languagePluginLoader.then(() => {

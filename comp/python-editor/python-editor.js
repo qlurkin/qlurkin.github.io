@@ -994,17 +994,22 @@ const setupWorker = () => {
 	return new Promise((resolve) => {
 		console.log("Start Python Thread");
 		emit("init");
-		pyodideWorker = new Worker('https://qlurkin.github.io/comp/python-editor/webworker.js');
-		pyodideWorker.onmessage = (e) => {
-			if (e.data.stdout) {
-				resolve();
-				emit("ready");
-			} else {
-				console.log("Pyodide Initialisation Error:", e.data.error);
-				reject(e.data.error);
-			}
-		};
-		pyodideWorker.postMessage({python: "True", fs: {}});
+		fetch('/comp/python-editor/webworker.js').then(res => res.text()).then(txt => {
+			txt = txt.replace(/<§origin§>/g, window.location.origin);
+			const blob = new Blob([txt], {type: 'application/javascript'});
+			pyodideWorker = new Worker(URL.createObjectURL(blob));
+			pyodideWorker.onmessage = (e) => {
+				if (e.data.stdout) {
+					resolve();
+					emit("ready");
+				} else {
+					console.log("Pyodide Initialisation Error:", e.data.error);
+					reject(e.data.error);
+				}
+			};
+			pyodideWorker.postMessage({python: "True", fs: {}});
+		});
+		//pyodideWorker = new Worker('/comp/python-editor/webworker.js')
 	})
 };
 
