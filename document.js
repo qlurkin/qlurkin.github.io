@@ -638,33 +638,33 @@
     }));
   }();
 
-  const link = document.createElement('link');
-  link.setAttribute("rel", "stylesheet");
-  link.setAttribute("href", "https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css");
-  document.head.insertBefore(link, null); // Load katex script
-
-  const katexScriptLoaded = new Promise(resolve => {
+  const loadScript = url => new Promise(resolve => {
     const script = document.createElement('script');
 
     script.onload = () => {
       resolve();
     };
 
-    script.setAttribute("src", "https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.js");
+    script.setAttribute("src", url);
     document.head.insertBefore(script, null);
-  }); // Load katex autorender script
+  });
+  const loadCSS = url => new Promise(resolve => {
+    const link = document.createElement('link');
 
-  const katexAutoLoaded = new Promise(resolve => {
-    const auto = document.createElement('script');
-
-    auto.onload = () => {
+    link.onload = () => {
       resolve();
     };
 
-    auto.setAttribute("src", "https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/contrib/auto-render.min.js");
-    document.head.insertBefore(auto, null);
+    link.setAttribute("rel", "stylesheet");
+    link.setAttribute("href", url);
+    document.head.insertBefore(link, null);
   });
-  Promise.all([katexScriptLoaded, katexAutoLoaded]).then(() => {
+
+  loadCSS("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css");
+  const scripts = [];
+  scripts.push(loadScript("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js"));
+  scripts.push(loadScript("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js"));
+  Promise.all(scripts).then(() => {
     renderMathInElement(document.body);
   });
   window.addEventListener("DOMContentLoaded", event => {
