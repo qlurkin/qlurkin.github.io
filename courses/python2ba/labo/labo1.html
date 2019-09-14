@@ -75,14 +75,14 @@
 			Définir une fonction def merge(S, T) qui fusionne deux dictionnaires représentant les stocks S et T de deux magasins (un stock est défini comme à la question précédente). La fonction construit donc un nouveau dictionnaire représentant le stock conjoint des deux magasins (on supposera que les prix des articles communs sont les mêmes).
 		</li>
 	</ol>
-	<h2>Application</h2>
+	<h2>Réflexion</h2>
 	Afin de déterminer quels types de soupes acheter pour ses employés, le directeur d'une entreprise propose à chacun de ses employés de voter parmi les choix possibles proposés par son fournisseur en soupes. Les votes des employés sont stockés dans une liste. Le directeur désire identifier la soupe qui a remporté le plus grand nombre de votes, et vous demande pour cela de définir les deux fonctions suivantes :
 	<ul>
 		<li><code class="lang-python">def computeFreq(votes)</code> permet de construire un dictionnaire à partir de la liste des votes, représentant le tableau des fréquences des votes,</li>
 		<li><code class="lang-python">def maxFreq(frequencies)</code> renvoie la soupe qui a obtenu le plus grand nombre de votes (ou une des soupes si plusieurs ont obtenu le plus grand nombre de votes).</li>
 	</ul>
 	<pre>
-		<code class="lang-python" style="white-space: pre-wrap">
+		<code class="lang-python wrap">
 			votes = ["tomate", "cerfeuil", "tomate", "potiron", "tomate", "cerfeuil", "poulet"]
 			frequencies = computeFreq(votes)
 			soup = maxFreq(frequencies)
