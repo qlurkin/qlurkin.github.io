@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Tuples et objets</title>
+	<script src="https://quentin.lurkin.xyz/document.js"></script>
+</head>
+<body>
+	<h1>IN2L - Informatique appliquée <small>Tuples et objets</small></h1>
+	<h3 class="nocount">Objectifs</h3>
+	<ul>
+		<li>Savoir créer et initialiser des tuples</li>
+		<li>Savoir définir un nouveau type de tuple nommé et ensuite l'utiliser</li>
+		<li>Savoir manipuler des chaines de caractères et appeler des méthodes sur des objets <code>str</code></li>
+	</ul>
+	<h2>Application</h2>
+	<ol>
+		<li>
+			Représentons des points dans l'espace avec des tuples à trois éléments. Définissez une fonction <code class="lang-python">def distance(p1, p2)</code> qui calcule la distance entre les deux points passés en paramètres. Voici un exemple d'appel de la fonction, et le résultat attendu:
+			<pre>
+				<code class="lang-python">
+					d = distance((1, 2  -1), (0, 2, 1))
+					print(d)
+				</code>
+			</pre>
+			<pre>
+				<code class="lang-plain">
+					2.23606797749979
+				</code>
+			</pre>
+			Pour rappel, la distance entre les points \(P1(x_1, y_1, z_1)\) et \(P2(x_2, y_2, z_2)\) est donnée par: $$ d(P_1, P_2)=\sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2 + (z_2 - z_1)^2} $$
+		</li>
+		<li>
+			Définissez une fonction <code class="lang-python">def buildsentence(words)</code> qui reçoit en paramètre un tuple de mots, et qui construit une phrase composée de la succession de ces mots, séparés par des espaces. Voici un exemple d'appel de la fonction, et le résultat attendu:
+			<pre>
+				<code class="lang-python wrap">
+					words = ("Bonjour", "monsieur", "Lurkin,", "ça", "va", "bien", "?")
+					sentence = buildsentence(words)
+					print(sentence)
+				</code>
+			</pre>
+			<pre>
+				<code class="lang-plain">
+					Bonjour monsieur Lurkin, ça va bien?
+				</code>
+			</pre>
+		</li>
+		<li>
+			Définissez une fonction <code class="lang-python">findAll(list, element)</code> qui est une variante de la fonction <code class="lang-python">find</code> vue au cours, mais qui renvoie la liste de tous les indices où l'élément cherché se trouve dans la liste donnée. Voici un exemple d'appel de la fonction, et le résultat attendu:
+			<pre>
+				<code class="lang-python wrap">
+					a = [1, 9, -3, 15, 1, 8]
+					print(findall(a, 1))
+					print(findall(a, 2))
+				</code>
+			</pre>
+			<pre>
+				<code class="lang-plain">
+					(True, [0, 4])
+					(False, [])
+				</code>
+			</pre>
+		</li>
+		<li>
+			Soient deux variables <code class="lang-python">x</code> et <code class="lang-python">y</code> possédant chacune un valeur. Écrivez des instructions Python dont le but est d'intervertir les valeurs de ces deux variables (sans utiliser l'affectation multiple). Voici un exemple de programme, que vous devez compléter, pour qu'il affiche le résultat attendu:
+			<pre>
+				<code class="lang-python wrap">
+					x = 69
+					y = "Guillaume"
+					# À compléter ...
+					print ("x =", x, "et y =", y)
+				</code>
+			</pre>
+			<pre>
+				<code class="lang-plain">
+					x = Guillaume et y = 69
+				</code>
+			</pre>
+		</li>
+	</ol>
+	<h2>Réflexion</h2>
+	<p>On va réaliser un programme dont le but est de justifier un texte étant donné une largeur spécifiée. Vous devez définir une fonction <code class="lang-python">def justify(text, width)</code> qui va produire une version justifiée du texte, de telle sorte qu'il occupe la largeur spécifiée.</p>
+	<p>Pour vous aider, vous pouvez utiliser les méthodes suivantes, applicables aux objets de type <code class="lang-python">str</code>:</p>
+	<ul>
+		<li>La méthode <code class="lang-python">split(char)</code> découpe une chaine de caractères en une liste, en coupant selon le caractère spécifié.</li>
+		<li>La méthode <code class="lang-python">join(list)</code> permet de construire une chaine de caractères en joignant les éléments de la liste spécifiée en les séparant par la chaine représentée par l'objet cible.</li>
+	</ul>
+	<ol type="a">
+		<li>
+			Pour commencer, écrivez une fonction <code class="lang-python">def extract(words, width)</code> qui reçoit une liste de mots <code class="lang-python">words</code> et retire de cette liste la sous-liste contenant ses <code class="lang-python">n</code> premiers mots, et la renvoie, de telle sorte que le nombre de caractères qu'il faut pour écrire ces <code class="lang-python">n</code> premiers mots en les séparant par des espaces soit inférieur ou égal à <code class="lang-python">width</code>. Voici un exemple d'un appel à cettefonction:
+			<pre>
+				<code class="lang-python wrap">
+					list = ["La", "programmation", "en", "Python", "est", "très", "importante"]
+					result = extract(list, 25)
+					print(result)
+					print(list)
+				</code>
+			</pre>
+			<pre>
+				<code class="lang-plain">
+					['La', 'programmation', 'en']
+					['Python', 'est', 'très', 'importante']
+				</code>
+			</pre>
+		</li>
+		<li>
+			Définissez ensuite la fonction <code class="lang-python">justify</code> de sorte à découper la chaine de caractères <code class="lang-python">text</code> en mots, pour ensuite appeler la fonction <code class="lang-python">extract</code> afin de traiter tout le texte. Voici un exemple d'appel à cette fonction:
+			<pre>
+				<code class="lang-python wrap">
+					text = "La programmation en Python est très importante et devrait être maitrisée par tout ingénieur au sortir de ses études"
+					print(justify(text , 25))
+				</code>
+			</pre>
+			<pre>
+				<code class="lang-plain">
+					La programmation en
+					Python est très
+					importante et devrait
+					être maitrisée par tout
+					ingénieur au sortir de
+					ses études
+				</code>
+			</pre>
+		</li>
+		<li>
+			Enfin, adaptez la fonction <code class="lang-python">justify</code> pour faire en sorte d'ajouter des espaces entre les mots, de manière équilibrée, de sorte que chaque ligne fasse le même nombre de caractères (celui spécifié). Pour l'exemple précédent, vous devriez avoir le résultat suivant:
+			<pre>
+				<code class="lang-plain">
+					La    programmation    en
+					Python      est      très
+					importante   et   devrait
+					être  maitrisée  par tout
+					ingénieur  au  sortir  de
+					ses études
+				</code>
+			</pre>
+		</li>
+	</ol>
+</body>
+</html>
