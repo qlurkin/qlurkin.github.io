@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Rappels</title>
+	<script src="https://quentin.lurkin.xyz/deck.js"></script>
+</head>
+<body>
+	<section>
+		<h1>Rappels</h1>
+		<p>Quentin Lurkin, Combéfis Sébastien</p>
+	</section>
+	<section>
+		<h2>Objectifs</h2>
+		
+		
+		<ul>
+			<li>
+				<strong>Bases de la programmation</strong> en Python 
+				
+				<ul>
+					<li>
+						Types de données, variables, affectation
+					</li>
+					<li>
+						Booléen et condition, <code class='lang-python'>if-elif-else</code>, <code class='lang-python'>while</code>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<strong>Structurer</strong> son code et ses données 
+				
+				<ul>
+					<li>
+						Définition et appel de fonction, récursion, sous-problèmes
+					</li>
+					<li>
+						Séquence, liste et chaines de caractères, <code class='lang-python'>for</code>
+					</li>
+				</ul>
+			</li>
+		</ul>
+		
+		
+	</section>
+	<section class="full">
+		<h2>Rappels</h2>
+		<img src="images/14549114_38a32817b5_o.jpg">
+	</section>
+	<section>
+		<h2>Programme Python</h2>
+		
+		
+		<ul>
+			<li>
+				Calcul des <strong>racines d'un trinôme du second degré</strong> 
+				
+				<small>Commentaire, importation de module, donnée, variable,</small>
+				
+				<small>expression, opérateur arithmétique, fonction <code class='lang-python'>print</code></small>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			from cmath import sqrt
+			
+			# Coefficients du trinôme
+			a = 1
+			b = -4
+			c = 2e2
+			
+			# Calcul du discriminant
+			delta = b ** 2 - 4 * a * c
+			
+			# Calcul des deux racines
+			x1 = (-b + sqrt(delta)) / (2 * a)
+			x2 = (-b - sqrt(delta)) / (2 * a)
+			
+			print('Les deux racines sont :', x1, 'et', x2)
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Types de données</h2>
+		
+		
+		<ul>
+			<li>
+				Type <strong>numérique</strong> 
+				
+				<small>Entier (<code class='lang-python'>int</code>), flottant (<code class='lang-python'>float</code>) et complexe (<code class='lang-python'>complex</code>)</small>
+			</li>
+			<li>
+				Type <strong>chaine de caractères</strong> (<code class='lang-python'>str</code>) 
+				
+				<small>Délimitée par des guillemets simples (<code class='lang-python'>'</code>) ou doubles (<code class='lang-python'>"</code>)</small>
+			</li>
+			<li>
+				Type <strong>booléen</strong> (<code class='lang-python'>bool</code>) 
+				
+				<small>Deux valeurs possibles <code class='lang-python'>True</code> et <code class='lang-python'>False</code></small>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			i = 12
+			f = 25.99
+			c = 3 - 2j
+			s = "Hello World!"
+			b = True
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Variable</h2>
+		
+		
+		<ul>
+			<li>
+				Une <strong>variable</strong> permet de stocker une valeur 
+				
+				<small>Possède un nom et une valeur (d'un certain type)</small>
+				
+				<figure>
+					<img src="images/Variable.svg" style="width: 4em">
+				</figure>
+			</li>
+			<li>
+				Deux <strong>opérations</strong> possibles 
+				
+				<ul>
+					<li>
+						Initialisation
+					</li>
+					<li>
+						Affectation d'une valeur
+					</li>
+				</ul>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			var = 42
+			var = "¡ Holà amigos !"
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Opérateur arithmétique</h2>
+		
+		
+		<ul>
+			<li>
+				Quatre <strong>opérateurs arithmétiques</strong> de base 
+				
+				<small>Addition (<code class='lang-python'>+</code>), soustraction (-), multiplication (<code class='lang-python'>*</code>) et division (<code class='lang-python'>/</code>)</small>
+			</li>
+			<li>
+				Opérateur d'<strong>exponentiation</strong> (<code class='lang-python'>**</code>)
+			</li>
+			<li>
+				Opération sur <strong>nombres entiers</strong> 
+				
+				<small>Division entière (<code class='lang-python'>//</code>) et reste de la division entière (<code class='lang-python'>%</code>)</small>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			power = 2 ** 10         # 1024
+			
+			# 17 = 5 * 3 + 2
+			quotient = 17 // 3      # 5
+			remainder = 17 % 3      # 2
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Affectation composée</h2>
+		
+		
+		<ul>
+			<li>
+				<strong>Combinaison</strong> d'un opérateur arithmétique et d'affectation 
+				
+				<small>Sucre syntaxique pour simplifier l'écriture du code</small>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			a += 1       # a = a + 1
+			
+			a **= 2      # a = a ** 2
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Priorité et associativité</h2>
+		
+		
+		<ul>
+			<li>
+				Ordre de <strong>priorité</strong> entre les opérateurs 
+				
+				<small>Permet de définir l'ordre d'évaluation</small>
+			</li>
+			<li>
+				<strong>Associativité</strong> des opérateurs 
+				
+				<small>Définit l'ordre d'évaluation en cas de même priorité</small>
+			</li>
+			<li>
+				Expression <strong>complètement parenthésée</strong> 
+				
+				<small>Rend l'ordre d'évaluation explicite</small>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			a = 17 + 5 ** 2 * 2 # équivalent à (17 + ((5 ** 2) * 2))
+			
+			b = 1 - 2 - 3       # équivalent à ((1 - 2) - 3)
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Chaine de caractères</h2>
+		
+		
+		<ul>
+			<li>
+				<strong>Séquence d'échappement</strong> pour caractère spécial 
+				
+				<small>Backslash (<code class='lang-python'>\\</code>), retour à la ligne (<code class='lang-python'>\n</code>), tabulation (<code class='lang-python'>\t</code>)...</small>
+			</li>
+			<li>
+				Opérateur de <strong>concaténation</strong> (<code class='lang-python'>+</code>)
+			</li>
+			<li>
+				<strong>Conversion</strong> en une chaine de caractères avec la fonction <code class='lang-python'>str</code>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			name = "Cédric Marchand"
+			year = 1977
+			
+			print(name + " n'est pas né en " + str(year) + ".")
+		</code></pre>
+		
+		<pre><code class="lang-plain">
+			Cédric Marchand n'est pas né en 1977.
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Fonction <code class='lang-python'>print</code></h2>
+		
+		
+		<ul>
+			<li>
+				Fonction <code class='lang-python'>print</code> pour <strong>afficher du texte</strong> 
+				
+				<small>Affichage vers la sortie standard</small>
+			</li>
+			<li>
+				Deux <strong>paramètres nommés</strong> 
+				
+				<ul>
+					<li>
+						<code class='lang-python'>end</code> indique le caractère à affiche en <strong>fin de ligne</strong> (<code class='lang-python'>\n</code>)
+					</li>
+					<li>
+						<code class='lang-python'>sep</code> indique le caractère <strong>séparateur</strong> (<code class='lang-python'> </code>)
+					</li>
+				</ul>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			day = 4
+			month = 8
+			year = 1961
+			
+			print('Né le :', end=' ')
+			print(day, month, year, sep='/')
+		</code></pre>
+		
+		<pre><code class="lang-plain">
+			Né le : 4/8/1961
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Fonction <code class='lang-python'>input</code></h2>
+		
+		
+		<ul>
+			<li>
+				Fonction <code class='lang-python'>input</code> pour <strong>lire du texte</strong> 
+				
+				<small>Lecture depuis l'entrée standard</small>
+			</li>
+			<li>
+				<strong>Conversion</strong> nécessaire pour lire d'autres types de données
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			serial = input('Bonjour, quel est ton matricule ? ')
+			
+			print(serial, ", Président de l'ECAM !", sep='')
+		</code></pre>
+		
+		<pre><code class="lang-plain">
+			Bonjour, quel est ton matricule ? MLT
+			MLT, Président de l'ECAM !
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Module et importation</h2>
+		
+		
+		<ul>
+			<li>
+				Importation d'un <strong>module</strong> avec <code class='lang-python'>import</code> 
+				
+				<small>Accès aux fonctions du module via son nom</small>
+			</li>
+			<li>
+				Importation des <strong>fonctions d'un module</strong> avec <code class='lang-python'>from ... import</code> 
+				
+				<small>Accès direct aux fonctions du module</small>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			import cmath
+			from math import sin, radians
+			
+			print("Racine carrée de -2 :", cmath.sqrt(-2))
+			print("Sinus de 90 degrés :", sin(radians(90)))
+		</code></pre>
+		
+		<pre><code class="lang-plain">
+			Racine carrée de -2 : 1.4142135623730951j
+			Sinus de 90 degrés : 1.0
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Opérateur de comparaison</h2>
+		
+		
+		<ul>
+			<li>
+				<strong>Comparaison</strong> de deux valeurs 
+				
+				<ul>
+					<li>
+						Égalité (<code class='lang-python'>==</code>) et différence (<code class='lang-python'>!=</code>)
+					</li>
+					<li>
+						Strictement plus grand/petit (<code class='lang-python'>></code>, <code class='lang-python'><</code>)
+					</li>
+					<li>
+						Plus grand/petit ou égal (<code class='lang-python'>>=</code>, <code class='lang-python'><=</code>)
+					</li>
+				</ul>
+			</li>
+			<li>
+				Comparaison limitée aux <strong>types compatibles</strong> 
+				
+				<small>Sans quoi il faut procéder à des conversions</small>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			a = 12 == 3 * 4       # a vaut True
+			b = "Eat" > "Drink"   # b vaut True
+			c = a != b            # c vaut False
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Opérateur logique</h2>
+		
+		
+		<ul>
+			<li>
+				<strong>Combinaison</strong> d'expressions booléennes 
+				
+				<ul>
+					<li>
+						NON logique (<code class='lang-python'>not</code>) inverse une valeur
+					</li>
+					<li>
+						ET logique (<code class='lang-python'>and</code>) impose les deux expressions à <code class='lang-python'>True</code>
+					</li>
+					<li>
+						OU logique (<code class='lang-python'>or</code>) nécessite une seule expression à <code class='lang-python'>True</code>
+					</li>
+				</ul>
+			</li>
+		</ul>
+		
+		<pre><code class="lang-python">
+			a = 8 > 2 and 12 <= 4                # a vaut False
+			b = 5 != 5 or 'PY' == 'P' + 'Y'      # b vaut True
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Instruction <code class='lang-python'>if</code></h2>
+		
+		
+		<ul>
+			<li>
+				Exécution d'un bloc de code si une <strong>condition est vérifiée</strong> 
+				
+				<small>Dans tous les cas, le programme continue après l'instruction <code class='lang-python'>if</code></small>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			x = -5
+			if x <= 0:
+				print("x est négatif !")
+				print("sa valeur absolue vaut ", -x)
+			print("Fin du programme")
+		</code></pre>
+		
+		<pre><code class="lang-plain">
+			x est négatif !
+			sa valeur absolue vaut 5
+			Fin du programme
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Instruction <code class='lang-python'>if-else</code></h2>
+		
+		
+		<ul>
+			<li>
+				<strong>Exécution alternative</strong> si la condition n'est pas vérifiée 
+				
+				<small>Dans tous les cas, le programme continue après le <code class='lang-python'>if-else</code></small>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			grade = 9.5
+			if grade >= 10:
+				print("vous avez réussi")
+			else:
+				print("vous avez raté")
+			print("Fin du programme")
+		</code></pre>
+		
+		<pre><code class="lang-plain">
+			vous avez raté
+			Fin du programme
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Instruction <code class='lang-python'>if-elif-else</code></h2>
+		
+		
+		<ul>
+			<li>
+				Définition de <strong>plusieurs alternatives disjointes</strong> 
+				
+				<small>Dans tous les cas, le programme continue après le <code class='lang-python'>if-elif-else</code></small>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			temp = 126
+			if temp < 100:
+				print("tout va bien")
+			elif 100 <= temp <= 130:
+				print("attention")
+			else:
+				print("danger")
+			print("Fin du programme")
+		</code></pre>
+		
+		<pre><code class="lang-plain">
+			attention
+			Fin du programme
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Instruction <code class='lang-python'>while</code></h2>
+		
+		
+		<ul>
+			<li>
+				<strong>Répète un bloc de code</strong> tant qu'une condition est vérifiée 
+				
+				<small>Dans tous les cas, le programme continue après <code class='lang-python'>while</code></small>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			n = 1
+			while n <= 5:
+				print(n)
+				n = n + 1
+		</code></pre>
+		
+		<pre><code class="lang-plain">
+			1
+			2
+			3
+			4
+			5
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Définition de fonction</h2>
+		
+		
+		<ul>
+			<li>
+				Bloc de code <strong>réutilisable et configurable</strong> 
+				
+				<small>Une fois définie, une fonction peut être appelée plusieurs fois</small>
+			</li>
+			<li>
+				Permet de <strong>structurer</strong> un programme et le rendre lisible 
+				
+				<small>Moins de bug, travail collaboratif</small>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			# Définition de la fonction
+			def table7():
+				n = 1
+				while n <= 10:
+					print(n, "x 7 =", n * 7)
+					n += 1
+			
+			# Appel de la fonction
+			table7()
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Paramètre</h2>
+		
+		
+		<ul>
+			<li>
+				Fournir une valeur à la fonction grâce à un <strong>paramètre</strong> 
+				
+				<small>Une paramètre est une variable définie dans la fonction</small>
+			</li>
+			<li>
+				On spécifie une <strong>valeur au paramètre</strong> au moment de l'appel 
+				
+				<small>La valeur est affectée au paramètre dans la fonction</small>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			# Définition de la fonction
+			def table(base):
+				n = 1
+				while n <= 10:
+					print(n, "x", base, "=", n * base)
+					n += 1
+			
+			# Appels de la fonction
+			table(7)
+			table(8)
+			table(42)
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Valeur par défaut</h2>
+		
+		
+		<ul>
+			<li>
+				<strong>Valeur par défaut</strong> définie avec la fonction 
+				
+				<small>Valeur du paramètre si elle n'est pas spécifiée lors de l'appel</small>
+			</li>
+			<li>
+				Utilisation des <strong>paramètres nommés</strong> lors de l'appel
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			# Définition de la fonction
+			def table(base, start=1, length=10):
+				n = start
+				while n < start + length:
+					print(n, "x", base, "=", n * base)
+					n += 1
+			
+			# Appels de la fonction
+			table(8, 5, 2)
+			table(8)
+			table(8, 5)
+			table(8, length=2)
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Valeur de retour</h2>
+		
+		
+		<ul>
+			<li>
+				<strong>Valeur de retour</strong> d'une fonction 
+				
+				<small>La fonction génère une valeur lors de son appel</small>
+			</li>
+			<li>
+				Instruction <code class='lang-python'>return</code> pour définir la <strong>valeur renvoyée</strong> 
+				
+				<small>Définit la valeur de l'appel de fonction comme expression</small>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			# Définition de la fonction
+			def multiply(a, b):
+				return a * b
+			
+			# Appels de la fonction
+			res = multiply(7, 9)
+			print(res)                # 63
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Liste</h2>
+		
+		
+		<ul>
+			<li>
+				Une liste stocke une séquence <strong>ordonnée de valeurs</strong> 
+				
+				<ul>
+					<li>
+						Les éléments sont accessibles par leurs indices
+					</li>
+					<li>
+						La taille est accessible avec la fonction <code class='lang-python'>len</code>
+					</li>
+				</ul>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			a = [1, 7, 2, -1, 2]
+			
+			print(len(a))             # 5
+		</code></pre>
+		
+		<figure>
+			<img src="images/Liste.svg" style="width: 15em">
+		</figure>
+		
+	</section>
+	<section>
+		<h2>Opérations sur les listes</h2>
+		
+		
+		<ul>
+			<li>
+				Plusieurs <strong>opérations sur les listes</strong> 
+				
+				<small>Accès (<code class='lang-python'>[]</code>), suppression (<code class='lang-python'>del</code>), concaténation (<code class='lang-python'>+</code>), répétition (<code class='lang-python'>*</code>)</small>
+				
+				<small>Appartenance (<code class='lang-python'>in</code>), comparaison (<code class='lang-python'>==</code>, <code class='lang-python'>!=</code>, <code class='lang-python'><</code>, <code class='lang-python'><=</code>, <code class='lang-python'>></code>, <code class='lang-python'>>=</code>)</small>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			a = [1, 7, 2, -1, 2]
+			
+			print(a[0])               # 1
+			print(a[-1])              # 2
+			print(7 in a)             # True
+			print(-1 not in a)        # False
+			
+			b = [-9, 0]
+			print(b * 2)              # [-9, 0, -9, 0]
+			print(a + b)              # [1, 7, 2, -1, 2, -9, 0]
+			print(b == [-9, 0])       # True
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Parcours d'une liste</h2>
+		
+		
+		<ul>
+			<li>
+				<strong>Parcours</strong> avec une boucle <code class='lang-python'>while</code> et un compteur 
+				
+				<small>Faire varier une variable de $0$ à la taille de la liste moins un</small>
+			</li>
+			<li>
+				Parcours avec une <strong>boucle <code class='lang-python'>for</code></strong> et l'opérateur <code class='lang-python'>in</code>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			# Avec une boucle while
+			i = 0
+			while i < len(numbers):
+				print(numbers[i])
+				i += 1
+			
+			# Avec une boucle for
+			for n in numbers:
+				print(n)
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Modification d'une liste</h2>
+		
+		
+		<ul>
+			<li>
+				<strong>Modification d'un élément</strong> avec l'opérateur d'affectation 
+				
+				<small>Les crochets permettent de sélectionner l'élément à modifier</small>
+			</li>
+			<li>
+				La fonction <code class='lang-python'>del</code> permet de <strong>supprimer un élément</strong> d'une liste 
+				
+				<small>Les autres éléments de la liste sont décalés</small>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			a = [1, 7, 2, -1, 2]
+			
+			a[0] = 42    # [42, 7, 2, -1, 2]
+			del(a[2])    # [42, 7, -1, 2]
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Slicing</h2>
+		
+		
+		<ul>
+			<li>
+				<strong>Extraire une sous-liste</strong> à partir d'une liste 
+				
+				<small>On spécifie l'indice de départ (inclus) et d'arrivée (non inclus)</small>
+			</li>
+			<li>
+				Le slicing fait une <strong>copie des éléments</strong> de la sous-liste extraite 
+				
+				<small>Mais il permet de modifier une liste lorsqu'utilisé à gauche de <code class='lang-python'>=</code></small>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			a = [1, 2, 6]
+			
+			a[:0] = [0]        # a = [0, 1, 2, 6]
+			a[4:] = [7, 8]     # a = [0, 1, 2, 6, 7, 8]
+			a[3:3] = [3, 4, 5] # a = [0, 1, 2, 3, 4, 5, 6, 7, 8]
+			a[0:4] = []        # a = [4, 5, 6, 7, 8]
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Chaine de caractères et intervalles</h2>
+		
+		
+		<ul>
+			<li>
+				Il existe des séquences <strong>non modifiables</strong> 
+				
+				<small>Chaine de caractères et intervalles, par exemple</small>
+			</li>
+			<li>
+				<strong>Intervalle d'entiers</strong> délimités par deux bornes 
+				
+				<small>Création avec la fonction <code class='lang-python'>range</code></small>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			s = "Hello"
+			print(s[1:4])             # ell
+			
+			i = range(5, 10)          # de 5 à 10 (non inclus)
+			print(len(i))             # 5
+			print(i[2])               # 7
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Définition par compréhension</h2>
+		
+		
+		<ul>
+			<li>
+				La boucle <code class='lang-python'>for</code> permet d'<strong>itérer sur les éléments</strong> d'une séquence 
+				
+				<small>Définition par compréhension de séquences</small>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			# Boucle while
+			squares = []
+			i = 0
+			while i <= 100:
+				squares.append(i ** 2)
+				i += 1
+			
+			# Boucle for
+			squares = []
+			for i in range(101):
+				squares.append(i ** 2)
+			
+			# Définition par compréhension
+			squares = [i ** 2 for i in range(101)]
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Crédits</h2>
+		
+		<ul>
+			<li>
+				https://www.flickr.com/photos/sharynmorrow/14549114
+			</li>
+		</ul>
+</section>
+
+</body>
+</html>
