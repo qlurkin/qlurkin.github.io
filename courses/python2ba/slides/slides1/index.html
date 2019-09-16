@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Ensembles et dictionnaires</title>
+	<script src="https://quentin.lurkin.xyz/deck.js"></script>
+	<style>
+		pre > code {
+			font-size: 75%;
+		}
+	</style>
+</head>
+<body>
+	<section>
+		<h1>Ensembles et dictionnaires</h1>
+		<p>Quentin Lurkin, Sébastien Combéfis</p>
+	</section>
+	<section>
+		<h2>Objectifs</h2>
+		
+		
+		<ul>
+			<li>
+				<strong>Structures de données</strong> avancées 
+				
+				<ul>
+					<li>
+						Ensemble et opérations ensemblistes
+					</li>
+					<li>
+						Dictionnaire et méthodes de parcours
+					</li>
+					<li>
+						Imbrication de données et structures complexes
+					</li>
+				</ul>
+			</li>
+		</ul>
+		
+		
+	</section>
+
+	<section class="full">
+		<h2>Ensembles</h2>
+		<img src="images/11082104723_05d27b7f3c_o.jpg" alt="">
+	</section>
+
+	<section>
+		<h2>Ensemble</h2>
+		
+		
+		<ul>
+			<li>
+				Collection <strong>non ordonnée</strong> d'éléments <strong>distincts</strong> 
+				
+				<small>Pas de doublons et pas d'ordre entre les éléments</small>
+			</li>
+			<li>
+				<strong>Définition</strong> d'un ensemble non vide avec <code>{}</code> 
+				
+				<small>Opérations des séquences (sauf modification) applicables</small>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			numbers = {42, -2, 0, 7, 11}
+			
+			print(numbers)            # {0, 42, 11, -2, 7}
+			print(len(numbers))       # 5
+			print(60 in numbers)      # False
+			print(type(numbers))      # <class 'set'>
+				
+			for element in numbers:
+				print(element)
+			</code></pre>
+			
+		</section>
+		<section>
+			<h2>Définition</h2>
+			
+			
+			<ul>
+				<li>
+					Par <strong>compréhension</strong> ou à partir d'une <strong>séquence</strong> 
+					
+					<small>Élimination automatique des doublons</small>
+				</li>
+				<li>
+					<strong>Ensemble vide</strong> créé avec <code>set()</code>
+				</li>
+			</ul>
+			
+			
+			<pre><code class="lang-python">
+				# {0, 42, 84, 21, 63}
+				S = {n for n in range(100) if n % 3 == 0 and n % 7 == 0}
+				
+				# {0, 42, 12, -1}
+				A = set([12, 42, 0, 12, 0, -1, 0])
+				
+				# {'!', 'C', 'i', 'c', 'o', 'r'}
+				B = set('Cocorico!')
+			</code></pre>
+			
+			\[
+			S = \Big\{ n \in \mathbb{N} \textrm{ avec } 0 \leq n < 100 \;\Big|\; n \textrm{ est divisible par } 3 \textrm{ et } 7 \Big\}
+			\]
+			
+		</section>
+		<section>
+			<h2>Modification d'un ensemble</h2>
+			
+			
+			<ul>
+				<li>
+					<strong>Modification</strong> d'un ensemble par ajout/suppression d'éléments 
+					
+					<small>Utilisation des fonctions <code>add</code> et <code>remove</code></small>
+				</li>
+				<li>
+					<strong>Application de la fonction</strong> <b>sur</b> la variable contenant l'ensemble 
+					
+					<small>Nom de la variable, suivi d'un point (<code>.</code>) puis</small>
+					
+					<small>du nom de  la fonction à appeler, avec ses éventuels paramètres</small>
+				</li>
+			</ul>
+			
+			
+			<pre><code class="lang-python">
+				S = {1, 2, 3, 4}
+				
+				S.remove(1)               # {2, 3, 4}
+				S.remove(2)               # {3, 4}
+				S.add(5)                  # {3, 4, 5}
+			</code></pre>
+			
+		</section>
+		<section>
+			<h2>Opération ensembliste</h2>
+			
+			
+			<ul>
+				<li>
+					Trois <strong>opérations ensemblistes</strong> de base 
+					
+					<small>Différence, union et intersection d'ensembles</small>
+				</li>
+				<li>
+					Ces opérateurs créent tous des <strong>nouveaux ensembles</strong>
+				</li>
+			</ul>
+			
+			
+			<figure>
+				<img src="images/venn.svg" style="width: 25em">
+			</figure>
+			
+			<pre><code class="lang-python">
+				A = {1, 2, 3, 4}
+				B = {3, 4, 5}
+				
+				print(A - B)              # {1, 2}            (différence)
+				print(A & B)              # {3, 4}            (intersection)
+				print(A | B)              # {1, 2, 3, 4, 5}   (union)
+			</code></pre>
+			
+		</section>
+		
+		<section>
+			<h2>Éléments d'un ensemble</h2>
+			
+			
+			<ul>
+				<li>
+					Les éléments d'un ensemble doivent être <strong>uniques</strong> 
+					
+					<small>Par conséquent, ils doivent être non modifiables</small>
+				</li>
+				<li>
+					On ne peut pas créer un <strong>ensemble d'ensembles</strong>
+				</li>
+			</ul>
+			
+			
+			<pre><code class="lang-python">
+				# L'ensemble des sous-ensembles de {1, 2, 3}
+				A = {{}, {1}, {2}, {3}, {1, 2}, {1, 3}, {2, 3}, {1, 2, 3}}
+			</code></pre>
+			
+			<pre><code class="lang-plain">
+				Traceback (most recent call last):
+				File "<stdin>", line 1, in <module>
+					TypeError: unhashable type: 'set'
+				</code></pre>
+				
+			</section>
+			<section>
+				<h2>Le type <code>frozenset</code></h2>
+				
+				
+				<ul>
+					<li>
+						Le type <code>frozenset</code> représente un <strong>ensemble non modifiable</strong> 
+						
+						<small>Les opérations des ensembles (sauf modification) sont applicables</small>
+					</li>
+					<li>
+						On peut créer un <strong>ensemble d'ensembles</strong> non modifiables 
+						
+						<small>Un <code>set</code> dont les éléments sont des <code>frozenset</code></small>
+					</li>
+				</ul>
+				
+				
+				<pre><code class="lang-python">
+					# L'ensemble des sous-ensembles de {1, 2, 3}
+					A = {
+						frozenset(),
+						frozenset({1}), frozenset({2}), frozenset({3}),
+						frozenset({1, 2}), frozenset({1, 3}), frozenset({2, 3}),
+						frozenset({1, 2, 3})
+					}
+				</code></pre>
+				
+			</section>
+			<section>
+				<h2>Somme des éléments d'un ensemble</h2>
+				
+				
+				<ul>
+					<li>
+						On déclare une variable <code>sum</code> pour <strong>la somme</strong> 
+						
+						<small>Variable initialisée à zéro</small>
+					</li>
+					<li>
+						On <strong>parcourt</strong> les éléments de l'ensemble en mettant <code>sum</code> à jour 
+						
+						<small>On utilise une affectation composée avec une somme</small>
+					</li>
+					<li>
+						On <strong>renvoie</strong> la somme
+					</li>
+				</ul>
+				
+				
+				<pre><code class="lang-python">
+					def sumElements(S):
+						sum = 0
+						for elem in S:
+							sum += elem
+						return sum
+					
+					S = {1, 2, 3}
+					print(sumElements(S))    # 6
+				</code></pre>
+				
+			</section>
+			<section>
+				<h2>Plus grande valeur d'un ensemble</h2>
+				
+				
+				<ul>
+					<li>
+						On déclare une variable <code>max</code> pour <strong>la plus grande valeur trouvée</strong> 
+						
+						<small>De base, on n'a rien trouvé, variable initialisée à $-\infty$</small>
+					</li>
+					<li>
+						On <strong>parcourt</strong> les éléments de l'ensemble en mettant <code>max</code> à jour 
+						
+						<small>Un <code>if</code> vérifie si on a un élément plus grand que l'actuel <code>max</code></small>
+					</li>
+					<li>
+						On <strong>renvoie</strong> la plus grande valeur trouvée
+					</li>
+				</ul>
+				
+				
+				<pre><code class="lang-python">
+					def maxElement(S):
+						max = float("-inf")
+						for elem in S:
+							if elem > max:
+								max = elem
+						return max
+					
+					S = {1, 24, -2, 99, 16}
+					print(maxElement(S))                       # 99
+				</code></pre>
+				
+			</section>
+
+			<section class="full">
+				<h2>Dictionnaires</h2>
+				<img src="images/3338710223_0a5bfd516c_o.jpg">
+			</section>
+
+			<section>
+				<h2>Dictionnaire</h2>
+				
+				
+				<ul>
+					<li>
+						Ensemble de <strong>paires clé-valeur</strong> 
+						
+						<small>Les clés sont uniques et non modifiables</small>
+					</li>
+					<li>
+						<strong>Définition</strong> d'un dictionnaire avec <code>{}</code> 
+						
+						<small>Opérations des séquences (sauf indices) applicables</small>
+					</li>
+				</ul>
+				
+				
+				<pre><code class="lang-python">
+					phone = {'Quentin': 8723, 'Cédric': 2837, 'Nathalie': 4872}
+					
+					print(phone)              # {'Quentin': 8723, 'Cédric': 2837,
+					                          #  'Nathalie': 4872}
+					print(len(phone))         # 3
+					print('Cédric' in phone)  # True
+					print(type(phone))        # &lt;class 'dict'>
+					</code></pre>
+					
+				</section>
+				<section>
+					<h2>Définition</h2>
+					
+					
+					<ul>
+						<li>
+							Par <strong>compréhension</strong> ou à partir d'une <strong>liste de paires</strong> clé-valeur 
+							
+							<small>Élimination automatique des doublons</small>
+						</li>
+						<li>
+							<strong>Dictionnaire vide</strong> avec <code>{}</code> 
+							
+							<small>Attention à ne pas confondre avec l'ensemble vide</small>
+						</li>
+					</ul>
+					
+					
+					<pre><code class="lang-python">
+						# {1: 1, 3: 9, 9: 81, 5: 25, 7: 49}
+						square = {n : n ** 2 for n in range(1,10) if n % 2 != 0}
+						
+						# {'A': 65, 'C': 67, 'B': 66, 'E': 69, 'D': 68, 'F': 70}
+						mapping = {chr(i): i for i in range(65, 71)}
+					</code></pre>
+					
+				</section>
+				<section>
+					<h2>Accès et modification</h2>
+					
+					
+					<ul>
+						<li>
+							<strong>Accès à une valeur</strong> à l'aide de la clé entre crochets 
+							
+							<small>Permet également la modification d'une valeur</small>
+						</li>
+						<li>
+							<strong>Suppression</strong> paire clé-valeur avec la fonction <code>del</code>
+						</li>
+						<li>
+							Deux situations si la <strong>clé n'existe pas</strong> 
+							
+							<ul>
+								<li>
+									À droite de <code>=</code> : provoque une erreur
+								</li>
+								<li>
+									À gauche de <code>=</code> : ajoute une paire clé-valeur au dictionnaire
+								</li>
+							</ul>
+						</li>
+					</ul>
+					
+					
+					<pre><code class="lang-python">
+						price = {"lemon": 0.85, "pear": 1}
+						
+						price['lemon'] = 0.90     # {"lemon": 0.90, "pear": 1}
+						price['apple'] = 1.00     # {"lemon": 0.90, "pear": 1, "apple": 1}
+						del(price['pear'])        # {"lemon": 0.90, "apple": 1}
+					</code></pre>
+					
+				</section>
+				<section>
+					<h2>Parcours d'un dictionnaire</h2>
+					
+					
+					<ul>
+						<li>
+							Accès aux clés avec la fonction <strong><code>keys</code></strong> et aux paires avec <strong><code>items</code></strong> 
+							
+							<small>Renvoient des séquences que l'on peut convertir en liste</small>
+						</li>
+					</ul>
+					
+					
+					<pre><code class="lang-python">
+						# ['lemon', 'pear', 'apple']
+						print(list(price.keys()))
+						
+						# [('lemon', 0.9), ('pear', 1.0), ('apple', 1.0)]
+						print(list(price.items()))
+						
+						# Parcours avec les clés
+						for fruit in price.keys():
+							print(fruit, price[fruit], sep=' : ')
+						
+						# Parcours direct
+						for key, value in price.items():
+							print(key, value, sep=' : ')
+					</code></pre>
+					
+				</section>
+				<section>
+					<h2>Somme des durées</h2>
+					
+					<ul>
+						<li>
+							<strong>Liste de musiques</strong> dont il faut calculer la durée totale
+						</li>
+						<li>
+							Chaque musique est stockée avec un <strong>dictionnaire</strong> 
+							<small>Passer en revue chaque dictionnaire et extraire la durée</small>
+						</li>
+					</ul>
+					
+					
+					<pre><code class="lang-python">
+						def totalDuration(playlist):
+							duration = 0
+							for music in playlist:
+								duration += music['duration']
+							return duration
+						
+						myPlaylist = [
+						{'artist': 'Axwell /\ Ingrosso', 'title': 'Sun Is Shining', 
+						'duration': 250},
+						{'artist': 'Black M', 'title': 'Sur ma route', 'duration': 251},
+						{'artist': 'AronChupa', 'title': "I'm an Albatraoz", 
+						'duration': 167}
+						]
+						print(totalDuration(myPlaylist))           # 668
+					</code></pre>
+					
+				</section>
+				<section>
+					<h2>Liste des titres interprétés par un artiste</h2>
+					
+					<ul>
+						<li>
+							<strong>Parcours</strong> du dictionnaire, à la recherche de l'artiste
+						</li>
+						<li>
+							Construction d'une <strong>liste des titres</strong>
+						</li>
+					</ul>
+					
+					
+					<pre><code class="lang-python">
+						def findTitles(playlist, artist):
+							titles = []
+							for music in playlist:
+								if music['artist'] == artist:
+									titles.append(music['title'])
+							return titles
+						
+						myPlaylist = [
+						{'artist': 'Axwell /\ Ingrosso', 'title': 'Sun Is Shining', 
+						'duration': 250},
+						{'artist': 'Black M', 'title': 'Sur ma route', 'duration': 251},
+						{'artist': 'AronChupa', 'title': "I'm an Albatraoz",
+						'duration': 167}
+						]
+						print(findTitles(myPlaylist, "AronChupa")) # ["I'm an Albatraoz"]
+					</code></pre>
+					
+				</section>
+
+				<section class="full">
+					<h2>Imbrication de données</h2>
+					<img src="images/4577032677_1106406a0f_b.jpg">
+				</section>
+
+				<section>
+					<h2>Imbrication de données</h2>
+					
+					
+					<ul>
+						<li>
+							<strong>Imbriquer</strong> des données 
+							
+							<small>Insertion d'une structure de données comme élément d'une autre</small>
+						</li>
+						<li>
+							<strong>Contraintes</strong> selon la structure principale 
+							
+							<small>Éléments d'un ensemble et clés d'un dictionnaire non modifiables</small>
+						</li>
+						<li>
+							Représentation de <strong>données complexes</strong> 
+							
+							<small>Bien organiser et définir la structure de données</small>
+						</li>
+					</ul>
+					
+					
+				</section>
+				<section>
+					<h2>Liste à deux dimensions</h2>
+					
+					
+					<ul>
+						<li>
+							On peut construire une liste dont les <strong>éléments sont des listes</strong>
+						</li>
+						<li>
+							<strong>Accès multiples</strong> à faire pour accéder aux éléments imbriqués
+						</li>
+					</ul>
+					
+					
+					<pre><code class="lang-python">
+						A = [1, 2]
+						B = [3, 4, 5]
+						L = [A, B]                # Équivalent à L = [[1, 2], [3, 4, 5]]
+						
+						print(L[0][1])            # 2
+						print(L[1][2])            # 5
+					</code></pre>
+					
+					<figure>
+						<img src="images/imbrication.svg" style="width: 20em">
+					</figure>
+					
+				</section>
+				<section>
+					<h2>Parcours d'une liste à deux dimensions</h2>
+					
+					
+					<ul>
+						<li>
+							Parcours à l'aide d'une <strong>double boucle</strong> 
+							
+							<small>Imbrication d'une boucle dans une autre, <code>while</code> ou <code>for</code></small>
+						</li>
+						<li>
+							La première boucle passe en revue les <strong>listes imbriquées</strong> 
+							
+							<small>La seconde boucle parcourt les éléments de chaque liste imbriquée</small>
+						</li>
+					</ul>
+					
+					
+					<pre><code class="lang-python">
+						L = [[1, 2], [3, 4, 5]]
+						
+						for elem in L:               # elem est une liste
+							for data in elem:        # data est un nombre entier
+								print(data, end=' ')
+							print('| ', end='')
+					</code></pre>
+					<pre><code class="lang-plain">
+						1 2 | 3 4 5 | 
+					</code></pre>
+					
+				</section>
+				<section>
+					<h2>Représentation d'une matrice</h2>
+					
+					
+					<ul>
+						<li>
+							<strong>Matrice</strong> représentée par une liste à deux dimensions 
+							
+							<small>Toutes les listes imbriquées ont le même nombre d'éléments</small>
+						</li>
+						<li>
+							Stockage d'une <strong>liste des lignes</strong> de la matrice 
+							
+							<ul>
+								<li>
+									La première dimension représente les lignes
+								</li>
+								<li>
+									Colonnes représentées par la deuxième dimension
+								</li>
+							</ul>
+						</li>
+					</ul>
+					
+					
+					<pre><code class="lang-python">
+						M = [[1, 2, 3], [4, 5, 6]]
+					</code></pre>
+					
+					\[ M = \left(\begin{array}{ccc} 1 & 2 & 3 \\ 4 & 5 & 6 \end{array}\right) \qquad \textsf{Par exemple, \texttt{M[1][0]} vaut 4} \]
+					
+				</section>
+				<section>
+					<h2>Parcours d'une matrice</h2>
+					
+					
+					<ul>
+						<li>
+							<strong>Dimension</strong> de la matrice obtenue avec la fonction <code>len</code> 
+							
+							<small>La matrice a <code>len(M)</code> lignes et <code>len(M[0])</code> colonnes</small>
+						</li>
+						<li>
+							<strong>Parcours</strong> avec boucle <code>while</code> et indices ou avec boucle <code>for</code>
+						</li>
+					</ul>
+					
+					
+					<pre><code class="lang-python">
+						# Avec une boucle while
+						i = 0
+						while i < len(M):
+							j = 0
+							while j < len(M[0]):
+								print(M[i][j])
+								j += 1
+							i += 1
+						
+						# Avec une boucle for
+						for line in M:
+							for elem in line:
+								print(elem)
+					</code></pre>
+					
+				</section>
+				<section>
+					<h2>Structures imbriquées (1)</h2>
+					
+					
+					<ul>
+						<li>
+							Imbrication d'autres structures <strong>dans des listes</strong> 
+							
+							<small>Liste de tuples, ensembles et dictionnaires</small>
+						</li>
+					</ul>
+					
+					
+					<pre><code class="lang-python">
+						# Liste de tuples
+						coords = [(0,0), (7,-2), (4,5), (-3,-9)]
+						
+						# Liste d'ensembles
+						lunches = [
+							{'apple', 'banana', 'grape'},
+							{'yogurt', 'cereals'},
+							{'bread', 'cheese', 'ham'},
+							{'sausage'}
+						]
+						
+						# Liste de dictionnaires
+						contacts = [
+							{'firstname': 'Alexis', 'lastname': 'King'},
+							{'firstname': 'Brice', 'lastname': 'Monster'},
+							{'firstname': 'Sébastien', 'lastname': 'Adams'}
+						]
+					</code></pre>
+					
+				</section>
+				<section>
+					<h2>Structures imbriquées (2)</h2>
+					
+					
+					<ul>
+						<li>
+							Structures imbriquées en <strong>clés et valeurs</strong> de dictionnaires 
+							
+							<small>Les clés d'un dictionnaire doivent être non modifiables</small>
+						</li>
+					</ul>
+					
+					
+					<pre><code class="lang-python">
+						# Tuples en clés d'un dictionnaire
+						config = {
+							(0, 0): 'Arnaud',
+							(2, 1): 'Louis',
+							(-1, 3): 'Marie',
+							(3, -1): 'Dan'
+						}
+						
+						# Listes en valeurs d'un dictionnaire
+						config = {
+							(0, 0): ['Arnaud', 'Pierre'],
+							(2, 1): ['Louis'],
+							(-1, 3): ['Marie', 'Éric', 'Tom'],
+							(3, -1): ['Dan']
+						}
+					</code></pre>
+					
+				</section>
+				<section>
+					<h2>Imbrication complexes</h2>
+					
+					
+					<ul>
+						<li>
+							On peut <strong>imbriquer</strong> des structures à plusieurs niveaux 
+							
+							<small>Des séquences, ensembles et dictionnaires</small>
+						</li>
+					</ul>
+					
+					
+					<pre><code class="lang-python">
+						address = {'street': "Promenade de l'Alma", 'number': 50,
+							'zip': 1200, 'city': "Woluwé-Saint-Lambert"}
+						marchand = {'firstname': "Cédric", 'lastname': "Marchand",
+							'address': address}
+						
+						# Équivalent à
+						# marchand = {'firstname': "Cédric", 'lastname': "Marchand", 
+						#    'address': {'street': "Promenade de l'Alma", 'number': 50, 
+						#    'zip': 1200, 'city': "Woluwé-Saint-Lambert"}}
+						
+						print(marchand['firstname'])            # Cédric
+						print(marchand['address']['city'])      # Woluwé-Saint-Lambert
+					</code></pre>
+					
+				</section>
+				<section>
+					<h2>Copie (1)</h2>
+					
+					
+					<ul>
+						<li>
+							Affecter une même liste à deux variables crée un <strong>alias</strong> 
+							
+							<small>Même chose pour les séquences, les ensembles et les dictionnaires</small>
+						</li>
+						<li>
+							On crée une <strong>véritable copie</strong> de liste avec la fonction <code>list</code> 
+							
+							<small>Ou avec les fonctions <code>set</code>, <code>dict</code>...</small>
+						</li>
+					</ul>
+					
+					
+					<pre><code class="lang-python">
+						L = [1, 2, 3, 4, 5]
+						A = L                                   # A est un alias de L
+						A[0] = 42
+						print(L)                                # [42, 2, 3, 4, 5]
+						
+						L = [1, 2, 3, 4, 5]
+						B = list(L)                             # B est une copie de L
+						B[0] = 42
+						print(L)                                # [1, 2, 3, 4, 5]
+					</code></pre>
+					
+				</section>
+				<section>
+					<h2>Copie (2)</h2>
+					
+					<figure>
+						<img src="images/alias.svg" style="width: 25em">
+					</figure>
+					
+				</section>
+				<section>
+					<h2>Copie de structures imbriquées</h2>
+					
+					
+					<ul>
+						<li>
+							Pas de soucis de copies pour les <strong>collections non modifiables</strong>
+						</li>
+						<li>
+							La copie ne se fait <strong>pas en profondeur</strong> 
+							
+							<small>Seuls les éléments de \og premier niveau \fg{</small> sont copiés}
+						</li>
+					</ul>
+					
+					
+					<pre><code class="lang-python">
+						L = [[1, 2], [3, 4, 5]]
+						A = list(L)
+						
+						A[1][0] = 42
+						print(L)                           # [[1, 2], [42, 4, 5]]
+					</code></pre>
+					
+					<figure>
+						<img src="images/shallow.svg" style="width: 20em">
+					</figure>
+					
+				</section>
+				<section>
+					<h2>Module <code>copy</code></h2>
+					
+					
+					<ul>
+						<li>
+							Deux fonctions proposées par le <strong>module <code>copy</code></strong> 
+							
+							<ul>
+								<li>
+									<code>copy</code> pour une copie "<i>shallow</i>"
+								</li>
+								<li>
+									<code>deepcopy</code> pour une copie "<i>deep</i>"
+								</li>
+							</ul>
+						</li>
+						<li>
+							Une <strong>copie en profondeur</strong> peut prendre du temps 
+							
+							<small>Et aussi consommer beaucoup d'espace mémoire</small>
+						</li>
+					</ul>
+					
+					
+					<pre><code class="lang-python">
+						import copy
+						
+						L = [[1], [2, 3], [4, 5, 6]]
+						A = copy.copy(L)                   # A est une copie shallow de L
+						B = copy.deepcopy(L)               # A est une copie deep de L
+					</code></pre>
+					
+				</section>
+				
+				<section>
+					<h2>Crédits</h2>
+					
+					<ul>
+						<li>
+							https://www.flickr.com/photos/doctorow/11082104723
+						</li>
+						<li>
+							https://www.flickr.com/photos/greeblie/3338710223
+						</li>
+						<li>
+							https://www.flickr.com/photos/ken-ichi/4577032677
+						</li>
+					</ul>
+			</section>
+			
+		</body>
+		</html>
+									
