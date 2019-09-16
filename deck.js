@@ -671,7 +671,7 @@
   const deckOk = Promise.all(scripts).then(() => loadScript("https://cdnjs.cloudflare.com/ajax/libs/deck.js/1.1.0/core/deck.core.js"));
   window.addEventListener("DOMContentLoaded", event => {
     console.log("DOM Loaded and Parsed");
-    document.body.classList.add('mode-deck');
+    document.body.classList.add('mode-document');
     Prism.highlightAll();
     deckOk.then(() => {
       renderMathInElement(document.body);
