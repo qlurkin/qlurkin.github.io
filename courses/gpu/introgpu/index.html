@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>GPU - Introduction</title>
+	<script src="https://quentin.lurkin.xyz/deck.js"></script>
+</head>
+<body>
+	<section>
+		<h1>
+			GPU - Introduction
+		</h1>
+		<p>Quentin Lurkin</p>
+	</section>
+	<section>
+		<h2>Qu'est-ce qu'un GPU</h2>
+		<ul>
+			<li><strong>Graphics Processing Unit</strong></li>
+			<li><strong>Aide</strong> le processeur principal (CPU)</li>
+			<li>Initialement pour le calcul des <strong>graphismes</strong></li>
+			<li>De plus en plus pour d'<strong>autres choses</strong>.</li>
+		</ul>
+	</section>
+	<section>
+		<h2>Pourquoi un GPU?</h2>
+		<ul>
+			<li>
+				Optimisé pour le calcul en paralèlle:
+				<ul>
+					<li>Intel Core i9-9980XE: <strong>18</strong> cores</li>
+					<li>NVidia Titan RTX: <strong>4608</strong> shader cores, <strong>288</strong> texture mapping unit, <strong>96</strong> render output unit, <strong>72</strong> ray tracing cores, <strong>576</strong> tensor cores</li>
+				</ul>
+			</li>
+			<li>La même procédure sur un grand nombre de données</li>
+		</ul>
+	</section>
+	<section>
+		<h2>Comment utiliser le GPU?</h2>
+		<ul>
+			<li>3 <strong>constructeurs</strong> pour les ordinateurs:
+				<ul>
+					<li>Intel: GPU Intégré dans les CPU Intel</li>
+					<li>AMD: Cartes Radeon et Radeon PRO</li>
+					<li>NVidia: Cartes GeForce et Quadro</li>
+				</ul>
+			</li>
+			<li>
+				Plusieurs <strong>API</strong>:
+				<ul>
+					<li>DirectX: API graphique de Microsoft</li>
+					<li>Metal: API graphique d'Apple</li>
+					<li>OpenGL/Vulkan: API graphique ouverte</li>
+					<li>CUDA: API de calcul de NVidia</li>
+					<li>OpenCL: API de calcul ouverte</li>
+				</ul>
+			</li>
+		</ul>
+	</section>
+	<section>
+		<h2>Vulkan</h2>
+		<ul>
+			<li>API Moderne: Successeur d'OpenGL</li>
+			<li>Ouverte et Cross-plateform</li>
+			<li>API extremement explicite</li>
+			<li>Gagne en popularité très rapidement</li>
+			<li>Graphismes et Calculs</li>
+		</ul>
+		<figure>
+			<img src="vulkan.svg" class="third2">
+		</figure>
+	</section>
+</body>
+</html>
