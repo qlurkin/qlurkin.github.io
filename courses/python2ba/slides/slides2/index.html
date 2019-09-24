@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+	<script src="https://quentin.lurkin.xyz/deck.js"></script>
+	<style>
+		pre > code {
+			font-size: 75% !important;
+		}
+	</style>
+</head>
+<body>
+	<section>
+		<h1>Tuples et Objets</h1>
+		<p>Quentin Lurkin, Sébastien Combéfis</p>
+	</section>
+	<section>
+		<h2>Rappels</h2>
+		
+		<ul>
+			<li>
+				<strong>Ensemble</strong> 
+				
+				<ul>
+					<li>
+						Collection non ordonnée d'éléments distincts
+					</li>
+					<li>
+						Opérations ensemblistes
+					</li>
+					<li>
+						Modification et ensemble non modifiable
+					</li>
+				</ul>
+			</li>
+			<li>
+				<strong>Dictionnaire</strong> 
+				
+				<ul>
+					<li>
+						Ensemble de paires clé-valeur, avec clés distinctes
+					</li>
+					<li>
+						Opérations d'accès et de modification
+					</li>
+				</ul>
+			</li>
+		</ul>
+		
+		
+	</section>
+	<section>
+		<h2>Objectifs</h2>
+		
+		
+		<ul>
+			<li>
+				Utilisation de <strong>tuples</strong> 
+				
+				<ul>
+					<li>
+						Définition et utilisation
+					</li>
+					<li>
+						Fonction avec plusieurs valeurs de retour
+					</li>
+				</ul>
+			</li>
+			<li>
+				Introduction aux <strong>objets</strong> 
+				
+				<ul>
+					<li>
+						Création et utilisation d'objets
+					</li>
+					<li>
+						Appel de méthode
+					</li>
+					<li>
+						Programmation orientée objet
+					</li>
+				</ul>
+			</li>
+		</ul>
+		
+		
+	</section>
+	<section class="full">
+		<h2>Tuples</h2>
+		<img src="images/985725985_a83ecfc97c_o.jpg">
+	</section>
+	<section>
+		<h2>Tuple</h2>
+		
+		
+		<ul>
+			<li>
+				Séquence ordonnée et <strong>non modifiable</strong> d'éléments 
+				
+				<small>Les éléments d'un tuple ne peuvent pas être modifiés</small>
+			</li>
+			<li>
+				<strong>Définition</strong> d'un tuple avec <code>()</code> 
+				
+				<small>Parenthèses pas obligatoires lorsqu'au moins un élément</small>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			# Tuple vide
+			a = ()
+			
+			# Tuples contenant un seul élément
+			b = 1,
+			c = (1,)
+			
+			# Tuples contenant trois éléments
+			d = 1, 2, 3
+			e = (1, 2, 3)
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Somme des éléments d'un tuple</h2>
+		
+		
+		<ul>
+			<li>
+				<strong>Accès aux éléments</strong> d'un tuple avec les crochets 
+				
+				<small>En lecture seulement, l'accès en écriture est interdit</small>
+			</li>
+			<li>
+				<strong>Utilisation</strong> d'un tuple similaire à celle des listes 
+				
+				<ul>
+					<li>
+						Taille d'un tuple obtenue avec la fonction <code>len</code>
+					</li>
+					<li>
+						Parcours d'un tuple avec <code>while</code> ou <code>for</code>
+					</li>
+				</ul>
+			</li>
+		</ul>
+
+		<div class="columns">
+			<div class="left">
+				<pre>
+					<code class="lang-python">
+						def sum(values):
+							s = 0
+							i = 0
+							while i < len(values):
+								s += values[i]
+								i += 1
+							return s
+					</code>
+				</pre>
+			</div>
+			<div class="right">
+				<pre>
+					<code class="lang-python">
+						def sum(values):
+							s = 0
+							for element in values:
+								s += element
+							return s
+					</code>
+				</pre>
+			</div>
+		</div>	
+	</section>
+	<section>
+		<h2>Définition avec parenthèses</h2>
+		
+		
+		<ul>
+			<li>
+				Définition <strong>avec parenthèses</strong> d'un tuple parfois obligatoire 
+				
+				<ul>
+					<li>
+						Pour le tuple vide
+					</li>
+					<li>
+						Lors d'un appel de fonction
+					</li>
+				</ul>
+			</li>
+			<li>
+				L'oubli de parenthèses provoque une <strong>ambigüité</strong> 
+				
+				<small>Elle est relevée par le compilateur par une erreur</small>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			result = sum(1, 2, 3)
+			
+			# Solution correcte :
+			# result = sum((1, 2, 3))
+		</code></pre>
+		<pre><code class="lang-plain">
+			Traceback (most recent call last):
+				File "program.py", line 9, in 
+					r = sum(1, 2, 3)
+			TypeError: sum() takes 1 positional argument but 3 were given
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Emballage et déballage</h2>
+		
+		
+		<ul>
+			<li>
+				On peut <strong>emballer</strong> plusieurs valeurs dans un tuple 
+				
+				<small>Elles sont toutes accessibles à partir d'une seule variable</small>
+			</li>
+			<li>
+				On peut <strong>déballer</strong> un tuple dans plusieurs variables 
+				
+				<small>Chaque variable reçoit la valeur d'un élément du tuple</small>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			t = 1, 2, 3
+			print(t)
+			
+			a, b, c = t
+			print(a, b, c, sep='/')
+		</code></pre>
+		
+		<pre><code class="lang-plain">
+			(1, 2, 3)
+			1/2/3
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Plusieurs valeurs de retour</h2>
+		
+		
+		<ul>
+			<li>
+				Une fonction peut <strong>renvoyer plusieurs valeurs</strong> 
+				
+				<small>Il suffit en fait de renvoyer un tuple</small>
+			</li>
+			<li>
+				Fonction qui <strong>cherche un élément</strong> dans une liste 
+				
+				<ul>
+					<li>
+						Si l'élément est trouvé, renvoie <code>True</code> et son indice
+					</li>
+					<li>
+						Sinon renvoie <code>False</code> et <code>None</code> comme indice
+					</li>
+				</ul>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			def find(L, element):
+				for i in range(len(L)):
+					if L[i] == element:       # L'élément est trouvé
+						return True, i
+				return False, None               # L'élément n'a pas été trouvé
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Récupération des valeurs de retour</h2>
+		
+		<ul>
+			<li>
+				Deux solutions pour <strong>récupérer les valeurs</strong> de retour 
+				
+				<ul>
+					<li>
+						Sous forme d'une variable contenant un tuple
+					</li>
+					<li>
+						Avec autant de variables qu'il y a d'éléments dans le tuple
+					</li>
+				</ul>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			values = [1, 2, 3, 4]
+			
+			result = find(values, 2)
+			found, index = find(values, 6)
+			
+			print(result, found, index)
+		</code></pre>
+		
+		<pre><code class="lang-plain">
+			(True, 1) False None
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Absence de valeur</h2>
+		
+		<ul>
+			<li>
+				La valeur spéciale <code>None</code> représente l'<strong>absence de valeur</strong> 
+				
+				<small>A permis d'avoir des valeurs de retour homogènes pour <code>find</code></small>
+			</li>
+			<li>
+				Ou alors on vérifie le <strong>type de la valeur de retour</strong>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			def find(list, element):
+				for i in range(len(list)):
+					if list[i] == element:       # L'élément est trouvé
+						return True, i
+				return False                     # L'élément n'a pas été trouvé
+			
+			values = [1, 2, 3, 4]
+			result = find(values, 2)             # result peut être
+			                                     # de différents type
+			if type(result) is tuple:
+				print(result[0], result[1])
+			else:
+				print(result)
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Opérateur de déballage</h2>
+		
+		
+		<ul>
+			<li>
+				Deux manières de <strong>déballer</strong> un tuple 
+				
+				<ul>
+					<li>
+						Avec l'opérateur d'affectation
+					</li>
+					<li>
+						Lors d'un appel de fonction
+					</li>
+				</ul>
+			</li>
+			<li>
+				<strong>Opérateur de déballage</strong> (<code>*</code>) lors d'un appel de fonction 
+				
+				<small>Déballe le tuple dans les paramètres de la fonction appelée</small>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			def max(a, b, c):
+				if a > b and a > c:
+					return a
+				elif b > c:
+					return b
+				return c
+			
+			t = 1, 2, 3
+			result = max(*t)
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Affectation multiple</h2>
+		
+		
+		<ul>
+			<li>
+				Changer la valeur de <strong>plusieurs variables</strong> en une fois 
+				
+				<small>Combinaison d'emballage puis de déballage</small>
+			</li>
+			<li>
+				Permet d'<strong>échanger</strong> les valeurs de deux variables 
+				
+				<small>En une seule opération, sans variable intermédiaire</small>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			x, y = "Hello", 42
+			print(x, y)
+			
+			x, y = y, x
+			print(x, y)
+		</code></pre>
+		
+		<pre><code class="lang-plain">
+			Hello 42
+			42 Hello
+		</code></pre>	
+		
+	</section>
+	<section>
+		<h2>Immuabilité (1)</h2>
+
+
+		<ul>
+		<li>
+			Un tuple est <strong>immuable</strong> 
+			
+			<small>Son état n'est pas modifiable une fois initialisé</small>
+		</li>
+		<li>
+			Plusieurs <strong>avantages</strong> à l'immuabilité 
+			
+			<ul>
+				<li>
+					Peut être élément d'un ensemble ou clé d'un dictionnaire
+				</li>
+				<li>
+					Peut être passé à une fonction <i>"sans risque"</i>
+				</li>
+				<li>
+					Pas besoin d'en faire des copies profondes
+				</li>
+			</ul>
+		</li>
+		<li>
+			Concept-clé de la <strong>programmation orientée objet</strong>
+		</li>
+		</ul>
+	</section>
+	<section>
+		<h2>Immuabilité (2)</h2>
+
+
+		<ul>
+		<li>
+			Différence entre <strong>liste</strong> et tuple 
+			
+			<small>Les valeurs d'une liste peuvent être modifiées</small>
+		</li>
+		</ul>
+
+
+		<pre><code class="lang-python">
+			def thug(data):
+				for i in range(len(data)):
+					data[i] = 0
+
+			d = [1, 2, 3]
+			print("Avant appel :", d)
+			thug(d)
+			print("Après appel :", d)
+		</code></pre>
+
+		<pre><code class="lang-plain">
+			Avant appel : [1, 2, 3]
+			Après appel : [0, 0, 0]
+		</code></pre>
+
+	</section>
+	<section>
+		<h2>Immuabilité (3)</h2>
+
+		<ul>
+			<li>
+				Différence entre liste et <strong>tuple</strong> 
+				
+				<small>Les valeurs d'un tuple ne peuvent pas être modifiées</small>
+			</li>
+		</ul>
+
+
+		<pre><code class="lang-python">
+			d = (1, 2, 3)
+			print("Avant appel :", d)
+			thug(d)
+			print("Après appel :", d)
+		</code></pre>
+
+		<pre><code class="lang-plain">
+			Avant appel : (1, 2, 3)
+			Traceback (most recent call last):
+				File "program.py", line 7, in &lt;module>
+					thug(d)
+				File "program.py", line 3, in thug
+					data[i] = 0
+			TypeError: 'tuple' object does not support item assignment
+		</code></pre>
+
+	</section>
+	<section class="full">
+		<h2>Objets</h2>
+		<img src="images/2828893154_94b10b0822_o.jpg">
+	</section>
+	<section>
+		<h2>Objet (1)</h2>
+
+		<ul>
+			<li>
+				Un <strong>objet</strong> combine des données et des fonctions 
+				
+				<small>Les fonctions ont accès complet aux données de l'objet</small>
+			</li>
+			<li>
+				Permet de définir des <strong>types de données</strong> complexes 
+				
+				<small>On a déjà renconté les listes, chaines de caractères, ensembles...</small>
+			</li>
+		</ul>
+
+
+		<pre><code class="lang-python">
+			dice = {1, 2, 3, 4, 5, 6}            # Initialisation des données
+			face = dice.pop()                    # Appel d'une fonction
+			
+			print("La face visible du dé est :", face)
+		</code></pre>
+
+		<pre><code class="lang-plain">
+			La face visible du dé est : 1
+		</code></pre>
+
+	</section>
+	<section>
+		<h2>Objet (2)</h2>
+
+
+		<ul>
+			<li>
+				<strong>Trois éléments</strong> existent lorsqu'on crée un objet 
+				
+				<ul>
+					<li>
+						L'<b>objet</b>, avec ses attributs, se trouve en mémoire
+					</li>
+					<li>
+						Une <b>variable</b> du même type que l'objet est déclarée
+					</li>
+					<li>
+						Une <b>référence</b> vers l'objet est stockée dans la variable
+					</li>
+				</ul>
+			</li>
+		</ul>
+
+
+		<pre><code class="lang-python">
+			dice = {1, 2, 3, 4, 5, 6}
+		</code></pre>
+
+		<figure>
+			<img src="images/dice.svg" class="third">
+		</figure>
+
+	</section>
+	<section>
+		<h2>Création</h2>
+
+
+		<ul>
+			<li>
+				Création d'un objet en exécutant un <strong>constructeur</strong> 
+				
+				<small>Permet d'initialiser les attributs de l'objet</small>
+			</li>
+		</ul>
+
+
+		<pre><code class="lang-python">
+			from datetime import time
+			
+			start = time(14, 45, 21)
+			end = time(16, 15, 56)
+		</code></pre>
+
+		<figure>
+			<img src="images/time.svg" class="third2">
+		</figure>
+
+	</section>
+	<section>
+		<h2>Accès aux attributs</h2>
+
+		<ul>
+			<li>
+				<strong>Accès aux attributs</strong> d'un objet avec l'opérateur d'accès (<code>.</code>)
+			</li>
+			<li>
+				L'accès peut se faire en <strong>lecture et/ou écriture</strong> 
+				
+				<small>Certains attributs sont protégés et en lecture seule</small>
+			</li>
+		</ul>
+
+
+		<pre><code class="lang-python">
+			startseconds = 3600 * start.hour + 60 * start.minute + start.second
+			endseconds = 3600 * end.hour + 60 * end.minute + end.second
+			
+			difference = endseconds - startseconds
+			print("Le cours va durer :", difference, "secondes")
+		</code></pre>
+
+	</section>
+	<section>
+	<h2>Attribut en lecture seule</h2>
+
+
+	<ul>
+		<li>
+			Erreur d'exécution si <strong>modification attribut lecture seule</strong> 
+			
+			<small>Modification d'un attribut faite par affectation</small>
+		</li>
+	</ul>
+
+
+	<pre><code class="lang-python">
+		from datetime import time
+		
+		start = time(14, 45, 21)
+		start.minute = 15
+	</code></pre>
+
+	<pre><code class="lang-plain">
+		Traceback (most recent call last):
+			File "program.py", line 4, in <module>
+				start.minute = 15
+		AttributeError: attribute 'minute' of 'datetime.time' objects is
+		not writable
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Paramètre de type objet</h2>
+		
+		<ul>
+			<li>
+				Une fonction peut recevoir des <strong>paramètres de type objet</strong> 
+				
+				<small>Le paramètre reçoit une copie de la référence vers l'objet</small>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			from datetime import time
+			
+			def toseconds(t):
+				return 3600 * t.hour + 60 * t.minute + t.second
+			
+			
+			start = time(14, 45, 21)
+			end = time(16, 15, 56)
+			
+			difference = toseconds(end) - toseconds(start)
+			print("Le cours va durer :", difference, "secondes")
+		</code></pre>
+		
+		<pre><code class="lang-plain">
+			Le cours va durer : 5435 secondes
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Valeur de retour de type objet</h2>
+		
+		
+		<ul>
+			<li>
+				Une fonction peut <strong>renvoyer un objet</strong> 
+				
+				<small>La fonction crée l'objet et renvoie une référence vers ce dernier</small>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			from datetime import time
+			
+			def theoreticalend(start, duration):
+				minute = start.minute + (duration % 60)
+				hour = start.hour + (duration // 60) + (minute // 60)
+				return time(hour, minute % 60, start.second)
+			
+			
+			start = time(14, 45, 21)
+			print("Le cours devrait finir à :", theoreticalend(start, 90))
+		</code></pre>
+		
+		<pre><code class="lang-plain">
+			Le cours devrait finir à : 16:15:21
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Appel de méthode (1)</h2>
+		
+		
+		<ul>
+			<li>
+				Une fonction associée à un objet est appelée une <strong>méthode</strong> 
+				
+				<small>Une méthode est appelée sur un objet cible</small>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			from calendar import TextCalendar
+			
+			cal = TextCalendar()
+			cal.prmonth(2015, 9)      # Affiche le calendrier de septembre 2015
+		</code></pre>
+		
+		<pre><code class="lang-plain">
+			September 2015
+			Mo Tu We Th Fr Sa Su
+			    1  2  3  4  5  6
+			 7  8  9 10 11 12 13
+			14 15 16 17 18 19 20
+			21 22 23 24 25 26 27
+			28 29 30
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Appel de méthode (2)</h2>
+		
+		
+		<ul>
+			<li>
+				Méthode appelée avec l'<strong>opérateur d'appel de méthode</strong> (<code>.</code>) 
+				
+				<small>L'objet cible est précisé avant le point</small>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			from calendar import TextCalendar
+			
+			cal = TextCalendar()
+			cal.setfirstweekday(6)    # Change le premier jour de la semaine
+			cal.prmonth(2015, 9)
+		</code></pre>
+		
+		<pre><code class="lang-plain">
+			September 2015
+			Su Mo Tu We Th Fr Sa
+			       1  2  3  4  5
+			 6  7  8  9 10 11 12
+			13 14 15 16 17 18 19
+			20 21 22 23 24 25 26
+			27 28 29 30
+		</code></pre>
+		
+	</section>
+
+	<section>
+		<h2>Programmation orientée objet</h2>
+		
+		
+		<ul>
+			<li>
+				La <strong>programmation orientée objet</strong> manipule des objets 
+				
+				<small>Concepts et entités représentés par des objets</small>
+			</li>
+			<li>
+				Représenter des objets <strong>concrets ou conceptuels</strong> du monde réel 
+				
+				<small>Une personne, un moyen de transport, une date, une liste...</small>
+			</li>
+			<li>
+				Création de <strong>nouveaux types de données</strong> 
+				
+				<small>Permet une programmation de plus haut niveau</small>
+			</li>
+		</ul>
+		
+		
+	</section>
+	<section>
+		<h2>État d'un objet</h2>
+		
+		
+		<ul>
+			<li>
+				Chaque objet est unique et possède son propre <strong>état</strong> 
+				
+				<small>Identité propre à chaque objet, avec ses propres attributs</small>
+			</li>
+			<li>
+				L'état d'un objet est <strong>modifiable ou non</strong> 
+				
+				<ul>
+					<li>
+						Objet immuable aura toujours le même état
+					</li>
+					<li>
+						État d'un objet non modifiable ne peut être changé
+					</li>
+				</ul>
+			</li>
+		</ul>
+		
+		
+	</section>
+	<section>
+		<h2>Identité d'un objet</h2>
+		
+		
+		<ul>
+			<li>
+				<strong>Identité</strong> d'un objet propre à chaque objet créé 
+				
+				<small>Caractérisée par son emplacement en mémoire</small>
+			</li>
+			<li>
+				Fonction prédéfinie <strong><code>id</code></strong> renvoie l'identité
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			numbers = {8, 3, 1, -2, 0}
+			letters = {'A', 'P', 'Q'}
+			
+			print(id(numbers))
+			print(id(letters))
+		</code></pre>
+		
+		<pre><code class="lang-plain">
+			4302577224
+			4329799752
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Tout est objet (1)</h2>
+		
+		
+		<ul>
+			<li>
+				En Python, toute donnée est un <strong>objet</strong> 
+				
+				<small>Même tout ce qu'on a déjà vu comme les nombres, booléens...</small>
+			</li>
+			<li>
+				Fonction prédéfinie <strong><code>dir</code></strong> donne la liste des méthodes
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			temperature = 19
+			print(dir(temperature))
+		</code></pre>
+		
+		<pre><code class="lang-plain">
+			['__abs__', '__add__', '__and__', '__bool__', '__ceil__',
+			'__class__', '__delattr__', '__dir__', '__divmod__', '__doc__',
+			'__eq__', '__float__', '__floor__', '__floordiv__', '__format__',
+			'__ge__', '__getattribute__', '__getnewargs__', '__gt__',
+			'__hash__', '__index__', '__init__', '__int__', '__invert__',
+			'__le__', '__lshift__', '__lt__', '__mod__', '__mul__', '__ne__',
+			'__neg__', '__new__', '__or__', '__pos__', '__pow__', '__radd__',
+			'__rand__', '__rdivmod__', '__reduce__', '__reduce_ex__',
+			'__repr__', '__rfloordiv__', '__rlshift__', '__rmod__',
+			'__rmul__', '__ror__', '__round__', '__rpow__', '__rrshift__',
+			'__rshift__', '__rsub__', '__rtruediv__', '__rxor__',
+			'__setattr__', '__sizeof__', '__str__', '__sub__',
+			'__subclasshook__', '__truediv__', '__trunc__', '__xor__',
+			'bit_length', 'conjugate', 'denominator', 'from_bytes', 'imag',
+			'numerator', 'real', 'to_bytes']
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Tout est objet (2)</h2>
+		
+		
+		<ul>
+			<li>
+				Les nombres entiers ont une <strong>méthode <code>__add__</code></strong> 
+				
+				<small>Permet de faire la somme de deux entiers</small>
+			</li>
+			<li>
+				Appel à la méthode <code>__add__</code> simplifié par l'<strong>opérateur <code>+</code></strong> 
+				
+				<small>Redéfinition d'un opérateur rend le code plus lisible</small>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			print(temperature + 11)
+			print(temperature.__add__(11))
+		</code></pre>
+		
+		<pre><code class="lang-plain">
+			30
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Exemple : les complexes</h2>
+		
+		
+		<ul>
+			<li>
+				<strong>Nombre complexe</strong> représenté par des objets de type <code>complex</code> 
+				
+				<small>Deux façons de les créer puis on peut utiliser plusieurs méthodes</small>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			a = 2 + 3j
+			b = complex(-1, 4)
+			
+			print(type(a))
+			print(a.imag)
+			print(b.conjugate())
+		</code></pre>
+		
+		<pre><code class="lang-plain">
+			<class 'complex'>
+				3.0
+				(-1-4j)
+			</code></pre>
+			
+		</section>
+		<section>
+			<h2>Exemple : les chaines de caractères</h2>
+			
+			
+			<ul>
+				<li>
+					<strong>Chaine de caractères</strong> représenté par des objets de type <code>str</code> 
+					
+					<small>Myriade de méthodes permettant de les manipuler</small>
+				</li>
+			</ul>
+			
+			
+			<pre><code class="lang-python">
+				s = "heLLo"
+				
+				print(s.upper())
+				print(s.capitalize())
+				print(s.startswith("H"))
+			</code></pre>
+			
+			<pre><code class="lang-plain">
+				HELLO
+				Hello
+				False
+			</code></pre>
+			
+		</section>
+		<section>
+			<h2>Exemple : le navigateur web</h2>
+			
+			
+			<ul>
+				<li>
+					Module <code>webbrowser</code> permet de manipuler le <strong>navigateur web</strong> 
+					
+					<small>Récupération du navigateur puis ouverture de pages avec <code>open</code></small>
+				</li>
+			</ul>
+			
+			
+			<pre><code class="lang-python">
+				import webbrowser
+				
+				chrome = webbrowser.get()
+				chrome.open("http://www.ukonline.be")
+			</code></pre>
+			
+		</section>
+		<section>
+			<h2>Crédits</h2>
+			
+			<ul>
+				<li>
+					https://www.flickr.com/photos/sunshinecity/985725985
+				</li>
+				<li>
+					https://www.flickr.com/photos/madalena_pestana/2828893154
+				</li>
+			</ul>
+		
+	</section>
+	
+</body>
+</html>
+								
