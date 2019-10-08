@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Classes et objets</title>
+	<script src="https://quentin.lurkin.xyz/deck.js"></script>
+	<style>
+		pre > code {
+			font-size: 75% !important;
+		}
+	</style>
+</head>
+<body>
+	<section>
+		<h1>Classes et objets</h1>
+		<p>Quentin Lurkin, Sébastien Combéfis</p>
+	</section>
+	<section>
+		<h2>Rappels</h2>
+		
+		<ul>
+			<li>
+				<strong>Tuple</strong> 
+				
+				<ul>
+					<li>
+						Séquence ordonnée non modifiable d'éléments
+					</li>
+					<li>
+						Emballage et déballage, affectation multiple
+					</li>
+				</ul>
+			</li>
+			<li>
+				<strong>Objet</strong> 
+				
+				<ul>
+					<li>
+						Création d'un objet
+					</li>
+					<li>
+						Accès aux attributs et appels de méthode
+					</li>
+					<li>
+						Introduction à la programmation orientée objet
+					</li>
+				</ul>
+			</li>
+		</ul>
+		
+		
+	</section>
+	<section>
+		<h2>Objectifs</h2>
+		
+		
+		<ul>
+			<li>
+				Définition de <strong>classes</strong> 
+				
+				<ul>
+					<li>
+						Définition, constructeur et initialisation
+					</li>
+					<li>
+						Variable d'instance
+					</li>
+					<li>
+						Définition et appel de méthode
+					</li>
+				</ul>
+			</li>
+			<li>
+				Programmation <strong>orientée objet</strong> 
+				
+				<ul>
+					<li>
+						Méthodes <i>"spéciales"</i> (égalité et représentation d'objets)
+					</li>
+					<li>
+						Visibilité des attributs, encapsulation
+					</li>
+					<li>
+						Conception orientée objet
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</section>
+	<section class="full">
+		<h2>Classes</h2>
+		<img src="images/3510951967_e887f41abb_o.jpg">
+	</section>
+	<section>
+		<h2>Objet et classe</h2>
+		<ul>
+			<li>
+				Un objet est une <strong>instance</strong> d'une classe 
+				
+				<small>Une classe est un modèle à partir duquel on construit des objets</small>
+			</li>
+			<li>
+				La classe définit <strong>deux éléments</strong> constitutifs des objets 
+				
+				<small>Les attributs et les fonctionnalités de l'objet</small>
+			</li>
+		</ul>
+		
+	</section>
+	<section>
+		<h2>Attribut et fonctionnalité</h2>
+		
+		
+		<ul>
+			<li>
+				Un attribut est une <strong>donnée</strong> stockée dans un objet 
+				
+				<small>Les valeurs des attributs définissent l'état de l'objet</small>
+			</li>
+			<li>
+				Une <strong>fonctionnalité</strong> permet d'effectuer une action  
+				
+				<small>Obtenir une information sur l'objet ou donner un ordre</small>
+			</li>
+		</ul>
+		
+		<figure>
+			<img src="images/attribfonct.svg">
+		</figure>
+		
+		
+	</section>
+	<section>
+		<h2>Utilisation d'un objet</h2>
+		
+		
+		<ul>
+			<li>
+				Pour pouvoir créer des objets, il faut une <strong>classe</strong> 
+				
+				<small>Une définition unique permet de créer plusieurs objets</small>
+			</li>
+			<li>
+				Une fois créée, interaction avec <strong>attribut et fonctionnalité</strong> 
+				
+				<small>Utilisation de l'opérateur d'accès/appel sur l'objet</small>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			# Construction d'objets
+			maxime = Person("Maxime", "Hockey")
+			elise = Person("Elise", "Space")
+			
+			# Accès à un attribut
+			print(maxime.firstname)              # Affiche 'Hockey'
+			
+			# Appel d'une méthode
+			print(maxime.hasfriend(elise))       # Affiche 'True'
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Définir une classe</h2>
+		
+		
+		<ul>
+			<li>
+				<strong>Définition</strong> d'une classe avec le mot réservé <code>class</code> 
+				
+				<ul>
+					<li>
+						Corps de la classe est un bloc de code indenté
+					</li>
+					<li>
+						Le corps de la classe peut contenir des définitions de méthodes
+					</li>
+				</ul>
+			</li>
+			<li>
+				Classe minimale grâce à l'<strong>instruction <code>pass</code></strong> 
+				
+				<small>Aussi appelée instruction vide car ne fait rien</small>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			class Contact:
+				pass
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Créer une instance</h2>
+		
+		
+		<ul>
+			<li>
+				Un objet est une <strong>instance</strong> d'une classe 
+				
+				<small>À partir d'une classe, on crée autant d'objets que l'on veut</small>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			a = Contact()
+			b = Contact()
+		</code></pre>
+		
+		<figure>
+			<img src="images/instances.svg">
+		</figure>
+		
+	</section>
+	<section>
+		<h2>Définir un constructeur</h2>
+		
+		
+		<ul>
+			<li>
+				<strong>Initialisation</strong> d'un objet par la méthode spéciale <code>__init__</code> 
+				
+				<small>Admet au moins un paramètre qui est <code>self</code></small>
+			</li>
+			<li>
+				Le paramètre <code>self</code> référence l'<strong>objet à construire</strong> 
+				
+				<small>Permet d'accéder aux attributs et fonctionnalités de l'objet</small>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			class Contact:
+				def __init__(self, firstname, lastname, phonenumber):
+					self.firstname = firstname
+					self.lastname = lastname
+					self.phonenumber = phonenumber
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Appeler un constructeur</h2>
+		
+		
+		<ul>
+			<li>
+				Méthode appelée au moment de la <strong>création d'un objet</strong> 
+				
+				<small>Initialise l'objet, en donnant une valeur à ses variables</small>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			marchand = Contact("Cédric", "Marchand", 2693)
+			flemal = Contact("Clémence", "Flemal", 0)
+		</code></pre>
+		
+		<figure>
+			<img src="images/constructor.svg">
+		</figure>
+		
+	</section>
+	<section>
+		<h2>Objet et référence</h2>
+		
+		
+		<ul>
+			<li>
+				Un objet est une <strong>instance</strong> d'une classe 
+				
+				<small>L'instanciation d'une classe produit un objet</small>
+			</li>
+			<li>
+				Stockage d'une <strong>référence</strong> vers l'objet dans une variable 
+				
+				<small>L'adresse où l'objet se situe en mémoire</small>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			print(marchand)
+			print(flemal)
+		</code></pre>
+		<pre><code class="lang-plain">
+			&lt;__main__.Contact object at 0x109678748>
+			&lt;__main__.Contact object at 0x109678780>
+		</code></pre>
+	</section>
+	<section>
+		<h2>Variable d'instance</h2>
+		
+		
+		<ul>
+			<li>
+				<strong>Variables d'instance</strong> attachées à un objet définissent son état 
+				
+				<small>Chaque objet possède ses propres copies de ces variables</small>
+			</li>
+			<li>
+				Accès aux variables d'instance avec l'<strong>objet cible</strong> 
+				
+				<small>Ou <code>self</code> à l'intérieur du code de la classe</small>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			print(marchand.firstname)
+			print(flemal.phonenumber)
+		</code></pre>
+		<pre><code class="lang-plain">
+			Cédric
+			0
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Plusieurs constructeurs</h2>
+		
+		
+		<ul>
+			<li>
+				Paramètre optionnel pour offrir <strong>plusieurs constructeurs</strong> 
+				
+				<ul>
+					<li>
+						Définit une valeur par défaut pour les variables d'instance
+					</li>
+					<li>
+						D'abord les obligatoires, puis les optionnelles
+					</li>
+				</ul>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			class Contact:
+				def __init__(self, firstname, lastname, phonenumber=0):
+					self.firstname = firstname
+					self.lastname = lastname
+					self.phonenumber = phonenumber
+			
+			marchand = Contact("Cédric", "Marchand", 2693)
+			flemal = Contact("Clémence", "Flemal")
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Méthode</h2>
+		
+		
+		<ul>
+			<li>
+				<strong>Méthode</strong> attachée à un objet réalisant une action dessus 
+				
+				<small>La méthode reçoit d'office un paramètre <code>self</code>, l'objet cible</small>
+			</li>
+			<li>
+				<strong>Appel d'une méthode</strong> sur un objet cible avec le point (<code>.</code>)
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			class Contact:
+				def __init__(self, firstname, lastname):
+					self.firstname = firstname
+					self.lastname = lastname
+					self.phonenumber = 0
+			
+				def setphonenumber(self, number):
+					self.phonenumber = number
+			
+			marchand = Contact("Cédric", "Marchand")
+			marchand.setphonenumber(2693)
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Plusieurs méthodes</h2>
+		
+		
+		<ul>
+			<li>
+				Comme pour le constructeur pour avoir <strong>plusieurs méthodes</strong> 
+				
+				<small>Utilisation de la valeur spéciale <code>None</code> comme valeur par défaut</small>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			class Contact:
+				# [...]
+				def changename(self, firstname=None, lastname=None):
+					if firstname is not None:
+						self.firstname = firstname
+					if lastname is not None:
+						self.lastname = lastname
+		</code></pre>
+		
+		<pre><code class="lang-python">
+			lurkin.changename('John', 'Doe')
+			lurkin.changename('John')
+			lurkin.changename(lastname='Doe')
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Définir un vecteur dans le plan (1)</h2>
+		
+		<ul>
+			<li>
+				Deux variables d'instance pour représenter les <strong>coordonnées</strong> 
+				
+				<small>Les deux variables <code>self.x</code> et <code>self.y</code> représentent \((x, y)\)</small>
+			</li>
+			<li>
+				Une méthode <code>norm</code> pour calculer la <strong>longueur du vecteur</strong> 
+				
+				<small>La norme vaut \(\sqrt{x^2 + y^2}\)</small>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			class Vector:
+				def __init__(self, x, y):
+					self.x = x
+					self.y = y
+			
+				def norm(self):
+					return sqrt(self.x ** 2 + self.y ** 2)
+			
+			u = Vector(1, -1)
+			print(u.norm())
+		</code></pre>
+		<pre><code class="lang-plain">
+			1.4142135623730951
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Exemple : Définir une musique</h2>
+		
+		
+		<ul>
+			<li>
+				Un titre, une liste d'artistes et une durée
+			</li>
+			<li>
+				Méthode <code>hasArtist</code> teste si un artiste a composé la musique
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			class Music:
+				def __init__(self, title, artists, duration):
+					self.title = title
+					self.artists = artists
+					self.duration = duration
+				
+				def hasAuthor(self, name):
+					return name in self.artists
+			
+			m1 = Music('Easy Come Easy Go', ['Alice on the roof'], 213)
+			print(m1.hasAuthor('Stromae'))
+		</code></pre>
+		<pre><code class="lang-plain">
+			False
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Exemple : Définir une personne</h2>
+		
+		
+		<ul>
+			<li>
+				Deux <strong>éléments particuliers</strong> à relever dans la classe <code>Person</code> 
+				
+				<ul>
+					<li>
+						Variables d'instance pas en paramètre du constructeur
+					</li>
+					<li>
+						Une méthode ne renvoie pas forcément quelque chose
+					</li>
+				</ul>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			class Person:
+				def __init__(self, firstname, lastname):
+					self.firstname = firstname
+					self.lastname = lastname
+					self.friends = []
+				
+				def addfriend(p):
+					self.friends.append(p)
+				
+				def hasfriend(p):
+					return p in self.friends
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Mot réservé <code>self</code></h2>
+		
+		<ul>
+			<li>
+				La <strong>variable d'instance</strong> est accessible dans toute la classe 
+				
+				<small>Existe en mémoire pendant toute la durée de vie de l'objet</small>
+			</li>
+			<li>
+				Opposée à la <strong>variable locale</strong> qui n'existe que dans la méthode
+			</li>
+		</ul>
+
+		<pre><code class="lang-python">
+			class Vector:
+				def __init__(self, x, y):
+					pass
+				
+				def norm(self):
+					return sqrt(x ** 2 + y ** 2)
+			
+			u = Vector(1, -1)
+			print(u.norm())
+		</code></pre>
+		<pre><code class="lang-plain">
+			Traceback (most recent call last):
+			File "program.py", line 38, in <module>
+				print(u.norm())
+			File "program.py", line 35, in norm
+				return sqrt(x ** 2 + y ** 2)
+			NameError: name 'x' is not defined
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Fonction vs méthode (1)</h2>
+		
+		
+		<ul>
+			<li>
+				Une <strong>méthode</strong> est une fonction associée à un objet 
+				
+				<ul>
+					<li>
+						La méthode peut agir sur les variables d'instance de l'objet
+					</li>
+					<li>
+						La méthode est appelée sur un objet cible
+					</li>
+				</ul>
+			</li>
+			<li>
+				Fonction agissant sur un <strong>tuple</strong> 
+				
+				<small>Tuple passé en paramètre de manière explicite</small>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			def norm(v):
+				x, y = v
+				return sqrt(x ** 2 + y ** 2)
+			
+			u = (1, -1)
+			print(norm(u))
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Fonction vs méthode (2)</h2>
+		
+		
+		<ul>
+			<li>
+				Une <strong>méthode</strong> est une fonction associée à un objet 
+				
+				<ul>
+					<li>
+						La méthode peut agir sur les variables d'instance de l'objet
+					</li>
+					<li>
+						La méthode est appelée sur un objet cible
+					</li>
+				</ul>
+			</li>
+			<li>
+				Méthode agissant sur un <strong>objet cible</strong> 
+				
+				<small>Objet cible passé de manière implicite</small>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			class Vector:
+				def __init__(self, x, y):
+					self.x = x
+					self.y = y
+				
+				def norm(self):
+					return sqrt(self.x ** 2 + self.y ** 2)
+			
+			u = Vector(1, -1)
+			print(u.norm())
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Résumé : définition d'une classe</h2>
+		
+		
+		<ul>
+			<li>
+				<strong>Deux éléments</strong> à définir dans le corps d'une classe 
+				
+				<ul>
+					<li>
+						Le constructeur initialise les variables d'instance
+					</li>
+					<li>
+						Les méthodes interrogent ou agissent sur l'objet
+					</li>
+				</ul>
+			</li>
+			<li>
+				<strong>Plusieurs</strong> constructeurs et versions d'une méthode 
+				
+				<small>À l'aide des paramètres optionnels</small>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			class NomDeLaClasse:
+				def __init__(self, pc1, pc2, ...):
+					self.varinst1 = pc1
+					self.varinst2 = pc2
+					self.autrevarinst = valeur
+				
+				def methode(self, pm1, pm2, ...):
+					# ... agir sur l'objet ...
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Résumé : utilisation d'un objet</h2>
+		
+		
+		<ul>
+			<li>
+				<strong>Création d'un objet</strong> à partir du nom de la classe 
+				
+				<ul>
+					<li>
+						Appel implicite du constructeur <code>__init__</code>
+					</li>
+					<li>
+						Même nombre de valeurs <code>vc</code>\(_i\) que de paramètres <code>pc</code>\(_i\)
+					</li>
+				</ul>
+			</li>
+			<li>
+				Stockage d'une <strong>référence vers l'objet</strong> dans une variable 
+				
+				<small>Utilisation de cette variable pour agir sur l'objet</small>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			var = NomDeLaClasse(vc1, vc2, ...)
+			
+			var.methode(vm1, vm2, ...)
+		</code></pre>
+		
+	</section>
+	<section class="full">
+		<h2>Programmation orientée objets</h2>
+		<img src="images/492906260_efcdafa477_o.jpg">
+	</section>
+	<section>
+		<h2>Représentation d'un objet</h2>
+		
+		
+		<ul>
+			<li>
+				La méthode <code>__str__</code> construit une <strong>représentation de l'objet</strong> 
+				
+				<small>Renvoie une chaine de caractères lisible de l'objet</small>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			class Vector:
+				def __init__(self, x, y):
+					self.x = x
+					self.y = y
+				
+				def __str__(self):
+					return '(' + str(self.x) + ', ' + str(self.y) + ')'
+			
+			u = Vector(1, -1)
+			print(u)
+		</code></pre>
+		<pre><code class="lang-plain">
+			(1, -1)
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Égalité (1)</h2>
+		
+		
+		<ul>
+			<li>
+				L'opérateur d'égalité <strong>compare les références</strong> des variables 
+				
+				<small>Le contenu des objets n'est pas comparé</small>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			u = Vector(1, -1)
+			v = Vector(1, -1)
+			print(u == v)                  # False
+		</code></pre>
+		
+		<figure>
+			<img src="images/equal.svg">
+		</figure>
+		
+	</section>
+	<section>
+		<h2>Alias (1)</h2>
+		<ul>
+			<li>
+				Un <strong>alias</strong> est une copie de la référence vers un objet 
+				
+				<small>Il n'y a qu'une seule copie de l'objet en mémoire</small>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			u = Vector(1, -1)
+			v = u
+			print(u == v)                  # True
+		</code></pre>
+		
+		<figure>
+			<img src="images/alias.svg">
+		</figure>
+		
+	</section>
+	<section>
+		<h2>Alias (2)</h2>
+		
+		
+		<ul>
+			<li>
+				<strong>Qu'affiche le code suivant</strong> après exécution ? 
+				
+				<ul>
+					<li>
+						<code>magic1</code> appelle une méthode sur <code>data</code>
+					</li>
+					<li>
+						<code>magic2</code> modifie la variable locale <code>data</code>
+					</li>
+				</ul>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			def magic1(data):
+				data.append("Coucou")
+			
+			def magic2(data):
+				data = "Coucou"
+			
+			a = [0, 1, 2, 3]
+			print(a)
+			
+			magic1(a)
+			print(a)
+			
+			magic2(a)
+			print(a)
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Surcharge d'opérateur (1)</h2>
+		
+		
+		<ul>
+			<li>
+				On peut <strong>redéfinir</strong> les opérateurs arithmétiques 
+				
+				<small><code>__add__</code> pour <code>+</code>, <code>__sub__</code> pour <code>-</code>, <code>__mul__</code> pour <code>*</code>...</small>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			class Vector:
+				def __init__(self, x, y):
+					self.x = x
+					self.y = y
+				
+				def __add__(self, other):
+					return Vector(self.x + other.x, self.y + other.y)
+				
+				# ...
+			
+			u = Vector(1, -1)
+			v = Vector(2, 1)
+			print(u + v)
+		</code></pre>
+		<pre><code class="lang-plain">
+			(3, 0)
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Surcharge d'opérateur (2)</h2>
+		
+		<ul>
+			<li>
+				On peut <strong>redéfinir</strong> les opérateurs de comparaison 
+				
+				<small><code>__lt__</code> pour <code>&lt;</code>, <code>__le__</code> pour <code>&lt;=</code>, <code>__eq__</code> pour <code>==</code>...</small>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			class Vector:
+				def __init__(self, x, y):
+					self.x = x
+					self.y = y
+				
+				def __lt__(self, other):
+					return self.x < other.x or (self.x == other.x and self.y < other.y)
+				
+				# ...
+			
+			u = Vector(1, -1)
+			v = Vector(2, 1)
+			print(u < v)
+		</code></pre>
+		<pre><code class="lang-plain">
+			True
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Égalité (2)</h2>
+		
+		
+		<ul>
+			<li>
+				Surcharge de l'opérateur d'égalité pour <strong>comparer les objets</strong> 
+				
+				<small>Le contenu des objets sera comparé, et non plus les références</small>
+			</li>
+			<li>
+				<strong>Comparaison des identités</strong> avec l'opérateur <code>is</code> 
+				
+				<small>Comparaison des références des objets</small>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			class Vector:
+				# ...
+				
+				def __eq__(self, other):
+					return self.x == other.x and self.y == other.y
+			
+			u = Vector(1, -1)
+			v = Vector(1, -1)
+			print(u == v)                  # True
+			print(u is v)                  # False
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Définir un vecteur dans le plan (2)</h2>
+		
+		
+		<ul>
+			<li>
+				Une seule variable d'instance pour les <strong>coordonnées</strong> 
+				
+				<small>Stockée dans un tuple par exemple</small>
+			</li>
+			<li>
+				<strong>Choix d'implémentation</strong> complètement libres 
+				
+				<small>Il n'y a pas qu'une seule solution unique</small>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			class Vector:
+				def __init__(self, x, y):
+					self.coords = (x, y)
+				
+				def norm(self):
+					return sqrt(self.coords[0] ** 2 + self.coords[1] ** 2)
+			
+			u = Vector(1, -1)
+			print(u.norm())
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Encapsulation (1)</h2>
+		
+		
+		<ul>
+			<li>
+				Les données de l'objet sont <strong>encapsulées</strong> dans l'objet 
+				
+				<small>Ne pas dévoiler les détails d'implémentation en dehors de l'objet</small>
+			</li>
+			<li>
+				<strong>Pas d'accès direct</strong> aux variables d'instance 
+				
+				<small>Pas recommandé d'accéder directement aux variables d'instance</small>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			u = Vector(1, -1)
+			v = Vector(2, 1)
+			
+			s = Vector(u.x + v.x, u.y + v.y)
+			
+			# ou
+			# s = Vector(u.coords[0] + v.coords[0], u.coords[0] + v.coords[0])
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Variable privée</h2>
+		
+		
+		<ul>
+			<li>
+				<strong>Variable privée</strong> en préfixant son nom avec <code>__</code> 
+				
+				<small>Ne pourra pas être accédée en dehors de la classe</small>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			class Vector:
+				def __init__(self, x, y):
+					self.__x = x
+					self.__y = y
+			
+			u = Vector(1, -1)
+			print(u.__x)
+		</code></pre>
+		<pre><code class="lang-plain">
+			Traceback (most recent call last):
+			File "program.py", line 9, in <module>
+				print(u.__x)
+			AttributeError: 'Vector' object has no attribute '__x'
+		</code></pre>
+	</section>
+	<section>
+		<h2>Accesseur</h2>
+		
+		
+		<ul>
+			<li>
+				Accès à une variable privée à l'aide d'un <strong>accesseur</strong> 
+				
+				<small>Méthode qui renvoie une variable d'instance</small>
+			</li>
+			<li>
+				Un accesseur se définit avec la <strong>décoration</strong> <code>@property</code> 
+				
+				<small>L'appel se fait comme si c'était une variable d'instance publique</small>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			from math import sqrt
+			
+			class Vector:
+				# ...
+				
+				@property
+				def x(self):
+					return self.__x
+			
+			u = Vector(1, -1)
+			print(u.x)                     # 1
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Mutateur</h2>
+		
+		
+		<ul>
+			<li>
+				Modification d'une variable privée à l'aide d'un <strong>mutateur</strong> 
+				
+				<small>Méthode qui change la valeur d'une variable d'instance</small>
+			</li>
+			<li>
+				Un mutateur se définit avec la <strong>décoration</strong> <code>@nom.setter</code> 
+				
+				<small>Où <code>nom</code> est celui de la méthode</small>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			class Vector:
+				# ...
+				
+				@x.setter
+				def x(self, value):
+					self.__x = value
+			
+			u = Vector(1, -1)
+			u.x = 12
+			print(u.x)                     # 12
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Encapsulation (2)</h2>
+		
+		
+		<ul>
+			<li>
+				Accès à un objet <strong>uniquement via les méthodes</strong> publiques 
+				
+				<small>Utilisateur indépendants de la représentation interne de l'objet</small>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			class Vector:
+				def __init__(self, x, y):
+					self.__coords = (x, y)
+				
+				@property
+				def x(self):
+					return self.__coords[0]
+				
+				@x.setter
+				def x(self, value):
+					self.__coords = (value, self.__coords[1])
+			
+			u = Vector(1, -1)
+			u.x = 12
+			print(u.x)                     # 12
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Interface</h2>
+		
+		
+		<ul>
+			<li>
+				L'<strong>interface publique</strong> d'un objet expose ses fonctionnalités 
+				
+				<small>Définit ce que l'utilisateur peut faire avec l'objet</small>
+			</li>
+			<li>
+				Interface publique de la <strong>classe <code>Vector</code></strong> 
+				
+				<ul>
+					<li>
+						Une variable d'instance <code>coords</code> privée
+					</li>
+					<li>
+						Un accesseur et un mutateur pour la coordonnée \(x\)
+					</li>
+					<li>
+						Une méthode <code>coords</code> publique
+					</li>
+				</ul>
+			</li>
+		</ul>
+		
+		
+		<figure>
+			<img src="images/interface.svg">
+		</figure>
+		
+	</section>
+	<section>
+		<h2>Composition d'objets</h2>
+		
+		
+		<ul>
+			<li>
+				On peut <strong>composer</strong> plusieurs objets ensemble 
+				
+				<small>En utilisant des variables d'instance de type objet</small>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			class Rectangle:
+				def __init__(self, lowerleft, width, height, angle=0):
+					self.__lowerleft = lowerleft
+					self.__width = width
+					self.__height = height
+					self.__angle = angle
+			
+				@property
+				def lowerleft(self):
+					return self.__lowerleft
+			
+			p = Vector(1, -1)
+			r = Rectangle(p, 100, 50)
+			print(r.lowerleft)             # (1, -1)
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Réutilisation de code</h2>
+		
+		<ul>
+			<li>
+				On peut <strong>réutiliser le code</strong> définit pour les objets composés 
+				
+				<small>Il suffit d'appeler les méthodes des variables objet</small>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			class Rectangle:
+				# ...
+				
+				def __str__(self):
+					return "Rectangle en " + str(self.__lowerleft) +
+					" de longueur " + str(self.__width) +
+					" et de hauteur " + str(self.__height) +
+					" incliné de " + str(self.__angle) + " degrés"
+			
+			r = Rectangle(Vector(1, -1), 100, 50)
+			print(r)
+		</code></pre>
+		<pre><code class="lang-plain">
+			Rectangle en (1, -1) de longueur 100 et de hauteur 50 incliné
+			de 0 degrés
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Chaine de caractères formatée</h2>
+		
+		<ul>
+			<li>
+				Chaine de caractères <strong>formatée</strong> à partir de valeurs 
+				
+				<ul>
+					<li>
+						Incrustation de valeurs définie avec des balises <code>{}</code>
+					</li>
+					<li>
+						Valeurs à incruster passées en paramètres de <code>format</code>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<strong>Même nombre</strong> de balises que de valeurs passées en paramètre 
+				
+				<small>Sinon, l'interpréteur Python produit une erreur d'exécution</small>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			class Rectangle:
+				# ...
+				
+				def __str__(self):
+					return "Rectangle en {} de longueur {} et de hauteur {}
+					incliné de {} degrés".format(self.__lowerleft,
+					self.__width, self.__height, self.__angle)
+			
+			r = Rectangle(Vector(1, -1), 100, 50)
+			print(r)
+		</code></pre>
+	</section>
+	<section>
+		<h2>Crédits</h2>
+		<ul>
+			<li>
+				https://www.flickr.com/photos/booleansplit/3510951967
+			</li>
+			<li>
+				https://www.flickr.com/photos/goincase/492906260
+			</li>
+		</ul>
+	</section>
+</body>
+</html>
