@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>SA4L - Labo 4</title>
+	<script src="https://quentin.lurkin.xyz/document.js"></script>
+	<style>
+		figure {
+			text-align: center;
+		}
+
+		p {
+			text-indent: 0;
+		}
+	</style>
+</head>
+<body>
+	<h1>SA4L - Labo 4: Eclairage</h1>
+	<h2>Eclairage diffus</h2>
+	<p>L'éclairage diffus correspond à la lumière renvoyée dans toutes les directions par la surface éclairée. Il ne dépend pas du point de vue.</p>
+	<figure>
+		<img src="images/Diffuse.svg" alt="" style="width: 50%">
+	</figure>
+	<p>Vecteurs:</p>
+	<ul>
+		<li>\(\vec{N}\) est le vecteur normal à la surface. </li>
+		<li>\(\vec{L}\) est le vecteur dirigé vers la lumière.</li>
+	</ul>
+	<p>Ces deux vecteurs sont ne norme 1.</p>
+	<p>L'intensité diffuse réfléchie par la surface \(\vec{I_d}\) est calculé par \[\vec{I_d} = (\vec{L} \cdot{} \vec{N}) \vec{C_d}\] où \(\vec{C_d}\) est la couleur diffuse (c-à-d la couleur de l'objet).</p>
+	<p>Les couleurs sont des vecteurs \((r, g, b)\)</p>
+	<p><strong>Ecrivez des shaders qui appliquent cette formule pour chaque fragment</strong></p>
+	<figure>
+		<img src="images/diffuse.png" alt="" style="width: 50%">
+		<figcaption>Texture diffuse</figcaption>
+	</figure>
+
+	<h2>Eclairage spéculaire</h2>
+	<p>L'éclairage spéculaire correspond au reflet de la source lumineuse sur la surface. Il dépend du point de vue.</p>
+	<figure>
+		<img src="images/Specular.svg" alt="">
+	</figure>
+	<p>Vecteurs:</p>
+	<ul>
+		<li>\(\vec{N}\) est le vecteur normal à la surface. </li>
+		<li>\(\vec{L}\) est le vecteur dirigé vers la lumière.</li>
+		<li>\(\vec{R}\) est le vecteur réfléchi.</li>
+		<li>\(\vec{V}\) est le vecteur dirigé la caméra.</li>
+	</ul>
+	<p>Tous ces vecteurs sont de norme 1.</p>
+	<p>L'intensité spéculaire réfléchie \(\vec{I_s}\) est calculée par \[\vec{I_s} = (\vec{R} \cdot{} \vec{V})^{\alpha}\vec{C_l}\] où \(\vec{C_l}\) est la couleur de la lumière et \(\alpha\) est la brillance du matériau.</p>
+	<p>Pour calculer \(\vec{R}\) on utilise \[\vec{R} = 2(\vec{N} \cdot{} \vec{L})\vec{N}-\vec{L}\]</p>
+	<p><strong>Modifiez vos shaders pour qu'ils tiennent compte de l'éclairage spéculaire.</strong></p>
+
+	<h2>Normal Mapping</h2>
+	<p>Le normal mapping consiste à utiliser une texture contenant les normales à la surface. Cela permet de faire varier la normale avec plus de détails sans ajouter ces détails à la géométrie 3D de l'objet.</p>
+	<p>Les composante \((r, g, b)\) de la texture normale doivent être converties. les composantes de couleurs sont comprise entre 0 et 1 alors que les coordonnées d'un vecteur unitaire sont entre -1 et 1. on applique donc à chaque composante la transformation suivante: \[ N_i = 2C_i - 1 \]</p>
+	<p>Les normales contenue dans la texture sont données dans un repère tangent à la surface. Ce repère est composé des trois vecteurs:</p>
+	<figure>
+		<img src="images/Tangent Frame.svg" alt="" style="width: 75%">
+	</figure>
+	<ul>
+		<li>\(\vec{N}\) est le vecteur normal à la surface. </li>
+		<li>\(\vec{T}\) est le vecteur tangent qui suit les coordonnées de textures \(u\).</li>
+		<li>\(\vec{B}\) est le vecteur binormal qui est perpendiculaire aux deux autres.</li>
+	</ul>
+	<p>\(\vec{N}\) et \(\vec{T}\) sont des données qui font partie des Vertex Data. \(\vec{B}\) peut être calculé par \[\vec{B} = \vec{N} \times{} \vec{T}\]</p>
+	<p>Ces vecteurs sont en général connu dans l'espace modèle. Pour passer des de l'espace tangent à l'espace modèle on utilise la matrice: \[ \left ( \begin{matrix} T_x & B_x & N_x \\ T_y & B_y & N_y \\ T_z & B_z & N_z \end{matrix} \right ) \]</p>
+	<p>Pour effectuer la transformation inverse, il faut inverser cette matrice. Pour une matrice orthogonale, cela corrspond à faire la transposée: \[ \left ( \begin{matrix} T_x & B_x & N_x \\ T_y & B_y & N_y \\ T_z & B_z & N_z \end{matrix} \right )^{-1} = \left ( \begin{matrix} T_x & B_x & N_x \\ T_y & B_y & N_y \\ T_z & B_z & N_z \end{matrix} \right )^T = \left ( \begin{matrix} T_x & T_y & T_z \\ B_x & B_y & B_z \\ N_x & N_y & N_z \end{matrix} \right ) \]</p>
+	<p><strong>Modifiez vos shaders et votre C++ pour utiliser une texture supplémentaire qui contient les normales.</strong></p>
+	<figure>
+		<img src="images/normal.png" alt="" style="width: 50%">
+		<figcaption>Texture diffuse</figcaption>
+	</figure>
+
+	<h2>Fonctions GLSL utiles:</h2>
+	<ul>
+		<li> <code class="lang-cpp">normalize()</code> pour normaliser un vecteur</li>
+		<li> <code class="lang-cpp">dot()</code> pour le produit scalaire de vecteurs</li>
+		<li> <code class="lang-cpp">cross()</code> pour le produit vectoriel de vecteurs</li>
+		<li> <code class="lang-cpp">length()</code> donne la norme d'un vecteur</li>
+		<li> <code class="lang-cpp">pow(x, n)</code> pour faire \(x^n\)</li>
+	</ul>
+</body>
+</html>
