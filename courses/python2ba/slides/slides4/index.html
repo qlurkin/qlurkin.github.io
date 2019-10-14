@@ -134,13 +134,10 @@
 		
 		<ul>
 			<li>
-				Via une console (cmd, Powershell)
+				<strong>Sans Anaconda</strong>, Via une console (cmd, Powershell)
 			</li>
 			<li>
-				Pour Anaconda (Anaconda Prompt) remplacer les <code class="lang-plain">py</code> par <code class="lang-plain">python</code> dans les commandes ci-dessous
-			</li>
-			<li>
-				Windows:
+				Windows (sans Anaconda):
 				<pre>
 					<code class="lang-plain">
 						> py -m pip install --upgrade pip wheel setuptools
@@ -148,12 +145,33 @@
 				</pre>
 				<pre>
 					<code class="lang-plain">
-						> py -m pip install docutils pygments pypiwin32 kivy_deps.sdl2==0.1.22 kivy_deps.glew==0.1.12
+						> py -m pip install PyHamcrest docutils pygments pypiwin32 kivy_deps.sdl2==0.1.22 kivy_deps.glew==0.1.12
 					</code>
 				</pre>
 				<pre>
 					<code class="lang-plain">
 						> py -m pip install kivy==1.11.1
+					</code>
+				</pre>
+			</li>
+			<li>
+				<strong>Avec Anaconda</strong> (Anaconda Prompt) remplacer les <code class="lang-plain">py</code> par <code class="lang-plain">python</code> dans les commandes ci-dessous
+			</li>
+			<li>
+				Windows (avec Anaconda):
+				<pre>
+					<code class="lang-plain">
+						> python -m pip install --upgrade pip wheel setuptools
+					</code>
+				</pre>
+				<pre>
+					<code class="lang-plain">
+						> python -m pip install PyHamcrest docutils pygments pypiwin32 kivy_deps.sdl2==0.1.22 kivy_deps.glew==0.1.12
+					</code>
+				</pre>
+				<pre>
+					<code class="lang-plain">
+						> python -m pip install kivy==1.11.1
 					</code>
 				</pre>
 			</li>
