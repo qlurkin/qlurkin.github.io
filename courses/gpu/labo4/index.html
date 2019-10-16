@@ -72,7 +72,7 @@
 	<p><strong>Modifiez vos shaders et votre C++ pour utiliser une texture supplémentaire qui contient les normales.</strong></p>
 	<figure>
 		<img src="images/normal.png" alt="" style="width: 50%">
-		<figcaption>Texture diffuse</figcaption>
+		<figcaption>Texture Normale</figcaption>
 	</figure>
 
 	<h2>Fonctions GLSL utiles:</h2>
@@ -82,6 +82,11 @@
 		<li> <code class="lang-cpp">cross()</code> pour le produit vectoriel de vecteurs</li>
 		<li> <code class="lang-cpp">length()</code> donne la norme d'un vecteur</li>
 		<li> <code class="lang-cpp">pow(x, n)</code> pour faire \(x^n\)</li>
+		<li> <code class="lang-cpp">max(x, y)</code> renvoie la plus grande valeur des deux</li>
+		<li> <code class="lang-cpp">clamp(vec, min, max)</code> contraint des composantes de vec entre min et max</li>
+		<li> <code class="lang-cpp">transpose(mat)</code> transpose une matrice</li>
+		<li> <code class="lang-cpp">inverse(mat)</code> inverse une matrice</li>
+		<li> <code class="lang-cpp">reflect(I, N)</code>calcule le vecteur réfléchit sur base du vecteur incident et normal (I - 2.0 * dot(N, I) * N).</li>
 	</ul>
 </body>
 </html>
