@@ -22,11 +22,11 @@
 		<img src="bataille.jpg" alt="">
 	</figure>
 	<h2>Le jeu "Bataille navale"</h2>
-	<p>Le jeu "Bataille navale" se joue sur une grille de 10 &times; 10 cases. Cette grille représente une mer et un certain nombre de bateaux s'y trouvent mais on ne sait pas où. Comme il s'agit d'une bataille, le but est de couler les bateaux. Nous pouvons donc envoyer des missiles sur les cases de la grille. Les bateaux s'entendent sur plusieurs cases et il faut toucher toutes les cases d'un bateau pour le couler.</p>
+	<p>Le jeu "Bataille navale" se joue sur une grille de 10 &times; 10 cases. Cette grille représente une mer. Un certain nombre de bateaux s'y trouvent mais on ne sait pas où. Comme il s'agit d'une bataille, le but est de couler les bateaux. Nous pouvons donc envoyer des missiles en cliquant sur les cases de la grille. Les bateaux s'entendent sur plusieurs cases et il faut toucher toutes les cases d'un bateau pour le couler.</p>
 	<p>La liste des bateaux est la suivante:</p>
 	<ul>
 		<li>1 <b>t</b>orpilleur (2 cases)</li>
-		<li>2 <b>s</b>ous-marin (3 cases)</li>
+		<li>2 <b>s</b>ous-marins (3 cases)</li>
 		<li>1 <b>c</b>roiseur (4 cases)</li>
 		<li>1 <b>p</b>orte-avions (5 cases)</li>
 	</ul>
@@ -50,35 +50,35 @@
 	<p>Vous devez écrire un programme en utilisant <strong>la bibliothèque Kivy</strong> qui implémente le jeu "Bataille navale".</p>
 	<p>En particulier votre programme devra:</p>
 	<ul>
-		<li>afficher une grille cliquable</li>
-		<li>charger la position des bateaux à partir d'un fichier texte au format décrit plus haut</li>
-		<li>informer le joueur des résultats de ses tirs de missiles (touché ou pas, nom du bateau, coulé ou pas)</li>
-		<li>informer le joueur que la partie est terminée lorsque tous les bateaux ont été coulés</li>
+		<li>afficher une grille cliquable <i>(3 points)</i></li>
+		<li>charger la position des bateaux à partir d'un fichier texte au format décrit plus haut <i>(3 points)</i></li>
+		<li>informer le joueur des résultats de ses tirs de missiles (touché ou pas, nom du bateau, coulé ou pas) <i>(3 points)</i></li>
+		<li>informer le joueur que la partie est terminée lorsque tous les bateaux ont été coulés <i>(3 points)</i></li>
 		<li>
 			<p>permettre au joueur d’entrer son pseudo pour sauver son score.</p>
 			<p>Le score est le pourcentage de tirs touchés par rapport au nombre total de tirs. \[score = 100 \times \frac{n_h}{n_{tot}}\]</p>
 			<p>où \(n_h\) est le nombre de tirs touchés et \(n_{tot}\) le nombre total de tirs.</p>
 			<p>Les scores seront sauvés dans un fichier JSON.</p>
-			<p>Le meilleur score enregistré devra être affiché.</p>
+			<p>Le meilleur score enregistré devra être affiché. <i>(3 points)</i></p>
 		</li>
 	</ul>
 	<p>De plus, votre programme pourra.</p>
 	<ul>
 		<li>
-			<p>choisir aléatoirement un fichier de position de bateaux parmis plusieur fichiers se trouvant dans un répertoire.<br>
+			<p>choisir aléatoirement un fichier de position de bateaux parmi plusieurs fichiers se trouvant dans un répertoire. <i>(2 points)</i><br>
 			module <code>random <a href="https://docs.python.org/3/library/random.html" target="_blank">https://docs.python.org/3/library/random.html</a></code><br>
 			module <code>glob <a href="https://docs.python.org/3/library/glob.html" target="_blank">https://docs.python.org/3/library/glob.html</a></code></p>
 		</li>
-		<li>générer un positionnement des bateaux aléatoirement.</li>
-		<li>permettre de jouer à 2</li>
+		<li>générer un positionnement des bateaux aléatoirement. <i>(3 points)</i></li>
+		<li>permettre de jouer à 2 <i>(3 points)</i></li>
 	</ul>
 
 	<h2>Évaluation</h2>
-	<p>Les projets sont à réaliser seul ou à deux pour la 8e séance de labo. Durant cette séance, vous serez interrogé sur votre code. Le but de cette défense est d’identifier votre niveau de maîtrise de ce code. Le niveau de maîtrise est coté sur 1 et la note finale est calculée comme suit \[n_f = n_m \times n_{cdc}\] où \(n_f\) est la note finale, \(n_m\) est la note de maitrise du code et \(n_{cdc}\) est la note obtenue sur base du cahier des charges.</p>
+	<p>Les projets sont à réaliser seul ou à deux pour la 8e séance de labo. Durant cette séance, vous serez interrogé sur votre code. Le but de cette défense est d’identifier votre niveau de maîtrise de ce code. Le niveau de maîtrise est coté sur 1 et la note finale est calculée comme suit \[n_f = n_m \times min(n_{cdc}, 20)\] où \(n_f\) est la note finale, \(n_m\) est la note de maitrise du code et \(n_{cdc}\) est la note obtenue sur base du cahier des charges.</p>
 	<p>Pour les groupes de deux, chaque membre pourra avoir une note de maîtrise différente. De plus, chaque membre devra maîtriser l’ensemble du code. Si un plagiat manifeste est constaté entre groupes, tous les membres de tous les groupes impliqués seront sanctionnés d’une note de maîtrise nulle.</p>
 
 	<h2>Ressources</h2>
-	<p>Bien qu’il soit possible de réaliser un très bon projet avec uniquement les concepts vu au cours, il est fort possible que vous vouliez aller plus loin. Le meilleur endroit pour trouver des réponse par rapport à kivy est le site de documentation officiel</p>
+	<p>Bien qu’il soit possible de réaliser un très bon projet avec uniquement les concepts vu au cours, il est fort possible que vous vouliez aller plus loin. Le meilleur endroit pour trouver des réponses par rapport à kivy est le site de documentation officiel</p>
 	<p style="text-align: center;"><code><a href="https://kivy.org/doc/stable" target="_blank">https://kivy.org/doc/stable</a></code></p>
 	<p>En particulier, si vous voulez:</p>
 	<ul>
