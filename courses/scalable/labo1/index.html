@@ -44,6 +44,20 @@
 
 	<p>Votre serveur devra être capable de répondre au requêtes suivantes:</p>
 	<ul>
+		<li>
+			Répondre à un ping
+			<pre><code class="lang-json">
+				{
+					"command": "ping"
+				}
+			</code></pre>
+			réponse:
+			<pre><code class="lang-json">
+				{
+					"ping": "pong",
+				}
+			</code></pre>
+		</li>
 		<li>Renvoyer un certain nombre de nombre aléatoire entre deux bornes:
 			<pre><code class="lang-json">
 				{
