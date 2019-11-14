@@ -40,7 +40,17 @@
 
 	<p>Chaque serveur de tri sera un serveur web. et la machine maitre fera des requêtes HTTP pour envoyer les données. La machine maitre sera elle aussi un serveur web de sorte que les données triées pourront être renvoyées par le même moyen.</p>
 
-	<p>Toutes les requêtes seront des POST avec JSON en body.</p>
+	<p>Toutes les requêtes seront des POST sur la route <code class="lang-plain">/</code> avec du JSON en body.</p>
+
+	<p>Votre devra serveur devra être capable de s'annoncer au server principal avec la requête suivante:</p>
+
+	<pre><code class="lang-json">
+		{
+			"command": "connect",
+			"name": "Sam Bertrand",
+			"port": 5000
+		}
+	</code></pre>
 
 	<p>Votre serveur devra être capable de répondre au requêtes suivantes:</p>
 	<ul>
@@ -85,10 +95,11 @@
 					"data": [3, 67, 87, 3, 1, 9867, 567]
 				}
 			</code></pre>
-			réponse dans une autre requête:
+			réponse dans des autres requêtes:
 			<pre><code class="lang-json">
 				{
-					"sorted": [1, 2, 3, 4, 5, 6, 7],
+					"command": "sorted"
+					"data": [1, 2, 3, 4, 5, 6, 7],
 					"id": 0,
 					"order": 0,
 					"last": false,
