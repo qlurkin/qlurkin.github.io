@@ -51,8 +51,6 @@
 	  return [...new Set(languages)];
 	};
 
-	loadCSS('/document.css');
-
 	const loadPrism = () => {
 	  const prismCdnUrl = language => `https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/components/prism-${language}.js`;
 
@@ -82,44 +80,12 @@
 
 	window.addEventListener("DOMContentLoaded", event => {
 	  console.log("DOM Loaded and Parsed");
+	  const documentJs = document.querySelector('script[src$="document.js"]').getAttribute("src");
+	  const documentJsRoot = documentJs.substring(0, documentJs.length - "document.js".length);
+	  console.log(documentJsRoot);
+	  loadCSS(documentJsRoot + 'document.css');
 	  if (document.querySelectorAll('[class*=lang]').length > 0) loadPrism();
 	  loadMathjax();
 	});
-
-	window.build = () => {
-	  console.log('build');
-	  const html = document.getElementsByTagName('html')[0].cloneNode(true);
-	  const head = html.querySelector('head');
-	  const title = head.querySelector('title').innerHTML;
-	  const scripts = [];
-	  head.childNodes.forEach(element => {
-	    if (element.tagName == "SCRIPT") scripts.push(element);
-	  });
-	  scripts.forEach(element => {
-	    head.removeChild(element);
-	  });
-	  const styles = [];
-	  head.childNodes.forEach(element => {
-	    if (element.tagName == "LINK" && element.rel == 'stylesheet') styles.push(element);
-	  });
-	  styles.forEach(element => {
-	    fetch(element.attributes.href.value, {
-	      mode: 'no-cors'
-	    }).then(res => res.text()).then(css => {
-	      head.removeChild(element);
-	      const style = document.createElement('style');
-	      style.appendChild(document.createTextNode(css));
-	      head.appendChild(style);
-	    });
-	  });
-	  const blob = new Blob([html.outerHTML], {
-	    type: "text/html"
-	  });
-	  const url = URL.createObjectURL(blob);
-	  const a = document.createElement('a');
-	  a.href = url;
-	  a.download = title + '.html';
-	  a.click();
-	};
 
 }());
