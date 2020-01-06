@@ -51,7 +51,7 @@
 	  return [...new Set(languages)];
 	};
 
-	loadCSS('document.css');
+	loadCSS('/document.css');
 
 	const loadPrism = () => {
 	  const prismCdnUrl = language => `https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/components/prism-${language}.js`;
