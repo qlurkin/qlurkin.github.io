@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<script src="https://quentin.lurkin.xyz/document.js"></script>
+</head>
+<body>
+	<h1>Projets de développement informatique : Labo 4 <small>Let’s chat together !</small></h1>
+	<h2>Contexte</h2>
+	<p>Le but de ce labo consiste à réaliser une petite application réseau qui vous permettra de chatter avec vos camarades à travers le réseau. Lors de ce labo, vous devez mettre au point le protocole de communication entre les différents composants que vous allez mettre en place, tout en respectant quelques éléments imposés. Une fois le protocole défini, vous devez implémenter votre solution en binôme, chaque membre étant responsable de composants différents.</p>
+	<p>L’application de chat que vous allez développer ne sera utilisable qu’en mode console. N’hésitez pas à repartir des exemples vus au cours que vous pouvez retrouver <a href="https://github.com/ECAM-Brussels/PythonAdvanced2BA">sur le dépôt GitHub du cours 1</a>.</p>
+	
+	<h2>Exercices</h2>
+	<p>Pour vous aider à réaliser votre travail, et pour vous entrainer par rapport à la matière du cours concernant la programmation réseau, voici quelques petits exercices à réaliser :</p>
+	<ol>
+		<li>
+			<p>Créez un socket TCP pour vous connecter au serveur <strong><a href="http://www.ecam.be">www.ecam.be</a></strong> sur le port 80. Une fois connecté, envoyez la chaîne de caractères suivante sur le socket :</p>
+			<pre><code class="lang-plain">
+				GET / HTTP/1.0\n\n
+			</code></pre>
+			<p>puis affichez la réponse renvoyée par le serveur. Réessayez en remplaçant <code>/</code> par <code>/shit</code> et comparez la réponse renvoyée par le serveur. Vérifiez, en particulier, le code de réponse HTTP (3 chiffres).</p>
+		</li>
+		<li>
+			Repartez de l’exemple <code>Chat</code> vu au cours et ajoutez une commande <code>client</code> qui renvoie les informations du client connecté au chat, c’est-à-dire l’adresse IP et le port de la personne que l’on a rejoint. Testez votre programme.
+		</li>
+	</ol>
+
+	<h2>Chat</h2>
+	<p>Votre application doit comporter une partie en mode client/serveur et une en mode peer-to-peer. Voici une idée d’implémentation :</p>
+	<ul>
+		<li>Le serveur permet de mémoriser la liste des clients disponibles pour chatter. Il retient pour chaque client son pseudo et son adresse IP.</li>
+		<li>Au démarrage, Le client va se présenter au serveur, ce qui fait qu’il sera disponible pour chatter. Il peut interroger le serveur pour obtenir la liste des clients disponibles.</li>
+		<li>Ayant l’adresse IP d’une autre machine, une machine peut lancer un chat avec une autre en mode peer-to-peer, tout cela indépendamment du serveur.</li>
+	</ul>
+</body>
+</html>
