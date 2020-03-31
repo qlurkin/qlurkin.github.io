@@ -24,7 +24,7 @@
 <body>
 	<h1>Artificial intelligence Lab 1</h1>
 	<h2>Getting Started with <code>pandas</code></h2>
-	<p><code>pandas</code> is an extremely usefull library for loading and preparing data in Python. This library is mandatory in all Data Science related project in Python.</p>
+	<p><code>pandas</code> is an extremely useful library for loading and preparing data in Python. This library is mandatory in all Data Science related project in Python.</p>
 	<p>To get started with <code>pandas</code> you should:</p>
 	<ul>
 		<li><a href="https://pandas.pydata.org/docs/getting_started/dsintro.html">start by learning about the structures used by pandas</a>,</li>
@@ -35,22 +35,26 @@
 	<p>Do the following exercices in a Jupyter Notebook File <em>(.ipynb)</em>. <strong>You have to post your file on claco by the end of the lab</strong>.</p>
 	<ol>
 		<li>Create a DataFrame with the data of the <a href="pokemon_data.csv" target="_blank">Pokemon Data</a>.</li>
-		<li>Create a Series that contains the names of the Pokemon.</li>
-		<li>Find the Pokemon that have the most <code>HP</code>.</li>
+		<li>Create a Series that contains the names of the Pokemons.</li>
+		<li>Find the Pokemon that has the highest <code>HP</code>.</li>
 		<li>Add two new columns <code>Atk Tot</code> and <code>Def Tot</code> that are respectively the sum of <code>Attack</code> and <code>Sp. Atk</code> and the sum of <code>Defense</code> and <code>Sp. Def</code>.</li>
-		<li>Create a Dataframe that only contains the Pokemon of <code>Type 1</code> <code>Fire</code>.</li>
-		<li>Create a Series with the names of Pokemon that contains "Mega".</li>
-		<li>Add a column <code>Rank</code> that contains:
+		<li>Create a Dataframe that only contains the Pokemons with <code>Type 1 == Fire</code>.</li>
+		<li>Create a Series with the Pokemon names containing "Mega".</li>
+		<li>Add a column named <code>Rank</code> containing:
 			<ul>
-				<li>"Strong" if <code>Attack</code> and <code>Defense</code> values are above their respective mean value.</li>
-				<li>"Weak" if <code>Attack</code> and <code>Defense</code> values are below their respective mean value.</li>
+				<li>"Strong" if <code>Attack</code> and <code>Defense</code> values are both above their respective mean value.</li>
+				<li>"Weak" if <code>Attack</code> and <code>Defense</code> values are both below their respective mean value.</li>
 				<li>"Standard" in other cases.</li>
 			</ul>
 		</li>
-		<li>Create a Series that have all the different <code>Type 1</code>as index and the number of Pokemon of that index as values.</li>
-		<li>Compute the survival rate for both gender.</li>
-		<li>With the <a href="titanic3.xls">Titanic Dataset</a>, group passengers in different age groups (10 years) and plot the survival rate of each group.</li>
-		<li>Based on the previous results, was the saying "Women an Children First" a reality in the Titanic disaster?</li>
+		<li>Create a Series containing all the different <code>Type 1</code> as index and the number of Pokemons of that index as values.</li>
+		<li>With the <a href="titanic3.xls">Titanic Dataset</a>
+			<ul>
+				<li>compute the survival rate for both gender.</li>
+				<li>group passengers in different age groups (10 years) and plot the survival rate of each group.</li>
+				<li>Based on the previous results, was the saying "Women an Children First" a reality in the Titanic disaster?</li>
+			</ul>
+		</li>
 	</ol>
 </body>
 </html>
