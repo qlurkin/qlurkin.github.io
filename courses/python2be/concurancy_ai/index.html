@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Programmation concurrente et intelligence artificielle</title>
+	<script src="https://quentin.lurkin.xyz/deck.js"></script>
+</head>
+<body>
+	<section>
+		<h1>Cours 7 &amp; 8<br> Programmation concurrente et intelligence artificielle</h1>
+		<p>Quentin Lurkin, Sébastien Combéfis</p>
+	</section>
+	<section>
+		<h2>Processus</h2>
+		<ul>
+			<li>Un <strong>processus</strong> est un programme en cours d'exécution <small>Plusieurs processus peuvent exister pour un même programme</small></li>
+			<li>
+				<p>Plusieurs caractéristiques liés aux processus</p>
+				<ul>
+					<li>Processus gérés par le système d'exploitation</li>
+					<li>Trois flux connectés : entrée/sortie/erreur standard</li>
+					<li>Code de retour après exécution (0 terminaison normale)</li>
+				</ul>
+			</li>
+			<li><strong>Informations</strong> sur le processus avec le module <code class="lang-python">sys</code></li>
+		</ul>
+	</section>
+	<section>
+		<h2>Flux</h2>
+		<ul>
+			<li>accessibles avec <code class="lang-python">sys.stdout</code>, <code class="lang-python">sys.stderr</code> et <code class="lang-python">sys.stdin</code> <small>Mêmes méthodes que pour manipuler des fichiers</small></li>
+			<li><strong>Forcer</strong> l'écriture des sorties avec <code class="lang-python">flush</code> <small>Le système d'exploitation stocke temporairement dans des buffers</small></li>
+		</ul>
+		<pre><code class="lang-python">
+			import sys
+
+			print('Année de naissance ?', end='')
+			sys.stdout.flush()
+			data = sys.stdin.read()
+			print('Vous avez', 2016 - int(data), 'ans.')
+			sys.exit(0)
+		</code></pre>
+	</section>
+	<section>
+		<h2>Calcul parallèle et distribué</h2>
+		<ul>
+			<li>Exécution <strong>concurrente</strong> de plusieurs activités <small>Rendue possible avec la multiprogrammation</small></li>
+			<li>Exécution <strong>parallèle</strong> de plusieurs activités <small>Rendue possible avec les multi-processeurs</small></li>
+			<li>
+				<strong>Plusieurs sources</strong> de parallélisme (<code class="lang-python">os.cpu_count()</code>)
+				<ul>
+					<li>Processeurs multicœurs, multithreadé, co-processeurs</li>
+					<li>Plusieurs processeurs</li>
+					<li>Plusieurs machines reliées par le réseau (cluster)</li>
+				</ul>
+			</li>
+		</ul>
+		<p class="center"><strong>Concurrence ≠ Parallélisme</strong></p>
+	</section>
+	<section>
+		<h2>Application multi-processus</h2>
+		<ul>
+			<li>Exécution de plusieurs <strong>processus indépendants</strong> <small>Chaque processus possède ses propres ressources</small></li>
+			<li>
+				<strong>Communication et partage de données</strong> pas évident
+				<ul>
+					<li>Fournir les données au lancement du nouveau processus</li>
+					<li>Communication par le réseau</li>
+					<li>Utilisation de services spécifiques au système d’exploitation</li>
+				</ul>
+			</li>
+		</ul>
+	</section>
+</body>
+</html>
