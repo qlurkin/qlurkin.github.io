@@ -87,7 +87,7 @@
 	<p>image size: 1024 x 610<br>130 face(s)</p>
 	<p class="center"><img src="./group.png" alt=""></p>
 	<h3>Preparing data</h3>
-	<p>As we'll use a segmentation network. the output of our network will be an image of the same size in which pixels can get close to 0.0 (not face) or 1.0 (face). We don't have these output for this dataset so you will have to create it yourself. Just create a full 0.0 image of the same size and "draw" 1.0 rectangle for each bounding box.</p>
+	<p>As we'll use a segmentation network. the output of our network will be an image of the same size in which pixels can get close to <code>0</code> (not face) or <code>1</code> (face). We don't have these output for this dataset so you will have to create it yourself. Just create a full <code>0</code> image of the same size and "draw" rectangle with <code>1</code> for each bounding box.</p>
 	<p class="center"><img src="./mask.png" alt=""></p>
 	<p><strong>Don't try to create these masks for the whole dataset right now. Just create a function that can create it for any image</strong>. You will use this in the next step.</p>
 	<h3>Create your model</h3>
