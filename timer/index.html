@@ -18,77 +18,50 @@
 	</style>
 </head>
 <body>
-	
 	<h1 id='title'></h1>
 	<div id='timer'></div>
 	<div>
 		<a id='refresh' href="#"><i class="material-icons">refresh</i></a>
 	</div>
 	<script>
+		const steps = [
+			{title: 'Accueil', time: 5},
+			{title: 'Présentation', time: 20},
+			{title: 'Questions', time: 20},
+			{title: 'Points', time: 5},
+			{title: 'Concertation', time: 5},
+		]
+
 		function restart() {
 			const start = Date.now()
 			localStorage.setItem('time', String(start))
 		}
 
 		function getTime() {
-			let startStr = localStorage.getItem('time')
-			if(startStr === null) {
-				restart()
-				let startStr = localStorage.getItem('time')
-			}
-			const start = parseInt(startStr, 10)
+			const start = parseInt(localStorage.getItem('time'), 10)
+
 			let msec = Date.now() - start
 			let seconde = Math.floor(msec/1000)
 			msec = msec % 1000
 			let minute = Math.floor(seconde/60)
 			seconde = seconde % 60
-			if(minute < 5) {
-				return {
-					title: 'Accueil',
-					minute: 4 - minute,
-					seconde: 59 - seconde,
-					msec: 999 - msec
+
+			let accumulatedTime = 0
+			for(let step of steps) {
+				accumulatedTime += step.time
+				if(minute < accumulatedTime) {
+					return {
+						title: step.title,
+						minute: accumulatedTime - minute - 1,
+						seconde: 59 - seconde,
+						msec: 999 - msec
+					}
 				}
 			}
-			if(minute < 25) {
-				minute -= 5
-				return {
-					title: 'Présentation',
-					minute: 19 - minute,
-					seconde: 59 - seconde,
-					msec: 999 - msec
-				}
-			}
-			if(minute < 45) {
-				minute -= 25
-				return {
-					title: 'Questions',
-					minute: 19 - minute,
-					seconde: 59 - seconde,
-					msec: 999 - msec
-				}
-			}
-			if(minute < 50) {
-				minute -= 45
-				return {
-					title: 'Points',
-					minute: 4 - minute,
-					seconde: 59 - seconde,
-					msec: 999 - msec
-				}
-			}
-			if(minute < 55) {
-				minute -= 50
-				return {
-					title: 'Concertation',
-					minute: 4 - minute,
-					seconde: 59 - seconde,
-					msec: 999 - msec
-				}
-			}
+
 			return {
 				title: 'Terminé',
-				minute: minute - 55,
+				minute: minute - accumulatedTime,
 				seconde,
 				msec,
 			}
@@ -107,6 +80,10 @@
 			const display = `${time.minute}:${formatInt(time.seconde, 2)}:${formatInt(time.msec, 3)}`
 			document.getElementById('timer').innerHTML = display
 			document.getElementById('title').innerHTML = time.title
+
+			const className = time.title.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()
+
+			document.querySelector('body').setAttribute('class', className)
 			
 			requestAnimationFrame(frame)
 		}
@@ -118,9 +95,16 @@
 			setTimeout(pageTitle, 100)
 		}
 
-		document.getElementById('refresh').addEventListener('click', restart)
-		requestAnimationFrame(frame)
-		setTimeout(pageTitle)
+		function main() {
+			if(localStorage.getItem('time') === null) {
+				restart()
+			}
+			document.getElementById('refresh').addEventListener('click', restart)
+			requestAnimationFrame(frame)
+			setTimeout(pageTitle)
+		}
+		
+		main()
 	</script>
 </body>
 </html>
