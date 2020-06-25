@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>MultiTimer</title>
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=MuseoModerno:wght@500&family=Roboto+Slab:wght@500&display=swap" rel="stylesheet">
+	<style>
+		h1 {
+			font-family: 'Roboto Slab', serif;
+		}
+
+		#timer {
+			font-family: 'MuseoModerno', cursive;
+		}
+	</style>
+</head>
+<body>
+	
+	<h1 id='title'></h1>
+	<div id='timer'></div>
+	<div>
+		<a id='refresh' href="#"><i class="material-icons">refresh</i></a>
+	</div>
+	<script>
+		function restart() {
+			const start = Date.now()
+			localStorage.setItem('time', String(start))
+		}
+
+		function getTime() {
+			let startStr = localStorage.getItem('time')
+			if(startStr === null) {
+				restart()
+				let startStr = localStorage.getItem('time')
+			}
+			const start = parseInt(startStr, 10)
+			let msec = Date.now() - start
+			let seconde = Math.floor(msec/1000)
+			msec = msec % 1000
+			let minute = Math.floor(seconde/60)
+			seconde = seconde % 60
+			if(minute < 5) {
+				return {
+					title: 'Accueil',
+					minute: 4 - minute,
+					seconde: 59 - seconde,
+					msec: 999 - msec
+				}
+			}
+			if(minute < 25) {
+				minute -= 5
+				return {
+					title: 'Présentation',
+					minute: 19 - minute,
+					seconde: 59 - seconde,
+					msec: 999 - msec
+				}
+			}
+			if(minute < 45) {
+				minute -= 25
+				return {
+					title: 'Questions',
+					minute: 19 - minute,
+					seconde: 59 - seconde,
+					msec: 999 - msec
+				}
+			}
+			if(minute < 50) {
+				minute -= 45
+				return {
+					title: 'Points',
+					minute: 4 - minute,
+					seconde: 59 - seconde,
+					msec: 999 - msec
+				}
+			}
+			if(minute < 55) {
+				minute -= 50
+				return {
+					title: 'Concertation',
+					minute: 4 - minute,
+					seconde: 59 - seconde,
+					msec: 999 - msec
+				}
+			}
+			return {
+				title: 'Terminé',
+				minute: minute - 55,
+				seconde,
+				msec,
+			}
+		}
+		
+		function formatInt(x, width) {
+			let str = String(x)
+			while(str.length < width) {
+				str = '0' + str
+			}
+			return str
+		}
+
+		function frame() {
+			const time = getTime()
+			const display = `${time.minute}:${formatInt(time.seconde, 2)}:${formatInt(time.msec, 3)}`
+			document.getElementById('timer').innerHTML = display
+			document.getElementById('title').innerHTML = time.title
+			
+			requestAnimationFrame(frame)
+		}
+
+		function pageTitle() {
+			const time = getTime()
+			const display = `${time.minute}:${formatInt(time.seconde, 2)} - ${time.title}`
+			document.title = display
+			setTimeout(pageTitle, 100)
+		}
+
+		document.getElementById('refresh').addEventListener('click', restart)
+		requestAnimationFrame(frame)
+		setTimeout(pageTitle)
+	</script>
+</body>
+</html>
