@@ -4,17 +4,18 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Ensembles et dictionnaires</title>
+	<title>Tuples, Ensembles et dictionnaires</title>
 	<script src="https://quentin.lurkin.xyz/document.js"></script>
 </head>
 <body>
-	<h1>IN2L - Informatique appliquée <small>Ensembles et dictionnaires</small></h1>
+	<h1>IN2L - Informatique appliquée <small>Tuples, Ensembles et dictionnaires</small></h1>
 	<h3 class="nocount">Objectifs</h3>
 	<ul>
 		<li>Savoir utiliser l'environnement de programmation Visual Studio Code : éditer et exécuter un code</li>
+		<li>Savoir créer et initialiser des tuples</li>
 		<li>Savoir créer et initialiser des ensembles et des dictionnaires</li>
 		<li>Savoir définir des fonctions manipulant des ensembles et des dictionnaires</li>
-		<li>Savoir manipuler des structures de données imbriquées</li>
+		
 	</ul>
 	<h2>Application</h2>
 	<ol>
@@ -51,28 +52,34 @@
 			(b) à l'aide de l'opérateur in.
 		</li>
 		<li>
-			Définir une fonction <code class="lang-python">def buildContacts(name, phone)</code> qui reçoit deux listes de même taille en paramètre, contenant le nom et le numéro de téléphone de vos contacts, et construit un dictionnaire représentant votre carnet de contacts. Le dictionnaire construit possède une clé contacts dont la valeur est une liste de dictionnaires représentant chaque contact, avec deux clés name et phone dont les valeurs sont le nom et le numéro de téléphone du contact.
-		</li>
-		<li>
-			Soit un dictionnaire qui permet de gérer les stocks d'un magasin. Chaque article possède un nom qui est la clé, et la quantité restant en stock ainsi que le prix en valeur. Par exemple :
+			Représentons des points dans l'espace avec des tuples à trois éléments. Définissez une fonction <code class="lang-python">def distance(p1, p2)</code> qui calcule la distance entre les deux points passés en paramètres. Voici un exemple d'appel de la fonction, et le résultat attendu:
 			<pre>
 				<code class="lang-python">
-					stock = {
-						'Coca 33cl': {
-							'quantity': 5,
-							'price': 1.0
-						},
-						'Nokia 3310': {
-							'quantity': 7,
-							'price': 35.99
-						}
-					}
+					d = distance((1, 2, -1), (0, 2, 1))
+					print(d)
 				</code>
 			</pre>
-			Définir une fonction <code class="lang-python">def totalValue(stock)</code> qui calcule la valeur totale d'un stock (somme des quantité × prix, pour chaque article).
+			<pre>
+				<code class="lang-plain">
+					2.23606797749979
+				</code>
+			</pre>
+			Pour rappel, la distance entre les points \(P1(x_1, y_1, z_1)\) et \(P2(x_2, y_2, z_2)\) est donnée par: $$ d(P_1, P_2)=\sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2 + (z_2 - z_1)^2} $$
 		</li>
 		<li>
-			Définir une fonction <code class="lang-python">def merge(S, T)</code> qui fusionne deux dictionnaires représentant les stocks S et T de deux magasins (un stock est défini comme à la question précédente). La fonction construit donc un nouveau dictionnaire représentant le stock conjoint des deux magasins (on supposera que les prix des articles communs sont les mêmes).
+			Définissez une fonction <code class="lang-python">def buildsentence(words)</code> qui reçoit en paramètre un tuple de mots, et qui construit une phrase composée de la succession de ces mots, séparés par des espaces. Voici un exemple d'appel de la fonction, et le résultat attendu:
+			<pre>
+				<code class="lang-python wrap">
+					words = ("Bonjour", "monsieur", "Lurkin,", "ça", "va", "bien", "?")
+					sentence = buildsentence(words)
+					print(sentence)
+				</code>
+			</pre>
+			<pre>
+				<code class="lang-plain">
+					Bonjour monsieur Lurkin, ça va bien?
+				</code>
+			</pre>
 		</li>
 	</ol>
 	<h2>Réflexion</h2>
