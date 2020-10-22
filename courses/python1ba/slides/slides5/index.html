@@ -86,7 +86,7 @@
 		<pre>
 			<code class="lang-python">
 				def badSquare(L):
-					for i in range(len(square)):
+					for i in range(len(L)):
 						L[i] = L[i]**2
 					return L
 
@@ -218,7 +218,14 @@
 	<section>
 		<h2>Existe déjà dans Python</h2>
 		<ul>
-			<li><code>map()</code> et <code>filter()</code> existe déjà en Python</li>
+			<li>
+				<code>map()</code> et <code>filter()</code> existent déjà en Python. <small>Attention ! leurs résultats doivent être convertis en liste</small>
+				<pre>
+					<code class='lang-python'>
+						res = list(map(square, [2, 4, 6]))
+					</code>
+				</pre>
+			</li>
 			<li><code>reduce()</code> existe dans le module <code>functools</code></li>
 		</ul>
 	</section>
