@@ -48,6 +48,12 @@
 	</ul>
 
 	<h2>Remarques</h2>
+	<h3>But du travail</h3>
+	<p>Le but de ce travail n'est pas d'obtenir le programme le plus rapide à tous prix. Il y a plein d'optimisations qui peuvent être faites pour améliorer le temps de calcul sur un thread. Ces optimisations ne sont pas le sujet de ce travail. Le but ici est de tirer avantage d'une augmentation de hardware (plus de coeurs ou plus de machines). Ne perdez dons pas trop de temps à optimiser vos performances mono-thread.</p>
+	
+	<h3>Et la RAM?</h3>
+	<p>Nous ne voyons pas ici l'importance que pourrait avoir une augmentation de la mémoire RAM. Il existe une gamme de problèmes qui peuvent tirer avantage d'une augmentation de la RAM. Dès qu'une grande masse de données doit être traitée et qu'il est impossible d'avoir toutes les données en RAM en même temps, il faut continuellement charger et décharger des données de la RAM. Cela prend beaucoup de temps et cela doit se faire d'autant plus souvent que la RAM est petite.</p>
+
 	<h3>Pour la version multi processus/threads</h3>
 	<p>Un thread est un sous-processus. Tous les threads d'un processus partagent la même mémoire que leur processus. Cela permet aux threads de travailler sur les mêmes données sans devoir s'envoyer de messages. De plus le démarrage d'un thread est une opération relativement peu coûteuse par rapport au démarrage d'un processus. Les threads sont donc à privilégier pour le calcul en parallèle sur CPU.</p>
 	<p>Cependant, si vous utilisez le langage Python, n'utilisez pas les threads. La façon particulière dont Python gère la mémoire empêche les threads Python de s'exécuter en parallèle (Global Interpreter Lock). Utilisez plutôt le module multiprocessing pour utiliser des processus.</p>
