@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>AD5L - Introduction</title>
+	<script src="https://quentin.lurkin.xyz/document.js"></script>
+</head>
+<body>
+	<h1>AD5L <small>Scalable Architecture</small></h1>
+
+	<h2>Introduction</h2>
+	<p>De nos jours, il est de plus en plus courant qu'une application doive gérer un charge de travail (workload \(W_l\)) qui varie au cours du temps. Pour gérer plus de charge de travail, il faut plus de capacité hardware (hardware capacity \(H_c\)). Il est cependant erroné de penser qu'il suffit de mettre deux fois plus de capacité hardware pour pouvoir gérer deux fois plus de charge. C'est ce qu'on appèle le facteur de scalabilité (Scalability factor \(S_f\)). \[ W_l = S_f \times H_c\]</p>
+	<p>Si ce facteur est constant on parle de scalabilité linéaire, mais ce n'est généralement pas le cas.</p>
+	<p>Il y a deux façons d'augmenter la capacité hardware:</p>
+	<ul>
+		<li>Scalabilité verticale,</li>
+		<li>Scalabilité horizontale.</li>
+	</ul>
+
+	<p>La scalabilité verticale consiste à augmenter les capacités de la machine (CPU, RAM, Disques). cette forme de scalabilité a une limite puisqu'il y a un moment où il n'existe de plus de meilleur hardware que celui qu'on a. De plus les prix de ces hardwares performants sont en générale prohibitifs.</p>
+
+	<p>La scalabilité horizontale consiste à diviser la charge de travail sur plusieurs machines.</p>
+
+	<p>Dans les deux cas, le software doit être prévu pour tirer avantage du supplément de capacité qui est à sa disposition. Cela passe souvent par la parallélisation de tâches. En scalabilité verticale, on parallélisera pour exploiter tous les coeurs du CPU. En scalabilité horizontale, on parallélise pour exploiter toutes les machines en même temps.</p>
+
+	<p>Les difficultés liées à la parallélisation sont:</p>
+	<ul>
+		<li>Les tâches doivent être indépendantes les unes des autres.</li>
+		<li>Les tâches doivent avoir accès aux données.</li>
+	</ul>
+</body>
+</html>

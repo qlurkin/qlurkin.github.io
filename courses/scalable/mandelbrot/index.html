@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>A5L - Mandelbrot</title>
+	<script src="https://quentin.lurkin.xyz/document.js"></script>
+</head>
+<body>
+	<h1>AD5L <small>Mandelbrot</small></h1>
+	<p>L'ensemble de Mandelbrot est un ensemble de nombres complexes. Comme les nombres complexes peuvent être représentés sur un plan (plan complexe avec un axe réel en x et un axe imaginaire en y) il est possible de représenter cet ensemble par une image:</p>
+	<figure>
+		<img src="./mandelbrot.png" alt="">
+		<figcaption>Les complexes de l'ensemble de mandelbrot (en noir). \(n_{max} = 30\)</figcaption>
+	</figure>
+	<p>Un complexe \(c\) fait parie de l'ensemble de mandelbrot si la suite \(z_n\) suivante est bornée.
+		$$ z_n = \begin{cases}
+			0 &\text{si } n = 1 \\
+			z_{n-1}^2 + c &\text{sinon }
+		\end{cases} $$</p>
+	<p>Il n'y a malheureusement pas de moyen rapide de savoir si la suite est bornée pour une certaine valeur de \(c\). Il est par contre démontré que si le module de \(z_n\) dépasse 2 alors la suite diverge.</p>
+	<p>La procedure pour déterminer si un complexe \(c\) appartient à l'ensemble de mandelbrot est donc simple: calculer la suite jusqu"à ce que:</p>
+	<ul>
+		<li>soit le module de \(z_n\) soit supérieur à 2,</li>
+		<li>soit on atteigne un \(n\) maximum définit à l'avance</li>
+	</ul>
+	<p>Dans le premier cas, \(c\) n'appartient pas à l'ensemble. Dans le second, on considère que \(c\) appartient à l'ensemble. La représentation de l'ensemble de Mandelbrot obtenue sera d'autant plus précise que l'on choisi un \(n\) maximum grand.</p>
+	<p>On constate ici, que la vérification de l'appartenance d'un complexe à l'ensemble de Mandelbrot est indépendante de celle d'un autre complexe. Le rendu de l'ensemble de Mandelbrot peut donc se faire en parallèle.</p>
+
+	<h2>Travail</h2>
+	<p>On vous demande de réaliser un programme qui crée une image de l'ensemble de Mandelbrot.</p>
+	<ul>
+		<li>Vous pouvez utiliser le langage que vous voulez.</li>
+		<li>Vous devez afficher la durée du rendu.</li>
+		<li>Vous devez faire 3 versions:
+			<ul>
+				<li>Une version simple</li>
+				<li>Une version avec plusieurs processus/threads pour utiliser tous les coeurs de votre processeurs (scalabilité verticale)</li>
+				<li>Une version réseau (scalabilité horizontale)</li>
+			</ul>
+		</li>
+		<li>Mesurez le gain de performance en fonction du degré de parallélisme.</li>
+	</ul>
+
+	<h2>Remarques</h2>
+	<h3>Pour la version multi processus/threads</h3>
+	<p>Un thread est un sous-processus. Tous les threads d'un processus partagent la même mémoire que leur processus. Cela permet aux threads de travailler sur les mêmes données sans devoir s'envoyer de messages. De plus le démarrage d'un thread est une opération relativement peu coûteuse par rapport au démarrage d'un processus. Les threads sont donc à privilégier pour le calcul en parallèle sur CPU.</p>
+	<p>Cependant, si vous utilisez le langage Python, n'utilisez pas les threads. La façon particulière dont Python gère la mémoire empêche les threads Python de s'exécuter en parallèle (Global Interpreter Lock). Utilisez plutôt le module multiprocessing pour utiliser des processus.</p>
+
+	<h3>Pour la version réseau</h3>
+	<p>Ici il vous faudra créer 2 programmes: un programme principal et un programme de calcul. Le programme principal s'occupe de diviser et d'envoyer le travail à plusieurs instances du programme de calcul.</p>
+	<p>Comme vous ne possédez pas forcement plusieurs ordinateurs à la maison, vous pouvez faire tourner le programme principal et plusieurs instances du programme de calcul sur un même PC. Cela revient à faire de la scalabilité verticale car chaque instance du programme de calcul est en fait un processus qui pourra s'exécuter en parallèle des autres. L'approche réseau permet en effet de faire à la fois de la scalabilité verticale et horizontale.</p>
+
+	<h3>L'ensemble de Mandelbrot est beau</h3>
+	<p>Si vous zoomez sur les bords de l'ensemble et que vous assignez différentes couleurs en fonction du nombre d'itérations nécessaires pour dépasser le module de 2, vous pouvez obtenir de très belles images:</p>
+	<figure>
+		<img src="./mandelbrot_beau.jpg" alt="">
+	</figure>
+</body>
+</html>
