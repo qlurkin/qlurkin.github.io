@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Lora&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Lora|Source+Code+Pro&display=swap');
 
 @page {
 	margin: 2cm;
@@ -13,6 +13,7 @@ body {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	text-rendering: optimizeLegibility;
+	background-color: white;
 }
 
 h1 {
@@ -20,7 +21,6 @@ h1 {
 	font-size: 2.5rem;
 	text-align: center;
 	margin: 3.236rem 0 2rem 0;
-	page-break-after: avoid;
 }
 
 h1 > small {
@@ -31,7 +31,6 @@ h1 > small {
 
 h2, h3, h4, h5, h6 {
 	margin: 1.618rem 0 1rem 0;
-	page-break-after: avoid;
 }
 
 h2 {
@@ -130,6 +129,27 @@ code.wrap {
 	text-align: center;
 }
 
-pre > code {
-	font-size: 80% !important;
+body pre.prettyprint {
+	padding: 1rem;
+	border-radius: 2px;
+	font-size: 90%;
+	
+}
+
+code {
+	font-family: 'Source Code Pro', monospace;
+	font-size: 87.5%;
+	color: #e83e8c;
+}
+
+h1, h2, h3, h4, h5, h6, pre, table, img {
+	break-inside: avoid-page;
+}
+
+/* hack that avoid page break after h2 et h3 */
+h1::after, h2::after, h3::after {
+	content: "";
+	display: block;
+	height: 100px;
+	margin-bottom: -100px;
 }
