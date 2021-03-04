@@ -24,6 +24,15 @@
 		.row > .column figure {
 			margin: 1em;
 		}
+
+		pre {
+			line-height: 1 !important;
+		}
+
+		code {
+			font-size: 70% !important;
+			
+		}
 	</style>
 </head>
 <body>
@@ -54,39 +63,15 @@
 	</section>
 
 	<section>
-		<h2>Offline-first</h2>
-		<div class="row">
-			<div class="column">
-				<figure>
-					<img src="./ecam-online.png" alt="">
-					<figcaption>Online</figcaption>
-				</figure>
-			</div>
-			<div class="column">
-				<figure>
-					<img src="./liefi.png" alt="">
-					<figcaption>Not Offline <small>(Lie-Fi)</small></figcaption>
-				</figure>
-			</div>
-			<div class="column">
-				<figure>
-					<img src="./offline.png" alt="">
-					<figcaption>Offline</figcaption>
-				</figure>
-			</div>
-		</div>
-	</section>
-
-	<section>
 		<h2>Service Worker</h2>
 		
-		<p>Dans la page :</p>
+		<h4>&lt;script></h4>
 		<pre><code class="lang-js">
 			if(navigator.serviceWorker) {
 				navigator.serviceWorker.register('/sw.js')
 			}
 		</code></pre>
-		<p>sw.js :</p>
+		<h4>sw.js</h4>
 		<pre><code class="lang-js">
 			console.log('Hello ?')
 		</code></pre>
@@ -103,7 +88,8 @@
 
 	<section>
 		<h2>Service Worker</h2>
-		<p>sw.js : </p>
+		<p>Le service worker peut intercepter les requêtes réseaux.</p>
+		<h4>sw.js</h4>
 		<pre><code class="lang-js">
 			self.addEventListener('fetch', event => {
 				event.respondWith(
@@ -111,12 +97,12 @@
 				)
 			})
 		</code></pre>
-		<p>Le service worker peut intercepter les requêtes réseaux.</p>
 	</section>
 
 	<section>
 		<h2>Service Worker</h2>
-		<p>sw.js : </p>
+		<p>Le service worker peut faire la requête vers le réseau.</p>
+		<h4>sw.js</h4>
 		<pre><code class="lang-js">
 			self.addEventListener('fetch', event => {
 				event.respondWith(
@@ -124,12 +110,12 @@
 				)
 			})
 		</code></pre>
-		<p>Le service worker peut faire la requête vers le réseau.</p>
 	</section>
 
 	<section>
 		<h2>Service Worker</h2>
-		<p>sw.js : </p>
+		<p>On peut en profiter pour faire des choses en plus.</p>
+		<h4>sw.js</h4>
 		<pre><code class="lang-js">
 			self.addEventListener('fetch', event => {
 				console.log('Request:', event.request.url)
@@ -141,12 +127,12 @@
 				)
 			})
 		</code></pre>
-		<p>On peut en profiter pour faire des choses en plus.</p>
 	</section>
 
 	<section>
 		<h2>Service Worker</h2>
-		<p>sw.js : </p>
+		<p>Page à afficher quand on est offline.</p>
+		<h4>sw.js</h4>
 		<pre><code class="lang-js">
 			self.addEventListener('install', event => {
 				event.waitUntil(
@@ -168,7 +154,6 @@
 				)
 			})
 		</code></pre>
-		<p>Page à afficher quand on est offline.</p>
 	</section>
 
 	<section>
@@ -178,7 +163,7 @@
 			<li>Supprimer les anciennes caches</li>
 			<li>skipWaiting</li>
 		</ul>
-		<p>sw.js : </p>
+		<h4>sw.js</h4>
 		<pre><code class="lang-js">
 			const version = 2
 
@@ -209,6 +194,8 @@
 						)
 					})
 				)
+
+				self.clients.claim() // control all current clients (tabs)
 			})
 
 			self.addEventListener('fetch', event => {
@@ -225,6 +212,111 @@
 	</section>
 
 	<section>
+		<h2>Offline-first</h2>
+		<div class="row">
+			<div class="column">
+				<figure>
+					<img src="./ecam-online.png" alt="">
+					<figcaption>Online</figcaption>
+				</figure>
+			</div>
+			<div class="column">
+				<figure>
+					<img src="./liefi.png" alt="">
+					<figcaption>Not Offline <small>(Lie-Fi)</small></figcaption>
+				</figure>
+			</div>
+			<div class="column">
+				<figure>
+					<img src="./offline.png" alt="">
+					<figcaption>Offline</figcaption>
+				</figure>
+			</div>
+		</div>
+	</section>
+
+	<section>
+		<h2>Offline-first</h2>
+		<ul>
+			<li>Récupérer le code de l'interface à partir de la cache</li>
+			<li>Afficher les données en cache et les mettre à jour ensuite</li>
+		</ul>
+		<h4>sw.js</h4>
+		<pre><code class="lang-js">
+			const version = 3
+
+			self.addEventListener('install', event => {
+				event.waitUntil(
+					caches.open('static-v'+version) // use another cache
+					.then(cache => cache.addAll([
+						'/index.html',
+						'/style.css',
+						'/app.js',
+						'/manifest.json'
+					]))
+				)
+				self.skipWaiting() // control page immediately
+			})
+
+			const expectedCaches = [
+				'static-v'+version,
+				'dynamic'
+			]
+
+			self.addEventListener('activate', event => {
+				event.waitUntil(
+					// Cleanup old cache
+					caches.keys().then(cacheNames =>{
+						return Promise.all(
+							cacheNames.map(cacheName => {
+								if(!expectedCaches.includes(cacheName)) {
+									return caches.delete(cacheName)
+								}
+							})
+						)
+					})
+				)
+
+				self.clients.claim() // control all current clients (tabs)
+			})
+
+			self.addEventListener('fetch', event => {
+				const url = new URL(event.request.url)
+
+				if(url.pathname.startsWith('/api/')) {
+					staleWhileRevalidate(event)
+					return
+				}
+
+				cacheFirst(event)
+			})
+
+			function staleWhileRevalidate(event) {
+				const networkFetch = fetch(event.request)
+				event.waitUntil(
+					networkFetch.then(response => {
+						const responseClone = response.clone()
+						caches.open('dynamic')
+							.then(cache => cache.put(event.request, responseClone))
+					})
+				)
+
+				event.respondWith(
+					caches.match(event.request)
+						.then(response => response || networkFetch)
+				)
+			}
+
+			function cacheFirst(event) {
+				event.respondWith(
+					caches.match(event.request)
+						.then(response => response || fetch(event.request))
+				)
+			}
+		</code></pre>
+	</section>
+
+	<section>
 		<h2>Installable</h2>
 		<ul>
 			<li>HTTPS</li>
@@ -235,11 +327,11 @@
 
 	<section>
 		<h2>manifest.json</h2>
-		<p>&lt;head&gt;</p>
+		<h4>&lt;head&gt;</h4>
 		<pre><code class="lang-html">
 			&lt;link rel="manifest" href="/manifest.json">
 		</code></pre>
-		<p>manifest.json</p>
+		<h4>manifest.json</h4>
 		<pre><code class="lang-json">
 			{
 				"name": "PROXX",

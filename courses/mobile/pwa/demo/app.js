@@ -19,7 +19,7 @@ function offline() {
 }
 
 function refresh() {
-	fetch('/student.json')
+	fetch('/api/student.json')
 	.then(response => response.json())
 	.then(students => {
 		render(app(students))
