@@ -2,49 +2,269 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Service Worker</title>
-	<script src="https://quentin.lurkin.xyz/document.js"></script>
+	<title>Progressive Web Apps</title>
+	<script src="https://quentin.lurkin.xyz/deck.js"></script>
 	<style>
-		iframe {
-			margin: 1rem auto;
-			display: block;
+		.row {
+			display: flex;
+			flex-flow: row nowrap;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.row > .column {
+			margin: 10px;
+			flex-grow: 1;
+			flex-shrink: 1;
+			flex-basis: 0;
+		}
+
+		.row > .column figure {
+			margin: 1em;
 		}
 	</style>
 </head>
 <body>
-	<h1><em>Service worker</em> et offline</h1>
-	<p>La problématique de rendre un site disponible offline comporte deux aspects:</p>
-	<ol>
-		<li>Il faut que l'interface utilisateur soit disponible (HTML, CSS, Javascript)</li>
-		<li>Il faut que les données soient disponibles (Database)</li>
-	</ol>
-	<p>Les <em>Services Worker</em> permettent de régler ces deux problèmes.</p>
-	<p>Le premier problème, fournir une interface offline, est le plus facile à mettre en place. Dans bien des cas, on ne pourra pas aller plus loin. Certaines app ont besoin de données lives.</p>
+	<section>
+		<h1>Progressive Web Apps</h1>
+		<a href="https://www.ecam.be/lur/" rel="author">Quentin Lurkin</a>
+	</section>
 
-	<h2>Service Worker</h2>
-	<p>Un <em>service worker</em> est un script Javascript qui intercepte toutes les requêtes réseaux d'un site. Le <em>service worker</em> peut utiliser des données mise en cache pour répondre à ces requêtes ou les laisser continuer vers le réseaux. Il peut aussi choisir quelles données/HTML/CSS/Javascript seront mise en cache. Voici une vidéo sur l'implémentation d'un <em>service worker</em>:</p>
-	<iframe width="560" height="315" src="https://www.youtube.com/embed/t4jh4hQ-NIk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+	<section>
+		<h2>Définition</h2>
+		<ul>
+			<li>Application web</li>
+			<li>Fonctionnalités comparables à une app native <small>Notification, Géolocalisation, ...</small></li>
+			<li>Performance comparable à une app native <small>indépendamment de la connectivité</small></li>
+			<li>Installable</li>
+		</ul>
+	</section>
 
-	<h2>Firebase</h2>
-	<p>Pour permettre l'accès à certaines données lorsqu'on est offline il faut avoir mis ces données en cache au moment où on était online.</p>
-	<p>On peut bien sûr utiliser le <em>Service worker</em> mais dans le cas de firebase cette fonction est déjà incluse dans le <em>Cloud Firestore</em>.</p>
-	<p>Voici la documentation liée à cet aspect du Cloud Firestore:</p>
-	<p><a href="https://firebase.google.com/docs/firestore/manage-data/enable-offline">https://firebase.google.com/docs/firestore/manage-data/enable-offline</a></p>
-	<p>Et aussi une petite vidéo:</p>
-	<iframe width="560" height="315" src="https://www.youtube.com/embed/oDvdAFP6OhQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+	<section>
+		<h2>Fonctionnalités</h2>
+		<ul>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Notification">Notification Web API</a></li>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API">Geolocation Web API</a></li>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices">MediaDevices Web API</a> <small>Camera, micro, ...</small></li>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Sensor_APIs">Sensor Web API</a> <small>Accéléromètre, Gyroscope, ...</small></li>
+			<li>...</li>
+		</ul>
+	</section>
 
-	<h2>manifest.webmanifest</h2>
-	<ul>
-		<li><a href="https://web.dev/add-manifest/">https://web.dev/add-manifest/</a></li>
-		<li><a href="https://app-manifest.firebaseapp.com/">https://app-manifest.firebaseapp.com/</a></li>
-	</ul>
+	<section>
+		<h2>Offline-first</h2>
+		<div class="row">
+			<div class="column">
+				<figure>
+					<img src="./ecam-online.png" alt="">
+					<figcaption>Online</figcaption>
+				</figure>
+			</div>
+			<div class="column">
+				<figure>
+					<img src="./liefi.png" alt="">
+					<figcaption>Not Offline <small>(Lie-Fi)</small></figcaption>
+				</figure>
+			</div>
+			<div class="column">
+				<figure>
+					<img src="./offline.png" alt="">
+					<figcaption>Offline</figcaption>
+				</figure>
+			</div>
+		</div>
+	</section>
 
-	<h2>Ressources supplémentaires</h2>
-	<ul>
-		<li><a href="https://web.dev/progressive-web-apps/">https://web.dev/progressive-web-apps/</a></li>
-		<li><a href="https://www.youtube.com/watch?v=Hp_dQvQyYEI">https://www.youtube.com/watch?v=Hp_dQvQyYEI</a></li>
-		<li><a href="https://www.youtube.com/watch?v=psB_Pjwhbxo&list=PLNYkxOF6rcIB2xHBZ7opgc2Mv009X87Hh">https://www.youtube.com/watch?v=psB_Pjwhbxo&list=PLNYkxOF6rcIB2xHBZ7opgc2Mv009X87Hh</a></li>
-	</ul>
+	<section>
+		<h2>Service Worker</h2>
+		
+		<p>Dans la page :</p>
+		<pre><code class="lang-js">
+			if(navigator.serviceWorker) {
+				navigator.serviceWorker.register('/sw.js')
+			}
+		</code></pre>
+		<p>sw.js :</p>
+		<pre><code class="lang-js">
+			console.log('Hello ?')
+		</code></pre>
+		
+	</section>
+
+	<section>
+		<h2>Service Worker</h2>
+		<figure>
+			<img src="./inspector.png" alt="">
+		</figure>
+		<p>Activez l'<em>Update on Reload</em> pour faciliter le développement</p>
+	</section>
+
+	<section>
+		<h2>Service Worker</h2>
+		<p>sw.js : </p>
+		<pre><code class="lang-js">
+			self.addEventListener('fetch', event => {
+				event.respondWith(
+					new Response("Hello")
+				)
+			})
+		</code></pre>
+		<p>Le service worker peut intercepter les requêtes réseaux.</p>
+	</section>
+
+	<section>
+		<h2>Service Worker</h2>
+		<p>sw.js : </p>
+		<pre><code class="lang-js">
+			self.addEventListener('fetch', event => {
+				event.respondWith(
+					fetch(event.request)
+				)
+			})
+		</code></pre>
+		<p>Le service worker peut faire la requête vers le réseau.</p>
+	</section>
+
+	<section>
+		<h2>Service Worker</h2>
+		<p>sw.js : </p>
+		<pre><code class="lang-js">
+			self.addEventListener('fetch', event => {
+				console.log('Request:', event.request.url)
+				event.respondWith(
+					fetch(event.request).then(response => {
+						console.log('Response:', response.headers.get('Content-Type'))
+						return response
+					})
+				)
+			})
+		</code></pre>
+		<p>On peut en profiter pour faire des choses en plus.</p>
+	</section>
+
+	<section>
+		<h2>Service Worker</h2>
+		<p>sw.js : </p>
+		<pre><code class="lang-js">
+			self.addEventListener('install', event => {
+				event.waitUntil(
+					caches.open('static-v1')
+					.then(cache => cache.addAll([
+						'/offline.html'
+					]))
+				)
+			})
+			
+			self.addEventListener('fetch', event => {
+				event.respondWith(
+					fetch(event.request)
+					.catch(() => {
+						if(event.request.mode == 'navigate') {
+							return caches.match('offline.html')
+						}
+					})
+				)
+			})
+		</code></pre>
+		<p>Page à afficher quand on est offline.</p>
+	</section>
+
+	<section>
+		<h2>Update Service Worker</h2>
+		<ul>
+			<li>Créer de nouvelles caches</li>
+			<li>Supprimer les anciennes caches</li>
+			<li>skipWaiting</li>
+		</ul>
+		<p>sw.js : </p>
+		<pre><code class="lang-js">
+			const version = 2
+
+			self.addEventListener('install', event => {
+				event.waitUntil(
+					caches.open('static-v'+version) // use another cache
+					.then(cache => cache.addAll([
+						'/offline.html'
+					]))
+				)
+				self.skipWaiting() // control page immediately
+			})
+
+			const expectedCaches = [
+				'static-v'+version
+			]
+
+			self.addEventListener('activate', event => {
+				event.waitUntil(
+					// Cleanup old cache
+					caches.keys().then(cacheNames =>{
+						return Promise.all(
+							cacheNames.map(cacheName => {
+								if(!expectedCaches.includes(cacheName)) {
+									return caches.delete(cacheName)
+								}
+							})
+						)
+					})
+				)
+			})
+
+			self.addEventListener('fetch', event => {
+				event.respondWith(
+					fetch(event.request)
+					.catch(() => {
+						if(event.request.mode == 'navigate') {
+							return caches.match('offline.html')
+						}
+					})
+				)
+			})
+		</code></pre>
+	</section>
+
+	<section>
+		<h2>Installable</h2>
+		<ul>
+			<li>HTTPS</li>
+			<li>Service Worker</li>
+			<li>manifest.json</li>
+		</ul>
+	</section>
+
+	<section>
+		<h2>manifest.json</h2>
+		<p>&lt;head&gt;</p>
+		<pre><code class="lang-html">
+			&lt;link rel="manifest" href="/manifest.json">
+		</code></pre>
+		<p>manifest.json</p>
+		<pre><code class="lang-json">
+			{
+				"name": "PROXX",
+				"short_name": "PROXX",
+				"start_url": "/",
+				"scope": "/",
+				"display": "standalone",
+				"theme_color": "#0E113E",
+				"background_color": "#0E113E",
+				"icons": [
+					{
+						"src": "/icon.png",
+						"sizes": "512x512",
+						"type": "image/png"
+					}
+				]
+			}
+		</code></pre>
+	</section>
+
+	<section>
+		<h2>manifest.json</h2>
+		<figure>
+			<img src="./manifest.png" alt="">
+		</figure>
+	</section>
 </body>
 </html>
