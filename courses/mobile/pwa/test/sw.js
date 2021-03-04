@@ -1,10 +1,13 @@
-const version = 2
+const version = 3
 
 self.addEventListener('install', event => {
 	event.waitUntil(
 		caches.open('static-v'+version) // use another cache
 		.then(cache => cache.addAll([
-			'/offline.html'
+			'/index.html',
+			'/style.css',
+			'/app.js',
+			'/manifest.json'
 		]))
 	)
 	self.skipWaiting() // control page immediately
