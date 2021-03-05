@@ -1,4 +1,4 @@
-const version = 6
+const version = 3
 
 self.addEventListener('install', event => {
 	event.waitUntil(
@@ -15,7 +15,8 @@ self.addEventListener('install', event => {
 
 const expectedCaches = [
 	'static-v'+version,
-	'dynamic'
+	'dynamic-v'+version,
+	'data'
 ]
 
 self.addEventListener('activate', event => {
@@ -38,7 +39,7 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
 	const url = new URL(event.request.url)
 
-	if(url.pathname.startsWith('/api/')) {
+	if(url.pathname.startsWith('/students')) {
 		staleWhileRevalidate(event)
 		return
 	}
@@ -51,20 +52,30 @@ function staleWhileRevalidate(event) {
 	event.waitUntil(
 		networkFetch.then(response => {
 			const responseClone = response.clone()
-			caches.open('dynamic')
+			caches.open('data')
 				.then(cache => cache.put(event.request, responseClone))
 		})
+		.catch(()=>{})
 	)
 
 	event.respondWith(
 		caches.match(event.request)
 			.then(response => response || networkFetch)
+			.catch(()=>{})
 	)
 }
 
 function cacheFirst(event) {
 	event.respondWith(
 		caches.match(event.request)
-			.then(response => response || fetch(event.request))
+			.then(response => response || fetch(event.request)
+				.then(response => {
+					const responseClone = response.clone()
+					caches.open('dynamic-v'+version)
+						.then(cache => cache.put(event.request, responseClone))
+					return response
+				})
+				.catch(()=>{})
+			)
 	)
 }
