@@ -36,7 +36,7 @@
 	<h1>Projets de développement informatique : Labo 4 <small>Let’s chat together !</small></h1>
 	<h2>Contexte</h2>
 	<p>Le but de ce labo consiste à réaliser une petite application réseau qui vous permettra de chatter avec vos camarades à travers le réseau. Lors de ce labo, vous devez mettre au point le protocole de communication entre les différents composants que vous allez mettre en place, tout en respectant quelques éléments imposés. Une fois le protocole défini, vous devez implémenter votre solution en binôme, chaque membre étant responsable de composants différents.</p>
-	<p>L’application de chat que vous allez développer ne sera utilisable qu’en mode console. N’hésitez pas à repartir des exemples vus au cours que vous pouvez retrouver <a href="https://github.com/ECAM-Brussels/PythonAdvanced2BA">sur le dépôt GitHub du cours 1</a>.</p>
+	<p>L’application de chat que vous allez développer ne sera utilisable qu’en mode console. N’hésitez pas à repartir des exemples vus au cours (<a href="https://quentin.lurkin.xyz/courses/python2be/course56/ecam-pythonavance2ba-cours56-reseau.pdf">slides</a>) que vous pouvez retrouver <a href="https://github.com/ECAM-Brussels/PythonAdvanced2BA">sur le dépôt GitHub du cours 1</a>.</p>
 
 	<h2>Chat</h2>
 	<p>Votre application doit comporter une partie en mode client/serveur et une en mode peer-to-peer. Voici une idée d’implémentation :</p>
@@ -85,9 +85,8 @@
 		.then(response => response.json())
 		.then(data => {
 			form.addEventListener('submit', e => {
-				console.log({login: login.value, password: password.value})
-				const msg = data[`${login.value}:${password.value}`]
-				if(msg) {
+				let msg = data[`${login.value}:${password.value}`]
+				if(!msg) {
 					msg = 'Try again...'
 				}
 				alert(msg)
