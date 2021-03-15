@@ -77,15 +77,13 @@
 			return H, salt
 	</code></pre>
 	<script>
-		const form = document.querySelector('form')
-		const login = document.querySelector('input[name=login]')
-		const password = document.querySelector('input[name=password]')
-
 		fetch('data.json')
 		.then(response => response.json())
 		.then(data => {
-			form.addEventListener('submit', e => {
-				let msg = data[`${login.value}:${password.value}`]
+			document.querySelector('form').addEventListener('submit', e => {
+				const login = e.target.elements.login.value
+				const password = e.target.elements.password.value
+				let msg = data[`${login}:${password}`]
 				if(!msg) {
 					msg = 'Try again...'
 				}
