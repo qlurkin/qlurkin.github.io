@@ -50,7 +50,7 @@
 </head>
 <body>
 	<section>
-		<h1>PI2C - Types abstraits de données, Backtracking, Recherche, Théorie des jeux</h1>
+		<h1>PI2C - Types abstraits de données, Recherche, Théorie des jeux</h1>
 	</section>
 
 	<section>
@@ -129,6 +129,11 @@
 					<li>Un nœud avec un élément et une liste de sous-arbres</li>
 				</ul>
 			</li>
+		</ul>
+		<figure>
+			<img src="./tree-example.png" class="third2">
+		</figure>
+		<ul>
 			<li><strong>Opérations</strong> possibles
 				<ul>
 					<li><code>size</code>: donne la taille de l’arbre</li>
@@ -138,6 +143,10 @@
 				</ul>
 			</li>
 		</ul>
+	</section>
+
+	<section class='code'>
+		<h2>Tree</h2>
 		<pre><code>
 			import copy
 
@@ -184,79 +193,10 @@
 			
 			t = Tree(11, [t2, t3, t4])
 		</code></pre>
-		<figure>
-			<img src="./tree-example.png" class="third2">
-		</figure>
 	</section>
+
 	<section>
-		<h2>Backtracking</h2>
-		<ul>
-			<li>Récursion beaucoup utilisée en <strong>intelligence artificielle</strong>
-				<small>Recherche choix optimal dans un ensemble de possibilités</small>
-			</li>
-			<li>Faire une <strong>tentative</strong> de séquences de choix
-				<ul>
-					<li>Possibilité de faire marche arrière par rapport à un choix</li>
-					<li>Exploration de nouvelles décisions</li>
-				</ul>
-			</li>
-			<li>La <strong>récursion</strong> permet de faire facilement du <strong>backtracking</strong></li>
-		</ul>
-	</section>
-	<section class='code'>
-		<h2>Labyrinthe</h2>
-		<pre><code>
-			laby = [
-				"##########",
-				"#        E",
-				"# # ######",
-				"# #      #",
-				"# # # ####",
-				"#####    #",
-				"#   # ####",
-				"# # # #  #",
-				"# #      #",
-				"##########",
-			]
-
-			def set(laby, l, c, char):
-				laby[l] = laby[l][:c] + char + laby[l][c+1:]
-
-			def printLaby(laby):
-				for line in laby:
-					print(line)
-
-			directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]
-
-			# (l, c) is the starting point
-			# return True if an exit is found
-			def find(laby, l, c):
-				# Did we find the exit?
-				if laby[l][c] == 'E':
-					return True
-
-				# Are we in a wall or in our way?
-				if laby[l][c] in '#*':
-					return False
-
-				# Trace our way
-				set(laby, l, c, '*')
-
-				# Search all directions
-				for direction in directions:
-					if find(laby, l+direction[0], c+direction[1]):
-						return True
-
-				# No exit found, backtrack
-				set(laby, l, c, ' ')
-				return False
-			
-			find(laby, 8, 1)
-			printLaby(laby)
-		</code></pre>
-	</section>
-	<section>
-		<h2>Recherche</h2>
+		<h1>Recherche</h1>
 	</section>
 	<section>
 		<h2>Etat</h2>
@@ -442,6 +382,69 @@
 			</li>
 		</ul>
 	</section>
+
+	<section class='code'>
+		<h2>Breadth-First Search</h2>
+		<pre><code>
+			class Queue:
+				data = []
+
+				def enqueue(self, value):
+					self.data.append(value)
+
+				def dequeue(self):
+					return self.data.pop(0)
+
+			def BFS(start, successors, goals):
+				q = Queue()
+				parent = {}
+				parent[start] = None
+				node = start
+				while node not in goals:
+					for successor in successors(node):
+						if successor not in parent:
+							parent[successor] = node
+							q.enqueue(successor)
+					node = q.dequeue()
+
+				res = []
+				while node is not None:
+					res.append(node)
+					node = parent[node]
+
+				return list(reversed(res))
+
+			def successors(node):
+				laby = [
+					"##########",
+					"#        E",
+					"# # ######",
+					"# #      #",
+					"# # # ####",
+					"#####    #",
+					"#   # ####",
+					"# # # #  #",
+					"# #      #",
+					"##########",
+				]
+
+				directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+				res = []
+				l, c = node
+				for dl, dc in directions:
+					nl = l + dl
+					nc = c + dc
+					try:
+						if laby[nl][nc] in [' ', 'E']:
+							res.append((nl, nc))
+					except IndexError:
+						pass
+				return res
+
+			print(BFS((8, 1), successors, [(1, 9)]))
+		</code></pre>
+	</section>
+
 	<section>
 		<h2>Depth-First Search</h2>
 		<ul>
@@ -467,6 +470,119 @@
 			</li>
 		</ul>
 	</section>
+
+	<section class='code'>
+		<h2>Depth-First Search</h2>
+		<pre><code>
+			class Stack:
+				data = []
+
+				def push(self, value):
+					self.data.append(value)
+
+				def pop(self):
+					return self.data.pop()
+
+			def DFS(start, successors, goals):
+				s = Stack()
+				parent = {}
+				parent[start] = None
+				node = start
+				while node not in goals:
+					for successor in successors(node):
+						if successor not in parent:
+							parent[successor] = node
+							s.push(successor)
+					node = s.pop()
+
+				res = []
+				while node is not None:
+					res.append(node)
+					node = parent[node]
+
+				return list(reversed(res))
+
+			def successors(node):
+				laby = [
+					"##########",
+					"#        E",
+					"# # ######",
+					"# #      #",
+					"# # # ####",
+					"#####    #",
+					"#   # ####",
+					"# # # #  #",
+					"# #      #",
+					"##########",
+				]
+
+				directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+				res = []
+				l, c = node
+				for dl, dc in directions:
+					nl = l + dl
+					nc = c + dc
+					try:
+						if laby[nl][nc] in [' ', 'E']:
+							res.append((nl, nc))
+					except IndexError:
+						pass
+				return res
+
+			print(DFS((8, 1), successors, [(1, 9)]))
+		</code></pre>
+	</section>
+
+	<section class='code'>
+		<h2>Recursive Depth-First Search</h2>
+		<pre><code>
+			def RDFS(start, successors, goals, res=[]):
+				res.append(start)
+				
+				if start in goals:
+					return True
+				
+				for successor in successors(start):
+					if successor not in res:
+						if RDFS(successor, successors, goals, res):
+							return True
+				
+				res.pop()
+				return False
+
+			def successors(node):
+				laby = [
+					"##########",
+					"#        E",
+					"# # ######",
+					"# #      #",
+					"# # # ####",
+					"#####    #",
+					"#   # ####",
+					"# # # #  #",
+					"# #      #",
+					"##########",
+				]
+
+				directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+				res = []
+				l, c = node
+				for dl, dc in directions:
+					nl = l + dl
+					nc = c + dc
+					try:
+						if laby[nl][nc] in [' ', 'E']:
+							res.append((nl, nc))
+					except IndexError:
+						pass
+				return res
+
+			res = []
+			print(RDFS((8, 1), successors, [(1, 9)], res))
+			print(res)
+		</code></pre>
+	</section>
+
 	<section>
 		<h2>Recherche informée</h2>
 		<ul>
@@ -498,6 +614,75 @@
 			</li>
 		</ul>
 	</section>
+
+	<section class="code">
+		<h2>Greedy Best-First Search</h2>
+		<pre><code>
+			class PriorityQueue:
+				data = []
+
+				def enqueue(self, value, priority):
+					# Could be better
+					self.data.append({'value': value, 'priority': priority})
+					self.data.sort(key=lambda elem: elem['priority'])
+
+				def dequeue(self):
+					return self.data.pop(0)['value']
+
+			def BestFS(start, successors, goals, heuristic):
+				q = PriorityQueue()
+				parent = {}
+				parent[start] = None
+				node = start
+				while node not in goals:
+					for successor in successors(node):
+						if successor not in parent:
+							parent[successor] = node
+							q.enqueue(successor, heuristic(successor))
+					node = q.dequeue()
+
+				res = []
+				while node is not None:
+					res.append(node)
+					node = parent[node]
+
+				return list(reversed(res))
+
+			def successors(node):
+				laby = [
+					"##########",
+					"#        E",
+					"# # ######",
+					"# #      #",
+					"# # # ####",
+					"#####    #",
+					"#   # ####",
+					"# # # #  #",
+					"# #      #",
+					"##########",
+				]
+
+				directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+				res = []
+				l, c = node
+				for dl, dc in directions:
+					nl = l + dl
+					nc = c + dc
+					try:
+						if laby[nl][nc] in [' ', 'E']:
+							res.append((nl, nc))
+					except IndexError:
+						pass
+				return res
+
+			def heuristic(node):
+				l, c = node
+				return (l - 1)**2 + (c - 9)**2
+
+			print(BestFS((8, 1), successors, [(1, 9)], heuristic))
+		</code></pre>
+	</section>
+
 	<section>
 		<h2>\(A^*\) Search </h2>
 		<ul>
@@ -515,6 +700,11 @@
 			</li>
 		</ul>
 	</section>
+
+	<section>
+		<h1>Théorie des jeux</h1>
+	</section>
+
 	<section>
 		<h2>Théorie des jeux</h2>
 		<ul>
