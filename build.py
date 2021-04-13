@@ -1,6 +1,7 @@
 import os
 import re
 from collections import namedtuple
+import json
 
 Tree = namedtuple('Tree', ['title', 'children', 'link'])
 Index = {}
@@ -50,18 +51,26 @@ with open('template.html', encoding='utf8') as file:
 for root, dirs, files in os.walk(os.path.join('.', 'courses')):
 	if os.path.basename(root) in ignore:
 		continue
+	title = None
 	parent = os.path.dirname(root)
+	if 'config.json' in files:
+		with open(os.path.join(root, 'config.json'), encoding='utf8') as file:
+			config = json.load(file)
+			if 'title' in config:
+				title = config['title']
 	if 'index.html' in files:
-		with open(os.path.join(root, 'index.html'), encoding='utf8') as file:
-			content = file.read()
-			title = regex.search(content)
-			if title is None:
-				title = os.path.basename(root)
-			else:
-				title = title.group(1).strip()
-			tree = Tree(title, [], os.path.join(root, 'index.html'))
+		if title is None:
+			with open(os.path.join(root, 'index.html'), encoding='utf8') as file:
+				content = file.read()
+				title = regex.search(content)
+				if title is None:
+					title = os.path.basename(root)
+				else:
+					title = title.group(1).strip()
+		tree = Tree(title, [], os.path.join(root, 'index.html'))
 	else:
-		title = os.path.basename(root)
+		if title is None:
+			title = os.path.basename(root)
 		tree = Tree(title, [], None)
 
 	Index[root] = tree
