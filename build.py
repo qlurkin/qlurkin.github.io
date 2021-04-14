@@ -1,3 +1,5 @@
+# This code is UGLY
+
 import os
 import re
 from collections import namedtuple
@@ -67,7 +69,10 @@ for root, dirs, files in os.walk(os.path.join('.', 'courses')):
 					title = os.path.basename(root)
 				else:
 					title = title.group(1).strip()
-		tree = Tree(title, [], os.path.join(root, 'index.html'))
+		link = os.path.join('.', os.path.relpath(root, os.path.join('.', 'courses')), 'index.html')
+		link = link.split(os.sep)
+		link = '/'.join(link)
+		tree = Tree(title, [], link)
 	else:
 		if title is None:
 			title = os.path.basename(root)
