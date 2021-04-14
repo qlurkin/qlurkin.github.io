@@ -81,6 +81,6 @@ theTree = Index[os.path.join('.', 'courses')]
 cleanTree(theTree)
 printTree(theTree)
 
-with open('index.html', 'w', encoding='utf8') as file:
+with open(os.path.join('.', 'courses', 'index.html'), 'w', encoding='utf8') as file:
 	file.write(template.format(renderTree(theTree)))
 
