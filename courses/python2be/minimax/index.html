@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Minimax</title>
+	<script src="https://quentin.lurkin.xyz/deck.js"></script>
+	<style>
+		li > ul {
+			margin-top: 0.5em;
+		}
+
+		.mode-deck section.code::before {
+			position: fixed;
+			background-color: #f0f0f0;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			content: '';
+			z-index: 10;
+			display: block;
+		}
+		.mode-deck section.code>* {
+			z-index: 100;
+		}
+
+		.mode-deck section.code h2 {
+			z-index: 1000;
+			background-color: #555;
+			
+		}
+
+		.mode-deck section.code {
+			width: 95%;
+		}
+
+		.mode-deck section.code::after {
+			content: '';
+			position: fixed;
+			top: 0;
+			left: 0;
+			bottom: 0;
+			width: 3%;
+			background-color: #bbb;
+			z-index: 20;
+		}
+	</style>
+</head>
+<body>
+	<section>
+		<h1>PI2C - Minimax</h1>
+	</section>
+	<section>
+		<h2>Algorithme Minimax</h2>
+		<ul>
+			<li>Deux joueurs appelés MIN et MAX (joue en premier)</li>
+			<li>Définition comme un <strong>problème de recherche</strong>
+				<ul>
+					<li><strong>État initial</strong> : position sur le plateau et joueur qui commence</li>
+					<li><strong>Fonction successeur</strong> : liste de paires (move,state)</li>
+					<li><strong>Test terminal</strong> : teste si le jeu est terminé (état terminaux)</li>
+					<li><strong>Fonction d’utilité</strong> : donne une valeur aux états terminaux</li>
+				</ul>
+			</li>
+			<li>MAX veut <strong>atteindre</strong> un état gagnant (terminal)
+				<small>Tout en sachant que MIN a son mot à dire</small>
+			</li>
+			<li>Jouer le meilleur coup possible à chaque tour
+				<small>En supposant que le joueur en face suit une stratégie parfaite</small>
+			</li>
+		</ul>
+	</section>
+	<section>
+		<h2>Valeur minimax</h2>
+		<ul>
+			<li><strong>Fonction MinimaxValue</strong> associe une valeur à chaque nœud n
+				<small>Définition récursive de cette fonction</small>
+			</li>
+			<li>Hypothèse que les deux joueurs <strong>jouent parfaitement</strong>
+				<ul>
+					<li>MAX préfère aller vers une situation de plus grande valeur</li>
+					<li>et MIN de plus petite valeur</li>
+				</ul>
+			</li>
+		</ul>
+		<div style="font-size: 0.7em;">
+			$$ MinimaxValue(n) = \left\{ \begin{array}{ll} Utility(n) & \textrm{si $n$ est un noeud terminal}\\ max_{s \in successors(n)} MinimaxValue(s) & \textrm{si $n$ est un noeud MAX}\\ min_{s \in successors(n)} MinimaxValue(s) & \textrm{si $n$ est un noeud MIN} \end{array} \right.$$
+		</div>
+	</section>
+	<section>
+		<h2>Algorithme Minimax</h2>
+		<ul>
+			<li>Arbre du jeu avec \(\bigtriangleup\) pour MAX et \(\bigtriangledown\) pour MIN
+				<small>MAX choisit toujours le coup qui maximise la valeur minimax</small>
+			</li>
+		</ul>
+		<figure>
+			<img src="./minimax0.svg" alt="">
+		</figure>
+		<figure>
+			<img src="./minimax2.svg" alt="">
+		</figure>
+		<figure>
+			<img src="./minimax3.svg" alt="">
+		</figure>
+		<figure>
+			<img src="./minimax1.svg" alt="">
+		</figure>
+	</section>
+	<section>
+		<h2>Obtenir les <em>move</em></h2>
+		<ul>
+			<li>Pour jouer, ce sont les <code>move</code> qui nous intéressent <small>retournons les en plus de la <code>minimaxValue</code></small></li>
+		</ul>
+		<figure>
+			<img src="./minimax4.svg" alt="">
+		</figure>
+	</section>
+	<section class="code">
+		<h2>Tic Tac Toe</h2>
+		<pre><code class="lang-python">
+			# The game state is a list of 9 items
+			# None is stored for empty cell
+			# 1 is stored for 'X' (player 1)
+			# 2 is stored for 'O' (player 2)
+
+			import random
+
+			def winner(state):
+				lines = [
+					[0, 1, 2],
+					[3, 4, 5],
+					[6, 7, 8],
+					[0, 3, 6],
+					[1, 4, 7],
+					[2, 5, 8],
+					[0, 4, 8],
+					[2, 4, 6]
+				]
+				for line in lines:
+					values = set((state[i] for i in line))
+					if len(values) == 1:
+						player = values.pop()
+						if player is not None:
+							return player
+				return None
+
+			def utility(state, player):
+				theWinner = winner(state)
+				if theWinner is None:
+					return 0
+				if theWinner == player:
+					return 1
+				return -1
+
+			def gameOver(state):
+				if winner(state) is not None:
+					return True
+
+				empty = 0
+				for elem in state:
+					if elem is None:
+						empty += 1
+				return empty == 0
+
+			def currentPlayer(state):
+				counters = {1: 0, 2: 0, None: 0}
+				for elem in state:
+					counters[elem] += 1
+				
+				if counters[1] == counters[2]:
+					return 1
+				return 2
+
+			def moves(state):
+				res = []
+				for i, elem in enumerate(state):
+					if elem is None:
+						res.append(i)
+				
+				random.shuffle(res)
+				return res
+
+			def apply(state, move):
+				player = currentPlayer(state)
+				res = list(state)
+				res[move] = player
+				return res
+		</code></pre>
+	</section>
+	<section>
+		<h2>Minimax</h2>
+		<p>Suivons strictement la formule :</p>
+		<div style="font-size: 0.7em;">
+			$$ MinimaxValue(n) = \left\{ \begin{array}{ll} Utility(n) & \textrm{si $n$ est un noeud terminal}\\ max_{s \in successors(n)} MinimaxValue(s) & \textrm{si $n$ est un noeud MAX}\\ min_{s \in successors(n)} MinimaxValue(s) & \textrm{si $n$ est un noeud MIN} \end{array} \right.$$
+		</div>
+		<p>Et créons deux fonctions mutuellement récursives <code>MAX()</code> et <code>MIN()</code></p>
+		<p>Nous ajoutons aussi une fonction <code>next()</code> pour nous aider à récupérer le prochain mouvement.</p>
+		<p>Utilisons également un décorateur <code>timeit</code> pour chronométrer l'exécution.</p>
+	</section>
+	<section class="code">
+		<pre><code class="lang-python">
+			import time
+
+			def MAX(state, player):
+				if gameOver(state):
+					return utility(state, player), None
+
+				theValue, theMove = float('-inf'), None
+				for move in moves(state):
+					successor = apply(state, move)
+					value, _ = MIN(successor, player)
+					if value > theValue:
+						theValue, theMove = value, move
+				return theValue, theMove
+
+			def MIN(state, player):
+				if gameOver(state):
+					return utility(state, player), None
+
+				theValue, theMove = float('inf'), None
+				for move in moves(state):
+					successor = apply(state, move)
+					value, _ = MAX(successor, player)
+					if value < theValue:
+						theValue, theMove = value, move
+				return theValue, theMove
+
+			def timeit(fun):
+				def wrapper(*args, **kwargs):
+					start = time.time()
+					res = fun(*args, **kwargs)
+					print('Executed in {}s'.format(time.time() - start))
+					return res
+				return wrapper
+			
+			@timeit
+			def next(state):
+				player = currentPlayer(state)
+				_, move = MAX(state, player)
+				return move
+
+			state = [
+				None, None, None,
+				None, None, None,
+				None, None, None,
+			]
+
+			print(next(state))
+		</code></pre>
+	</section>
+</body>
+</html>
