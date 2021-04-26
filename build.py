@@ -41,7 +41,8 @@ ignore = [
 	'__pycache__',
 	'node_modules',
 	'.vscode',
-	'.git'
+	'.git',
+	'.ignore'
 ]
 
 pattern = r'<title>([^<]+)</title>'
