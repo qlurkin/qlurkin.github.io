@@ -282,7 +282,7 @@
 			loss=tf.keras.losses.MeanSquaredError()
 		)
 
-		history = model.fit(
+		model.fit(
 			input_values,
 			expected_outputs,
 			batch_size = 10,
