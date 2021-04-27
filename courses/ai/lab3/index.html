@@ -249,6 +249,50 @@
 		optimizer = tf.keras.optimizers.SGD(0.1)
 	</code></pre>
 
+	<p>
+		To create the model, we can subclass <code>tf.keras.Model</code>
+	</p>
+
+	<pre><code class="lang-python">
+		class Linear(tf.keras.Model):
+			def __init__(self):
+				super(Linear, self).__init__()
+				self.m = tf.Variable(1.0, name='m')
+				self.p = tf.Variable(1.0, name='p')
+				
+				@tf.function
+				def linear(x):
+					return self.m*x + self.p
+
+				self.linear = linear
+
+			def call(self, input):
+				return self.linear(input)
+
+		model = Linear()
+	</code></pre>
+
+	<p>
+		Train such a model is simpler :
+	</p>
+
+	<pre><code class="lang-python">
+		model.compile(
+			optimizer = tf.keras.optimizers.SGD(0.1),
+			loss=tf.keras.losses.MeanSquaredError()
+		)
+
+		history = model.fit(
+			input_values,
+			expected_outputs,
+			batch_size = 10,
+			epochs = 15
+		)
+
+		tf.print("model.m=", model.m)
+		tf.print("model.p=", model.p)
+	</code></pre>
+
 	<h2>MNIST With TensorFlow</h2>
 
 	<p>You can try to create a model for the MNIST Dataset by following <a href="https://www.tensorflow.org/tutorials/quickstart/advanced">these instructions</a></p>
