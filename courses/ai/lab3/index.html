@@ -181,8 +181,8 @@
 	</p>
 
 	<pre><code class="lang-python">
-		input_values = np.reshape(input_values, (10, 10))
-		expected_outputs = np.reshape(expected_outputs, (10, 10))
+		input_values_batches = np.reshape(input_values, (10, 10))
+		expected_outputs_batches = np.reshape(expected_outputs, (10, 10))
 	</code></pre>
 
 	<p>
@@ -194,7 +194,7 @@
 		p_values = []
 		m_values = []
 		for epoch in range(15):
-			for input_value, expected_output in zip(input_values, expected_outputs):
+			for input_value, expected_output in zip(input_values_batches, expected_outputs_batches):
 				train_step(input_value, expected_output)
 				p_values.append(p.numpy())
 				m_values.append(m.numpy())
@@ -259,15 +259,9 @@
 				super(Linear, self).__init__()
 				self.m = tf.Variable(1.0, name='m')
 				self.p = tf.Variable(1.0, name='p')
-				
-				@tf.function
-				def linear(x):
-					return self.m*x + self.p
 
-				self.linear = linear
-
-			def call(self, input):
-				return self.linear(input)
+			def call(self, x):
+				return self.m * x + self.p
 
 		model = Linear()
 	</code></pre>
@@ -291,7 +285,15 @@
 
 		tf.print("model.m=", model.m)
 		tf.print("model.p=", model.p)
+
+		plt.scatter(input_values, expected_outputs, label='data')
+		plt.plot([0, 2], [model.p, model.m*2+model.p])
+		plt.show()
 	</code></pre>
+
+	<figure>
+		<img src="./linear_trained.png" alt="">
+	</figure>
 
 	<h2>MNIST With TensorFlow</h2>
 
