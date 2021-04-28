@@ -4,6 +4,7 @@ import os
 import re
 from collections import namedtuple
 import json
+import posixpath
 
 Tree = namedtuple('Tree', ['title', 'children', 'link'])
 Index = {}
@@ -70,9 +71,7 @@ for root, dirs, files in os.walk(os.path.join('.', 'courses')):
 					title = os.path.basename(root)
 				else:
 					title = title.group(1).strip()
-		link = os.path.join('.', os.path.relpath(root, os.path.join('.', 'courses')), 'index.html')
-		link = link.split(os.sep)
-		link = '/'.join(link)
+		link = posixpath.join('.', os.path.relpath(root, os.path.join('.', 'courses')), 'index.html')
 		tree = Tree(title, [], link)
 	else:
 		if title is None:
