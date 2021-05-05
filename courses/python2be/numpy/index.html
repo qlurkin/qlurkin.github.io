@@ -123,6 +123,7 @@
 			np.zeros(5)
 			np.ones((2, 3), dtype='int32')
 			np.linspace(0, 2, 5)
+			np.arange(12)
 		</code></pre>
 	</section>
 
@@ -133,6 +134,7 @@
 			a + 1    # [2, 3, 4, 5]
 			2 * a    # [2, 4, 6, 8]
 			a ** 2   # [1, 4, 9, 16]
+			a &lt; 3    # [True, True, False, False]
 		</code></pre>
 	</section>
 
@@ -161,9 +163,26 @@
 			x.shape  # Forme => (3, 2)
 			x.size   # Nombre total d’éléments => 6
 			x.dtype  # Type de données stockées => dtype('int32')
-			x[0, 1]  # x[0][1] => 2
-			x[:, 1]  # [2, 4, 6]
-			x[[0, 2], :] # [[1, 2], [5, 6]]
+		</code></pre>
+	</section>
+
+	<section>
+		<h2>Indexation</h2>
+		<pre><code class="lang-python">
+			x = np.array([[1, 2],
+			              [3, 4],
+			              [5, 6]])
+
+			x[0, 1]                # x[0][1] => 2
+			x[:, 1]                # [2, 4, 6]
+			x[[0, 2], :]           # [[1, 2], [5, 6]]
+			x[[[True , False],
+			   [False, True ],
+				[True , True ]]]    # [1, 4, 5, 6]
+			x[x < 4]               # [1, 2, 3]
+			x[x < 4] = 0           # [[0, 0],
+			                       #  [0, 4],
+			                       #  [5, 6]]
 		</code></pre>
 	</section>
 
