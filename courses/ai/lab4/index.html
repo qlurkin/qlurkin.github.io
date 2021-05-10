@@ -51,6 +51,7 @@
 				<img src="./discriminator.png" alt="">
 			</figure>
 		</li>
+		<li>Upscaling blocks of the generator can be replaced by <code>Conv2DTranspose</code> layers.</li>
 		<li>To help with memory consumption, train with small image sizes (upscale 64x64 to 256x256 for example). You can also reduce the size of your batch.</li>
 		<li>TensorFlow contains utilities to <a href="https://www.tensorflow.org/api_docs/python/tf/keras/preprocessing/image_dataset_from_directory">load image datasets</a>.</li>
 		<li>As mentioned above, checkpoints are useful to resume training. You can, for example, train your model during multiple nights and use your computer normally during daytime. TensorFlow contains <a href="https://www.tensorflow.org/api_docs/python/tf/train/CheckpointManager">Checkpoint Manager</a> that facilitate the use of checkpoints.</li>
