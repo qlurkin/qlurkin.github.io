@@ -26,7 +26,7 @@
 	</figure>
 
 	<h2>Super Sampling</h2>
-	<p>The purpose of Super Sampling is to upscale images. This is traditionally done by linear or bicubic with low perceptual quality results.</p>
+	<p>The purpose of Super Sampling is to upscale images. This is traditionally done by linear or bicubic interpolation with low perceptual quality results.</p>
 	<figure>
 		<img src="./result.png" alt="">
 	</figure>
@@ -34,7 +34,7 @@
 
 	<p>To produce high quality result with high frequency details, these details must be generated. This is where the GAN comes into play.</p>
 
-	<p>In this problem, the generator will not produce the output from random noise. It will do it from the low resolution input image. Therefore, his loss function will be composed of two parts. An adversarial part that involve a discriminator model. And a content part that ensure that the content of the original image is preserved.</p>
+	<p>In this problem, the generator will not produce the output from random noise. It will do it from the low resolution input image. Therefore, his loss function will be composed of two parts. An adversarial part that involve a discriminator model. And a content part that ensure that the content of the original image is retained.</p>
 
 	<p><a href="./Photo-Realistic Single Image Super-Resolution Using a Generative Adversial Network.pdf">Here is a paper about such a GAN based Super Sampling Method.</a></p>
 
