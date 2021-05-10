@@ -27,10 +27,9 @@
 
 	<h2>Super Sampling</h2>
 	<p>The purpose of Super Sampling is to upscale images. This is traditionally done by linear or bicubic with low perceptual quality results.</p>
-	<div class='center'>
-		<img src="./kentaw100.jpg" alt="">
-		<img src="./kentaw300bil.png" alt="">
-	</div>
+	<figure>
+		<img src="./result.png" alt="">
+	</figure>
 	<p>With these traditional method, the produced images lacks of high frequency details because these details are not present in the low resolution input images.</p>
 
 	<p>To produce high quality result with high frequency details, these details must be generated. This is where the GAN comes into play.</p>
@@ -44,5 +43,18 @@
 	<p>Because training can be very long we encourage you <a href="https://www.tensorflow.org/tensorboard/get_started">to monitor your training with <code>tf.summary</code> and Tensorboard</a>. It can help to cancel unsuccessful training and not waste time.</p>
 	<p>An other helpful thing to do is saving checkpoints during training to be able to resume when interrupted (Example in the GAN MNIST link above).</p>
 	<p>This work must be submitted on Claco for the 14th of may 11h59 PM.</p>
+
+	<h2>Advices</h2>
+	<ul>
+		<li>The discriminator model presented in the paper need a lot of memory to run. You may have to scale it down significantly.
+			<figure>
+				<img src="./discriminator.png" alt="">
+			</figure>
+		</li>
+		<li>To help with memory consumption, train with small image sizes (upscale 64x64 to 256x256 for example). You can also reduce the size of your batch.</li>
+		<li>TensorFlow contains utilities to <a href="https://www.tensorflow.org/api_docs/python/tf/keras/preprocessing/image_dataset_from_directory">load image datasets</a>.</li>
+		<li>As mentioned above, checkpoints are useful to resume training. You can, for example, train your model during multiple nights and use your computer normally during daytime. TensorFlow contains <a href="https://www.tensorflow.org/api_docs/python/tf/train/CheckpointManager">Checkpoint Manager</a> that facilitate the use of checkpoints.</li>
+		<li>At the end of training you can <a href="https://www.tensorflow.org/guide/keras/save_and_serialize">save</a> your generator to use it in an other python script.</li>
+	</ul>
 </body>
 </html>
