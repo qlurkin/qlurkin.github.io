@@ -1,65 +1,758 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>IC1T - Cours 1</title>
-	<script src="https://quentin.lurkin.xyz/deck.js"></script>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>IC1T - Cours 1</title>
+   <script src="https://quentin.lurkin.xyz/deck.js"></script>
+   <style>
+      .terminal {
+         background-color: darkslategray;
+         color: white;
+         font-family: consolas, monospace;
+         white-space: pre;
+         padding: 1rem;
+         font-size: 0.9em;
+         margin-bottom: 1em;
+      }
+
+      .terminal::before {
+         content: "Terminal";
+         display: block;
+         background-color: black;
+         text-align: center;
+         margin: -1rem;
+         padding: 0.5rem;
+         margin-bottom: 1rem;
+      }
+
+      .file-title {
+         margin-bottom: -1.2em;
+         font-family: consolas, monospace;
+         font-size: 0.9em;
+         color: white;
+         padding: 0.5rem;
+         text-align: center;
+         background-color: #686868;
+      }
+
+      .middle {
+         display: flex;
+         flex-direction: column;
+         justify-content: center;
+      }
+
+      table {
+         border: 2px solid black;
+         border-collapse: collapse;
+         margin-left: auto;
+         margin-right: auto;
+      }
+
+      td, th {
+         border: 1px solid #666;
+         text-align: center;
+         padding: 0.2em 1em;
+      }
+
+      th {
+         border-bottom: 2px solid black;
+      }
+   </style>
 </head>
 <body>
-	<section>
-		<h1>IC1T - Programmation <small>Cours 1</small></h1>
-	</section>
-	<section>
-		<h2>Qu'est-ce qu'un ordinateur ?</h2>
-		<p>Un ordinateur est un système composé de plusieurs éléments</p>
-		<p>Processeur, Mémoire, Stockage, périphériques, ...</p>
-	</section>
-	<section>
-		<h2>Processeur</h2>
-		<ul>
-			<li>Central Processing Unit (CPU)</li>
-			<li>Exécute des instructions</li>
-			<li>Programme = suite d'instructions</li>
-			<li>Un programme traite des données</li>
-		</ul>
-	</section>
-	<section>
-		<h2>Mémoire</h2>
-		<ul>
-			<li>Random Access Memory (RAM)</li>
-			<li>Contient le programme et les données utilisée par le processeur</li>
-			<li>Rapide</li>
-			<li>Taille limitée</li>
-			<li>Volatile</li>
-		</ul>
-	</section>
-	<section>
-		<h2>Stockage</h2>
-		<ul>
-			<li>Solid State Drive (SSD) ou Hard Disk Drive (HDD)</li>
-			<li>Contient des programmes et des données</li>
-			<li>Lent</li>
-			<li>Taille importante</li>
-			<li>Persistant</li>
-			<li>Organisé en fichiers et répertoires</li>
-		</ul>
-	</section>
-	<section>
-		<h2>Langage machine</h2>
-		<ul>
-			<li>Ensemble des instructions exécutables par le processeur</li>
-			<li>Conçu pour s'exécuter rapidement</li>
-			<li>Pas conçu pour les humains</li>
-		</ul>
-	</section>
-	<section>
-		<h2>Langage de programmation</h2>
-		<ul>
-			<li>Conçu pour les humains</li>
-			<li>Peut être compilé ou interprété</li>
-		</ul>
-	</section>
+   <section>
+      <h1>IC1T - Programmation <small>Cours 1</small></h1>
+   </section>
+   <section>
+      <h2>Informations générales</h2>
+      <ul>
+         <li>7h30 de <strong>cours théoriques</strong>, 7h30 d'<strong>exercices à domicile</strong></li>
+         <li>Les documents utilisés sont sur <strong>claco.ecam.be</strong></li>
+         <li>Evaluation :
+            <ul>
+               <li>Exercices à domicile (20%), <strong>non-réévaluable</strong>.</li>
+               <li>Examen écrit sur PC (80%)</li>
+            </ul>
+         </li>
+         <li><strong>Toutes les communications passent par Teams</strong></li>
+      </ul>
+   </section>
+   <section>
+      <h2>Qu'est-ce qu'un ordinateur ?</h2>
+      <p>Un ordinateur est un système composé de plusieurs éléments</p>
+      <p>Processeur, Mémoire, Stockage, périphériques, ...</p>
+   </section>
+   <section>
+      <h2>Processeur</h2>
+      <figure>
+         <svg width="80%" viewBox="0 0 2045 1534" version="1.1">
+            <g id="CPU">
+               <rect x="2.275" y="622.022" width="288.161" height="288.161" style="fill:#ebebeb;stroke:#000;stroke-width:4.17px;"/>
+               <text x="94.341px" y="783.998px" style="font-size:50px;">CPU</text>
+            </g>
+         </svg>
+      </figure>
+   </section>
+   <section>
+      <h2 class="deck-only">Processeur</h2>
+      <ul>
+         <li>Central Processing Unit (CPU)</li>
+         <li>Exécute des instructions</li>
+         <li>Programme = suite d'instructions</li>
+         <li>Un programme manipule des données</li>
+      </ul>
+      <p class="document-only">Le processeur (CPU) exécute les instructions d'un programme une par une. Ces instructions proviennent de la mémoire et manipulent généralement des données se trouvant également dans la mémoire.</p>
+   </section>
+   <section>
+      <h2>Mémoire</h2>
+      <figure>
+         <svg width="80%" viewBox="0 0 2045 1534" version="1.1">
+            <g id="CPU-RAM">
+               <path id="CPU-to-RAM" d="M338.718,783.001l0,31.384l-48.282,-48.283l48.282,-48.282l0,31.383l145.121,0l-0,-31.383l48.282,48.282l-48.282,48.283l-0,-31.384l-145.121,0Z" style="fill:#ffe077;stroke:#000;stroke-width:4.17px;"/>
+               <g id="RAM">
+                  <text x="528.191px" y="175.554px" style="font-size:50px;">RAM</text>
+                  <rect x="532.121" y="207.464" width="431.648" height="1184.98" style="fill:#ebebeb;stroke:#000;stroke-width:4.17px;"/>
+                  <rect x="583.818" y="252.526" width="332.517" height="258.514" style="fill:#ff9494;stroke:#000;stroke-width:4.17px;"/>
+                  <rect x="583.818" y="761.972" width="332.517" height="306.416" style="fill:#b3ffa6;stroke:#000;stroke-width:4.17px;"/>
+                  <rect x="583.818" y="555.635" width="332.517" height="164.114" style="fill:#b4b4b4;stroke:#000;stroke-width:4.17px;"/>
+                  <rect x="583.818" y="1115.35" width="332.517" height="64.503" style="fill:#b4b4b4;stroke:#000;stroke-width:4.17px;"/>
+                  <rect x="583.818" y="1226.82" width="332.517" height="34.09" style="fill:#b4b4b4;stroke:#000;stroke-width:4.17px;"/>
+                  <rect x="583.818" y="1307.61" width="332.517" height="16.507" style="fill:#b4b4b4;stroke:#000;stroke-width:4.17px;"/>
+                  <text x="653.898px" y="394.417px" style="font-size:50px;">Program</text>
+                  <text x="696.402px" y="932.782px" style="font-size:50px;">Data</text>
+               </g>
+               <g id="CPU">
+                  <rect x="2.275" y="622.022" width="288.161" height="288.161" style="fill:#ebebeb;stroke:#000;stroke-width:4.17px;"/>
+                  <text x="94.341px" y="783.998px" style="font-size:50px;">CPU</text>
+               </g>
+            </g>
+         </svg>
+      </figure>
+   </section>
+   <section>
+      <h2 class="deck-only">Mémoire</h2>
+      <ul>
+         <li>Random Access Memory (RAM)</li>
+         <li>Contient le programme et les données utilisée par le processeur</li>
+         <li>Rapide</li>
+         <li>Taille limitée</li>
+         <li>Volatile</li>
+      </ul>
+      <p class="document-only">La mémoire (RAM) contient les instructions du programme et les données qu'il manipule. Sa taille ne dépasse généralement pas quelques giga-octet (Go) et son contenu est temporaire.</p>
+   </section>
+   <section>
+      <h2>Stockage</h2>
+      <figure>
+         <svg width="80%" viewBox="0 0 2045 1534" version="1.1">
+            <g id="All">
+               <g id="CPU-RAM">
+                  <path id="CPU-to-RAM" d="M338.718,783.001l0,31.384l-48.282,-48.283l48.282,-48.282l0,31.383l145.121,0l-0,-31.383l48.282,48.282l-48.282,48.283l-0,-31.384l-145.121,0Z" style="fill:#ffe077;stroke:#000;stroke-width:4.17px;"/>
+                  <g id="RAM">
+                     <text x="528.191px" y="175.554px" style="font-size:50px;">RAM</text>
+                     <rect x="532.121" y="207.464" width="431.648" height="1184.98" style="fill:#ebebeb;stroke:#000;stroke-width:4.17px;"/>
+                     <rect x="583.818" y="252.526" width="332.517" height="258.514" style="fill:#ff9494;stroke:#000;stroke-width:4.17px;"/>
+                     <rect x="583.818" y="761.972" width="332.517" height="306.416" style="fill:#b3ffa6;stroke:#000;stroke-width:4.17px;"/>
+                     <rect x="583.818" y="555.635" width="332.517" height="164.114" style="fill:#b4b4b4;stroke:#000;stroke-width:4.17px;"/>
+                     <rect x="583.818" y="1115.35" width="332.517" height="64.503" style="fill:#b4b4b4;stroke:#000;stroke-width:4.17px;"/>
+                     <rect x="583.818" y="1226.82" width="332.517" height="34.09" style="fill:#b4b4b4;stroke:#000;stroke-width:4.17px;"/>
+                     <rect x="583.818" y="1307.61" width="332.517" height="16.507" style="fill:#b4b4b4;stroke:#000;stroke-width:4.17px;"/>
+                     <text x="653.898px" y="394.417px" style="font-size:50px;">Program</text>
+                     <text x="696.402px" y="932.782px" style="font-size:50px;">Data</text>
+                  </g>
+                  <g id="CPU">
+                     <rect x="2.275" y="622.022" width="288.161" height="288.161" style="fill:#ebebeb;stroke:#000;stroke-width:4.17px;"/>
+                     <text x="94.341px" y="783.998px" style="font-size:50px;">CPU</text>
+                  </g>
+               </g>
+               <path id="RAM-to-Storage" d="M1012.05,783.001l-0,31.384l-48.283,-48.283l48.283,-48.282l-0,31.383l177.592,0l-0,-31.383l48.282,48.282l-48.282,48.283l-0,-31.384l-177.592,0Z" style="fill:#ffe077;stroke:#000;stroke-width:4.17px;"/>
+               <g id="Storage">
+                  <rect x="1237.93" y="63.338" width="804.003" height="1468.08" style="fill:#ebebeb;stroke:#000;stroke-width:4.17px;"/>
+                  <g>
+                     <path d="M1367.2,170.51l-0,381.195" style="fill:none;stroke:#000;stroke-width:4.17px;"/>
+                     <text x="1512.38px" y="274.44px" style="font-size:50px;">bin</text>
+                     <text x="1583.66px" y="369.202px" style="font-size:50px;">python.exe</text>
+                     <text x="1583.66px" y="458.996px" style="font-size:50px;">word.exe</text>
+                     <text x="1583.66px" y="553.758px" style="font-size:50px;">vscode.exe</text>
+                     <g transform="matrix(1,0,0,1,1277.92,-1283.8)">
+                        <text x="161.868px" y="1465.7px" style="font-family:monospace;font-weight:700;font-size:50px;">C:</text>
+                        <text x="237.298px" y="1465.7px" style="font-style:italic;font-size:50px;">or</text>
+                        <text x="315.648px" y="1465.7px" style="font-family:monospace;font-weight:700;font-size:50px;">/</text>
+                     </g>
+                     <path d="M1438.48,256.837l-71.281,0" style="fill:none;stroke:#000;stroke-width:4.17px;"/>
+                     <path d="M1438.48,256.837l0,94.762l71.281,0" style="fill:none;stroke:#000;stroke-width:4.17px;"/>
+                     <path d="M1367.2,551.705l-0,98.368l71.281,0" style="fill:none;stroke:#000;stroke-width:4.17px;"/>
+                     <path d="M1367.2,650.073l-0,98.369l71.281,-0" style="fill:none;stroke:#000;stroke-width:4.17px;"/>
+                     <g>
+                        <path d="M1581.05,1134.23l-0,98.368l71.281,0" style="fill:none;stroke:#000;stroke-width:4.17px;"/>
+                        <path d="M1581.05,1233.96l-0,98.369l71.281,-0" style="fill:none;stroke:#000;stroke-width:4.17px;"/>
+                        <path d="M1581.05,1332.33l-0,98.368l71.281,-0" style="fill:none;stroke:#000;stroke-width:4.17px;"/>
+                        <text x="1511.72px" y="765.558px" style="font-size:50px;">Users</text>
+                        <text x="1583px" y="860.32px" style="font-size:50px;">jarvis</text>
+                        <text x="1583px" y="953.732px" style="font-size:50px;">lur</text>
+                        <text x="1655.01px" y="1053.46px" style="font-size:50px;">Desktop</text>
+                        <text x="1655.01px" y="1151.83px" style="font-size:50px;">Documents</text>
+                        <text x="1726.37px" y="1246.59px" style="font-size:50px;">lettre.docx</text>
+                        <text x="1726.37px" y="1344.96px" style="font-size:50px;">hello.py</text>
+                        <text x="1726.27px" y="1438.36px" style="font-size:50px;">logo.jpg</text>
+                        <text x="1515.04px" y="667.439px" style="font-size:50px;">Windows</text>
+                        <path d="M1509.77,844.533l-71.281,-0" style="fill:none;stroke:#000;stroke-width:4.17px;"/>
+                        <path d="M1509.77,941.098l0,193.13" style="fill:none;stroke:#000;stroke-width:4.17px;"/>
+                        <path d="M1581.05,1134.23l-71.282,0" style="fill:none;stroke:#000;stroke-width:4.17px;"/>
+                        <path d="M1581.05,1035.86l-71.282,-0" style="fill:none;stroke:#000;stroke-width:4.17px;"/>
+                        <path d="M1438.48,747.968l0,193.13l71.281,-0" style="fill:none;stroke:#000;stroke-width:4.17px;"/>
+                        <g>
+                           <path d="M1465.75,812.376l0,60.708l75.083,-0l0,-53.224l-51.204,0l0,-7.484l-23.879,-0Z" style="fill:#ffe077;stroke:#000;stroke-width:4.17px;"/>
+                           <path d="M1553.78,829.246l-75.915,-0l-12.118,43.838l75.915,-0l12.118,-43.838Z" style="fill:#ffe077;stroke:#000;stroke-width:4.17px;"/>
+                        </g>
+                        <g>
+                           <path d="M1465.75,910.744l0,60.708l75.083,-0l0,-53.224l-51.204,0l0,-7.484l-23.879,-0Z" style="fill:#ffe077;stroke:#000;stroke-width:4.17px;"/>
+                           <path d="M1553.78,927.614l-75.915,-0l-12.118,43.838l75.915,-0l12.118,-43.838Z" style="fill:#ffe077;stroke:#000;stroke-width:4.17px;"/>
+                        </g>
+                        <g>
+                           <path d="M1537.03,1005.51l0,60.708l75.084,-0l-0,-53.224l-51.204,0l-0,-7.484l-23.88,-0Z" style="fill:#ffe077;stroke:#000;stroke-width:4.17px;"/>
+                           <path d="M1625.06,1022.38l-75.915,-0l-12.118,43.838l75.915,-0l12.118,-43.838Z" style="fill:#ffe077;stroke:#000;stroke-width:4.17px;"/>
+                        </g>
+                        <g>
+                           <path d="M1537.03,1103.87l0,60.708l75.084,0l-0,-53.223l-51.204,-0l-0,-7.485l-23.88,0Z" style="fill:#ffe077;stroke:#000;stroke-width:4.17px;"/>
+                           <path d="M1625.06,1120.74l-75.915,0l-12.118,43.838l75.915,0l12.118,-43.838Z" style="fill:#ffe077;stroke:#000;stroke-width:4.17px;"/>
+                        </g>
+                        <g>
+                           <path d="M1394.47,619.482l-0,60.708l75.083,0l-0,-53.223l-51.204,-0l0,-7.485l-23.879,0Z" style="fill:#ffe077;stroke:#000;stroke-width:4.17px;"/>
+                           <path d="M1482.5,636.352l-75.914,0l-12.118,43.838l75.915,0l12.117,-43.838Z" style="fill:#ffe077;stroke:#000;stroke-width:4.17px;"/>
+                        </g>
+                        <g>
+                           <path d="M1394.47,717.614l-0,60.708l75.083,-0l-0,-53.224l-51.204,0l0,-7.484l-23.879,-0Z" style="fill:#ffe077;stroke:#000;stroke-width:4.17px;"/>
+                           <path d="M1482.5,734.484l-75.914,-0l-12.118,43.838l75.915,-0l12.117,-43.838Z" style="fill:#ffe077;stroke:#000;stroke-width:4.17px;"/>
+                        </g>
+                        <g>
+                           <rect x="1623.82" y="1191.69" width="57.025" height="74.608" style="fill:#dffffc;stroke:#000;stroke-width:4.17px;"/>
+                           <path d="M1670.39,1205.11l-36.116,-0" style="fill:none;stroke:#000;stroke-width:4.17px;"/>
+                           <path d="M1670.39,1217.47l-36.116,0" style="fill:none;stroke:#000;stroke-width:4.17px;"/>
+                           <path d="M1670.39,1229.11l-36.116,-0" style="fill:none;stroke:#000;stroke-width:4.17px;"/>
+                           <path d="M1670.39,1240.99l-36.116,0" style="fill:none;stroke:#000;stroke-width:4.17px;"/>
+                           <path d="M1670.39,1252.87l-36.116,0" style="fill:none;stroke:#000;stroke-width:4.17px;"/>
+                        </g>
+                        <g>
+                           <rect x="1623.82" y="1290.06" width="57.025" height="74.608" style="fill:#dffffc;stroke:#000;stroke-width:4.17px;"/>
+                           <path d="M1670.39,1303.48l-36.116,0" style="fill:none;stroke:#000;stroke-width:4.17px;"/>
+                           <path d="M1670.39,1315.84l-36.116,-0" style="fill:none;stroke:#000;stroke-width:4.17px;"/>
+                           <path d="M1670.39,1327.48l-36.116,0" style="fill:none;stroke:#000;stroke-width:4.17px;"/>
+                           <path d="M1670.39,1339.36l-36.116,-0" style="fill:none;stroke:#000;stroke-width:4.17px;"/>
+                           <path d="M1670.39,1351.24l-36.116,-0" style="fill:none;stroke:#000;stroke-width:4.17px;"/>
+                        </g>
+                        <g>
+                           <rect x="1623.82" y="1388.42" width="57.025" height="74.608" style="fill:#dffffc;stroke:#000;stroke-width:4.17px;"/>
+                           <path d="M1670.39,1401.85l-36.116,0" style="fill:none;stroke:#000;stroke-width:4.17px;"/>
+                           <path d="M1670.39,1414.2l-36.116,-0" style="fill:none;stroke:#000;stroke-width:4.17px;"/>
+                           <path d="M1670.39,1425.85l-36.116,-0" style="fill:none;stroke:#000;stroke-width:4.17px;"/>
+                           <path d="M1670.39,1437.73l-36.116,-0" style="fill:none;stroke:#000;stroke-width:4.17px;"/>
+                           <path d="M1670.39,1449.61l-36.116,-0" style="fill:none;stroke:#000;stroke-width:4.17px;"/>
+                        </g>
+                     </g>
+                     <g>
+                        <path d="M1323.19,131.721l-0,60.708l75.083,0l-0,-53.223l-51.204,-0l-0,-7.485l-23.879,0Z" style="fill:#ffe077;stroke:#000;stroke-width:4.17px;"/>
+                        <path d="M1411.22,148.591l-75.915,0l-12.117,43.838l75.914,0l12.118,-43.838Z" style="fill:#ffe077;stroke:#000;stroke-width:4.17px;"/>
+                     </g>
+                     <g>
+                        <path d="M1394.47,226.483l-0,60.708l75.083,0l-0,-53.223l-51.204,-0l0,-7.485l-23.879,0Z" style="fill:#ffe077;stroke:#000;stroke-width:4.17px;"/>
+                        <path d="M1482.5,243.353l-75.914,0l-12.118,43.838l75.915,0l12.117,-43.838Z" style="fill:#ffe077;stroke:#000;stroke-width:4.17px;"/>
+                     </g>
+                     <g>
+                        <rect x="1481.25" y="314.296" width="57.025" height="74.608" style="fill:#dffffc;stroke:#000;stroke-width:4.17px;"/>
+                        <path d="M1511.87,329.961c-1.398,-0.136 -2.807,-0.136 -4.205,-0l-0.779,4.326c-1.119,0.186 -2.217,0.48 -3.279,0.878l-2.838,-3.357c-1.279,0.582 -2.499,1.286 -3.642,2.103l1.488,4.136c-0.875,0.721 -1.679,1.525 -2.4,2.4l-4.136,-1.488c-0.817,1.143 -1.521,2.363 -2.103,3.642l3.357,2.838c-0.398,1.062 -0.692,2.16 -0.878,3.279l-4.326,0.779c-0.136,1.398 -0.136,2.807 -0,4.205l4.326,0.779c0.186,1.119 0.48,2.217 0.878,3.279l-3.357,2.838c0.582,1.279 1.286,2.499 2.103,3.642l4.136,-1.489c0.721,0.876 1.525,1.68 2.4,2.401l-1.488,4.136c1.143,0.817 2.363,1.521 3.642,2.103l2.838,-3.357c1.062,0.398 2.16,0.692 3.279,0.878l0.779,4.326c1.398,0.136 2.807,0.136 4.205,0l0.779,-4.326c1.119,-0.186 2.217,-0.48 3.279,-0.878l2.838,3.357c1.279,-0.582 2.499,-1.286 3.642,-2.103l-1.489,-4.136c0.876,-0.721 1.68,-1.525 2.401,-2.401l4.136,1.489c0.817,-1.143 1.521,-2.363 2.103,-3.642l-3.357,-2.838c0.398,-1.062 0.692,-2.16 0.878,-3.279l4.326,-0.779c0.136,-1.398 0.136,-2.807 0,-4.205l-4.326,-0.779c-0.186,-1.119 -0.48,-2.217 -0.878,-3.279l3.357,-2.838c-0.582,-1.279 -1.286,-2.499 -2.103,-3.642l-4.136,1.488c-0.721,-0.875 -1.525,-1.679 -2.401,-2.4l1.489,-4.136c-1.143,-0.817 -2.363,-1.521 -3.642,-2.103l-2.838,3.357c-1.062,-0.398 -2.16,-0.692 -3.279,-0.878l-0.779,-4.326Zm-2.103,14.079c4.172,0 7.559,3.388 7.559,7.559c0,4.172 -3.387,7.559 -7.559,7.559c-4.171,0 -7.559,-3.387 -7.559,-7.559c0,-4.171 3.388,-7.559 7.559,-7.559Z" style="fill:#6191ff;stroke:#000;stroke-width:4.17px;"/>
+                     </g>
+                     <path d="M1438.13,351.599l-0,94.762l71.281,0" style="fill:none;stroke:#000;stroke-width:4.17px;"/>
+                     <g>
+                        <rect x="1480.9" y="409.058" width="57.025" height="74.608" style="fill:#dffffc;stroke:#000;stroke-width:4.17px;"/>
+                        <path d="M1511.51,424.723c-1.399,-0.136 -2.807,-0.136 -4.206,-0l-0.779,4.326c-1.119,0.186 -2.217,0.48 -3.279,0.878l-2.837,-3.357c-1.28,0.582 -2.499,1.286 -3.642,2.103l1.488,4.136c-0.876,0.721 -1.68,1.525 -2.401,2.4l-4.135,-1.488c-0.817,1.143 -1.522,2.363 -2.103,3.642l3.357,2.838c-0.398,1.062 -0.693,2.16 -0.879,3.279l-4.326,0.779c-0.136,1.398 -0.136,2.807 0,4.205l4.326,0.779c0.186,1.119 0.481,2.217 0.879,3.279l-3.357,2.838c0.581,1.279 1.286,2.499 2.103,3.642l4.135,-1.489c0.721,0.876 1.525,1.68 2.401,2.401l-1.488,4.136c1.143,0.817 2.362,1.521 3.642,2.103l2.837,-3.357c1.062,0.398 2.16,0.692 3.279,0.878l0.779,4.326c1.399,0.136 2.807,0.136 4.206,0l0.779,-4.326c1.119,-0.186 2.217,-0.48 3.279,-0.878l2.838,3.357c1.279,-0.582 2.498,-1.286 3.641,-2.103l-1.488,-4.136c0.876,-0.721 1.68,-1.525 2.401,-2.401l4.136,1.489c0.816,-1.143 1.521,-2.363 2.102,-3.642l-3.357,-2.838c0.398,-1.062 0.693,-2.16 0.879,-3.279l4.326,-0.779c0.136,-1.398 0.136,-2.807 -0,-4.205l-4.326,-0.779c-0.186,-1.119 -0.481,-2.217 -0.879,-3.279l3.357,-2.838c-0.581,-1.279 -1.286,-2.499 -2.102,-3.642l-4.136,1.488c-0.721,-0.875 -1.525,-1.679 -2.401,-2.4l1.488,-4.136c-1.143,-0.817 -2.362,-1.521 -3.641,-2.103l-2.838,3.357c-1.062,-0.398 -2.16,-0.692 -3.279,-0.878l-0.779,-4.326Zm-2.103,14.079c4.172,0 7.559,3.388 7.559,7.559c-0,4.172 -3.387,7.559 -7.559,7.559c-4.172,0 -7.559,-3.387 -7.559,-7.559c0,-4.171 3.387,-7.559 7.559,-7.559Z" style="fill:#6191ff;stroke:#000;stroke-width:4.17px;"/>
+                     </g>
+                     <path d="M1438.13,446.361l-0,94.762l71.281,0" style="fill:none;stroke:#000;stroke-width:4.17px;"/>
+                     <g>
+                        <rect x="1480.9" y="503.82" width="57.025" height="74.608" style="fill:#dffffc;stroke:#000;stroke-width:4.17px;"/>
+                        <path d="M1511.51,519.485c-1.399,-0.136 -2.807,-0.136 -4.206,-0l-0.779,4.326c-1.119,0.186 -2.217,0.48 -3.279,0.878l-2.837,-3.357c-1.28,0.582 -2.499,1.286 -3.642,2.103l1.488,4.136c-0.876,0.721 -1.68,1.525 -2.401,2.4l-4.135,-1.488c-0.817,1.143 -1.522,2.363 -2.103,3.642l3.357,2.838c-0.398,1.062 -0.693,2.16 -0.879,3.279l-4.326,0.779c-0.136,1.398 -0.136,2.807 0,4.205l4.326,0.779c0.186,1.119 0.481,2.217 0.879,3.279l-3.357,2.838c0.581,1.279 1.286,2.499 2.103,3.642l4.135,-1.488c0.721,0.875 1.525,1.679 2.401,2.4l-1.488,4.136c1.143,0.817 2.362,1.521 3.642,2.103l2.837,-3.357c1.062,0.398 2.16,0.692 3.279,0.878l0.779,4.326c1.399,0.136 2.807,0.136 4.206,0l0.779,-4.326c1.119,-0.186 2.217,-0.48 3.279,-0.878l2.838,3.357c1.279,-0.582 2.498,-1.286 3.641,-2.103l-1.488,-4.136c0.876,-0.721 1.68,-1.525 2.401,-2.4l4.136,1.488c0.816,-1.143 1.521,-2.363 2.102,-3.642l-3.357,-2.838c0.398,-1.062 0.693,-2.16 0.879,-3.279l4.326,-0.779c0.136,-1.398 0.136,-2.807 -0,-4.205l-4.326,-0.779c-0.186,-1.119 -0.481,-2.217 -0.879,-3.279l3.357,-2.838c-0.581,-1.279 -1.286,-2.499 -2.102,-3.642l-4.136,1.488c-0.721,-0.875 -1.525,-1.679 -2.401,-2.4l1.488,-4.136c-1.143,-0.817 -2.362,-1.521 -3.641,-2.103l-2.838,3.357c-1.062,-0.398 -2.16,-0.692 -3.279,-0.878l-0.779,-4.326Zm-2.103,14.08c4.172,-0 7.559,3.387 7.559,7.558c-0,4.172 -3.387,7.559 -7.559,7.559c-4.172,0 -7.559,-3.387 -7.559,-7.559c0,-4.171 3.387,-7.558 7.559,-7.558Z" style="fill:#6191ff;stroke:#000;stroke-width:4.17px;"/>
+                     </g>
+                  </g>
+                  <text x="1235.44px" y="37.192px" style="font-size:50px;">Storage</text>
+               </g>
+            </g>
+         </svg>
+      </figure>
+   </section>
+   <section>
+      <h2 class="deck-only">Stockage</h2>
+      <ul>
+         <li>Solid State Drive (SSD) ou Hard Disk Drive (HDD) "disque dur"</li>
+         <li>Contient des programmes et des données</li>
+         <li>Lent</li>
+         <li>Taille importante</li>
+         <li>Persistant</li>
+         <li>Organisé en fichiers et répertoires</li>
+      </ul>
+      <p class="document-only">Le stockage de masse (SSD, HDD, Clé USB, carte SD, ...) contient des fichiers organisés dans une hiérarchie de dossiers. Les opérations d'écriture et de lecture de fichiers sont beaucoup plus lentes que les accès à des données en RAM. Les stockages de masse n'ont pas besoin d'être alimenté pour conserver les données et peuvent contenir jusqu'à plusieurs tera-octet (To).</p>
+   </section>
+   <section>
+      <h2>Terminal</h2>
+      <p class="document-only">Une bonne partie de l'utilisation d'un ordinateur passe par la création, l'édition et la gestion de fichiers dans l'arborescence de dossiers du stockage de masse. Bien que de nos jour la plupart des gens fasse ces opérations en utilisant une interface graphique, il est aussi possible de les réaliser en ligne de commande dans un terminal.</p>
+
+      <p class="document-only">Sous Windows, il y a plusieurs programme permettant d'utiliser les lignes de commande :</p>
+      <ul class="document-only">
+         <li>cmd: invite de commande</li>
+         <li>Powershell</li>
+         <li>Windows Terminal</li>
+      </ul>
+
+      <p class="document-only">Sous MacOS, le programme s'appelle simplement "terminal"</p>
+      
+      <div class="terminal">$> pwd
+C:\Users\lur
+$> ls
+Desktop
+Documents
+$> cd Documents
+$> pwd
+C:\Users\lur\Documents</div>
+
+         <p class="document-only">Les développeurs et les ingénieurs sont régulièrement amenés à utiliser le terminal. Il est donc important d'apprendre les bases de son utilisation.</p>
+
+         <p class="document-only">La première notion à intégré est la notion de répertoire courant. Lorsqu'on utilise le terminal, il y a toujours un dossier de l'arborescence qui est considéré comme notre position actuelle. On peut afficher le chemin de ce dossier avec la commande <code>pwd</code> pour <em>print working directory</em>. Beaucoup de commandes agissent directement sur le répertoire courant.</p>
+
+         <p class="document-only">La commande <code>ls</code> permet de lister le contenu du répertoire courant</p>
+
+         <p class="document-only">La commande <code>cd</code> (<em>change directory</em>) permet de changer le répertoire courant. On indique le nouveau répertoire courant par son chemin relatif ou absolu</p>
+
+         <ul class="document-only">
+            <li>Un chemin absolu indique un éléments de l'arborescence de fichiers en partant de la racine de celle-ci :
+               <ul>
+                  <li>Sous Windows: <code>C:\Users\lur</code></li>
+                  <li>Sous MacOS ou Linux: <code>/Users/lur</code></li>
+               </ul>
+            </li>
+            <li>Un chemin relatif l'indique en partant du répertoire courant. Si le répertoire courant est <code>C:\Users</code> alors le chemin relatif <code>lur\Documents\hello.py</code> correspond au chemin absolu <code>C:\Users\lur\Documents\hello.py</code></li>
+         </ul>
+
+         <p class="document-only">Remarques:</p>
+         <ul class="document-only">
+            <li>Dans un chemin, l'utilisation de <code>..</code> permet de remonter d'un repertoire. La commande <code>cd ..</code> permet donc de passer au répertoire parent. Un <code>.</code> seul représente le répertoire courant. Le chemin relatif mentionné plus haut peut donc aussi s'écrire <code>.\lur\Documents\hello.py</code>.</li>
+            <li>Windows utilise des anti-slash (<code>\</code>) pour séparer les différentes parties du chemin alors que MacOS et Linux utilisent des slash (<code>/</code>)</li>
+         </ul>
+   </section>
+   
+   <section>
+      <h2>Langage machine</h2>
+      <ul>
+         <li>Ensemble des instructions exécutables par le processeur</li>
+         <li>Conçu pour s'exécuter rapidement</li>
+         <li>Pas conçu pour les humains</li>
+      </ul>
+   </section>
+
+   <section>
+      <h2>Langage de programmation</h2>
+      <ul>
+         <li>Conçu pour les humains</li>
+         <li>Peut être compilé ou interprété</li>
+      </ul>
+   </section>
+
+   <section>
+      <h2>Python</h2>
+      <div class="row">
+         <div class="span6 middle">
+            <ul>
+               <li>Langage interprété</li>
+               <li>L'interpréteur = <code>python.exe</code></li>
+               <li>code = texte brut</li>
+            </ul>
+         </div>
+         <div class="span6 middle">
+            <figure>
+               <svg width="80%" viewBox="0 0 1000 1534" version="1.1">
+                  <g id="CPU-RAM">
+                     <path id="CPU-to-RAM" d="M338.718,783.001l0,31.384l-48.282,-48.283l48.282,-48.282l0,31.383l145.121,0l-0,-31.383l48.282,48.282l-48.282,48.283l-0,-31.384l-145.121,0Z" style="fill:#ffe077;stroke:#000;stroke-width:4.17px;"/>
+                     <g id="RAM">
+                        <text x="528.191px" y="175.554px" style="font-size:50px;">RAM</text>
+                        <rect x="532.121" y="207.464" width="431.648" height="1184.98" style="fill:#ebebeb;stroke:#000;stroke-width:4.17px;"/>
+                        <rect x="583.818" y="252.526" width="332.517" height="258.514" style="fill:#ff9494;stroke:#000;stroke-width:4.17px;">yop</rect>
+                        <rect x="583.818" y="761.972" width="332.517" height="306.416" style="fill:#b3ffa6;stroke:#000;stroke-width:4.17px;"/>
+                        <rect x="583.818" y="555.635" width="332.517" height="164.114" style="fill:#b4b4b4;stroke:#000;stroke-width:4.17px;"/>
+                        <rect x="583.818" y="1115.35" width="332.517" height="64.503" style="fill:#b4b4b4;stroke:#000;stroke-width:4.17px;"/>
+                        <rect x="583.818" y="1226.82" width="332.517" height="34.09" style="fill:#b4b4b4;stroke:#000;stroke-width:4.17px;"/>
+                        <rect x="583.818" y="1307.61" width="332.517" height="16.507" style="fill:#b4b4b4;stroke:#000;stroke-width:4.17px;"/>
+                        <text x="653.898px" y="354.417px" style="font-size:50px;">Program :</text>
+                        <text x="633.898px" y="424.417px" style="font-size:50px;">python.exe</text>
+                        <text x="696.402px" y="902.782px" style="font-size:50px;">Data :</text>
+                        <text x="606.402px" y="972.782px" style="font-size:50px;">Code Python</text>
+                     </g>
+                     <g id="CPU">
+                        <rect x="2.275" y="622.022" width="288.161" height="288.161" style="fill:#ebebeb;stroke:#000;stroke-width:4.17px;"/>
+                        <text x="94.341px" y="783.998px" style="font-size:50px;">CPU</text>
+                     </g>
+                  </g>
+               </svg>
+            </figure>
+         </div>
+      </div>
+   </section>
+   
+   <section>
+      <h2>Installation</h2>
+      <ul>
+         <li>Version actuelle: <span class='pyversion'>3.X.X</span></li>
+         <li>Télécharger sur <a href="https://www.python.org/downloads">python.org</a></li>
+         <li>Cocher la case <em>"Add Python <span class='pyshortversion'>3.X</span> to PATH"</em></li>
+      </ul>
+   </section>
+
+   <section>
+      <h2>Utilisation</h2>
+      <p>Mode interactif</p>
+      <div class="terminal">$> C:\bin\python.exe --version
+Python <span class='pyversion'>3.X.X</span>
+$> python
+Python <span class='pyversion'>3.X.X</span> ...
+Type "help", "copyright", "credits" or "license" for more information.
+>>> 1 + 1
+2
+>>> exit()
+$>
+&nbsp;
+&nbsp;</div>
+   </section>
+   <section>
+      <h2>Utilisation</h2>
+      <p>Mode script</p>
+      
+            <p class="file-title"><em style>hello.py</em></p>
+            <pre><code class='lang-python'>
+               print('Hello World')
+            </code></pre>
+         
+            <div class="terminal">$> python hello.py
+Hello World
+$>
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;</div>
+   </section>
+   <section>
+      <h2>Écrire des fichiers Python</h2>
+      <ul>
+         <li>Texte Brut</li>
+         <li>N'importe quel éditeur de texte</li>
+         <li>Nous utiliserons <strong>Visual Studio Code</strong></li>
+         <li>Télécharger: <a href="https://code.visualstudio.com">code.visualstudio.com</a></li>
+         <li>Ajouter l'extension ( icône
+               <svg width="0.9em" height="0.9em" viewBox="0 0 50 50">
+                  <rect x="2" y="8" width="20" height="20" ry="3" rx="3" style="fill:none;stroke:#000;stroke-width:3px;"/>
+                  <rect x="22" y="28" width="20" height="20" ry="3" rx="3" style="fill:none;stroke:#000;stroke-width:3px;"/>
+                  <rect x="2" y="28" width="20" height="20" ry="3" rx="3" style="fill:none;stroke:#000;stroke-width:3px;"/>
+                  <rect x="28" y="2" width="20" height="20" ry="3" rx="3" style="fill:none;stroke:#000;stroke-width:3px;"/>
+               </svg>
+            ) Python de Microsoft</li>
+      </ul>
+   </section>
+
+   <section class='code'>
+      <h2>Exemple de programme</h2>
+      <pre><code class='lang-python'>
+         from math import sqrt
+         
+         def bazooka(a, b, c):
+            delta = b**2 - 4*a*c
+            if delta &lt; 0:
+               return []
+            if delta == 0:
+               return [ -b/(2*a) ]
+            return [
+               (-b - sqrt(delta))/(2*a),
+               (-b + sqrt(delta))/(2*a)
+            ]
+
+         print(bazooka(1, -1, -2))
+         # [-1.0, 2.0]
+      </code></pre>
+   </section>
+
+   <section>
+      <h2>Valeurs et variables</h2>
+      <ul>
+         <li><strong>Une variable contient une valeur</strong></li>
+         <li>Une variable a un <strong>nom</strong></li>
+         <li>Le signe <strong>=</strong> sert à assigner une valeur à une variable</li>
+      </ul>
+      <pre><code class="lang-python">
+         a = 42
+      </code></pre>
+      <figure>
+         <svg width="50%" viewBox="0 0 1780 941" version="1.1">
+            <g>
+               <rect x="718.473" y="186.234" width="511.1" height="511.1" style="fill:none;stroke:#000;stroke-width:15.66px;"/>
+               <text x="435.195px" y="507.148px" style="font-family:'Consolas', monospace;font-size:266.667px;fill:#008802;">a</text>
+               <text x="832.291px" y="528.046px" style="font-family:'Consolas', monospace;font-size:266.667px;fill:#0053d8;">42</text>
+               <ellipse cx="916.27" cy="448.593" rx="556.47" ry="374.94" style="fill:none;stroke:#de0000;stroke-width:15.66px;"/>
+               <text x="1207.1px" y="72.482px" style="font-size:100px;fill:#de0000;">La variable</text>
+               <text x="1366.77px" y="895.116px" style="font-size:100px;fill:#0053d8;">La valeur</text>
+               <text x="-6.862px" y="728.803px" style="font-size:100px;fill:#008802;">Le nom</text>
+               <path d="M483.334,598.628l23.199,-35.414l23.767,35.035" style="fill:none;stroke:#008802;stroke-width:15.66px;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+               <path d="M359.8,693.598c138.621,-3.775 147.112,-42.337 146.733,-130.384" style="fill:none;stroke:#008802;stroke-width:15.66px;"/>
+               <path d="M950.341,624.014l24.803,-34.31l22.13,36.091" style="fill:none;stroke:#0053d8;stroke-width:15.66px;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+               <path d="M1333.51,859.91c-199.807,-4.867 -365.219,-12.486 -358.367,-270.206" style="fill:none;stroke:#0053d8;stroke-width:15.66px;"/>
+            </g>
+         </svg>
+      </figure>
+   </section>
+
+   <section>
+      <h2>Types de valeurs</h2>
+      <ul>
+         <li>Les entiers (<code>int</code>)
+            <pre><code class="lang-python">
+               a = 42 # littéral
+               a = 2 * 21 # expression
+            </code></pre>
+         </li>
+         <li>Les nombre à virgule flottante (<code>float</code>)
+            <pre><code class="lang-python">
+               a = 0.42 # littéral
+               a = 42e-2 # littéral en notation scientifique
+               a = 1 / 2 # expression
+            </code></pre>
+         </li>
+         <li>Les chaînes de caractères (<code>string</code>)
+            <pre><code class="lang-python">
+               a = "hello" # littéral
+               b = 2 * a + "!!" # expression
+            </code></pre>
+         </li>
+      </ul>
+   </section>
+
+   <section>
+      <h2>Types de valeurs</h2>
+      <ul>
+         <li>Les listes (<code>list</code>)
+            <pre><code class="lang-python">
+               a = [1, 2, 3] # littéral
+               b = [1, 2] + [3] # expression
+            </code></pre>
+         </li>
+         <li>Les booléens (<code>bool</code>)
+            <pre><code class="lang-python">
+               a = True # littéral
+               b = a or 5 &lt; 0 # expression
+            </code></pre>
+         </li>
+         <li><strong>Et bien d'autres...</strong></li>
+      </ul>
+   </section>
+
+   <section>
+      <h2>Opérations sur les nombres</h2>
+      <ul>
+         <li>Les opérateurs suivants sont définis pour <strong>les valeurs numériques</strong></li>
+      </ul>
+      <pre><code class="lang-python">
+         a = 1 + 2 # somme de deux nombres
+         a = 1 - 2 # différence de deux nombres
+         a = 2 * 2 # produit de deux nombres
+         a = 4 ** 2 # puissance de deux nombres
+         a = 4 / 2 # quotient de deux nombre
+         a = 5 // 2 # division entière
+         a = 5 % 2 # modulo, reste de la division entière
+      </code></pre>
+
+      <pre><code class="lang-python">
+         seconds = 265
+         print(seconds, 'secondes correspond à', seconds//60,
+            'minutes et', seconds%60, 'secondes')
+      </code></pre>
+   </section>
+
+   <section>
+      <h2>Opérations sur les séquences</h2>
+      <ul>
+         <li>Les chaînes de caractères et les listes sont des séquences.</li>
+         <li>L’opérateur <code>+</code> entre deux séquence permet de créer une nouvelle
+            séquence contenant les deux opérandes bout-à-bout
+            <small>On appelle cette opération la concaténation</small></li>
+         <li>L’opérateur <code>*</code> entre un entier <code>n</code> et une séquence permet de créer
+            une nouvelle séquence contenant <code>n</code> fois la séquence de départ.</li>
+      </ul>
+      <pre><code class="lang-python">
+         f = [1, 2] + [3, 4] # [1, 2, 3, 4]
+         g = 3 * "hello" # "hellohellohello"
+      </code></pre>
+   </section>
+
+   <section>
+      <h2>Conditions</h2>
+      <ul>
+         <li>Exécuter un bloc seulement si une condition est remplie
+            <pre><code class="lang-python">
+               note = -5
+               if note &lt; 0:
+                  print("notes négatives interdite !")
+                  note = 0
+               if note > 20:
+                  print("notes limitée à 20 !")
+                  note = 20
+               print('note =', note)
+            </code></pre>
+         </li>
+         <li><strong>Instruction bloc</strong> : L'entête fini par <code>:</code> et le bloc est <strong>indenté</strong> à droite</li>
+         <li>tabulations ou espaces pour l'indentation, <strong>doit être identique pour toutes les lignes du bloc</strong></li>
+      </ul>
+   </section>
+
+   <section>
+      <h2>Écrire la condition</h2>
+      <ul>
+         <li>Une condition est une expression <strong>à valeur booléenne</strong></li>
+         <li><strong>Comparaison</strong> de deux valeurs :
+            <ul>
+               <li>Égalité (<code>==</code>) et différence (<code>!=</code>)</li>
+               <li>Strictement plus grand/petit (<code>></code>, <code>&lt;</code>)</li>
+               <li>Plus grand/petit ou égal (<code>>=</code>, <code><=</code>)</li>
+            </ul>
+         </li>
+      </ul>
+      <pre><code class="lang-python">
+         a = 12 == 3 * 4 # a vaut True
+         b = "Eat" > "Drink" # b vaut True
+         c = a != b # c vaut False
+      </code></pre>
+   </section>
+
+   <section>
+      <h2>Opérateurs logique</h2>
+      <ul>
+         <li>Opérations sur des <strong>valeurs booléenne</strong></li>
+         <li>NON logique (<code>not</code>) inverse une valeur</li>
+         <li>ET logique (<code>and</code>) impose les deux expressions à <code>True</code></li>
+         <li>OU logique (<code>or</code>) nécessite une seule expression à <code>True</code></li>
+      </ul>
+      <table>
+         <tr>
+            <th><code>a</code></th>
+            <th><code>b</code></th>
+            <th><code>not a</code></th>
+            <th><code>a and b</code></th>
+            <th><code>a or b</code></th>
+         </tr>
+         <tr>
+            <td><code>False</code></td>
+            <td><code>False</code></td>
+            <td><code>True</code></td>
+            <td><code>False</code></td>
+            <td><code>False</code></td>
+         </tr>
+         <tr>
+            <td><code>False</code></td>
+            <td><code>True</code></td>
+            <td></td>
+            <td><code>False</code></td>
+            <td><code>True</code></td>
+         </tr>
+         <tr>
+            <td><code>True</code></td>
+            <td><code>False</code></td>
+            <td><code>False</code></td>
+            <td><code>False</code></td>
+            <td><code>True</code></td>
+         </tr>
+         <tr>
+            <td><code>True</code></td>
+            <td><code>True</code></td>
+            <td></td>
+            <td><code>True</code></td>
+            <td><code>True</code></td>
+         </tr>
+      </table>
+      <pre><code class="lang-python">
+         a = 8 > 2 and 12 <= 4 # a vaut False
+         b = 5 != 5 or 'PY' == 'P' + 'Y' # b vaut True
+      </code></pre>
+   </section>
+
+   <section>
+      <h2>Fonctions</h2>
+      <ul>
+         <li>Qu’est-ce que c’est ?
+            <small>C’est un sous-programme réutilisable</small>
+         </li>
+         <li>Comment les reconnaitre ?
+            <small>Grâce aux () qui suivent son nom</small>
+         </li>
+         <li>Un appel à une fonction <strong>a une valeur</strong>
+            <small>Elles peuvent être utilisée dans des expressions</small>
+         </li>
+      </ul>
+      <pre><code class="lang-python">
+         from math import cos
+         from cmath import sqrt
+         
+         x = cos(0)
+         y = sqrt(4) # racine carrée (complexe)
+         
+         # on peut entrer un string
+         s = input("Entrez un nombre: ")
+         v = int(s) # conversion de valeur
+         
+         # print vaut None
+         a = print("La réponse est " + str(42))
+         print(a)
+      </code></pre>
+   </section>
+
+   <section>
+      <h2>Nos fonctions</h2>
+      <ul>
+         <li>On peut définir nos propres fonctions
+            <pre><code class="lang-python">
+               def one():
+                  return 1
+            </code></pre>
+         </li>
+         <li>Le mot <code>def</code> sert à définir une fonction</li>
+         <li>Le mot <code>return</code> sert à indiquer la <strong>valeur</strong> de la fonction</li>
+         <li>La définition de fonction est une <strong>instruction bloc</strong></li>
+      </ul>
+   </section>
+
+   <section>
+      <h2>Paramètres de fonction</h2>
+      <ul>
+         <li>Une fonction peut prendre des <strong>paramètres</strong>
+            <pre><code class="lang-python">
+               def somme(a, b):
+                  return a + b
+               
+               print(somme(40, 2)) # affiche 42
+            </code></pre>
+         </li>
+         <li>les valeurs de l'appel sont <strong>assignées</strong> aux paramètres
+            <small>Comme s'il y avait un <code>=</code></small>
+         </li>
+      </ul>
+   </section>
+
+   <script>
+      fetch('https://endoflife.date/api/python.json')
+      .then(response => response.json())
+      .then(data => {
+         const version = data[0].latest
+         const shortVersion = version.split('.').slice(0, 2).join('.')
+         document.querySelectorAll('.pyversion').forEach(elem => {
+            elem.innerHTML = version
+         })
+         document.querySelectorAll('.pyshortversion').forEach(elem => {
+            elem.innerHTML = shortVersion
+         })
+      })
+   </script>
 </body>
 </html>
+<!--javascript: (function(){var unencodedURL = (location.href); var websiteURL = encodeURIComponent(unencodedURL); var url = 'https://web-capture.net/?url=' + websiteURL; window.open(url, 'web-capture.net','')})();-->
