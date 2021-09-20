@@ -1288,6 +1288,32 @@ $>
       </ul>
    </section>
 
+   <section class='code deck-only'>
+      <h2>Bazooka</h2>
+      <pre><code class="lang-python">
+         from math import sqrt
+         
+         def bazooka(a, b, c):
+            delta = b**2 - 4*a*c
+            if delta &lt; 0:
+               return []
+            if delta == 0:
+               return [ -b/(2*a) ]
+            return [
+               (-b - sqrt(delta))/(2*a),
+               (-b + sqrt(delta))/(2*a)
+            ]
+
+         print(bazooka(1, -1, -2))
+         # [-1.0, 2.0]
+      </code></pre>
+   </section>
+
+   <section class="deck-only">
+      <p class='center big'>N'oubliez de faire vos <a href="exercices1.zip">exercices</a> !</p>
+      <p class='center'>A remettre sur claco</p>
+   </section>
+
    <script>
       fetch('https://endoflife.date/api/python.json')
       .then(response => response.json())
