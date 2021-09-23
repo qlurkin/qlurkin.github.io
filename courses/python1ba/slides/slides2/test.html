@@ -13,108 +13,23 @@
 
 </head>
 <body>
-   <div id="drawing"></div>
+   <div id="drawing" style="font-size: 2em;"></div>
    <script type="module">
-      import {SVG, Polyline, Point} from 'https://cdnjs.cloudflare.com/ajax/libs/svg.js/3.1.1/svg.esm.min.js'
-      const draw = SVG().size(800, 800).addTo('#drawing')
-      /*const rect = draw.rect().size(200, 100).fill('#f06').radius(5)
-      const text = draw.text("Hello\nWorld").center(100, 50)
-      console.log(text.bbox().cx)
-
-      const rect2 = draw.rect().size(200, 100).fill('#f06').radius(5).move(300, 300)
-      const text2 = draw.text("Hello\nWorld").center(100+300, 50+300)
-
-      const point = new Point(1, 1)
-      console.log()*/
-
-      function sizeTo(elem, content) {
-         bbox = content.bbox()
-         elem.size(bbox.width, bbox.height)
-      }
-
-      function connect(start, end) {
-         const startPoint = [start.cx(), start.cy()]
-         const endPoint = [end.cx(), end.cy()]
-         const pl = draw.polyline([startPoint, endPoint]).fill('none').stroke({ color: 'black', width: 4, linecap: 'round', linejoin: 'round' })
-         start.before(pl)
-      }
-
-      function max(arr) {
-         console.log(arr)
-         return arr.reduce((a, b) => Math.max(a, b))
-      }
-
-      function Node() {
-         const content = []
-         const directions = ['right', 'left', 'top', 'bottom']
-         const opposite = {
-            right: 'left',
-            left: 'right',
-            top: 'bottom',
-            bottom: 'top'
-         }
-         
-         const neighbor = {
-            right: undefined,
-            left: undefined,
-            top: undefined,
-            bottom: undefined
-         }
-
-         function setNeighbor(dir, elem) {
-            if(left !== node) {
-               left = node
-               if(node !== undefined) {
-                  node.right(that)
-               }
-            }
-         }
-         
-         
-         const that = {
-            add: elem => {
-               content.push(elem)
-            },
-
-            width: () => {
-               return max(content.map(elem => elem.bbox().width))
-            },
-
-            height: () => {
-               return max(content.map(elem => elem.bbox().height))
-            },
-
-            left: node => {
-               if(left !== node) {
-                  left = node
-                  if(node !== undefined) {
-                     node.right(that)
-                  }
-               }
-            },
-            right: node => {
-               right = node
-               node.left(that)
-            },
-            top: node => {
-               top = node
-               node.bottom(that)
-            },
-            bottom: node => {
-               bottom = node
-               node.top(that)
-            }
-         }
-
-         return that
-      }
-
-      const node = Node()
-      node.add(draw.rect().size(200, 100))
-      node.add(draw.text("Hello World Hello World Hello World Hello World Hello World").move(200, 200))
-      console.log(node.width())
-
-      //connect(rect, rect2)
+      import {SVG, Point, connect, arrow, backArrow, drawClass, drawObject, drawVariable} from './uml.js'
+      const draw = SVG().viewbox(0, 0, 800, 800).addTo('#drawing').attr({
+         style: 'font-size: 12px; font-family: monospace',
+         width: '150%'
+      })
+      const rect1 = draw.rect().size(50, 26).center(100, 50).fill("red").stroke({color: 'black', width: 0})
+      const rect2 = draw.rect().size(50, 125).center(90, 200).fill("green").stroke({color: 'black', width: 0})
+      
+      const truc = drawClass(draw, "Truc", ["hello", "world"], ["Quentin", "Lurkin"], new Point(200, 200))
+      const variable = drawVariable(draw, "res", new Point(50, 200))
+      connect(draw, rect1, backArrow, truc, arrow)
+      connect(draw, variable, undefined, truc, arrow)
+      //textBox(draw, ["Hello", "world"], new Point(200, 200))
+      //draw.circle(5).center(200, 200).fill("red")
+      //draw.rect().size(truc.rbox(draw).width, truc.rbox(draw).height).center(truc.rbox(draw).cx, truc.rbox(draw).cy).fill("none").stroke({color: 'red'})
    </script>
 </body>
 </html>
