@@ -23,6 +23,11 @@ export function composition(context) {
    context.polygon([[-size, -size/2], [0, 0], [-size, +size/2], [-2*size, 0]]).fill('black').stroke({color: 'black'})
 }
 
+export function inheritance(context) {
+   const size = 5
+   context.polygon([[-size*1.6, -size], [0, 0], [-size*1.6, +size]]).fill('white').stroke({color: 'black'})
+}
+
 function extremity(context, origin, box, arrow) {
    const endRatio = box.height / box.width
    const deltaX = box.cx - origin.x
