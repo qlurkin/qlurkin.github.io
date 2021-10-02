@@ -4,19 +4,14 @@ var Deck = (function (exports) {
 	
 
 	function ___$insertStyle(css) {
-	  if (!css) {
-	    return;
-	  }
-	  if (typeof window === 'undefined') {
-	    return;
-	  }
-
-	  var style = document.createElement('style');
-
-	  style.setAttribute('type', 'text/css');
-	  style.innerHTML = css;
-	  document.head.appendChild(style);
-	  return css;
+	    if (!css || typeof window === 'undefined') {
+	        return;
+	    }
+	    const style = document.createElement('style');
+	    style.setAttribute('type', 'text/css');
+	    style.innerHTML = css;
+	    document.head.appendChild(style);
+	    return css;
 	}
 
 	const loadScript = url => new Promise(resolve => {
@@ -9370,8 +9365,13 @@ var Deck = (function (exports) {
 	}
 
 	function setModeBasedOnOrientation() {
-		if(screen.orientation.type.startsWith('portrait')) {
-			documentMode();
+		if(screen.orientation) {
+			if(screen.orientation.type.startsWith('portrait')) {
+				documentMode();
+			}
+			else {
+				deckMode();
+			}
 		}
 		else {
 			deckMode();
