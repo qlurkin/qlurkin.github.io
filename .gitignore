@@ -3,3 +3,4 @@ result.txt
 __pycache__
 node_modules
 .ipynb_checkpoints
+.DS_Store
