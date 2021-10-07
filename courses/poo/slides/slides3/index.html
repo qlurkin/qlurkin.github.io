@@ -521,6 +521,67 @@
     </section>
 
     <section>
+        <h2>Classe Object</h2>
+        <ul>
+            <li>La classe <code>Object</code> est la super-classe de tout le monde
+                <small>Racine de toutes les hiérarchies de classe</small>
+            </li>
+            <li>Contient plusieurs <strong>méthodes redéfinissables</strong> communes à tous
+                <ul>
+                    <li>Représentation d’un objet sous forme de chaine de caractères
+                        <pre><code class="lang-csharp">
+                            public virtual string ToString()
+                        </code></pre>
+                    </li>
+                    <li>Test de l’égalité de deux objets
+                        <pre><code class="lang-csharp">
+                            public virtual bool Equals (object obj)
+                        </code></pre>
+                    </li>
+                    <li>Obtention d’un code de hachage pour l’objet
+                        <pre><code class="lang-csharp">
+                            public virtual int GetHashCode()
+                        </code></pre>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Classe Object</h2>
+        <ul>
+            <li>Classe permettant de représenter des paires d’entiers
+                <small>Redéfinition des méthodes Equals et ToString</small>
+            </li>
+        </ul>
+        <pre><code class="lang-csharp">
+            public class IntPair
+            {
+                private readonly int x, y;
+
+                // [...]
+
+                public override bool Equals(object obj)
+                {
+                    if(obj == null || GetType () != obj.GetType ())
+                    {
+                        return false;
+                    }
+
+                    IntPair p = (IntPair) obj;
+                    return x == p.x && y == p.y;
+                }
+
+                public override string ToString()
+                {
+                    return String.Format("({0}, {1})", x, y);
+                }
+            }
+        </code></pre>
+    </section>
+
+    <section>
         <h2>Surcharge de méthode</h2>
         <ul>
             <li>Plusieurs méthodes peuvent avoir le <strong>même nom</strong>
@@ -536,7 +597,7 @@
 
             public static void Kill(string target)
             {
-                this(target, new CrossBow());
+                Kill(target, new CrossBow());
             }
         </code></pre>
     </section>
@@ -805,67 +866,6 @@
                 <small>En rassemblant les membres communs dans la super-classe</small>
             </li>
         </ul>
-    </section>
-
-    <section>
-        <h2>Classe Object</h2>
-        <ul>
-            <li>La classe <code>Object</code> est la super-classe de tout le monde
-                <small>Racine de toutes les hiérarchies de classe</small>
-            </li>
-            <li>Contient plusieurs <strong>méthodes redéfinissables</strong> communes à tous
-                <ul>
-                    <li>Représentation d’un objet sous forme de chaine de caractères
-                        <pre><code class="lang-csharp">
-                            public virtual string ToString()
-                        </code></pre>
-                    </li>
-                    <li>Test de l’égalité de deux objets
-                        <pre><code class="lang-csharp">
-                            public virtual bool Equals (object obj)
-                        </code></pre>
-                    </li>
-                    <li>Obtention d’un code de hachage pour l’objet
-                        <pre><code class="lang-csharp">
-                            public virtual int GetHashCode()
-                        </code></pre>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </section>
-
-    <section>
-        <h2>Classe Object</h2>
-        <ul>
-            <li>Classe permettant de représenter des paires d’entiers
-                <small>Redéfinition des méthodes Equals et ToString</small>
-            </li>
-        </ul>
-        <pre><code class="lang-csharp">
-            public class IntPair
-            {
-                private readonly int x, y;
-
-                // [...]
-
-                public override bool Equals(object obj)
-                {
-                    if(obj == null || GetType () != obj.GetType ())
-                    {
-                        return false;
-                    }
-
-                    IntPair p = (IntPair) obj;
-                    return x == p.x && y == p.y;
-                }
-
-                public override string ToString()
-                {
-                    return String.Format("({0}, {1})", x, y);
-                }
-            }
-        </code></pre>
     </section>
 </body>
 </html>
