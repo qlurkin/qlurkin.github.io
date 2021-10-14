@@ -315,11 +315,132 @@
     </section>
 
     <section>
-        <h2>map, filter, reduce</h2>
+		<h2>Fonctions d'ordre supérieur</h2>
+		<ul>
+            <li>Les fonctions prenant une fonction en paramètre s'appelle des <strong>fonctions d'ordre supérieur</strong>.</li>
+            <li>Il en existe pour effectuer les traitements les plus courant sur les listes</li>
+			<li>
+				présentons trois types de traitement courant:
+				<ul>
+					<li>Correspondance (<code>map</code>)</li>
+					<li>Filtrage (<code>filter</code>)</li>
+					<li>Réduction (<code>reduce</code>)</li>
+				</ul>
+			</li>
+		</ul>
+	</section>
+
+    <section>
+		<h2>Correspondance</h2>
+		<ul>
+			<li>Produire une donnée pour chaque élément d'une liste</li>
+			<li>Le résultat est une liste de même taille que la liste de départ.</li>
+		</ul>
+		<pre><code class="lang-python">
+            def square(L):
+                res = []
+                for elem in L:
+                    res.append(elem**2)
+                return res
+		</code></pre>
+		<ul>
+			<li>Seul le contenu du <code>append()</code> est spécifique.</li>
+		</ul>
+	</section>
+
+    <section>
+		<h2>Fonction <code>map()</code></h2>
+		<ul>
+			<li>Factorisons la partie commune:</li>
+		</ul>
+		<pre><code class="lang-python">
+            def square(x):
+                return x**2
+
+            print(map(square, [2, 3, 4]))
+		</code></pre>
+        <div class="terminal">
+            [4, 9, 16]
+        </div>
+	</section>
+
+    <section>
+		<h2>Filtrage</h2>
+		<ul>
+			<li>Garder une partie des éléments de départ</li>
+			<li>Le résultat est une liste plus petite que la liste de départ. <small>Elle peut aussi être de même taille</small></li>
+		</ul>
+		<pre><code class="lang-python">
+            def even(L):
+                res = []
+                for elem in L:
+                    if elem % 2 == 0:
+                        res.append(elem)
+                return res
+		</code></pre>
+		<ul>
+			<li>Seul le test du <code>if</code> est spécifique.</li>
+		</ul>
+	</section>
+
+    <section>
+		<h2>Fonction <code>filter()</code></h2>
+		<ul>
+			<li>Factorisons la partie commune:</li>
+		</ul>
+		<pre><code class="lang-python">
+            def even(x):
+                return x % 2 == 0
+
+            print(filter(even, [2, 3, 4]))
+		</code></pre>
+        <div class="terminal">
+            [2, 4]
+        </div>
+	</section>
+
+    <section>
+		<h2>Réduction</h2>
+		<ul>
+			<li>Produire une valeur à partir de la liste entière</li>
+			<li>Le résultat est une valeur</li>
+		</ul>
+		<pre><code class="lang-python">
+            def sum(L):
+                res = 0
+                for elem in L:
+                    res = res + elem
+                return res
+		</code></pre>
+		<ul>
+			<li>Seuls la valeur initiale de <code>res</code> et le contenu du <code>for</code> sont spécifiques.</li>
+		</ul>
+	</section>
+
+    <section>
+		<h2>Fonction <code>reduce()</code></h2>
+		<ul>
+			<li>Factorisons la partie commune:</li>
+		</ul>
+		<pre><code class="lang-python">
+            from functools import reduce
+
+            def add(a, b):
+                return a + b
+
+            print(reduce(add, [2, 3, 4], 0))
+		</code></pre>
+        <div class="terminal">
+            9
+        </div>
+	</section>
+
+    <section>
+        <h1>Division de problème</h1>
     </section>
 
     <section>
-        <h2>Divisions de problèmes</h2>
+        <h2>Division de problème</h2>
         <ul>
             <li>Les <strong>longs</strong> programmes ne sont pas toujours faciles à comprendre.</li>
         </ul>
@@ -425,6 +546,10 @@
     </section>
 
     <section>
+        <h1>Fonctions récursives</h1>
+    </section>
+
+    <section>
         <h2>Fonctions récursives</h2>
         <ul>
             <li>Une fonction peut <strong>s'appeler elle-même</strong>.
@@ -465,5 +590,10 @@
                 return fact(n - 1) * n   # cas récursif
         </code></pre>
     </section>
+
+    <section class="deck-only">
+        <p class='center big'>N'oubliez de faire vos <a href="exercices4.zip">exercices</a> !</p>
+        <p class='center'>A remettre sur claco</p>
+     </section>
 </body>
 </html>
