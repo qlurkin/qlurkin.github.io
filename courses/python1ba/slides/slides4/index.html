@@ -357,7 +357,7 @@
             def square(x):
                 return x**2
 
-            print(map(square, [2, 3, 4]))
+            print(list(map(square, [2, 3, 4])))
 		</code></pre>
         <div class="terminal">
             [4, 9, 16]
@@ -392,7 +392,7 @@
             def even(x):
                 return x % 2 == 0
 
-            print(filter(even, [2, 3, 4]))
+            print(list(filter(even, [2, 3, 4])))
 		</code></pre>
         <div class="terminal">
             [2, 4]
