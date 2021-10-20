@@ -1,91 +1,76 @@
-# This code is UGLY
-
-import os
-import re
-from collections import namedtuple
+import fs
+from os.path import basename, join, splitext
 import json
-import posixpath
+import copy
+import importlib
 
-Tree = namedtuple('Tree', ['title', 'children', 'link'])
-Index = {}
+class BuildSiteError(Exception):
+    pass
 
-def cleanTree(tree:Tree):
-	toRemove = []
-	for child in tree.children:
-		
-		cleanTree(child)
+importedDriver = {}
 
-		if len(child.children) == 0 and child.link is None:
-			toRemove.append(child)
+def getIndex(path, files):
+    indices = list(filter(lambda name: basename(name).startswith('index'), files))
+    if len(indices) > 1:
+        raise BuildSiteError('Multiple Index in Folder {}'.format(path))
+    if len(indices) > 0:
+        return indices[0]
+    return None
 
-	for child in toRemove:
-		tree.children.remove(child)
+def updateConfig(path, config, fs):
+    config = copy.deepcopy(config)
+    if 'buildDir' not in config:
+        print('yop')
+        config['buildDir'] = 'build'
+    config['buildDir'] = join(config['buildDir'], basename(path))
+    configPath = join(path, '.config.json')
+    try:
+        update = json.loads(fs.read(configPath))
+        config.update(update)
+    except FileNotFoundError:
+        pass
+    return config
 
-def printTree(tree:Tree):
-	
-	def _show(T:Tree, level):
-		print('{}- {}'.format('   '*level, T.title))
-		for child in T.children:
-			_show(child, level+1)
-	
-	_show(tree, 0)
+def processIndex(index, children, config, fs):
+    if index is None:
+        extension = 'none'
+    else:
+        _, extension = splitext(index)
+        extension = extension[1:]
 
-def renderTree(tree:Tree):
-	res = tree.title
-	if tree.link is not None:
-		res = '<a href="{}">{}</a>'.format(tree.link, res)
-	if len(tree.children) > 0:
-		res += '<ul>{}</ul>'.format(''.join(('<li>{}</li>'.format(renderTree(child)) for child in tree.children)))
-	return res
+    if extension not in importedDriver:
+        importedDriver[extension] = importlib.import_module(extension+'-driver')
+    
+    return importedDriver[extension].process(index, children, config, fs)
 
-ignore = [
-	'__pycache__',
-	'node_modules',
-	'.vscode',
-	'.git',
-	'.ignore'
-]
+def copyFiles(files, dst, fs):
+    for file in files:
+        fs.copy(file, dst)
 
-pattern = r'<title>([^<]+)</title>'
-regex = re.compile(pattern)
+def buildFolder(path, config, fs):
+    files, directories = fs.listdir(path)
+    index = getIndex(path, files)
+    config = updateConfig(path, config, fs)
+    print(config)
+    if not fs.exists(config['buildDir']):
+        fs.mkdir(config['buildDir'])
+    else:
+        fs.clean(config['buildDir'])
+    
+    print(directories)
+    children = []
+    for directory in directories:
+        children.append(buildFolder(directory, config, fs))
 
-with open('template.html', encoding='utf8') as file:
-	template = file.read()
+    print(config)
+    print(index)
+    fileToCopy = list(filter(lambda file: file != index, files))
+    print('toCopy =', fileToCopy)
+    copyFiles(fileToCopy, config['buildDir'], fs)
+    data = processIndex(index, children, config, fs)
+    data['children'] = children
+    return data
 
-for root, dirs, files in os.walk(os.path.join('.', 'courses')):
-	if os.path.basename(root) in ignore:
-		continue
-	title = None
-	parent = os.path.dirname(root)
-	if 'config.json' in files:
-		with open(os.path.join(root, 'config.json'), encoding='utf8') as file:
-			config = json.load(file)
-			if 'title' in config:
-				title = config['title']
-	if 'index.html' in files:
-		if title is None:
-			with open(os.path.join(root, 'index.html'), encoding='utf8') as file:
-				content = file.read()
-				title = regex.search(content)
-				if title is None:
-					title = os.path.basename(root)
-				else:
-					title = title.group(1).strip()
-		link = posixpath.join('.', os.path.relpath(root, os.path.join('.', 'courses')), 'index.html')
-		tree = Tree(title, [], link)
-	else:
-		if title is None:
-			title = os.path.basename(root)
-		tree = Tree(title, [], None)
 
-	Index[root] = tree
-	if parent in Index:
-		Index[parent].children.append(tree)
-
-theTree = Index[os.path.join('.', 'courses')]
-cleanTree(theTree)
-printTree(theTree)
-
-with open(os.path.join('.', 'courses', 'index.html'), 'w', encoding='utf8') as file:
-	file.write(template.format(renderTree(theTree)))
-
+if __name__ == '__main__':
+    print(buildFolder('courses', {}, fs))
