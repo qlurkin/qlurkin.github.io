@@ -3,7 +3,7 @@ from os.path import join, basename
 import template as tpl
 
 def process(index, children, config, fs):
-    pageTemplate = tpl.load('page')
+    template = tpl.load('page')
     
     content = fs.read(index)
     md = markdown.Markdown(extensions=['extra', 'meta', 'codehilite'])
@@ -20,7 +20,7 @@ def process(index, children, config, fs):
                 break
 
     outputPath = join(config['buildDir'], 'index.html')
-    fs.write(outputPath, pageTemplate.substitute(content=html, title=title))
+    fs.write(outputPath, template.render(content=html, title=title))
     
     return {
         'title': title,

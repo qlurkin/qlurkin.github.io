@@ -1,7 +1,9 @@
-from string import Template
-import fs
-from os.path import join
+from jinja2 import Environment, FileSystemLoader, select_autoescape
+
+env = Environment(
+    loader=FileSystemLoader("templates"),
+    autoescape=select_autoescape()
+)
 
 def load(name):
-    content = fs.read(join('templates', name+'.html'))
-    return Template(content)
+    return env.get_template(name+'.html')
