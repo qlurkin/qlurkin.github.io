@@ -47,6 +47,13 @@ def copyFiles(files, dst, fs):
     for file in files:
         fs.copy(file, dst)
 
+def removeConfig(toRemove, config):
+    config = copy.deepcopy(config)
+    for item in toRemove:
+        if item in config:
+            del(config[item])
+    return config
+
 def buildFolder(path, config, fs):
     files, directories = fs.listdir(path)
     index = getIndex(path, files)
@@ -57,8 +64,9 @@ def buildFolder(path, config, fs):
         fs.clean(config['buildDir'])
     
     children = []
+    cleanedConfig = removeConfig(['title'], config)
     for directory in directories:
-        children.append(buildFolder(directory, config, fs))
+        children.append(buildFolder(directory, cleanedConfig, fs))
 
     fileToCopy = list(filter(lambda file: file != index, files))
     copyFiles(fileToCopy, config['buildDir'], fs)
