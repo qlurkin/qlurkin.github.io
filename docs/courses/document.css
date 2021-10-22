@@ -1,0 +1,155 @@
+@import url('https://fonts.googleapis.com/css?family=Lora|Source+Code+Pro&display=swap');
+
+@page {
+	margin: 2cm;
+}
+
+body {
+	font-family:  'Lora', serif;
+	counter-reset: section;
+	max-width: 40rem;
+	margin: auto;
+	font-size: 12pt;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-rendering: optimizeLegibility;
+	background-color: white;
+}
+
+h1 {
+	font-weight: normal;
+	font-size: 2.5rem;
+	text-align: center;
+	margin: 3.236rem 0 2rem 0;
+}
+
+h1 > small {
+	display: block;
+	color: darkgray;
+	font-size: 0.6em;
+}
+
+h2, h3, h4, h5, h6 {
+	margin: 1.618rem 0 1rem 0;
+}
+
+h2 {
+	font-size: 1.5rem;
+	counter-reset: subsection;
+}
+h2:before {
+	content: counter(section) "\0000a0\0000a0";
+	counter-increment: section;
+}
+h2.nocount:before {
+	content: none;
+	counter-increment: none;
+}
+
+h3 {
+	counter-reset: subsubsection;
+}
+h3:before {
+	content: counter(section) "." counter(subsection) "\0000a0\0000a0";
+	counter-increment: subsection;
+}
+h3.nocount:before {
+	content: none;
+	counter-increment: none;
+}
+
+h4:before {
+	content: counter(section) "." counter(subsection) "." counter(subsubsection) "\0000a0\0000a0";
+	counter-increment: subsubsection;
+}
+h4.nocount:before {
+	content: none;
+	counter-increment: none;
+}
+
+p {
+	text-align: justify;
+	margin: 1rem 0 1rem 0;
+}
+
+ul {
+	list-style-type: none;
+}
+
+ul > li {
+	position: relative;
+	margin: 0.6em 0;
+}
+
+ul > li::before {
+	content: "\2014\a0";
+	position: absolute;
+	left: -1.5em;
+}
+
+ol > li {
+	margin: 0.6em 0;
+}
+
+li {
+	text-align: justify;
+}
+
+figure {
+	max-width: 100%;
+	margin: 1rem auto 1rem auto;
+	text-align: center;
+}
+
+figure > img {
+	width: 100%;
+}
+
+figure > figcaption {
+	text-align: center;
+}
+
+.right {
+	text-align: right;
+}
+
+.break-before {
+	page-break-before: always;
+}
+
+.break-after {
+	page-break-after: always;
+}
+
+code.wrap {
+	white-space: pre-wrap !important;
+}
+
+.center {
+	text-align: center;
+}
+
+body pre.prettyprint {
+	padding: 1rem;
+	border-radius: 2px;
+	font-size: 90%;
+	
+}
+
+code {
+	font-family: 'Source Code Pro', monospace;
+	font-size: 87.5%;
+	color: #e83e8c;
+}
+
+h1, h2, h3, h4, h5, h6, pre, table, img {
+	break-inside: avoid-page;
+}
+
+/* hack that avoid page break after h2 et h3 */
+h1::after, h2::after, h3::after {
+	content: "";
+	display: block;
+	height: 100px;
+	margin-bottom: -100px;
+}

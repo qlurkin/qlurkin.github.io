@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Interface graphique et évènements</title>
+	<script src="https://quentin.lurkin.xyz/deck.js"></script>
+	<style>
+		pre > code {
+			font-size: 75% !important;
+		}
+	</style>
+</head>
+<body>
+	<section>
+		<h1>Interface graphique et évènements</h1>
+		<p>Quentin Lurkin</p>
+	</section>
+	<section>
+		<h2>Rappels</h2>
+		
+		<ul>
+			<li>
+				Définition d'une <strong>classe</strong> 
+				
+				<ul>
+					<li>
+						Définition d'une classe (variable d'instance et constructeur)
+					</li>
+					<li>
+						Définition d'un constructeur et instanciation d'un objet
+					</li>
+					<li>
+						Définition de méthode et appel
+					</li>
+				</ul>
+			</li>
+			<li>
+				Concepts de <strong>programmation orientée objet</strong> 
+				
+				<ul>
+					<li>
+						Représentation d'un objet avec <code>__str__</code>
+					</li>
+					<li>
+						Surcharge d'opérateur
+					</li>
+					<li>
+						Égalité des objets (<code>==</code>) et des identités (<code>is</code>)
+					</li>
+					<li>
+						Accesseur et mutateur
+					</li>
+				</ul>
+			</li>
+		</ul>
+		
+		
+	</section>
+	<section>
+		<h2>Objectifs</h2>
+		
+		
+		<ul>
+			<li>
+				<strong>Interface graphique</strong> 
+				
+				<ul>
+					<li>
+						Construction d'une interface graphique avec <code class="lang-python">Kivy</code>
+					</li>
+					<li>
+						Widgets graphiques
+					</li>
+				</ul>
+			</li>
+			<li>
+				Programmation <strong>évènementielle</strong> 
+				
+				<ul>
+					<li>
+						Boucle d'évènements
+					</li>
+					<li>
+						Action et gestionnaire d'évènements
+					</li>
+					<li>
+						Canvas et dessin
+					</li>
+				</ul>
+			</li>
+		</ul>
+		
+		
+	</section>
+	<section class="full">
+		<h2>Interfaces graphiques</h2>
+		<img src="images/1934375123_c7326ad4dd_o.jpg" alt="">
+	</section>
+	<section>
+		<h2>Librairie Kivy</h2>
+		
+		<ul>
+			<li>
+				Framework open-source pour créer des <strong>interfaces utilisateur</strong> 
+				
+				<small>Application desktop ou mobile, jeux...</small>
+			</li>
+			<li>
+				Plusieurs <strong>avantages</strong> offerts par la librairie 
+				
+				<ul>
+					<li>
+						Multi-plateforme (Linux, Windows, OS X, Android, iOS)
+					</li>
+					<li>
+						Framework stable, API documentée...
+					</li>
+					<li>
+						Moteur graphique basé sur OpenGL ES 2 (utilisation du GPU)
+					</li>
+				</ul>
+			</li>
+			<li>
+				<code class="lang-python">Kivy</code> est disponible sur <code>https://kivy.org</code>
+			</li>
+		</ul>
+		
+		
+	</section>
+	<section>
+		<h2>Graphical User Interface (1)</h2>
+		
+		
+		<ul>
+			<li>
+				Utilisation de la <strong>librairie graphique Kivy</strong> pour les GUI 
+				
+				<small>Importation de <code>kivy.app</code> et <code>kivy.uix.*</code></small>
+			</li>
+			<li>
+				Création d'une <strong>fenêtre</strong> en définissant une classe 
+				
+				<small>Méthode <code>build</code> permet de construire l'interface</small>
+			</li>
+		</ul>
+		
+		
+		
+		<pre><code class="lang-python">
+			from kivy.app import App
+			from kivy.uix.label import Label
+			
+			class HelloApp(App):
+				def build(self):
+					return Label(text='Hello World!', font_size='100sp')
+			
+			HelloApp().run()
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Graphical User Interface (2)</h2>
+		
+		<figure>
+			<img src="images/kivy-hello-world.png" alt="" class="zoom">
+		</figure>
+		
+	</section>
+	<section>
+		<h2>Widget</h2>
+		
+		
+		<ul>
+			<li>
+				Interface graphique construite à partir de <strong>widgets</strong> 
+				
+				<small>Composants tels que label, bouton, fenêtre, liste, case à cocher...</small>
+			</li>
+			<li>
+				Widgets placés <strong>les uns dans les autres</strong> 
+				
+				<small>Chaque composant a un composant parent</small>
+			</li>
+		</ul>
+
+		<div class="columns">
+			<div class="left">
+				<figure>
+					<img src="images/nested-components.png" alt="">
+				</figure>
+			</div>
+			<div class="right">
+				<figure>
+					<img src="images/splitted-frame.png" alt="">
+				</figure>
+			</div>
+		</div>
+	</section>
+	<section>
+		<h2>Hiérarchie de Widget</h2>
+		
+		
+		<ul>
+			<li>
+				<strong>Liens entre les composants</strong> d'une fenêtre comme un arbre 
+				
+				<small>Hiérarchie des relations de filiation des widgets</small>
+			</li>
+			<li>
+				Un composant possède un <strong>parent et une liste de fils</strong> 
+				
+				<small>L'organisation visuelle dépend du type de parent</small>
+			</li>
+		</ul>
+
+		<figure>
+			<img src="images/component-hierarchy.png" alt="" class="third">
+		</figure>
+		
+	</section>
+	<section>
+		<h2>Composants de base (1)</h2>
+		
+		
+		<ul>
+			<li>
+				Un <strong>label</strong> est une zone de texte non modifiable 
+				
+				<small>Permet d'afficher du texte pour information à l'utilisateur</small>
+			</li>
+			<li>
+				Une <strong>zone de texte</strong> permet à l'utilisateur d'entrer un texte 
+				
+				<small>Permet de récupérer une information de l'utilisateur</small>
+			</li>
+			<li>
+				Un <strong>bouton</strong> peut être cliqué 
+				
+				<small>Permet de réagir à une action de l'utilisateur</small>
+			</li>
+		</ul>
+		
+		<figure>
+			<img src="images/kivy-form-example.png" alt="" class="half">
+		</figure>
+		
+	</section>
+	<section>
+		<h2>Composants de base (2)</h2>
+		
+		
+		<pre><code class="lang-python">
+			from kivy.app import App
+			from kivy.config import Config 
+			from kivy.uix.boxlayout import BoxLayout
+			from kivy.uix.button import Button
+			from kivy.uix.label import Label
+			from kivy.uix.textinput import TextInput
+			
+			class LoginApp(App):
+				def build(self):
+					self.title = 'Se connecter'
+					box = BoxLayout(orientation='horizontal')
+					box.add_widget(Label(text='Pin code'))
+					box.add_widget(TextInput())
+					box.add_widget(Button(text='Entrer'))
+					return box
+			
+			# Configuration de la taille de la fenêtre
+			Config.set('graphics', 'width', '350') 
+			Config.set('graphics', 'height', '50')
+			
+			# Lancement de l'interface graphique
+			LoginApp().run()
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>BoxLayout</h2>
+		
+		
+		<ul>
+			<li>
+				Un <strong>box layout</strong> n'a aucun rendu graphique 
+				
+				<small>Uniquement utilisé pour y stocker d'autres composants</small>
+			</li>
+			<li>
+				<strong>Ajout d'un composant</strong> à l'aide de la méthode <code>add_widget</code> 
+				
+				<ul>
+					<li>
+						Les composants sont ajoutés l'un à la suite de l'autre
+					</li>
+					<li>
+						Organisation horizontale ou verticale des composants
+					</li>
+				</ul>
+			</li>
+		</ul>
+		
+		
+		
+		<pre><code class="lang-python">
+			box = BoxLayout(orientation='horizontal')
+			box.add_widget(Label(text='Pin code'))
+			box.add_widget(TextInput())
+			box.add_widget(Button(text='Entrer'))
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Gestionnaire de mise en page</h2>
+		
+		
+		<ul>
+			<li>
+				Plusieurs composants de gestion de <strong>mise en page</strong> 
+				
+				<ul>
+					<li>
+						<code>BoxLayout</code> aligne horizontalement ou verticalement
+					</li>
+					<li>
+						<code>GridLayout</code> organise sous forme de lignes et colonnes
+					</li>
+					<li>
+						<code>FloatLayout</code> permet un positionnement absolu
+					</li>
+				</ul>
+			</li>
+			<li>
+				On peut combiner plusieurs <strong>conteneurs</strong> 
+				
+				<small>Pour créer une mise en page complexe</small>
+			</li>
+		</ul>
+		
+		
+	</section>
+	<section>
+		<h2>GridLayout (1)</h2>
+		
+		
+		<ul>
+			<li>
+				Organisation des composants fils sous forme d'une <strong>grille</strong> 
+				
+				<ul>
+					<li>
+						Choix fixe du nombre de lignes (<code>rows</code>) et colonnes (<code>cols</code>)
+					</li>
+					<li>
+						Composants fils ajoutés de haut en bas, de gauche à droite
+					</li>
+				</ul>
+			</li>
+		</ul>
+		
+		<figure>
+			<img src="images/kivy-gridgame.png" alt="" class="third">
+		</figure>
+	</section>
+	<section>
+		<h2>GridLayout (2)</h2>
+		
+		
+		<pre><code class="lang-python">
+			class GridGameApp(App):
+				def build(self):
+					self.title = 'Grid Game'
+					grid = GridLayout(rows=3, cols=4)
+					for i in range(12):
+						grid.add_widget(Button(text=str(i + 1)))
+					return grid
+		</code></pre>
+		
+		<figure>
+			<img src="images/kivy-gridgame.png" alt="" class="third">
+		</figure>
+		
+	</section>
+	<section>
+		<h2>FloatLayout (1)</h2>
+		
+		
+		<ul>
+			<li>
+				Organisation des composants fils de <strong>manière libre</strong> 
+				
+				<ul>
+					<li>
+						Précision de la coordonnée de positionnement (<code>pos</code>)
+					</li>
+					<li>
+						La coordonnée \((0, 0)\) est le coin inférieur gauche
+					</li>
+				</ul>
+			</li>
+		</ul>
+		
+		<figure>
+			<img src="images/kivy-free-positioning.png" alt="" class="third">
+		</figure>
+		
+	</section>
+	<section>
+		<h2>FloatLayout (2)</h2>
+		
+		
+		<pre><code class="lang-python">
+			class FreePosApp(App):
+				def build(self):
+					self.title = 'Free Positioning'
+					box = FloatLayout(size=(200, 150))
+					box.add_widget(Button(text='A', size_hint=(0.3, 0.2), pos=(0, 0)))
+					box.add_widget(Button(text='B', size_hint=(0.3, 0.2), pos=(50, 80)))
+					return box
+		</code></pre>
+		
+		<figure>
+			<img src="images/kivy-free-positioning.png" alt="" class="third">
+		</figure>
+		
+	</section>
+	<section>
+		<h2>Application graphique</h2>
+		
+		
+		<ul>
+			<li>
+				Code d'une <strong>application graphique</strong> placé dans une classe 
+				
+				<small>La classe doit être "de type" <code>App</code></small>
+			</li>
+			<li>
+				Lancement de l'application par <strong>la méthode <code>run</code></strong>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			from kivy.app import App
+			
+			class LoginApp(App):
+				pass
+			
+			LoginApp().run()
+		</code></pre>
+		
+	</section>
+	<section class="full">
+		<h2>Programmation évènementielle</h2>
+		<img src="images/15529452622_73c699ab21_k.jpg" alt="">
+	</section>
+	<section>
+		<h2>Boucle d'évènement</h2>
+		
+		
+		<ul>
+			<li>
+				Des <strong>évènements</strong> sont produits par l'utilisateur 
+				
+				<small>Il faut associer les évènements à un gestionnaire</small>
+			</li>
+		</ul>
+		
+		
+		
+		<figure>
+			<img src="images/eventloop.svg" alt="" class="half">
+		</figure>
+		
+	</section>
+	<section>
+		<h2>Gestionnaire d'évènement (1)</h2>
+		
+		
+		<ul>
+			<li>
+				Pour <strong>traiter un évènement</strong>, il faut lui associer un gestionnaire 
+				
+				<small>Une portion de code à exécuter lorsque l'évènement se produit</small>
+			</li>
+			<li>
+				Intervention de <strong>trois éléments</strong> 
+				
+				<ul>
+					<li>
+						La source de l'évènement (un widget)
+					</li>
+					<li>
+						L'évènement à proprement parler (clic, pression de touche...)
+					</li>
+					<li>
+						Le gestionnaire d'évènements (le code à exécuter)
+					</li>
+				</ul>
+			</li>
+			<li>
+				<strong>Informations complémentaires</strong> selon l'évènement 
+				
+				<small>Coordonnées pour un clic de souris, touche pour une pression...</small>
+			</li>
+		</ul>
+		
+		
+	</section>
+	<section>
+		<h2>Gestionnaire d'évènement (2)</h2>
+		
+		
+		<ul>
+			<li>
+				Associer une <strong>fonction à une action</strong> d'un composant 
+				
+				<small>Via la méthode <code>bind</code> du widget</small>
+			</li>
+		</ul>
+		
+		
+		<pre><code class="lang-python">
+			class QuitApp(App):
+				def build(self):
+					self.title = 'Quit me'
+					box = AnchorLayout(anchor_x='center', anchor_y='center')
+					quit = Button(text='Quitter', size_hint=(0.7,0.3))
+					quit.bind(on_press=self._quit)
+					box.add_widget(quit)
+					return box
+			
+				def _quit(self, source):
+					sys.exit(0)
+		</code></pre>
+		
+	</section>
+	<section>
+		<h2>Gestionnaire d'évènement (3)</h2>
+		
+		
+		<ul>
+			<li>
+				<strong>Exécution</strong> de la fonction associée lors de l'évènement 
+				
+				<small>Ici, lors du clic sur le bouton quitter</small>
+			</li>
+		</ul>
+		
+		<figure>
+			<img src="images/kivy-quit-me.png" alt="" class="third">
+		</figure>
+	</section>
+		<section>
+			<h2>Exemple: calculateur d'age (1)</h2>
+			
+			<figure>
+				<img src="images/kivy-age-calculator.png" alt="" class="fourth3">
+			</figure>
+			
+		</section>
+		<section>
+			<h2>Exemple: calculateur d'age (2)</h2>
+			
+			<pre><code class="lang-python">
+				class AgeCalculatorApp(App):
+					def build(self):
+						self.title = 'Age Calculator'
+						box = BoxLayout(orientation='vertical')
+						line1 = BoxLayout(orientation='horizontal')
+						line1.add_widget(Label(text="Année de naissance"))
+						self.input = TextInput(multiline=False)
+						line1.add_widget(self.input)
+						box.add_widget(line1)
+						self.output = Label()
+						box.add_widget(self.output)
+						self.input.bind(on_text_validate=self._compute)
+						return box
+			</code></pre>
+		</section>
+		<section>
+			<h2>Exemple: calculateur d'age (3)</h2>
+			
+			<pre><code class="lang-python">
+				class AgeCalculatorApp(App):
+				
+					# [...]
+					
+					def _compute(self, source):
+						year = int(self.input.text)
+						self.output.text = str(2019 - year)
+			</code></pre>
+			
+			
+		</section>
+		<section>
+			<h2>Crédits</h2>
+			
+			<ul>
+				<li>
+					https://www.flickr.com/photos/silvertje/1934375123
+				</li>
+				<li>
+					https://www.flickr.com/photos/125720812@N02/15529452622
+				</li>
+			</ul>	
+	</section>
+	
+</body>
+</html>
+									

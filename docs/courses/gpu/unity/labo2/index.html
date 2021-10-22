@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Génération de géométrie & Compute Shaders</title>
+	<script src="https://quentin.lurkin.xyz/document.js"></script>
+</head>
+<body>
+	<h1>GPU - Labo2 <small>Génération de géométrie & Compute Shaders</small></h1>
+	<h2>Introduction</h2>
+	<p>Dans ce labo, nous allons :</p>
+	<ul>
+		<li>Utiliser un script pour générer un <em>Mesh</em>,</li>
+		<li>Utiliser un <em>Compute Shader</em> pour mettre à jour la position des sommets du <em>Mesh</em>.</li>
+		<li>Vous pourrez utiliser ce qui a été vu au labo précédent pour personnaliser le matériau du <em>Mesh</em>.</li>
+	</ul>
+	<h2>Génération du <em>Mesh</em></h2>
+	<p>Pour afficher un objet dans un moteur 3D comme Unity, il faut 4 choses:</p>
+	<ul>
+		<li>Une camera: nous avons vu comment la projection de caméra est calculée.</li>
+		<li>Un <em>Mesh</em>: c'est un ensemble de triangles à afficher.</li>
+		<li>Une transformation: c'est une translation, rotation et mise à l'échelle qui sert à positioner le <em>Mesh</em> dans l'espace monde.</li>
+		<li>Un matériau: Il sert à définir comment la surface du <em>Mesh</em> s'affiche (<em>Vertex</em> et <em>Fragment Shaders</em>).</li>
+	</ul>
+	<p>Pour générer un <em>Mesh</em> nous devront générer des triangles. Ces triangles sont composés de trois <em>vertices</em> (pluriel de <em>vertex</em>)</p>
+	<p>Vous pouvez regarder <a href="https://www.youtube.com/watch?v=eJEpeUH1EMg">cette vidéo</a> pour avoir une introduction sur la manière de créer un <em>Mesh</em> en C# dans Unity.</p>
+	<p>On vous demande ensuite de créer un plan subdivisé comme celui-ci:</p>
+	<figure>
+		<img src="mesh.png">
+		<figcaption>Plan subdivisé</figcaption>
+	</figure>
+	<p>Le nombre de segments sur chaque côtés sera controlé par un attribut publique de votre classe basée sur <em>MonoBehaviour</em>. Les attributs publiques des scripts sont directement paramétrables depuis l'interface de Unity:</p>
+	<figure>
+		<img src="mesh_segments.png" style="width: 20em; max-width: 100%;">
+		<figcaption>Interface de Unity</figcaption>
+	</figure>
+
+	<h2>Compute Shader</h2>
+	<p>Un <em>Compute Shader</em> est un programme qui s'exécute sur le GPU et indépendamment de l'affichage.</p>
+	<p>Pour une introduction sur les <em>Compute Shader</em> vous pouvez lire <a href="https://medium.com/@simonalbou/lusage-de-compute-shaders-sur-unity-un-gain-de-performance-violent-54c1b0f72698">cet article</a>.</p>
+	<p>Vous pouvez ensuite créer un <em>Compute Shader</em> pour assigner une coordonnée <code>y</code> à chaque <em>vertex</em> de votre <em>Mesh</em>. Essayez d'obtenir ceci:</p>
+	<figure>
+		<img src="ripple.png">
+		<figcaption>Cosinus de la distance au centre</figcaption>
+	</figure>
+	<p>Pour les plus courageux, il est même possible d'animer l'onde en implémentant la méthode <code>Update</code> de votre classe basée sur <em>MonoBehaviour</em>. On peut récupérer la durée de la <em>frame</em> en cours avec</p>
+	<pre>
+		<code class="lang-cs">
+			Time.deltaTime
+		</code>
+	</pre>
+	<p>Et il est possible de passer des paramètres au <em>Compute shader</em> dans un <em>ComputeBuffer</em> supplémentaire.</p>
+</body>
+</html>

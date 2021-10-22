@@ -1,0 +1,12 @@
+body {
+	background-color: #eee;
+	padding: 1rem;
+	margin: 0;
+}
+
+h1 {
+	margin: -1rem -1rem 1rem -1rem;
+	padding: 1rem;
+	background-color: blueviolet;
+	color: cornsilk;
+}

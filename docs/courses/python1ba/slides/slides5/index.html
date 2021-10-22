@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>IC1T - Synthèse</title>
+	<script src="https://quentin.lurkin.xyz/deck.js"></script>
+</head>
+<body>
+	<section>
+		<h1>IC1T - Synthèse</h1>
+		<p><a href="mailto://lur@ecam.be">Quentin Lurkin</a></p>
+	</section>
+	<section>
+		<h2>But de l'informatique</h2>
+		<ul>
+			<li>Automatiser le traitement de l'information <small>D'où le nom "informatique"</small></li>
+			<li>Appliquer un traitement à une importante quantité de données</li>
+			<li>Dans le code, on va donc répéter des opérations sur des collections de données. <small>Faire des boucles sur des listes</small></li>
+		</ul>
+	</section>
+	
+	<section>
+		<h2>Types de traitement</h2>
+		<ul>
+			<li>Les différents traitements sur les listes se ressemble beaucoup.</li>
+			<li>
+				présentons trois types de traitement courant:
+				<ul>
+					<li>Correspondance (<code>map</code>)</li>
+					<li>Filtrage (<code>filter</code>)</li>
+					<li>Réduction (<code>reduce</code>)</li>
+				</ul>
+			</li>
+		</ul>
+	</section>
+
+	<section>
+		<h2>Correspondance</h2>
+		<ul>
+			<li>Produire une donnée pour chaque élément d'une liste</li>
+			<li>Le résultat est une liste de même taille que la liste de départ.</li>
+		</ul>
+		<h3>Exemple:</h3>
+		<pre>
+			<code class="lang-python">
+				def square(L):
+					res = []
+					for elem in L:
+						res.append(elem**2)
+					return res
+			</code>
+		</pre>
+		<ul>
+			<li>Seul le contenu du <code>append()</code> est spécifique.</li>
+		</ul>
+	</section>
+
+	<section>
+		<h2>Fonction <code>map()</code></h2>
+		<ul>
+			<li>Factorisons la partie commune:</li>
+		</ul>
+		<pre>
+			<code class="lang-python">
+				def map(fn, L):
+					res = []
+					for elem in L:
+						res.append(fn(elem))
+					return res
+
+				def square(x):
+					return x**2
+
+				print(map(square, [2, 3, 4]))
+			</code>
+		</pre>
+	</section>
+
+	<section>
+		<h2>Attention</h2>
+		<ul>
+			<li>Evitez de modifier la liste que vous recevez.</li>
+			<li>On perd la liste de départ</li>
+		</ul>
+		<pre>
+			<code class="lang-python">
+				def badSquare(L):
+					for i in range(len(L)):
+						L[i] = L[i]**2
+					return L
+
+				L = [1, 2, 3]
+				res = badSquare(L)
+				print("L:", L)
+				print("res:", res)
+			</code>
+		</pre>
+	</section>
+
+	<section>
+		<h2>Filtrage</h2>
+		<ul>
+			<li>Garder une partie des éléments de départ</li>
+			<li>Le résultat est une liste plus petite que la liste de départ. <small>Elle peut aussi être de même taille</small></li>
+		</ul>
+		<h3>Exemple:</h3>
+		<pre>
+			<code class="lang-python">
+				def even(L):
+					res = []
+					for elem in L:
+						if elem % 2 == 0:
+							res.append(elem)
+					return res
+			</code>
+		</pre>
+		<ul>
+			<li>Seul le test du <code>if</code> est spécifique.</li>
+		</ul>
+	</section>
+
+	<section>
+		<h2>Fonction <code>filter()</code></h2>
+		<ul>
+			<li>Factorisons la partie commune:</li>
+		</ul>
+		<pre>
+			<code class="lang-python">
+				def filter(fn, L):
+					res = []
+					for elem in L:
+						if fn(elem):
+							res.append(elem)
+					return res
+
+				def even(x):
+					return x % 2 == 0
+
+				print(filter(even, [2, 3, 4]))
+			</code>
+		</pre>
+	</section>
+
+	<section>
+		<h2>Réduction</h2>
+		<ul>
+			<li>Produire une valeur à partir de la liste entière</li>
+			<li>Le résultat est une valeur</li>
+		</ul>
+		<h3>Exemple:</h3>
+		<pre>
+			<code class="lang-python">
+				def sum(L):
+					res = 0
+					for elem in L:
+						res = res + elem
+					return res
+			</code>
+		</pre>
+		<ul>
+			<li>Seuls la valeur initiale de <code>res</code> et le contenu du <code>for</code> sont spécifiques.</li>
+		</ul>
+	</section>
+
+	<section>
+		<h2>Fonction <code>reduce()</code></h2>
+		<ul>
+			<li>Factorisons la partie commune:</li>
+		</ul>
+		<pre>
+			<code class="lang-python">
+				def reduce(fn, L, init):
+					res = init
+					for elem in L:
+						res = fn(res, elem)
+					return res
+
+				def add(a, b):
+					return a + b
+
+				print(reduce(add, [2, 3, 4], 0))
+			</code>
+		</pre>
+	</section>
+
+	<section>
+		<h2><code>reduce()</code> peut tout faire</h2>
+		<ul>
+			<li>
+				Correspondance
+				<pre>
+					<code class="lang-python">
+						def appendSquare(L, elem):
+							return L.append(elem**2)
+		
+						print(reduce(appendSquare, [1, 2, 3], []))
+					</code>
+				</pre>
+			</li>
+			<li>
+				Filtrage
+				<pre>
+					<code class="lang-python">
+						def appendIfEven(L, elem):
+							if elem % 2 == 0
+								L.append(elem)
+							return L
+		
+						print(reduce(appendIfEven, [1, 2, 3], []))
+					</code>
+				</pre>
+			</li>
+			<li>Mais il est plus facile d'utiliser <code>map()</code> et <code>filter()</code>.</li>
+		</ul>
+	</section>
+
+	<section>
+		<h2>Existe déjà dans Python</h2>
+		<ul>
+			<li>
+				<code>map()</code> et <code>filter()</code> existent déjà en Python. <small>Attention ! leurs résultats doivent être convertis en liste</small>
+				<pre>
+					<code class='lang-python'>
+						res = list(map(square, [2, 4, 6]))
+					</code>
+				</pre>
+			</li>
+			<li><code>reduce()</code> existe dans le module <code>functools</code></li>
+		</ul>
+	</section>
+
+	<section>
+		<h2>Exercice de préparation au projet</h2>
+		<p>Créer un programme avec une interface dans le terminal. Le programme devra proposer un menu avec 2 fonctionnalités:</p>
+		<ul>
+			<li>Enregistrer une valeur</li>
+			<li>calculer la somme des valeurs enregistrées</li>
+		</ul>
+		<p>Toutes les interactions avec l'utilisateur se passe avec des <code>input()</code> et des <code>print()</code>.</p>
+	</section>
+
+	<section>
+		<h2>Solution</h2>
+		<pre>
+			<code class="lang-python">
+				from functools import reduce
+
+				numbers = []
+
+				def addNumber(n):
+					numbers.append(n)
+
+				def add(a, b):
+					return a + b
+
+				def somme():
+					return reduce(add, numbers, 0)
+
+				def menu():
+					print("MENU")
+					print("  1. Enregistrer un nombre")
+					print("  2. Calculer la somme")
+					print("  3. Sortir du programme")
+					choice = input("Faites votre choix: ")
+					return choice
+
+				def addForm():
+					addNumber(float(input("Votre nombre: ")))
+
+				def showSomme():
+					print("Somme:", somme())
+
+				def mainloop():
+					while True:
+						choice = menu()
+						if choice == "1":
+							addForm()
+						elif choice == "2":
+							showSomme()
+						elif choice == "3":
+							print("Bye!")
+							break
+						else:
+							print("Réponse invalide")
+
+				mainloop()
+			</code>
+		</pre>
+	</section>
+</body>
+</html>

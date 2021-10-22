@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>AI5L Lab 3 - TensorFlow</title>
+	<script src="https://quentin.lurkin.xyz/document.js"></script>
+	<style>
+		pre>code {
+			font-size: 85% !important;
+		}
+	</style>
+</head>
+<body>
+	<h1>TensorFlow <small>AI5L - Lab 3</small></h1>
+
+	<h2>What is TensorFlow</h2>
+
+	<p>
+		TensorFlow is a very powerful and open source library for implementing and deploying large-scale machine learning models. It is composed of two core building blocks: a library for defining <strong>computational graphs</strong> and a runtime for executing such graphs on a variety of different hardware.
+	</p>
+
+	<p>
+		A computational graph is an abstract way of describing computations as a directed graph. In such a graph nodes represent operations and edges represent <strong>values (tensors)</strong> that <strong>flows</strong> from one operation to the next. For example, the following code :
+	</p>
+
+	<pre><code class="lang-python">
+		a = 42
+		b = 3
+		prod = a * b
+		sum = a + b
+		res = prod / sum
+		print(res)
+	</code></pre>
+
+	<p>
+		can be represented by the following graph :
+	</p>
+
+	<figure>
+		<img src="./graph-example.svg" alt="">
+	</figure>
+
+	<p>
+		This representation has multiple advantages. First it is language independent. Tensorflow let export and import graphs in different languages (with <a href="https://developers.google.com/protocol-buffers/">protocol buffers</a>). Second, it make easy to perform parallelism. For example, in the example above, it is obvious that the <code>prod</code> and <code>add</code> operations can be executed in parallel.
+	</p>
+
+	<p>
+		Here is the above graph writen with the Python module of TensorFlow :
+	</p>
+
+	<pre><code class="lang-python">
+		import tensorflow as tf
+
+		# Constructing the graph
+		a = tf.constant(42, name='a')
+		b = tf.constant(3, name='b')
+		prod = tf.multiply(a, b, name='prod')
+		sum = tf.add(a, b, name='add')
+		res = tf.divide(prod, sum, name='res')
+
+		# Executing the graph
+		tf.print(res)
+	</code></pre>
+
+	<p>
+		Writing code by constructing graph is cumbersome. In TensorFlow 2, you can compile a function into a TensorFlow graph by using a simple decorator :
+	</p>
+
+	<pre><code class="lang-python">
+		@tf.function
+		def fun():
+			a = 42
+			b = 3
+			return (a*b)/(a+b)
+
+		tf.print(fun())
+	</code></pre>
+
+	<h2>Build a model</h2>
+
+	<p>
+		In a nutshell, a model is just something that make a prediction based on some input and some parameters. In machine learning, our goal is to adjust the parameters to have good predictions on all the possible inputs of a particular problem.
+	</p>
+
+	<p>
+		In TensorFlow 2, a model is a function and its arguments are the inputs of the model. For parameters, TensorFlow 2 uses <code>tf.Variable</code>. Here is an example of linear model :
+	</p>
+
+	<pre><code class="lang-python">
+		m = tf.Variable(1.0, name='m')
+		p = tf.Variable(1.0, name='p')
+
+		@tf.function
+		def linear(x):
+			return m*x + p
+	</code></pre>
+
+	<p>
+		You can use that model to make predictions :
+	</p>
+
+	<pre><code class="lang-python">
+		# tf.functions take tf.Tensor as arguments
+		# with scalar
+		tf.print(linear(tf.constant(1.0)))
+
+		# and with list
+		tf.print(linear(tf.constant([2.0, 3.0, 6.0])))
+	</code></pre>
+
+	<h2>Train a Model</h2>
+
+	<p>
+		the purpose of training is to find the values of the model's parameters that fit predictions to known expected values. To do that we need a way to evaluate the likeliness between predictions and expected values. This is the loss function :
+	</p>
+
+	<pre><code class="lang-python">
+		@tf.function
+		def loss_function(expected_output, output):
+			return (expected_output - output) ** 2
+	</code></pre>
+
+	<p>
+		To know how to change the models parameters, we need to compute the gradient of the loss function. TensorFlow provide <code>tf.GradientTape</code> to do that :
+	</p>
+
+	<pre><code class="lang-python">
+		# Compute gradient of x² for x = 3
+		x = tf.Variable(3.0)
+
+		with tf.GradientTape() as tape:
+			y = x**2
+
+		dy_dx = tape.gradient(y, x)
+		tf.print(dy_dx)     # print 6
+	</code></pre>
+
+	<p>
+		Then we must use that gradient to change the parameters :
+	</p>
+
+	<pre><code class="lang-python">
+		@tf.function
+		def train_step(input_value, expected_output):
+			with tf.GradientTape() as tape:
+				loss = loss_function(expected_output, linear(input_value))
+			grads = tape.gradient(loss, [m, p])
+			
+			# We descent of 1 hundredth of the gradient
+			m.assign_sub(0.01*grads[0])
+			p.assign_sub(0.01*grads[1])
+	</code></pre>
+
+	<p>
+		From now we need data to train. We can create some :
+	</p>
+
+	<pre><code class="lang-python">
+		import numpy as np
+		import matplotlib.pyplot as plt
+		
+		# tf.functions expect float32
+		# we create 100 data points
+		# we use m=0.5 and p=2
+		input_values = np.float32(np.random.rand(100)*2)
+		expected_outputs = np.float32(0.5*input_values + 2 + (np.random.rand(100)*0.1-0.05))
+
+		# display data points
+		plt.scatter(input_values, expected_outputs, label='data')
+		plt.show()
+	</code></pre>
+
+	<figure>
+		<img src="./linear_data.png" alt="">
+	</figure>
+
+	<p>
+		Don't forget that TensorFlow Graphs accept Tensors which can contains multiple data. Let's organize our data into batch (10 batch of 10 data points)
+	</p>
+
+	<pre><code class="lang-python">
+		input_values_batches = np.reshape(input_values, (10, 10))
+		expected_outputs_batches = np.reshape(expected_outputs, (10, 10))
+	</code></pre>
+
+	<p>
+		Now its time to train our model. We'll pass multiple times (epoch) through all batch :
+	</p>
+
+	<pre><code class="lang-python">
+		# We'll record values for p and m to plot their evolutions
+		p_values = []
+		m_values = []
+		for epoch in range(15):
+			for input_value, expected_output in zip(input_values_batches, expected_outputs_batches):
+				train_step(input_value, expected_output)
+				p_values.append(p.numpy())
+				m_values.append(m.numpy())
+		
+		# display final values
+		tf.print('p =', p)   # p = 1.97727704
+		tf.print('m =', m)   # m = 0.521407127
+
+		# plot values evolution during the training
+		plt.plot(m_values, label='m')
+		plt.plot(p_values, label='p')
+		plt.legend()
+		plt.show()
+	</code></pre>
+
+	<figure>
+		<img src="./linear_training.png" alt="">
+	</figure>
+
+	<p><strong>This was the long way to train a linear regression :D</strong></p>
+	<p>
+		But now you what Graphs, Tensors, Operations, GradientTape, batch and epoch are. A lot of what we've done can be simplified using TensorFlow APIs but now you understand how TensorFlow works. It works the same with models made of thousands of neurons.
+	</p>
+
+	
+	<h2>Now we can simplify</h2>
+
+	<p>Update of parameters with the gradient can be performed by optimizers. The SGD optimizer is equivalent to what we've done before.</p>
+
+	<pre><code class="lang-python">
+		#define once outside the training loop
+		optimizer = tf.keras.optimizers.SGD(0.01)
+
+		# In the loop
+		# m.assign_sub(0.01*grads[0])
+		# p.assign_sub(0.01*grads[1])
+		optimizer.apply_gradients(zip(grads, [m, p]))
+	</code></pre>
+
+	<p>
+		We can simplify the loss function :
+	</p>
+
+	<pre><code class="lang-python">
+		# @tf.function
+		# def loss_function(input_value, expected_output):
+		# 	return (expected_output - output) ** 2
+		loss_function = tf.losses.MeanSquaredError()
+
+		# with this one, we can optimize faster
+		#optimizer = tf.keras.optimizers.SGD(0.01)
+		optimizer = tf.keras.optimizers.SGD(0.1)
+	</code></pre>
+
+	<p>
+		To create the model, we can subclass <code>tf.keras.Model</code>
+	</p>
+
+	<pre><code class="lang-python">
+		class Linear(tf.keras.Model):
+			def __init__(self):
+				super(Linear, self).__init__()
+				self.m = tf.Variable(1.0, name='m')
+				self.p = tf.Variable(1.0, name='p')
+
+			def call(self, x):
+				return self.m * x + self.p
+
+		model = Linear()
+	</code></pre>
+
+	<p>
+		Train such a model is simpler :
+	</p>
+
+	<pre><code class="lang-python">
+		model.compile(
+			optimizer = tf.keras.optimizers.SGD(0.1),
+			loss=tf.keras.losses.MeanSquaredError()
+		)
+
+		model.fit(
+			input_values,
+			expected_outputs,
+			batch_size = 10,
+			epochs = 15
+		)
+
+		tf.print("model.m=", model.m)
+		tf.print("model.p=", model.p)
+
+		plt.scatter(input_values, expected_outputs, label='data')
+		plt.plot([0, 2], [model.p, model.m*2+model.p])
+		plt.show()
+	</code></pre>
+
+	<figure>
+		<img src="./linear_trained.png" alt="">
+	</figure>
+
+	<h2>MNIST With TensorFlow</h2>
+
+	<p>You can try to create a model for the MNIST Dataset by following <a href="https://www.tensorflow.org/tutorials/quickstart/advanced">these instructions</a></p>
+
+	<h2>Credits</h2>
+	<ul>
+		<li><a href="https://d3lm.medium.com/understand-tensorflow-by-mimicking-its-api-from-scratch-faa55787170d">Understand TensorFlow by mimicking its API from scratch</a></li>
+		<li><a href="https://www.tensorflow.org/">Official Documentation</a></li>
+	</ul>
+</body>
+</html>

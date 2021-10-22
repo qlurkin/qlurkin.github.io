@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>PI2C - IA</title>
+	<script src="https://quentin.lurkin.xyz/deck.js"></script>
+	<style>
+		li > ul {
+			margin-top: 0.5em;
+		}
+
+		.mode-deck section.code::before {
+			position: fixed;
+			background-color: #f0f0f0;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			content: '';
+			z-index: 10;
+			display: block;
+		}
+		.mode-deck section.code>* {
+			z-index: 100;
+		}
+
+		.mode-deck section.code h2 {
+			z-index: 1000;
+			background-color: #555;
+			
+		}
+
+		.mode-deck section.code {
+			width: 95%;
+		}
+
+		.mode-deck section.code::after {
+			content: '';
+			position: fixed;
+			top: 0;
+			left: 0;
+			bottom: 0;
+			width: 3%;
+			background-color: #bbb;
+			z-index: 20;
+		}
+	</style>
+</head>
+<body>
+	<section>
+		<h1>PI2C - Types abstraits de données, Recherche, Théorie des jeux</h1>
+	</section>
+
+	<section>
+		<h2>Types abstraits de données</h2>
+		<ul>
+			<li><strong>Type abstrait de données</strong> (TAD) spécifie mathématiquement
+				<ul>
+					<li>Un ensemble de données</li>
+					<li>Les opérations qu’on peut effectuer</li>
+				</ul>
+			</li>
+			<li>Correspond à un <strong>cahier des charges</strong> <small>Implémentation du CDC par une structure de données</small></li>
+			<li><strong>Plusieurs implémentations possibles</strong> pour un même TAD <small>Se différencient par la complexité calculatoire et spatiale</small></li>
+		</ul>
+	</section>
+	<section>
+		<h2>File</h2>
+		<ul>
+			<li>Séquence de type <strong>First-in First-out</strong> (FIFO)
+				<small>Le premier élément qui a été ajouté sera le premier à sortir</small>
+			</li>
+			<li>Opérations possibles:
+				<ul>
+					<li><code>size</code>: donne la taille de la file</li>
+					<li><code>isEmpty</code>: teste si la file est vide</li>
+					<li><code>front</code>: récupère l’élément en début de file</li>
+					<li><code>enqueue</code>: ajoute un élément en fin de file</li>
+					<li><code>dequeue</code>: retire l’élément en début de file</li>
+				</ul>
+			</li>
+		</ul>
+		<figure>
+			<img src="./queue.png" class="third2">
+		</figure>
+	</section>
+	<section>
+		<h2>Pile</h2>
+		<ul>
+			<li>Séquence de type <strong>Last-in First-out</strong> (LIFO)
+				<small>Le dernier élément qui a été ajouté sera le premier à sortir</small>
+			</li>
+			<li>Opérations possibles:
+				<ul>
+					<li><code>size</code>: donne la taille de la pile</li>
+					<li><code>isEmpty</code>: teste si la pile est vide</li>
+					<li><code>top</code>: récupère l’élément en haut de la pile</li>
+					<li><code>push</code>: ajoute un élément en haut de la pile</li>
+					<li><code>pop</code>: retire l’élément en haut de la pile</li>
+				</ul>
+			</li>
+		</ul>
+		<figure>
+			<img src="./stack.png" class="half">
+		</figure>
+	</section>
+	<section>
+		<h2>Arbre</h2>
+		<ul>
+			<li>Éléments d’un <strong>arbre</strong> organisés de manière hiérarchique
+				<small>Un arbre est un ensemble de nœuds (qui contiennent les valeurs)</small>
+			</li>
+			<li>Chaque nœud possède un <strong>parent</strong> et zéro ou plusieurs <strong>enfants</strong>
+				<small>Sauf la racine de l’arbre qui n’a pas de parent</small>
+			</li>
+		</ul>
+		<figure>
+			<img src="./tree.png">
+		</figure>
+	</section>
+	<section>
+		<h2>Définition récursive</h2>
+		<ul>
+			<li><strong>Deux cas</strong> possibles pour définir un arbre
+				<ul>
+					<li>Un arbre vide (sans enfants)</li>
+					<li>Un nœud avec un élément et une liste de sous-arbres</li>
+				</ul>
+			</li>
+		</ul>
+		<figure>
+			<img src="./tree-example.png" class="third2">
+		</figure>
+		<ul>
+			<li><strong>Opérations</strong> possibles
+				<ul>
+					<li><code>size</code>: donne la taille de l’arbre</li>
+					<li><code>value</code>: récupère la valeur stockée à la racine de l’arbre</li>
+					<li><code>children</code>: récupère la liste des sous-arbres enfants de la racine</li>
+					<li><code>addChild</code>: ajoute un sous-arbre comme enfant à la racine</li>
+				</ul>
+			</li>
+		</ul>
+	</section>
+
+	<section class='code'>
+		<h2>Tree</h2>
+		<pre><code>
+			import copy
+
+			class Tree :
+				def __init__ (self, value, children=[]):
+					self.__value = value
+					self.__children = copy.deepcopy(children)
+
+				@property
+				def value(self):
+					return self.__value
+
+				@property
+				def children(self):
+					return copy.deepcopy(self.__children)
+
+				def addChild (self, tree):
+					self.__children.append(tree)
+
+				@property
+				def size(self):
+					result = 1
+					for child in self.__children:
+						result += child.size
+					return result
+
+				def __getitem__(self, index):
+					return self.__children[index]
+
+				def __str__(self):
+					def _str (tree, level):
+						result = '[{}]\n'.format(tree.__value)
+						for child in tree.children:
+							result += '{}|--{}'.format(' ' * level, _str(
+							child, level + 1))
+						return result
+					return _str(self, 0)
+					
+
+			t1 = Tree(-9)
+			t2 = Tree(25, [t1])
+			t3 = Tree(12)
+			t4 = Tree(14)
+			
+			t = Tree(11, [t2, t3, t4])
+		</code></pre>
+	</section>
+
+	<section>
+		<h1>Recherche</h1>
+	</section>
+	<section>
+		<h2>Etat</h2>
+		<ul>
+			<li>L'<strong>état</strong> d’un système le décrit à un instant donné
+				<small>Typiquement décrit par un ensemble de variables avec leur valeur</small>
+			</li>
+			<li><strong>Modification de l’état</strong> selon le type d’environnement
+				<small>Environnement de type discret ou continu</small>
+			</li>
+			<li>Au départ, le système est dans un état initial</li>
+		</ul>
+	</section>
+	<section>
+		<h2>Action</h2>
+		<ul>
+			<li>Une <strong>action</strong> est effectuée sur l’environnement
+				<small>Modification de l’état de l’environnement suite à l’action</small>
+			</li>
+			<li>Ensemble d'<strong>actions possibles</strong>  pour chaque état
+				<small>Des actions peuvent être indisponibles dans certains états</small>
+			</li>
+			<li>Définition d’une action par une <strong>fonction successeur</strong></li>
+		</ul>
+		<figure>
+			<img src="./action.png" class="half">
+		</figure>
+	</section>
+	<section>
+		<h2>Robot nettoyeur</h2>
+		<ul>
+			<li><strong>Robot</strong> dans une pièce à nettoyer
+				<small>Démarre de sa base et doit y retourner après avoir tout inspecté</small>
+			</li>
+			<li>Description de l'<strong>état</strong> composée de deux éléments
+				<ul>
+					<li>Contenu de chaque case (robot, déchet)</li>
+					<li>Direction courante du robot</li>
+				</ul>
+			</li>
+		</ul>
+		<figure>
+			<img src="./robot.png" style='width: 15%'>
+		</figure>
+	</section>
+	<section>
+		<h2>Robot nettoyeur: actions</h2>
+		<ul>
+			<li><strong>Quatre actions</strong> possibles
+				<ul>
+					<li><code>move</code> avance d’une case dans la direction courante</li>
+					<li><code>left</code> tourne sur lui-même de 90 degrés vers la gauche</li>
+					<li><code>right</code> tourne sur lui-même de 90 degrés vers la droite</li>
+					<li><code>clean</code> nettoie la case sur laquelle il se trouve</li>
+				</ul>
+			</li>
+			<li>L’objectif est d’avoir nettoyé toutes les cases
+				<small>Et d’éventuellement être revenu à la case de départ</small>
+			</li>
+		</ul>
+		<figure>
+			<img src="./robot.png" style='width: 15%'>
+		</figure>
+	</section>
+	<section>
+		<h2>Arbre d'exécution</h2>
+		<ul>
+			<li>L'<strong>arbre d’exécution</strong> reprend toutes les exécutions possibles
+				<small>Cet arbre peut éventuellement être infini</small>
+			</li>
+			<li>État dans les <strong>nœuds</strong> et actions sur les <strong>arêtes</strong>
+				<small>Nombre maximum de fils correspond au nombre d’actions</small>
+			</li>
+			<li>Un <strong>chemin</strong> dans l’arbre représente une exécution donnée
+				<small>L’arbre représente donc bien toutes les exécutions</small>
+			</li>
+		</ul>
+		<figure>
+			<img src="./robot-tree.png" style='width: 75%'>
+		</figure>
+	</section>
+	<section>
+		<h2>Espace d'états</h2>
+		<ul>
+			<li>Représentation compacte sous forme d’un <strong>graphe</strong>
+				<small>On ne duplique plus les états égaux</small>
+			</li>
+			<li><strong>Espace d’états</strong> complètement défini par
+				<ul>
+					<li>l’état initial</li>
+					<li>et la fonction successeur</li>
+				</ul>
+			</li>
+			<li>Un <strong>chemin</strong> dans le graphe représente une exécution donnée
+				<small>Une boucle indique une exécution infinie possible</small>
+			</li>
+		</ul>
+		<figure>
+			<img src="./robot-graph.png" class="third2">
+		</figure>
+	</section>
+	<section>
+		<h2>Coût et objectif</h2>
+		<ul>
+			<li>Possibilité d’ajouter un <strong>coût</strong> pour les actions
+				<small>Coût pour effectuer une action qui mène d’un état à un autre</small>
+			</li>
+			<li><strong>Minimiser coût</strong> du chemin d’exécution de la solution
+				<small>Différence entre solution et solution optimale</small>
+			</li>
+			<li>L’<strong>objectif</strong> est l’ensemble des états à atteindre
+				<small>Une solution est un chemin de l’état initial à un objectif</small>
+			</li>
+		</ul>
+	</section>
+	<section>
+		<h2>Solution</h2>
+		<ul>
+			<li>La <strong>solution optimale</strong> pour le robot fait six actions
+				<small>Cette solution n’est pas unique</small>
+			</li>
+		</ul>
+		<figure>
+			<img src="./robot-solution.png" alt="">
+		</figure>
+	</section>
+	<section>
+		<h2>Algorithme de recherche</h2>
+		<ul>
+			<li>Quatre critères pour évaluer les <strong>performances d’un algorithme</strong>
+				<ul>
+					<li><strong>Complétude</strong> : l’algorithme trouve-t-il toujours une solution ?</li>
+					<li><strong>Optimalité</strong> : la solution trouvée est-elle la meilleure ?</li>
+					<li><strong>Complexité temporelle</strong> : temps pour trouver la solution</li>
+					<li><strong>Complexité spatiale</strong> : mémoire pour trouver la solution</li>
+				</ul>
+			</li>
+			<li>Selon la situation, certains critères seront <strong>ignorés</strong>
+				<small>Parfois, l’algorithme boucle et ne termine donc jamais</small>
+			</li>
+		</ul>
+	</section>
+	<section>
+		<h2>Recherche non informée</h2>
+		<ul>
+			<li>Recherche <strong>non informée</strong> ou recherche aveugle
+				<small>Exploration complète de l’espace d’états</small>
+			</li>
+			<li>Recherche basée uniquement sur la <strong>définition du problème</strong>
+				<ul>
+					<li>Génération d’états avec la fonction successeur</li>
+					<li>Test de si un état fait partie de l’objectif ou non</li>
+				</ul>
+			</li>
+			<li>Distinction entre algorithmes selon l’<strong>ordre d’exploration</strong>
+				<small>Peut conduire à atteindre plus ou moins vite une solution</small>
+			</li>
+		</ul>
+	</section>
+	<section>
+		<h2>Breadth-First Search</h2>
+		<ul>
+			<li>Exploration successives des successeurs <strong>en largeur</strong>
+				<small>D’abord les successeurs d’un nœuds avant leurs successeurs...</small>
+			</li>
+			<li>Exploration de l’arbre d’exécution <strong>par niveaux</strong>
+				<small>Algorithme complet, mais pas forcément optimal</small>
+			</li>
+		</ul>
+		<figure>
+			<img src="./breadth-first.png" alt="">
+		</figure>
+		<ul>
+			<li><strong>Complexité temporelle</strong> de l’algorithme en \(O(b^{d})\)
+				<ul>
+					<li>\(b\) facteur de branchement (nombre maximum de fils)</li>
+					<li>\(d\) la profondeur d’une solution (de la moins profonde)</li>
+				</ul>
+			</li>
+			<li>Même complexité spatiale</li>
+			<li><strong>Optimal</strong> lorsque tous les couts sont identiques
+				<small>Exploration du nœud non exploré le moins profond</small>
+			</li>
+		</ul>
+	</section>
+
+	<section class='code'>
+		<h2>Breadth-First Search</h2>
+		<pre><code>
+			class Queue:
+				data = []
+
+				def enqueue(self, value):
+					self.data.append(value)
+
+				def dequeue(self):
+					return self.data.pop(0)
+
+			def BFS(start, successors, goals):
+				q = Queue()
+				parent = {}
+				parent[start] = None
+				node = start
+				while node not in goals:
+					for successor in successors(node):
+						if successor not in parent:
+							parent[successor] = node
+							q.enqueue(successor)
+					node = q.dequeue()
+
+				res = []
+				while node is not None:
+					res.append(node)
+					node = parent[node]
+
+				return list(reversed(res))
+
+			def successors(node):
+				laby = [
+					"##########",
+					"#        E",
+					"# # ######",
+					"# #      #",
+					"# # # ####",
+					"#####    #",
+					"#   # ####",
+					"# # # #  #",
+					"# #      #",
+					"##########",
+				]
+
+				directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+				res = []
+				l, c = node
+				for dl, dc in directions:
+					nl = l + dl
+					nc = c + dc
+					try:
+						if laby[nl][nc] in [' ', 'E']:
+							res.append((nl, nc))
+					except IndexError:
+						pass
+				return res
+
+			print(BFS((8, 1), successors, [(1, 9)]))
+		</code></pre>
+	</section>
+
+	<section>
+		<h2>Depth-First Search</h2>
+		<ul>
+			<li>Exploration d’abord <strong>en profondeur</strong>
+				<small>D’abord explorer le nœud non exploré le plus profond</small>
+			</li>
+			<li>Descente jusqu’à une <strong>feuille de l’arbre</strong>
+				<small>Pas complet (peut être coincé dans une boucle), ni optimal</small>
+			</li>
+		</ul>
+		<figure>
+			<img src="./depth-first.png" alt="">
+		</figure>
+		<ul>
+			<li><strong>Complexité temporelle</strong> de l’algorithme en \(O(b^m)\)
+				<ul>
+					<li>\(b\) facteur de branchement (nombre maximum de fils)</li>
+					<li>\(m\) la profondeur maximale dans l’arbre</li>
+				</ul>
+			</li>
+			<li>Complexité spatiale de l’algorithme en \(O(bm)\)
+				<small>La variante recherche backtracking ne nécessite que \(O(m)\)</small>
+			</li>
+		</ul>
+	</section>
+
+	<section class='code'>
+		<h2>Depth-First Search</h2>
+		<pre><code>
+			class Stack:
+				data = []
+
+				def push(self, value):
+					self.data.append(value)
+
+				def pop(self):
+					return self.data.pop()
+
+			def DFS(start, successors, goals):
+				s = Stack()
+				parent = {}
+				parent[start] = None
+				node = start
+				while node not in goals:
+					for successor in successors(node):
+						if successor not in parent:
+							parent[successor] = node
+							s.push(successor)
+					node = s.pop()
+
+				res = []
+				while node is not None:
+					res.append(node)
+					node = parent[node]
+
+				return list(reversed(res))
+
+			def successors(node):
+				laby = [
+					"##########",
+					"#        E",
+					"# # ######",
+					"# #      #",
+					"# # # ####",
+					"#####    #",
+					"#   # ####",
+					"# # # #  #",
+					"# #      #",
+					"##########",
+				]
+
+				directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+				res = []
+				l, c = node
+				for dl, dc in directions:
+					nl = l + dl
+					nc = c + dc
+					try:
+						if laby[nl][nc] in [' ', 'E']:
+							res.append((nl, nc))
+					except IndexError:
+						pass
+				return res
+
+			print(DFS((8, 1), successors, [(1, 9)]))
+		</code></pre>
+	</section>
+
+	<section class='code'>
+		<h2>Recursive Depth-First Search</h2>
+		<pre><code>
+			def RDFS(start, successors, goals, res=[]):
+				res.append(start)
+				
+				if start in goals:
+					return True
+				
+				for successor in successors(start):
+					if successor not in res:
+						if RDFS(successor, successors, goals, res):
+							return True
+				
+				res.pop()
+				return False
+
+			def successors(node):
+				laby = [
+					"##########",
+					"#        E",
+					"# # ######",
+					"# #      #",
+					"# # # ####",
+					"#####    #",
+					"#   # ####",
+					"# # # #  #",
+					"# #      #",
+					"##########",
+				]
+
+				directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+				res = []
+				l, c = node
+				for dl, dc in directions:
+					nl = l + dl
+					nc = c + dc
+					try:
+						if laby[nl][nc] in [' ', 'E']:
+							res.append((nl, nc))
+					except IndexError:
+						pass
+				return res
+
+			res = []
+			print(RDFS((8, 1), successors, [(1, 9)], res))
+			print(res)
+		</code></pre>
+	</section>
+
+	<section>
+		<h2>Recherche informée</h2>
+		<ul>
+			<li>Recherche <strong>informée</strong> utilise des connaissances spécifiques 
+				<small>Beaucoup plus efficace que les recherches non informées</small>
+			</li>
+			<li>Stratégie générale de type <strong>Best-First Search</strong>
+				<small>Choix du meilleur nœud à explorer à chaque étape</small>
+			</li>
+			<li><strong>Fonction d’évaluation</strong> \(f(n)\)
+				<small>Choix du nœud à explorer avec la plus faible valeur</small>
+			</li>
+			<li><strong>Fonction heuristique</strong> \(h(n)\)
+				<small>Cout estimé du chemin le moins cher vers l’objectif</small>
+			</li>
+		</ul>
+	</section>
+	<section>
+		<h2>Greedy Best-First Search</h2>
+		<ul>
+			<li>Choix du nœud <strong>le plus proche</strong> de l’objectif
+				<small>En utilisant \(f(n) = h(n)\)</small>
+			</li>
+			<li>L'<strong>heuristique</strong> est choisie en fonction du problème
+				<small>Souvent une mesure de distance vers l’objectif</small>
+			</li>
+			<li>Complexité temporelle en \(O(b^m)\) et spatiale en \(O(b^m)\)
+				<small>Réduit en fonction du problème et de la qualité de l’heuristique</small>
+			</li>
+		</ul>
+	</section>
+
+	<section class="code">
+		<h2>Greedy Best-First Search</h2>
+		<pre><code>
+			class PriorityQueue:
+				data = []
+
+				def enqueue(self, value, priority):
+					# Could be better
+					self.data.append({'value': value, 'priority': priority})
+					self.data.sort(key=lambda elem: elem['priority'])
+
+				def dequeue(self):
+					return self.data.pop(0)['value']
+
+			def BestFS(start, successors, goals, heuristic):
+				q = PriorityQueue()
+				parent = {}
+				parent[start] = None
+				node = start
+				while node not in goals:
+					for successor in successors(node):
+						if successor not in parent:
+							parent[successor] = node
+							q.enqueue(successor, heuristic(successor))
+					node = q.dequeue()
+
+				res = []
+				while node is not None:
+					res.append(node)
+					node = parent[node]
+
+				return list(reversed(res))
+
+			def successors(node):
+				laby = [
+					"##########",
+					"#        E",
+					"# # ######",
+					"# #      #",
+					"# # # ####",
+					"#####    #",
+					"#   # ####",
+					"# # # #  #",
+					"# #      #",
+					"##########",
+				]
+
+				directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+				res = []
+				l, c = node
+				for dl, dc in directions:
+					nl = l + dl
+					nc = c + dc
+					try:
+						if laby[nl][nc] in [' ', 'E']:
+							res.append((nl, nc))
+					except IndexError:
+						pass
+				return res
+
+			def heuristic(node):
+				l, c = node
+				return (l - 1)**2 + (c - 9)**2
+
+			print(BestFS((8, 1), successors, [(1, 9)], heuristic))
+		</code></pre>
+	</section>
+
+	<section>
+		<h2>\(A^*\) Search </h2>
+		<ul>
+			<li><strong>\(A^*\)</strong> (prononcé "A-star") combine deux fonctions
+				<ul>
+					<li>\(g(n)\) donne le coût d’avoir atteint \(n\)</li>
+					<li>\(h(n)\) heuristique du coût pour atteindre l’objectif depuis \(n\)</li>
+				</ul>
+			</li>
+			<li><strong>Fonction d’évaluation</strong> \(f(n) = g(n) + h(n)\)
+				<small>Coût estimé pour atteindre l'objectif en passant par \(n\)</small>
+			</li>
+			<li>Complet et optimal si \(h(n)\) est <strong>admissible</strong>
+				<small>\(h(n)\) ne surestime jamais le coût pour atteindre l’objectif</small>
+			</li>
+		</ul>
+	</section>
+
+	<section>
+		<h1>Théorie des jeux</h1>
+	</section>
+
+	<section>
+		<h2>Théorie des jeux</h2>
+		<ul>
+			<li>Recherche de solution pour des jeux avec <strong>deux adversaires</strong></li>
+			<li><strong>Arbre du jeu</strong> défini par l’état initial et les mouvements légaux</li>
+			<li>Jeu de <strong>somme nulle</strong> lorsque la somme des gains vaut 0
+				<small>Le gain de l’un correspond obligatoirement à une perte de l’autre</small>
+			</li>
+			<li>Jeu avec <strong>information parfaite</strong> pour les joueurs
+				<small>Toute l’information du plateau est accessible aux deux joueurs</small>
+			</li>
+			<li>Pas de <strong>chance</strong> impliquée dans le jeu</li>
+		</ul>
+	</section>
+	<section>
+		<h2>Algorithme Minimax</h2>
+		<ul>
+			<li>Deux joueurs appelés MIN et MAX (joue en premier)</li>
+			<li>Définition comme un <strong>problème de recherche</strong>
+				<ul>
+					<li><strong>État initial</strong> : position sur le plateau et joueur qui commence</li>
+					<li><strong>Fonction successeur</strong> : liste de paires (move,state)</li>
+					<li><strong>Test terminal</strong> : teste si le jeu est terminé (état terminaux)</li>
+					<li><strong>Fonction d’utilité</strong> : donne une valeur aux états terminaux</li>
+				</ul>
+			</li>
+			<li>MAX veut <strong>atteindre</strong> un état gagnant (terminal)
+				<small>Tout en sachant que MIN a son mot à dire</small>
+			</li>
+			<li>Jouer le meilleur coup possible à chaque tour
+				<small>En supposant que le joueur en face suit une stratégie parfaite</small>
+			</li>
+		</ul>
+	</section>
+	<section>
+		<h2>Valeur minimax</h2>
+		<ul>
+			<li><strong>Fonction MinimaxValue</strong> associe une valeur à chaque nœud n
+				<small>Définition récursive de cette fonction</small>
+			</li>
+			<li>Hypothèse que les deux joueurs <strong>jouent parfaitement</strong>
+				<ul>
+					<li>MAX préfère aller vers une situation de plus grande valeur</li>
+					<li>et MIN de plus petite valeur</li>
+				</ul>
+			</li>
+		</ul>
+		<div style="font-size: 0.7em;">
+			$$ MinimaxValue(n) = \left\{ \begin{array}{ll} Utility(n) & \textrm{si $n$ est un noeud terminal}\\ max_{s \in successors(n)} MinimaxValue(s) & \textrm{si $n$ est un noeud MAX}\\ min_{s \in successors(n)} MinimaxValue(s) & \textrm{si $n$ est un noeud MIN} \end{array} \right.$$
+		</div>
+	</section>
+	<section>
+		<h2>Algorithme Minimax</h2>
+		<ul>
+			<li>Arbre du jeu avec \(\bigtriangleup\) pour MAX et \(\bigtriangledown\) pour MIN
+				<small>MAX choisit toujours le coup qui maximise la valeur minimax</small>
+			</li>
+		</ul>
+		<figure>
+			<img src="./minimax.png" alt="">
+		</figure>
+		<figure>
+			<img src="./minimax2.png" alt="">
+		</figure>
+		<figure>
+			<img src="./minimax3.png" alt="">
+		</figure>
+		<figure>
+			<img src="./minimax4.png" alt="">
+		</figure>
+
+		<ul>
+			<li>Peut-être optimisé avec <strong>Alpha-Beta pruning</strong></li>
+			<li><strong>Variantes</strong>: negamax, depth limited minimax, iterative-deepening depth limited minimax</li>
+		</ul>
+	</section>
+</body>
+</html>
