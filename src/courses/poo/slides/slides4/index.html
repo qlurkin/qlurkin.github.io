@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PO3T - Cours 4</title>
+    <script src="https://quentin.lurkin.xyz/deck.js"></script>
+</head>
+<body>
+    <section>
+        <h1>PO3T - Cours 4 <small>Types génériques, Visibilité, Encapsulation et Immuabilité</small></h1>
+        <p>Quentin Lurkin</p>
+    </section>
+    <section>
+        <h2>Type générique</h2>
+        <ul>
+            <li>Définition d’un type non spécifié lors de l’implémentation
+                <small>Classe/méthode générique utilisable avec plusieurs types</small>
+            </li>
+            <li>Classe/méthode paramétrée avec un ou plusieurs types
+                <small>Spécification du type désiré lors de l’instanciation/appel</small>
+            </li>
+            <li>Possibilité de spécifier un ensemble de types acceptables
+                <small>En utilisant notamment la relation is-a</small>
+            </li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Type générique</h2>
+        <ul>
+            <li>Spécification des types génériques de la classe entre chevrons</li>
+        </ul>
+        <pre><code class="lang-csharp">
+            public class Pair &lt;S,T>
+            {
+                private readonly S first;
+                private readonly T second;
+                
+                public Pair (S first, T second)
+                {
+                    this.first = first;
+                    this.second = second;
+                }
+
+                public S First { get { return first; } }
+                public T Second { get { return second; } }
+
+                public override string ToString()
+                {
+                    return String.Format ("({0}, {1})", first, second);
+                }
+            }
+        </code></pre>
+    </section>
+
+    <section>
+        <h2>Type générique</h2>
+        <ul>
+            <li>Spécification des types effectifs lors de l’instanciation
+                <small>Doit aussi être précisé pour le type de la variable</small>
+            </li>
+        </ul>
+        <pre><code class="lang-csharp">
+            Pair&lt;string,int> p = new Pair&lt;string,int> ("Tom", 21);
+            Console.WriteLine (p);
+
+            Pair&lt;string,Pair&lt;int,int>> q = new Pair&lt;string,Pair&lt;int,int>> (
+                "Tom",
+                new Pair&lt;int,int> (187, 98)
+            );
+            Console.WriteLine (q);
+        </code></pre>
+        <div class="terminal">
+            (Tom, 21)
+            (Tom, (187, 98))
+        </div>
+    </section>
+
+    <section>
+        <h2>Contraintes</h2>
+        <ul>
+            <li>Possibilité d’ajouter des contraintes sur les types génériques
+                <small>La méthode CompareTo provient de IComparable</small>
+            </li>
+        </ul>
+        <pre><code class="lang-csharp">
+            public class OrderedPair&lt;T> where T : IComparable 
+            {
+                private readonly T min, max;
+                
+                public OrderedPair (T a, T b)
+                {
+                    bool comp = a.CompareTo (b) > 0;
+                    min = comp ? b : a;
+                    max = comp ? a : b;
+                }
+                public override string ToString ()
+                {
+                    return String.Format ("({0}, {1})", min, max);
+                }
+            }
+        </code></pre>
+    </section>
+
+    <section>
+        <h2>Méthode générique</h2>
+        <ul>
+            <li>Possibilité de définir une méthode générique <small>
+                Déclaration des types génériques dans la signature
+            </small></li>
+        </ul>
+        <pre><code class="lang-csharp">
+            public static void Main (string[] args)
+            {
+                Console.WriteLine (max (12, 7));
+                Console.WriteLine (max ("sept", "douze"));
+            }
+            
+            public static T max&lt;T> (T a, T b) where T : IComparable
+            {
+                return a.CompareTo(b) > 0 ? a : b;
+            }
+        </code></pre>
+    </section>
+
+    <section>
+        <h2>Valeur par défaut</h2>
+        <ul>
+            <li>Obtention de la valeur par défaut d’un type avec default</li>
+        </ul>
+        <pre><code class="lang-csharp">
+            public class Container &lt;T>
+            {
+                public readonly T data;
+                public Container()
+                {
+                    data = default(T);
+                }
+            }
+
+            public class Program
+            {
+                public static void Main (string[] args)
+                {
+                    Console.WriteLine (new Container &lt;int>().data);
+                    Console.WriteLine (new Container &lt;bool>().data);
+                }
+            }
+        </code></pre>
+        <div class="terminal">
+            0
+            False
+        </div>
+    </section>
+
+    <section>
+        <h1>Visibilité</h1>
+    </section>
+
+    <section>
+        <h2>Visibilité publique</h2>
+        <ul>
+            <li>Membre public accessible depuis partout
+                <small>Aucune limitation à la visibilité d’un membre public</small>
+            </li>
+            <li>Visibilité par défaut dans les interfaces
+                <small>Ne contient que des méthodes publiques</small>
+            </li>
+        </ul>
+        <pre><code class="lang-csharp">
+            public class Foo
+            {
+                public int x = 12;
+            }
+
+            public class Program
+            {
+                public static void Main (string[] args)
+                {
+                    Foo foo = new Foo();
+                    Console.WriteLine (foo.x); // Accès OK
+                }
+            }
+        </code></pre>
+    </section>
+
+    <section class="code">
+        <h2>Quels sont les accès autorisés et ceux interdits ?</h2>
+        <pre><code class="lang-csharp">
+            public class A
+            {
+                public int x;
+                public void Method () {}
+            }
+
+            public class B
+            {
+                public A a = new A();
+                public B (int x)
+                {
+                    Console.WriteLine (a.x);
+                }
+            }
+
+            public class C
+            {
+                public static void Main (string[] args)
+                {
+                    B b = new B (42);
+                    b.a.Method();
+                }
+            }
+        </code></pre>
+    </section>
+
+    <section>
+        <h2>Visibilité privée</h2>
+        <ul>
+            <li>Membre privé accessible que depuis le corps de la classe
+                <small>Peu importe l’instance, tant qu’on est dans le corps de la classe</small>
+            </li>
+            <li>Erreur de compilation si tentative d’accès à un membre privé</li>
+        </ul>
+        <pre><code class="lang-csharp">
+            public class Foo
+            {
+                private int x = 12;
+
+                public void Method (Foo f)
+                {
+                    Console.WriteLine (f.x); // Accès OK
+                }
+            }
+
+            public class Program
+            {
+                public static void Main (string[] args)
+                {
+                    Foo foo = new Foo();
+                    Console.WriteLine (foo.x); // Accès pas OK
+                }
+            } 
+        </code></pre>
+    </section>
+
+    <section class="code">
+        <h2>Quels sont les accès autorisés et ceux interdits ?</h2>
+        <pre><code class="lang-csharp">
+            public class A
+            {
+                public int x;
+                private void Method () {}
+            }
+
+            public class B
+            {
+                private A a = new A();
+                public B (int x)
+                {
+                    Console.WriteLine (a.x);
+                }
+            }
+
+            public class C
+            {
+                public static void Main (string[] args)
+                {
+                    B b = new B (42);
+                    b.a.Method();
+                }
+            }
+        </code></pre>
+    </section>
+
+    <section>
+        <h2>Visibilité protégée</h2>
+        <ul>
+            <li>Membre protégé public pour les sous-classes, privé ailleurs
+                <small>Privé mais avec autorisation particulière pour les sous-classes</small>
+            </li>
+        </ul>
+        <pre><code class="lang-csharp">
+            public class Foo
+            {
+                protected int x = 12;
+            }
+
+            public class Bar : Foo
+            {
+                public Bar()
+                {
+                    x = 42; // Accès OK
+                }
+            }
+
+            public class Program
+            {
+                public static void Main (string[] args)
+                {
+                    Bar bar = new Bar();
+                    Console.WriteLine (bar.x); // Accès pas OK
+                }
+            }
+        </code></pre>
+    </section>
+
+    <section>
+        <h2>Visibilité protégée</h2>
+        <ul>
+            <li>Membre protégé hérité accessible uniquement par this
+                <small>Hérité dans la sous-classe, mais reste privé à la super-classe</small>
+            </li>
+        </ul>
+        <pre><code class="lang-csharp">
+            public class Foo
+            {
+                protected int x = 12;
+            }
+
+            public class Bar : Foo
+            {
+                public Bar()
+                {
+                    x = 42; // Accès OK (équivalent à this.x)
+                }
+
+                public void Method (Foo f)
+                {
+                    Console.WriteLine (f.x); // Accès pas OK
+                }
+            }
+        </code></pre>
+    </section>
+
+    <section class="code">
+        <h2>Quels sont les accès autorisés et ceux interdits ?</h2>
+        <pre><code class="lang-csharp">
+            public class A
+            {
+                protected int x;
+                public void Method () {}
+            }
+
+            public class B
+            {
+                public A a = new A();
+                public B (int x)
+                {
+                    Console.WriteLine (a.x);
+                }
+            }
+
+            public class C
+            {
+                public static void Main (string[] args)
+                {
+                    B b = new B (42);
+                    b.a.Method();
+                }
+            }
+        </code></pre>
+    </section>
+
+    <section>
+        <h2>Visibilité interne</h2>
+        <ul>
+            <li>Membre accessible partout dans le même assembly
+                <small>Moins large que visibilité publique</small>
+            </li>
+            <li>Peut être combiné avec protected</li>
+        </ul>
+        <pre><code class="lang-csharp">
+            namespace A
+            {
+                public class Foo
+                {
+                    internal int x = 12;
+                }
+
+                public class Program
+                {
+                    public static void Main (string[] args)
+                    {
+                        Foo foo = new Foo();
+                        Console.WriteLine (foo.x); // Accès OK
+                    }
+                }
+            }
+        </code></pre>
+    </section>
+
+    <section>
+        <h2>Visibilité par défaut</h2>
+        <ul>
+            <li>Chaque type de membre possède une <strong>visibilité par défaut</strong>
+                <small>Qui s’applique si on ne mentionne aucun modificateur</small>
+            </li>
+            <li>Visibilité internal par défaut des <strong>membres de premier niveau</strong>
+                <small>Ne peuvent d’ailleurs être que <code>public</code> ou <code>internal</code></small>
+            </li>
+            <li>Visibilité de <strong>membres imbriqués</strong> depend du contenant
+                <ul>
+                    <li>Membres d’une classe <code>private</code> par défaut</li>
+                    <li>Membres d’une interface <code>public</code> par défaut</li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Restriction de visibilité</h2>
+        <ul>
+            <li>Sous-classe pas plus accessible que super-classe
+                <small>Même règle pour implémentation d’interfaces</small>
+            </li>
+            <li>Variable d’instance pas plus accessible que son type
+                <small>Pareil pour propriété, type retour/paramètre méthode</small>
+            </li>
+        </ul>
+    </section>
+
+    <section class="code">
+        <h2>Quels sont les accès autorisés et ceux interdits ?</h2>
+        <pre><code class="lang-csharp">
+            public class Program
+            {
+                private class A
+                {
+                    protected int x;
+                    internal string y;
+                }
+                
+                internal class B : A
+                {
+                    public A a = new A();
+                    public B (int x)
+                    {
+                        Console.WriteLine (this.x);
+                        Console.WriteLine (a.y);
+                    }
+
+                    public A Method()
+                    {
+                        return new A();
+                    }
+                }
+            }
+        </code></pre>
+    </section>
+
+    <section>
+        <h2>Bonnes pratiques</h2>
+        <ul>
+            <li>Toujours partir de la visibilité la moins grande</li>
+            <li>Quelques règles par défaut de visibilité
+                <ul>
+                    <li>Variable d’instance devrait être privée</li>
+                    <li>Constructeur devrait être public</li>
+                    <li>Méthode devrait être publique</li>
+                </ul>
+            </li>
+            <li>Quelques cas particuliers envisageable
+                <ul>
+                    <li>Variable d’instance protégée en cas d’héritage</li>
+                    <li>Méthode privée pour la découpe en sous-problèmes</li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Portée</h2>
+        <ul>
+            <li>Attention à ne pas confondre visibilité et portée d’une variable
+                <ul>
+                    <li>Visibilité définit à partir d’où on peut accéder à une variable</li>
+                    <li>Portée définit où un nom de variable existe et peut être utilisé</li>
+                </ul>
+            </li>
+            <li> Variable d’instance versus locale
+                <ul>
+                    <li>Variable d’instance définie dans tout le corps de la classe</li>
+                    <li>Variable locale dans tout le corps méthode à partir définition</li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+
+    <section>
+        <h1>Encapsulation</h1>
+    </section>
+
+    <section>
+        <h2>Encapsulation</h2>
+        <ul>
+            <li>L’encapsulation consiste à cacher les détails d’implémentation
+                <small>Contrôle de l’accès à certains membres d’une classe</small>
+            </li>
+            <li>Représentation interne cachée de l’extérieur
+                <small>Un changement d’implémentation interne n’affecte pas les autres</small>
+            </li>
+            <li>Manipulation de l’objet à travers des méthodes publiques</li>
+        </ul>
+    </section>
+
+    <section class="code">
+        <h2>Sans encapsulation</h2>
+        <pre><code class="lang-csharp">
+            public class Vector
+            {
+                public double x, y;
+
+                public Vector (double x, double y)
+                {
+                    this.x = x;
+                    this.y = y;
+                }
+            }
+            
+            public class Program
+            {
+                public static void Main (string[] args)
+                {
+                    Vector u = new Vector (1, -1);
+                    Console.WriteLine(
+                        string.Format("({0}, {1})", u.x, u.y)
+                    );
+                }
+            }
+        </code></pre>
+    </section>
+
+    <section class="code">
+        <h2>Sans encapsulation - après changement</h2>
+        <pre><code class="lang-csharp">
+            public class Vector
+            {
+                public double[] coords; // changement de représentation interne
+
+                public Vector (double x, double y)
+                {
+                    coords = new double[] {x, y};
+                }
+            }
+            
+            public class Program
+            {
+                public static void Main (string[] args)
+                {
+                    Vector u = new Vector (1, -1);
+                    Console.WriteLine(
+                        string.Format("({0}, {1})", u.x, u.y) // code client cassé !
+                    ); 
+                }
+            }
+        </code></pre>
+    </section>
+
+    <section class="code">
+        <h2>Avec encapsulation</h2>
+        <pre><code class="lang-csharp">
+            public class Vector
+            {
+                private double x, y;
+
+                public Vector (double x, double y)
+                {
+                    this.x = x;
+                    this.y = y;
+                }
+
+                public double X { get { return x; } }
+                public double Y { get { return y; } }
+            }
+            
+            public class Program
+            {
+                public static void Main (string[] args)
+                {
+                    Vector u = new Vector (1, -1);
+                    Console.WriteLine(
+                        string.Format("({0}, {1})", u.X, u.Y)
+                    );
+                }
+            }
+        </code></pre>
+    </section>
+
+    <section class="code">
+        <h2>Avec encapsulation - après changement</h2>
+        <pre><code class="lang-csharp">
+            public class Vector
+            {
+                public double[] coords; // changement de représentation interne
+
+                public Vector (double x, double y)
+                {
+                    coords = new double[] {x, y};
+                }
+
+                public double X { get { return coords[0]; } }
+                public double Y { get { return coords[1]; } }
+            }
+            
+            public class Program
+            {
+                public static void Main (string[] args)
+                {
+                    Vector u = new Vector (1, -1);
+                    Console.WriteLine(
+                        string.Format("({0}, {1})", u.X, u.Y) // code client préservé !
+                    );
+                }
+            }
+        </code></pre>
+    </section>
+
+    <section>
+        <h2>Bénéfice de l’encapsulation</h2>
+        <ul>
+            <li>Contrôle de l’accès aux variables d’instance d’une classe
+                <small>Peuvent être accessibles en lecture et/ou écriture</small>
+            </li>
+            <li>Contrôle des valeurs stockées dans les variables d’instance
+                <small>La classe est la seule à avoir accès à sa structure interne</small>
+            </li>
+            <li>Indépendance par rapport à l’utilisateur
+                <small>La classe est libre de modifier son implémentation</small>
+            </li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Interface publique</h2>
+        <ul>
+            <li>Définition de l’interface publique d’un objet
+                <small>Seule façon d’interagir avec l’objet de l’extérieur</small>
+            </li>
+            <li>L’utilisateur fait abstraction de l’implémentation pour l’utiliser</li>
+            <li>Garantie du résultat de l’exécution des méthodes publiques
+                <small>Ne doit pas être affecté par des changements d’implémentation</small>
+            </li>
+            <li>L’interface publique doit être la plus stable possible</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Encapsulation et héritage</h2>
+        <ul>
+            <li>La visibilité <code>protected</code> est un défaut d'encapsulation
+                <small><code>private</code> est préferable à <code>protected</code></small>
+            </li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Soyez discrets !</h2>
+        <p class="center big">"What you hide, you can change"</p>
+        <p class="center">Do not break encapsulation!</p>
+    </section>
+
+    <section>
+        <h1>Immuabilité</h1>
+    </section>
+
+    <section class="code">
+        <h2>Problème avec les objets mutables</h2>
+        <pre><code class="lang-csharp">
+            class Program
+            {
+                static int sum(List&lt;int> L)
+                {
+                    for(int i = L.Count - 1; i > 0; i--)
+                    {
+                        L[i - 1] = L[i - 1] + L[i];
+                    }
+                    return L[0];
+                }
+
+                static void Main(string[] args)
+                {
+                    List&lt;int> list = new List&lt;int>() {1, 2, 3};
+                    Console.WriteLine("Sum = {0}", sum(list)); // 6 Ok
+                    Console.WriteLine(
+                        "List = [{0}]",
+                        String.Join(", ", list)  // [6, 5, 3] WTF!!
+                    );
+                }
+            }
+        </code></pre>
+    </section>
+
+    <section>
+        <h2>Objet immuable</h2>
+        <ul>
+            <li>Un objet est immuable si son état ne peut être changé
+                <small>Après avoir été initialisé par le constructeur</small>
+            </li>
+            <li>Pouvoir partager une référence vers un objet de manière sure
+                <small>Sans risquer de voir l’état de l’objet modifié</small>
+            </li>
+            <li>Copies de l’objet pas nécessaires
+                <small>Économie de la quantité de mémoire utilisée</small>
+            </li>
+        </ul>
+    </section>
+
+    <section class='code'>
+        <h2>Les instances de la classe suivante sont-elles immuables?</h2>
+        <pre><code class="lang-csharp">
+            public class Mysterious
+            {
+                public readonly int secret;
+                public Mysterious (int data)
+                {
+                    secret = data;
+                }
+            }
+        </code></pre>
+    </section>
+
+    <section class='code'>
+        <h2>Les instances de la classe suivante sont-elles immuables?</h2>
+        <pre><code class="lang-csharp">
+            public class Mysterious
+            {
+                public readonly int secret;
+                public Mysterious (int data)
+                {
+                    secret = data;
+                }
+            }
+        </code></pre>
+        <ul>
+            <li>Variable d’instance publique, mais constante
+                <small>Sa valeur ne pourra donc pas être changée, état préservé</small>
+            </li>
+        </ul>
+    </section>
+
+    <section class='code'>
+        <h2>Les instances de la classe suivante sont-elles immuables?</h2>
+        <pre><code class="lang-csharp">
+            public class SuperMysterious
+            {
+                public readonly int[] secrets;
+                public SuperMysterious (int x, int y)
+                {
+                    secrets = new int[] {x, y};
+                }
+            }
+        </code></pre>
+    </section>
+
+    <section class='code'>
+        <h2>Les instances de la classe suivante sont-elles immuables?</h2>
+        <pre><code class="lang-csharp">
+            public class SuperMysterious
+            {
+                public readonly int[] secrets;
+                public SuperMysterious (int x, int y)
+                {
+                    secrets = new int[] {x, y};
+                }
+            }
+        </code></pre>
+
+        <ul>
+            <li>Variable d’instance publique, mais constante
+                <small>La référence est constante mais l'état de l'objet référencé peut changer !</small>
+            </li>
+            <li>Attention lorsque les variables d’instance sont des objets</li>
+        </ul>
+    </section>
+
+    <section class='code'>
+        <h2>Les instances de la classe suivante sont-elles immuables?</h2>
+        <pre><code class="lang-csharp">
+            public class MysteriousCeption
+            {
+                ppublic readonly Mysterious secret;
+                public MysteriousCeption (int x)
+                {
+                    secret = new Mysterious (x);
+                }
+            }
+        </code></pre>
+    </section>
+
+    <section class='code'>
+        <h2>Les instances de la classe suivante sont-elles immuables?</h2>
+        <pre><code class="lang-csharp">
+            public class MysteriousCeption
+            {
+                ppublic readonly Mysterious secret;
+                public MysteriousCeption (int x)
+                {
+                    secret = new Mysterious (x);
+                }
+            }
+        </code></pre>
+        <ul>
+            <li>Variable d’instance publique, mais constante et immuable
+                <small>Sa valeur ne pourra donc pas être changée, ni son état !</small>
+            </li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Critères à vérifier</h2>
+        <ul>
+            <li>Variable d’instance privée</li>
+            <li>Variable d’instance publique et constante
+                <small>Pour autant que le type soit un primitif ou d’objet immuable</small>
+            </li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Référence passée au constructeur</h2>
+        <ul>
+            <li>Modification d’un objet passé en paramètre au constructeur
+                <small>Altération de l’état si l’objet reçu par le constructeur en fait partie</small>
+            </li>
+        </ul>
+        <pre><code class="lang-csharp">
+            public class Vector
+            {
+                public double[] coords;
+
+                public Vector (double[] coords)
+                {
+                    this.coords = coords;
+                }
+
+                public double[] Coords { get { return coords; } }
+
+                public override string ToString() {
+                    return String.Format ("({0}, {1})", coords[0], coords[1]);
+                }
+            }
+
+            public class Program
+            {
+                static void Main(string[] args)
+                {
+                    double[] data = {1, -1};
+                    Vector u = new Vector (data);
+                    Console.WriteLine (u);
+
+                    data[0] = 0;
+                    Console.WriteLine (u);
+                } 
+            }
+        </code></pre>
+        <div class="terminal">
+            (1, -1)
+            (0, -1)
+        </div>
+    </section>
+
+    <section>
+        <h2>Référence passée au constructeur</h2>
+        <ul>
+            <li>Le constructeur doit faire une copie de l’objet reçu
+                <small>Pas nécessaire si l’objet est immuable</small>
+            </li>
+        </ul>
+        <pre><code class="lang-csharp">
+            public class Vector
+            {
+                public double[] coords;
+
+                public Vector (double[] coords)
+                {
+                    this.coords = new double[coords.Length];
+                    Array.Copy(coords, this.coords, coords.Length);
+                }
+
+                public double[] Coords { get { return coords; } }
+
+                public override string ToString() {
+                    return String.Format ("({0}, {1})", coords[0], coords[1]);
+                }
+            }
+
+            public class Program
+            {
+                static void Main(string[] args)
+                {
+                    double[] data = {1, -1};
+                    Vector u = new Vector (data);
+                    Console.WriteLine (u);
+
+                    data[0] = 0;
+                    Console.WriteLine (u);
+                } 
+            }
+        </code></pre>
+        <div class="terminal">
+            (1, -1)
+            (1, -1)
+        </div>
+    </section>
+
+    <section>
+        <h2>Renvoi d’une référence</h2>
+        <ul>
+            <li>Modification d’un objet renvoyé par une méthode
+                <small>Altération de l’état si l’objet renvoyé en fait partie</small>
+            </li>
+        </ul>
+        <pre><code class="lang-csharp">
+            public class Vector
+            {
+                public double[] coords;
+
+                public Vector (double[] coords)
+                {
+                    this.coords = new double[coords.Length];
+                    Array.Copy(coords, this.coords, coords.Length);
+                }
+
+                public double[] Coords { get { return coords; } }
+
+                public override string ToString() {
+                    return String.Format ("({0}, {1})", coords[0], coords[1]);
+                }
+            }
+
+            public class Program
+            {
+                static void Main(string[] args)
+                {
+                    Vector u = new Vector (new double[] {1, -1});
+                    Console.WriteLine (u);
+
+                    double[] data = u.Coords;
+                    data [0] = 0;
+                    Console.WriteLine (u);
+                } 
+            }
+        </code></pre>
+        <div class="terminal">
+            (1, -1)
+            (0, -1)
+        </div>
+    </section>
+
+    <section>
+        <h2>Renvoi d’une référence</h2>
+        <ul>
+            <li>La méthode doit renvoyer une copie de l’objet à renvoyer
+                <small>Pas nécessaire si l’objet est immuable</small>
+            </li>
+        </ul>
+        <pre><code class="lang-csharp">
+            public class Vector
+            {
+                public double[] coords;
+
+                public Vector (double[] coords)
+                {
+                    this.coords = new double[coords.Length];
+                    Array.Copy(coords, this.coords, coords.Length);
+                }
+
+                public double[] Coords
+                { 
+                    get
+                    { 
+                        double[] coords = new double[this.coords.Length];
+                        Array.Copy (this.coords, coords, this.coords.Length);
+                        return coords;
+                    }
+                }
+
+                public override string ToString() {
+                    return String.Format ("({0}, {1})", coords[0], coords[1]);
+                }
+            }
+
+            public class Program
+            {
+                static void Main(string[] args)
+                {
+                    Vector u = new Vector (new double[] {1, -1});
+                    Console.WriteLine (u);
+
+                    double[] data = u.Coords;
+                    data [0] = 0;
+                    Console.WriteLine (u);
+                } 
+            }
+        </code></pre>
+        <div class="terminal">
+            (1, -1)
+            (1, -1)
+        </div>
+    </section>
+
+    <section>
+        <h2>Critères à vérifier</h2>
+        <ul>
+            <li>Copie de tous les objets mutables reçus en paramètres
+                <small>Seulement pour ceux qui font partie de l’état de l’objet</small>
+            </li>
+            <li>Copie des objets mutables dont une référence est renvoyée
+                <small>Seulement s’ils font partie de l’état de l’objet</small>
+            </li>
+            <li>Aucune copie nécessaire pour les objets immuables
+                <small>Leur état ne pourra jamais être modifié</small>
+            </li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Intérêts des objets immuables</h2>
+        <ul>
+            <li>Partage de références sans aucun risque
+                <small>Puisque personne ne pourra altérer l’état de l’objet</small>
+            </li>
+            <li>Utilisation d’un même objet partagé entre plusieurs threads
+                <small>Aucun souci de cohérence de l’état de l’objet, vu par les threads</small>
+            </li>
+            <li>Pas besoin d’en faire des copies
+                <small>Utilisation efficace de la mémoire</small>
+            </li>
+        </ul>
+    </section>
+</body>
+</html>

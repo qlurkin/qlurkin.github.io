@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 1780 941" version="1.1"
+	xmlns="http://www.w3.org/2000/svg"
+	xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve"
+	xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
+	<g>
+		<rect x="718.473" y="186.234" width="511.1" height="511.1" style="fill:none;stroke:#000;stroke-width:15.66px;"/>
+		<text x="435.195px" y="507.148px" style="font-family:'Consolas', monospace;font-size:266.667px;fill:#008802;">a</text>
+		<text x="832.291px" y="528.046px" style="font-family:'Consolas', monospace;font-size:266.667px;fill:#0053d8;">42</text>
+		<ellipse cx="916.27" cy="448.593" rx="556.47" ry="374.94" style="fill:none;stroke:#de0000;stroke-width:15.66px;"/>
+		<text x="1207.1px" y="72.482px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:100px;fill:#de0000;">La variable</text>
+		<text x="1366.77px" y="895.116px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:100px;fill:#0053d8;">La valeur</text>
+		<text x="-6.862px" y="728.803px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:100px;fill:#008802;">Le nom</text>
+		<path d="M483.334,598.628l23.199,-35.414l23.767,35.035" style="fill:none;stroke:#008802;stroke-width:15.66px;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+		<path d="M359.8,693.598c138.621,-3.775 147.112,-42.337 146.733,-130.384" style="fill:none;stroke:#008802;stroke-width:15.66px;"/>
+		<path d="M950.341,624.014l24.803,-34.31l22.13,36.091" style="fill:none;stroke:#0053d8;stroke-width:15.66px;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+		<path d="M1333.51,859.91c-199.807,-4.867 -365.219,-12.486 -358.367,-270.206" style="fill:none;stroke:#0053d8;stroke-width:15.66px;"/>
+	</g>
+</svg>

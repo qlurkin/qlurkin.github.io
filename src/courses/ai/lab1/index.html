@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Artificial intelligence Lab 1</title>
+	<script src="https://quentin.lurkin.xyz/document.js"></script>
+	<style>
+		:not(pre)>code {
+			white-space: pre-wrap;
+			background: #f7f7f7;
+			border: 1px solid #dadce0;
+			color: #202124;
+			font: 0.9em "Roboto Mono",monospace;
+			hyphens: none;
+			tab-size: 2;
+			text-align: left;
+			word-spacing: normal;
+			margin: 0 .25em;
+			padding: .125em .25em;
+		}
+	</style>
+</head>
+<body>
+	<h1>Artificial intelligence Lab 1</h1>
+	<h2>Getting Started with <code>pandas</code></h2>
+	<p><code>pandas</code> is an extremely useful library for loading and preparing data in Python. This library is mandatory in all Data Science related projects in Python.</p>
+	<p>To get started with <code>pandas</code> you should:</p>
+	<ul>
+		<li><a href="https://pandas.pydata.org/docs/user_guide/dsintro.html">start by learning about the structures used by pandas</a>,</li>
+		<li><a href="https://pandas.pydata.org/docs/user_guide/10min.html">and then get an idea of what you can do with it</a>.</li>
+	</ul>
+		
+	<h2>Exercices</h2>
+	<p>Do the following exercices in a Jupyter Notebook File <em>(.ipynb)</em>. <span style="color: red;">You can't use loops</span>. <strong>You have to post your file on claco by the end of the week 06:00PM</strong>.</p>
+	<ol>
+		<li>Create a DataFrame with the data of the <a href="pokemon_data.csv" target="_blank">Pokemon Data</a>.</li>
+		<li>Create a Series containing the names of the Pokemons.</li>
+		<li>Find the Pokemon with the highest <code>HP</code>.</li>
+		<li>Add two new columns <code>Atk Tot</code> and <code>Def Tot</code> that are respectively the sum of <code>Attack</code> and <code>Sp. Atk</code> and the sum of <code>Defense</code> and <code>Sp. Def</code>.</li>
+		<li>Create a Dataframe that containing only the Pokemons with <code>Type 1 == Fire</code>.</li>
+		<li>Create a Series with the Pokemon names containing "Mega".</li>
+		<li>Add a column named <code>Rank</code> containing:
+			<ul>
+				<li>"Strong" if <code>Attack</code> and <code>Defense</code> values are both above their respective mean value.</li>
+				<li>"Weak" if <code>Attack</code> and <code>Defense</code> values are both below their respective mean value.</li>
+				<li>"Standard" in other cases.</li>
+			</ul>
+		</li>
+		<li>Create a Series containing all the different <code>Type 1</code> as index and the number of Pokemons of that index as values.</li>
+		<li>With the <a href="titanic3.xls">Titanic Dataset</a>
+			<ul>
+				<li>compute the survival rate for both gender.</li>
+				<li>assemble passengers in different age groups (10 years) and plot the survival rate of each group.</li>
+				<li>Based on the previous results, was the saying "Women an Children First" a reality in the Titanic disaster?</li>
+			</ul>
+		</li>
+	</ol>
+</body>
+</html>

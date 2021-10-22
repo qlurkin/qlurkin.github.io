@@ -1,0 +1,535 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<!-- Reorganised with TEXT EDITOR (gedit under Ubuntu).
+     This file is the general file for the belgian french alphanumerical keyboard :
+     - it uses style sheet (css) [see details at section "style"]
+     - it displays the standard pad
+     - and optionnaly
+        * for some keys : the draw and/or the text (↹ and/or TAB …)
+        * the Linux additional glyphs
+     - keys and inscriptions are geographically referenced : "kb" + line(number) + range(letter) -->
+
+<svg id="svg2"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.0"
+   sodipodi:version="0.32"
+   inkscape:version="0.48.0 r9654"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   xml:space="preserve"
+
+   sodipodi:docname="KB_Belgique 800px.svg" width="800" height="247" viewBox="0 0 801 248" style="display:inline">
+
+  <metadata
+   id="metadata316">
+    <rdf:RDF>
+      <cc:Work rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview id="base"
+   inkscape:window-width="1679"
+   inkscape:window-height="1019"
+   inkscape:pageshadow="2"
+   inkscape:pageopacity="0.0"
+   borderopacity="1.0"
+   bordercolor="#666666"
+   pagecolor="#ffffff"
+   showguides="true"
+   inkscape:guide-bbox="true"
+   inkscape:zoom="0.6"
+   inkscape:cx="400"
+   inkscape:cy="123.5"
+   inkscape:current-layer="layer3"
+   inkscape:window-x="0"
+   inkscape:window-y="0"
+   showgrid="true"
+   inkscape:window-maximized="1"
+   inkscape:snap-bbox="true"
+   inkscape:bbox-nodes="true"
+   inkscape:snap-nodes="true"
+   inkscape:snap-grids="true"
+   inkscape:bbox-paths="false"
+   fit-margin-top="0"
+   fit-margin-left="0"
+   fit-margin-right="0"
+   fit-margin-bottom="0"
+   units="px"
+   inkscape:snap-bbox-edge-midpoints="false"
+   inkscape:snap-bbox-midpoints="false"
+   inkscape:snap-global="true"
+   inkscape:snap-page="true"
+   inkscape:snap-smooth-nodes="true">
+  </sodipodi:namedview>
+
+<defs id="defs4">
+	<linearGradient id="linearGradient1035" inkscape:collect="always">
+		<stop id="stop1031" offset="0" style="stop-color:#181818;stop-opacity:1" />
+		<stop id="stop1033" offset="1" style="stop-color:#e7e7e7;stop-opacity:0" />
+	</linearGradient>
+	<linearGradient id="linearGradient1037" xlink:href="#linearGradient1035" gradientUnits="userSpaceOnUse" inkscape:collect="always"
+		x1="79.152" y1="184.48" x2="104.15" y2="204.48" gradientTransform="translate(4.348,21.516)" />
+
+   <marker id="TriangleOutM" inkscape:stockid="TriangleOutM"
+   style="overflow:visible"
+   orient="auto"
+   refX="0"
+   refY="0">
+    <path id="path4356" style="fill-rule:evenodd;stroke:black;stroke-width:1pt;marker-start:none"
+      d="M 5.77,0 -2.88,5 -2.88,-5 5.77,0 z"
+       transform="scale(0.4,0.4)"
+       inkscape:connector-curvature="0" />
+  </marker>
+  <style id="style6" type="text/css">
+
+<!--  General     : «#» style for «id» ; «.» class style (for particular style in group)
+      DRAW styles : K_ : particular key style
+      TEXT styles : «text» : common style for all text | T_ : text style | _L : large ; _s : very small -->
+    
+    <![CDATA[
+
+      text            { writing-mode:lr-tb;font-weight:bold;font-family:consolas, monospace;}
+      #T_others       { font-size:16px; text-align:start ;text-anchor:start ;}
+      #T_alterninsc   { font-size:14px; fill:dimgray    ;fill-opacity:1 ;stroke:none; text-align:start ;text-anchor:start ;}
+      #T_stdletters   { font-size:21px; fill:black      ;fill-opacity:1 ;stroke:none; text-align:center;text-anchor:middle;}
+      #T_stdspecial   { font-size:18px; fill:black      ;fill-opacity:1 ;stroke:none; text-align:center;text-anchor:middle;}
+      #T_intodisuse   { font-size:18px; fill:dimgray    ;fill-opacity:1 ;stroke:none; text-align:center;text-anchor:middle;}
+      #T_AltGr        { font-size:18px; fill:blue       ;fill-opacity:1 ;stroke:none; text-align:center;text-anchor:middle;}
+      #T_AltGrSh      { font-size:18px; fill:dodgerblue ;fill-opacity:1 ;stroke:none; text-align:center;text-anchor:middle;}
+      .T_UpAltGr      { font-size:18px; fill:skyblue    ;}
+      .T_DeadKey      { font-size:21px; fill:red        ;}
+
+      #T_Lx_AltGr     { font-size:18px; fill:purple     ;fill-opacity:1 ;stroke:none; text-align:center;text-anchor:middle;}
+      #T_Lx_AltGrSh   { font-size:18px; fill:blueviolet ;fill-opacity:1 ;stroke:none; text-align:center;text-anchor:middle;}
+      .T_Lx_UpAltGr   { font-size:18px; fill:violet     ;font-family:Sans;}
+      .T_Lx_DeadKey   { font-size:21px; fill:darkorange ;fill-opacity:1 ;stroke:darkorange;stroke-width:0.6;}
+
+      .T_size_s       { font-size:12px; fill:black      ;fill-opacity:1 ;stroke:none; text-align:start ;text-anchor:start ;}
+      .T_size_L       { font-size:21px; }
+
+      #GlyphKey       { fill:white      ;stroke:grey   ;stroke-width:1;}
+      #ModifKey       { fill:gainsboro  ;stroke:grey   ;stroke-width:1;}
+      #OtherKey       { fill:silver     ;stroke:grey   ;stroke-width:1;}
+      .K_AltGr        { fill:#D5EEF8    ;stroke:grey   ;stroke-width:1;}
+
+     ]]>
+       
+    </style>        
+</defs>
+<!-- ========  Keyboard background ======== -->
+<g inkscape:groupmode="layer" id="layer1" inkscape:label="Background" style="display:inline" sodipodi:insensitive="true">
+      <rect id="Bckgrd" x="0" y="0" width="800" height="247" style="fill:wheat;stroke:none" />
+</g>
+
+<!-- ========     Keys      ======== -->
+<g inkscape:groupmode="layer" id="layer2" inkscape:label="Keys"       style="display:inline" sodipodi:insensitive="true">
+  <g id="GlyphKey">
+<!-- Num keys -->
+<!-- Standard letters keys -->
+<!-- Specials glyphs keys -->
+<!-- Ponctuation keys -->
+    <rect id="K_kb2a" x="2"   y="2"   width="48"  height="44" rx="6" ry="6" />
+    <use  id="K_kb2b" xlink:href="#K_kb2a" transform="translate(54,0)"/>
+    <use  id="K_kb2c" xlink:href="#K_kb2a" transform="translate(108,0)"/>
+    <use  id="K_kb2d" xlink:href="#K_kb2a" transform="translate(162,0)"/>
+    <use  id="K_kb2e" xlink:href="#K_kb2a" transform="translate(216,0)"/>
+    <use  id="K_kb2f" xlink:href="#K_kb2a" transform="translate(270,0)"/>
+    <use  id="K_kb2g" xlink:href="#K_kb2a" transform="translate(324,0)"/>
+    <use  id="K_kb2h" xlink:href="#K_kb2a" transform="translate(378,0)"/>
+    <use  id="K_kb2i" xlink:href="#K_kb2a" transform="translate(432,0)"/>
+    <use  id="K_kb2j" xlink:href="#K_kb2a" transform="translate(486,0)"/>
+    <use  id="K_kb2k" xlink:href="#K_kb2a" transform="translate(540,0)"/>
+    <use  id="K_kb2l" xlink:href="#K_kb2a" transform="translate(594,0)"/>
+    <use  id="K_kb2m" xlink:href="#K_kb2a" transform="translate(648,0)"/>
+
+    <use  id="K_kb3b" xlink:href="#K_kb2a" transform="translate(80,50)"/>
+    <use  id="K_kb3c" xlink:href="#K_kb2a" transform="translate(134,50)"/>
+    <use  id="K_kb3d" xlink:href="#K_kb2a" transform="translate(188,50)"/>
+    <use  id="K_kb3e" xlink:href="#K_kb2a" transform="translate(242,50)"/>
+    <use  id="K_kb3f" xlink:href="#K_kb2a" transform="translate(296,50)"/>
+    <use  id="K_kb3g" xlink:href="#K_kb2a" transform="translate(350,50)"/>
+    <use  id="K_kb3h" xlink:href="#K_kb2a" transform="translate(404,50)"/>
+    <use  id="K_kb3i" xlink:href="#K_kb2a" transform="translate(458,50)"/>
+    <use  id="K_kb3j" xlink:href="#K_kb2a" transform="translate(512,50)"/>
+    <use  id="K_kb3k" xlink:href="#K_kb2a" transform="translate(566,50)"/>
+    <use  id="K_kb3l" xlink:href="#K_kb2a" transform="translate(620,50)"/>
+    <use  id="K_kb3m" xlink:href="#K_kb2a" transform="translate(674,50)"/>
+
+    <use  id="K_kb4b" xlink:href="#K_kb2a" transform="translate(96,100)"/>
+    <use  id="K_kb4c" xlink:href="#K_kb2a" transform="translate(150,100)"/>
+    <use  id="K_kb4d" xlink:href="#K_kb2a" transform="translate(204,100)"/>
+    <use  id="K_kb4e" xlink:href="#K_kb2a" transform="translate(258,100)"/>
+    <use  id="K_kb4f" xlink:href="#K_kb2a" transform="translate(312,100)"/>
+    <use  id="K_kb4g" xlink:href="#K_kb2a" transform="translate(366,100)"/>
+    <use  id="K_kb4h" xlink:href="#K_kb2a" transform="translate(420,100)"/>
+    <use  id="K_kb4i" xlink:href="#K_kb2a" transform="translate(474,100)"/>
+    <use  id="K_kb4j" xlink:href="#K_kb2a" transform="translate(528,100)"/>
+    <use  id="K_kb4k" xlink:href="#K_kb2a" transform="translate(582,100)"/>
+    <use  id="K_kb4l" xlink:href="#K_kb2a" transform="translate(636,100)"/>
+    <use  id="K_kb4m" xlink:href="#K_kb2a" transform="translate(690,100)"/>
+
+    <use  id="K_kb5b" xlink:href="#K_kb2a" transform="translate(62,150)"/>
+    <use  id="K_kb5c" xlink:href="#K_kb2a" transform="translate(116,150)"/>
+    <use  id="K_kb5d" xlink:href="#K_kb2a" transform="translate(170,150)"/>
+    <use  id="K_kb5e" xlink:href="#K_kb2a" transform="translate(224,150)"/>
+    <use  id="K_kb5f" xlink:href="#K_kb2a" transform="translate(278,150)"/>
+    <use  id="K_kb5g" xlink:href="#K_kb2a" transform="translate(332,150)"/>
+    <use  id="K_kb5h" xlink:href="#K_kb2a" transform="translate(386,150)"/>
+    <use  id="K_kb5i" xlink:href="#K_kb2a" transform="translate(440,150)"/>
+    <use  id="K_kb5j" xlink:href="#K_kb2a" transform="translate(494,150)"/>
+    <use  id="K_kb5k" xlink:href="#K_kb2a" transform="translate(548,150)"/>
+    <use  id="K_kb5l" xlink:href="#K_kb2a" transform="translate(602,150)"/>
+
+    <rect id="K_kb6d" x="188" y="202" width="364" height="44" rx="6" ry="6" />
+  </g>
+
+<!-- Modification keys -->
+  <g id="ModifKey">
+    <rect id="K_kb4a" x="2"   y="102" width="90"  height="44" rx="6" ry="6" />
+    <rect id="K_kb5a" x="2"   y="152" width="56"  height="44" rx="6" ry="6" />
+    <rect id="K_kb5m" x="658" y="152" width="142" height="44" rx="6" ry="6" />
+    <rect id="K_kb6k" x="558" y="202" width="56"  height="44" rx="6" ry="6" class="K_AltGr"/>
+  </g>
+  
+<!-- Others keys  -->
+  <g id="OtherKey">
+<!-- Backspace  --> <rect id="K_kb2n" x="704" y="2"   width="96" height="44" rx="6" ry="6" />
+
+<!-- Tabulation --> <rect id="K_kb3a" x="2"   y="52"  width="74" height="44" rx="6" ry="6" />
+<!-- Enter key --> 
+    <path id="K_kb3n"
+     sodipodi:nodetypes="ssssssssccss"
+     d="M 736.16,51.79 C 732.72,51.79 730.23,54.35 730.22,57.03 L 730.16,89.63 C 730.15,92.94 732.85,96 736.16,96
+        L 740.15,96 C 743.231,96 745.85,99.04 745.85,101.59 745.85,104.14 746.09,126.16 746.09,139.44 746.09,141.43
+          748.11,145.41 752.09,145.41 766.03,145.41 779.97,145.41 793.91,145.41 797.89,145.41 799.88,141.43 799.88,139.44
+          799.88,112.22 799.88,85 799.88,57.78 799.88,55.79 797.89,51.78 793.91,51.78 z" />
+
+<!-- Ctrl 1 --> <rect id="K_kb6a" x="2"   y="202" width="56" height="44" rx="6" ry="6" />
+<!-- Win  1 --> <rect id="K_kb6b" x="64"  y="202" width="56" height="44" rx="6" ry="6" />
+<!-- Alt    --> <rect id="K_kb6c" x="126" y="202" width="56" height="44" rx="6" ry="6" />
+<!-- Win  2 --> <rect id="K_kb6l" x="620" y="202" width="56" height="44" rx="6" ry="6" />
+<!-- Menu   --> <rect id="K_kb6m" x="682" y="202" width="56" height="44" rx="6" ry="6" />
+<!-- Ctrl 2 --> <rect id="K_kb6n" x="744" y="202" width="56" height="44" rx="6" ry="6" />
+  </g>
+  
+</g>
+<!-- ========     Key signs    ======== -->
+<g inkscape:groupmode="layer" id="DrawedInscr" inkscape:label="DrawedInscr" style="display:inline">
+  
+	<!--  Logo keys : neutral window -->
+	<rect id="S_kb6b" x="80" y="214" width="25" height="20"
+		style="fill:url(#linearGradient1037);fill-opacity:1;stroke:White;stroke-width:1;stroke-linecap:round;stroke-linejoin:round" />
+
+<!-- Windows keys - - >
+  <g id="S_kb6b" style="stroke:white;stroke-width:0.4">
+    <path id="WinLogo-1" style="fill:#666"
+          d="M 75.38,223.05 C 78.27,222 81.28,222.2 84.41,223.34 L 86.84,216.82 C 83.92,215.72 80.95,215.23 77.75,216.6 L 75.38,223.05 z"
+          sodipodi:nodetypes="ccccc" inkscape:connector-curvature="0" />
+    <path id="WinLogo-2" style="fill:#9b9b9b"
+          d="M 87.6,216.98 C 91.71,218.37 94.64,217.9 96.86,217.44 L 94.48,223.7 C 90.21,225.27 87.64,224.25 85.14,223.55 L 87.6,216.98 z"
+          sodipodi:nodetypes="ccccc" inkscape:connector-curvature="0" />
+    <path id="WinLogo-3" style="fill:#c1c1c1"
+          d="M 84.94,224.13 C 87.69,225.01 90.58,225.56 94.22,224.43 L 91.29,231.55 C 87.82,232.87 85.18,232.42 82.23,231.37 L 84.94,224.13 z"
+          sodipodi:nodetypes="ccccc" inkscape:connector-curvature="0" />
+    <path id="WinLogo-4" style="fill:#555"
+          d="M 72.38,230.91 C 75.31,229.76 78.33,230 81.41,231.16 L 84.14,223.9 C 82.86,223.47 80,222.29 75,223.82 L 72.38,230.91 z"
+          sodipodi:nodetypes="ccccc" inkscape:connector-curvature="0" />
+    <text id="WinLogo-5" x="94" y="235" class="T_size_s">™</text>
+  </g> -->
+		
+  
+  <use id="S_kb6l" xlink:href="#S_kb6b" transform="translate(556,0)" x="0" y="0" width="1" height="1" />
+<!--   Menu key     -->
+  <g id="S_kb6m">
+    <rect id="Menu-1" x="690" y="214" width="16" height="20"
+          style="fill:#d2cfcf;stroke:black;stroke-width:1;stroke-linecap:round;stroke-linejoin:round" />
+    <path id="Menu-2"
+          style="fill:none;stroke:black;stroke-width:4;stroke-linecap:square;stroke-linejoin:miter"
+          d="M 691.5,214 704.5,214 M 691.5,219 704.5,219" />
+    <path id="Menu-3"
+          style="fill:none;stroke:black;stroke-width:2;stroke-linecap:square;stroke-linejoin:miter"
+          d="M 693,223 703,223 M 693,227 703,227 M 693,231 703,231" />
+    <path id="Menu-4"
+          style="fill:none;stroke:#d2cfcf;stroke-width:2;stroke-linecap:square;stroke-linejoin:miter"
+          d="M 693,219 703,219" />
+    <path id="Menu-arrow"
+          style="fill:#d2cfcf;stroke:black;stroke-width:1.4;stroke-linecap:butt;stroke-linejoin:round"
+          d="M 706,231 708,228 712,232 714,230 710,226 712,224 701,219 706,231 z"
+          sodipodi:nodetypes="cccccccc" />
+  </g>
+<!--    Backspace     -->
+  <path id="S_kb2n"
+        style="fill:none;stroke:black;stroke-width:2;marker-end:url(#TriangleOutM)"
+        d="M 738,24 718,24"
+        sodipodi:nodetypes="cc" />
+  
+<!-- ========     Alternates signs    ======== -->
+  <g inkscape:groupmode="layer" id="sublayer3a" inkscape:label="alternative signs" sodipodi:insensitive="true" style="display:inline">
+<!-- Tabulations  -->
+    <path id="S_kb3a-l1"
+          style="fill:none;stroke:black;stroke-width:2;marker-end:url(#TriangleOutM)"
+          d="M 34,66 14,66" />
+    <path id="S_kb3a-l2"
+          style="fill:none;stroke:black;stroke-width:2"
+          d="M 10,60 10,72" />
+    <path id="S_kb3a-r1"
+          style="fill:none;stroke:black;stroke-width:2;marker-end:url(#TriangleOutM)"
+          d="M 10,82 30,82" />
+    <path id="S_kb3a-r2"
+          style="fill:none;stroke:black;stroke-width:2"
+          d="M 34,76 34,88" />
+<!-- Shift  -->
+    <path id="S_kb5a" style="fill:none;stroke:black;stroke-width:2"
+          d="M 18,166 10,174 14,174 14,180 22,180 22,174 26,174 z"
+          inkscape:connector-curvature="0" />
+    <use  id="S_kb5n" xlink:href="#S_kb5a" transform="translate(660,0)" x="0" y="0" width="1" height="1" />
+<!-- Enter  -->
+    <path id="S_kb3n" style="fill:none;stroke:black;stroke-width:2;marker-end:url(#TriangleOutM)"
+          d="M 784,110 784,118 766,118"
+          inkscape:connector-curvature="0" />
+<!-- Caps Lock  -->
+    <g id="S_kb4a">
+      <rect id="CapsLock-1" x="10" y="120" width="18" height="14" ry="1" rx="1"
+            style="fill:none;stroke:black;stroke-width:1.6"  />
+      <path id="CapsLock-2"
+            style="fill:none;stroke:black;stroke-width:1.4"
+            d="M 12,120 v-3 a7,6 0 0,1 14,0 v3 m-12,0 v-3 a5,4 0 0,1 10,0 v3"  />
+      <ellipse id="CapsLock-3" cx="19" cy="125" rx="1" ry="2"
+            sodipodi:cx="19" sodipodi:cy="125" sodipodi:rx="1" sodipodi:ry="2"
+            style="fill:none;stroke:black;stroke-width:1.2" />
+    </g>
+  </g>
+</g>
+<!-- ========     Inscriptions layer    ======== -->
+<g inkscape:groupmode="layer" id="fr-be" inkscape:label="incriptions" sodipodi:insensitive="true" style="display:inline">
+  
+  <g id="T_stdspecial">
+    <text id="T_kb2a2" x="14"  y="40" >²</text>
+    <text id="T_kb2a3" x="14"  y="22" >³</text>
+    <text id="T_kb2b2" x="68"  y="40" >&amp;</text>
+    <text id="T_kb2c2" x="122" y="40" >é</text>
+    <text id="T_kb2d2" x="176" y="40" >&quot;</text>
+    <text id="T_kb2e2" x="230" y="40" >'</text>
+    <text id="T_kb2f2" x="284" y="40" >(</text>
+    <text id="T_kb2g2" x="338" y="40" >§</text>
+    <text id="T_kb2h2" x="392" y="40" >è</text>
+    <text id="T_kb2i2" x="446" y="40" >!</text>
+    <text id="T_kb2j2" x="500" y="40" >ç</text>
+    <text id="T_kb2k2" x="554" y="40" >à</text>
+    <text id="T_kb2l2" x="610" y="40" >)</text>
+    <text id="T_kb2m1" x="610" y="20" >°</text>
+    <text id="T_kb2n1" x="664" y="18" >_</text>
+    <text id="T_kb2n2" x="664" y="40" >-</text>
+
+    <text id="T_kb3l1" x="636" y="72" class="T_DeadKey">¨</text>
+    <text id="T_kb3l2" x="636" y="92" class="T_DeadKey">^</text>
+    <text id="T_kb3m1" x="689" y="68" >∗</text>
+    <text id="T_kb3m2" x="690" y="92" >$</text>
+
+    <text id="T_kb4l1" x="650" y="120" >%</text>
+    <text id="T_kb4l2" x="650" y="142" >ù</text>
+    <text id="T_kb4m1" x="704" y="120" >£</text>
+    <text id="T_kb4m2" x="704" y="142" >µ</text>
+
+    <text id="T_kb5b1" x="78"  y="170" >&gt;</text>
+    <text id="T_kb5b2" x="78"  y="188" >&lt;</text>
+
+    <text id="T_kb5i1" x="454" y="172" >?</text>
+    <text id="T_kb5i2" x="454" y="190" >,</text>
+    <text id="T_kb5j1" x="508" y="170" >.</text>
+    <text id="T_kb5j2" x="508" y="190" >;</text>
+    <text id="T_kb5k1" x="562" y="172" >/</text>
+    <text id="T_kb5k2" x="562" y="190" >:</text>
+    <text id="T_kb5l1" x="616" y="170" >+</text>
+    <text id="T_kb5l2" x="616" y="192" >=</text>
+  </g>
+  <g id="T_intodisuse">
+    <text id="T_kb1b2" x="68"  y="20" >1</text> 
+    <text id="T_kb1c2" x="122" y="20" >2</text>
+    <text id="T_kb1d2" x="176" y="20" >3</text>
+    <text id="T_kb1e2" x="230" y="20" >4</text>
+    <text id="T_kb1f2" x="284" y="20" >5</text>
+    <text id="T_kb1g2" x="338" y="20" >6</text>
+    <text id="T_kb1h2" x="392" y="20" >7</text>
+    <text id="T_kb1i2" x="446" y="20" >8</text>
+    <text id="T_kb1k2" x="500" y="20" >9</text>
+    <text id="T_kb1l2" x="554" y="20" >0</text>
+  </g>
+  <g id="T_stdletters">
+    <text id="T_kb3b"  x="96"  y="72" >A</text>
+    <text id="T_kb3c"  x="150" y="72" >Z</text>
+    <text id="T_kb3d"  x="204" y="72" >E</text>
+    <text id="T_kb3e"  x="258" y="72" >R</text>
+    <text id="T_kb3f"  x="312" y="72" >T</text>
+    <text id="T_kb3g"  x="366" y="72" >Y</text>
+    <text id="T_kb3h"  x="420" y="72" >U</text>
+    <text id="T_kb3i"  x="474" y="72" >I</text>
+    <text id="T_kb3j"  x="528" y="72" >O</text>
+    <text id="T_kb3k"  x="582" y="72" >P</text>
+
+    <text id="T_kb4b"  x="112" y="122" >Q</text>
+    <text id="T_kb4c"  x="166" y="122" >S</text>
+    <text id="T_kb4d"  x="220" y="122" >D</text>
+    <text id="T_kb4e"  x="274" y="122" >F</text>
+    <text id="T_kb4f"  x="328" y="122" >G</text>
+    <text id="T_kb4g"  x="382" y="122" >H</text>
+    <text id="T_kb4h"  x="436" y="122" >J</text>
+    <text id="T_kb4i"  x="490" y="122" >K</text>
+    <text id="T_kb4j"  x="544" y="122" >L</text>
+    <text id="T_kb4k"  x="598" y="122" >M</text>
+
+    <text id="T_kb5c"  x="132" y="172" >W</text>
+    <text id="T_kb5d"  x="186" y="172" >X</text>
+    <text id="T_kb5e"  x="240" y="172" >C</text>
+    <text id="T_kb5f"  x="294" y="172" >V</text>
+    <text id="T_kb5g"  x="348" y="172" >B</text>
+    <text id="T_kb5h"  x="402" y="172" >N</text>
+  </g>
+
+  <g id="T_others">
+    <text id="T_kb6a" x="10"  y="230" >Ctrl</text>
+    <text id="T_kb6c" x="134" y="230" >Alt</text>
+    <text id="T_kb6k" x="564" y="230" >Alt Gr</text>
+    <text id="T_kb6n" x="750" y="230" >Ctrl</text>
+  </g>
+
+  <g id="T_AltGr">
+    <text id="T_kb2b3" x="94"  y="40"  >|</text>
+    <text id="T_kb2c3" x="148" y="40"  >@</text>
+    <text id="T_kb2d3" x="202" y="40"  >#</text>
+    <text id="T_kb2g3" x="364" y="42"  >^</text>
+    <text id="T_kb2j3" x="526" y="40"  >{</text>
+    <text id="T_kb2k3" x="580" y="40"  >}</text>
+    <text id="T_kb2m3" x="662" y="90"  >[</text>
+
+    <text id="T_kb3d2" x="228" y="92"  >€</text>
+    <text id="T_kb3m3" x="716" y="90"  >]</text>
+
+    <text id="T_kb4l3" x="674" y="144" class="T_DeadKey">´</text>
+    <text id="T_kb4m3" x="728" y="144" class="T_DeadKey">`</text>
+
+    <text id="T_kb5b3" x="102" y="190" >\</text>
+    <text id="T_kb5l3" x="640" y="188" class="T_DeadKey">~</text>
+  </g>
+<!-- ========     alternates inscriptions    ======== -->
+  <g inkscape:groupmode="layer" id="sublayer4a" inkscape:label="alternative inscriptions" style="display:inline">
+    <g id="T_alterninsc" >
+      <text id="T_kb2n1" x="748" y="20"  >Suppr</text>
+      <text id="T_kb2n2" x="748" y="38"  >arrière</text>
+
+      <text id="T_kb3a"  x="38"  y="80"  >Tab</text>
+      <text id="T_kb3n"  x="746" y="78"  >Entrée</text>
+
+      <text id="T_kb4a1" x="36"  y="120" >Verr</text>
+      <text id="T_kb4a2" x="36"  y="136" >Maj</text>
+
+      <text id="T_kb5a"  x="32"  y="180" >Maj</text>
+      <text id="T_kb5m"  x="696" y="180" >Maj</text>
+    </g>
+  </g>
+<!-- ========        Linux Keys     ======== -->
+  <g inkscape:groupmode="layer" id="sublayer4b" inkscape:label="inscriptions linux" style="display:none">
+<!-- ========        with AltGr     ======== -->
+    <g id="T_Lx_AltGr">
+      <text id="T_kb2a3" x="32"  y="40" >¬</text>
+      <text id="T_kb2a3" x="256" y="40" >¼</text>
+      <text id="T_kb2a3" x="310" y="40" >½</text>
+      <text id="T_kb2a3" x="418" y="40" >{</text>
+      <text id="T_kb2a3" x="472" y="40" >[</text>
+      <text id="T_kb2a3" x="634" y="40" >\</text>
+      <text id="T_kb2a3" x="688" y="38" class="T_Lx_DeadKey">¸</text>
+
+      <text id="T_kb3b3" x="120" y="92" >@</text>
+      <text id="T_kb3c3" x="174" y="92" >ł</text>
+      <text id="T_kb3e3" x="282" y="92" >¶</text>
+      <text id="T_kb3f3" x="336" y="92" >ŧ</text>
+      <text id="T_kb3g3" x="390" y="90" >←</text>
+      <text id="T_kb3h3" x="444" y="90" >↓</text>
+      <text id="T_kb3i3" x="498" y="90" >→</text>
+      <text id="T_kb3j3" x="550" y="92" >œ</text>
+      <text id="T_kb3k3" x="606" y="92" >þ</text>
+
+      <text id="T_kb4b3" x="134" y="142" >æ</text>
+      <text id="T_kb4c3" x="190" y="142" >ß</text>
+      <text id="T_kb4d3" x="244" y="142" >ð</text>
+      <text id="T_kb4g3" x="298" y="142" >đ</text>
+      <text id="T_kb4h3" x="352" y="142" >ŋ</text>
+      <text id="T_kb4i3" x="406" y="142" >ħ</text>
+      <text id="T_kb4j3" x="514" y="142" >ĸ</text>
+      <text id="T_kb4j3" x="568" y="142" >ł</text>
+      <text id="T_kb4k3" x="622" y="142" class="T_Lx_DeadKey">´</text>
+
+      <text id="T_kb5b3" x="102" y="170" >\</text>
+      <text id="T_kb5c3" x="156" y="192" class="T_size_L">«</text>
+      <text id="T_kb5d3" x="210" y="192" class="T_size_L">»</text>
+      <text id="T_kb5e3" x="264" y="192" >¢</text>
+      <text id="T_kb5f3" x="318" y="190" >“</text>
+      <text id="T_kb5g3" x="372" y="192" >”</text>
+      <text id="T_kb5i3" x="478" y="188" class="T_Lx_DeadKey">¸</text>
+      <text id="T_kb5k3" x="586" y="192" >⋅</text>
+    </g>
+<!-- ======== with AltGr & Maj   ======== -->
+    <g id="T_Lx_AltGrSh">
+      <text id="T_kb2a4" x="32"  y="20" >¬</text>
+      <text id="T_kb2b4" x="94"  y="18" >¡</text> 
+      <text id="T_kb2c4" x="148" y="20" >⅛</text>
+      <text id="T_kb2d4" x="202" y="20" >£</text>
+      <text id="T_kb2e4" x="256" y="20" >$</text>
+      <text id="T_kb2f4" x="310" y="20" >⅜</text>
+      <text id="T_kb2g4" x="364" y="20" >⅝</text>
+      <text id="T_kb2h4" x="418" y="20" >⅞</text>
+      <text id="T_kb2i4" x="472" y="20" >™</text>
+      <text id="T_kb2j4" x="526" y="20" >±</text>
+      <text id="T_kb2k4" x="580" y="20" >°</text>
+      <text id="T_kb2l4" x="634" y="18" >¿</text>
+      <text id="T_kb2m4" x="688" y="18" class="T_Lx_DeadKey">˛</text>
+
+      <text id="T_kb3b4" x="120" y="72" >Ω</text>
+      <text id="T_kb3c4" x="174" y="72" class="T_Lx_UpAltGr">Ł</text>
+      <text id="T_kb3d4" x="228" y="72" >¢</text>
+      <text id="T_kb3e4" x="282" y="72" >®</text>
+      <text id="T_kb3f4" x="336" y="72" class="T_Lx_UpAltGr">Ŧ</text>
+      <text id="T_kb3g4" x="390" y="72" >¥</text>
+      <text id="T_kb3h4" x="444" y="68" >↑</text>
+      <text id="T_kb3i4" x="498" y="72" >ı</text>
+      <text id="T_kb3j4" x="550" y="72" class="T_Lx_UpAltGr">Œ</text>
+      <text id="T_kb3k4" x="606" y="72" class="T_Lx_UpAltGr">Þ</text>
+      <text id="T_kb3m4" x="660" y="72" class="T_Lx_DeadKey">°</text>
+      <text id="T_kb3m4" x="714" y="74" class="T_Lx_DeadKey">¯</text>
+
+      <text id="T_kb4b4" x="134" y="122" class="T_Lx_UpAltGr">Æ</text>
+      <text id="T_kb4c4" x="190" y="118" >§</text>
+      <text id="T_kb4d4" x="244" y="122" class="T_Lx_UpAltGr">Ð</text>
+      <text id="T_kb4e4" x="298" y="122" >ª</text>
+      <text id="T_kb4f4" x="352" y="122" class="T_Lx_UpAltGr">Ŋ</text>
+      <text id="T_kb4g4" x="406" y="122" class="T_Lx_UpAltGr">Ħ</text>
+      <text id="T_kb4h4" x="514" y="122" >&amp;</text>
+      <text id="T_kb4j4" x="568" y="122" class="T_Lx_UpAltGr">Ł</text>
+      <text id="T_kb4k4" x="622" y="124" class="T_Lx_DeadKey">˝</text>
+      <text id="T_kb4l4" x="676" y="124" class="T_Lx_DeadKey">ˇ</text>
+      <text id="T_kb4m4" x="730" y="124" class="T_Lx_DeadKey">˘</text>
+
+      <text id="T_kb5c4" x="102" y="172" >\</text>
+      <text id="T_kb5c4" x="156" y="172" >&lt;</text>
+      <text id="T_kb5d4" x="210" y="172" >&gt;</text>
+      <text id="T_kb5e4" x="264" y="172" >©</text>
+      <text id="T_kb5f4" x="318" y="170" >‘</text>
+      <text id="T_kb5g4" x="372" y="170" >’</text>
+      <text id="T_kb5i4" x="478" y="170" >º</text>
+      <text id="T_kb5j4" x="532" y="170" >×</text>
+      <text id="T_kb5k4" x="586" y="170" >÷</text>
+      <text id="T_kb5l4" x="640" y="174" class="T_Lx_DeadKey">¯</text>
+    </g>
+  </g>
+</g>
+</svg>

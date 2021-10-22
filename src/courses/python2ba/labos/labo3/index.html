@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Classes et objets</title>
+	<script src="https://quentin.lurkin.xyz/document.js"></script>
+	<style>
+		pre > code {
+			font-size: 75% !important;
+		}
+	</style>
+</head>
+<body>
+	<h1>IN2L - Informatique appliquée <small>Classes et objets</small></h1>
+	<h3 class="nocount">Objectifs</h3>
+	<ul>
+		<li>Savoir définir une nouvelle classe, son constructeur et des méthodes</li>
+		<li>Comprendre une classe, savoir l'utiliser et en créer des instances</li>
+		<li>Savoir construire un programme de moyenne ampleur combinant des classes</li>
+	</ul>
+	<h2>Application</h2>
+	<ol>
+		<li>
+			Définir une classe <code class="lang-python">Item</code> qui représente un article de magasin. Un tel article est défini par un code-barres (<code class="lang-python">int</code>), un nom de produit (<code class="lang-python">str</code>) et un prix en cents (<code class="lang-python">int</code>). On doit pouvoir créer une instance de cette classe comme suit :
+			<pre>
+				<code class="lang-python">
+					beer = Item (56273, "Zundert 33 cl", 250)
+					print(beer)
+				</code>
+			</pre>
+			<pre>
+				<code class="lang-plain">
+					<__main__.Item object at 0x1010647b8>
+				</code>
+			</pre>
+		</li>
+		<li>
+			Améliorez la classe précédente en y ajoutant une méthode qui permet d'obtenir le prix en euros pour un article et aussi pour une quantité d'article qu'on commanderait. On doit pouvoir écrire l'exemple suivant:
+			<pre>
+				<code class="lang-python wrap">
+					print(beer.unitprice)
+					print(beer.price(10))
+				</code>
+			</pre>
+			<pre>
+				<code class="lang-plain">
+					2.5
+					25.0
+				</code>
+			</pre>
+		</li>
+		<li>
+			Enfin, ajoutez la méthode <code class="lang-python">__str__</code> à votre classe pour que l'article soit joliment affiché lors d'un <code class="lang-python">print()</code> :
+			<pre>
+				<code class="lang-python wrap">
+					print(beer)
+				</code>
+			</pre>
+			<pre>
+				<code class="lang-plain">
+					Zundert 33 cl (code: 56273, prix: 250)
+				</code>
+			</pre>
+		</li>
+		<li>
+			Définir une classe <code class="lang-python">Answer</code> qui représente une réponse d'une question de type QCM. Une telle réponse est composée de deux attributs:
+			<ul>
+				<li>un identifiant (une chaine de caractères);</li>
+				<li>l'énoncé de la réponse.</li>
+			</ul>
+			Prévoyez deux variables d'instance privées, deux accesseurs <code class="lang-python">id</code> et <code class="lang-python">text</code> et aucun mutateur. On doit, par exemple, pouvoir écrire le code suivant tel qu'il produise le résultat montré, lors de son exécution (il vous faudra définir la fonction <code class="lang-python">__str__</code>) :
+			<pre>
+				<code class="lang-python wrap">
+					a1 = Answer ('A1', "Il est blanc.")
+					a2 = Answer ('A2', "Il n'en a pas.")
+					a3 = Answer ('A1', "Shuuut, je joue à Fortnite.")
+					a4 = Answer ('A3', "Il est rayé.")
+					print (a1, a2, a3, a4, sep='\n')
+				</code>
+			</pre>
+			<pre>
+				<code class="lang-plain">
+					[A1] Il est blanc.
+					[A2] Il n'en a pas.
+					[A1] Shuuut, je joue à Fortnite.
+					[A3] Il est rayé.
+				</code>
+			</pre>
+		</li>
+		<li>
+			Définir une classe <code class="lang-python">Question</code> qui représente une question d'un QCM. Une telle question est composée de trois attributs:
+			<ul>
+				<li>un identifiant (une chaine de caractères);</li>
+				<li>l'énoncé de la question;</li>
+				<li>une liste de réponses (dont les identifiants sont uniques).</li>
+			</ul>
+			La liste de réponses est initialement vide. Prévoyez trois variables d'instance privées pour les attributs, deux accesseurs <code class="lang-python">id</code> et <code class="lang-python">text</code> et aucun mutateur. De plus, prévoyez une variable d'instance privée de type dictionnaire pour retenir, pour chaque réponse, si elle est correcte ou non. Enfin, ajoutez une méthode <code class="lang-python">add</code> qui ajoute une réponse à la question (s'il n'y en avait pas déjà une avec le même identifiant). On doit, par exemple, pouvoir écrire le code suivant tel qu'il produise le résultat montré, lors de son exécution (il vous faudra définir la fonction <code class="lang-python">__str__</code>):
+			<pre>
+				<code class="lang-python">
+					q1 = Question('Q1', 'Quelle est la couleur du chat de Marchand?')
+					q1.add(a1, True)
+					q1.add(a2, True)
+					q1.add(a3, False) # Ne sera pas ajoutée, car identifiant déjà existant
+					q1.add(a4, False)
+					print(q1)
+				</code>
+			</pre>
+			<pre>
+				<code class="lang-plain">
+					[Q1] Quelle est la couleur du chat de Marchand?
+						[A1] Il est blanc. (True)
+						[A2] Il n'en a pas. (True)
+						[A3] Il est rayé. (False)
+				</code>
+			</pre>
+		</li>
+	</ol>
+	<h2>Réflexion</h2>
+	<p>On souhaiterait construire un programme permettant de faire passer un quizz à un étudiant. Pour cela on va tout d'abord enrichir la classe <code class="lang-python">Question</code>, puis on écrira le programme principal.</p>
+	<ol>
+		<li>
+			Ajoutez une méthode <code class="lang-python">ask</code> dans la classe <code class="lang-python">Question</code>. Cette méthode permet de poser la question, en proposant deux choix de réponse et en s'assurant qu'une seule bonne réponse soit présentée. Dans un premier temps, parcourez simplement la liste des réponses et sélectionnez les successivement de sorte à en avoir une seule vraie.
+			<p>La méthode demande à l'utilisateur de rentrer un chiffre qui correspond à la réponse qu'il choisit (1 ou 2) et renvoie un booléen (<code class="lang-python">True</code> ou <code class="lang-python">False</code>) signalant si la réponse donnée est bonne ou non. Voici un exemple d'appel de cette méthode <code class="lang-python">ask</code> et le résultat produit:</p>
+
+			<pre>
+				<code class="lang-python">
+					print(q1.ask())
+				</code>
+			</pre>
+			<pre>
+				<code class="lang-plain">
+					Quelle est la couleur du chat de Marchand?
+						1/ Il est blanc.
+						2/ Il est rayé.
+					Votre réponse? 2
+					False
+				</code>
+			</pre>
+		</li>
+		<li>
+			On désire généraliser la méthode <code class="lang-python">ask</code> et pouvoir choisir le nombre de réponses que l'on souhaite voir afficher (par défaut, ça doit être deux). Modifiez donc la méthode <code class="lang-python">ask</code> de sorte que sa signature soit:
+			<pre>
+				<code class="lang-python">
+					def ask(self, nb=2):
+				</code>
+			</pre>
+			S'il n'y a pas assez de réponses pour la question, la méthode doit directement renvoyer <code class="lang-python">False</code> en affichant un message d'erreur à l'écran.
+		</li>
+		<li>
+			Enfin, dernière chose que l'on veut faire, c'est un programme principal qui va poser plusieurs questions, retenir les réponses données et afficher le score à la fin de l'exécution. Voici un exemple d'exécution du programme:
+			<pre>
+				<code class="lang-plain">
+					=== Bienvenue dans myQuizz 2.0 ===
+
+					Quelle est la couleur du chat de Marchand?
+						1/ Il est blanc.
+						2/ Il est rayé.
+					Votre réponse? 2
+
+					Pourquoi Mélotte a un PC de gamer ?
+						1/ N'importe quoi, il a un Mac.
+						2/ Parce qu'il joue pendant ses pauses.
+					Votre réponse? 1
+
+					Peut-on contrôler le cerveau de quelqu'un avec une Arduino?
+						1/ Évidemment, c'est pour cela que les bisseurs 1BA sont tous restés à l'ECAM.
+						2/ Non non, par contre il faut faire attention à la montre de Lurkin.
+					Votre réponse? 1
+
+					Quizz terminé.
+					Vous avez un score de 1/3.
+				</code>
+			</pre>
+		</li>
+	</ol>
+</body>
+</html>

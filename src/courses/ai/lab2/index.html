@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Artificial intelligence Lab 2</title>
+	<script src="https://quentin.lurkin.xyz/document.js"></script>
+	<style>
+		:not(pre)>code {
+			white-space: pre-wrap;
+			background: #f7f7f7;
+			border: 1px solid #dadce0;
+			color: #202124;
+			font: 0.9em "Roboto Mono",monospace;
+			hyphens: none;
+			tab-size: 2;
+			text-align: left;
+			word-spacing: normal;
+			margin: 0 .25em;
+			padding: .125em .25em;
+		}
+
+		table {
+			border-collapse: collapse;
+			border: 1px solid gray;
+			width: 100%;
+		}
+
+		td, th {
+			border: 1px solid gray;
+			padding: 0.5rem;
+		}
+
+		td {
+			border-top: none;
+			border-bottom: none;
+		}
+	</style>
+</head>
+<body>
+	<h1>Artificial intelligence Lab 2</h1>
+	<p>In this lab, you will use the <code>sklearn</code> module to create a model that classify handwritten digits.</p>
+	<p class='center'>
+		<img src="./7.png" alt="" style="width: 30%">
+		<img src="./6.png" alt="" style="width: 30%">
+		<img src="./8.png" alt="" style="width: 30%">
+	</p>
+
+	<h2>The dataset</h2>
+	
+	<p>We'll use the <em><a href="http://yann.lecun.com/exdb/mnist/">The MNIST Database</a></em> which contains 60 000 labelized images of handwritten digits. Each image is 28x28 pixels. Each digit is centered in his image regarding the center of mass of the pixels and is resized to fit in a 20x20 box.</p>
+
+	<p>The images are store in <code><a href="./train-images-idx3-ubyte.gz">train-images-idx3-ubyte.gz</a></code>. First you need to decompress the <code>.gz</code> file. Then the data are store in binary format with the following layout (in big endian):</p>
+
+	<table>
+		<tr>
+			<th>Offset</th>
+			<th>Type</th>
+			<th>Value</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>0000</td>
+			<td>32 bit integer</td>
+			<td>0x00000803 (2051)</td>
+			<td>magic number</td>
+		</tr>
+		<tr>
+			<td>0004</td>
+			<td>32 bit integer</td>
+			<td>60000</td>
+			<td>number of images</td>
+		</tr>
+		<tr>
+			<td>0008</td>
+			<td>32 bit integer</td>
+			<td>28</td>
+			<td>number of rows</td>
+		</tr>
+		<tr>
+			<td>0012</td>
+			<td>32 bit integer</td>
+			<td>28</td>
+			<td>number of columns</td>
+		</tr>
+		<tr>
+			<td>0016</td>
+			<td>unsigned byte</td>
+			<td>...</td>
+			<td>pixel</td>
+		</tr>
+		<tr>
+			<td>xxxx</td>
+			<td>unsigned byte</td>
+			<td>...</td>
+			<td>pixel</td>
+		</tr>
+	</table>
+
+	<p>The corresponding labels are stored in <a href="./train-labels-idx1-ubyte.gz">train-labels-idx1-ubyte.gz</a> with the following layout:</p>
+
+	<table>
+		<tr>
+			<th>Offset</th>
+			<th>Type</th>
+			<th>Value</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>0000</td>
+			<td>32 bit integer</td>
+			<td>0x00000801(2049)</td>
+			<td>magic number</td>
+		</tr>
+		<tr>
+			<td>0004</td>
+			<td>32 bit integer</td>
+			<td>60000</td>
+			<td>number of labels</td>
+		</tr>
+		<tr>
+			<td>0008</td>
+			<td>unsigned byte</td>
+			<td>...</td>
+			<td>pixel</td>
+		</tr>
+		<tr>
+			<td>xxxx</td>
+			<td>unsigned byte</td>
+			<td>...</td>
+			<td>pixel</td>
+		</tr>
+	</table>
+
+	<p>The labels values are 0 to 9.</p>
+
+	<h2>Exercices</h2>
+
+	<p>Do the following exercices in a Jupyter Notebook File <em>(.ipynb)</em>. <strong>You have to post your file on claco by the end of the lab</strong>.</p> 
+	<ol>
+		<li>Load the data. The <code>struct</code> module can help you.</li>
+		<li>Display some images with <code>matplotlib</code></li>
+		<li>Use <code>pandas</code> to check if the classes are balanced (mostly the same number of instance of each class)</li>
+		<li>Split data into train and test subsets (90% train, 10% test). There is a function in <code>sklearn</code> to do that.</li>
+		<li>the <code>sklearn</code> module contain implementations of many classification method. you have seen them during the theoretical course. Find one that give you best results. No need for long lasting training, I get good results with 10 seconds of training. The <code>sklearn.metrics</code> module can help you to quantify the results of your model.</li>
+	</ol>
+</body>
+</html>

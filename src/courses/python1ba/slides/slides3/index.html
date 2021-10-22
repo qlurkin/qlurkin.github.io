@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IC1T - Cours 3</title>
+    <script src="https://quentin.lurkin.xyz/deck.js"></script>
+</head>
+<body>
+    <section>
+        <h1>IC1T - Programmation <small>
+            Les séquences
+        </small></h1>
+        <p>Quentin Lurkin</p>
+    </section>
+
+    <section>
+        <h2>Les séquences</h2>
+        <ul>
+            <li>Les séquences sont des <strong>types</strong> de valeur :
+                <ul>
+                    <li>Les chaînes de caractères (<code>string</code>)
+                        <pre><code class="lang-python">
+                            a = "hello"      # littéral
+                            b = 2 * a + "!!" # expression
+                        </code></pre>
+                    </li>
+                    <li>Les listes (<code>list</code>)
+                        <pre><code class="lang-python">
+                            a = [1, 2, 3, 4]    # littéral
+                            a = [1, 2] + [3, 4] # expression
+                        </code></pre>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Les séquences</h2>
+        <ul>
+            <li>Les chaînes de caractères et les listes sont des séquences
+                <small>représente une suite ordonnée de valeurs</small>
+            </li>
+            <li>Une séquence stocke <strong>plusieurs</strong> valeurs</li>
+            <li>Les valeurs d’une séquence possèdent un numéro d’<strong>ordre</strong> dans la séquence
+                <small>l’indice de l’élément</small>
+            </li>
+        </ul>
+        <pre><code class="lang-python">
+            l = [2, 42, 3.1416, 34] # Liste est une séquence de valeurs
+            s = "J'aime les pâtes"  # String est une séquence de caractères
+        </code></pre>
+    </section>
+
+    <section>
+        <h2>Opérations sur les séquences</h2>
+        <ul>
+            <li>L’opérateur + entre deux séquences permet de créer une <strong>nouvelle séquence</strong> contenant les deux opérandes bout-à-bout
+                <small>On appelle cette opération la concaténation</small>
+            </li>
+            <li>L’opérateur * entre un entier n et une séquence permet de créer une <strong>nouvelle séquence</strong> contenant n fois la séquence de départ.</li>
+        </ul>
+        <pre><code class="lang-python">
+            f = [1, 2] + [3, 4]  # [1, 2, 3, 4]
+            g = 3 * "hello"      # "hellohellohello"
+        </code></pre>
+    </section>
+
+    <section>
+        <h2>Test d’appartenance</h2>
+        <ul>
+            <li>L’opérateur <code>in</code> permet de vérifier si une valeur se trouve dans une séquence.
+                <small>Ou si une sous-chaine est dans une chaine de caractères</small>
+            </li>
+        </ul>
+        <pre><code class="lang-python">
+            L = [1, 2, 42, 3]
+            if 42 in L:
+                print("OK")
+            
+            S = 'Python'
+            if 'thon' not in S:
+                print("KO")
+        </code></pre>
+    </section>
+
+    <section>
+        <h2>Accès aux éléments</h2>
+        <ul>
+            <li>Il est possible d’accéder aux éléments individuels
+                <small>Pour cela, on utilise les crochets []</small>
+            </li>
+            <li>Chaque éléments est repéré par son numéro d’ordre
+                <small>Le numéro d’ordre est appelé <strong>indice</strong></small>
+            </li>
+            <li>Les indices commencent à <strong>zéro</strong>
+                <small>Les indices négatifs permettent d’indiquer un caractère en partant
+                    de la fin de la chaîne</small>
+            </li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Le <em>slicing</em></h2>
+        <ul>
+            <li>Il est possible de référencer une sous-séquence c-à-d une "tranche" de la séquence
+                On sépare les deux indices délimitant la tranche par un ":"
+            </li>
+            <li>La tranche [m:n] référence la sous-séquence qui va du m<sup>e</sup> élément (compris) au n<sup>e</sup> élément (non-compris).
+                <small>Idem avec le deuxième indice et la fin de la séquence</small>
+            </li>
+            <li>Si on omet le premier indice, la tranche démarre au début de la séquence
+                <small>Idem avec le deuxième indice et la fin de la séquence</small>
+            </li>
+        </ul>
+        <pre><code class="lang-python">
+            s = "j’aime les pâtes"
+            print(s[7:10]) # affiche 'les'
+            print(s[11:-1]) # affiche 'pâte'
+            print(s[11:]) # affiche 'pâtes'
+            print(s[:6]) # affiche 'j’aime'
+        </code></pre>
+    </section>
+
+    <section>
+        <h2>La longueur d’une séquence</h2>
+        <ul>
+            <li>Il est possible de connaitre le nombre d’éléments contenus dans une séquence grâce à la fonction <code>len()</code></li>
+        </ul>
+        <pre><code class="lang-python">
+            s = "j’aime les pâtes"
+            print(len(s)) # affiche 16
+        </code></pre>
+    </section>
+
+    <section>
+        <h2>Un <code>string</code> est immuable</h2>
+        <ul>
+            <li>On peut modifier un élément d’une liste</li>
+        </ul>
+        <pre><code class="lang-python">
+            s = [1, 2, 42, 4, 5]
+            s[2] = 3
+            print(s)   # affiche [1, 2, 3, 4, 5]
+        </code></pre>
+        <ul>
+            <li>Une fois créé, un string ne peut plus être modifié</li>
+            <li>On peut toujours créer un nouveau string avec une valeur adaptée</li>
+        </ul>
+        <pre><code class="lang-python">
+            s = "j’aime les pâtes"
+            s[12] = "u"                # provoque une erreur !
+            s = s[:12] + "o" + s[13:]  # crée un nouveau string adapté
+        </code></pre>
+    </section>
+
+    <section>
+        <h2>Liste</h2>
+        <ul>
+            <li>Une liste est une séquence permettant de stocker tous types de valeurs</li>
+        </ul>
+        <pre><code class="lang-python">
+            numbers = [1, 2, 3, 4, 5]
+            words = ["I", "love", "Python"]
+            mixed = [1, "duck-billed platypus", True]
+        </code></pre>
+        <ul>
+            <li>On peut supprimer un élément d’une liste.</li>
+        </ul>
+        <pre><code class="lang-python">
+            numbers = [1, 2, 2, 3, 4, 5]
+            del(numbers[1])
+            print(numbers) # affiche [1, 2, 3, 4, 5]
+        </code></pre>
+    </section>
+
+    <section>
+        <h2>Editer avec des slicing</h2>
+        <ul>
+            <li>Les slicing permettent de remplacer une tranche d’un coup.</li>
+        </ul>
+        <pre><code class="lang-python">
+            numbers = [1, 2, 3, 4, 5]
+            numbers[0:0] = [0]      # ???
+            numbers[6:6] = [6]      # ???
+            numbers[3:4] = [42]     # ???
+            numbers[3:7] = [3, 4]   # ???
+            numbers[3:] = []        # ???
+            del(numbers[1:])        # ???
+        </code></pre>
+    </section>
+
+    <section>
+        <h2>Ajout en fin de liste</h2>
+        <ul>
+            <li>Les slicing permettent l’ajout en fin de liste.</li>
+        </ul>
+        <pre><code class="lang-python">
+            L[len(L):len(L)] = "nouveau élément"
+        </code></pre>
+        <ul>
+            <li>Il existe une méthode plus simple</li>
+        </ul>
+        <pre><code class="lang-python">
+            L.append("nouveau élément")
+        </code></pre>
+    </section>
+
+    <section>
+        <h2>Attention aux copies</h2>
+        <ul>
+            <li>La copie d’une liste n’est pas aussi simple qu’il n’y parait.
+                <pre><code class="lang-python">
+                    words = ['I', 'like', 'Python']
+                    mots = words
+                    mots[1] = 'love'
+                    print(words)      # ???
+                </code></pre>
+            </li>
+            <li>Un slicing permet cependant de créer une vraie copie dans les cas simples.
+                <pre><code class="lang-python">
+                    words = ['I', 'like', 'Python']
+                    mots = words[:]     # ou mots = list(words)
+                    mots[1] = 'love'
+                    print(words)        # ???
+                </code></pre>
+            </li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Boucler dans une séquence</h2>
+        <ul>
+            <li>Pour parcourir les éléments d’une séquence, on peut utiliser
+                une boucle while.
+                <pre><code class="lang-python">
+                    numbers = [2, 5, 7, 2, 1]
+                    i = 0
+                    while i &lt; len(numbers):
+                        print(numbers[i])
+                </code></pre>
+            </li>
+            <li>On peut aussi utiliser la boucle <code>for ... in</code>    .
+                <pre><code class="lang-python">
+                    numbers = [2, 5, 7, 2, 1]
+                    for n in numbers:
+                        print(n)
+                </code></pre>
+            </li>
+            <li>Cela marche aussi avec les chaines de caractères.</li>
+        </ul>
+    </section>
+
+    <section class="code">
+        <h2>Somme des éléments d’une liste</h2>
+        <pre><code class="lang-python">
+            def sum(L):
+                s = 0
+                for elem in L:
+                    s += elem
+                    return s
+
+                print(sum([1, 2, 3, 42]))
+        </code></pre>
+    </section>
+
+    <section class="code">
+        <h2>Maximum d’une liste</h2>
+        <pre><code class="lang-python">
+            def max(L):
+                m = L[0]
+                for elem in L:
+                    if elem > m:
+                        m = elem
+                return m
+
+            print(max([1, 2, 3, 42, 5]))
+        </code></pre>
+    </section>
+
+    <section class="code">
+        <h2>Opération sur les éléments d’une liste</h2>
+        <pre><code class="lang-python">
+            # renvoie la lise des carrés de L
+            def square(L):
+                res = []
+                for elem in L:
+                    res.append(elem**2)
+                return res
+            print(square([1, 2, 3, 42, 5]))
+        </code></pre>
+    </section>
+
+    <section class="code">
+        <h2>Filtrage d’une liste</h2>
+        <pre><code class="lang-python">
+            # renvoie la lise des éléments pairs de L
+            def even(L):
+                res = []
+                for elem in L:
+                    if elem % 2 == 0:
+                        res.append(elem)
+                return res
+
+            print(even([1, 2, 3, 42, 5]))
+        </code></pre>
+    </section>
+    <section>
+        <h2>Intervalles</h2>
+        <ul>
+            <li>Un intervalle est une séquence numérique logique.</li>
+            <li>Créé avec la fonction <code>range()</code></li>
+        </ul>
+        <pre><code class="lang-python">
+            range(5)         # [0, 1, 2, 3, 4]
+            range(1, 5)      # [1, 2, 3, 4]
+            range(1, 8, 2)   # [1, 3, 5, 7]
+            range(5, 0, -1)  # ???
+        </code></pre>
+    </section>
+    <section class="code">
+        <h2>Recherche d’un élément</h2>
+        <pre><code class="lang-python">
+            def find(L, elem):
+                for i in range(len(L)):
+                    if L[i] == elem:
+                        return i
+                return None
+
+            print(find([1, 2, 3, 42, 5], 42))
+        </code></pre>
+    </section>
+
+    <section class="deck-only">
+        <p class='center big'>N'oubliez de faire vos <a href="exercices3.zip">exercices</a> !</p>
+        <p class='center'>A remettre sur claco</p>
+     </section>
+</body>
+</html>

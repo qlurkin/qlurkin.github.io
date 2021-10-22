@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Mastermind</title>
+	<script src="https://quentin.lurkin.xyz/document.js"></script>
+	<style>
+		pre > code {
+			font-size: 75% !important;
+		}
+
+		p {
+			text-indent: 0;
+		}
+
+		.combinaison {
+			margin: 2em auto;
+			text-align: center;
+			word-wrap: none;
+		}
+
+		.combinaison > div {
+			display: inline-block;
+			width: 50px;
+			height: 50px;
+			margin: 0;
+			padding: 0;
+			border-radius: 25px;
+			border: 1px solid gray;
+		}
+	</style>
+</head>
+<body>
+	<h1>IN2L - Informatique appliquée <small>Projet: mastermind</small></h1>
+	<figure>
+		<img src="jeu-mastermind.jpg" alt="">
+	</figure>
+	<h2>Le jeu "Mastermind"</h2>
+	<p>Le jeu "Mastermind" consiste à essayer de deviner une combinaison de couleur. Le jeu original, original se joue à deux. Un des joueur choisi la combinaison et donne des indices. l'autre essaye de deviner la combinaison.</p>
+
+	<p>Dans notre version du jeu, c'est votre programme qui choisira la combinaison et qui donnera les indices. Le joueur humain essayera de la deviner.</p>
+
+	<p>Les combinaisons sont composées de 4 pions de couleur (à choisir parmi 6 couleurs). Pour avoir la bonne combinaison, non seulement la couleur des pions est importante mais aussi leur positions. La même couleur peut apparaître plusieurs fois.</p>
+
+	<figure>
+		<div class="combinaison">
+			<div style="background-color: red;"></div>
+			<div style="background-color: yellow;"></div>
+			<div style="background-color: blue;"></div>
+			<div style="background-color: green;"></div>
+		</div>
+		<figcaption>Exemple de combinaison</figcaption>
+	</figure>
+
+	<p>Lorsque que le joueur propose un combinaison, le programme donnera comme indices, le nombre de pions de la bonne couleur et à la bonne place ainsi que le nombre de pions de la bonne couleur mais se trouvant à la mauvaise place. Comme exemple, avec la combinaison présentée plus haut, si le joueur fait la proposition ci-dessous, l'indice sera : 2 pions de la bonne couleur et bien placé (rouge et jaune), et un pions de la bonne couleur mais mal placé (bleu).</p>
+
+	<figure>
+		<div class="combinaison">
+			<div style="background-color: red;"></div>
+			<div style="background-color: yellow;"></div>
+			<div style="background-color: black;"></div>
+			<div style="background-color: blue;"></div>
+		</div>
+		<figcaption>Exemple de proposition</figcaption>
+	</figure>
+
+	<p>le joueur a 10 tentatives pour trouver la combinaison. S'il n'y parvient pas, il perd. L'ensemble des tentatives ainsi que les conseils donnés à chacune d'entre elle, restent visibles durant toute la partie.</p>
+	
+	<h2>Cahier des charges</h2>
+	<p>Vous devez écrire un programme en utilisant <strong>la bibliothèque Kivy</strong> qui implémente le jeu "Mastermind" (<a href="https://web.microsoftstream.com/video/817a66b3-ce06-4e2f-8574-972115451d40">Vidéo d'exemple</a>).</p>
+	<p>En particulier votre programme devra <i>(obligatoire)</i>:</p>
+	<ul>
+		<li>choisir une combinaison aléatoirement <i>(3 points)</i><br>module <code>random <a href="https://docs.python.org/3/library/random.html" target="_blank">https://docs.python.org/3/library/random.html</a></code></li>
+		<li>permettre au joueur de jouer des propositions de combinaisons<i>(4 points)</i><br>Le widget <code>Spinner</code> de Kivy peut être utile <a href="https://kivy.org/doc/stable/api-kivy.uix.spinner.html">https://kivy.org/doc/stable/api-kivy.uix.spinner.html</a></li>
+		<li>fournir les indices <i>(4 points)</i></li>
+		<li>informer le joueur que la partie est terminée lorsque qu'il a trouvé la combinaison ou qu'il a épuisé ses 10 tentatives <i>(3 points)</i></li>
+		<li>
+			<p>permettre au joueur d’entrer son pseudo pour sauver son score.</p>
+			<p>Le score est le nombre de tentatives restantes.</p>
+			<p>Les scores seront sauvés dans un fichier JSON.</p>
+			<p>Le meilleur score enregistré devra être affiché. <i>(4 points)</i></p>
+		</li>
+	</ul>
+	<p>De plus, votre programme pourra <i>(optionnel)</i>:</p>
+	<ul>
+		<li>
+			<p>sauver l'entièreté de la partie (combinaison + toutes les propositions) dans le fichier JSON. <i>(2 points)</i></p>
+		</li>
+		<li>permettre de choisir en le Mastermind normal et le Mastermind super (où on a 12 tentatives pour trouver des combinaison de 5 pions choisis parmi 8 couleurs). <i>(2 points)</i></li>
+		<li>avoir un visuel particulièrement soigné <i>(1 point)</i></li>
+	</ul>
+
+	<p>Le tout est noté sur 20 points. Vous constatez que si vous vous limitez aux points obligatoires vous ne pouvez obtenir que 18 points. Si vous obtenez plus que 20 points, votre note sera majorée à 20/20.</p>
+
+	<h2>Évaluation</h2>
+	<p>Les projets sont à réaliser seul pour le dernier jour de cours avant les vacances de Noël. Si un plagiat manifeste est constaté entre projets, tous les étudiants impliqués seront sanctionnés d’une note nulle.</p>
+	<p>Le projet est à remettre dans une archive <b>.zip</b> pour le <b>20 août 2021 à 23h59</b> au plus tard à l'adresse suivante:<br><a href="https://claco.ecam.be/#/desktop/workspaces/open/2bain20/resources/remise-projet-2e-session-1">https://claco.ecam.be/#/desktop/workspaces/open/2bain20/resources/remise-projet-2e-session-1</a></p>
+
+	<h2>Ressources</h2>
+	<p>Bien qu’il soit possible de réaliser un très bon projet avec uniquement les concepts vu au cours, il est fort possible que vous vouliez aller plus loin. Le meilleur endroit pour trouver des réponses par rapport à kivy est le site de documentation officiel</p>
+	<p style="text-align: center;"><code><a href="https://kivy.org/doc/stable" target="_blank">https://kivy.org/doc/stable</a></code></p>
+	<p>En particulier, si vous voulez:</p>
+	<ul>
+		<li>
+			enchaîner plusieurs écrans (menu, jeux, tableau des scores, ...):<br>
+			<code><a href="https://kivy.org/doc/stable/api-kivy.uix.screenmanager.html" target="_blank">https://kivy.org/doc/stable/api-kivy.uix.screenmanager.html</a></code> 
+		</li>
+		<li>
+			afficher des images dans un bouton:<br>
+			<code><a href="https://kivy.org/doc/stable/api-kivy.uix.behaviors.html" target="_blank">https://kivy.org/doc/stable/api-kivy.uix.behaviors.html</a></code><br>
+			<code><a href="https://kivy.org/doc/stable/api-kivy.uix.image.html" target="_blank">https://kivy.org/doc/stable/api-kivy.uix.image.html</a></code>
+		</li>
+	</ul>
+	
+</body>
+</html>

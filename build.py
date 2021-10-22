@@ -68,4 +68,4 @@ def buildFolder(path, config, fs):
 
 
 if __name__ == '__main__':
-    buildFolder('courses', {}, fs)
+    buildFolder('src', {}, fs)

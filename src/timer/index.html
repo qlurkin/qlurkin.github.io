@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>MultiTimer</title>
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=MuseoModerno:wght@500&family=Roboto+Slab:wght@500&display=swap" rel="stylesheet">
+	<style>
+		h1 {
+			font-family: 'Roboto Slab', serif;
+		}
+
+		#timer {
+			font-family: 'MuseoModerno', cursive;
+		}
+	</style>
+</head>
+<body>
+	<h1 id='title'></h1>
+	<div id='timer'></div>
+	<div>
+		<a id='refresh' href="#"><i class="material-icons">refresh</i></a>
+	</div>
+	<script>
+		const steps = [
+			{title: 'Accueil', time: 5},
+			{title: 'Présentation', time: 20},
+			{title: 'Questions', time: 20},
+			{title: 'Points', time: 5},
+			{title: 'Concertation', time: 5},
+		]
+
+		function restart() {
+			const start = Date.now()
+			localStorage.setItem('time', String(start))
+		}
+
+		function getTime() {
+			const start = parseInt(localStorage.getItem('time'), 10)
+
+			let msec = Date.now() - start
+			let seconde = Math.floor(msec/1000)
+			msec = msec % 1000
+			let minute = Math.floor(seconde/60)
+			seconde = seconde % 60
+
+			let accumulatedTime = 0
+			for(let step of steps) {
+				accumulatedTime += step.time
+				if(minute < accumulatedTime) {
+					return {
+						title: step.title,
+						minute: accumulatedTime - minute - 1,
+						seconde: 59 - seconde,
+						msec: 999 - msec
+					}
+				}
+			}
+
+			return {
+				title: 'Terminé',
+				minute: minute - accumulatedTime,
+				seconde,
+				msec,
+			}
+		}
+		
+		function formatInt(x, width) {
+			let str = String(x)
+			while(str.length < width) {
+				str = '0' + str
+			}
+			return str
+		}
+
+		function frame() {
+			const time = getTime()
+			const display = `${time.minute}:${formatInt(time.seconde, 2)}:${formatInt(time.msec, 3)}`
+			document.getElementById('timer').innerHTML = display
+			document.getElementById('title').innerHTML = time.title
+
+			const className = time.title.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()
+
+			document.querySelector('body').setAttribute('class', className)
+			
+			requestAnimationFrame(frame)
+		}
+
+		function pageTitle() {
+			const time = getTime()
+			const display = `${time.minute}:${formatInt(time.seconde, 2)} - ${time.title}`
+			document.title = display
+			setTimeout(pageTitle, 100)
+		}
+
+		function main() {
+			if(localStorage.getItem('time') === null) {
+				restart()
+			}
+			document.getElementById('refresh').addEventListener('click', restart)
+			requestAnimationFrame(frame)
+			setTimeout(pageTitle)
+		}
+		
+		main()
+	</script>
+</body>
+</html>
