@@ -65,6 +65,7 @@ def buildFolder(path, config, fs):
     
     children = []
     cleanedConfig = removeConfig(['title'], config)
+    directories.sort()
     for directory in directories:
         children.append(buildFolder(directory, cleanedConfig, fs))
 
