@@ -6,7 +6,7 @@ def process(index, children, config, fs):
 
     content = fs.read(index)
 
-    pattern = r'<title>(.*)</title>'
+    pattern = r'<title>(.*?)</title>'
     regex = re.compile(pattern)
     result = regex.search(content)
 
@@ -14,7 +14,7 @@ def process(index, children, config, fs):
     if result is not None:
         title = result.group(1).strip()
     else:
-        pattern = r'<h1>(.*)</h1>'
+        pattern = r'<h1>(.*?)</h1>'
         regex = re.compile(pattern)
         result = regex.search(content)
         if result is not None:
