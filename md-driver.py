@@ -1,12 +1,13 @@
 import markdown
 from os.path import join, basename
 import template as tpl
+from markdown_latex import MathExtension
 
 def process(index, children, config, fs):
     template = tpl.load('page')
     
     content = fs.read(index)
-    md = markdown.Markdown(extensions=['extra', 'meta', 'codehilite'])
+    md = markdown.Markdown(extensions=[MathExtension(), 'extra', 'meta', 'codehilite'])
     html = md.convert(content)
     meta = md.Meta
     
