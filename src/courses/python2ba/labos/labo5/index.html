@@ -27,6 +27,25 @@
 	<h2>Application</h2>
 	<ol>
 		<li>
+			<p>Ecrire un programme kivy qui permet de charger un fichier JSON de la forme suivante:</p>
+			<pre><code class="lang-json">
+				{
+					"firstname": "Quentin",
+					"lastname": "Lurkin",
+					"birthdate": "24/08/1982",
+					"address": {
+						"street": "Promenade de l’Alma",
+						"number": "50",
+						"CP": 1200,
+						"City": "Brussels",
+						"Country": Belgium
+					}
+				}
+			</code></pre>
+			<p>et d'afficher ses informations de façon lisible.</p>
+			<p>L'utilisateur pourra introduire le nom du fichier dans une boite de texte et il recevra un message d'erreur si le fichier n'existe pas ou s'il ne respecte pas le format.</p>
+		</li>
+		<li>
 			<p>Définir une fonction <code class="lang-python">computesum(path)</code> qui reçoit un paramètre:</p>
 			<ul>
 				<li><code class="lang-python">path</code> contient le chemin vers un fichier sur l’ordinateur,</li>
