@@ -12,7 +12,6 @@ def tex2svg(formula, fontsize=12, dpi=300):
     Returns:
         str: SVG render.
     """
-    print(formula)
     fig = plt.figure(figsize=(0.01, 0.01))
     fig.text(0, 0, r'${}$'.format(formula), fontsize=fontsize)
 

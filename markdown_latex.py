@@ -10,7 +10,6 @@ class MathInlineProcessor(InlineProcessor):
         if formula[0] == '$':
             formula = formula[1:]
             display = True
-        print(formula)
         el = etree.Element("div" if display else "span")
         el.set("class", "latex")
         el.text = self.md.htmlStash.store(tex2svg(formula))
