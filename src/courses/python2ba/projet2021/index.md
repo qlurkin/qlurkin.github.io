@@ -4,7 +4,7 @@ title: Conway's Game of Life
 
 # Projet 2021 <small>Conway's Game of Life</small>
 
-## introduction
+## Introduction
 
 Le jeu de la vie de John Horton Conway est une simulation de vie simplifiée. Elle se déroule sur une grille à deux dimensions. Les cases de la grille sont appelées des cellules. Chaque cellule peut soit être vivante soit être morte. Chaque cellule a 8 voisines (horizontalement, verticalement et diagonalement).
 
