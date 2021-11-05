@@ -54,7 +54,7 @@
   <rdf:RDF xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
     <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-    <dc:date>2021-11-05T22:39:04.934411</dc:date>
+    <dc:date>2021-11-05T23:53:23.645992</dc:date>
     <dc:format>image/svg+xml</dc:format>
     <dc:creator>
      <cc:Agent>
@@ -593,7 +593,7 @@ z
   <rdf:RDF xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
     <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-    <dc:date>2021-11-05T22:39:04.951772</dc:date>
+    <dc:date>2021-11-05T23:53:23.663775</dc:date>
     <dc:format>image/svg+xml</dc:format>
     <dc:creator>
      <cc:Agent>
@@ -737,7 +737,7 @@ z
   <rdf:RDF xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
     <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-    <dc:date>2021-11-05T22:39:04.962338</dc:date>
+    <dc:date>2021-11-05T23:53:23.675283</dc:date>
     <dc:format>image/svg+xml</dc:format>
     <dc:creator>
      <cc:Agent>
@@ -899,7 +899,7 @@ z
   <rdf:RDF xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
     <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-    <dc:date>2021-11-05T22:39:04.975741</dc:date>
+    <dc:date>2021-11-05T23:53:23.685870</dc:date>
     <dc:format>image/svg+xml</dc:format>
     <dc:creator>
      <cc:Agent>
@@ -1078,9 +1078,10 @@ z
         document.body.style.imageRendering = "pixelated"
         const width = 40
         const height = 80
+        const cellSize = 10
         const canvas = document.createElement("canvas")
-        canvas.width = width
-        canvas.height = height
+        canvas.width = width*cellSize
+        canvas.height = height*cellSize
 
         let context = undefined
         if (canvas.getContext) {
@@ -1091,7 +1092,8 @@ z
             canvas,
             width,
             height,
-            context
+            context,
+            cellSize
         }
     }
 
@@ -1099,7 +1101,7 @@ z
         if(state)
         {
             ctx.context.fillStyle = "rgba(128, 128, 128, 0.15)"
-            ctx.context.fillRect( x, y, 1, 1 )
+            ctx.context.fillRect( x*ctx.cellSize, y*ctx.cellSize, ctx.cellSize, ctx.cellSize )
         }
     }
 

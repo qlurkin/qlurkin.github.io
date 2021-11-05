@@ -54,9 +54,10 @@ Bien qu’il soit possible de réaliser un très bon projet avec uniquement les 
         document.body.style.imageRendering = "pixelated"
         const width = 40
         const height = 80
+        const cellSize = 10
         const canvas = document.createElement("canvas")
-        canvas.width = width
-        canvas.height = height
+        canvas.width = width*cellSize
+        canvas.height = height*cellSize
 
         let context = undefined
         if (canvas.getContext) {
@@ -67,7 +68,8 @@ Bien qu’il soit possible de réaliser un très bon projet avec uniquement les 
             canvas,
             width,
             height,
-            context
+            context,
+            cellSize
         }
     }
 
@@ -75,7 +77,7 @@ Bien qu’il soit possible de réaliser un très bon projet avec uniquement les 
         if(state)
         {
             ctx.context.fillStyle = "rgba(128, 128, 128, 0.15)"
-            ctx.context.fillRect( x, y, 1, 1 )
+            ctx.context.fillRect( x*ctx.cellSize, y*ctx.cellSize, ctx.cellSize, ctx.cellSize )
         }
     }
 
