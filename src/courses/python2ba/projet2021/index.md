@@ -8,7 +8,7 @@ title: Conway's Game of Life
 
 Le jeu de la vie de John Horton Conway est une simulation de vie simplifiée. Elle se déroule sur une grille à deux dimensions. Les cases de la grille sont appelées des cellules. Chaque cellule peut soit être vivante soit être morte. Chaque cellule a 8 voisines (horizontalement, verticalement et diagonalement).
 
-La simulation évolue dans le temps par étapes. A chaque étape, Le changement d'état d'un cellule dépend de l'état de ses cellules voisines à l'étape précédente. Les règles sont les suivantes:
+La simulation évolue dans le temps par étapes. A chaque étape, Le changement d'état d'une cellule dépend de l'état de ses cellules voisines à l'étape précédente. Les règles sont les suivantes:
 
 - une cellule morte possédant exactement trois voisines vivantes devient vivante,
 - une cellule vivante possédant deux ou trois voisines vivantes le reste, sinon elle meurt.
@@ -29,14 +29,14 @@ En particulier votre programme devra (obligatoire):
 De plus, votre programme pourra (optionnel):
 
 - permettre de choisir la taille de la grille, *(3 points)*
-- permettre de sauver une configuration de cellules dans un fichier JSON, *(1 points)*
+- permettre de sauver une configuration de cellules dans un fichier JSON, *(1 point)*
 - avoir un visuel particulièrement soigné. *(1 point)*
 
 Le tout est noté sur 20 points. Vous constatez que si vous vous limitez aux points obligatoires vous ne pouvez obtenir que 18 points. Si vous obtenez plus que 20 points, votre note sera majorée à 20/20.
 
 ## Evaluation
 
-Les projets sont à réaliser seul ou à deux pour la 8e séance de labo. Durant cette séance, vous serez interrogé sur votre code. Le but de cette défense est d’identifier votre niveau de maîtrise de ce code. Le niveau de maîtrise est coté sur 1 et la note finale est calculée comme suit $$ n_f = n_m \times min(n_{cdc}, 20) $$ où $n_f$ est la note finale, $n_m$ est la note de maîtrise du code et $n_{cdc}$ est la note obtenue sur base du cahier des charges.
+Les projets sont à réaliser seul ou à deux pour la 8e séance de labo. Durant cette séance, vous serez interrogés sur votre code. Le but de cette défense est d’identifier votre niveau de maîtrise de ce code. Le niveau de maîtrise est coté sur 1 et la note finale est calculée comme suit $$ n_f = n_m \times min(n_{cdc}, 20) $$ où $n_f$ est la note finale, $n_m$ est la note de maîtrise du code et $n_{cdc}$ est la note obtenue sur base du cahier des charges.
 
 Pour les groupes de deux, chaque membre pourra avoir une note de maîtrise différente. De plus, chaque membre devra maîtriser l’ensemble du code.
 
@@ -44,7 +44,7 @@ Si un plagiat manifeste est constaté entre projets, tous les étudiants impliqu
 
 ## Ressources
 
-Bien qu’il soit possible de réaliser un très bon projet avec uniquement les concepts vu au cours, il est fort possible que vous vouliez aller plus loin. Le meilleur endroit pour trouver des réponses par rapport à `kivy` est le [site de documentation officiel](https://kivy.org/doc/stable)
+Bien qu’il soit possible de réaliser un très bon projet avec uniquement les concepts vus au cours, il est fort possible que vous vouliez aller plus loin. Le meilleur endroit pour trouver des réponses par rapport à `kivy` est le [site de documentation officiel](https://kivy.org/doc/stable)
 
 
 
