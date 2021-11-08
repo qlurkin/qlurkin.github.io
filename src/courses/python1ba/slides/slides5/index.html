@@ -1,292 +1,209 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>IC1T - Synthèse</title>
-	<script src="https://quentin.lurkin.xyz/deck.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IC1T - Cours 5</title>
+    <script src="https://quentin.lurkin.xyz/deck.js"></script>
 </head>
 <body>
-	<section>
-		<h1>IC1T - Synthèse</h1>
-		<p><a href="mailto://lur@ecam.be">Quentin Lurkin</a></p>
-	</section>
-	<section>
-		<h2>But de l'informatique</h2>
-		<ul>
-			<li>Automatiser le traitement de l'information <small>D'où le nom "informatique"</small></li>
-			<li>Appliquer un traitement à une importante quantité de données</li>
-			<li>Dans le code, on va donc répéter des opérations sur des collections de données. <small>Faire des boucles sur des listes</small></li>
-		</ul>
-	</section>
-	
-	<section>
-		<h2>Types de traitement</h2>
-		<ul>
-			<li>Les différents traitements sur les listes se ressemble beaucoup.</li>
-			<li>
-				présentons trois types de traitement courant:
-				<ul>
-					<li>Correspondance (<code>map</code>)</li>
-					<li>Filtrage (<code>filter</code>)</li>
-					<li>Réduction (<code>reduce</code>)</li>
-				</ul>
-			</li>
-		</ul>
-	</section>
+    <section>
+        <h1>IC1T - Cours 5</h1>
+        <p><a href="mailto://lur@ecam.be">Quentin Lurkin</a></p>
+    </section>
+    
+    <section>
+        <h2>Complexité</h2>
+        <ul>
+            <li>Mesure de l'efficacité d'un algorithme</li>
+            <li><em>"Ressources utilisées en fonction de la taille des données"</em></li>
+            <li>Spatiale ou temporelle</li>
+        </ul>
+    </section>
 
-	<section>
-		<h2>Correspondance</h2>
-		<ul>
-			<li>Produire une donnée pour chaque élément d'une liste</li>
-			<li>Le résultat est une liste de même taille que la liste de départ.</li>
-		</ul>
-		<h3>Exemple:</h3>
-		<pre>
-			<code class="lang-python">
-				def square(L):
-					res = []
-					for elem in L:
-						res.append(elem**2)
-					return res
-			</code>
-		</pre>
-		<ul>
-			<li>Seul le contenu du <code>append()</code> est spécifique.</li>
-		</ul>
-	</section>
+    <section>
+        <h2>Complexité spatiale : factorielle</h2>
+        <ul>
+            <li>En itératif : complexité spatiale constante (\(O(1)\))
+                <pre><code class="lang-python">
+                    def fact(n):
+                        result = 1
+                        while n > 0:
+                            result *= n
+                            n -= 1
+                        return result
+                </code></pre>
+            </li>
+            <li>En récursif : complexité spatiale proportionelle à <code>n</code> (\(O(n)\))
+                <pre><code class="lang-python">
+                    def fact(n):
+                        if n == 1:
+                            return 1
+                        return fact(n - 1) * n
+                </code></pre>
+            </li>
+        </ul>
+    </section>
 
-	<section>
-		<h2>Fonction <code>map()</code></h2>
-		<ul>
-			<li>Factorisons la partie commune:</li>
-		</ul>
-		<pre>
-			<code class="lang-python">
-				def map(fn, L):
-					res = []
-					for elem in L:
-						res.append(fn(elem))
-					return res
+    <section>
+        <h2>Complexité temporelle: Tri à bulles</h2>
+        <ul>
+            <li>Comparer 2 éléments consécutifs. S'ils ne sont pas ordonnés, les échanger.</li>
+        </ul>
+        <pre><code class="lang-python">
+            def bubbleSort(L):
+                for n in range(len(L)):
+                    for i in range(1, len(L) - n):
+                        if L[i-1] > L[i]:
+                            tmp = L[i-1]
+                            L[i-1] = L[i]
+                            L[i] = tmp
+        </code></pre>
+        <ul>
+            <li>Complexité temporelle : \(O(n^2)\)</li>
+        </ul>
+    </section>
 
-				def square(x):
-					return x**2
+    <section>
+        <h2>Complexité temporelle: Tri Fusion</h2>
+        <ul>
+            <li><em>"Diviser pour mieux régner"</em></li>
+            <li>Tri récursif
+                <ul>
+                    <li>Diviser</li>
+                    <li>Trier <em>(récursion)</em></li>
+                    <li>Fusionner</li>
+                </ul>
+            </li>
+        </ul>
+    </section>
 
-				print(map(square, [2, 3, 4]))
-			</code>
-		</pre>
-	</section>
+    <section>
+        <h2>Tri Fusion</h2>
+        <pre><code class="lang-python">
+            def fusion(L1, L2):
+                if len(L1) == 0 or len(L2) == 0:
+                    return L1 + L2
+                if L1[0] &lt; L2[0]:
+                    return [L1[0]] + fusion(L1[1:], L2)
+                return [L2[0]] + fusion(L1, L2[1:])
 
-	<section>
-		<h2>Attention</h2>
-		<ul>
-			<li>Evitez de modifier la liste que vous recevez.</li>
-			<li>On perd la liste de départ</li>
-		</ul>
-		<pre>
-			<code class="lang-python">
-				def badSquare(L):
-					for i in range(len(L)):
-						L[i] = L[i]**2
-					return L
+            def fusionSort(L):
+                if len(L) &lt; 2:
+                    return L
+                return fusion(fusionSort(L[:len(L)//2]), fusionSort(L[len(L)//2:]))
+        </code></pre>
+        <ul>
+            <li>Complexité temporelle : \(O(n.log(n))\)</li>
+        </ul>
+    </section>
 
-				L = [1, 2, 3]
-				res = badSquare(L)
-				print("L:", L)
-				print("res:", res)
-			</code>
-		</pre>
-	</section>
+    <section>
+        <h2>Module</h2>
+        <ul>
+            <li>Un gros programme est <strong>rarement</strong> écrit en un fichier.
+                <ul>
+                    <li>Longs fichiers → pas pratique.</li>
+                    <li>Travail à plusieurs.</li>
+                </ul>
+            </li>
+            <li>Un même module peut être utiliser dans <strong>plusieurs</strong> projets.</li>
+        </ul>
+    </section>
 
-	<section>
-		<h2>Filtrage</h2>
-		<ul>
-			<li>Garder une partie des éléments de départ</li>
-			<li>Le résultat est une liste plus petite que la liste de départ. <small>Elle peut aussi être de même taille</small></li>
-		</ul>
-		<h3>Exemple:</h3>
-		<pre>
-			<code class="lang-python">
-				def even(L):
-					res = []
-					for elem in L:
-						if elem % 2 == 0:
-							res.append(elem)
-					return res
-			</code>
-		</pre>
-		<ul>
-			<li>Seul le test du <code>if</code> est spécifique.</li>
-		</ul>
-	</section>
+    <section>
+        <h2>Utilisation d'un module</h2>
+        <ul>
+            <li>Importation d'un module :
+                <pre><code class="lang-python">
+                    import turtle
 
-	<section>
-		<h2>Fonction <code>filter()</code></h2>
-		<ul>
-			<li>Factorisons la partie commune:</li>
-		</ul>
-		<pre>
-			<code class="lang-python">
-				def filter(fn, L):
-					res = []
-					for elem in L:
-						if fn(elem):
-							res.append(elem)
-					return res
+                    turtle.forward(90)
+                    turtle.done()
+                </code></pre>
+            </li>
+            <li>Importation des fonctions d'un module :
+                <pre><code class="lang-python">
+                    from turtle import forward, done
 
-				def even(x):
-					return x % 2 == 0
+                    forward(90)
+                    done()
+                </code></pre>
+            </li>
+            <li>Pour importer toutes les fonctions, on utilise le <code>*</code> :
+                <pre><code class="lang-python">
+                    from turtle import *
+                </code></pre>
+            </li>
+        </ul>
+    </section>
 
-				print(filter(even, [2, 3, 4]))
-			</code>
-		</pre>
-	</section>
+    <section>
+        <h2>Définition d'un module</h2>
+        <ul>
+            <li>Créer un fichier .py contenant des définitions de fonctions.</li>
+            <li>Exemple : définissons le module shape dans le fichier <code>shape.py</code>.
+                <pre><code class="lang-python">
+                    from turtle import *
+                    
+                    def polygon(nbsides, side, col='black'):
+                        color(col)
+                        angle = 360 / nbsides
+                        i=0
+                        while i &lt; nbsides:
+                            forward(side)
+                            left(angle)
+                            i += 1
 
-	<section>
-		<h2>Réduction</h2>
-		<ul>
-			<li>Produire une valeur à partir de la liste entière</li>
-			<li>Le résultat est une valeur</li>
-		</ul>
-		<h3>Exemple:</h3>
-		<pre>
-			<code class="lang-python">
-				def sum(L):
-					res = 0
-					for elem in L:
-						res = res + elem
-					return res
-			</code>
-		</pre>
-		<ul>
-			<li>Seuls la valeur initiale de <code>res</code> et le contenu du <code>for</code> sont spécifiques.</li>
-		</ul>
-	</section>
+                    def square(side, col='black'):
+                        polygon(4, side, col)
+                </code></pre>
+            </li>
+            <li>On peut importer un module dans un autre.</li>
+        </ul>
+    </section>
 
-	<section>
-		<h2>Fonction <code>reduce()</code></h2>
-		<ul>
-			<li>Factorisons la partie commune:</li>
-		</ul>
-		<pre>
-			<code class="lang-python">
-				def reduce(fn, L, init):
-					res = init
-					for elem in L:
-						res = fn(res, elem)
-					return res
+    <section>
+        <h2>Définition d'un module</h2>
+        <ul>
+            <li>On peut ensuite écrire le programme suivant :
+                <pre><code class="lang-python">
+                    from shape import *
 
-				def add(a, b):
-					return a + b
+                    square(90)
+                    polygon(6, 90, 'red')
+                    polygon(10, 90, 'blue')
 
-				print(reduce(add, [2, 3, 4], 0))
-			</code>
-		</pre>
-	</section>
+                    done()
+                </code></pre>
+            </li>
+        </ul>
+    </section>
 
-	<section>
-		<h2><code>reduce()</code> peut tout faire</h2>
-		<ul>
-			<li>
-				Correspondance
-				<pre>
-					<code class="lang-python">
-						def appendSquare(L, elem):
-							return L.append(elem**2)
-		
-						print(reduce(appendSquare, [1, 2, 3], []))
-					</code>
-				</pre>
-			</li>
-			<li>
-				Filtrage
-				<pre>
-					<code class="lang-python">
-						def appendIfEven(L, elem):
-							if elem % 2 == 0
-								L.append(elem)
-							return L
-		
-						print(reduce(appendIfEven, [1, 2, 3], []))
-					</code>
-				</pre>
-			</li>
-			<li>Mais il est plus facile d'utiliser <code>map()</code> et <code>filter()</code>.</li>
-		</ul>
-	</section>
+    <section>
+        <h2>La variable <code>__name__</code></h2>
+        <ul>
+            <li>La variable globale <code>__name__</code> est définie dans chaque fichier Python :
+                <ul>
+                    <li>Elle contient un <code>string</code> égal au <strong>nom du module</strong>.</li>
+                    <li>Dans le programme principal, elle vaut <code>"__main__"</code></li>
+                </ul>
+            </li>
+            <li>Pour qu'un module puisse aussi être exécuté comme un programme, on teste souvent la variable <code>__name__</code> :
+                <pre><code class="lang-python">
+                    # ...
 
-	<section>
-		<h2>Existe déjà dans Python</h2>
-		<ul>
-			<li>
-				<code>map()</code> et <code>filter()</code> existent déjà en Python. <small>Attention ! leurs résultats doivent être convertis en liste</small>
-				<pre>
-					<code class='lang-python'>
-						res = list(map(square, [2, 4, 6]))
-					</code>
-				</pre>
-			</li>
-			<li><code>reduce()</code> existe dans le module <code>functools</code></li>
-		</ul>
-	</section>
+                    if __name__ == "__main__":
+                        polygon(10, 90, 'blue')
+                        done()
+                </code></pre>
+            </li>
+        </ul>
+    </section>
 
-	<section>
-		<h2>Exercice de préparation au projet</h2>
-		<p>Créer un programme avec une interface dans le terminal. Le programme devra proposer un menu avec 2 fonctionnalités:</p>
-		<ul>
-			<li>Enregistrer une valeur</li>
-			<li>calculer la somme des valeurs enregistrées</li>
-		</ul>
-		<p>Toutes les interactions avec l'utilisateur se passe avec des <code>input()</code> et des <code>print()</code>.</p>
-	</section>
-
-	<section>
-		<h2>Solution</h2>
-		<pre>
-			<code class="lang-python">
-				from functools import reduce
-
-				numbers = []
-
-				def addNumber(n):
-					numbers.append(n)
-
-				def add(a, b):
-					return a + b
-
-				def somme():
-					return reduce(add, numbers, 0)
-
-				def menu():
-					print("MENU")
-					print("  1. Enregistrer un nombre")
-					print("  2. Calculer la somme")
-					print("  3. Sortir du programme")
-					choice = input("Faites votre choix: ")
-					return choice
-
-				def addForm():
-					addNumber(float(input("Votre nombre: ")))
-
-				def showSomme():
-					print("Somme:", somme())
-
-				def mainloop():
-					while True:
-						choice = menu()
-						if choice == "1":
-							addForm()
-						elif choice == "2":
-							showSomme()
-						elif choice == "3":
-							print("Bye!")
-							break
-						else:
-							print("Réponse invalide")
-
-				mainloop()
-			</code>
-		</pre>
-	</section>
+    <section class="deck-only">
+        <p class='center big'>N'oubliez de faire vos <a href="exercices5.zip">exercices</a> !</p>
+        <p class='center'>A remettre sur claco</p>
+     </section>
 </body>
 </html>
