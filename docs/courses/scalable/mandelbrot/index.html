@@ -33,25 +33,20 @@
 	<p>On constate ici, que la vérification de l'appartenance d'un complexe à l'ensemble de Mandelbrot est indépendante de celle d'un autre complexe. Le rendu de l'ensemble de Mandelbrot peut donc se faire en parallèle.</p>
 
 	<h2>Travail</h2>
-	<p>On vous demande de réaliser un programme qui crée une image de l'ensemble de Mandelbrot.</p>
+	<p>On vous demande de réaliser un serveur capable de répondre à des requêtes sur l'ensemble de Mandelbrot. La requête contiendra un nombre complexe et le serveur répondra en indiquant s'il s'agit d'un nombre de l'ensemble de Mandelbrot.</p>
 	<ul>
 		<li>Vous pouvez utiliser le langage que vous voulez.</li>
-		<li>Vous devez afficher la durée du rendu.</li>
-		<li>Vous devez faire 3 versions:
-			<ul>
-				<li>Une version simple</li>
-				<li>Une version avec plusieurs processus/threads pour utiliser tous les coeurs de votre processeurs (scalabilité verticale)</li>
-				<li>Une version réseau (scalabilité horizontale)</li>
-			</ul>
+		<li>Vous devez utiliser un <em>load balancer</em> et plusieurs <em>worker</em> (1 par coeur de votre CPU).</li>
+		<li>Vous devez réaliser une interface graphique qui affiche l'ensemble de Mandelbrot en faisant un requête à votre serveur par pixel (ou plusieurs si vous faite de l'<em>anti-aliasing</em>).
 		</li>
-		<li>Mesurez le gain de performance en fonction du degré de parallélisme.</li>
+		<li>Faite un rapport contenant une documentation de l'API de votre serveur, la stratégie de répartition du <em>load balancer</em> et une description des bibliothèques utilisées.</li>
 	</ul>
 
 	<h2>Remarques</h2>
 	<h3>But du travail</h3>
 	<p>Le but de ce travail n'est pas d'obtenir le programme le plus rapide à tous prix. Il y a plein d'optimisations qui peuvent être faites pour améliorer le temps de calcul sur un thread. Ces optimisations ne sont pas le sujet de ce travail. Le but ici est de tirer avantage d'une augmentation de hardware (plus de coeurs ou plus de machines). Ne perdez dons pas trop de temps à optimiser vos performances mono-thread.</p>
 	
-	<h3>Et la RAM?</h3>
+	<!--<h3>Et la RAM?</h3>
 	<p>Nous ne voyons pas ici l'importance que pourrait avoir une augmentation de la mémoire RAM. Il existe une gamme de problèmes qui peuvent tirer avantage d'une augmentation de la RAM. Dès qu'une grande masse de données doit être traitée et qu'il est impossible d'avoir toutes les données en RAM en même temps, il faut continuellement charger et décharger des données de la RAM. Cela prend beaucoup de temps et cela doit se faire d'autant plus souvent que la RAM est petite.</p>
 
 	<h3>Pour la version multi processus/threads</h3>
@@ -60,7 +55,7 @@
 
 	<h3>Pour la version réseau</h3>
 	<p>Ici il vous faudra créer 2 programmes: un programme principal et un programme de calcul. Le programme principal s'occupe de diviser et d'envoyer le travail à plusieurs instances du programme de calcul.</p>
-	<p>Comme vous ne possédez pas forcement plusieurs ordinateurs à la maison, vous pouvez faire tourner le programme principal et plusieurs instances du programme de calcul sur un même PC. Cela revient à faire de la scalabilité verticale car chaque instance du programme de calcul est en fait un processus qui pourra s'exécuter en parallèle des autres. L'approche réseau permet en effet de faire à la fois de la scalabilité verticale et horizontale.</p>
+	<p>Comme vous ne possédez pas forcement plusieurs ordinateurs à la maison, vous pouvez faire tourner le programme principal et plusieurs instances du programme de calcul sur un même PC. Cela revient à faire de la scalabilité verticale car chaque instance du programme de calcul est en fait un processus qui pourra s'exécuter en parallèle des autres. L'approche réseau permet en effet de faire à la fois de la scalabilité verticale et horizontale.</p>-->
 
 	<h3>L'ensemble de Mandelbrot est beau</h3>
 	<p>Si vous zoomez sur les bords de l'ensemble et que vous assignez différentes couleurs en fonction du nombre d'itérations nécessaires pour dépasser le module de 2, vous pouvez obtenir de très belles images:</p>
