@@ -16,7 +16,7 @@ Dans `raylib`, Vous pouvez récupérer le temps écoulé depuis la dernière fra
 
 ### Exercice
 
-Créez une classe `Particule` qui représente une particule et faites un programme qui affiche une particule se déplaçant selon sa vitesse.
+Créez une classe `Particle` qui représente une particule et faites un programme qui affiche une particule se déplaçant selon sa vitesse.
 
 ## Collision
 
@@ -28,7 +28,7 @@ Vector3 Vector3Reflect(Vector3 v, Vector3 normal);
 
 qui permet de calculer le vecteur réfléchit.
 
-La detection de la collision et le calcul de la normale dépendent de la surface de collision. Pour un plan d'équation $ ax + by + cz + d = 0 $ le normale est $(a, b, c)$. Un tel plan sépare l'espace en 2 régions: La région où l'expression $ ax + by + cz $ est positive et celle où elle est négative. On choisit généralement la région positive comme zone autorisée pour la particule et on détecte une collision dès qu'elle passe dans la région négative.
+La detection de la collision et le calcul de la normale dépendent de la surface de collision. Pour un plan d'équation $ ax + by + cz + d = 0 $ le normale est $(a, b, c)$. Un tel plan sépare l'espace en 2 régions: La région où l'expression $ ax + by + cz + d $ est positive et celle où elle est négative. On choisit généralement la région positive comme zone autorisée pour la particule et on détecte une collision dès qu'elle passe dans la région négative.
 
 Une fois la collision détectée, la particule se trouve dans la "zone interdite". Il généralement nécessaire de la replacer dans la zone autorisée avant de laisser la simulation continuer.
 
@@ -46,7 +46,9 @@ Un système de particules gère un ensemble de particules.
 
 ### Exercice
 
-Ajouter une classe `ParticuleSystem` qui crée un certain nombre de particules avec des positions et des vitesses aléatoires et permet de les faire rebondir dans la boite.
+Ajouter une classe `ParticleSystem` qui crée un certain nombre de particules avec des positions et des vitesses aléatoires et permet de les faire rebondir dans la boite.
+
+Veillez à enregistrer vos particules de façon contiguë dans la mémoire (`array` ou `std::vector`) pour maximiser l'utilisation de la cache.
 
 ## Gravité
 
@@ -56,6 +58,6 @@ $$ \begin{array}{rcl} v_x & = & v_x + \Delta t \cdot g_x \\\\ v_y & = & v_y + \D
 
 ### Exercice
 
-Modifiez vos classe `Particule` et `ParticuleSystem` pour que les particules subissent la gravité.
+Modifiez vos classes `Particle` et `ParticleSystem` pour que les particules subissent la gravité.
 
 

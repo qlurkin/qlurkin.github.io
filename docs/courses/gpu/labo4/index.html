@@ -26,14 +26,14 @@
 <p>$$ \begin{array}{rcl} x &amp; = &amp; x + \Delta t \cdot v_x \\ y &amp; = &amp; y + \Delta t \cdot v_y \\ z &amp; = &amp; z + \Delta t \cdot v_z\end{array} $$</p>
 <p>Dans <code>raylib</code>, Vous pouvez récupérer le temps écoulé depuis la dernière frame avec <code>GetFrameTime()</code>.</p>
 <h3>Exercice</h3>
-<p>Créez une classe <code>Particule</code> qui représente une particule et faites un programme qui affiche une particule se déplaçant selon sa vitesse.</p>
+<p>Créez une classe <code>Particle</code> qui représente une particule et faites un programme qui affiche une particule se déplaçant selon sa vitesse.</p>
 <h2>Collision</h2>
 <p>Lorsqu'une collision est détectée, la particule est réfléchie par rapport à la normale à la surface de collision. C'est donc bien la direction du vecteur vitesse de la particule qui change. Dans <code>raymath.h</code>, vous avez une fonction</p>
 <div class="codehilite"><pre><span></span><code><span class="n">Vector3</span><span class="w"> </span><span class="nf">Vector3Reflect</span><span class="p">(</span><span class="n">Vector3</span><span class="w"> </span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="n">Vector3</span><span class="w"> </span><span class="n">normal</span><span class="p">);</span><span class="w"></span>
 </code></pre></div>
 
 <p>qui permet de calculer le vecteur réfléchit.</p>
-<p>La detection de la collision et le calcul de la normale dépendent de la surface de collision. Pour un plan d'équation $ ax + by + cz + d = 0 $ le normale est $(a, b, c)$. Un tel plan sépare l'espace en 2 régions: La région où l'expression $ ax + by + cz $ est positive et celle où elle est négative. On choisit généralement la région positive comme zone autorisée pour la particule et on détecte une collision dès qu'elle passe dans la région négative.</p>
+<p>La detection de la collision et le calcul de la normale dépendent de la surface de collision. Pour un plan d'équation $ ax + by + cz + d = 0 $ le normale est $(a, b, c)$. Un tel plan sépare l'espace en 2 régions: La région où l'expression $ ax + by + cz + d $ est positive et celle où elle est négative. On choisit généralement la région positive comme zone autorisée pour la particule et on détecte une collision dès qu'elle passe dans la région négative.</p>
 <p>Une fois la collision détectée, la particule se trouve dans la "zone interdite". Il généralement nécessaire de la replacer dans la zone autorisée avant de laisser la simulation continuer.</p>
 <p>Il est bien sûr possible de detecter des collisions avec d'autres primitives que des plans.</p>
 <h3>Exercice</h3>
@@ -42,12 +42,13 @@
 <h2>Système de particules</h2>
 <p>Un système de particules gère un ensemble de particules.</p>
 <h3>Exercice</h3>
-<p>Ajouter une classe <code>ParticuleSystem</code> qui crée un certain nombre de particules avec des positions et des vitesses aléatoires et permet de les faire rebondir dans la boite.</p>
+<p>Ajouter une classe <code>ParticleSystem</code> qui crée un certain nombre de particules avec des positions et des vitesses aléatoires et permet de les faire rebondir dans la boite.</p>
+<p>Veillez à enregistrer vos particules de façon contiguë dans la mémoire (<code>array</code> ou <code>std::vector</code>) pour maximiser l'utilisation de la cache.</p>
 <h2>Gravité</h2>
 <p>La gravité est plus une accélération qu'une force. Elle modifie directement la vitesse des particules:</p>
 <p>$$ \begin{array}{rcl} v_x &amp; = &amp; v_x + \Delta t \cdot g_x \\ v_y &amp; = &amp; v_y + \Delta t \cdot g_y \\ v_z &amp; = &amp; v_z + \Delta t \cdot g_z\end{array} $$</p>
 <h3>Exercice</h3>
-<p>Modifiez vos classe <code>Particule</code> et <code>ParticuleSystem</code> pour que les particules subissent la gravité.</p>
+<p>Modifiez vos classes <code>Particle</code> et <code>ParticleSystem</code> pour que les particules subissent la gravité.</p>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script>
         MathJax = {
