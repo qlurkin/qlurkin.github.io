@@ -102,7 +102,7 @@ figure {
 	text-align: center;
 }
 
-figure > img {
+figure > img, figure > canvas {
 	width: 100%;
 }
 

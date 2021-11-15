@@ -39,16 +39,24 @@
 <h3>Exercice</h3>
 <p>Placer votre particule dans une boite et laissez la rebondir sur les 6 faces. Une boite peut être implémentée par 6 plans ou par <a href="https://www.iquilezles.org/www/articles/boxfunctions/boxfunctions.htm">une fonction SDF <em>(Signed Distance Field)</em> adaptée</a>.</p>
 <p>Essayez d'implémenter les collisions pour qu'il soit facile d'ajouter des surfaces de collisions <em>(évitez d'hardcoder la collision dans la classe Particule)</em></p>
+<figure id="cube"></figure>
+<script type='module' src='exercice2.js'> </script>
+
 <h2>Système de particules</h2>
 <p>Un système de particules gère un ensemble de particules.</p>
 <h3>Exercice</h3>
 <p>Ajouter une classe <code>ParticleSystem</code> qui crée un certain nombre de particules avec des positions et des vitesses aléatoires et permet de les faire rebondir dans la boite.</p>
 <p>Veillez à enregistrer vos particules de façon contiguë dans la mémoire (<code>array</code> ou <code>std::vector</code>) pour maximiser l'utilisation de la cache.</p>
+<figure id="cube2"></figure>
+<script type='module' src='exercice3.js'> </script>
+
 <h2>Gravité</h2>
 <p>La gravité est plus une accélération qu'une force. Elle modifie directement la vitesse des particules:</p>
 <p>$$ \begin{array}{rcl} v_x &amp; = &amp; v_x + \Delta t \cdot g_x \\ v_y &amp; = &amp; v_y + \Delta t \cdot g_y \\ v_z &amp; = &amp; v_z + \Delta t \cdot g_z\end{array} $$</p>
 <h3>Exercice</h3>
 <p>Modifiez vos classes <code>Particle</code> et <code>ParticleSystem</code> pour que les particules subissent la gravité.</p>
+<figure id="cube3"></figure>
+<script type='module' src='exercice4.js'> </script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script>
         MathJax = {

@@ -40,6 +40,9 @@ Placer votre particule dans une boite et laissez la rebondir sur les 6 faces. Un
 
 Essayez d'implémenter les collisions pour qu'il soit facile d'ajouter des surfaces de collisions *(évitez d'hardcoder la collision dans la classe Particule)*
 
+<figure id="cube"></figure>
+<script type='module' src='exercice2.js'> </script>
+
 ## Système de particules
 
 Un système de particules gère un ensemble de particules.
@@ -50,6 +53,9 @@ Ajouter une classe `ParticleSystem` qui crée un certain nombre de particules av
 
 Veillez à enregistrer vos particules de façon contiguë dans la mémoire (`array` ou `std::vector`) pour maximiser l'utilisation de la cache.
 
+<figure id="cube2"></figure>
+<script type='module' src='exercice3.js'> </script>
+
 ## Gravité
 
 La gravité est plus une accélération qu'une force. Elle modifie directement la vitesse des particules:
@@ -59,5 +65,8 @@ $$ \begin{array}{rcl} v_x & = & v_x + \Delta t \cdot g_x \\\\ v_y & = & v_y + \D
 ### Exercice
 
 Modifiez vos classes `Particle` et `ParticleSystem` pour que les particules subissent la gravité.
+
+<figure id="cube3"></figure>
+<script type='module' src='exercice4.js'> </script>
 
 
