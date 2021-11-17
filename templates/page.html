@@ -7,31 +7,9 @@
     <title>{{ title }}</title>
     <link rel="stylesheet" href="/document.css">
     <link rel="stylesheet" href="/code.css">
-    <style>
-        span.latex {
-            vertical-align: middle;
-            display: inline-block;
-        }
-
-        div.latex {
-            text-align: center;
-        }
-    </style>
+    <link rel="stylesheet" href="/katex.min.css">
 </head>
 <body>
     {{ content|safe }}
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script>
-        MathJax = {
-            loader: {
-                load: ['input/tex', 'output/svg']
-            },
-            tex: {
-                inlineMath: [['$', '$']]
-            },
-            svg: {}
-        }
-    </script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.0/es5/startup.js"></script>
 </body>
 </html>

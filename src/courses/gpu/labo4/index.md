@@ -10,7 +10,7 @@ Dans cette séance nous allons commencer à simuler quelques particules. Nous al
 
 Une particule est simplement un point qui possède une position $(x, y, z)$ et une vitesse $(v_x, v_y, v_z)$. Pour l'animer il suffit de mettre à jour sa position à chaque *frame*.
 
-$$ \begin{array}{rcl} x & = & x + \Delta t \cdot v_x \\\\ y & = & y + \Delta t \cdot v_y \\\\ z & = & z + \Delta t \cdot v_z\end{array} $$
+$$ \begin{array}{rcl} x & = & x + \Delta t \cdot v_x \\ y & = & y + \Delta t \cdot v_y \\ z & = & z + \Delta t \cdot v_z\end{array} $$
 
 Dans `raylib`, Vous pouvez récupérer le temps écoulé depuis la dernière frame avec `GetFrameTime()`.
 
@@ -60,7 +60,7 @@ Veillez à enregistrer vos particules de façon contiguë dans la mémoire (`arr
 
 La gravité est plus une accélération qu'une force. Elle modifie directement la vitesse des particules:
 
-$$ \begin{array}{rcl} v_x & = & v_x + \Delta t \cdot g_x \\\\ v_y & = & v_y + \Delta t \cdot g_y \\\\ v_z & = & v_z + \Delta t \cdot g_z\end{array} $$
+$$ \begin{array}{rcl} v_x & = & v_x + \Delta t \cdot g_x \\ v_y & = & v_y + \Delta t \cdot g_y \\ v_z & = & v_z + \Delta t \cdot g_z\end{array} $$
 
 ### Exercice
 
