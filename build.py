@@ -79,5 +79,3 @@ def buildFolder(path, config, fs):
 
 if __name__ == '__main__':
     buildFolder('src', {}, fs)
-    shutil.copy('./node_modules/katex/dist/katex.min.css', './docs')
-    shutil.copytree('./node_modules/katex/dist/fonts', './docs/fonts')

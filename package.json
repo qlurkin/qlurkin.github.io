@@ -20,6 +20,6 @@
   },
   "homepage": "https://github.com/qlurkin/qlurkin.github.io#readme",
   "dependencies": {
-    "katex": "^0.15.1"
+    "katex": "0.15.1"
   }
 }
