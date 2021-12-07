@@ -109,6 +109,6 @@ export function box(particle, rad) {
         const gradient = opposite(boxGradient(particle.position, rad))
         const reflect = add(particle.velocity, opposite(multScalar(2*dot(particle.velocity, gradient), gradient)))
         particle.velocity.set(reflect.x, reflect.y, reflect.z)
-        particle.position.add(opposite(multScalar(distance, gradient)))
+        particle.position.add(multScalar(-1.9*distance, gradient))
     }
 }
