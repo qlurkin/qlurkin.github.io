@@ -1,0 +1,12 @@
+body {
+    font-family: sans-serif;
+    font-size: 12pt;
+}
+
+p {
+    text-align: justify;
+}
+
+strong {
+    color: red;
+}
