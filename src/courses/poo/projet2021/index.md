@@ -10,7 +10,7 @@ On vous demande de réaliser un simulateur d'**écosystème simplifié**. Dans c
 
 - Le monde est représenté par un plan 2D.
 - Toute les formes de vie ont des **points de vie** et des **réserves d'énergie**.
-- Les réserves d'énergie diminuent avec le temps
+- Les réserves d'énergie diminuent avec le temps.
 - Lorsqu'une forme de vie n'a plus d'énergie, elle convertit ses points de vie en énergie.
 - Une forme de vie qui n'a plus de point de vie meurt. Les animaux deviennent de la viande. Les plantes deviennent des déchets organiques.
 - Les animaux peuvent se déplacer. Les plantes ne le peuvent pas.
@@ -46,11 +46,18 @@ On vous demande de réaliser un simulateur d'**écosystème simplifié**. Dans c
 
     Le rapport sera inclus dans le dépôt Github au format **Markdown**.
 
-Les liens de vos dépôts sont à remettre sur **claco** pour le **3 janvier à 18h**. Tous les commit ultérieurs seront ignorés.
+Les liens de vos dépôts sont à remettre sur **[claco](https://claco.ecam.be/#/desktop/workspaces/open/3bepo30/resources/remise-projet-2021)** pour le **3 janvier à 18h**. Tous les commit ultérieurs seront ignorés.
 
 Le projet est à faire en **binôme**.
 
 ## Grille d'évaluation
 
-Bientôt disponible
+- Gestion des points de vie et d'énergie: 3 points
+- Gestion des zones: 2 points
+- Gestion de l'alimentation: 2 points
+- Gestion de la reproduction: 2 points
+- Diagramme UML: 4 points
+- Principes SOLID: 4 points
+- Le projet fonctionne et montre une simulation: 3 points
+
 
