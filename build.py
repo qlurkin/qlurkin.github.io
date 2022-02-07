@@ -68,6 +68,8 @@ def buildFolder(path, config, fs):
     cleanedConfig = removeConfig(['title'], config)
     directories.sort()
     for directory in directories:
+        if basename(directory).startswith('.'):
+            continue
         children.append(buildFolder(directory, cleanedConfig, fs))
 
     fileToCopy = list(filter(lambda file: file != index, files))
