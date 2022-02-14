@@ -7,7 +7,7 @@
     <title>Cours 1 & 2 : Gestion de projet, versioning, package et intégration continue</title>
     <script src="https://quentin.lurkin.xyz/deck.js"></script>
     <style>
-        .terminal {
+        .terminal, .file-title, figure {
             margin-top: 1rem;
         }
 
@@ -87,12 +87,11 @@
     <section>
         <h2>États des fichiers</h2>
         <ul>
-            <li>Un fichier doit être explicitement ajouté au dépôt Git</li>
-        </ul>
-        <figure>
-            <img src="./state.png" alt="">
-        </figure>
-        <ul>
+            <li>Un fichier doit être explicitement ajouté au dépôt Git
+                <figure>
+                    <img src="./state.png" alt="">
+                </figure>
+            </li>
             <li><strong>Untracked/Modified</strong>
                 <ul>
                     <li>Nouveaux fichiers ou fichiers modifiés</li>
@@ -266,6 +265,28 @@
         </figure>
     </section>
     <section>
+        <h2>README.md</h2>
+        <ul>
+            <li>Affiché automatiquement sur GitHub</li>
+            <li><a href="https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax">Format Markdown</a>
+                <p class="file-title">README.md</p>
+                <pre><code class="plaintext">
+                    # PI2C Lab
+
+                    ## Introduction
+
+                    This is an example repo for a lab about Git and GitHub.
+
+                    You can find more info about the Markdown syntax [here](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
+                </code></pre>
+                <figure>
+                    <img src="./markdown_render.png" class="half">
+                </figure>
+            </li>
+            <li>Prévisualisation dans VSCode : <img src="./preview.png" style="vertical-align: baseline; width: 1em;"></li>
+        </ul>
+    </section>
+    <section>
         <h1>Packages</h1>
     </section>
     <section>
@@ -343,110 +364,154 @@
     <section>
         <h2>Cycle TDD</h2>
         <ul>
-            <li>Cycle en trois phases principales</li>
+            <li>Cycle en trois phases principales
+                <figure>
+                    <img src="./tdd.png" alt="">
+                </figure>
+            </li>
         </ul>
-        <figure>
-            <img src="./tdd.png" alt="">
-        </figure>
     </section>
     <section>
         <h2>Module pytest</h2>
         <ul>
             <li>module intégré à Python : <code>unittest</code></li>
             <li>module plus simple : <code>pytest</code></li>
-            <li><div class="terminal">
-                > pip install pytest
-            </div></li>
+            <li>Installation :
+                <div class="terminal">
+                    > pip install pytest
+                </div>
+            </li>
         </ul>
     </section>
     <section>
         <h2>Ecrire des tests avec pytest</h2>
 
         <ul>
-            <li>Code à tester</li>
+            <li>Code à tester
+                <p class="file-title">main.py</p>
+                <pre><code class="lang-python">
+                    def add(a, b):
+                        pass
+                </code></pre>
+            </li>
+            <li>Test définit à part
+                <p class="file-title">test_main.py</p>
+                <pre><code class="lang-python">
+                    import main
+                    
+                    def test_add():
+                        assert main.add(3, 4) == 7
+                </code></pre>
+            </li>
+            <li>La commande <code>pytest</code> exécute toutes les fonctions nommée <code>test_*</code> dans les fichiers nommés <code>test_*.py</code> du répertoire courant et de ses sous-répertoires.
+                <div class="terminal" style="font-size: 85%;">
+                    > pytest
+                    ===================== test session starts =====================
+                    platform darwin -- Python 3.9.7, pytest-7.0.0, pluggy-1.0.0
+                    rootdir: /Users/lur/Program
+                    collected 1 item                                              
+        
+                    test_main.py <span class='red'>F</span>                                          <span class="red">[100%]</span>
+        
+                    ========================== FAILURES ===========================
+                    <span class="red">__________________________ test_main __________________________</span>
+        
+                        <span class="purple">def</span> <span class="green">test_main</span>():
+                    >       <span class="purple">assert</span> main.add(<span class="purple">3</span>, <span class="purple">4</span>) == <span class="purple">7</span>
+                    <span class="red">E       assert None == 7</span>
+                    <span class="red">E        +  where None = &lt;function add at 0x7faf4002a430>(3, 4)</span>
+                    <span class="red">E        +    where &lt;function add at 0x7faf4002a430> = main.add</span>
+        
+                    <span class="red">test_main.py</span>:4: AssertionError
+                    =================== short test summary info ===================
+                    FAILED test_main.py::test_main - assert None == 7
+                    <span class="red">====================== 1 failed in 0.06s ======================</span>
+        
+                </div>
+            </li>
         </ul>
-
-        <p class="file-title">main.py</p>
-        <pre><code class="lang-python">
-            def add(a, b):
-                pass
-        </code></pre>
-
-        <ul>
-            <li>Test définit à part</li>
-        </ul>
-
-        <p class="file-title">test_main.py</p>
-        <pre><code class="lang-python">
-            import main
-            
-            def test_add():
-                assert main.add(3, 4) == 7
-        </code></pre>
-
-        <ul>
-            <li>La commande <code>pytest</code> exécute toutes les fonctions nommée <code>test_*</code> dans les fichiers nommés <code>test_*.py</code> du répertoire courant et de ses sous-répertoires.</li>
-        </ul>
-
-        <div class="terminal">
-            > pytest
-            ===================== test session starts =====================
-            platform darwin -- Python 3.9.7, pytest-7.0.0, pluggy-1.0.0
-            rootdir: /Users/lur/Program
-            collected 1 item                                              
-
-            test_main.py <span class='red'>F</span>                                          <span class="red">[100%]</span>
-
-            ========================== FAILURES ===========================
-            <span class="red">__________________________ test_main __________________________</span>
-
-                <span class="purple">def</span> <span class="green">test_main</span>():
-            >       <span class="purple">assert</span> main.add(<span class="purple">3</span>, <span class="purple">4</span>) == <span class="purple">7</span>
-            <span class="red">E       assert None == 7</span>
-            <span class="red">E        +  where None = &lt;function add at 0x7faf4002a430>(3, 4)</span>
-            <span class="red">E        +    where &lt;function add at 0x7faf4002a430> = main.add</span>
-
-            <span class="red">test_main.py</span>:4: AssertionError
-            =================== short test summary info ===================
-            FAILED test_main.py::test_main - assert None == 7
-            <span class="red">====================== 1 failed in 0.06s ======================</span>
-
-        </div>
     </section>
+
     <section>
-        <h2>Plateforme Travis</h2>
+        <h2>Intégration dans VSCode</h2>
         <ul>
-            <li>Plateforme d’exécution automatique de tests
-                <small>Code automatiquement rapatrié depuis GitHub par exemple</small>
+            <li>Configuration des tests
+                <figure>
+                    <img src="./configure_test_vscode2.png" alt="">
+                </figure>
             </li>
-            <li>Création gratuite d’un compte pour tester des dépôts publics
-                <small><a href="https://travis-ci.org/">https://travis-ci.org/</a></small>
+            <li>Exécuter tous les tests
+                <figure>
+                    <img src="./run_tests.png" alt="">
+                </figure>
+            </li>
+            <li>Exécuter à partir du fichier de Test
+                <figure>
+                    <img src="./run_from_test_src.png" alt="">
+                </figure>
             </li>
         </ul>
-        <figure>
-            <img src="./travis.png" class="half">
-        </figure>
     </section>
+
     <section>
-        <h2>Configuration de Travis</h2>
+        <h2>GitHub Actions</h2>
         <ul>
-            <li>Création d’un fichier .travis.yml pour la configuration
-                <ul>
-                    <li>Language de programmation</li>
-                    <li>Version spécifique</li>
-                    <li>Script à exécuter</li>
-                </ul>
+            <li>Exécuter des scripts sur les serveurs de GitHub</li>
+            <li>Exemple: exécuter les tests à chaque <code>push</code></li>
+            <li>Configuration: 
+                <p class="file-title">.github/workflows/test.yml</p>
+                <pre><code class="plaintext">
+                    name: Run Tests
+                    on: [push]
+                    jobs:
+                      test:
+                        runs-on: ubuntu-latest
+                          strategy:
+                            fail-fast: false
+                            matrix:
+                              python-version: ["3.8", "3.9"]
+
+                          steps:
+                          - uses: actions/checkout@v2
+                          - name: Set up Python ${{ matrix.python-version }}
+                            uses: actions/setup-python@v2
+                            with:
+                              python-version: ${{ matrix.python-version }}
+                          - name: Install dependencies
+                            run: |
+                              python -m pip install --upgrade pip
+                              python -m pip install pytest
+                              if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+                          - name: Test with pytest
+                            run: |
+                              pytest
+                </code></pre>
+            </li>
+            <li><code>- uses: actions/...</code> sont des actions prédéfinies (<a href="https://github.com/marketplace?category=&query=&type=actions&verification=">GitHub Marketplace</a>)</li>
+            <li>Résultat sur la page du projet
+                <figure>
+                    <img src="./homepage.png" alt="">
+                </figure>
+            </li>
+            <li>Menu Actions
+                <figure>
+                    <img src="./create_badge1.png" alt="">
+                </figure>
+            </li>
+            <li>Ajouter un badge sur le <code>README.md</code>
+                <figure>
+                    <img src="./create_badge_2.png" class="half">
+                </figure>
+                <figure>
+                    <img src="./readme_badge.png" class="half">
+                </figure>
+            </li>
+            <li>Notification par email
+                <figure>
+                    <img src="./mail.png" class="half">
+                </figure>
             </li>
         </ul>
-        <p class="file-title">.travis.yml</p>
-        <pre><code class="plaintext">
-            language: python
-            python:
-              - "3.9"
-            script:
-              - pip3 install pytest
-              - pytest
-        </code></pre>
     </section>
 </body>
 </html>
