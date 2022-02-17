@@ -16,6 +16,8 @@ def process(index, children, config, fs):
     if 'title' in config:
         title = config['title']
 
+    items.sort(key=lambda item: item['title'])
+
     content = template.render(title=title, items=items)
 
     outputPath = join(config['buildDir'], 'index.html')
