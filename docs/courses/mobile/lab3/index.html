@@ -27,7 +27,7 @@
         class TeachersModel {
             private var _teachers = listOf&lt;Teacher>()
 
-            val teacher : List&lt;Teacher>
+            val teachers : List&lt;Teacher>
                 get() = _teachers
 
             fun loadTeachers() {
@@ -58,10 +58,10 @@
             override fun onCreate(savedInstanceState: Bundle?) {
                 super.onCreate(savedInstanceState)
                 setContentView(R.layout.activity_main)
-                val textView = findViewById<RecyclerView>(R.id.textview)
+                val textView = findViewById&lt;TextView>(R.id.textView)
                 var text = ""
                 for (item in teachersModel.teachers) {
-                    with item {
+                    with(item) {
                         text += "$trigram $name\n"
                     }
                 }
@@ -69,6 +69,12 @@
             }
         }
     </code></pre>
+
+    <p>You should be able to run the app and see the result.</p>
+
+    <figure>
+        <img src="./simple_textview.png" style="width: 50%">
+    </figure>
 
     <p>This example has two problems</p>
     <ul>
@@ -134,7 +140,6 @@
 
     <pre><code class="lang-kotlin">
         class MainActivity : AppCompatActivity() {
-            // the get() of this property is delegated to viewModels()
             private val teachersModel: TeachersModel by viewModels()
         
             override fun onCreate(savedInstanceState: Bundle?) {
@@ -152,7 +157,9 @@
         }
     </code></pre>
 
-    <p>Here, if we rotate the device, the activity will be recreated but not the <code>TeachersModel</code>. The data will be loaded only once.</p>
+    <p>Here the <code>by viewModels()</code> <a href="https://kotlinlang.org/docs/delegated-properties.html">delegate</a> the <code>get()</code> of the <code>teacherModel</code> property to <code>viewModels()</code>. <code>viewModels()</code> is in charge of creating the instance of <code>TeachersModel</code> or returning the instance that already exists.</p>
+
+    <p>Now, if we rotate the device, the activity will be recreated but not the <code>TeachersModel</code>. The data will be loaded only once.</p>
 
     <h2>RecyclerView</h2>
     <p>Nearly all application need to display a list of item at some point.</p>
@@ -253,8 +260,11 @@
                 android:scrollbars="vertical" />
         &lt;/FrameLayout>
     </code></pre>
-    <p>It is in this layout that we specify the <code>LayoutManager</code>.</p>
+
+    <p>It is in this layout that we specify the <code>LayoutManager</code>. We put the <code>RecyclerView</code> in a <code>FrameLayout</code> because we don't need a <code>ConstraintLayout</code> for just one <code>RecyclerView</code> that will take all the screen.</p>
+
     <p>And we put all together in the <code>onCreate</code> of the <code>Activity</code></p>
+    
     <pre><code class="lang-kotlin">
         class MainActivity : AppCompatActivity() {
             private val teachersModel: TeachersModel by viewModels()
@@ -270,7 +280,11 @@
         }
     </code></pre>
 
-    
+    <p>You should be able to run the app and see the result.</p>
+
+    <figure>
+        <img src="./teachers_recycler_view.png" style="width: 50%">
+    </figure>
 
     <h2>Request Data From Internet</h2>
     <p>To perform HTTP requests we will use library called <a href="https://square.github.io/retrofit/">Retrofit</a>.</p>
@@ -288,7 +302,7 @@
             implementation 'com.squareup.retrofit2:converter-moshi:2.9.0'
         }
     </code></pre>
-    <p>The Moshi Converter helps to deal with JSON.</p>
+    <p>The <a href="https://github.com/square/moshi">Moshi</a> Converter helps to deal with JSON.</p>
     <p>The Retrofit library uses Java 8 features so we need to check if they are enabled in our <code>build.gradle<em>(Module: ... .app)</em></code></p>
     <pre><code class="lang-plaintext">
         android {
@@ -305,7 +319,7 @@
         }
     </code></pre>
 
-    <p>In order to perform network call we must get the permission to do it. Declare the need of internet access in the Manifest.</p>
+    <p>In order to perform network call we must get the permission to do it. Declare the need of internet access in the <code>AndroidManifest.xml</code>.</p>
 
     <pre><code class="lang-xml">
         &lt;uses-permission android:name="android.permission.INTERNET" />
@@ -326,7 +340,7 @@
             .add(KotlinJsonAdapterFactory())
             .build()
 
-        data class Response(val teachers: List<Teacher>)
+        data class Response(val teachers: List&lt;Teacher>)
 
         private val retrofit = Retrofit.Builder()
             .addConverterFactory(MoshiConverterFactory.create(moshi))
@@ -345,9 +359,9 @@
 
     <p>Because we are in a strongly typed language, parsing JSON is not as straightforward as in Python or Javascript. Here we must have types that corresponds to what we will find in the JSON. We already have the <code>Teacher</code> class that match the teachers in the JSON but we have to add a class for the root object in the JSON. This is the <code>Response</code> class in the code above.</p>
 
-    <p>The interface we created describe the web API. Because it is just an interface, it must be implemented. This is the role of the <code>retrofit.create</code> call. Because this call is expensive, we save the instance in a Singleton that is created with the <code>object</code> keyword.</p>
+    <p>The interface we created describe the web API. Because it is just an interface, it must be implemented. This is the role of the <code>retrofit.create</code> call. Because this call is expensive, we save the instance in a <a href="https://kotlinlang.org/docs/object-declarations.html#object-declarations-overview">Singleton</a> that is created with the <code>object</code> keyword.</p>
 
-    <p>The <code>getTeachers</code> method in qualified with the <code>suspend</code> keyword in order to be callable from a coroutine. Coroutines are a convenient and safe way to use Threads. The Android System will not allow to use network from the main Thread.</p>
+    <p>The <code>getTeachers</code> method in qualified with the <code>suspend</code> keyword in order to be callable from a <a href="https://kotlinlang.org/docs/coroutines-overview.html">coroutine</a>. Coroutines are a convenient and safe way to use Threads. The Android System will not allow to use network from the main Thread.</p>
 
     <p>We will now use a coroutine in our <code>ViewModel</code> to load the teachers.</p>
 
@@ -379,6 +393,10 @@
 
     <p>If you run the app now, it well perform the network call but nothing will be displayed in the <code>RecyclerView</code>. It's because the network call is asynchronous and the update of the <code>_teachers</code> attribut happens after the creation of the <code>ItemAdapter</code>. The <code>ItemAdapter</code> was created when <code>_teacher</code> referred to an empty list.</p>
 
+    <figure>
+        <img src="./empty_screen.png" style="width: 50%">
+    </figure>
+
     <p>To fix this our Activity must observe the <code>viewModel.teachers</code> property.</p>
 
     <h2>LiveData</h2>
@@ -388,9 +406,9 @@
 
     <pre><code class="lang-kotlin">
         class TeachersModel : ViewModel() {
-            private val _teachers = MutableLiveData(listOf<Teacher>())
+            private val _teachers = MutableLiveData(listOf&lt;Teacher>())
         
-            val teachers: LiveData<List<Teacher>>
+            val teachers: LiveData&lt;List&lt;Teacher>>
                 get() = _teachers
         
             fun loadTeachers() {
@@ -422,7 +440,7 @@
                 super.onCreate(savedInstanceState)
                 setContentView(R.layout.activity_main)
                 val recyclerView = findViewById&lt;RecyclerView>(R.id.recycler_view)
-                viewModel.teachers.observe(this) {
+                teachersModel.teachers.observe(this) {
                     recyclerView.adapter = ItemAdapter(it)
                 }
                 // For performance
