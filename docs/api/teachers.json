@@ -1,8 +1,6 @@
-{
-    "teachers": [
-        {"trigram": "SGK", "name": "Son Goku"},
-        {"trigram": "UZK", "name": "Naruto Uzumaki"},
-        {"trigram": "HKT", "name": "Kenshiro Kasumi"},
-        {"trigram": "CDP", "name": "Luffy Monkey D."}
-    ]
-}
+[
+    {"trigram": "SGK", "name": "Son Goku"},
+    {"trigram": "UZK", "name": "Naruto Uzumaki"},
+    {"trigram": "HKT", "name": "Kenshiro Kasumi"},
+    {"trigram": "CDP", "name": "Luffy Monkey D."}
+]
