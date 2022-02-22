@@ -43,7 +43,7 @@
                     Teacher("FLE", "Clémence Flémal"),
                     Teacher("MAR", "Cédric Marchand"),
                     Teacher("MCH", "Nicolas Marchand"),
-                    Teacher("DFR", "Francois Defrance")
+                    Teacher("DFR", "François Defrance")
                 )
             }
 
@@ -333,6 +333,23 @@
 
     <p>The data we want to load are on this URL :</p>
     <p style="text-align: center;"><a href="https://quentin.lurkin.xyz/api/teachers.json">https://quentin.lurkin.xyz/api/teachers.json</a></p>
+
+    <p>These data look like this :</p>
+
+    <pre><code class="lang-json">
+        {
+            "teachers": [
+                {"trigram": "LUR", "name": "Quentin Lurkin"},
+                {"trigram": "HSL", "name": "Ken Hasselmann"},
+                {"trigram": "LRG", "name": "André Lorge"},
+                {"trigram": "DKP", "name": "Philippe Dekimpe"},
+                {"trigram": "FLE", "name": "Clémence Flémal"},
+                {"trigram": "MAR", "name": "Cédric Marchand"},
+                {"trigram": "MCH", "name": "Nicolas Marchand"},
+                {"trigram": "DFR", "name": "François Defrance"}
+            ]
+        }
+    </code></pre>
 
     <p>We must describe this API to Retrofit. We should do this in a separate Kotlin file.</p>
 
