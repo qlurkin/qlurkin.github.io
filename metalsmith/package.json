@@ -1,0 +1,20 @@
+{
+  "name": "metalsmith",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@metalsmith/layouts": "^2.4.0",
+    "@metalsmith/markdown": "^1.4.0",
+    "jstransformer-nunjucks": "^1.0.0",
+    "metalsmith": "^2.4.2",
+    "metalsmith-ancestry": "^1.6.1",
+    "metalsmith-debug": "^1.2.0"
+  }
+}
