@@ -33,7 +33,7 @@ Metalsmith(__dirname)
         })
     ))
     //.use(ancestry())
-    //.use(show())
+    .use(show())
     .use(debug())
     .build(function (err) {
         if (err) throw err
