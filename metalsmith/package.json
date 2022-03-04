@@ -15,6 +15,7 @@
     "jstransformer-nunjucks": "^1.0.0",
     "metalsmith": "^2.4.2",
     "metalsmith-ancestry": "^1.6.1",
-    "metalsmith-debug": "^1.2.0"
+    "metalsmith-debug": "^1.2.0",
+    "sass": "^1.49.9"
   }
 }

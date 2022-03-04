@@ -10,6 +10,8 @@ const source = require('./plugins/source')
 const index = require('./plugins/index')
 const config = require('./plugins/config')
 const title = require('./plugins/title')
+const sass = require('./plugins/sass')
+
 
 Metalsmith(__dirname)
     .source('./src')
@@ -29,7 +31,8 @@ Metalsmith(__dirname)
         layouts({
             default: 'default.njk',
             directory: 'layouts',
-            suppressNoFilesError: true
+            suppressNoFilesError: true,
+            pattern: '**/*.html'
         })
     ))
     //.use(ancestry())
@@ -37,5 +40,7 @@ Metalsmith(__dirname)
     .use(debug())
     .build(function (err) {
         if (err) throw err
+        sass('./scss', './docs/css')
         console.log('Build finished!')
     })
+
