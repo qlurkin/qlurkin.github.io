@@ -15,6 +15,7 @@ const rollup = require('./plugins/rollup')
 const resolve = require('rollup-plugin-node-resolve')
 const commonjs = require('@rollup/plugin-commonjs')
 const rollup_sass = require('rollup-plugin-sass')
+const deck = require('./plugins/deck')
 
 Metalsmith(__dirname)
     .source('./src')
@@ -25,6 +26,7 @@ Metalsmith(__dirname)
     .use(markdown())
     .use(title())
     .use(index())
+    .use(deck())
     .use(filter(
         function (file) {
             if(!file.contents.toString().includes('</html>'))
@@ -44,21 +46,38 @@ Metalsmith(__dirname)
     .build(function (err) {
         if (err) throw err
         //sass('./scss', './docs/css')
-        rollup([{
-            input: 'js/deck.js',
-            output: {
-                file: 'docs/deck.js',
-                format: 'iife',
-                name: 'Deck'
+        rollup([
+            {
+                input: 'js/deck.js',
+                output: {
+                    file: 'docs/deck.js',
+                    format: 'iife',
+                    name: 'Deck'
+                },
+                plugins: [ 
+                    resolve(),
+                    commonjs(),
+                    rollup_sass({
+                        insert: true
+                    })
+                ]
             },
-            plugins: [ 
-                resolve(),
-                commonjs(),
-                rollup_sass({
-                    insert: true
-                })
-            ]
-        }])
+            {
+                input: 'js/document.js',
+                output: {
+                    file: 'docs/document.js',
+                    format: 'iife',
+                    name: 'Document'
+                },
+                plugins: [ 
+                    resolve(),
+                    commonjs(),
+                    rollup_sass({
+                        insert: true
+                    })
+                ]
+            }
+        ])
         .then(() => {
             console.log('Build finished!')
         })

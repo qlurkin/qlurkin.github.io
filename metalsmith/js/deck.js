@@ -1,8 +1,6 @@
 import {DOMReady} from './helpers'
 import '../scss/deck.scss'
-
-import CodeReady from './code.js'
-
+import './code.js'
 import renderMath from './math'
 
 function setHash(str) {
@@ -152,7 +150,6 @@ export function initDeck() {
 
 	count = slides.length
 
-	//loadCSS('/css/deck.css')
 	setClasses()
 	renderMath()
 	initNavigation()
