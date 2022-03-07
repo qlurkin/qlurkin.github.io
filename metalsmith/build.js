@@ -11,6 +11,7 @@ const index = require('./plugins/index')
 const config = require('./plugins/config')
 const title = require('./plugins/title')
 const sass = require('./plugins/sass')
+const rollup = require('./plugins/rollup')
 
 
 Metalsmith(__dirname)
@@ -29,18 +30,28 @@ Metalsmith(__dirname)
             return false
         },
         layouts({
-            default: 'default.njk',
+            default: 'document.njk',
             directory: 'layouts',
             suppressNoFilesError: true,
             pattern: '**/*.html'
         })
     ))
     //.use(ancestry())
-    .use(show())
-    .use(debug())
+    //.use(show())
+    //.use(debug())
     .build(function (err) {
         if (err) throw err
         sass('./scss', './docs/css')
-        console.log('Build finished!')
+        rollup([{
+            input: 'js/deckBehavior.js',
+            output: {
+                file: 'docs/js/deckBehavior.js',
+                format: 'iife',
+                name: 'Deck'
+            }
+        }])
+        .then(() => {
+            console.log('Build finished!')
+        })
     })
 
