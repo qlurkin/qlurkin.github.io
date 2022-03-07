@@ -20,9 +20,6 @@ function index() {
 
         autoIndexes.sort((a, b) => b.length - a.length)
 
-        console.log("autoIndexes:", autoIndexes)
-        console.log("indexes:", indexes)
-
         for(const autoIndex of autoIndexes) {
             const folder = path.dirname(autoIndex)
             const links = []
