@@ -13,11 +13,15 @@
   "dependencies": {
     "@metalsmith/layouts": "^2.4.0",
     "@metalsmith/markdown": "^1.4.0",
+    "@rollup/plugin-commonjs": "^21.0.2",
+    "highlight.js": "^11.4.0",
     "jstransformer-nunjucks": "^1.0.0",
     "metalsmith": "^2.4.2",
     "metalsmith-ancestry": "^1.6.1",
     "metalsmith-debug": "^1.2.0",
     "rollup": "^2.69.1",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-sass": "^1.2.10",
     "sass": "^1.49.9"
   }
 }

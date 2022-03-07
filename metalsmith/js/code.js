@@ -1,4 +1,4 @@
-//import hljs from './_highlight'
+import hljs from 'highlight.js'
 import {DOMReady} from './helpers'
 
 function normalizeIndent(str) {
@@ -21,7 +21,16 @@ function normalizeAllIndent() {
 	})
 }
 
-DOMReady().then(() => {
-	normalizeAllIndent()
-	//hljs.highlightAll()
+const CodeReady = new Promise((resolve, reject) => {
+	DOMReady().then(() => {
+		normalizeAllIndent()
+		console.log("Code Indentation Done")
+		resolve()
+	})
 })
+
+CodeReady.then(() => {
+	hljs.highlightAll()
+})
+
+export default CodeReady

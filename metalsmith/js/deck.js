@@ -1,9 +1,9 @@
 import {DOMReady} from './helpers'
-//import './deck.scss'
+import '../scss/deck.scss'
 
-//import './code.js'
+import CodeReady from './code.js'
 
-//import renderMath from './math'
+import renderMath from './math'
 
 function setHash(str) {
 	if(history.pushState) {
@@ -154,7 +154,7 @@ export function initDeck() {
 
 	//loadCSS('/css/deck.css')
 	setClasses()
-	//renderMath()
+	renderMath()
 	initNavigation()
 	setModeBasedOnOrientation()
 }
