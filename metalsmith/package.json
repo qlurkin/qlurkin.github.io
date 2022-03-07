@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "node build.js"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +17,7 @@
     "metalsmith": "^2.4.2",
     "metalsmith-ancestry": "^1.6.1",
     "metalsmith-debug": "^1.2.0",
+    "rollup": "^2.69.1",
     "sass": "^1.49.9"
   }
 }
