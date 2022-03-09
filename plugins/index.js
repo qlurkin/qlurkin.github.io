@@ -28,15 +28,15 @@ function index() {
                     links.push(index)
                 }
             }
-            if(links.length > 0) {
-                indexPath = path.join(folder, 'index.html')
-                const title = files[autoIndex].title
-                files[indexPath] = files[autoIndex]
-                files[indexPath].links = links.map(link => ({link, title: files[link].title}))
-                files[indexPath].layout = 'index.njk'
-                delete files[autoIndex]
-                indexes.push(indexPath)
-            }
+            
+            indexPath = path.join(folder, 'index.html')
+            const title = files[autoIndex].title
+            files[indexPath] = files[autoIndex]
+            files[indexPath].links = links.map(link => ({link, title: files[link].title}))
+            files[indexPath].layout = 'index.njk'
+            delete files[autoIndex]
+            indexes.push(indexPath)
+            
         }
 
         done()
