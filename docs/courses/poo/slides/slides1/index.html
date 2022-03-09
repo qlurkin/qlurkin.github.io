@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>POO - Cours 1</title>
+   <script src="/deck.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+   <script>
+      mermaid.initialize({
+         startOnLoad:true,
+         fontFamily: 'sans-serif',
+         securityLevel: 'antiscript',
+         curve: 'linear',
+         logLevel: 4,
+         theme: 'neutral'
+      });
+   </script>
+</head>
+<body>
+   <section>
+      <h1>PO3T - programmation Orientée Objets <small>Cours 1 - Rappels et relations</small></h1>
+      <p>Quentin Lurkin</p>
+   </section>
+   <section>
+      <h1>Rappels</h1>
+   </section>
+   <section>
+      <h2>Vie d'un objet</h2>
+      <p>Trois étapes principales dans la <strong>vie d'un objet</strong></p>
+      <ul>
+         <li>Création de l'objet (<em>initialisation</em>)</li>
+         <li>Appel de méthode et changement d'état (<em>utilisation</em>)</li>
+         <li>Destruction de l'objet (<em>finalisation</em>)</li>
+      </ul>
+      <pre><code class="lang-python">
+         words = []
+
+         words.append('Hello')  # Appel de la méthode append
+         words.append('World!') # de l'objet words (list)
+
+         print (' '.join(words))
+      </code></pre>
+   </section>
+   <section>
+      <h2>Et en Java...</h2>
+      <p>Langage compilé et typé statiquement, proche du C#</p>
+      <ul>
+         <li>Déclaration du type des éléments de la liste</li>
+         <li>Délimitation des corps (classe, méthode) avec accolades</li>
+         <li>Méthode main comme point d'entrée</li>
+      </ul>
+      <pre><code class="lang-java">
+         import java.util.ArrayList;
+
+         public class Rappels
+         {
+            public static void main(String[] args)
+            {
+               ArrayList&lt;String> words = new ArrayList&lt;String>();
+
+               words.add("Hello");  // Appel de la méthode add
+               words.add("World!"); // de l'objet words (ArrayList)
+
+               System.out.println(String.join(" ", words));
+            }
+         }
+      </code></pre>
+   </section>
+   <section>
+      <h2>Et en C++...</h2>
+      <p>Langage compilé orienté objet comme "extension" du C</p>
+      <ul>
+         <li>Également typé statiquement (variable et contenu des listes)</li>
+      </ul>
+      <pre><code class="lang-cpp">
+         #include &lt;iostream>
+         #include &lt;vector>
+         
+         using namespace std;
+         
+         int main(int argc, char *argv[])
+         {
+            vector&lt;string> words;
+         
+            words.push_back("Hello");  // Appel de la méthode push_back
+            words.push_back("World!"); // de l'objet words (vector)
+         
+            string s;
+            join (words, ' ', s);
+            cout &lt;&lt; s &lt;&lt; endl ;
+            return 0;
+         }
+      </code></pre>
+   </section>
+   <section>
+      <h2>Et en C#...</h2>
+      <p>Langage compilé et typé statiquement, proche du Java</p>
+      <ul>
+         <li>Déclaration d'un espace de noms pour la classe</li>
+      </ul>
+      <pre><code class="lang-csharp">
+         using System;
+         using System.Collections.Generic;
+
+         namespace Cours1
+         {
+            public class Rappels
+            {
+               public static void Main(string[] args)
+               {
+                  List&lt;string> words = new List&lt;string>();
+
+                  words.Add("Hello");  // Appel de la méthode Add
+                  words.Add("World!"); // de l'objet words (List)
+
+                  Console.WriteLine(String.Join (" ", words));
+               }
+            }
+         }
+      </code></pre>
+   </section>
+   <section>
+      <h2>Objets</h2>
+      <ul>
+         <li>Un <strong>objet</strong> possède deux types de membres
+            <ul>
+               <li>des attributs (caractéristiques)</li>
+               <li>des méthodes (fonctionnalités)</li>
+            </ul>
+         </li>
+         <li><strong>L'état de l'objet</strong> peut varier tout au long de l'exécution
+            <small>Défini par l'ensemble des valeurs des attributs</small>
+         </li>
+      </ul>
+   </section>
+   <section>
+      <h2>Attributs</h2>
+      <ul>
+         <li>Un attribut possède une <strong>valeur</strong>
+            <small>Cette valeur fait partie de l'état de l'objet</small>
+         </li>
+         <li>Deux niveaux d'<strong>accessibilité</strong> pour les attributs
+            <small>En lecture seule ou en lecture et écriture</small>
+         </li>
+      </ul>
+      <pre><code class="lang-csharp">
+         // attribut en lecture seule
+         Console.WriteLine("Taille de la liste : " + words.Count);
+      </code></pre>
+
+      <div class="terminal">
+         Taille de la liste : 2
+      </div>
+   </section>
+   <section>
+      <h2>Fonctionnalités</h2>
+      <ul>
+         <li>Une fonctionnalité est appliquée sur un <strong>objet cible</strong>
+            <small>Elle agit sur l'état de l'objet, en le lisant et/ou le modifiant</small>
+         </li>
+      </ul>
+      <pre><code class="lang-csharp">
+         Console.WriteLine(words.Contains("Hello"));
+         Console.WriteLine("Liste : " + String.Join(", ", words));
+         words.Clear();
+         Console.WriteLine("Liste : " + String.Join(", ", words));
+      </code></pre>
+      <div class="terminal">
+         True
+         Liste : Hello, World!
+         Liste :
+      </div>
+   </section>
+   <section>
+      <h2>Classes</h2>
+      <ul>
+         <li>Une classe permet de <strong>construire</strong> des objets
+            <small>Il s'agit d'un modèle qui décrit les attributs et fonctionnalités</small>
+         </li>
+         <li>Un objet est une <strong>instance</strong> d'une classe
+            <small>On crée un nouvel objet à partir d'une classe</small>
+         </li>
+      </ul>
+   </section>
+   <section>
+      <h2>Instances</h2>
+      <p><strong>Trois éléments</strong> distincts sont à identifier</p>
+      <ol>
+         <li>Une <strong>classe</strong> est un modèle</li>
+         <li>Un objet est une <strong>instance</strong> d'une classe</li>
+         <li>Une variable stocke une <strong>référence</strong> vers l'objet</li>
+      </ol>
+      <figure id="schema"></figure>
+      <script type="module">
+         import {SVG, Point, connect, arrow, backArrow, drawClass, drawObject, drawVariable} from '/uml.js'
+         const draw = SVG().viewbox(0, 0, 400, 140).addTo('#schema').attr({
+            style: 'font-size: 12px; font-family: monospace',
+            width: '80%'
+         })
+         const height = 70
+         const variable = drawVariable(draw, "gsm", new Point(50, height))
+         const object = drawObject(draw, "GSM", ["Apple", "iPhone 13", "Project RED"], new Point(150, height))
+         const Class = drawClass(draw, "GSM", ["Marque", "Modèle", "Couleur"], ["envoyerSMS", "recevoirAppel", "voirNiveauBatterie"], new Point(325, height))
+         connect(draw, variable, undefined, object, arrow)
+         connect(draw, object, undefined, Class, backArrow)
+      </script>
+   </section>
+   <section>
+      <h2>Alias</h2>
+      <ul>
+         <li>Une variable est une <strong>référence</strong> vers un objet
+            <small>La variable permet d'accéder à l'objet et ainsi le manipuler</small>
+         </li>
+         <li>Un <strong>alias</strong> réfère le même objet qu'une autre variable</li>
+      </ul>
+      <figure id="alias"></figure>
+      <script type="module">
+         import {SVG, Point, connect, arrow, backArrow, drawClass, drawObject, drawVariable} from '/uml.js'
+         const draw = SVG().viewbox(0, 0, 400, 140).addTo('#alias').attr({
+            style: 'font-size: 12px; font-family: monospace',
+            width: '80%'
+         })
+         const height = 70
+         const variable = drawVariable(draw, "gsm", new Point(50, height-30))
+         const alias = drawVariable(draw, "phone", new Point(50, height+30))
+         const object = drawObject(draw, "GSM", ["Apple", "iPhone 13", "Project RED"], new Point(150, height))
+         const Class = drawClass(draw, "GSM", ["Marque", "Modèle", "Couleur"], ["envoyerSMS", "recevoirAppel", "voirNiveauBatterie"], new Point(325, height))
+         connect(draw, variable, undefined, object, arrow)
+         connect(draw, alias, undefined, object, arrow)
+         connect(draw, object, undefined, Class, backArrow)
+      </script>
+   </section>
+   <section>
+      <h2>Définir une classe</h2>
+      <ul>
+         <li>Définition d'une classe Contact représentant un <strong>contact</strong>
+            <small>Caractérisé par un prénom, un nom et un numéro de téléphone</small>
+         </li>
+         <pre><code class="lang-python">
+            class Contact :
+               def __init__ (self, firstname, lastname):
+                  self.firstname = firstname
+                  self.lastname = lastname
+                  self.phonenumber = 0
+
+               def setPhoneNumber(self, number):
+                  self.phonenumber = number
+
+               def __str__(self):
+                  return '{} {} ({})'.format(
+                     self.firstname,
+                     self.lastname,
+                     self.phonenumber
+                  )
+
+            marchand = Contact ('Cédric', 'Marchand')
+            print(marchand)   # Cédric Marchand (0)
+
+            marchand.setPhoneNumber(8172)
+            print(marchand)   # Cédric Marchand (8172)
+         </code></pre>
+      </ul>
+   </section>
+   <section>
+      <h2>Constructeur et variable d'instance</h2>
+      <ul>
+         <li>Le <strong>constructeur</strong> initialise l'état de l'objet
+            <small>L'instantiation invoque implicitement le constructeur</small>
+         </li>
+         <li>Initialisation des <strong>variables d'instance</strong>
+            <small>On affecte une valeur à chaque variable d'instance</small>
+         </li>
+      </ul>
+      <pre><code class="lang-python">
+         class Contact :
+            def __init__ (self, firstname, lastname):
+               self.firstname = firstname
+               self.lastname = lastname
+               self.phonenumber = 0
+
+            # [...]
+      </code></pre>
+   </section>
+   <section>
+      <h2>Et en Java...</h2>
+      <ul>
+         <li>Constructeur porte le même nom que la classe</li>
+         <li>Mot réservé <code>this</code> représente l'objet cible</li>
+      </ul>
+      <pre><code class="lang-java">
+         class Contact
+         {
+            private String firstname, lastname;
+            private int phonenumber;
+            
+            public Contact (String firstname, String lastname)
+            {
+               this.firstname = firstname;
+               this.lastname = lastname;
+               this.phonenumber = 0;
+            }
+            
+            // [...]
+         }
+      </code></pre>
+   </section>
+   <section>
+      <h2>Et en Java... (2)</h2>
+      <ul>
+         <li>Définition d'une classe <code>Program</code>
+            <ul>
+               <li>Ne sera pas instanciée</li>
+               <li>Uniquement pour héberger méthode <code>main</code></li>
+            </ul>
+         </li>
+      </ul>
+      <pre><code class="lang-java">
+         public class Program
+         {
+            public static void main(String[] args)
+            {
+               Contact marchand = new Contact("Cédric", "Marchand");
+               System.out.println(marchand);
+
+               // [...]
+            }
+         }
+      </code></pre>
+   </section>
+   <section class="code">
+      <h2>Et en C++...</h2>
+      <pre><code class="lang-cpp">
+         #include &lt;iostream>
+         #include &lt;string>
+         
+         using namespace std;
+         
+         class Contact
+         {
+            private:
+               string firstname, lastname;
+               int phonenumber;
+            public:
+               Contact(string, string);
+            
+            // [...]
+         };
+         
+         Contact::Contact(string firstname, string lastname)
+         {
+            this->firstname = firstname;
+            this->lastname = lastname;
+            this->phonenumber = 0;
+         }
+
+         int main()
+         {
+            Contact marchand("Cédric", "Marchand");
+            cout &lt;&lt; marchand &lt;&lt; endl;
+
+            // [...]
+         }
+      </code></pre>
+   </section>
+   <section class="code">
+      <h2>Et en C#...</h2>
+      <pre><code class="lang-csharp">
+         namespace Application {
+            class Contact
+            {
+               private string firstname, lastname;
+               private int phonenumber;
+
+               public Contact(string firstname, string lastname)
+               {
+                  this.firstname = firstname;
+                  this.lastname = lastname;
+                  this.phonenumber = 0;
+               }
+
+               // [...]
+            }
+
+            public class Program
+            {
+               public static void Main(string[] args)
+               {
+                  Contact marchand = new Contact("Cédric", "Marchand");
+                  Console.WriteLine(marchand) ;
+
+                  // [...]
+               }
+            }
+         }
+      </code></pre>
+   </section>
+   <section>
+      <h2>Variable d'instance</h2>
+      <ul>
+         <li>Une <strong>variable d'instance</strong> est liée à l'objet
+            <small>Sa valeur fait partie de l'état de l'objet</small>
+         </li>
+         <li>Peuvent avoir une certaine <strong>visibilité</strong>
+            <small>Uniquement accessible dans la classe ou visible de l'extérieur</small>
+         </li>
+      </ul>
+      <pre><code class="lang-csharp">
+         class Contact
+         {
+            private string firstname, lastname;
+            private int phonenumber;
+
+            // [...]
+         }
+      </code></pre>
+   </section>
+   <section>
+      <h2>Instanciation</h2>
+      <ul>
+         <li>On peut créer plusieurs instances d'une classe
+            <small>Chaque instance a son identité propre</small>
+         </li>
+      </ul>
+      <figure id="instanciation"></figure>
+      <script type="module">
+         import {SVG, Point, connect, arrow, backArrow, drawClass, drawObject, drawVariable} from '/uml.js'
+         const draw = SVG().viewbox(0, 0, 400, 400).addTo('#instanciation').attr({
+            style: 'font-size: 12px; font-family: monospace',
+            width: '80%'
+         })
+         const height = 100
+         const marchand = drawVariable(draw, "marchand", new Point(70, height-60))
+         const flemal = drawVariable(draw, "flemal", new Point(70, height+60))
+         const objectMarchand = drawObject(draw, "Contact", ["Cédric", "Marchand", "8172"], new Point(160, height-60))
+         const objectFlemal = drawObject(draw, "Contact", ["Clémence", "Flemal", "0"], new Point(160, height+60))
+         const Class = drawClass(draw, "Contact", ["firstname", "lastname", "phonenumber"], ["setPhoneNumber", "toString"], new Point(325, height))
+         connect(draw, marchand, undefined, objectMarchand, arrow)
+         connect(draw, flemal, undefined, objectFlemal, arrow)
+         connect(draw, objectMarchand, undefined, Class, backArrow)
+         connect(draw, objectFlemal, undefined, Class, backArrow)
+      </script>
+   </section>
+   <section>
+      <h2>Méthode</h2>
+      <ul>
+         <li>Une <strong>méthode</strong> (d'instance) représente une fonctionnalité
+            <small>Elle agit sur une instance spécifique, l'objet cible</small>
+         </li>
+         <li>Mot réservé spécifique pour accéder à l'<strong>objet cible</strong>
+            <small>Référence vers l'objet cible (this, self,...)</small>
+         </li>
+         <li>Peuvent avoir une certaine <strong>visibilité</strong>
+            <small>Uniquement accessible dans la classe ou visible de l'extérieur</small>
+         </li>
+      </ul>
+      <pre><code class="lang-python">
+         class Contact
+            # [...]
+
+            def setPhoneNumber(self, number):
+               self.phonenumber = number
+
+            # [...]
+
+         marchand.setPhoneNumber(8172)
+         print(marchand)
+      </code></pre>
+   </section>
+   <section class='code'>
+      <h2>Et en Java...</h2>
+      <pre><code class="lang-java">
+         class Contact
+         {
+            private String firstname, lastname;
+            private int phonenumber;
+            
+            public Contact (String firstname, String lastname)
+            {
+               this.firstname = firstname;
+               this.lastname = lastname;
+               this.phonenumber = 0;
+            }
+
+            public void setPhoneNumber(int number)
+            {
+               this.phonenumber = number;
+            }
+
+            @Override
+            public String toString()
+            {
+               return String.format("%s %s (%d)", firstname, lastname, phonenumber);
+            }
+            
+            // [...]
+         }
+
+         public class Program
+         {
+            public static void main(String[] args)
+            {
+               Contact marchand = new Contact("Cédric", "Marchand");
+               marchand.setPhoneNumber(8172);
+               System.out.println(marchand);
+            }
+         }
+      </code></pre>
+   </section>
+   <section class='code'>
+      <h2>Et en C#...</h2>
+      <pre><code class="lang-csharp">
+         namespace Application {
+            class Contact
+            {
+               private string firstname, lastname;
+               private int phonenumber;
+
+               public Contact(string firstname, string lastname)
+               {
+                  this.firstname = firstname;
+                  this.lastname = lastname;
+                  this.phonenumber = 0;
+               }
+
+               public void SetPhoneNumber ( int number )
+               {
+                  phonenumber = number;
+               }
+
+               public override string ToString()
+               {
+                  return String.Format("{0} {1} ({2})",
+                     this.firstname,
+                     this.lastname,
+                     this.phonenumber
+                  );
+               }
+            }
+
+            public class Program
+            {
+               public static void Main(string[] args)
+               {
+                  Contact marchand = new Contact("Cédric", "Marchand");
+                  marchand.SetPhoneNumber(8172);
+                  Console.WriteLine(marchand);
+               }
+            }
+         }
+      </code></pre>
+   </section>
+   <section>
+      <h1>Relations entre classes</h1>
+   </section>
+   <section>
+      <h2>Relation entre classes</h2>
+      <ul>
+         <li>Une classe définit un nouveau type de donnée
+            <small>On peut l'utiliser pour définir des objets de ce type</small>
+         </li>
+         <li>Plusieurs classes peuvent être liées entre elle
+            <small>Plusieurs types de relation sont possibles entre classes</small>
+         </li>
+         <li>Création de dépendances entre classes
+            <small>Et donc entre les instances de ces classes</small>
+         </li>
+      </ul>
+   </section>
+   <section class='code'>
+      <h2>Représentation d'un dé</h2>
+      <pre><code class="lang-csharp">
+         public class Die
+         {
+            public readonly int nbFaces; // Constante
+            private int visibleFace;
+            private static Random generator = new Random();
+
+            public int VisibleFace{
+               get { return visibleFace; }
+            }
+
+            public Die() : this(6){} // Appel de l' autre constructeur
+
+            public Die(int faces)
+            {
+               nbFaces = faces;
+               Roll();
+            }
+
+            public void Roll()
+            {
+               visibleFace = generator.Next(nbFaces) + 1;
+            }
+         }
+      </code></pre>
+   </section>
+   <section>
+      <h2>Création de dés</h2>
+      <pre><code class="lang-csharp">
+         public static void Main(string[] args)
+         {
+            Die d1 = new Die(); // Dé à 6 faces
+            Die d2 = new Die(12); // Dé à 12 faces
+
+            Console.WriteLine(d1.VisibleFace);
+            Console.WriteLine(d2.VisibleFace);
+         }
+      </code></pre>
+      <figure id='dices'></figure>
+      <script type='module'>
+         import {SVG, Point, connect, arrow, backArrow, drawClass, drawObject, drawVariable} from '/uml.js'
+         const draw = SVG().viewbox(0, 0, 400, 200).addTo('#dices').attr({
+            style: 'font-size: 12px; font-family: monospace',
+            width: '80%'
+         })
+         const height = 100
+         const d1 = drawVariable(draw, "d1", new Point(50, height-60))
+         const d2 = drawVariable(draw, "d2", new Point(50, height+60))
+         const o1 = drawObject(draw, "Die", ["nbFaces = 6", "visibleFace = 3"], new Point(160, height-60))
+         const o2 = drawObject(draw, "Die", ["nbFaces = 12", "visibleFace = 7"], new Point(160, height+60))
+         const Class = drawClass(draw, "Die", ["- nbFaces: int", "- visibleFace: int"], [], new Point(325, height))
+         connect(draw, d1, undefined, o1, arrow)
+         connect(draw, d2, undefined, o2, arrow)
+         connect(draw, o1, undefined, Class, backArrow)
+         connect(draw, o2, undefined, Class, backArrow)
+      </script>
+   </section>
+   <section class="code">
+      <h2>Représentation d’une paire de dés</h2>
+      <pre><code class="lang-csharp">
+         public class PairOfDice
+         {
+            private readonly int nbFaces;
+            private int visibleFace1, visibleFace2;
+            private static Random generator = new Random();
+
+            public PairOfDice(int faces)
+            {
+               nbFaces = faces;
+               visibleFace1 = generator.Next(nbFaces) + 1;
+               visibleFace2 = generator.Next(nbFaces) + 1;
+            }
+
+            public void PrintFaces()
+            {
+               Console.WriteLine(String.Format("{0}, {1}", visibleFace1, visibleFace2));
+            }
+         }
+      </code></pre>
+   </section>
+   <section>
+      <h2>Composition de classe</h2>
+      <ul>
+         <li>Définir une nouvelle classe à partir d’autres
+            <small>En déclarant des variables d’instance des types utilisés</small>
+         </li>
+         <li>Éviter la répétition de code inutile
+            <small>Facilite les corrections et les évolutions</small>
+         </li>
+         <li>Construire des objets à partir de blocs simples
+            <small>Comme on le fait dans la vraie vie...</small>
+         </li>
+      </ul>
+   </section>
+   <section class="code">
+      <h2>Représentation d’une paire de dés (2)</h2>
+      <pre><code class="lang-csharp">
+         public class PairOfDice
+         {
+            private int nbFaces;
+            private Die die1, die2;        // Composition à partir
+                                           // de deux objets Die
+            public PairOfDice(int faces)
+            {
+               nbFaces = faces;
+               die1 = new Die(faces);
+               die2 = new Die(faces);
+            }
+
+            public void PrintFaces()
+            {
+               Console.WriteLine(String.Format("{0}, {1}", die1.VisibleFace , die2.VisibleFace));
+            }
+         }
+      </code></pre>
+   </section>
+   <section>
+      <h2>Relation de composition</h2>
+      <ul>
+         <li>Une classe A est composée à partir d’une classe B
+            <small>Une instance de A a des variables d’instance de type B</small>
+         </li>
+         <li>Également appelée relation has-a (ou is-made-up-of )
+            <small>Une instance de A has-a une(des) instance(s) de B</small>
+         </li>
+      </ul>
+      <figure id="composition"></figure>
+      <script type="module">
+         import {SVG, Point, connect, arrow, backArrow, drawClass, drawObject, drawVariable, aggregation, composition} from '/uml.js'
+         const draw = SVG().viewbox(0, 0, 180, 60).addTo('#composition').attr({
+            style: 'font-size: 12px; font-family: monospace',
+            width: '50%'
+         })
+         const height = 30
+         const PairOfDice = drawClass(draw, "PairOfDice", [], [], new Point(50, height))
+         const Die = drawClass(draw, "Die", [], [], new Point(150, height))
+         connect(draw, PairOfDice, composition, Die, undefined)
+      </script>
+   </section>
+   <section>
+      <h2>Lien fort entre les instances composées</h2>
+      <ul>
+         <li>Objets contenus <strong>fortement liés</strong> à l’objet contenant
+            <small>Ils disparaissent de la mémoire avec l’objet contenant</small>
+         </li>
+         <li>Instances contenues <strong>créées en même temps</strong> que la contenante
+            <small>Lors de l’initialisation de l’instance contenante</small>
+         </li>
+         <li><strong>Avantages</strong> et inconvénients
+            <ul>
+               <li>On construit sur l’existant, plus grande modularité</li>
+               <li>Redondance et duplication de données (nombre de faces)</li>
+               <li>Souplesse et évolutivité (différents nombres de faces possible)</li>
+            </ul>
+         </li>
+      </ul>
+   </section>
+   <section>
+      <h2>Agrégation</h2>
+      <ul>
+         <li>Généralisation de la composition, sans l’appartenance <small>
+            Deux objets indépendamment créés vont pouvoir être agrégés
+         </small></li>
+         <li>Suppression de l’objet contenant sans toucher aux contenus</li>
+      </ul>
+      <figure id="aggregation"></figure>
+      <script type="module">
+         import {SVG, Point, connect, arrow, backArrow, drawClass, drawObject, drawVariable, aggregation, composition} from '/uml.js'
+         const draw = SVG().viewbox(0, 0, 200, 60).addTo('#aggregation').attr({
+            style: 'font-size: 12px; font-family: monospace',
+            width: '50%'
+         })
+         const height = 30
+         const PairOfDice = drawClass(draw, "City", [], [], new Point(50, height))
+         const Die = drawClass(draw, "Citizen", [], [], new Point(150, height))
+         connect(draw, PairOfDice, aggregation, Die, undefined)
+      </script>
+   </section>
+   <section>
+      <h2>Composition et agrégation</h2>
+      <ul>
+         <li>Relation de contenance entre objets</li>
+         <li>Existence indépendante de l’objet contenu ou non
+            <ul>
+               <li>Oui dans le cas d’une agrégation (owns-a)</li>
+               <li>Non dans le cas d’une composition (is-made-up-of)</li>
+            </ul>
+         </li>
+      </ul>
+   </section>
+   <section>
+      <h2>Relation d'association</h2>
+      <ul>
+         <li>Relation d’utilisation entre deux classes (use)
+            <small>Beaucoup plus générale que composition et agrégation</small>
+         </li>
+         <li>Plusieurs situations possibles d’utilisation
+            <ul>
+               <li>Recevoir un objet en paramètre</li>
+               <li>Renvoyer un objet</li>
+               <li>Utiliser un objet dans le corps d’une méthode</li>
+            </ul>
+         </li>
+      </ul>
+      <figure id="association"></figure>
+      <script type="module">
+         import {SVG, Point, connect, arrow, backArrow, drawClass, drawObject, drawVariable, aggregation, composition} from '/uml.js'
+         const draw = SVG().viewbox(0, 0, 200, 60).addTo('#association').attr({
+            style: 'font-size: 12px; font-family: monospace',
+            width: '50%'
+         })
+         const height = 30
+         const Die = drawClass(draw, "Die", [], [], new Point(50, height))
+         const Random = drawClass(draw, "Random", [], [], new Point(150, height))
+         connect(draw, Die, undefined, Random, arrow)
+      </script>
+   </section>
+   <section>
+      <h2>Comparaison des relations</h2>
+      <ul>
+         <li>Classement des relations en fonction de leur force
+            <small>Association &lt; Agrégation &lt; Composition</small>
+         </li>
+      </ul>
+      <table>
+         <tr>
+            <th></th>
+            <th>cycles de vie indépendants</th>
+            <th>appartenance</th>
+         </tr>
+         <tr>
+            <th>association</th>
+            <td>oui</td>
+            <td><strong>non</strong></td>
+         </tr>
+         <tr>
+            <th>agrégation</th>
+            <td>oui</td>
+            <td>oui</td>
+         </tr>
+         <tr>
+            <th>composition</th>
+            <td><strong>non</strong></td>
+            <td>oui</td>
+         </tr>
+      </table>
+   </section>
+   <section>
+      <h2>Couplage et cohésion</h2>
+      <ul>
+         <li>Classes <strong>couplées</strong> si l’une dépend de l’implémentation de l’autre
+            <small>Une classe accède aux variables d’instance de l’autre...</small>
+         </li>
+         <li><strong>Cohésion</strong> d’une classe mesure son niveau d’indépendance
+            <small>Classe cohérente facilement maintenable et réutilisable</small>
+         </li>
+         <li>Il faut minimiser ↓ le couplage et maximiser ↑ la cohésion
+            <small>Règle de bonne pratique en programmation orientée objet</small>
+         </li>
+      </ul>
+   </section>
+</body>
+</html>

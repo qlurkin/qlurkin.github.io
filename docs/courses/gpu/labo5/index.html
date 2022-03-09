@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>SA4L - Labo 5</title>
+	<script src="/document.js"></script>
+</head>
+<body>
+	<h1>SA4L - Labo 5<small>Simulation de tissu</small></h1>
+	<figure>
+		<img src="tissu.png" alt="tissu simulé déposé de façon réaliste sur une sphère">
+	</figure>
+
+	<h2>Simulation de tissu</h2>
+	<p>Dans une simulation de tissu, on ne calcule que le mouvement des différents sommets. Chaque sommet est considéré comme un corp ponctuel possédant une masse, une position et une vitesse. A chaque frame, on calcule les forces qui s'applique sur le sommet. La résultante des forces nous permet de calculer l'accélération. L'accélération nous permet de mettre à jour la vitesse. La vitesse nous permet de mettre à jour la position. $$ \begin{aligned} \vec{v_c} &= \vec{v_p} + \Delta{}t \; \frac{\vec{R}}{m} \\ \vec{x_c} &= \vec{x_p} + \Delta{}t \; \vec{v_c} \end{aligned}$$</p>
+	<p>Où \(\vec{x_c}\) et \(\vec{x_p}\) sont respectivement les positions dans la frame courante et dans la frame précédente. Idem pour \(\vec{v_c}\) et \(\vec{v_p}\) qui concernent les vitesses. \(\vec{R}\) est la résultante des forces et \(m\) la masse. \(\Delta{}t\) est le temps écoulé entre les deux frames.</p>
+	
+	<p>Quels sont les forces qui s'appliquent dans une simulation de tissu? Pour faire une simulation simple, on considère que les différents sommets du tissu sont reliés par des ressorts. Les forces se calculent donc facilement grâce à la loi de Hooke. $$\vec{F_s} = - k \; \Delta{}l$$</p>
+	<p>Où \(k\) est la constante de raideur du ressort et \(\Delta{}l\) la différence de longueur par rapport à la longueur du ressort au repos. Le signe \(-\) est là pour nous rappeler que la force s'oppose à la variation de longueur et agit donc pour ramener le ressort vers sa longueur de repos.</p>
+
+	<p>Pour obtenir un comportement réaliste il est nécessaire d'avoir trois types de ressorts dans un tissu.</p>
+	<figure>
+		<img src="Three-types-of-basic-springs-for-cloth-simulation.png" alt="">
+	</figure>
+	<p>Les constantes de raideur de ces trois types de ressorts sont généralement différentes.</p>
+
+	<p>Le problème avec les ressorts, c'est qu'ils ont une fâcheuse tendance à osciller. Pour réduire ce problème, on ajoute une force d'amortissement. Cette force résiste au mouvement du sommet et est proportionnelle à la vitesse. $$ \vec{F_d} = -c_d \; \vec{v} $$ </p>
+	<p>Où \(c_d\) est le coefficient d'amortissement.</p>
+
+	<p>Pour que le tissu tombe, il faut évidemment tenir compte de la gravité. $$ F_g = m \; \vec{g} $$</p>
+
+	<p>Lors du contact entre le tissu et la sphère, il est possible de tenir compte de force de frottement. Le frottement est tangent à la surface de frottement et se calcule sur base de la résultante des autres forces. $$ \begin{aligned} \vec{R_{o_n}} &= (\vec{R_{o}} \cdot \vec{1_n}) \; \vec{1_n} \\ \vec{R_{o_t}} &= \vec{R_{o}} - \vec{R_{o_n}} \\ \vec{1_t} &= \frac{\vec{R_{o_t}}}{|\vec{R_{o_t}}|} \\ \vec{F_f} &= -\min(|\vec{R_{o_t}}|, c_f|\vec{R_{o_n}}|) \; \vec{1_t} \end{aligned} $$</p>
+	<p>Où \( \vec{R_{o}} \) est la résultante des autre forces. \( \vec{R_{o_t}} \) et \( \vec{R_{o_n}} \) sont ses composantes tangentielle et normale. \( \vec{1_n} \) est le vecteur unitaire normal à la surface. \( \vec{1_t} \) est le vecteur unitaire tangent à la surface dans la même direction que \( \vec{R_{o_t}} \). \(c_f\) est le coefficient de frottement. En bref, les force de frottement annule la composante tangentielle des autres forces jusqu'à un certain point qui dépend de la composante normale.</p>
+
+	<p>Après avoir calculé les nouvelles positions des sommets, il faut vérifier les collisions avec la sphère. La detection des collisions entre un point et une sphère est extrêmement simple. Si la distance entre le point et le centre de la sphère est plus petite que le rayon de la sphère, le point est dans la sphère. Dans ce cas il faut le repositionner à la surface. $$ \begin{aligned} \vec{CS} &= \vec{x_{s}} - \vec{x_c} \\ \vec{1_{cs}} &= \frac{\vec{CS}}{|\vec{CS}|} \\ \vec{x_{s_r}} &= \vec{x_c} + r \; \vec{1_{cs}} \end{aligned} $$</p>
+
+	<p>Où \( x_s \) est la position du sommet, \( x_c \) la position du centre et \( x_{s_r} \) la position du sommet après repositionnement. Une fois le repositionnement effectué, il faut remettre à jour la vitesse. $$ \vec{v} = \frac{\vec{x_{s_r}} - \vec{x_s}}{\Delta{}t} $$</p>
+</body>
+</html>

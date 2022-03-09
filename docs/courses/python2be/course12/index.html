@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours 1 & 2 : Gestion de projet, versioning, package et intégration continue</title>
+    <script src="/deck.js"></script>
+    <style>
+        .terminal, .file-title, figure {
+            margin-top: 1rem;
+        }
+
+        .red {
+            color: red;
+        }
+
+        .purple {
+            color:rgb(0, 234, 255);
+        }
+
+        .green {
+            color:rgb(0, 255, 110);
+        }
+    </style>
+</head>
+<body>
+    <section>
+        <h1>Gestion de projet, versioning, package et intégration continue</h1>
+    </section>
+    <section>
+        <h1>Versioning de code</h2>
+    </section>
+    <section>
+        <h2>Source Code Management</h2>
+        <ul>
+            <li>Pour tout projet informatique, il faut une stratégie de backup</li>
+            <li>On ajoute souvent une gestion des versions</li>
+            <li>Un développeur peut proposer plusieurs révisions par jour</li>
+        </ul>
+        <figure>
+            <img src="./philactere.png" alt="">
+        </figure>
+    </section>
+    <section>
+        <h2>Buts d’un gestionnaire de versions</h2>
+        <ul>
+            <li>Gestion d’un projet de programmation</li>
+            <li>Garder l’historique de toutes les modifications</li>
+            <li>Travail en équipe</li>
+            <li>Support de branches de développement</li>
+        </ul>
+        <figure>
+            <img src="./branches.png" alt="">
+        </figure>
+    </section>
+    <section>
+        <h2>Git</h2>
+        <ul>
+            <li>Système inventé par <strong>Linus Torvalds</strong> pour le kernel Linux</li>
+            <li>Git a vu le jour en avril 2005 <small>Premier commit le 8 avril</small></li>
+            <li>Logiciel de gestion de versions <strong>décentralisé</strong> <small>Connexion internet uniquement pour les <code>pull</code> et <code>push</code></small></li>
+        </ul>
+        <figure>
+            <img src="./git.png" alt="" class='third'>
+        </figure>
+    </section>
+    <section>
+        <h2>Git avec un serveur central</h2>
+        <ul>
+            <li>Accès en écriture pour tous les développeurs</li>
+        </ul>
+        <figure>
+            <img src="./central.png" class="third2">
+        </figure>
+    </section>
+    <section>
+        <h2>Git décentralisé</h2>
+        <ul>
+            <li>Accès en écriture seulement pour les mainteneurs</li>
+            <li>Les contributeurs font des pull requests</li>
+        </ul>
+        <figure>
+            <img src="./decentral.png" class="third2">
+        </figure>
+    </section>
+    <section>
+        <h2>États des fichiers</h2>
+        <ul>
+            <li>Un fichier doit être explicitement ajouté au dépôt Git
+                <figure>
+                    <img src="./state.png" alt="">
+                </figure>
+            </li>
+            <li><strong>Untracked/Modified</strong>
+                <ul>
+                    <li>Nouveaux fichiers ou fichiers modifiés</li>
+                    <li>Pas pris en compte pour le prochain commit</li>
+                </ul>
+            </li>
+            <li><strong>Staged</strong>
+                <ul>
+                    <li>Fichiers ajoutés, modifiés, supprimés ou déplacés</li>
+                    <li>Pris en compte pour le prochain commit</li>
+                </ul>
+            </li>
+            <li><strong>Unmodified/Committed</strong>
+                <ul>
+                    <li>Aucune modification pour le prochain commit</li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+    <section>
+        <h2>Commandes de base</h2>
+        <ul>
+            <li>Ajouter un fichier dans la zone de transit
+                <div class="terminal">
+                    > git add &lt;fichier>
+                </div>
+            </li>
+            <li>Obtenir l’état des fichiers
+                <div class="terminal">
+                    > git status
+                </div>
+            </li>
+            <li>Valider les modifications en créant un commit
+                <div class="terminal">
+                    > git commit -m "Titre du commit"
+                </div>
+            </li>
+            <li>Obtenir l’historique des commits
+                <div class="terminal">
+                    > git log
+                </div>
+            </li>
+        </ul>
+    </section>
+    <section>
+        <h2>Le concept de branche</h2>
+        <ul>
+            <li>Une branche pointe vers un commit</li>
+            <li>À chaque nouveau commit, le pointeur de branche avance</li>
+            <li>Un commit pointe vers le commit parent</li>
+        </ul>
+        <figure>
+            <img src="./branche1.png" alt="">
+        </figure>
+        <figure>
+            <img src="./branche2.png" alt="">
+        </figure>
+        <figure>
+            <img src="./branche3.png" alt="">
+        </figure>
+    </section>
+    <section>
+        <h2>Création d’une nouvelle branche</h2>
+        <ul>
+            <li>Une nouvelle branche est créée avec <code>git branch &lt;name></code></li>
+        </ul>
+        <div class="terminal">
+            > git branch test
+        </div>
+        <figure>
+            <img src="./branche4.png" alt="">
+        </figure>
+    </section>
+    <section>
+        <h2>Branche courante</h2>
+        <ul>
+            <li>La commande <code>git branch</code> liste les branches existantes
+                <div class="terminal">
+                    > git branch
+                    * master
+                      test
+                </div>
+            </li>
+            <li>La branche courante est identifiée par <code>HEAD</code>
+                <figure>
+                    <img src="./branche5.png" alt="">
+                </figure>
+            </li>
+        </ul>
+    </section>
+    <section>
+        <h2>Changer de branche</h2>
+        <ul>
+            <li>La commande <code>git checkout &lt;name></code> change de branche
+                <div class="terminal">
+                    > git checkout test
+                    Switched to branch 'test'
+                </div>
+            </li>
+            <li>La branche courante est identifiée par <code>HEAD</code>
+                <figure>
+                    <img src="./branche6.png" alt="">
+                </figure>
+            </li>
+        </ul>
+    </section>
+    <section>
+        <h2>Commit sur une branche</h2>
+        <ul>
+            <li>Un commit va toujours se faire sur la branche courante
+                <figure>
+                    <img src="./branche7.png" alt="">
+                </figure>
+            </li>
+        </ul>
+        <div class="terminal">
+            > git commit ...
+        </div>
+        <figure>
+            <img src="./branche8.png" alt="">
+        </figure>
+        <div class="terminal">
+            > git commit ...
+        </div>
+        <figure>
+            <img src="./branche9.png" alt="">
+        </figure>
+        <div class="terminal">
+            > git checkout master
+        </div>
+        <figure>
+            <img src="./branche10.png" alt="">
+        </figure>
+        <div class="terminal">
+            > git commit ...
+        </div>
+        <figure>
+            <img src="./branche11.png" alt="">
+        </figure>
+    </section>
+    <section>
+        <h2>Opérations de base sur une branche</h2>
+        <ul>
+            <li>On peut supprimer une branche avec l’option <code>-d</code>
+                <div class="terminal">
+                    > git branch -d test
+                    Deleted branch test (was 617a041).
+                </div>
+            </li>
+            <li>On peut renommer une branche avec l’option <code>-m</code>
+                <div class="terminal">
+                    > git branch
+                    * master
+                      test
+                    > git branch -m test alternative
+                    > git branch
+                      alternative
+                    * master
+                </div>
+            </li>
+        </ul>
+    </section>
+    <section>
+        <h2>Plateforme GitHub</h2>
+        <ul>
+            <li>Plateforme d’hébergement de dépôts Git <small>Serveur public permettant le partage de code</small></li>
+            <li>Création gratuite d’un compte pour dépôts publics <small><a href="https://github.com/">https://github.com/</a></small></li>
+        </ul>
+        <figure>
+            <img src="./GitHub-logo.png" class="half">
+        </figure>
+    </section>
+    <section>
+        <h2>README.md</h2>
+        <ul>
+            <li>Affiché automatiquement sur GitHub</li>
+            <li><a href="https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax">Format Markdown</a>
+                <p class="file-title">README.md</p>
+                <pre><code class="plaintext">
+                    # PI2C Lab
+
+                    ## Introduction
+
+                    This is an example repo for a lab about Git and GitHub.
+
+                    You can find more info about the Markdown syntax [here](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
+                </code></pre>
+                <figure>
+                    <img src="./markdown_render.png" class="half">
+                </figure>
+            </li>
+            <li>Prévisualisation dans VSCode : <img src="./preview.png" style="vertical-align: baseline; width: 1em;"></li>
+        </ul>
+    </section>
+    <section>
+        <h1>Packages</h1>
+    </section>
+    <section>
+        <h2>Pip</h2>
+        <ul>
+            <li>Pip est le gestionnaire de package de Python
+                <small><strong>P</strong>ip <strong>I</strong>nstall <strong>P</strong>ackage</small>
+            </li>
+            <li>Installation d’un package
+                <div class="terminal">> pip install &lt;package></div>
+            </li>
+            <li>Suppression d’un package
+                <div class="terminal">> pip uninstall &lt;package></div>
+            </li>
+            <li>Lister les packages
+                <div class="terminal">> pip list</div>
+            </li>
+            <li>Si l’exécutable n’est pas disponible
+                <div class="terminal">> python -m pip &lt;commande></div>
+            </li>
+        </ul>
+    </section>
+    <section>
+        <h2>requirements.txt</h2>
+        <ul>
+            <li>Liste les packages nécessaires pour un projet <small>
+                Un nom de package par ligne
+            </small></li>
+            <li>Installation de tous les packages
+                <div class="terminal">
+                    > pip install -r requirements.txt
+                </div>
+            </li>
+            <li>L’installation est toujours globale
+                <small>Les packages sont ajoutés à l’interpréteur Python</small>
+            </li>
+        </ul>
+    </section>
+    <section>
+        <h1>Test unitaire</h1>
+    </section>
+    <section>
+        <h2>Testing</h2>
+        <ul>
+            <li>Nécessité de tester qu’un programme fait bien ce qu’il faut
+                <ul>
+                    <li>Définir ce que le programme doit faire</li>
+                    <li>Écrire un jeu de tests pour vérifier le programme</li>
+                </ul>
+            </li>
+            <li>Impossible de garantir l’exactitude d’un programme
+                <small>On ne peut pas tester tous les scénarios possibles</small>
+            </li>
+            <li>Amélioration de la qualité de code
+                <small>Un jeu de tests bien choisi diminue le nombre de bugs potentiels</small>
+            </li>
+        </ul>
+    </section>
+    <section>
+        <h2>Types de test</h2>
+        <ul>
+            <li>Test utilisateur (usability testing)<small>Évaluer un programme par des tests utilisateurs (ergonomie...)</small></li>
+            <li>Test fonctionnel (functional testing)<small>Assurance qualité (QA) et test black-box sur les spécifications</small></li>
+            <li>Test d’intégration (integration testing)<small>Vérification des performances et de la fiabilité du programme</small></li>
+        </ul>
+    </section>
+    <section>
+        <h2>Test unitaire</h2>
+        <ul>
+            <li>Test individuel d’une unité dans le code<small>Une fonction, une classe ou une méthode</small></li>
+            <li>Définition du test sur base d’une spécification du code<small>Étant donné les préconditions, vérifier les postconditions</small></li>
+            <li>Utilisé notamment en Test-Driven Development (TDD)<small>Technique de développement de logiciel piloté par les tests</small></li>
+        </ul>
+    </section>
+    <section>
+        <h2>Cycle TDD</h2>
+        <ul>
+            <li>Cycle en trois phases principales
+                <figure>
+                    <img src="./tdd.png" alt="">
+                </figure>
+            </li>
+        </ul>
+    </section>
+    <section>
+        <h2>Module pytest</h2>
+        <ul>
+            <li>module intégré à Python : <code>unittest</code></li>
+            <li>module plus simple : <code>pytest</code></li>
+            <li>Installation :
+                <div class="terminal">
+                    > pip install pytest
+                </div>
+            </li>
+        </ul>
+    </section>
+    <section>
+        <h2>Ecrire des tests avec pytest</h2>
+
+        <ul>
+            <li>Code à tester
+                <p class="file-title">main.py</p>
+                <pre><code class="lang-python">
+                    def add(a, b):
+                        pass
+                </code></pre>
+            </li>
+            <li>Test définit à part
+                <p class="file-title">test_main.py</p>
+                <pre><code class="lang-python">
+                    import main
+                    
+                    def test_add():
+                        assert main.add(3, 4) == 7
+                </code></pre>
+            </li>
+            <li>La commande <code>pytest</code> exécute toutes les fonctions nommée <code>test_*</code> dans les fichiers nommés <code>test_*.py</code> du répertoire courant et de ses sous-répertoires.
+                <div class="terminal" style="font-size: 85%;">
+                    > pytest
+                    ===================== test session starts =====================
+                    platform darwin -- Python 3.9.7, pytest-7.0.0, pluggy-1.0.0
+                    rootdir: /Users/lur/Program
+                    collected 1 item                                              
+        
+                    test_main.py <span class='red'>F</span>                                          <span class="red">[100%]</span>
+        
+                    ========================== FAILURES ===========================
+                    <span class="red">__________________________ test_main __________________________</span>
+        
+                        <span class="purple">def</span> <span class="green">test_main</span>():
+                    >       <span class="purple">assert</span> main.add(<span class="purple">3</span>, <span class="purple">4</span>) == <span class="purple">7</span>
+                    <span class="red">E       assert None == 7</span>
+                    <span class="red">E        +  where None = &lt;function add at 0x7faf4002a430>(3, 4)</span>
+                    <span class="red">E        +    where &lt;function add at 0x7faf4002a430> = main.add</span>
+        
+                    <span class="red">test_main.py</span>:4: AssertionError
+                    =================== short test summary info ===================
+                    FAILED test_main.py::test_main - assert None == 7
+                    <span class="red">====================== 1 failed in 0.06s ======================</span>
+        
+                </div>
+            </li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Intégration dans VSCode</h2>
+        <ul>
+            <li>Configuration des tests
+                <figure>
+                    <img src="./configure_test_vscode2.png" alt="">
+                </figure>
+            </li>
+            <li>Exécuter tous les tests
+                <figure>
+                    <img src="./run_tests.png" alt="">
+                </figure>
+            </li>
+            <li>Exécuter à partir du fichier de Test
+                <figure>
+                    <img src="./run_from_test_src.png" alt="">
+                </figure>
+            </li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>GitHub Actions</h2>
+        <ul>
+            <li>Exécuter des scripts sur les serveurs de GitHub</li>
+            <li>Exemple: exécuter les tests à chaque <code>push</code></li>
+            <li>Configuration: 
+                <p class="file-title">.github/workflows/test.yml</p>
+                <pre><code class="plaintext">
+                    name: Run Tests
+                    on: [push]
+                    jobs:
+                      test:
+                        runs-on: ubuntu-latest
+                        strategy:
+                          fail-fast: false
+                          matrix:
+                            python-version: ["3.8", "3.9"]
+
+                        steps:
+                        - uses: actions/checkout@v2
+                        - name: Set up Python ${{ matrix.python-version }}
+                          uses: actions/setup-python@v2
+                          with:
+                            python-version: ${{ matrix.python-version }}
+                        - name: Install dependencies
+                          run: |
+                            python -m pip install --upgrade pip
+                            python -m pip install pytest
+                            if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+                        - name: Test with pytest
+                          run: |
+                            pytest
+                </code></pre>
+            </li>
+            <li><code>- uses: actions/...</code> sont des actions prédéfinies (<a href="https://github.com/marketplace?category=&query=&type=actions&verification=">GitHub Marketplace</a>)</li>
+            <li>Résultat sur la page du projet
+                <figure>
+                    <img src="./homepage.png" alt="">
+                </figure>
+            </li>
+            <li>Menu Actions
+                <figure>
+                    <img src="./create_badge1.png" alt="">
+                </figure>
+            </li>
+            <li>Ajouter un badge sur le <code>README.md</code>
+                <figure>
+                    <img src="./create_badge_2.png" class="half">
+                </figure>
+                <figure>
+                    <img src="./readme_badge.png" class="half">
+                </figure>
+            </li>
+            <li>Notification par email
+                <figure>
+                    <img src="./mail.png" class="half">
+                </figure>
+            </li>
+        </ul>
+    </section>
+</body>
+</html>

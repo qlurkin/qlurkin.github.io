@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Manipulations de fichiers textes</title>
+	<script src="/document.js"></script>
+	<style>
+		pre > code {
+			font-size: 75% !important;
+		}
+
+		p {
+			text-indent: 0;
+		}
+	</style>
+</head>
+<body>
+	<h1>IN2L - Informatique appliquée <small>Manipulations de fichiers textes</small></h1>
+	<h3 class="nocount">Objectifs</h3>
+	<ul>
+		<li>Savoir ouvrir un fichier texte et lire son contenu</li>
+		<li>Savoir créer un fichier texte et y écrire du contenu</li>
+		<li>Savoir importer un dictionnaire Python depuis un document JSON stocké dans un fichier</li>
+	</ul>
+	<h2>Application</h2>
+	<ol>
+		<li>
+			<p>Ecrire un programme kivy qui permet de charger un fichier JSON de la forme suivante:</p>
+			<pre><code class="lang-json">
+				{
+					"firstname": "Quentin",
+					"lastname": "Lurkin",
+					"birthdate": "24/08/1982",
+					"address": {
+						"street": "Promenade de l'Alma",
+						"number": "50",
+						"CP": 1200,
+						"City": "Brussels",
+						"Country": "Belgium"
+					}
+				}
+			</code></pre>
+			<p>et d'afficher ses informations de façon lisible.</p>
+			<p>L'utilisateur pourra introduire le nom du fichier dans une boite de texte et il recevra un message d'erreur si le fichier n'existe pas ou s'il ne respecte pas le format.</p>
+		</li>
+		<li>
+			<p>Définir une fonction <code class="lang-python">computesum(path)</code> qui reçoit un paramètre:</p>
+			<ul>
+				<li><code class="lang-python">path</code> contient le chemin vers un fichier sur l’ordinateur,</li>
+			</ul>
+			<p>qui est sensé contenir un nombre par ligne, et qui affiche à l’écran la somme de tous ces nombres. Attention, le fichier peut ne pas exister auquel cas un message d’erreur est affiché. Le fichier peut également être vide, dans ce cas la somme est nulle. De plus, des lignes peuvent être erronées (ne contiennent pas un nombre); ces dernières doivent simplement être ignorées. Voici un exemple d’appel avec le contenu du fichier <code class="lang-plain">data.txt</code> et le résultat produit:</p>
+			<pre><code class="lang-plain">
+				13
+				7.5
+				2.1
+				DEUX
+				4.4
+				100
+			</code></pre>
+			<pre><code class="lang-python">
+				computesum('data.txt')
+			</code></pre>
+			<pre><code class="lang-plain">
+				La somme est 127.0
+			</code></pre>
+		</li>
+		<li>
+			<p>Crééz un fichier texte contenant un document JSON, comme l’exemple minimal ci-dessous. Chargez ensuite le fichier et récupérez son contenu comme un dictionnaire Python. Pour chaque pays, ajoutez une entrée <code class="lang-python">nblang</code> qui contient le nombre de langues officielles. Sauvegardez ensuite le dictionnaire mis à jour dans le même fichier.</p>
+			<pre><code class="lang-json">
+				{
+					"Belgium": {
+						"capital": "Brussels",
+						"languages": ["french", "dutch", "german"]
+					},
+					"China": {
+						"capital": "Beijing",
+						"languages": ["mandarin chinese"]
+					}
+				}
+			</code></pre>
+		</li>
+	</ol>
+</body>
+</html>

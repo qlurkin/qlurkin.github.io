@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 4 - Flutter</title>
+    <script src="/document.js"></script>
+    <style>
+        .terminal {
+            background-color: darkslategray;
+            color: white;
+            font-family: consolas, monospace;
+            white-space: pre;
+            padding: 1rem;
+            font-size: 0.9em;
+            margin-bottom: 1rem;
+            margin-top: 1rem;
+        }
+
+        .terminal::before {
+            content: "Terminal";
+            display: block;
+            background-color: black;
+            text-align: center;
+            margin: -1rem;
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        pre > code[class*=language-] {
+            font-size: 80%;
+        }
+
+        iframe {
+            display: block;
+            margin: 1rem auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Lab4 - Flutter</h1>
+
+    <h2>Installation</h2>
+
+    <p>You can install flutter from the <a href="https://docs.flutter.dev/get-started/install">official site</a></p>
+    <p>To build Android Apps, Flutter need the Android SDK. So keep Android Studio Installed.</p>
+    <p>To work with Flutter you can use Android Studio or VSCode. To setup your editor look at <a href="https://docs.flutter.dev/get-started/editor">this page</a>.</p>
+
+    <h2>Create an App</h2>
+    <div class="terminal">> flutter create teachers_app
+> cd teachers_app
+> flutter run</div>
+    <p>You can run the app in Chrome, in the Android emulator or on a actual Phone. To build for iOS your must have a Mac and the iOS development tools installed</p>
+
+    <figure>
+        <img src="./vscode.png">
+    </figure>
+    
+    <h2>Hello World</h2>
+    <p>Create an app like shown above and replace the code in <code>lib/main.dart</code> with</p>
+    <pre><code class="lang-dart">
+        // Copyright 2018 The Flutter team. All rights reserved.
+        // Use of this source code is governed by a BSD-style license that can be
+        // found in the LICENSE file.
+
+        import 'package:flutter/material.dart';
+
+        void main() {
+            runApp(const MyApp());
+        }
+
+        class MyApp extends StatelessWidget {
+            const MyApp({Key? key}) : super(key: key);
+
+            @override
+            Widget build(BuildContext context) {
+                return MaterialApp(
+                    title: 'Teachers',
+                    home: Scaffold(
+                        appBar: AppBar(
+                            title: const Text('Teachers'),
+                        ),
+                        body: const Center(
+                            child: Text('Hello World'),
+                        ),
+                    ),
+                );
+            }
+        }
+    </code></pre>
+
+    <ul>
+        <li>This example creates a Material app. <a href="https://material.io/guidelines">Material</a> is a visual design language that is standard on mobile and the web. Flutter offers a rich set of Material widgets. It’s a good idea to have a <code>uses-material-design: true</code> entry in the flutter section of your <code>pubspec.yaml</code> file. This will allow you to use more features of Material, such as their set of predefined Icons.</li>
+        <li>The app extends <code>StatelessWidget</code>, which makes the app itself a widget. In Flutter, almost everything is a widget, including alignment, padding, and layout.</li>
+        <li>The <code>Scaffold</code> widget, from the Material library, provides a default app bar, and a body property that holds the widget tree for the home screen. The widget subtree can be quite complex.</li>
+        <li>A widget’s main job is to provide a <code>build()</code> method that describes how to display the widget in terms of other, lower level widgets.</li>
+        <li>The body for this example consists of a <code>Center</code> widget containing a <code>Text</code> child widget. The Center widget aligns its widget subtree to the center of the screen.</li>
+    </ul>
+
+    <h2>More on Widgets</h2>
+
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/wE7khGHVkYY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+    <h2>Fetch from Internet</h2>
+
+    <p>In the Teachers App, we want to fetch a JSON from the Internet.</p>
+    <p style="text-align:center"><a href="https://quentin.lurkin.xyz/api/teachers.json">https://quentin.lurkin.xyz/api/teachers.json</a></p>
+
+    <p>To make HTTP requests we need to add a package to our <code>pubspec.yaml</code>. You can find the latest version of the <a href="https://pub.dev/packages/http/install"><code>http</code> package</a> on pub.dev.</p>
+    <pre><code class="lang-yaml">
+        dependencies:
+            http: &lt;latest_version>
+    </code></pre>
+
+    <p>Then we can import it in our code</p>
+    <pre><code class="lang-dart">
+        import 'package:http/http.dart' as http;
+    </code></pre>
+
+    <p>Additionally, in your <code>android/app/src/main/AndroidManifest.xml</code> file, add the Internet permission.</p>
+    <pre><code class="lang-xml">
+        &lt;uses-permission android:name="android.permission.INTERNET" />
+    </code></pre>
+
+    <p>To make a GET request we can create this function</p>
+    <pre><code class="lang-dart">
+        Future&lt;http.Response> fetchAlbum() {
+            return http.get(Uri.parse('https://quentin.lurkin.xyz/api/teachers.json'));
+        }
+    </code></pre>
+    <p>The <code>http.get()</code> method returns a <code>Future</code> that contains a <code>http.Response</code>.</p>
+    <ul>
+        <li><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html"><code>Future</code></a> is a core Dart class for working with async operations. A <code>Future</code> object represents a potential value or error that will be available at some time in the future.</li>
+        <li>The <code>http.Response</code> class contains the data received from a successful http call.</li>
+    </ul>
+
+    <p>While it’s easy to make a network request, working with a raw <code>Future&lt;http.Response></code> isn’t very convenient. To make your life easier, convert the <code>http.Response</code> into a Dart object. For that we must create a <code>Teacher</code> class, a <code>Response</code> class. they includes a factory constructor that creates instances from JSON.</p>
+
+    <pre><code class="lang-dart">
+        class Response {
+            final List&lt;Teacher> teachers;
+        
+            Response(this.teachers);
+        
+            factory Response.fromJson(Map&lt;String, dynamic> json) {
+                List&lt;dynamic> list = json['teachers'];
+                List&lt;Teacher> teachers = list.map((item) => Teacher.fromJson(item)).toList();
+                return Response(teachers);
+            }
+        }
+        
+        class Teacher {
+            final String trigram;
+            final String name;
+        
+            Teacher(this.trigram, this.name);
+        
+            factory Teacher.fromJson(Map&lt;String, dynamic> json) {
+                return Teacher(json['trigram'], json['name']);
+            }
+        }
+    </code></pre>
+
+    <p>We can adjust our <code>fetchTeachers</code> function.</p>
+
+    <pre><code class="lang-dart">
+        Future&lt;Response> fetchTeachers() async {
+            final response = await http.get(Uri.parse('https://quentin.lurkin.xyz/api/teachers.json'));
+            if (response.statusCode == 200) {
+                return Response.fromJson(jsonDecode(response.body));
+            }
+            throw Exception("Status != 200");
+        }
+    </code></pre>
+
+    <p>You must import <code>dart:convert</code> to use <code>jsonDecode()</code></p>
+
+    <pre><code class="lang-dart">
+        import 'dart:convert';
+    </code></pre>
+
+    <h2>StateFulWidget</h2>
+
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/AqCMFXEmf3w" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+    <p>To display the result of our network request we have to create a <code>StateFulWidget</code>. Its State will contain our <code>Future&lt;Response></code>. It will display different widgets based on the state of our <code>Future</code>.</p>
+
+    <pre><code class="lang-dart">
+        class RequestTeachers extends StatefulWidget {
+            const RequestTeachers({ Key? key }) : super(key: key);
+          
+            @override
+            _RequestTeachersState createState() => _RequestTeachersState();
+        }
+    </code></pre>
+
+    <p>And its <code>State</code>.</p>
+
+    <pre><code class="lang-dart">
+        class _RequestTeachersState extends State&lt;RequestTeachers> {
+            late Future&lt;Response> futureTeachers;
+
+            @override
+            void didChangeDependencies() {
+                super.didChangeDependencies();
+                futureTeachers = fetchTeachers();
+            }
+          
+            @override
+            Widget build(BuildContext context) {
+                return FutureBuilder&lt;Response>(
+                    future: futureTeachers,
+                    builder: (context, snapshot) {
+                        if(snapshot.hasData) {
+                            List&lt;Teacher> teachers = snapshot.data?.teachers ?? [];
+                            return Text('Data: ${teachers.length} teachers');
+                        }
+                        if(snapshot.hasError) {
+                            return Text('Error: ${snapshot.error}');
+                        }
+                        return const CircularProgressIndicator();
+                    }
+                );
+            }
+        }
+    </code></pre>
+
+    <ul>
+        <li>Network call should not be done in the <code>build</code> method. So we did it in the <code>didChangeDependencies</code> method. the call to <code>didChangeDependencies</code> method can be retriggered if we need to refresh data.</li>
+        <li>The <code>_RequestTeachersState</code> contains the <code>Future&lt;Response></code> and use a <code>FutureBuilder</code> to display widgets depending on the <code>Future</code> state.</li>
+        <li>The <code>builder</code> function of the <code>FutureBuilder</code> display a <code>CircularProgressIndicator</code> while we wait for the <code>Future</code> to resolve.</li>
+        <li>When the <code>Future</code> is resolved, if it has data, we show the number of <code>Teacher</code> loaded otherwise we show the error message.</li>
+    </ul>
+
+    <p>Now we will replace the <code>Text</code> with the number of <code>Teacher</code> by the actual list.</p>
+
+    <pre><code class="lang-dart">
+        class TeachersList extends StatelessWidget {
+            final List&lt;Teacher> teachers;
+          
+            const TeachersList(this.teachers ,{Key? key}) : super(key: key);
+          
+            @override
+            Widget build(BuildContext context) {
+                return ListView.builder(
+                    padding: const EdgeInsets.all(16.0),
+                    itemCount: teachers.length,
+                    itemBuilder: (context, i) {
+                        if (i.isOdd) return const Divider();
+                        final index = i ~/ 2; // integer division
+                        return ListTile(
+                            title: Text(teachers[index].trigram),
+                            subtitle: Text(teachers[index].name)
+                        );
+                    }
+                );
+            }
+        }
+    </code></pre>
+
+    <ul>
+        <li>The <code>TeacherList</code> class receive the list in the constructor</li>
+        <li>The <code>ListView</code> will display <code>Divider</code> widgets and <code>ListTile</code> widgets alternating.</li>
+    </ul>
+
+    <h2>Navigation</h2>
+
+    <p>In Flutter, the <code>Navigator</code> manages a stack containing the app's routes. Pushing a route onto the <code>Navigator</code>'s stack updates the display to that route. Popping a route from the <code>Navigator</code>'s stack returns the display to the previous route.</p>
+
+    <p>We will add a <code>_clickItem</code> method in our <code>TeachersList</code> widget.</p>
+
+    <pre><code class="lang-dart">
+        void _clickItem(BuildContext context, int index) {
+            Navigator.of(context).push(
+            )
+        }
+    </code></pre>
+
+    <p>Let's push a <code>MaterialPageRoute</code> to the stack.</p>
+
+    <pre><code class="lang-dart">
+        void _clickItem(BuildContext context, int index) {
+            Navigator.of(context).push(
+                MaterialPageRoute&lt;void>(
+                    builder: (context) {
+                        return Text(teachers[index].trigram);
+                    }
+                )
+            )
+        }
+    </code></pre>
+
+    <p>Now we'll add a clickListener to our <code>ListTile</code>.</p>
+
+    <pre><code class="lang-dart">
+        return ListTile(
+            title: Text(teachers[index].trigram),
+            subtitle: Text(teachers[index].name),
+            onTap: () {
+                _clickItem(context, index);
+            },
+        );
+    </code></pre>
+
+    <p>If you click on a <code>ListTile</code> now the result is pretty ugly. Let's create a <code>TeacherDetail</code> widget to fix that.</p>
+
+    <pre><code class="lang-dart">
+        class TeacherDetail extends StatelessWidget {
+            final Teacher teacher;
+          
+            const TeacherDetail(this.teacher ,{Key? key}) : super(key: key);
+          
+            @override
+            Widget build(BuildContext context) {
+                return Scaffold(
+                    appBar: AppBar(
+                        title: const Text('Teacher'),
+                    ),
+                    body: Center(
+                        child: Column(
+                            children: [
+                                Spacer(),
+                                Text(
+                                    teacher.trigram,
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 60
+                                    )
+                                ),
+                                Spacer(),
+                                Text(
+                                    teacher.name,
+                                    style: const TextStyle(
+                                        fontSize: 20
+                                    )
+                                ),
+                                Spacer()
+                            ]
+                        ),
+                    ),
+                );
+            }
+        }
+    </code></pre>
+
+    <p>You can now replace the <code>Text</code> in <code>_clickItem</code> with a <code>TeacherDetail</code> widget and test the app.</p>
+
+    <p style="font-size: 3em; font-weight: bold; text-align: center;">Voila!</p>
+</body>
+</html>

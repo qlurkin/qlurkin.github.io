@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Écosystème</title>
+    <script src="/document.js"></script>
+</head>
+<body>
+    <h1>Écosystème</h1>
+    
+    <h1 id="po3l---projet-écosystème">PO3L - Projet <small>Écosystème</small></h1>
+<h2 id="description">Description</h2>
+<p>On vous demande de réaliser un simulateur d&#39;<strong>écosystème simplifié</strong>. Dans cet écosystème :</p>
+<ul>
+<li>Le monde est représenté par un plan 2D.</li>
+<li>Toute les formes de vie ont des <strong>points de vie</strong> et des <strong>réserves d&#39;énergie</strong>.</li>
+<li>Les réserves d&#39;énergie diminuent avec le temps.</li>
+<li>Lorsqu&#39;une forme de vie n&#39;a plus d&#39;énergie, elle convertit ses points de vie en énergie.</li>
+<li>Une forme de vie qui n&#39;a plus de point de vie meurt. Les animaux deviennent de la viande. Les plantes deviennent des déchets organiques.</li>
+<li>Les animaux peuvent se déplacer. Les plantes ne le peuvent pas.</li>
+<li>La viande devient un déchet organique après un certain temps.</li>
+<li>Une forme de vie doit <strong>se nourrir</strong> pour remplir ses réserves d&#39;énergie.<ul>
+<li>Les carnivores se nourrissent de viande. Ils doivent donc tuer d&#39;autre animaux. Ils doivent attaquer pour faire perdre tous les points de vie de leurs proies. Pour attaquer, les carnivores doivent rentrer en contact avec leur cible.</li>
+<li>Les herbivores mangent des plantes.</li>
+<li>Les plantes se nourrissent de déchets organiques.</li>
+<li>Les animaux laissent régulièrement des déchets organiques derrière eux.</li>
+</ul>
+</li>
+<li>Une forme de vie doit <strong>se reproduire</strong>.<ul>
+<li>Pour les animaux, un mâle et une femelle doivent entrer en contact. Après une période de gestation, un petit naît près de la femelle.</li>
+<li>Les plantes se répandent, de nouvelles plantes naissent dans les alentours d&#39;une plante existante</li>
+</ul>
+</li>
+<li>Autour d&#39;une forme de vie, il y a plusieurs zones. Ces zones sont circulaires et sont caractérisées par leur rayon.<ul>
+<li>La <strong>zone de vision</strong> est la zone dans laquelle un animal peut voir (des proies, de la nourriture, des prédateurs).</li>
+<li>la <strong>zone de contact</strong> est la zone dans laquelle on considère que le contact est possible. Un prédateur peut attaquer une proie. Un herbivore peut manger une plante. Un mâle et une femelle peuvent se reproduire...</li>
+<li>Pour les plantes, la <strong>zone de racines</strong> est la zone dans laquelle elle peut consommer les déchets organiques.</li>
+<li>Et toujours pour les plantes, la <strong>zone de semis</strong> est la zone dans laquelle de nouvelles plantes peuvent apparaître autour d&#39;une plante existante.</li>
+</ul>
+</li>
+</ul>
+<h2 id="délivrable">Délivrable</h2>
+<p><strong>Dans un dépôt Github</strong> vous remettrez:</p>
+<ul>
+<li><p><strong>Un projet</strong> correspondant à la description ci-dessus dans <strong>un langage de votre choix</strong> mais permettant de faire l&#39;<strong>héritage</strong> et des <strong>classes abstraites</strong>.</p>
+<p>  La description ne mentionne rien sur comment les différentes formes de vie s&#39;organisent pour se déplacer, se nourrir, se reproduire. Il est bien entendu possible d&#39;implémenter beaucoup d&#39;espèces différentes qui auraient des comportements divers et variés. Votre projet devra implémenter, au minimum, une espèce de carnivore, une espèce d&#39;herbivore et une espèce de plante. Il devra être conçu pour qu&#39;il soit facile <strong>d&#39;ajouter des espèces</strong>.</p>
+<p>  Il n&#39;est pas obligatoire que votre projet ai une interface graphique mais il faudra qu&#39;on puisse voir que <strong>la simulation fonctionne</strong>.</p>
+</li>
+<li><p>Un <strong>Rapport</strong> comprenant :</p>
+<ul>
+<li>un diagramme de classes,</li>
+<li>un diagramme de séquences,</li>
+<li>Une description (avec justifications) d&#39;au moins <strong>deux principes SOLID</strong> utilisés dans le projet.</li>
+</ul>
+<p>  Le rapport sera inclus dans le dépôt Github au format <strong>Markdown</strong>.</p>
+</li>
+</ul>
+<p>Les liens de vos dépôts sont à remettre sur <strong><a href="https://claco.ecam.be/#/desktop/workspaces/open/3bepo30/resources/remise-projet-2021">claco</a></strong> pour le <strong>3 janvier à 18h</strong>. Tous les commit ultérieurs seront ignorés.</p>
+<p>Le projet est à faire en <strong>binôme</strong>.</p>
+<h2 id="grille-dévaluation">Grille d&#39;évaluation</h2>
+<ul>
+<li>Gestion des points de vie et d&#39;énergie: 3 points</li>
+<li>Gestion des zones: 2 points</li>
+<li>Gestion de l&#39;alimentation: 2 points</li>
+<li>Gestion de la reproduction: 2 points</li>
+<li>Diagramme UML: 4 points</li>
+<li>Principes SOLID: 4 points</li>
+<li>Le projet fonctionne et montre une simulation: 3 points</li>
+</ul>
+
+</body>
+</html>

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=1024, user-scalable=no">
+    <title>AB4C 3 - Accessibilité
+    </title>
+    <script src="/deck.js"></script>
+    <style>
+      button {
+      	position: relative;
+      	padding: 5px 20px;
+      	line-height: 1;
+      	border-radius: 4px;
+      }
+      
+      button img{
+      	height: 1em;
+      	vertical-align: middle;
+      }
+      
+      span.accessible-hidden {
+      	position: absolute;
+      	left: -10000px;
+      }
+      
+      button:hover span.accessible-hidden {
+      	left: 50%;
+      	margin-left: -50%;
+      	top: -2.5em;
+      	display: block;
+      	color: white;
+      	background-color: rgba(0,0,0,0.7);
+      	font-size: 0.6em;
+      	padding: 0.5em;
+      	border-radius: 5px;
+      }
+      
+      .display {
+      	padding-top: 1em;
+      	padding-bottom: 1em;
+      }
+    </style>
+  </head>
+  <body>
+    <section>
+      <h1>AB4C 3 - Accessibilité</h1><a href="mailto://lur@ecam.be" rel="author">Quentin Lurkin</a>
+    </section>
+    <section>
+      <h1>Accessibilité</h1>
+    </section>
+    <section>
+      <h1>Contenu non-textuel</h1>
+      <ul> 
+        <li>Ajouter un texte alternatif aux images
+          <pre><code class="lang-html">&lt;img src="cat.jpg" alt="Un mignon petit chat" /></code></pre>
+        </li>
+        <li>Ajouter un texte alternatif aux contenus vidéo et audio</li>
+      </ul>
+    </section>
+    <section>
+      <h2>Boutons avec Icone</h2>
+      <p>Ce genre de button est inaccessible aux <em>Screen Reader</em></p>
+      <pre><code class="lang-html">&lt;button>&lt;img src="img/search.svg"/>&lt;/button>
+</code></pre>
+      <div class="center display">
+        <button><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pg0KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE5LjAuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPg0KPHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJDYXBhXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB2aWV3Qm94PSIwIDAgNTYuOTY2IDU2Ljk2NiIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNTYuOTY2IDU2Ljk2NjsiIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KPHBhdGggZD0iTTU1LjE0Niw1MS44ODdMNDEuNTg4LDM3Ljc4NmMzLjQ4Ni00LjE0NCw1LjM5Ni05LjM1OCw1LjM5Ni0xNC43ODZjMC0xMi42ODItMTAuMzE4LTIzLTIzLTIzcy0yMywxMC4zMTgtMjMsMjMNCglzMTAuMzE4LDIzLDIzLDIzYzQuNzYxLDAsOS4yOTgtMS40MzYsMTMuMTc3LTQuMTYybDEzLjY2MSwxNC4yMDhjMC41NzEsMC41OTMsMS4zMzksMC45MiwyLjE2MiwwLjkyDQoJYzAuNzc5LDAsMS41MTgtMC4yOTcsMi4wNzktMC44MzdDNTYuMjU1LDU0Ljk4Miw1Ni4yOTMsNTMuMDgsNTUuMTQ2LDUxLjg4N3ogTTIzLjk4NCw2YzkuMzc0LDAsMTcsNy42MjYsMTcsMTdzLTcuNjI2LDE3LTE3LDE3DQoJcy0xNy03LjYyNi0xNy0xN1MxNC42MSw2LDIzLjk4NCw2eiIvPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPC9zdmc+DQo="></button>
+      </div>
+      <p>Solution:</p>
+      <ul>
+        <li>L'attribut <code class="lang-html">aria-label</code> permet de définir un label à destination des <em>Screen Reader</em>
+          <pre><code class="lang-html">&lt;button aria-label="Search">&lt;img aria-hidden="true" src="img/search.svg"/>&lt;/button></code></pre>
+        </li>
+        <li> 
+          <p>On peut aussi ajouter un texte caché dans le bouton</p>
+          <pre><code class="lang-html">&lt;button>
+	&lt;img src="img/search.svg" aria-hidden="true"/>
+	&lt;span class="accessible-hidden"> Search &lt;/span> 
+&lt;/button></code></pre>
+          <pre><code class="lang-css">span.accessible-hidden {
+	position: absolute;
+	left: -10000px;
+}</code></pre>
+          <div class="center display">
+            <button><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pg0KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE5LjAuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPg0KPHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJDYXBhXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB2aWV3Qm94PSIwIDAgNTYuOTY2IDU2Ljk2NiIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNTYuOTY2IDU2Ljk2NjsiIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KPHBhdGggZD0iTTU1LjE0Niw1MS44ODdMNDEuNTg4LDM3Ljc4NmMzLjQ4Ni00LjE0NCw1LjM5Ni05LjM1OCw1LjM5Ni0xNC43ODZjMC0xMi42ODItMTAuMzE4LTIzLTIzLTIzcy0yMywxMC4zMTgtMjMsMjMNCglzMTAuMzE4LDIzLDIzLDIzYzQuNzYxLDAsOS4yOTgtMS40MzYsMTMuMTc3LTQuMTYybDEzLjY2MSwxNC4yMDhjMC41NzEsMC41OTMsMS4zMzksMC45MiwyLjE2MiwwLjkyDQoJYzAuNzc5LDAsMS41MTgtMC4yOTcsMi4wNzktMC44MzdDNTYuMjU1LDU0Ljk4Miw1Ni4yOTMsNTMuMDgsNTUuMTQ2LDUxLjg4N3ogTTIzLjk4NCw2YzkuMzc0LDAsMTcsNy42MjYsMTcsMTdzLTcuNjI2LDE3LTE3LDE3DQoJcy0xNy03LjYyNi0xNy0xN1MxNC42MSw2LDIzLjk4NCw2eiIvPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPC9zdmc+DQo="><span class="accessible-hidden">Search</span></button>
+          </div>
+          <p>On peut, en bonus, fournir un tooltip au survol de la souris </p>
+          <pre><code class="lang-css">button {
+	position: relative;
+}
+
+button:hover span.accessible-hidden {
+	left: 50%;
+	margin-left: -50%;
+	top: -2.5em;
+	display: block;
+	color: white;
+	background-color: rgba(0,0,0,0.6);
+	font-size: 0.6em;
+	padding: 0.5em;
+	border-radius: 5px;
+}
+</code></pre>
+        </li>
+      </ul>
+    </section>
+    <section>
+      <h2>Structure</h2>
+      <ul>
+        <li>Utiliser les bonnes balises pour chaque élément de structure de la page</li>
+        <li>Utiliser les <em>aria role</em>: <code>search</code>, <code>banner</code>, <code>navigation</code>, ...
+          <pre><code class="lang-html">&lt;div role="navigation">&lt;/div>
+&lt;nav>&lt;/nav></code></pre>
+        </li>
+        <li>Structurer en niveaux de titre</li>
+      </ul>
+    </section>
+    <section>
+      <h2>Définir la langue</h2>
+      <pre><code class="lang-html">&lt;html lang="fr">
+	...
+	&lt;p> Définir le &lt;em lang="en">layout&lt;/em> du site.&lt;/p>
+	...
+&lt;/html></code></pre>
+    </section>
+    <section>
+      <h2>Navigation sans souris</h2>
+      <ul>
+        <li>Definir un ordre de navigation par tabulation logique
+          <pre><code class="lang-html">&lt;a href="https://www.w3schools.com/" tabindex="2">W3Schools&lt;/a>
+&lt;a href="http://www.google.com/" tabindex="1">Google&lt;/a>
+&lt;a href="http://www.microsoft.com/" tabindex="3">Microsoft&lt;/a></code></pre>
+        </li>
+        <li>Ajouter un lien vers le contenu principal 
+          <pre><code class="lang-html">&lt;body>
+	&lt;a href="#main">Skip to main content&lt;/a>
+	&lt;nav role='navigation'>
+		&lt;a href="/">Home&lt;/a>
+		&lt;a href="/about">About&lt;/a>
+		&lt;a href="/blog">Blog&lt;/a>
+	&lt;/nav>
+	&lt;main id="main" role="main">
+	&lt;!-- page specific content -->
+	&lt;/main>
+&lt;/body>
+</code></pre>
+        </li>
+      </ul>
+    </section>
+    <section>
+      <h2>Formulaires</h2>
+      <ul>
+        <li>Définir le l'ordre de navigation par tabulation </li>
+        <li>Ajouter des <code>&lt;label></code> à chaque élément du formulaire
+          <pre><code class="lang-html">&lt;label for="name">Name:&lt;/label>
+&lt;input id="name" type="text"></code></pre>
+          <p>ou</p>
+          <pre><code class="lang-html">&lt;label> Name:
+	&lt;input type="text">
+&lt;/label></code></pre>
+        </li>
+        <li>Utiliser les fieldset pour grouper les input liés
+          <pre><code class="lang-html">&lt;fieldset> 
+&lt;legend>Select pizza crust&lt;/legend>  
+	&lt;input type="radio" name="crust" id="crust1" value="deep" />&lt;label for="crust1">Deep dish&lt;/label>
+	&lt;input type="radio" name="crust" id="crust2" value="thick" />&lt;label for="crust2">Thick&lt;/label> 
+	&lt;input type="radio" name="crust" id="crust3" value="hand" />&lt;label for="crust3">Hand thrown&lt;/label> 
+	&lt;input type="radio" name="crust" id="crust4" value="thin" />&lt;label for="crust4">Thin&lt;/label>
+&lt;/fieldset>
+</code></pre>
+        </li>
+      </ul>
+    </section>
+    <section>
+      <h2>Couleur</h2>
+      <ul>
+        <li>Veiller à avoir suffisament de contraste entre le texte et le fond</li>
+        <li>Tester les couleur pour les différents daltonismes <a href="https://www.toptal.com/designers/colorfilter">Testeur de site</a></li>
+      </ul>
+    </section>
+    <section>
+      <h1>Moteur de recherche</h1>
+    </section>
+    <section>
+      <h2>Meta-data</h2>
+      <ul>
+        <li>Le titre est important
+          <pre><code class="lang-html">&lt;title>Un super titre&lt;/title></code></pre>
+        </li>
+        <li>Ajouter une description. Elle apparait directement dans les résultats de recherche
+          <pre><code class="lang-html">&lt;meta name="description" content="description du site"/>
+</code></pre>
+        </li>
+        <li>Meta robots
+          <pre><code class="lang-html">&lt;meta name="robots" content="noindex, nofollow">
+</code></pre>
+          <p><code>noindex</code>: le moteur de recherche n'indexera pas la page</p>
+          <p><code>nofollow</code>: le moteur de recherche ne suivra pas les liens de la page</p>
+        </li>
+        <li>Ajouter des données structurées à votre contenu</li>
+      </ul>
+    </section>
+    <section>
+      <h2>Données stucturée: Microdata</h2>
+      <p><a src="https://schema.org">https://schema.org</a></p>
+      <pre><code class="lang-html">&lt;div itemscope itemtype="http://schema.org/Movie">
+	&lt;h1 itemprop="name">Avatar&lt;/h1>
+	&lt;div itemprop="director" itemscope itemtype="http://schema.org/Person">
+		Director: &lt;span itemprop="name">James Cameron&lt;/span> (born &lt;span itemprop="birthDate">August 16, 1954&lt;/span>)
+	&lt;/div>
+	&lt;span itemprop="genre">Science fiction&lt;/span>
+	&lt;a href="../movies/avatar-theatrical-trailer.html" itemprop="trailer">Trailer&lt;/a>
+&lt;/div>
+</code></pre>
+    </section>
+    <section>
+      <h2>Données stucturée: JSON-LD</h2>
+      <p><a src="https://json-ld.org/">https://json-ld.org/</a></p>
+      <pre><code class="lang-html">&lt;script type="application/ld+json">
+	{
+		"@context": "https://json-ld.org/contexts/person.jsonld",
+		"@id": "http://dbpedia.org/resource/John_Lennon",
+		"name": "John Lennon",
+		"born": "1940-10-09",
+		"spouse": "http://dbpedia.org/resource/Cynthia_Lennon"
+	}
+&lt;/script>
+</code></pre>
+    </section>
+    <section>
+      <h2>Données stucturée: RDFa</h2>
+      <p><a src="https://rdfa.info/">https://rdfa.info/</a></p>
+      <pre><code class="lang-html">&lt;div vocab="http://schema.org/" typeof="Person">
+	&lt;a property="image" href="http://manu.sporny.org/images/manu.png">
+	&lt;span property="name">Manu Sporny&lt;/span>&lt;/a>, 
+	&lt;span property="jobTitle">Founder/CEO&lt;/span>
+	&lt;div>
+		Phone: &lt;span property="telephone">(540) 961-4469&lt;/span>
+	&lt;/div>
+	&lt;div>
+		E-mail: &lt;a property="email" href="mailto:msporny@digitalbazaar.com">msporny@digitalbazaar.com&lt;/a>
+	&lt;/div>
+	&lt;div>
+		Links: &lt;a property="url" href="http://manu.sporny.org/">Manu's homepage&lt;/a>
+	&lt;/div>
+&lt;/div>
+</code></pre>
+    </section>
+    <section>
+      <h2>robot.txt</h2>
+      <ul>
+        <li>A la racine du site</li>
+        <li>Inscructions pour les moteurs de recherche et autres robots</li>
+        <li><a src="http://robots-txt.com/">http://robots-txt.com/</a></li>
+      </ul>
+      <pre><code>User-agent: *
+Disallow: /repertoire-a/
+Disallow: /repertoire-b/
+Disallow: /page-a.html
+
+User-agent: Googlebot
+Disallow: /repertoire-c/
+
+Sitemap: http://www.mon-domaine.fr/sitemap.xml
+</code></pre>
+    </section>
+    <section>
+      <h2>sitemap.xml</h2>
+      <ul>
+        <li>Liste les pages du site</li>
+        <li>Donne des données supplémentaires sur les pages</li>
+        <li><a src="https://www.sitemaps.org">https://www.sitemaps.org</a></li>
+      </ul>
+      <pre><code class="lang-xml">&lt;?xml version="1.0" encoding="UTF-8"?>
+&lt;urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+	&lt;url>
+		&lt;loc>http://www.example.com/&lt;/loc>
+		&lt;lastmod>2005-01-01&lt;/lastmod>
+		&lt;changefreq>monthly&lt;/changefreq>
+		&lt;priority>0.8&lt;/priority>
+	&lt;/url>
+&lt;/urlset> </code></pre>
+    </section>
+  </body>
+</html>

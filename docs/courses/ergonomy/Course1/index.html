@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=1024, user-scalable=no">
+    <title>AB4C 1 - Responsive Design
+    </title>
+    <script src="https://cdn.jsdelivr.net/gh/ireade/caniuse-embed/public/caniuse-embed.min.js"></script>
+    <script src="/deck.js"></script>
+  </head>
+  <body>
+    <section>
+      <h1>AB4C 1 - Responsive Design</h1><a href="mailto://lur@ecam.be" rel="author">Quentin Lurkin</a>
+    </section>
+    <section>
+      <h2>Objectifs du cours</h2>
+      <p>Tour d'horizon du design d'interface web.</p>
+    </section>
+    <section>
+      <h2>Mobile First</h2>
+      <p>Un site est de plus en plus souvent consulté sur mobile.</p>
+    </section>
+    <section>
+      <h2><em lang="en">Responsive Web Design</em></h2>
+      <ul>
+        <li>S'adapte aux écrans de PC, tablette et téléphone.</li>
+        <li>Même <em lang="en">markup</em></li>
+        <li>Le <strong>CSS</strong> fait le travail</li>
+      </ul>
+    </section>
+    <section>
+      <h2>Définir le <em lang="en">Viewport</em></h2>
+      <pre><code class="language-html">&lt;meta name="viewport" content="width=device-width, initial-scale=1.0">
+</code></pre>
+      <p>Empêche le "dézoom" des navigateurs mobiles</p>
+    </section>
+    <section>
+      <h2>Les feuilles de style CSS</h2>
+      <p>Définissent le style des balises HTML</p>
+      <pre><code class="language-css">sélecteur {
+	propriété: valeur;
+	...
+}
+</code></pre>
+      <ul>
+        <li>Le sélecteur définit quelles balises sont affectées</li>
+        <li>La propriété définir quel attribut de la balise est modifié</li>
+      </ul>
+    </section>
+    <section>
+      <h2>Les sélecteurs</h2>
+      <pre><code class="language-html">&lt;element id="identifiant" class="classe1 classe2">&lt;/element></code></pre>
+      <ul>
+        <li><code class="language-css">element</code>: selectionne les balises <code class="language-css">element</code></li>
+        <li><code class="language-css">.class</code>: sélectionne les balises ayant la classe <code class="language-css">class</code></li>
+        <li><code class="language-css">#id</code>: sélectionne les balises ayant l'identificateur <code class="language-css">id</code></li>
+        <li><code class="language-css">selecteur1, selecteur2</code>: les "<code class="language-css">selecteur2</code>" et les "<code class="language-css">selecteur2</code>"</li>
+        <li><code class="language-css">selecteur1 selecteur2</code>: les "<code class="language-css">selecteur2</code>" descendant d'un "<code class="language-css">selecteur2</code>"</li>
+        <li><code class="language-css">selecteur1 > selecteur2</code>: les "<code class="language-css">selecteur2</code>" descendant direct d'un "<code class="language-css">selecteur2</code>"</li>
+      </ul>
+    </section>
+    <section>
+      <h2>Les sélecteurs</h2>
+      <p>Plus de sélecteurs: <a href="https://www.w3schools.com/cssref/css_selectors.asp">https://www.w3schools.com/cssref/css_selectors.asp</a></p>
+    </section>
+    <section>
+      <h2>La propriété "<code class="language-css">display</code>"</h2>
+      <p>Contrôle la position d'un élément par rapport aux autres</p>
+      <ul>
+        <li><code class="language-css">inline</code>: affiche l'élément comme un caractère</li>
+        <li><code class="language-css">block</code>: affiche l'élément comme un paragraphe</li>
+        <li><code class="language-css">flex</code>: organise les sous-éléments de façon linéaire</li>
+        <li><code class="language-css">grid</code>: organise les sous-éléments sur une grille</li>
+        <li><code class="language-css">none</code>: n'affiche pas l'élément</li>
+      </ul>
+    </section>
+    <section>
+      <h2><code class="language-css">display: inline</code></h2>
+      <pre><code class="language-html">&lt;strong>hello&lt;/strong> &lt;em>ça va&lt;/em>
+&lt;span class="punctuation">?&lt;/span>
+</code></pre>
+      <p><b>hello</b> <em>ça va</em> ?</p>
+    </section>
+    <section>
+      <h2><code class="language-css">display: block</code></h2>
+      <pre><code class="language-html">&lt;p> hello world !!&lt;/p>
+&lt;div class="salutation"> Hi ! &lt;/div> 
+</code></pre>
+      <p>hello world !!</p>
+      <div>Hi !</div>
+    </section>
+    <section>
+      <h2><code class="language-css">display: flex</code></h2>
+      <p>Layout 3 colonnes</p>
+      <pre><code class="language-html">&lt;div class="row">
+	&lt;nav class="left">&lt;/nav>
+	&lt;main>&lt;/main>
+	&lt;nav class="right">&lt;/nav> 
+&lt;/div>
+</code></pre>
+      <pre><code class="language-css">.row {
+	display: flex;
+	justify-content: space-between;
+}
+
+.left, .right {
+	flex-grow: 0;
+	flex-shrink: 0;
+	width: 200px;
+	background-color: green;
+}
+
+main {
+	flex-grow: 1;
+	flex-shrink: 0;
+	background-color: red;
+}
+</code></pre>
+      <div style="display: flex; justify-content: space-between;">
+        <nav style="flex-grow: 0; flex-shrink: 0; width: 200px; background-color: green;"></nav>
+        <main style="flex-grow: 1; flex-shrink: 0; background-color: red;">&nbsp;<br>&nbsp;<br>&nbsp;<br></main>
+        <nav style="flex-grow: 0; flex-shrink: 0; width: 200px; background-color: green;"></nav>
+      </div>
+    </section>
+    <section>
+      <h2><code class="language-css">display: flex</code></h2>
+      <p>centrer un block dans un autre</p>
+      <pre><code class="language-html">&lt;html>
+	&lt;body>
+		&lt;main>&lt;/main>
+	&lt;/body>
+&lt;/html>
+</code></pre>
+      <pre><code class="language-css">html, body {
+	height: 100%;
+}
+
+body {
+	background-color: green;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+main {
+	background-color: red;
+}
+</code></pre>
+      <div style="height: 300px; background-color: green; display: flex; justify-content: center;align-items: center;">
+        <main style="width: 200px; height: 100px; background-color: red;">&nbsp;</main>
+      </div>
+    </section>
+    <section>
+      <h2><code class="language-css">display: flex</code></h2>
+      <p class="ciu_embed" data-feature="flexbox" data-periods="future_1,current,past_1,past_2" data-accessible-colours="false">
+        <a href="http://caniuse.com/#feat=flexbox">
+        <picture>
+          <source type="image/webp" srcset="https://caniuse.bitsofco.de/image/flexbox.webp">
+          <img src="https://caniuse.bitsofco.de/image/flexbox.png" alt="Data on support for the flexbox feature across the major browsers from caniuse.com">
+        </picture>
+        </a>
+      </p>
+    </section>
+    <section>
+      <h2><code class="language-css">display: flex</code></h2>
+      <p>Plus d'info sur <code class="language-css">display: flex</code>: </p>
+      <p>&nbsp; <a href="https://css-tricks.com/snippets/css/a-guide-to-flexbox/">https://css-tricks.com/snippets/css/a-guide-to-flexbox/</a></p>
+    </section>
+    <section>
+      <h2><code class="language-css">display: grid</code></h2>
+      <p>Le plus puissant outil de layout du CSS</p>
+      <pre><code class="language-html">&lt;body>
+	&lt;header>&lt;/header>
+	&lt;main>&lt;/main>
+	&lt;nav>&lt;/nav>
+	&lt;footer>&lt;/footer>
+&lt;/body>
+</code></pre>
+      <pre><code class="language-css">header {
+	grid-area: header;
+	background-color: red;
+}
+main {
+	grid-area: main;
+	background-color: green;
+}
+nav {
+	grid-area: sidebar;
+	background-color: blue;
+}
+footer {
+	grid-area: footer;
+	background-color: yellow;
+}
+
+.container {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+	grid-template-rows: auto;
+	grid-template-areas: 
+		"header header header header"
+		"main main main sidebar"
+		"footer footer footer footer";
+}
+</code></pre>
+      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; grid-template-rows: auto; grid-template-areas: 'header header header header' 'main main main sidebar' 'footer footer footer footer';">
+        <div style="grid-area: header; background-color: red; height: 100px;">&nbsp;</div>
+        <div style="grid-area: main; background-color: green; height: 100px;">&nbsp;</div>
+        <div style="grid-area: sidebar; background-color: blue; height: 100px;">&nbsp;</div>
+        <div style="grid-area: footer; background-color: yellow; height: 100px;">&nbsp;</div>
+      </div>
+    </section>
+    <section>
+      <h2><code class="language-css">display: grid</code></h2>
+      <p class="ciu_embed" data-feature="css-grid" data-periods="future_1,current,past_1,past_2" data-accessible-colours="false">
+        <a href="http://caniuse.com/#feat=css-grid">
+          <picture>
+            <source type="image/webp" srcset="https://caniuse.bitsofco.de/image/css-grid.webp">
+            <img src="https://caniuse.bitsofco.de/image/css-grid.png" alt="Data on support for the css-grid feature across the major browsers from caniuse.com">
+          </picture>
+        </a>
+      </p>
+    </section>
+    <section>
+      <h2><code class="language-css">display: grid</code></h2>
+      <p>Plus d'info sur <code class="language-css">display: grid</code>: </p>
+      <p>&nbsp; <a href="https://css-tricks.com/snippets/css/complete-guide-grid/">https://css-tricks.com/snippets/css/complete-guide-grid/</a></p>
+    </section>
+    <section>
+      <h2>La propriété "<code class="language-css">position</code>"</h2>
+      <p>Contrôle la position d'un élément</p>
+      <ul>
+        <li><code class="language-css">relative</code>: décale par rapport à sa position normale</li>
+        <li><code class="language-css">absolute</code>: positionne par rapport à un ancêtre</li>
+        <li><code class="language-css">fixed</code>: positionne par rapport à la fenêtre</li>
+        <li><code class="language-css">sticky</code>: rend <code class="language-css">fixed</code> en fonction du scroll</li>
+      </ul>
+      <p>S'utilise en conjonction avec les propriétés <code class="language-css">top</code>, <code class="language-css">bottom</code>, <code class="language-css">left</code> et <code class="language-css">right</code></p>
+    </section>
+    <section>
+      <h2>Les règles "Media"</h2>
+      <pre><code class="language-css">@media (max-width:800px) {
+
+}</code></pre>
+    </section>
+  </body>
+</html>
