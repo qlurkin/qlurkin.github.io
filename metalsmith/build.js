@@ -16,14 +16,28 @@ const resolve = require('rollup-plugin-node-resolve')
 const commonjs = require('@rollup/plugin-commonjs')
 const rollup_sass = require('rollup-plugin-sass')
 const deck = require('./plugins/deck')
+const enforceList = require('./plugins/enforceList')
+const replace = require('./plugins/replace')
+const ignoreDot = require('./plugins/ignoreDot')
 
 Metalsmith(__dirname)
     .source('./src')
     .destination('./docs')
     .clean(true)
     .use(config())
+    .use(ignoreDot())
     .use(source())
     .use(markdown())
+    .use(replace([
+        {
+            find: 'https://quentin.lurkin.xyz/deck.js',
+            replace: '/deck.js'
+        },
+        {
+            find: 'https://quentin.lurkin.xyz/document.js',
+            replace: '/document.js'
+        }
+    ]))
     .use(title())
     .use(index())
     .use(deck())
@@ -37,7 +51,10 @@ Metalsmith(__dirname)
             default: 'document.njk',
             directory: 'layouts',
             suppressNoFilesError: true,
-            pattern: '**/*.html'
+            pattern: '**/*.html',
+            engineOptions: {
+                filters: { enforceList }
+            }
         })
     ))
     //.use(ancestry())

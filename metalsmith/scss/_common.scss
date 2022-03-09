@@ -2,6 +2,8 @@
 
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
@@ -18,22 +20,31 @@ code {
     font-family: 'Source Code Pro', monospace;
 }
 
-li, p {
-    margin: 0.6em 0;
-    text-align: justify;
+pre {
+    overflow-x: auto;
+    padding: 1em 0.8em;
+    background: #F0F0F0;
+    border-radius: 4px;
 }
 
-li > ul {
-    margin-top: 0.5em;
+pre > code {
+    font-size: .75em;
 }
 
-.indent {
-    padding-left: 3ex;
+p, li, pre, figure, h1, h2, h3, h4 {
+    margin-bottom: 1rem;
 }
 
-h1, h2, h3, h4, h5, h6, pre, table, img {
+h1, h2, h3, h4, pre, table, img {
     break-inside: avoid-page;
-    margin: 1.618rem 0 1rem 0;
+}
+
+h1, h2, h3, h4 {
+    margin-top: 2rem;
+}
+
+ul, figure, pre, .file-title, .terminal {
+    margin-top: 1rem;
 }
 
 /* hack that avoid page break after h2 et h3 */
@@ -44,28 +55,54 @@ h2::after, h3::after, h4::after {
     margin-bottom: -100px;
 }
 
-.center {
+p, li {
+    text-align: justify;
+}
+
+li {
+    margin-left: 30px;
+}
+
+figure {
     text-align: center;
-}
 
-.big {
-    font-size: 1.5em;
-}
+    figcaption {
+        text-align: center;
+        font-style: italic;
+        font-size: 0.8em;
+    }
 
-.right {
-	text-align: right;
-}
+    img {
+        max-width: 100%;
 
-.break-before {
-	page-break-before: always;
-}
-
-.break-after {
-	page-break-after: always;
-}
-
-code.wrap {
-	white-space: pre-wrap !important;
+        &.half {
+            width: 50%;
+        }
+        
+        &.third {
+            width: 33%;
+        }
+        
+        &.third2 {
+            width: 66%;
+        }
+        
+        &.fourth {
+            width: 25%;
+        }
+        
+        &.fourth3 {
+            width: 75%;
+        }
+        
+        &.zoom {
+            width: 75%;
+        }
+        
+        &.max {
+            width: 100%;
+        }
+    }
 }
 
 h1 > small {
@@ -73,7 +110,7 @@ h1 > small {
     font-size: 0.6em;
     font-weight: normal;
     color: gray;
-    margin-top: 0.4em;
+    margin: 1rem 0;
 }
 
 .row {
@@ -126,48 +163,32 @@ h1 > small {
     }
 }
 
-figure {
-    margin: 0 0 1em 0;
-    padding: 0;
+.indent {
+    padding-left: 3ex;
+}
+
+.center {
     text-align: center;
+}
 
-    figcaption {
-        text-align: center;
-        font-style: italic;
-        font-size: 0.8em;
-    }
+.big {
+    font-size: 1.5em;
+}
 
-    img {
-        max-width: 100%;
+.right {
+	text-align: right;
+}
 
-        &.half {
-            width: 50%;
-        }
-        
-        &.third {
-            width: 33%;
-        }
-        
-        &.third2 {
-            width: 66%;
-        }
-        
-        &.fourth {
-            width: 25%;
-        }
-        
-        &.fourth3 {
-            width: 75%;
-        }
-        
-        &.zoom {
-            width: 75%;
-        }
-        
-        &.max {
-            width: 100%;
-        }
-    }
+.break-before {
+	page-break-before: always;
+}
+
+.break-after {
+	page-break-after: always;
+}
+
+code.wrap {
+	white-space: pre-wrap !important;
 }
 
 .terminal {
@@ -177,7 +198,7 @@ figure {
     white-space: pre;
     padding: 1rem;
     font-size: 0.9em;
-    margin-bottom: 1em;
+    margin-bottom: 1rem;
 
     &::before {
         content: "Terminal";
@@ -191,34 +212,11 @@ figure {
 }
 
 .file-title {
-    margin-bottom: -1.2em;
+    margin-bottom: -1rem !important;
     font-family: consolas, monospace;
     font-size: 0.9em;
     color: white;
     padding: 0.5rem;
     text-align: center;
     background-color: #686868;
-}
-
-.middle {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-table {
-    border: 2px solid black;
-    border-collapse: collapse;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-td, th {
-    border: 1px solid #666;
-    text-align: center;
-    padding: 0.2em 1em;
-}
-
-th {
-    border-bottom: 2px solid black;
 }

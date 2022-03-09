@@ -7,7 +7,7 @@
     <title>{{ title }}</title>
     <script src="/deck.js"></script>
     
-    {% for file in css %}
+    {% for file in css|enforceList %}
         <link rel="stylesheet" href="{{ file }}">
     {% endfor %}
 </head>
