@@ -4,8 +4,8 @@ import './code.js'
 import renderMath from './math'
 
 function setHash(str) {
-	if(history.pushState) {
-		history.pushState(null, null, '#'+str)
+	if(history.replaceState) {
+		history.replaceState(null, null, '#'+str)
 	}
 	else {
 		window.location.hash = '#'+str
