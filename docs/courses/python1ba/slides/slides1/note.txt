@@ -1,1 +1,0 @@
-.\chrome.exe --headless --enable-logging --disable-gpu --print-to-pdf="C:\Users\qlurk\Downloads\screen.pdf" "https://www.chromestatus.com/"
