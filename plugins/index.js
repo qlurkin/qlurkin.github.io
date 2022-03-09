@@ -1,6 +1,14 @@
 const path = require('path')
 const getAncestors = require('./helpers').getAncestors
 
+function compareLinks(a, b) {
+    if (a.title < b.title)
+     return -1
+    if (a.title > b.title)
+        return 1
+    return 0
+}
+
 function index() {
     return (files, metalsmith, done) => {
         const indexes = []
@@ -33,6 +41,7 @@ function index() {
             const title = files[autoIndex].title
             files[indexPath] = files[autoIndex]
             files[indexPath].links = links.map(link => ({link, title: files[link].title}))
+            files[indexPath].links.sort(compareLinks)
             files[indexPath].layout = 'index.njk'
             delete files[autoIndex]
             indexes.push(indexPath)
