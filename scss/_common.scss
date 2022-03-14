@@ -21,14 +21,16 @@ code {
 }
 
 pre {
+    font-family: 'Source Code Pro', monospace;
     overflow-x: auto;
     padding: 1em 0.8em;
     background: #F0F0F0;
     border-radius: 4px;
+    font-size: 75%;
 }
 
 pre > code {
-    font-size: .75em;
+    font-size: 100%;
 }
 
 p, li, pre, figure, h1, h2, h3, h4 {

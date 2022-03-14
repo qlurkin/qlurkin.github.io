@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Labo 4 : Réseau</title>
+    <script src="/document.js"></script>
+</head>
+<body>
+    <h1>Labo 4 : Réseau</h1>
+    
+    <h2 id="introduction">Introduction</h2>
+<p>Dans ce labo, nous allons nous familiariser avec la programmation réseau en créant une petite messagerie en ligne de commande.</p>
+<h2 id="premier-socket">Premier <code>socket</code></h2>
+<p>En programmation réseau, le concept de base est le <code>socket</code>. Pour utiliser des <code>socket</code> en Python, il faut importer le module <code>socket</code>. Pas besoin de l&#39;installer, il est déjà inclus par défaut.</p>
+<pre><code class="language-python">import socket
+</code></pre>
+<p>On peut ensuite créer un <code>socket</code></p>
+<pre><code class="language-python">s = socket.socket()
+</code></pre>
+<p>Un <code>socket</code> peut être vu comme l&#39;extrémité d&#39;un câble réseau. A l&#39;autre bout du câble, il y aura un autre <code>socket</code>, celui de l&#39;application avec laquelle on communique.</p>
+<p>Dans une communication utilisant les sockets, les participants sont identifiés sur le réseau par leurs adresses IP. L&#39;<strong>adresse IP</strong> identifie un <strong>ordinateur</strong> mais il peut y avoir plusieurs applications sur cet ordinateur qui utilisent le réseau en même temps. Pour identifier une <strong>application</strong> précise sur l&#39;ordinateur, on utilise un <strong>numéro de port</strong>. Lorsqu&#39;on parle d&#39;adresse, on fait généralement référence à la combinaison de l&#39;adresse IP et du port. Il est également possible d&#39;utiliser un nom DNS à la place de l&#39;adresse IP.</p>
+<p>Les serveurs web sont des applications qui écoute généralement sur le <strong>port 80</strong>. Nous pouvons utiliser un <code>socket</code> pour nous y connecter.</p>
+<pre><code class="language-python">address = (&#39;www.perdu.com&#39;, 80)
+s.connect(address)
+</code></pre>
+<p>Une fois connecté, notre <code>socket</code> est relié à un autre <code>socket</code> sur le serveur de <em>perdu.com</em>. Nous pouvons utiliser ce lien pour envoyer une requête au serveur.</p>
+<p>Les serveurs web utilise le protocol HTTP pour communiquer. Cela signifie que la requête que l&#39;on va envoyer doit se conformer à ce protocol.</p>
+<pre><code class="language-python">request = &#39;GET / HTTP/1.0\r\n\r\n&#39;.encode()
+</code></pre>
+<p>La méthode <code>encode()</code> des chaines de caractères. Elle encode le texte en utilisant une table d&#39;encodage des caractères. Chaque caractère sera converti en son code binaire.</p>
+<p>Nous n&#39;avons jamais à nous soucier de l&#39;encodage des chaines de caractères quand on reste dans une même application Python. Mais quand les chaînes de caractères partent vers l&#39;extérieur, cela devient important.</p>
+<p>Par défaut, <code>encode()</code> utilise l&#39;<strong>UTF-8</strong>.</p>
+<p>Envoyons la requête maintenant.</p>
+<pre><code class="language-python">s.send(request)
+</code></pre>
+<p>Une fois la requête reçue, le serveur va nous répondre. Le système d&#39;exploitation de note ordinateur va enregistrer cette réponse dans une file jusqu&#39;à ce que nous venions la récupérer avec la méthode <code>recv()</code>. Le <code>recv()</code> doit spécifier le nombre maximum d&#39;octets que l&#39;on veut lire dans la file. Cette chaîne d&#39;octets doit ensuite être décodée en chaîne de caractères.</p>
+<pre><code class="language-python">response = s.recv(2048).decode()
+</code></pre>
+<p>Si vous affichez la réponse, vous verrez les <em>headers</em> HTTP et le HTML de la réponse.</p>
+<p>Pour finir, il faut fermer le <code>socket</code></p>
+<pre><code class="language-python">s.close()
+</code></pre>
+<p>Il est possible d&#39;écrire ce code avec la notation <code>with</code> pour que la fermeture soit automatique.</p>
+<pre><code class="language-python">address = (&#39;www.perdu.com&#39;, 80)
+request = &#39;GET / HTTP/1.0\r\n\r\n&#39;.encode()
+
+with socket.socket() as s:
+    s.connect(address)
+    s.send(request)
+    response = s.recv(2048).decode()
+
+print(response)
+</code></pre>
+<h2 id="côté-serveur">Côté serveur</h2>
+<p>Dans l&#39;exemple précédent, nous nous sommes connecté à un serveur qui <strong>écoutait</strong> le réseau pour <strong>accepter</strong> de nouvelles connexions. Comment implémente-t-on le côté serveur en Python ?</p>
+<p>Il faut commencer par spécifier l&#39;adresse sur laquelle on écoute. L&#39;adresse IP de notre ordinateur est décidée au moment où il se connecte au réseau. Ce n&#39;est pas le rôle des <code>socket</code> de décider de l&#39;adresse de l&#39;ordinateur. De ce fait, l&#39;adresse que nous allons spécifier agit comme un filtre. Si l&#39;ordinateur reçoit des messages qui ne correspondent pas à l&#39;adresse que l&#39;on a indiquée dans notre code, ils seront ignorés.</p>
+<p>Ce serait particulièrement embêtant de devoir changer l&#39;adresse dans notre code à chaque fois que notre ordinateur change d&#39;adresse. Heureusement, il est possible d&#39;utiliser l&#39;adresse <code>&#39;0.0.0.0&#39;</code> qui correspond à n&#39;importe quelle adresse IP et qui permet ne filtrer aucun message.</p>
+<p>On spécifie l&#39;adresse avec la méthode <code>bind()</code></p>
+<pre><code class="language-python">s = socket.socket()
+serverAddress = (&#39;0.0.0.0&#39;, 3000)
+s.bind(serverAddress)
+</code></pre>
+<p>On va ensuite demander à notre <code>socket</code> d&#39;écouter le réseau.</p>
+<pre><code class="language-python">s.listen()
+</code></pre>
+<p>Une fois que nous écoutons le réseau, il ne reste plus qu&#39;à accepter une connexion. La méthode <code>accept()</code> est une méthode bloquante (comme <code>input()</code>), l&#39;exécution du code ne continuera pas tant qu&#39;aucune connexion ne sera reçue. Cette méthode renvoie un <code>socket</code> relié à celui de l&#39;application qui a fait la demande de connexion. Elle renvoie aussi son adresse.</p>
+<pre><code class="language-python">client, address = s.accept()
+</code></pre>
+<p>On peut ensuite utiliser ce <code>socket</code> client pour recevoir son message.</p>
+<pre><code class="language-python">message = client.recv(2048).decode()
+</code></pre>
+<p>Et on peut éventuellement lui répondre avec un <code>send()</code>ou fermer la connexion avec un <code>close()</code>.</p>
+<p>On peut aussi utiliser le <code>with</code>.</p>
+<pre><code class="language-python">serverAddress = (&#39;0.0.0.0&#39;, 3000)
+
+with socket.socket() as s:
+    s.bind(serverAddress)
+    s.listen()
+    client, address = s.accept()
+    with client:
+        message = client.recv(2048).decode()
+    print(message)
+</code></pre>
+<p>Vous pouvez utiliser la communication réseau entre deux programme qui tournent sur le même ordinateur. Il vous suffit d&#39;utiliser <code>&#39;127.0.0.1&#39;</code> ou <code>&#39;localhost&#39;</code> comme adresse dans le <code>connect()</code></p>
+<p>Ce server s&#39;arrête dès qu&#39;il reçoit un message mais on peut bien sûr mettre le <code>accept()</code> et la gestion du client dans une boucle.</p>
+<pre><code class="language-python">while True:
+    client, address = s.accept()
+    with client:
+        message = client.recv(2048).decode()
+</code></pre>
+<p>On crée ici, délibérément, une boucle infinie car il est généralement souhaitable qu&#39;un serveur tourne sans s&#39;arrêter. On forcera l&#39;arrêt en tapant <strong>Ctrl-C</strong> dans le terminal.</p>
+<h2 id="lets-chat">Let&#39;s Chat</h2>
+<p>Nous savons maintenant envoyer et recevoir des messages. Le problème maintenant est de faire les deux en même temps pour faire notre application de messagerie. En effet, la boucle infinie et le <code>accept()</code> bloquant ne laissent pas tourner le code permettant d&#39;aussi envoyer des messages.</p>
+<p>De plus si nous permettons à l&#39;utilisateur d&#39;entrer ses messages avec la fonction <code>input()</code> qui est, elle aussi, bloquante, cela ne permet pas de recevoir des messages en même temps. Et nous voudront certainement permettre à l&#39;utilisateur d&#39;envoyer plusieurs messages, ce qui veut dire qu&#39;il y aura aussi une boucle au niveau de l&#39;envoi.</p>
+<p>Il nous faut donc un moyen de faire tourner les deux parties indépendamment l&#39;une de l&#39;autre.</p>
+<p>Pour cela, nous allons utiliser les <strong>Threads</strong>. Tous les programmes que nous avons réalisés jusqu&#39;à présent s&#39;exécutaient toujours dans le <em>thread</em> principal. Il est possible de créer d&#39;autres <em>thread</em> pour exécuter différentes parties du code en &quot;parallèle&quot;.</p>
+<p>Définissons une fonction que l&#39;on souhaite exécuter sur un autre <em>thread</em>.</p>
+<pre><code class="language-python">import time
+
+def hello():
+    while True:
+        time.sleep(1)
+        print(&#39;hello&#39;)
+</code></pre>
+<p>Pour créer un <em>thread</em>, on a besoin du module <code>threading</code>.</p>
+<pre><code class="language-python">import threading
+</code></pre>
+<p>On peut alors utiliser la classe <code>Thread</code> pour créer le <em>thread</em>.</p>
+<pre><code class="language-python">thread = threading.Thread(target=hello, daemon=True)
+</code></pre>
+<p>Le paramètre <code>daemon=True</code> fait que ce thread n&#39;empêchera pas le programme de s&#39;arrêter. Avec cette option, le programme s&#39;arrêtera dès que le <em>thread</em> principal sera terminé.</p>
+<p>Pour démarrer le <em>thread</em>, on utilise la méthode <code>start()</code>. Cette méthode n&#39;est pas bloquante, l&#39;execution du programme n&#39;attend pas la fin de la fonction <em>target</em> pour continuer.</p>
+<pre><code class="language-python">thread.start()
+while True:
+    time.sleep(1)
+    print(&#39;bye&#39;)
+</code></pre>
+<p>Si vous lancé cet exemple vous verrez que les deux boucles infinie tournent en même temps.</p>
+<h2 id="a-vous-">A vous !</h2>
+<p>Utilisez ce que l&#39;on vient de voir pour créer une petite application de messagerie en ligne de commande.</p>
+<p>En plus des messages, on pourra utiliser des commandes tel que <code>/join</code> et <code>/quit</code> pour changer de destinataire et quitter le programme.</p>
+<pre>
+#> python chat.py
+Welcome to Messenger !
+> /join 192.168.1.42 3000
+192.168.1.42:3000 JOINED
+> Hello, ça farte ?
+192.168.1.42 said: Top, et toi ?
+> Ouais, je suis un pro du réseau now xD
+192.168.1.42 said: A fond (y)
+> /quit
+BEY
+</pre>
+
+<h2 id="défis">Défis</h2>
+<p>Ajoutez un server central qui garde la liste des clients connectés avec leurs pseudos et adresses pour permettre de contacter les autres clients par leurs pseudos.</p>
+
+</body>
+</html>
