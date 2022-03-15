@@ -36,7 +36,7 @@ Une fois connecté, notre `socket` est relié à un autre `socket` sur le serveu
 Les serveurs web utilise le protocol HTTP pour communiquer. Cela signifie que la requête que l'on va envoyer doit se conformer à ce protocol.
 
 ```python
-request = 'GET / HTTP/1.0\r\n\r\n'.encode()
+request = 'GET / HTTP/1.1\r\nHost: www.perdu.com\r\n\r\n'.encode()
 ```
 
 La méthode `encode()` des chaines de caractères. Elle encode le texte en utilisant une table d'encodage des caractères. Chaque caractère sera converti en son code binaire.

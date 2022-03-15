@@ -27,7 +27,7 @@ s.connect(address)
 </code></pre>
 <p>Une fois connecté, notre <code>socket</code> est relié à un autre <code>socket</code> sur le serveur de <em>perdu.com</em>. Nous pouvons utiliser ce lien pour envoyer une requête au serveur.</p>
 <p>Les serveurs web utilise le protocol HTTP pour communiquer. Cela signifie que la requête que l&#39;on va envoyer doit se conformer à ce protocol.</p>
-<pre><code class="language-python">request = &#39;GET / HTTP/1.0\r\n\r\n&#39;.encode()
+<pre><code class="language-python">request = &#39;GET / HTTP/1.1\r\nHost: www.perdu.com\r\n\r\n&#39;.encode()
 </code></pre>
 <p>La méthode <code>encode()</code> des chaines de caractères. Elle encode le texte en utilisant une table d&#39;encodage des caractères. Chaque caractère sera converti en son code binaire.</p>
 <p>Nous n&#39;avons jamais à nous soucier de l&#39;encodage des chaines de caractères quand on reste dans une même application Python. Mais quand les chaînes de caractères partent vers l&#39;extérieur, cela devient important.</p>
