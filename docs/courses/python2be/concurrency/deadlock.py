@@ -7,8 +7,8 @@ results = {}
 
 def compute(name):
 	global counter
+	sleep(1)
 	counter += 1
-	sleep(randint(0, 1))
 	results[name] = counter
 
 threads = [th.Thread(target = compute, args = (name,)) for name in ['Dan', 'Tom']]
