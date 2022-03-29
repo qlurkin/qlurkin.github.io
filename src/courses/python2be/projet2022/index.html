@@ -1,0 +1,48 @@
+---
+title: Projet 2022 - Othello
+---
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Z5EN-cbgo-4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<h2>Enoncé</h2>
+
+<p>Vous devez réaliser une intelligence artificielle pour le jeu Othello. Votre IA devra interagir avec une <a href="https://github.com/qlurkin/PI2CChampionshipRunner">application gérant les parties</a> pour participer à un championnat organisé entre toutes les IA du labo. <a href="https://github.com/qlurkin/PI2CChampionshipRunner/tree/main/games/othello">Les informations spécifiques au jeu Abalone se trouvent ici</a>.</p>
+
+<h2>Modalités de remise</h2>
+
+<p>Le projet est à réaliser par binôme.</p>
+
+<p>Votre projet doit être remis via GitHub. Créez une repository séparée de celle du gestionnaire de partie. Elle devra contenir au minimum:</p>
+
+<ul>
+	<li>Le script python de votre client IA</li>
+	<li>Un README.md expliquant la stratégie et les bibliothèques utilisées (Et les matricules des deux étudiants)</li>
+</ul>
+
+<p><strong>Vous devez avoir remis votre lien github et <em>pusher</em> pour le 12 mai 8h30.</strong></p>
+
+<h2>Grille de notation</h2>
+
+<ul>
+	<li>Vos commits sont corrects: <strong>2</strong></li>
+	<li>L'IA démarre correctement: <strong>1</strong></li>
+	<li>L'IA s'inscrit auprès du serveur de parties: <strong>2</strong></li>
+	<li>L'IA répond à la requête <code>move</code>: <strong>1</strong></li>
+	<li>L'état du jeu intervient dans la génération du <code>move</code> : <strong>2</strong></li>
+	<li>Le code est convenable (noms des variables et fonctions, commentaires, ...): <strong>2</strong></li>
+	<li>Le fichier <code>README.md</code> explique la stratégie et les bibliothèques utilisées: <strong>2</strong></li>
+	<li>La stratégie utilisée est avancée/originale: <strong>1</strong></li>
+	<li>
+		Durant le championnat:
+		<ul>
+			<li>L'IA est mieux classée que <code>Random</code> : <strong>2</strong> <br> Une IA jouant aléatoirement mais correctement (sans <code>Bad Move</code> ni suicide) participera à la compétition.</li>
+			<li>L'IA génère moins de 3  par partie (en moyenne sur l'ensemble du tournoi): <strong>0.5</strong></li>
+			<li>L'IA génère moins de 2 <code>Bad Move</code> par partie (en moyenne sur l'ensemble du tournoi): <strong>0.5</strong></li>
+			<li>L'IA génère moins de 1 <code>Bad Move</code> par partie (en moyenne sur l'ensemble du tournoi): <strong>0.5</strong></li>
+			<li>L'IA n'a généré aucun <code>Bad Move</code>: <strong>1</strong></li>
+			<li>Bonus classement (1<sup>er</sup>: <strong>2.5</strong>, 2<sup>e</sup>: <strong>2</strong>, 3<sup>e</sup>: <strong>1.5</strong>, 4<sup>e</sup>: <strong>1</strong>, 5<sup>e</sup>: <strong>0.5</strong>)</li>
+		</ul>
+	</li>
+</ul>
+
+<p style='color: red;'>En cas de plagiat entre groupe, tout les étudiants impliqués auront <strong>0</strong></p>
