@@ -34,7 +34,7 @@ fn main() {
 
     // Tuples
     let tup: (i32, f64, u8) = (500, 6.4, 1);
-    
+
     // destructuring
     let (x, y, z) = tup;
 
@@ -48,7 +48,20 @@ fn main() {
 
     // array
     let ar = [1, 2, 3, 4, 5];
-    let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    let months = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+    ];
     let arr: [i32; 5] = [1, 2, 3, 4, 5];
 
     // equivalent to => let arra = [3, 3, 3, 3, 3];
@@ -64,7 +77,7 @@ fn main() {
     let mut index = String::new();
 
     println!("Enter a number:");
-    
+
     io::stdin()
         .read_line(&mut index)
         .expect("Failed to read line");
@@ -78,7 +91,7 @@ fn main() {
 
     // types must be declared
     fn add(a: i32, b: i32) -> i32 {
-        return a + b
+        return a + b;
     }
 
     println!("3 + 4 = {}", add(3, 4));
@@ -236,28 +249,31 @@ fn main() {
 
     // Ownership with functions
 
-    fn takes_ownership(some_string: String) { // some_string comes into scope
+    fn takes_ownership(some_string: String) {
+        // some_string comes into scope
         println!("{}", some_string);
     } // Here, some_string goes out of scope and `drop` is called. The backing
       // memory is freed.
-    
-    fn makes_copy(some_integer: i32) { // some_integer comes into scope
+
+    fn makes_copy(some_integer: i32) {
+        // some_integer comes into scope
         println!("{}", some_integer);
     } // Here, some_integer goes out of scope. Nothing special happens.
 
-    let s = String::from("hello");  // s comes into scope
+    let s = String::from("hello"); // s comes into scope
 
-    takes_ownership(s);             // s's value moves into the function...
-                                    // ... and so is no longer valid here
+    takes_ownership(s); // s's value moves into the function...
+                        // ... and so is no longer valid here
 
-    let x = 5;                      // x comes into scope
+    let x = 5; // x comes into scope
 
-    makes_copy(x);                  // x would move into the function,
-                                    // but i32 is Copy, so it's okay to still
-                                    // use x afterward
+    makes_copy(x); // x would move into the function,
+                   // but i32 is Copy, so it's okay to still
+                   // use x afterward
 
     // function can give back the ownership
-    fn takes_and_give_back_ownership(some_string: String) -> String { // some_string comes into scope
+    fn takes_and_give_back_ownership(some_string: String) -> String {
+        // some_string comes into scope
         println!("{}", some_string);
         some_string
     }
@@ -265,7 +281,8 @@ fn main() {
     s = takes_and_give_back_ownership(s);
 
     // Borrowing
-    fn calculate_length(s: &String) -> usize { // s is a reference. it borrow ownership
+    fn calculate_length(s: &String) -> usize {
+        // s is a reference. it borrow ownership
         s.len()
     } // Here, s goes out of scope. But because it does not have ownership of what
       // it refers to, nothing happens.
@@ -292,7 +309,7 @@ fn main() {
     let r1 = &s; // no problem
     let r2 = &s; // no problem
     let r3 = &mut s; // will cause problem
-    //println!("{}, {}, and {}", r1, r2, r3); // error: mutable and immutable ref at the same time
+                     //println!("{}, {}, and {}", r1, r2, r3); // error: mutable and immutable ref at the same time
 
     // no problem here
     let mut s = String::from("hello");
@@ -307,7 +324,7 @@ fn main() {
     // fn dangle() -> &String { // dangle returns a reference to a String
 
     //     let s = String::from("hello"); // s is a new String
-    
+
     //     &s // we return a reference to the String, s
     // } // Here, s goes out of scope, and is dropped. Its memory goes away.
     //   // Danger!
@@ -315,7 +332,7 @@ fn main() {
     // here no dangle
     fn no_dangle() -> String {
         let s = String::from("hello");
-    
+
         s
     }
 
@@ -336,13 +353,13 @@ fn main() {
     // return a slice
     fn first_word(s: &String) -> &str {
         let bytes = s.as_bytes();
-    
+
         for (i, &item) in bytes.iter().enumerate() {
             if item == b' ' {
                 return &s[0..i];
             }
         }
-    
+
         &s[..]
     }
 
@@ -357,13 +374,13 @@ fn main() {
     // We should use string slice as input type. It accept slice and String as input
     fn better_first_word(s: &str) -> &str {
         let bytes = s.as_bytes();
-    
+
         for (i, &item) in bytes.iter().enumerate() {
             if item == b' ' {
                 return &s[0..i];
             }
         }
-    
+
         &s[..]
     }
 
@@ -496,7 +513,8 @@ fn main() {
 
     // Associated Functions
     impl Rectangle {
-        fn square(size: u32) -> Rectangle { // without self
+        fn square(size: u32) -> Rectangle {
+            // without self
             Rectangle {
                 width: size,
                 height: size,
@@ -509,6 +527,7 @@ fn main() {
     // No problem to have multiple impl block for the same type
 
     // Enum
+    // Enum have multiple Variants
     enum IpAddrKind {
         V4,
         V6,
@@ -517,6 +536,7 @@ fn main() {
     let four = IpAddrKind::V4;
     let six = IpAddrKind::V6;
 
+    // Variant can hold values
     enum IpAddr {
         V4(String),
         V6(String),
@@ -525,6 +545,7 @@ fn main() {
     let home = IpAddr::V4(String::from("127.0.0.1"));
     let loopback = IpAddr::V6(String::from("::1"));
 
+    // Variant's values can differ in type
     enum IpAddr2 {
         V4(u8, u8, u8, u8),
         V6(String),
@@ -533,13 +554,15 @@ fn main() {
     let home = IpAddr2::V4(127, 0, 0, 1);
     let loopback = IpAddr2::V6(String::from("::1"));
 
+    // Many possibilities
     enum Message {
         Quit,
-        Move { x: i32, y: i32 },
+        Move { x: i32, y: i32 }, // named field like a struct
         Write(String),
         ChangeColor(i32, i32, i32),
     }
 
+    // we can add methods to Enum
     impl Message {
         fn call(&self) {
             // method body would be defined here
@@ -558,7 +581,5 @@ fn main() {
     // So used that we don't have to import it. We can also use None and Some without mentioning Option<T>::
     let some_number = Some(5);
     let some_string = Some("a string");
-    let absent_number: Option<i32> = None;
-
-
+    let absent_number: Option<i32> = None; // Here type must be mentioned because it can't be inferred.
 }

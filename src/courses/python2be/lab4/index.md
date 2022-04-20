@@ -1,5 +1,5 @@
 ---
-title: "Labo 4 : Réseau"
+title: "Labo 4: Réseau"
 ---
 
 ## Introduction
