@@ -454,6 +454,47 @@
     </section>
 
     <section>
+        <h2>Couverture des tests</h2>
+        <ul>
+            <li>Pourcentage du code qui est vérifié par des tests.</li>
+            <li>Mesure automatique
+                <div class="terminal">
+                    > pip install coverage
+                </div>
+            </li>
+            <li>Démarrer les tests avec <code>coverage</code>
+                <div class="terminal">
+                    > coverage run -m pytest
+                </div>
+            </li>
+            <li>Afficher le rapport
+                <div class="terminal">
+                    > coverage report
+                </div>
+            </li>
+            <li>Pour afficher les numéros de lignes non couvertes utiliser l'option <code>-m</code>
+                <div class="terminal">
+                    > coverage report -m
+                </div>
+            </li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Comment <code>coverage</code> fonctionne</h2>
+        <ul>
+            <li>Il enregistre les lignes exécutées durant l'exécution des tests
+                <small>Phase <code>run</code></small>
+            </li>
+            <li>Il détermine les lignes exécutables
+                <small>Phase report</small>
+            </li>
+            <li>Il compare les deux</li>
+            <li>Remarque: <strong>le code des tests est pris en compte dans la couverture</strong></li>
+        </ul>
+    </section>
+
+    <section>
         <h2>GitHub Actions</h2>
         <ul>
             <li>Exécuter des scripts sur les serveurs de GitHub</li>
