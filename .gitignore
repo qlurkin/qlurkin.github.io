@@ -3,3 +3,6 @@ __pycache__
 node_modules
 .ipynb_checkpoints
 .DS_Store
+.coverage
+htmlcov
+.pytest_cache
