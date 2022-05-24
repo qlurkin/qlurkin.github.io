@@ -1,7 +1,9 @@
 {
     "cSpell.words": [
         "endfor",
-        "iife"
+        "iife",
+        "Matplotlib",
+        "pygame"
     ],
     "liveServer.settings.root": "/docs",
     "liveServer.settings.port": 5501,
