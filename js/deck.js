@@ -52,6 +52,16 @@ function removeTouchNavigation() {
 	document.removeEventListener('touchend', touchEnd)
 }
 
+function toggleFullScreen() {
+	if (!document.fullscreenElement) {
+		document.body.requestFullscreen()
+	} else {
+		if (document.exitFullscreen) {
+			document.exitFullscreen()
+		}
+	}
+}
+
 function initNavigation() {
 	document.addEventListener('keydown', event => {
 		if (['ArrowRight', 'ArrowDown', 'KeyS', 'KeyD', 'Space'].includes(event.code)) {
@@ -65,6 +75,9 @@ function initNavigation() {
 		else if (event.key === 'm') {
 			event.preventDefault()
 			toggleView()
+		}
+		else if (event.key === 'f') {
+			toggleFullScreen()
 		}
 	})
 
