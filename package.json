@@ -1,14 +1,14 @@
 {
-  "name": "metalsmith",
+  "name": "qlurkin.github.io",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "node build.js"
+    "build": "node build.js",
+    "start": "npx serve ./docs"
   },
   "keywords": [],
-  "author": "",
+  "author": "Quentin Lurkin",
   "license": "ISC",
   "dependencies": {
     "@metalsmith/layouts": "^2.4.0",
@@ -22,6 +22,7 @@
     "rollup": "^2.69.1",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-sass": "^1.2.10",
-    "sass": "^1.49.9"
+    "sass": "^1.49.9",
+    "serve": "^14.0.1"
   }
 }
