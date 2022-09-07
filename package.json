@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "node build.js",
-    "start": "npx serve ./docs"
+    "start": "npx http-server ./docs"
   },
   "keywords": [],
   "author": "Quentin Lurkin",
@@ -15,6 +15,7 @@
     "@metalsmith/markdown": "^1.4.0",
     "@rollup/plugin-commonjs": "^21.0.2",
     "highlight.js": "^11.4.0",
+    "http-server": "^14.1.1",
     "jstransformer-nunjucks": "^1.0.0",
     "metalsmith": "^2.4.2",
     "metalsmith-ancestry": "^1.6.1",
@@ -22,7 +23,6 @@
     "rollup": "^2.69.1",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-sass": "^1.2.10",
-    "sass": "^1.49.9",
-    "serve": "^14.0.1"
+    "sass": "^1.49.9"
   }
 }
