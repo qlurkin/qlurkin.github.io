@@ -1,22 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-   <meta charset="UTF-8">
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>IC1T - Cours 2</title>
-   <script src="https://quentin.lurkin.xyz/deck.js"></script>
-</head>
-<body>
-   <section>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IC1T - Cours 2</title>
+    <script src="https://quentin.lurkin.xyz/deck.js"></script>
+  </head>
+  <body>
+    <section>
       <h1>IC1T - Programmation <small>Contrôle de flux</small></h1>
       <p>Quentin Lurkin</p>
-   </section>
-   <section>
+    </section>
+    <section>
+      <h2>Contrôle de flux</h2>
       <ul>
-         <li>modifier le flux d’exécution du programme
-            <small>Sur base de conditions</small>
-         </li>
+        <li>
+          modifier le flux d’exécution du programme
+          <small>Sur base de conditions</small>
+        </li>
       </ul>
       <pre><code class="lang-python">
          answer = input("As-tu faim? ")
@@ -25,53 +27,63 @@
          else:
             print("Va étudier !")
       </code></pre>
-   </section>
-   <section>
+    </section>
+    <section>
       <h2>Contrôle de flux</h2>
       <figure>
-         <img src="./faim.png" alt="" style="width: 60%">
+        <img src="./faim.png" alt="" style="width: 60%" />
       </figure>
-   </section>
+    </section>
 
-   <section>
+    <section>
       <h2>Instruction <code>if</code></h2>
       <ul>
-         <li>Exécution d’un bloc de code si une <strong>condition est vérifiée</strong>
-            <small>Dans tous les cas, le programme continue après l’instruction <code>if</code></small>
-         </li>
+        <li>
+          Exécution d’un bloc de code si une
+          <strong>condition est vérifiée</strong>
+          <small
+            >Dans tous les cas, le programme continue après l’instruction
+            <code>if</code></small
+          >
+        </li>
       </ul>
       <div class="row">
-         <div class="span6 middle">
-            <pre><code class="lang-python">
+        <div class="span6 middle">
+          <pre><code class="lang-python">
                def negatif(x):
                   if x &lt; 0:
                      print("x est négatif !")
                   print("Fin de la fonction")
                negatif(-5)
             </code></pre>
-            <div class="terminal">
-               x est négatif !
-               Fin de la fonction
-            </div>
-         </div>
-         <div class="span6 middle">
-            <figure>
-               <img src="./negatif.png" alt="" style='width: 75%'>
-            </figure>
-         </div>
+          <pre class="terminal">
+            x est négatif !
+            Fin de la fonction
+          </pre>
+        </div>
+        <div class="span6 middle">
+          <figure>
+            <img src="./negatif.png" alt="" style="width: 75%" />
+          </figure>
+        </div>
       </div>
-   </section>
+    </section>
 
-   <section>
-      <h2>Instruction <code>if</code>-<code>else</code></h2>
+    <section>
+      <h2>Instruction <code>if-else</code></h2>
       <ul>
-         <li><strong>Exécution alternative</strong> si la condition n’est pas vérifiée
-            <small>Dans tous les cas, le programme continue après le <code>if-else</code></small>
-         </li>
+        <li>
+          <strong>Exécution alternative</strong> si la condition n’est pas
+          vérifiée
+          <small
+            >Dans tous les cas, le programme continue après le
+            <code>if-else</code></small
+          >
+        </li>
       </ul>
       <div class="row">
-         <div class="span6">
-            <pre><code class="lang-python">
+        <div class="span6">
+          <pre><code class="lang-python">
                def inform(grade):
                   if grade >= 10:
                      print("vous avez réussi")
@@ -80,25 +92,29 @@
                   print("Fin de la fonction")
                inform(9.5)
             </code></pre>
-            <div class="terminal">
-               vous avez raté
-               Fin de la fonction
-            </div>
-         </div>
-         <div class="span6">
-            <figure>
-               <img src="./grade.png" alt="" class="width: 75%">
-            </figure>
-         </div>
+          <pre class="terminal">
+            vous avez raté
+            Fin de la fonction
+          </pre>
+        </div>
+        <div class="span6">
+          <figure>
+            <img src="./grade.png" alt="" class="width: 75%" />
+          </figure>
+        </div>
       </div>
-   </section>
+    </section>
 
-   <section>
+    <section>
       <h2>Instruction <code>if-elif-else</code></h2>
       <ul>
-         <li>Définition de <strong>plusieurs alternatives disjointes</strong>
-            <small>Dans tous les cas, le programme continue après le <code>if-elif-else</code></small>
-         </li>
+        <li>
+          Définition de <strong>plusieurs alternatives disjointes</strong>
+          <small
+            >Dans tous les cas, le programme continue après le
+            <code>if-elif-else</code></small
+          >
+        </li>
       </ul>
       <pre><code class="lang-python">
          def alert(temp):
@@ -111,20 +127,20 @@
             print("Fin de la fonction")
          alert(126)
       </code></pre>
-      <div class="terminal">
-         attention
-         Fin de la fonction
-      </div>
-   </section>
+      <pre class="terminal">
+        attention
+        Fin de la fonction
+      </pre>
+    </section>
 
-   <section>
+    <section>
       <h2>Instruction <code>if-elif-else</code></h2>
       <figure>
-         <img src="./temp.png" alt="" style="width: 75%">
+        <img src="./temp.png" alt="" style="width: 75%" />
       </figure>
-   </section>
+    </section>
 
-   <section class="code">
+    <section class="code">
       <h2>Exemple</h2>
       <pre><code class="lang-python">
          from math import sqrt
@@ -147,78 +163,85 @@
 
          print(bazooka(1, 3, 2))
       </code></pre>
-   </section>
+    </section>
 
-   <section>
+    <section>
       <h2>Instruction <code>while</code></h2>
       <ul>
-         <li><strong>Répète un bloc de code</strong> tant qu’une condition est vérifiée
-            <small>Dans tous les cas, le programme continue après <code>while</code></small>
-         </li>
+        <li>
+          <strong>Répète un bloc de code</strong> tant qu’une condition est
+          vérifiée
+          <small
+            >Dans tous les cas, le programme continue après
+            <code>while</code></small
+          >
+        </li>
       </ul>
       <div class="row">
-         <div class="span6 middle">
-            <pre><code class="lang-python">
+        <div class="span6 middle">
+          <pre><code class="lang-python">
                def count(until):
                   n = 1
-                  while n <= until:
+                  while n &lt;= until:
                      print(n)
                      n = n + 1
                count(5)
             </code></pre>
-            <div class="terminal">
-               1
-               2
-               3
-               4
-               5
-            </div>
-         </div>
-         <div class="span6 middle">
-            <figure>
-               <img src="./while.png" alt="" style="width: 75%">
-            </figure>
-         </div>
+          <pre class="terminal">
+            1
+            2
+            3
+            4
+            5
+          </pre>
+        </div>
+        <div class="span6 middle">
+          <figure>
+            <img src="./while.png" alt="" style="width: 75%" />
+          </figure>
+        </div>
       </div>
-   </section>
+    </section>
 
-   <section>
+    <section>
       <h2>Exemple : tables de multiplication</h2>
       <pre><code class="lang-python">
          def table(x):
             i = 1
-            while i <=10:
+            while i &lt;= 10:
                print(i, "x", x, "=", i*x)
                i += 1
 
          n = int(input("Entrez un nombre: "))
          table(n)
       </code></pre>
-      <div class="terminal" style='font-size: 60%;'>
-         Entrez un nombre: 7
-         1 x 7 = 7
-         2 x 7 = 14
-         3 x 7 = 21
-         4 x 7 = 28
-         5 x 7 = 35
-         6 x 7 = 42
-         7 x 7 = 49
-         8 x 7 = 56
-         9 x 7 = 63
-         10 x 7 = 70
-      </div>
-   </section>
+      <pre class="terminal" style="font-size: 60%">
+        Entrez un nombre: 7
+        1 x 7 = 7
+        2 x 7 = 14
+        3 x 7 = 21
+        4 x 7 = 28
+        5 x 7 = 35
+        6 x 7 = 42
+        7 x 7 = 49
+        8 x 7 = 56
+        9 x 7 = 63
+        10 x 7 = 70
+      </pre>
+    </section>
 
-   <section>
+    <section>
       <h2>Attention aux boucles infinies</h2>
       <ul>
-         <li>Il faut que la condition de la boucle <strong>puisse devenir fausse</strong>
-            <small>Sinon elle ne s’arrête <strong>jamais</strong></small>
-         </li>
+        <li>
+          Il faut que la condition de la boucle
+          <strong>puisse devenir fausse</strong>
+          <small>Sinon elle ne s’arrête <strong>jamais</strong></small>
+        </li>
       </ul>
       <pre><code class="lang-python">
          n = 1
-         while n <= 5:
+         while n &lt;= 5:
             print(n)      # boucle infinie !!
       </code></pre>
       <pre><code class="lang-python">
@@ -227,39 +250,143 @@
             print(n)
             n += 1        # boucle infinie !!
       </code></pre>
-   </section>
+    </section>
 
-   <section>
+    <section>
       <h2>Interruption de boucles</h2>
       <ul>
-         <li>Le mot <code>break</code> met <strong>immédiatement</strong> fin à la boucle.
-            <pre style="font-size: 80%;"><code class="lang-python">
+        <li>
+          Le mot <code>break</code> met <strong>immédiatement</strong> fin à la
+          boucle.
+          <pre style="font-size: 80%"><code class="lang-python">
                # recherche le plus petit naturel non nul divisible par 38 et 46
                n = 1
-               while n <= 1000000:
+               while True:
                   if n % 38 == 0 and n % 46 == 0:
                      break
                   n += 1
                print(n, "est le plus petit nombre divisible par 38 et 46")
             </code></pre>
-         </li>
-         <li>Le mot <code>continue</code> met <strong>immédiatement</strong> fin au tour de boucle en cours
-            <pre style="font-size: 80%;"><code class="lang-python">
+        </li>
+        <li>
+          Le mot <code>continue</code> met <strong>immédiatement</strong> fin au
+          tour de boucle en cours
+          <pre style="font-size: 80%"><code class="lang-python">
                # affiche tous les nombres pairs plus petits que 100
                n = 0
-               while n <= 100:
+               while n &lt;= 100:
                   n += 1
                   if n % 2 != 0:
                      continue
                   print(n)
             </code></pre>
-         </li>
+        </li>
       </ul>
-   </section>
+    </section>
 
-   <section class="deck-only">
-      <p class='center big'>N'oubliez de faire vos <a href="exercices2.zip">exercices</a> !</p>
-      <p class='center'>A remettre sur claco</p>
-   </section>
-</body>
+    <section>
+      <h2>Programmation graphique</h2>
+      <ul>
+        <li>Ouvre une <strong>fenêtre</strong> de l'OS</li>
+        <li>
+          Tourne <strong>jusqu'à ce qu'on quitte</strong>
+          <small>boucle !</small>
+        </li>
+        <li>
+          Permet d'afficher des formes, images, animation
+          <small>Une animation est une succession rapide d'images</small>
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Pygame</h2>
+      <ul>
+        <li>Permet de créer un programme graphique</li>
+        <li>
+          Non-inclus dans l'installation de Python
+          <small>Il faut installer le package</small>
+        </li>
+      </ul>
+      <h3>Installation</h3>
+      <ul>
+        <li>
+          Python peut
+          <strong>télécharger et installer automatiquement des packages</strong>
+        </li>
+        <li>Pour installer Pygame :</li>
+      </ul>
+      <pre class="terminal">
+        <b>&> python -m pip install pygame</b>
+      </pre>
+    </section>
+
+    <section class="code">
+      <h2>Premier programme graphique</h2>
+      <pre>
+        <code class="lang-python">
+          import pygame
+
+          # initialisation de pygame
+          pygame.init()
+
+          # demande une fenêtre de 800x600 pixels
+          screen = pygame.display.set_mode([800, 600])
+
+          # boucle jusqu'à ce qu'on quitte
+          while not pygame.event.peek(pygame.QUIT):
+
+              # dessine un cercle rouge centré en (100, 300) de rayon 20
+              pygame.draw.circle(screen, [255, 0, 0], [100, 300], 20)
+
+              # affiche l'image qui vient d'être dessinée
+              pygame.display.flip()
+        </code>
+      </pre>
+    </section>
+
+    <section>
+      <h2>Animation</h2>
+      <p>Pour animer le cercle, il suffit de le dessiner à une position un peu différente à chaque image.</p>
+      <pre><code class="lang-python">
+          import pygame
+
+          # initialisation de pygame
+          pygame.init()
+
+          # demande une fenêtre de 800x600 pixels
+          screen = pygame.display.set_mode([800, 600])
+
+          xCircle = 100
+
+          # boucle jusqu'à ce qu'on quitte
+          while not pygame.event.peek(pygame.QUIT):
+
+              # dessine un rectangle noir pour effacer l'image
+              pygame.draw.rect(screen, [0, 0, 0], pygame.Rect(0, 0, 800, 600))
+
+              # dessine un cercle rouge centré en (xCircle, 300) de rayon 20
+              pygame.draw.circle(screen, [255, 0, 0], [xCircle, 300], 20)
+              
+              # déplace le cercle
+              xCircle += 1
+
+              # affiche l'image qui vient d'être dessinée
+              pygame.display.flip()
+      
+      </code></pre>
+    </section>
+
+    <section>
+      <h2>Documentation</h2>
+      <p>Vous trouverez la documentation de pygame sur <a href="https://www.pygame.org/docs/">www.pygame.org/docs/</a></p>
+    </section>
+
+    <section class="deck-only">
+      <p class="center big">
+        N'oubliez de faire vos <a href="exercices2.zip">exercices</a> !
+      </p>
+      <p class="center">A remettre sur claco</p>
+    </section>
+  </body>
 </html>

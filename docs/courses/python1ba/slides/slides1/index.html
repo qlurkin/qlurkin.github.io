@@ -206,7 +206,12 @@
             >exercices à domicile</strong
           >
         </li>
-        <li>Les documents utilisés sont sur <strong>claco.ecam.be</strong></li>
+        <li>
+          Les documents utilisés sont sur
+          <a href="https://quentin.lurkin.xyz/courses/python1ba/index.html"
+            ><strong>quentin.lurkin.xyz/courses/python1ba/</strong></a
+          >
+        </li>
         <li>
           Evaluation :
           <ul>
@@ -844,10 +849,15 @@
         Sous MacOS, le programme s'appelle simplement "terminal"
       </p>
 
-      <div class="terminal">
-        $> pwd C:\Users\lur $> ls Desktop Documents $> cd Documents $> pwd
+      <pre class="terminal">
+        <b>$&gt; pwd</b>
+        C:\Users\lur
+        <b>$&gt; ls</b>
+        Desktop Documents
+        <b>$&gt; cd Documents</b>
+        <b>$&gt; pwd</b>
         C:\Users\lur\Documents
-      </div>
+      </pre>
 
       <p class="document-only">
         Les développeurs et les ingénieurs sont régulièrement amenés à utiliser
@@ -2097,13 +2107,26 @@
     <section>
       <h2>Utilisation</h2>
       <p>Mode interactif</p>
-      <div class="terminal">
-        $> C:\bin\python.exe --version Python
-        <span class="pyversion">3.X.X</span> $> python Python
-        <span class="pyversion">3.X.X</span> ... Type "help", "copyright",
-        "credits" or "license" for more information. >>> 1 + 1 2 >>> exit() $>
+      <pre class="terminal">
+        <b>$> python --version</b>
+        Python <span class="pyversion">3.X.X</span>
+        <b>$> python</b>
+        Python <span class="pyversion">3.X.X</span> ...
+        Type "help", "copyright", "credits" or "license" for more
+        information.
+        >>> 1 + 1
+        2
+        >>> exit()
+        <b>$></b>
         &nbsp; &nbsp;
-      </div>
+      </pre>
+      <p>
+        <strong>
+          Attention: sur les Macs, la commande <code>python</code> lance la
+          version 2 de Python. Il faut utiliser la commande
+          <code>python3</code>.
+        </strong>
+      </p>
       <p class="document-only">
         Ce qu'on ajoute après le chemin de l'exécutable est considéré comme des
         arguments. Les arguments permette de passer des paramètres au programme
@@ -2134,9 +2157,11 @@
          print('Hello World')
       </code></pre>
 
-      <div class="terminal">
-        $> python hello.py Hello World $> &nbsp; &nbsp; &nbsp; &nbsp;
-      </div>
+      <pre class="terminal">
+        <b>$> python hello.py</b>
+        Hello World
+        <b>$> &nbsp; &nbsp; &nbsp; &nbsp;</b>
+      </pre>
       <p class="document-only">
         Le mode script permet d'exécuter le code se trouvant dans un fichier. Il
         suffit d'écrire le chemin du fichier en argument.
@@ -2515,7 +2540,7 @@
       </code></pre>
     </section>
 
-    <section>
+    <!--<section>
       <h2>Opérations sur les séquences</h2>
       <ul>
         <li>Les chaînes de caractères et les listes sont des séquences.</li>
@@ -2534,7 +2559,7 @@
          f = [1, 2] + [3, 4] # [1, 2, 3, 4]
          g = 3 * "hello" # "hellohellohello"
       </code></pre>
-    </section>
+    </section>-->
 
     <section>
       <h2>Conditions</h2>
@@ -2563,7 +2588,7 @@
         </li>
       </ul>
 
-      <p>
+      <p class="document-only">
         Il arrive régulièrement qu'on se retrouve avec un mélange de tabulations
         et d'espaces dans les indentations ce qui provoque une erreur de syntaxe
         et empêche le programme de se lancer. Dans VSCode, il est possible
@@ -2571,7 +2596,7 @@
         facilement les espaces et les tabulations
       </p>
 
-      <figure>
+      <figure class="document-only">
         <img
           style="width: 30%"
           src="./indentation.png"
@@ -2746,6 +2771,33 @@
       </ul>
     </section>
 
+    <section>
+      <h2>Paramètres de fonction</h2>
+      <ul>
+        <li>
+          Certaines fonctions peuvent prendre un nombre quelconque de paramètres
+          <pre><code class="lang-python">
+            # print affiche tous ses paramètres séparés par des espaces et 
+            # retourne à la ligne
+            print('Hello', 'World', '!!!')
+          </code></pre>
+        </li>
+        <li>
+          Les fonctions peuvent prendre des paramètres nommés
+          <pre><code class="lang-python">
+            # le paramètres sep est utilisé entre les différentes valeurs
+            # affichées (espace par défaut)
+            print(21, 'juillet', 1831, sep='/')
+
+            # le paramètre end est utilisé à la fin de l'affichage
+            # (passage à la ligne par défaut)
+            print('Hello', end=' ')
+            print('World')
+          </code></pre>
+        </li>
+      </ul>
+    </section>
+
     <section class="code deck-only">
       <h2>Bazooka</h2>
       <pre><code class="lang-python">
@@ -2765,6 +2817,14 @@
          print(bazooka(1, -1, -2))
          # [-1.0, 2.0]
       </code></pre>
+    </section>
+
+    <section>
+      <h2>Documentation</h2>
+      <p>
+        La documentation officielle de Python se trouve sur
+        <a href="https://docs.python.org/3/">docs.python.org/3/</a>
+      </p>
     </section>
 
     <section class="deck-only">
