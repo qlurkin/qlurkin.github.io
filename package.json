@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "node build.js",
-    "start": "npx http-server ./docs"
+    "start": "node start.js"
   },
   "keywords": [],
   "author": "Quentin Lurkin",
