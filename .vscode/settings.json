@@ -1,9 +1,12 @@
 {
     "cSpell.words": [
+        "cmath",
         "endfor",
         "iife",
+        "linalg",
         "Lurkin",
         "Matplotlib",
+        "numpy",
         "pygame",
         "tinylr"
     ],
