@@ -8,6 +8,7 @@ const changes = []
 const watched = './last_build.json'
 let running = false
 let should_rebuild = false
+let server_started = false
 
 const params = {
     port: 8181, // Set the server port. Defaults to 8080.
@@ -24,7 +25,6 @@ const params = {
         },
     ], // Takes an array of Connect-compatible middleware that are injected into the server middleware stack
 }
-liveServer.start(params)
 
 function request_build() {
     if(timer !== null) {
@@ -46,6 +46,10 @@ function request_build() {
                     fs.writeFileSync(watched, JSON.stringify({
                         last_build: (new Date()).toJSON()
                     }))
+                    if(!server_started) {
+                        liveServer.start(params)
+                        server_started = true
+                    }
                 }
             })
         }
