@@ -11,9 +11,11 @@
   "author": "Quentin Lurkin",
   "license": "ISC",
   "dependencies": {
+    "@compodoc/live-server": "^1.2.3",
     "@metalsmith/layouts": "^2.4.0",
     "@metalsmith/markdown": "^1.4.0",
     "@rollup/plugin-commonjs": "^21.0.2",
+    "chokidar": "^3.5.3",
     "highlight.js": "^11.4.0",
     "http-server": "^14.1.1",
     "jstransformer-nunjucks": "^1.0.0",

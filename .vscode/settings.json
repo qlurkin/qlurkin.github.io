@@ -2,8 +2,10 @@
     "cSpell.words": [
         "endfor",
         "iife",
+        "Lurkin",
         "Matplotlib",
-        "pygame"
+        "pygame",
+        "tinylr"
     ],
     "liveServer.settings.root": "/docs",
     "liveServer.settings.port": 5501,
