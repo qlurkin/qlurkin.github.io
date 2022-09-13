@@ -28,5 +28,3 @@ print(integrate(expr, y))              # -cos(x + 2*y)/2
 print(integrate(expr, (y, 0, pi/2)))   # cos(x)
 print(limit(expr, x, 0))               # sin(2*y)
 
-
-
