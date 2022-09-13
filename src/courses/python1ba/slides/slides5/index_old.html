@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IC1T - Cours 5</title>
+    <script src="https://quentin.lurkin.xyz/deck.js"></script>
+</head>
+<body>
+    <section>
+        <h1>IC1T - Cours 5</h1>
+        <p><a href="mailto://lur@ecam.be">Quentin Lurkin</a></p>
+    </section>
+    
+    <section>
+        <h2>Complexité</h2>
+        <ul>
+            <li>Mesure de l'efficacité d'un algorithme</li>
+            <li><em>"Ressources utilisées en fonction de la taille des données"</em></li>
+            <li>Spatiale ou temporelle</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Complexité spatiale : factorielle</h2>
+        <ul>
+            <li>En itératif : complexité spatiale constante (\(O(1)\))
+                <pre><code class="lang-python">
+                    def fact(n):
+                        result = 1
+                        while n > 0:
+                            result *= n
+                            n -= 1
+                        return result
+                </code></pre>
+            </li>
+            <li>En récursif : complexité spatiale proportionelle à <code>n</code> (\(O(n)\))
+                <pre><code class="lang-python">
+                    def fact(n):
+                        if n == 1:
+                            return 1
+                        return fact(n - 1) * n
+                </code></pre>
+            </li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Complexité temporelle: Tri à bulles</h2>
+        <ul>
+            <li>Comparer 2 éléments consécutifs. S'ils ne sont pas ordonnés, les échanger.</li>
+        </ul>
+        <pre><code class="lang-python">
+            def bubbleSort(L):
+                for n in range(len(L)):
+                    for i in range(1, len(L) - n):
+                        if L[i-1] > L[i]:
+                            tmp = L[i-1]
+                            L[i-1] = L[i]
+                            L[i] = tmp
+        </code></pre>
+        <ul>
+            <li>Complexité temporelle : \(O(n^2)\)</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Complexité temporelle: Tri Fusion</h2>
+        <ul>
+            <li><em>"Diviser pour mieux régner"</em></li>
+            <li>Tri récursif
+                <ul>
+                    <li>Diviser</li>
+                    <li>Trier <em>(récursion)</em></li>
+                    <li>Fusionner</li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Tri Fusion</h2>
+        <pre><code class="lang-python">
+            def fusion(L1, L2):
+                if len(L1) == 0 or len(L2) == 0:
+                    return L1 + L2
+                if L1[0] &lt; L2[0]:
+                    return [L1[0]] + fusion(L1[1:], L2)
+                return [L2[0]] + fusion(L1, L2[1:])
+
+            def fusionSort(L):
+                if len(L) &lt; 2:
+                    return L
+                return fusion(fusionSort(L[:len(L)//2]), fusionSort(L[len(L)//2:]))
+        </code></pre>
+        <ul>
+            <li>Complexité temporelle : \(O(n.log(n))\)</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Module</h2>
+        <ul>
+            <li>Un gros programme est <strong>rarement</strong> écrit en un fichier.
+                <ul>
+                    <li>Longs fichiers → pas pratique.</li>
+                    <li>Travail à plusieurs.</li>
+                </ul>
+            </li>
+            <li>Un même module peut être utiliser dans <strong>plusieurs</strong> projets.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Utilisation d'un module</h2>
+        <ul>
+            <li>Importation d'un module :
+                <pre><code class="lang-python">
+                    import turtle
+
+                    turtle.forward(90)
+                    turtle.done()
+                </code></pre>
+            </li>
+            <li>Importation des fonctions d'un module :
+                <pre><code class="lang-python">
+                    from turtle import forward, done
+
+                    forward(90)
+                    done()
+                </code></pre>
+            </li>
+            <li>Pour importer toutes les fonctions, on utilise le <code>*</code> :
+                <pre><code class="lang-python">
+                    from turtle import *
+                </code></pre>
+            </li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Définition d'un module</h2>
+        <ul>
+            <li>Créer un fichier .py contenant des définitions de fonctions.</li>
+            <li>Exemple : définissons le module shape dans le fichier <code>shape.py</code>.
+                <pre><code class="lang-python">
+                    from turtle import *
+                    
+                    def polygon(nbsides, side, col='black'):
+                        color(col)
+                        angle = 360 / nbsides
+                        i=0
+                        while i &lt; nbsides:
+                            forward(side)
+                            left(angle)
+                            i += 1
+
+                    def square(side, col='black'):
+                        polygon(4, side, col)
+                </code></pre>
+            </li>
+            <li>On peut importer un module dans un autre.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Définition d'un module</h2>
+        <ul>
+            <li>On peut ensuite écrire le programme suivant :
+                <pre><code class="lang-python">
+                    from shape import *
+
+                    square(90)
+                    polygon(6, 90, 'red')
+                    polygon(10, 90, 'blue')
+
+                    done()
+                </code></pre>
+            </li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>La variable <code>__name__</code></h2>
+        <ul>
+            <li>La variable globale <code>__name__</code> est définie dans chaque fichier Python :
+                <ul>
+                    <li>Elle contient un <code>string</code> égal au <strong>nom du module</strong>.</li>
+                    <li>Dans le programme principal, elle vaut <code>"__main__"</code></li>
+                </ul>
+            </li>
+            <li>Pour qu'un module puisse aussi être exécuté comme un programme, on teste souvent la variable <code>__name__</code> :
+                <pre><code class="lang-python">
+                    # ...
+
+                    if __name__ == "__main__":
+                        polygon(10, 90, 'blue')
+                        done()
+                </code></pre>
+            </li>
+        </ul>
+    </section>
+
+    <section class="deck-only">
+        <p class='center big'>N'oubliez pas de faire vos <a href="exercices5.zip">exercices</a> !</p>
+        <p class='center'>A remettre sur claco</p>
+     </section>
+</body>
+</html>
