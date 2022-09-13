@@ -57745,15 +57745,8 @@ var Deck = (function (exports) {
 		const slide = document.getElementById('slide-'+slideNumber);
 		if(slide.classList.contains(className)) return
 
-		const classAttrib = slide.attributes["class"];
-		if(classAttrib) {
-			const classes = classAttrib.value;
-			const deckClasses = classes.match(/deck-.+/);
-			if(deckClasses) {
-				for(let cl of deckClasses) {
-					slide.classList.remove(cl);
-				}
-			}
+		for(let cl of ['deck-after', 'deck-next', 'deck-before', 'deck-current', 'deck-previous']) {
+			slide.classList.remove(cl);
 		}
 
 		slide.classList.add(className);
