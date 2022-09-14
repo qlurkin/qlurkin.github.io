@@ -10,4 +10,5 @@ def combine(L1, L2, fct):
 def add(a, b):
     return a + b
 
-print(combine([1, 2, 3], [3, 2, 1], add)) # [4, 4, 4]
+if __name__ == '__main__':
+    print(combine([1, 2, 3], [3, 2, 1], add)) # [4, 4, 4]

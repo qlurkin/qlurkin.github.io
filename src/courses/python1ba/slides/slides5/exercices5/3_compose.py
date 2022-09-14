@@ -14,4 +14,5 @@ def square(x):
 def twice(x):
     return 2*x
 
-print(compose([square, twice], 3)) # 18
+if __name__ == '__main__':
+    print(compose([square, twice], 3)) # 18

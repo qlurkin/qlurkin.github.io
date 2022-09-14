@@ -5,4 +5,5 @@
 def zipper(L1, L2):
     # Votre code ici
 
-print(zipper([1, 3, 5], [6, 4, 2, 1])) # [1, 6, 3, 4, 5, 2, 1]
+if __name__ == '__main__':
+    print(zipper([1, 3, 5], [6, 4, 2, 1])) # [1, 6, 3, 4, 5, 2, 1]
