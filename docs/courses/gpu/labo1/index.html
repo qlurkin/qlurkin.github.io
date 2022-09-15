@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Beginning with Rust</title>
-    <script src="/document.js"></script>
+    <script src="/document.js" defer></script>
 </head>
 <body>
     <h1>Beginning with Rust</h1>
@@ -58,12 +58,12 @@ $> cargo install --force --path .
 
 <p>This will install the <code>rustlings</code> command.</p>
 <p>To make <code>rust-analyzer</code> fully functional in the exercices, you must create project files by running:</p>
-<pre class='terminal'>
+<pre class='terminal' id='term1'>
 $> rustlings lsp
 </pre>
 
 <p>Then you can start the exercices by running:</p>
-<pre class='terminal'>
+<pre class='terminal' id='term2'>
 $> rustlings watch
 </pre>
 

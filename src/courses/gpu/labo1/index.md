@@ -73,18 +73,16 @@ This will install the `rustlings` command.
 
 To make `rust-analyzer` fully functional in the exercices, you must create project files by running:
 
-<pre class='terminal'>
+<pre class='terminal' id='term1'>
 $> rustlings lsp
 </pre>
 
 Then you can start the exercices by running:
 
-<pre class='terminal'>
+<pre class='terminal' id='term2'>
 $> rustlings watch
 </pre>
 
 This will watch the exercices files and recompile it on each modification.
 
 While `rustlings watch` is running, you can type the `hint` subcommand to get hint about the Rust way of solving it. I recommend to check the hint on each exercices even if you manage to solve it by yourself.
-
-

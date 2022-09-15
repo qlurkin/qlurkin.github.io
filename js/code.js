@@ -31,6 +31,7 @@ const CodeReady = new Promise((resolve, reject) => {
 
 CodeReady.then(() => {
 	hljs.highlightAll()
+	console.log('Code Rendering Finished')
 })
 
 export default CodeReady
