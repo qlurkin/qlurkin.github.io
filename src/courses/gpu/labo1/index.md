@@ -18,7 +18,7 @@ $> cargo new project_name
 
 This will create the following file tree.
 
-```
+```plaintext
 📦 project-name
 ┣ 📂 src
 ┃ ┗ 📜 main.rs
