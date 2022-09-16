@@ -1,5 +1,5 @@
 ---
-title: Beginning with Rust
+title: Lab 1 - Beginning with Rust
 ---
 
 ## Installation
