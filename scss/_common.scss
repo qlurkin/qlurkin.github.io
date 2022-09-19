@@ -222,3 +222,21 @@ code.wrap {
     text-align: center;
     background-color: #686868;
 }
+
+table {
+    border-collapse: collapse;
+    border: 2px solid black;
+
+    td {
+        border: 1px solid black;
+    }
+
+    th {
+        border: 2px solid black;
+    }
+
+    td, th {
+        padding: 0.5em;
+        text-align: center;
+    }
+}

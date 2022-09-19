@@ -8,3 +8,4 @@ htmlcov
 .pytest_cache
 *.py
 *-old.zip
+*.dSYM

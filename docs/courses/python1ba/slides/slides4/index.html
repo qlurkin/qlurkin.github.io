@@ -129,6 +129,48 @@
     </section>
 
     <section>
+      <h2>Vecteurs</h2>
+      <ul><li>Plusieurs manières de créer des vecteurs de valeurs
+          <small>Depuis une structure Python, ou par des fonctions de Numpy</small>
+      </li></ul>
+      <pre><code class="lang-python">
+          np.array([1, 2, 3])
+          np.zeros(5)
+          np.ones(10)
+          np.random.random(10)
+          np.random.randn(10)
+          np.linspace(0, 10, 5)
+          np.arange(0, 10, 0.2)
+      </code></pre>
+  </section>
+
+    <section>
+      <h2>Opérations avec scalaire</h2>
+      <pre><code class="lang-python">
+          a = np.array([1, 2, 3, 4])
+          a + 1       # [2, 3, 4, 5]
+          2 * a       # [2, 4, 6, 8]
+          a ** 2      # [1, 4, 9, 16]
+          1 / a       # [1.0, 0.5, 0.3333, 0.25]
+          a &lt; 3    # [True, True, False, False]
+      </code></pre>
+  </section>
+
+  <section>
+      <h2>Opérations entre vecteurs</h2>
+      <ul>
+          <li>vecteurs de même taille</li>
+          <li>élément par élément</li>
+      </ul>
+      <pre><code class="lang-python">
+          a = np.array([1, 2, 3, 4])
+          b = np.array([5, 6, 7, 8])
+          a + b    # [6, 8, 10, 12]
+          a * b    # [5, 12, 21, 32]
+      </code></pre>
+  </section>
+
+    <section>
       <h2>Fonctions vectorisées</h2>
       <ul>
         <li>Fonctions qui s'applique sur tous les éléments d'un vecteur</li>
