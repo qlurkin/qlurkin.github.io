@@ -167,7 +167,7 @@
 
 				<pre><code class="lang-plaintext">
 					Traceback (most recent call last):
-					File "<stdin>", line 1, in <module>
+					File "&lt;stdin>", line 1, in &lt;module>
 						TypeError: unhashable type: 'set'
 				</code></pre>
 
@@ -232,14 +232,6 @@
 					
 					print(sumElements(S))    # 6
 
-					# avec reduce
-					from functools import reduce
-
-					def add(a, b):
-						return a + b
-
-					print(reduce(add, S))    # 6
-
 					# avec la fonction sum
 					print(sum(S))            # 6
 				</code></pre>
@@ -261,18 +253,8 @@
 					
 					print(maxElement(S))            # 99
 
-					# avec un reduce
-					from functools import reduce
-
-					def maximum(a, b):
-						if a > b:
-							return a
-						return b
-
-					print(reduce(maximum, S))       # 99
-
 					# avec la fonction max
-					print(max(S))
+					print(max(S))                   # 99
 				</code></pre>
 
 			</section>
@@ -428,11 +410,11 @@
 							return duration
 						
 						myPlaylist = [
-						{'artist': 'Axwell /\ Ingrosso', 'title': 'Sun Is Shining', 
-						'duration': 250},
-						{'artist': 'Black M', 'title': 'Sur ma route', 'duration': 251},
-						{'artist': 'AronChupa', 'title': "I'm an Albatraoz", 
-						'duration': 167}
+							{'artist': 'Axwell /\ Ingrosso', 'title': 'Sun Is Shining', 
+							'duration': 250},
+							{'artist': 'Black M', 'title': 'Sur ma route', 'duration': 251},
+							{'artist': 'AronChupa', 'title': "I'm an Albatraoz", 
+							'duration': 167}
 						]
 						print(totalDuration(myPlaylist))           # 668
 					</code></pre>
@@ -460,11 +442,11 @@
 							return titles
 						
 						myPlaylist = [
-						{'artist': 'Axwell /\ Ingrosso', 'title': 'Sun Is Shining', 
-						'duration': 250},
-						{'artist': 'Black M', 'title': 'Sur ma route', 'duration': 251},
-						{'artist': 'AronChupa', 'title': "I'm an Albatraoz",
-						'duration': 167}
+							{'artist': 'Axwell /\ Ingrosso', 'title': 'Sun Is Shining', 
+							'duration': 250},
+							{'artist': 'Black M', 'title': 'Sur ma route', 'duration': 251},
+							{'artist': 'AronChupa', 'title': "I'm an Albatraoz",
+							'duration': 167}
 						]
 						print(findTitles(myPlaylist, "AronChupa")) # ["I'm an Albatraoz"]
 					</code></pre>

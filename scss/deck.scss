@@ -54,7 +54,8 @@ h1 {
     }
 
     .deck-before, .deck-previous, .deck-next, .deck-after {
-        display: none;
+        position: absolute;
+        left: -200vw;
     }
 
     .deck-current {
