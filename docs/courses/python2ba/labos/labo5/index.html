@@ -5,12 +5,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>Labo 5 - Manipulations de fichiers textes</title>
-	<script src="/document.js"></script>
+	<script src="/document.js" defer></script>
 	<style>
-		pre > code {
-			font-size: 75% !important;
-		}
-
 		p {
 			text-indent: 0;
 		}
@@ -50,8 +46,8 @@
 			<ul>
 				<li><code class="lang-python">path</code> contient le chemin vers un fichier sur l’ordinateur,</li>
 			</ul>
-			<p>qui est sensé contenir un nombre par ligne, et qui affiche à l’écran la somme de tous ces nombres. Attention, le fichier peut ne pas exister auquel cas un message d’erreur est affiché. Le fichier peut également être vide, dans ce cas la somme est nulle. De plus, des lignes peuvent être erronées (ne contiennent pas un nombre); ces dernières doivent simplement être ignorées. Voici un exemple d’appel avec le contenu du fichier <code class="lang-plain">data.txt</code> et le résultat produit:</p>
-			<pre><code class="lang-plain">
+			<p>qui est sensé contenir un nombre par ligne, et qui affiche à l’écran la somme de tous ces nombres. Attention, le fichier peut ne pas exister auquel cas un message d’erreur est affiché. Le fichier peut également être vide, dans ce cas la somme est nulle. De plus, des lignes peuvent être erronées (ne contiennent pas un nombre); ces dernières doivent simplement être ignorées. Voici un exemple d’appel avec le contenu du fichier <code class="lang-plaintext">data.txt</code> et le résultat produit:</p>
+			<pre><code class="lang-plaintext">
 				13
 				7.5
 				2.1
@@ -62,7 +58,7 @@
 			<pre><code class="lang-python">
 				computesum('data.txt')
 			</code></pre>
-			<pre><code class="lang-plain">
+			<pre><code class="lang-plaintext">
 				La somme est 127.0
 			</code></pre>
 		</li>

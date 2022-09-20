@@ -5,7 +5,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>AD5L - Tri</title>
-	<script src="/document.js"></script>
+	<script src="/document.js" defer></script>
 </head>
 <body>
 	<h1>AD5L <small>Tri distribué</small></h1>
@@ -19,7 +19,7 @@
 
 	<p>Chaque serveur de tri sera un serveur web. et la machine maitre fera des requêtes HTTP pour envoyer les données. La machine maitre sera elle aussi un serveur web de sorte que les données triées pourront être renvoyées par le même moyen.</p>
 
-	<p>Toutes les requêtes seront des POST sur la route <code class="lang-plain">/</code> avec du JSON en body.</p>
+	<p>Toutes les requêtes seront des POST sur la route <code class="lang-plaintext">/</code> avec du JSON en body.</p>
 
 	<p>Votre devra serveur devra être capable de s'annoncer au server principal avec la requête suivante:</p>
 

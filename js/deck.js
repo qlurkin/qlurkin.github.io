@@ -1,6 +1,5 @@
-import {DOMReady} from './helpers'
 import '../scss/deck.scss'
-import './code.js'
+import renderCode from './code'
 import renderMath from './math'
 
 function setHash(str) {
@@ -158,6 +157,7 @@ export function initDeck() {
 
 	setClasses()
 	renderMath()
+	renderCode()
 	initNavigation()
 	setModeBasedOnOrientation()
 }
@@ -210,6 +210,4 @@ export function deckMode() {
 	addTouchNavigation()
 }
 
-DOMReady().then(() => {
-	initDeck()
-})
+initDeck()

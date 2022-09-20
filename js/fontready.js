@@ -1,13 +1,15 @@
-const FontReady = new Promise((resolve, reject) => {
-    document.fonts.ready
-    .then(() => {
-        console.log('Fonts Loaded')
-        resolve()
+export const fontReady = () => {
+    return new Promise((resolve, reject) => {
+        document.fonts.ready
+        .then(() => {
+            console.log('Fonts Loaded')
+            resolve()
+        })
+        .catch((err) => {
+            console.log(err)
+            resolve()
+        })
     })
-    .catch((err) => {
-        console.log(err)
-        resolve()
-    })
-})
+}
 
-export default FontReady
+export default fontReady

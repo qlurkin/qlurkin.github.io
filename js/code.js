@@ -1,5 +1,6 @@
 import hljs from 'highlight.js'
-import {DOMReady} from './helpers'
+//import { render } from 'sass';
+//import {DOMReady} from './helpers'
 
 function normalizeIndent(str) {
 	// trim empty lines from start & end
@@ -12,11 +13,13 @@ function normalizeIndent(str) {
 
 function normalizeAllIndent() {
 	const codes = document.querySelectorAll('pre>code')
-	//console.log(codes)
 	codes.forEach(code => {
-		//console.log(code.innerHTML)
-		//console.log(normalizeIndent(code.innerHTML))
 		code.innerHTML = normalizeIndent(code.innerHTML)
+		const pre = code.parentElement
+		while (pre.firstChild) {
+			pre.removeChild(pre.lastChild)
+		}
+		pre.appendChild(code)
 	})
 	const terminals = document.querySelectorAll('.terminal')
 	terminals.forEach(term => {
@@ -24,18 +27,19 @@ function normalizeAllIndent() {
 	})
 }
 
-const CodeReady = new Promise((resolve, reject) => {
-	DOMReady().then(() => {
+export const renderCode = () => {
+	return new Promise((resolve, reject) => {
+		// DOMReady().then(() => {
+		// 	normalizeAllIndent()
+		// 	console.log("Code Indentation Done")
+		// 	resolve()
+		// })
 		normalizeAllIndent()
 		console.log("Code Indentation Done")
+		hljs.highlightAll()
+		console.log('Code Rendering Finished')
 		resolve()
 	})
-})
+}
 
-CodeReady.then(() => {
-	console.log("Start Code Rendering")
-	hljs.highlightAll()
-	console.log('Code Rendering Finished')
-})
-
-export default CodeReady
+export default renderCode

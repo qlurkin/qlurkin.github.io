@@ -5,7 +5,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>Chapitre 06 - Lecture et écriture de fichiers</title>
-	<script src="/deck.js"></script>
+	<script src="/deck.js" defer></script>
 	<style>
 		table {
 			border-collapse: collapse;
@@ -141,7 +141,7 @@
 		
 		<ul>
 			<li>
-				Au plus bas niveau, un fichier est une <strong>séquence de bits</strong> (<code class="lang-plain">0</code> et <code class="lang-plain">1</code>) 
+				Au plus bas niveau, un fichier est une <strong>séquence de bits</strong> (<code class="lang-plaintext">0</code> et <code class="lang-plaintext">1</code>) 
 				
 				<small>La séquence doit être interprétée pour en obtenir le sens</small>
 			</li>
@@ -173,7 +173,7 @@
 				<ul>
 					<li>
 						Chemin absolu à partir de la racine
-						<small><code class="lang-plain">C:\</code> (Windows), <code class="lang-plain">/</code> (OSX et Linux)</small>
+						<small><code class="lang-plaintext">C:\</code> (Windows), <code class="lang-plaintext">/</code> (OSX et Linux)</small>
 					</li>
 					<li>
 						Chemin relatif à partir du répertoire courant
@@ -209,9 +209,9 @@
 		<h2>Navigation en ligne de commande</h2>
 		<p>Pour passer d'un répertoire à l'autre dans une console de commandes</p>
 		<ul>
-			<li><code class="lang-plain">pwd</code>: Affiche le chemin du répertoire courant <small>Base des chemins relatifs</small></li>
-			<li><code class="lang-plain">cd</code> <i>(suivi d'un chemin)</i>: Change de répertoire courant <small><code class="lang-plain">..</code> pour le répertoire parent</small></li>
-			<li><code class="lang-plain">dir</code> <i>(Windows)</i> ou <code class="lang-plain">ls</code> <i>(OSX et Linux)</i>: Liste le contenu du répertoire</li>
+			<li><code class="lang-plaintext">pwd</code>: Affiche le chemin du répertoire courant <small>Base des chemins relatifs</small></li>
+			<li><code class="lang-plaintext">cd</code> <i>(suivi d'un chemin)</i>: Change de répertoire courant <small><code class="lang-plaintext">..</code> pour le répertoire parent</small></li>
+			<li><code class="lang-plaintext">dir</code> <i>(Windows)</i> ou <code class="lang-plaintext">ls</code> <i>(OSX et Linux)</i>: Liste le contenu du répertoire</li>
 		</ul>
 	</section>
 	<section class="full">
@@ -456,7 +456,7 @@
 			except IOError:
 				print("Erreur d'entrée/sortie")
 		</code></pre>
-		<pre><code class="lang-plain">
+		<pre><code class="lang-plaintext">
 			Facebook:mlt@ecam.be:melo:8dj,Sj0m1
 			Skype:mar@ecam.be:cedou:arduino
 			Facebook:fle@ecam.be:fingerfood:b8ur,g2er
@@ -543,7 +543,7 @@
 					tokens = cleaned.split(':')
 					print('Compte {} de {} (mode de passe : {})'.format(tokens[0], tokens[2], tokens[3]))
 		</code></pre>
-		<pre><code class="lang-plain">
+		<pre><code class="lang-plaintext">
 			Compte Facebook de melo (mode de passe : 8dj,Sj0m1)
 			Compte Skype de cedou (mode de passe : arduino)
 			Compte Facebook de fingerfood (mode de passe : b8ur,g2er)
@@ -753,7 +753,7 @@
 			<img src="images/melotte-secret.png" alt="">
 		</figure>
 		
-		<pre><code class="lang-plain">
+		<pre><code class="lang-plaintext">
 			Traceback (most recent call last):
 				File "program.py", line 6, in <module>
 					print(file.read())

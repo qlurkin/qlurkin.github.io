@@ -113,7 +113,7 @@
 			print('Alexis a obtenu', percentage(18, 20), '%')
 			print('Sébastien a obtenu', percentage(6, 0), '%')
 		</code></pre>
-		<pre><code class="lang-plain">
+		<pre><code class="lang-plaintext">
 			Alexis a obtenu 90.0 %
 			Traceback (most recent call last):
 				File "program.py", line 5, in &lt;module>
@@ -131,21 +131,21 @@
 		<ul>
 			<li>
 				L'erreur a comme <strong>origine</strong> l'exécution de l'instruction en ligne 5
-				<pre><code class="lang-plain">
+				<pre><code class="lang-plaintext">
 					File "program.py", line 5, in &lt;module>
 						print('Sébastien a obtenu', percentage(6, 0), '%')
 				</code></pre>
 			</li>
 			<li>
 				L'erreur est dans la <strong>fonction <code>percentage()</code></strong>
-				<pre><code class="lang-plain">
+				<pre><code class="lang-plaintext">
 					File "program.py", line 2, in percentage
 						return score / total * 100
 				</code></pre>
 			</li>
 			<li>
 				L'erreur est de type <strong>division par zéro</strong>
-				<pre><code class="lang-plain">
+				<pre><code class="lang-plaintext">
 					ZeroDivisionError: division by zero
 				</code></pre>
 			</li>
@@ -173,7 +173,7 @@
 					return score / total * 100
 				return None
 		</code></pre>
-		<pre><code class="lang-plain">
+		<pre><code class="lang-plaintext">
 			Alexis a obtenu 90.0 %
 			Sébastien a obtenu None %
 		</code></pre>
@@ -238,7 +238,7 @@
 			if score > 10
 				print('Vous avez réussi !')
 		</code></pre>
-		<pre><code class="lang-plain">
+		<pre><code class="lang-plaintext">
 			File "program.py", line 2
 				if score > 10
 							^
@@ -268,7 +268,7 @@
 				print(data[i])
 				i += 1
 		</code></pre>
-		<pre><code class="lang-plain">
+		<pre><code class="lang-plaintext">
 			1
 			2
 			3
@@ -299,7 +299,7 @@
 			
 			print(perimeter(2, 1))
 		</code></pre>
-		<pre><code class="lang-plain">
+		<pre><code class="lang-plaintext">
 			4
 		</code></pre>
 		
@@ -392,7 +392,7 @@
 			print(percentage(15, 20), '%')
 			print(percentage(22, 20), '%')
 		</code></pre>
-		<pre><code class="lang-plain">
+		<pre><code class="lang-plaintext">
 			75.0 %
 			Traceback (most recent call last):
 				File "program.py", line 8, in &lt;module>
@@ -544,7 +544,7 @@
 			<li>
 				Si l'utilisateur entre un nombre entier, <strong>pas d'erreurs</strong>
 				
-				<pre><code class="lang-plain">
+				<pre><code class="lang-plaintext">
 					Année de naissance ? 1982
 					Tu as 36 ans
 				</code></pre>
@@ -552,7 +552,7 @@
 			<li>
 				Si l'utilisateur n'entre pas un nombre entier, <strong>erreur capturée</strong>
 				
-				<pre><code class="lang-plain">
+				<pre><code class="lang-plaintext">
 					Année de naissance ? BLA
 					Erreur
 				</code></pre>
@@ -658,7 +658,7 @@
 			<li>
 				Division par zéro
 				
-				<pre><code class="lang-plain">
+				<pre><code class="lang-plaintext">
 					a ? deux
 					&lt;class 'ValueError'>
 					invalid literal for int() with base 10: 'deux'
@@ -667,7 +667,7 @@
 			<li>
 				Erreur de conversion
 				
-				<pre><code class="lang-plain">
+				<pre><code class="lang-plaintext">
 					a ? 2 
 					b ? 0
 					&lt;class 'ZeroDivisionError'>
@@ -725,7 +725,7 @@
 			except ZeroDivisionError:
 				print('Division par zéro')
 		</code></pre>
-		<pre><code class="lang-plain">
+		<pre><code class="lang-plaintext">
 			a ? 2
 			b ? 0
 			Autre erreur
@@ -754,7 +754,7 @@
 				print('Line:', e.lineno)
 				print('Text:', e.text)
 		</code></pre>
-		<pre><code class="lang-plain">
+		<pre><code class="lang-plaintext">
 			can't assign to literal (mymod.py, line 1)
 			File: /Users/combefis/Desktop/mymod.py
 			Line: 1
@@ -785,7 +785,7 @@
 			except:
 				print('Erreur')
 		</code></pre>
-		<pre><code class="lang-plain">
+		<pre><code class="lang-plaintext">
 			a ? 1
 			b ? 0
 			Erreur de calcul
@@ -829,7 +829,7 @@
 			
 			compute()
 		</code></pre>
-		<pre><code class="lang-plain">
+		<pre><code class="lang-plaintext">
 			Traceback (most recent call last):
 				File "program.py", line 7, in &lt;module>
 					compute()
@@ -865,7 +865,7 @@
 				
 				compute()
 			</code></pre>
-			<pre><code class="lang-plain">
+			<pre><code class="lang-plaintext">
 				Erreur.
 			</code></pre>
 			
@@ -911,7 +911,7 @@
 				print('Nettoyage de la mémoire.')
 				print('Fin du calcul.')
 		</code></pre>
-		<pre><code class="lang-plain">
+		<pre><code class="lang-plaintext">
 			Début du calcul.
 			a ? 2
 			b ? 8
@@ -950,7 +950,7 @@
 				print('Veuillez entrer un nombre.')
 		</code></pre>
 
-		<pre><code class="lang-plain">
+		<pre><code class="lang-plaintext">
 			Entrez un nombre : -12
 			Veuillez entrer un nombre positif.
 		</code></pre>
@@ -1008,7 +1008,7 @@
 			except:
 				print('Erreur')
 		</code></pre>
-		<pre><code class="lang-plain">
+		<pre><code class="lang-plaintext">
 			Pas de racine réelle.
 		</code></pre>
 		
@@ -1050,7 +1050,7 @@
 				print('Erreur')
 			
 		</code></pre>
-		<pre><code class="lang-plain">
+		<pre><code class="lang-plaintext">
 			Pas de racine réelle (delta = -8)
 		</code></pre>
 		

@@ -5,7 +5,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>Chapitre 03 - Classes et objets</title>
-	<script src="/deck.js"></script>
+	<script src="/deck.js" defer></script>
 	<style>
 		pre > code {
 			font-size: 75% !important;
@@ -255,7 +255,7 @@
 			print(marchand)
 			print(flemal)
 		</code></pre>
-		<pre><code class="lang-plain">
+		<pre><code class="lang-plaintext">
 			&lt;__main__.Contact object at 0x109678748>
 			&lt;__main__.Contact object at 0x109678780>
 		</code></pre>
@@ -282,7 +282,7 @@
 			print(marchand.firstname)
 			print(flemal.phonenumber)
 		</code></pre>
-		<pre><code class="lang-plain">
+		<pre><code class="lang-plaintext">
 			Cédric
 			0
 		</code></pre>
@@ -410,7 +410,7 @@
 			u = Vector(1, -1)
 			print(u.norm())
 		</code></pre>
-		<pre><code class="lang-plain">
+		<pre><code class="lang-plaintext">
 			1.4142135623730951
 		</code></pre>
 		
@@ -442,7 +442,7 @@
 			m1 = Music('Easy Come Easy Go', ['Alice on the roof'], 213)
 			print(m1.hasAuthor('Stromae'))
 		</code></pre>
-		<pre><code class="lang-plain">
+		<pre><code class="lang-plaintext">
 			False
 		</code></pre>
 		
@@ -507,7 +507,7 @@
 			u = Vector(1, -1)
 			print(u.norm())
 		</code></pre>
-		<pre><code class="lang-plain">
+		<pre><code class="lang-plaintext">
 			Traceback (most recent call last):
 			File "program.py", line 38, in <module>
 				print(u.norm())
@@ -689,7 +689,7 @@
 			u = Vector(1, -1)
 			print(u)
 		</code></pre>
-		<pre><code class="lang-plain">
+		<pre><code class="lang-plaintext">
 			(1, -1)
 		</code></pre>
 		
@@ -806,7 +806,7 @@
 			v = Vector(2, 1)
 			print(u + v)
 		</code></pre>
-		<pre><code class="lang-plain">
+		<pre><code class="lang-plaintext">
 			(3, 0)
 		</code></pre>
 		
@@ -838,7 +838,7 @@
 			v = Vector(2, 1)
 			print(u < v)
 		</code></pre>
-		<pre><code class="lang-plain">
+		<pre><code class="lang-plaintext">
 			True
 		</code></pre>
 		
@@ -957,7 +957,7 @@
 			u = Vector(1, -1)
 			print(u.__x)
 		</code></pre>
-		<pre><code class="lang-plain">
+		<pre><code class="lang-plaintext">
 			Traceback (most recent call last):
 			File "program.py", line 9, in <module>
 				print(u.__x)
@@ -1150,7 +1150,7 @@
 			r = Rectangle(Vector(1, -1), 100, 50)
 			print(r)
 		</code></pre>
-		<pre><code class="lang-plain">
+		<pre><code class="lang-plaintext">
 			Rectangle en (1, -1) de longueur 100 et de hauteur 50 incliné
 			de 0 degrés
 		</code></pre>
