@@ -57622,7 +57622,10 @@ var Deck = (function (exports) {
 
 	function normalizeAllIndent() {
 		const codes = document.querySelectorAll('pre>code');
+		//console.log(codes)
 		codes.forEach(code => {
+			//console.log(code.innerHTML)
+			//console.log(normalizeIndent(code.innerHTML))
 			code.innerHTML = normalizeIndent(code.innerHTML);
 		});
 		const terminals = document.querySelectorAll('.terminal');
@@ -57640,6 +57643,7 @@ var Deck = (function (exports) {
 	});
 
 	CodeReady.then(() => {
+		console.log("Start Code Rendering");
 		lib.highlightAll();
 		console.log('Code Rendering Finished');
 	});

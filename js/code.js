@@ -12,7 +12,10 @@ function normalizeIndent(str) {
 
 function normalizeAllIndent() {
 	const codes = document.querySelectorAll('pre>code')
+	//console.log(codes)
 	codes.forEach(code => {
+		//console.log(code.innerHTML)
+		//console.log(normalizeIndent(code.innerHTML))
 		code.innerHTML = normalizeIndent(code.innerHTML)
 	})
 	const terminals = document.querySelectorAll('.terminal')
@@ -30,6 +33,7 @@ const CodeReady = new Promise((resolve, reject) => {
 })
 
 CodeReady.then(() => {
+	console.log("Start Code Rendering")
 	hljs.highlightAll()
 	console.log('Code Rendering Finished')
 })
