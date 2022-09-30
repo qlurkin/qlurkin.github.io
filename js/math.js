@@ -1,28 +1,35 @@
 import {loadScript} from './helpers'
 
+let resolveMathReady = null
+
+export const mathReady = new Promise((resolve) => {
+    resolveMathReady = resolve
+})
+
 export function renderMath() {
     const content = document.body.innerText
 
     if(content.includes('$$') ||
       (content.includes('\\(') && content.includes('\\)')) ||
       (content.includes('\\[') && content.includes('\\]'))) {
-        return new Promise((resolve, reject) => {
-            console.log('Loading MathJax...')
-            window.MathJax = {
-                startup: {
-                    pageReady: () => {
-                        return MathJax.startup.defaultPageReady().then(() => {
-                            console.log('MathJax initial typesetting complete');
-                            resolve()
-                        });
-                    }
+        
+        console.log('Loading MathJax...')
+        window.MathJax = {
+            startup: {
+                pageReady: () => {
+                    return MathJax.startup.defaultPageReady().then(() => {
+                        console.log('MathJax initial typesetting complete');
+                        resolveMathReady()
+                    });
                 }
-            };
-            loadScript('https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js')
-        })
+            }
+        };
+        loadScript('https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js')
+        return mathReady
     }
     else {
-        return Promise.resolve()
+        resolveMathReady()
+        return mathReady
     }
 }
 

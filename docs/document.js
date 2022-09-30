@@ -1,4 +1,4 @@
-(function () {
+var Document = (function (exports) {
 	'use strict';
 
 	
@@ -57580,8 +57580,10 @@
 	hljs.default = hljs;
 	var lib = hljs;
 
-	//import { render } from 'sass';
-	//import {DOMReady} from './helpers'
+	let resolveCodeReady;
+	const codeReady = new Promise((resolve) => {
+		resolveCodeReady = resolve;
+	});
 
 	function normalizeIndent(str) {
 		// trim empty lines from start & end
@@ -57609,18 +57611,12 @@
 	}
 
 	const renderCode = () => {
-		return new Promise((resolve, reject) => {
-			// DOMReady().then(() => {
-			// 	normalizeAllIndent()
-			// 	console.log("Code Indentation Done")
-			// 	resolve()
-			// })
-			normalizeAllIndent();
-			console.log("Code Indentation Done");
-			lib.highlightAll();
-			console.log('Code Rendering Finished');
-			resolve();
-		})
+		normalizeAllIndent();
+		console.log("Code Indentation Done");
+		lib.highlightAll();
+		console.log('Code Rendering Finished');
+		resolveCodeReady();
+		return codeReady
 	};
 
 	const loadScript = url => new Promise(resolve => {
@@ -57650,31 +57646,54 @@
 		console.log('DOM Ready');
 	});
 
+	let resolveMathReady = null;
+
+	const mathReady = new Promise((resolve) => {
+	    resolveMathReady = resolve;
+	});
+
 	function renderMath() {
 	    const content = document.body.innerText;
 
 	    if(content.includes('$$') ||
 	      (content.includes('\\(') && content.includes('\\)')) ||
 	      (content.includes('\\[') && content.includes('\\]'))) {
-	        return new Promise((resolve, reject) => {
-	            console.log('Loading MathJax...');
-	            window.MathJax = {
-	                startup: {
-	                    pageReady: () => {
-	                        return MathJax.startup.defaultPageReady().then(() => {
-	                            console.log('MathJax initial typesetting complete');
-	                            resolve();
-	                        });
-	                    }
+	        
+	        console.log('Loading MathJax...');
+	        window.MathJax = {
+	            startup: {
+	                pageReady: () => {
+	                    return MathJax.startup.defaultPageReady().then(() => {
+	                        console.log('MathJax initial typesetting complete');
+	                        resolveMathReady();
+	                    });
 	                }
-	            };
-	            loadScript('https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js');
-	        })
+	            }
+	        };
+	        loadScript('https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js');
+	        return mathReady
 	    }
 	    else {
-	        return Promise.resolve()
+	        resolveMathReady();
+	        return mathReady
 	    }
 	}
+
+	const fontReady = new Promise((resolve) => {
+	    document.fonts.ready
+	    .then(() => {
+	        console.log('Fonts Loaded');
+	        resolve();
+	    })
+	    .catch((err) => {
+	        console.log(err);
+	        resolve();
+	    });
+	});
+
+	const readyToDraw = Promise.all([mathReady, codeReady, fontReady]).then(() => {
+	    console.log("Ready To Draw");
+	});
 
 	function initDocument() {
 	    renderMath();
@@ -57683,4 +57702,10 @@
 
 	initDocument();
 
-})();
+	exports.readyToDraw = readyToDraw;
+
+	Object.defineProperty(exports, '__esModule', { value: true });
+
+	return exports;
+
+})({});
