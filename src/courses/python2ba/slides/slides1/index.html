@@ -363,8 +363,8 @@
 
 				<ul>
 					<li>
-						Accès aux clés avec la fonction <strong><code>keys</code></strong> et aux paires avec
-						<strong><code>items</code></strong>
+						Accès aux clés avec la fonction <strong><code>keys</code></strong>, aux paires avec
+						<strong><code>items</code></strong> et aux valeurs avec la fonction <strong><code>values</code></strong>
 
 						<small>Renvoient des séquences que l'on peut convertir en liste</small>
 					</li>
@@ -385,6 +385,10 @@
 						# Parcours direct
 						for key, value in price.items():
 							print(key, value, sep=' : ')
+
+						# Parcours des valeurs seulement
+						for value in price.values():
+							print(value)
 					</code></pre>
 
 			</section>
