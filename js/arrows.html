@@ -33,7 +33,6 @@
             display: inline-block;
         }
     </style>
-    <script src="./drawOnHtml.js" defer></script>
 </head>
 <body>
     <p>Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum <span id="truc">caca</span> Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum </p>
@@ -45,7 +44,8 @@
 
         </div>
     </div>
-    <script>
+    <script type="module">
+        import {Context, noArrow, simpleArrow, inheritance, composition} from './drawOnHtml.js'
         window.addEventListener('DOMContentLoaded', () => {
             const context = Context().stroke(3, 'red')
             context.start('#yap', inheritance)
