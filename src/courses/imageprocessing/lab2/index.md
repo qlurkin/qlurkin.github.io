@@ -17,4 +17,4 @@ import cv2
 ```
 ## Files
 
-Here are the files needed for this lab: [Files](Lab2.zip)
+Here are the files needed for this lab: [Files](lab2.zip)
