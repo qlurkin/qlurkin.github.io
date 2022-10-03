@@ -10,4 +10,4 @@ function initDocument() {
 
 initDocument()
 
-export { readyToDraw }
+//export { readyToDraw }
