@@ -85,7 +85,7 @@ module.exports = (callback) => {
                     output: {
                         file: 'docs/document.js',
                         format: 'iife',
-                        name: 'Document'
+                        name: 'Doc'
                     },
                     plugins: [ 
                         resolve(),

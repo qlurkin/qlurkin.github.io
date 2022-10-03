@@ -1,4 +1,4 @@
-(function () {
+var Doc = (function (exports) {
 	'use strict';
 
 	
@@ -57691,7 +57691,7 @@
 	    });
 	});
 
-	Promise.all([mathReady, codeReady, fontReady]).then(() => {
+	const readyToDraw = Promise.all([mathReady, codeReady, fontReady]).then(() => {
 	    console.log("Ready To Draw");
 	});
 
@@ -57702,6 +57702,10 @@
 
 	initDocument();
 
-	//export { readyToDraw }
+	exports.readyToDraw = readyToDraw;
 
-})();
+	Object.defineProperty(exports, '__esModule', { value: true });
+
+	return exports;
+
+})({});
