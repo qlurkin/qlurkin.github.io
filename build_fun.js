@@ -19,6 +19,7 @@ const deck = require('./plugins/deck')
 const enforceList = require('./plugins/enforceList')
 const replace = require('./plugins/replace')
 const ignoreDot = require('./plugins/ignoreDot')
+const fs = require('fs')
 
 module.exports = (callback) => {
     Metalsmith(__dirname)
@@ -97,6 +98,8 @@ module.exports = (callback) => {
                 }
             ])
             .then(() => {
+                fs.mkdirSync("./docs/js")
+                fs.copyFileSync("./js/drawOnHtml.js", "./docs/js/drawOnHtml.js")
                 console.log('Build finished!')
                 if(callback) callback()
             })
