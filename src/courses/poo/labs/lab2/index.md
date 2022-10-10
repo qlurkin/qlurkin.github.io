@@ -17,8 +17,17 @@ Si vous utilisez la commande `dotnet`, vous pouvez ajouter le Workload avec la c
 Essayez de créer un nouveau projet MAUI. Dans Visual Studio 2022 Preview, il y a un template **"Application .NET MAUI"**. Avec la ligne de commande, vous pouvez utiliser la commande :
 
 <pre class="terminal">
-> dotnet new maui -n "MyMauiApp"
+> dotnet new maui -n "Labo2"
 </pre>
+
+L'application par défaut ressemble à ceci:
+
+<figure>
+    <img src="./MAUI_default.png">
+</figure>
+
+
+
 
 ## Enoncé
 
