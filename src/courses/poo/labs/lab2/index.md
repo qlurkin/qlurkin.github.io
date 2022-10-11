@@ -32,6 +32,8 @@ Suivez le tutoriel suivant pour créer une application de notes :
 
 [https://learn.microsoft.com/fr-be/dotnet/maui/tutorials/notes-app/](https://learn.microsoft.com/fr-be/dotnet/maui/tutorials/notes-app/)
 
+Pas besoin de compiler pour Android.
+
 **N'hésitez surtout pas à poser vos questions !**
 
 <!-- ## Les fichiers
