@@ -6,11 +6,6 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>Chapitre 02 - Imbrication de données et Objets</title>
 	<script src="/deck.js" defer></script>
-	<style>
-		pre > code {
-			font-size: 75% !important;
-		}
-	</style>
 </head>
 <body>
 	<section>
@@ -135,7 +130,7 @@
 			M = [[1, 2, 3], [4, 5, 6]]
 		</code></pre>
 		
-		\[ M = \left(\begin{array}{ccc} 1 & 2 & 3 \\ 4 & 5 & 6 \end{array}\right) \qquad \textsf{Par exemple, \texttt{M[1][0]} vaut 4} \]
+		\[ M = \left(\begin{array}{ccc} 1 & 2 & 3 \\ 4 & 5 & 6 \end{array}\right) \qquad \textsf{Par exemple, M[1][0] vaut 4} \]
 		
 	</section>
 	<section>
@@ -316,7 +311,7 @@
 			<li>
 				La copie ne se fait <strong>pas en profondeur</strong> 
 				
-				<small>Seuls les éléments de \og premier niveau \fg{</small> sont copiés}
+				<small>Seuls les éléments de "premier niveau" sont copiés</small>
 			</li>
 		</ul>
 		
@@ -783,6 +778,7 @@
 		
 		<pre><code class="lang-plaintext">
 			30
+			30
 		</code></pre>
 		
 	</section>
@@ -809,11 +805,10 @@
 		</code></pre>
 		
 		<pre><code class="lang-plaintext">
-			<class 'complex'>
-				3.0
-				(-1-4j)
-			</code></pre>
-			
+			&lt;class 'complex'>
+			3.0
+			(-1-4j)
+		</code></pre>
 		</section>
 		<section>
 			<h2>Exemple : les chaines de caractères</h2>
@@ -860,7 +855,7 @@
 				import webbrowser
 				
 				chrome = webbrowser.get()
-				chrome.open("http://www.ukonline.be")
+				chrome.open("http://www.perdu.com")
 			</code></pre>
 			
 		</section>
