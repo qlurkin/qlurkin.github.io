@@ -6,20 +6,535 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>Chapitre 04 - Interface graphique</title>
 	<script src="https://quentin.lurkin.xyz/deck.js" defer></script>
-	<style>
-		pre > code {
-			font-size: 75% !important;
-		}
-	</style>
 </head>
 <body>
 	<section>
 		<h1>IN2T - Informatique <small>Interface graphique</small></h1>
 		<p>Quentin Lurkin</p>
 	</section>
+
 	<section>
-		<p class='big center'>Coming Soon</p>
+		<h2>Programmation graphique</h2>
+		<ul>
+			<li>Ouvre une <strong>fenêtre</strong> de l'OS</li>
+			<li>
+				Tourne <strong>jusqu'à ce qu'on quitte</strong>
+				<small>boucle !</small>
+			</li>
+			<li>
+				Permet d'afficher des formes, images, animation
+				<small>Une animation est une succession rapide d'images</small>
+			</li>
+		</ul>
 	</section>
+
+	<section>
+		<h2>Pygame</h2>
+		<ul>
+			<li>Permet de créer un programme graphique</li>
+			<li>
+				Non-inclus dans l'installation de Python
+				<small>Il faut installer le package</small>
+			</li>
+		</ul>
+		<h3>Installation</h3>
+		<ul>
+			<li>
+				Python peut <strong>télécharger et installer automatiquement des packages</strong>
+			</li>
+			<li>Pour installer Pygame :</li>
+		</ul>
+		<pre class="terminal">
+			<b>&> python -m pip install pygame</b>
+		</pre>
+	</section>
+
+	<section class="code">
+		<h2>Premier programme graphique</h2>
+		<pre>
+			<code class="lang-python">
+				import pygame
+
+				# initialisation de pygame
+				pygame.init()
+
+				# demande une fenêtre de 800x600 pixels
+				screen = pygame.display.set_mode((800, 600))
+
+				# la clock sert à limiter le nombre d'images par seconde
+				clock = pygame.time.Clock()
+
+				# boucle jusqu'à ce qu'on quitte
+				while not pygame.event.peek(pygame.QUIT):
+
+					# attends qu'il se soit passé au moins 1/60
+					# de seconde depuis le dernier tick
+					clock.tick(60)
+
+					# dessine un cercle rouge centré en (100, 300) de rayon 20
+					pygame.draw.circle(screen, (255, 0, 0), (100, 300), 20)
+
+					# affiche l'image qui vient d'être dessinée
+					pygame.display.flip()
+			</code>
+		</pre>
+	</section>
+
+	<section>
+		<h2>Animation</h2>
+		<p>Pour animer le cercle, il suffit de le dessiner à une position un peu différente à chaque image.</p>
+		<pre><code class="lang-python">
+			import pygame
+
+			# initialisation de pygame
+			pygame.init()
+
+			# demande une fenêtre de 800x600 pixels
+			screen = pygame.display.set_mode((800, 600))
+
+			clock = pygame.time.Clock()
+
+			xCircle = 100
+
+			# boucle jusqu'à ce qu'on quitte
+			while not pygame.event.peek(pygame.QUIT):
+				clock.tick(60)
+
+				# dessine un rectangle noir pour effacer l'image
+				pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(0, 0, 800, 600))
+
+				# dessine un cercle rouge centré en (xCircle, 300) de rayon 20
+				pygame.draw.circle(screen, (255, 0, 0), (xCircle, 300), 20)
+				
+				# déplace le cercle
+				xCircle += 1
+
+				# affiche l'image qui vient d'être dessinée
+				pygame.display.flip()
+		</code></pre>
+	</section>
+
+	<section>
+		<h2>Événements</h2>
+		<ul>
+			<li>Gestion des événements lié à la souris et au clavier
+				<small>Et autres événements comme <code>pygame.QUIT</code></small>
+			</li>
+			<li>Fonctions dans le module <code>pygame.event</code></li>
+			<li>Les événements captés par Pygame sont stocké dans une file</li>
+			<li>Le fonction <code>pygame.event.peek</code> vérifie si un certain type d'événement attends dans la file
+				<pre><code class="lang-python">
+					# boucle jusqu'à ce qu'on quitte
+					while not pygame.event.peek(pygame.QUIT):
+						# ...
+				</code></pre>
+			</li>
+		</ul>
+	</section>
+
+	<section>
+		<h2>Clavier</h2>
+		<ul>
+			<li>Pour traiter tous les événements
+				<pre><code class="lang-python">
+					# Boucler sur tous les events
+					for event in pygame.event.get():
+						# Faire quelque-chose avec l'event
+				</code></pre>
+			</li>
+			<li>Tester le type de l'événement avec l'attribut <code>event.type</code> <small>
+				Types des événements clavier: <code>pygame.KEYDOWN</code> et <code>pygame.KEYUP</code>
+			</small></li>
+			<li>Les événements clavier ont $ attributs spécifiques :
+				<ul>
+					<li><code>key</code>: un code correspondant à la touche du clavier</li>
+					<li><code>mod</code>: un code représentant la combinaison de touches de modification enfoncées (SHIFT, ALT, ...)</li>
+					<li><code>unicode</code>: le caractère tapé</li>
+					<li><code>scancode</code>: un code indépendant du layout du clavier (AZERTY, QWERTY, ...)</li>
+				</ul>
+			</li>
+			<li><a href="https://www.pygame.org/docs/ref/key.html#key-constants-label">Les constantes contenant les <code>key</code> code</a></li>
+			<li><a href="https://www.pygame.org/docs/ref/key.html#key-modifiers-label">Les constantes contenant les codes des touches de modification</a></li>
+		</ul>
+	</section>
+
+	<section class="code">
+		<h2>Clavier</h2>
+		<pre><code class="lang-python">
+			import pygame
+			import sys
+
+			pygame.init()
+
+			screen = pygame.display.set_mode((800, 600))
+
+			clock = pygame.time.Clock()
+
+			xCircle = 100
+			vxCircle = 1
+
+			# boucle infinie !
+			while True:
+				clock.tick(60)
+				for event in pygame.event.get():
+					# Quitter si l'event est un QUIT
+					if event.type == pygame.QUIT:
+						sys.exit()
+					# Changer la vitesse de la balle si on appuie sur espace
+					if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+						vxCircle = -vxCircle
+					
+				pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(0, 0, 800, 600))
+
+				pygame.draw.circle(screen, (255, 0, 0), (xCircle, 300), 20)
+				
+				# déplace le cercle
+				xCircle += vxCircle
+
+				pygame.display.flip()
+		</code></pre>
+	</section>
+
+	<section>
+		<h2>Touche de modification</h2>
+		<ul>
+			<li>Pour tester si une touche de modification sont appuyée :
+			<pre><code class="lang-python">
+				if event.mod & pygame.KMOD_SHIFT:
+					# SHIFT était appuyé lors de cet event
+			</code></pre>
+			</li>
+			<li>Ou plusieurs :
+				<pre><code class="lang-python">
+					if event.mod & (pygame.KMOD_SHIFT | pygame.KMOD_ALT):
+						# SHIFT et ALT étaient appuyés lors de cet event
+				</code></pre>
+			</li>
+		</ul>
+	</section>
+
+	<section>
+		<h2>Souris</h2>
+		<ul>
+			<li>Types des événements souris: <code>pygame.MOUSEBUTTONDOWN</code>, <code>pygame.MOUSEBUTTONUP</code>, <code>pygame.MOUSEMOTION</code>, <code>pygame.MOUSEWHEEL</code></li>
+			<li>Les attributs intéressants des événements <code>pygame.MOUSEMOTION</code> sont :
+				<ul>
+					<li><code>pos</code>: les coordonnées de la souris</li>
+					<li><code>rel</code>: la vitesse de la souris</li>
+				</ul>
+			</li>
+
+			<li>Les attributs intéressants des événements <code>pygame.MOUSEBUTTONDOWN</code> et <code>pygame.MOUSEBUTTONUP</code> sont :
+				<ul>
+					<li><code>button</code>: 1, 2 ou 3 en fonction du bouton pressé (gauche, milieu ou droit)</li>
+					<li><code>pos</code>: les coordonnées de la souris</li>
+				</ul>
+			</li>
+		</ul>
+	</section>
+
+	<section class="code">
+		<h2>Souris</h2>
+
+		<pre><code class="lang-python">
+			import pygame
+			import sys
+
+			pygame.init()
+
+			screen = pygame.display.set_mode((800, 600))
+
+			clock = pygame.time.Clock()
+
+			posCircle = (100, 100)
+
+			# boucle infinie !
+			while True:
+				clock.tick(60)
+				for event in pygame.event.get():
+					# Quitter si l'event est un QUIT
+					if event.type == pygame.QUIT:
+						sys.exit()
+					# Changer la vitesse de la balle si on appuie sur espace
+
+					if event.type == pygame.MOUSEMOTION:
+						# Place le cercle là où se trouve la souris
+						posCircle = event.pos
+					
+				pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(0, 0, 800, 600))
+
+				pygame.draw.circle(screen, (255, 0, 0), posCircle, 20)
+
+				pygame.display.flip()
+		</code></pre>
+	</section>
+
+	<section>
+		<h2>Widget</h2>
+
+		<ul>
+			<li>Bouton, Label, Champ texte, ...</li>
+			<li>Pas inclus dans Pygame</li>
+			<li>Utilisation de la bibliothèque <code>pygame_gui</code></li>
+		</ul>
+
+		<h3>Installation</h3>
+		<pre class="terminal">
+			<b>&> python -m pip install pygame_gui</b>
+		</pre>
+	</section>
+
+	<section>
+		<h2>Pygame_gui</h2>
+		<ul>
+			<li>Configuration du manager de widgets</li>
+		</ul>
+		<pre><code class="lang-python">
+			import pygame
+			import pygame_gui
+			import sys
+
+			pygame.init()
+
+			screen = pygame.display.set_mode((800, 600))
+
+			clock = pygame.time.Clock()
+
+			manager = pygame_gui.UIManager((800, 600))
+
+			while True:
+				# tick renvoie le temps écoulé depuis le dernier tick (en ms)
+				time_delta = clock.tick(60)
+				for event in pygame.event.get():
+					if event.type == pygame.QUIT:
+						sys.exit()
+					
+					# permet à pygame_gui de recevoir les events
+					manager.process_events(event)
+
+				# permet à pygame_gui de mettre à jour les animations (en s)
+				manager.update(time_delta/1000)
+
+				pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(0, 0, 800, 600))
+
+				# affiche les widgets
+				manager.draw_ui(screen)
+
+				pygame.display.flip()
+		</code></pre>
+	</section>
+
+	<section>
+		<h2>Ajout d'un widget</h2>
+		<ul>
+			<li>Ajout d'un bouton</li>
+		</ul>
+		<pre><code class="lang-python">
+			import pygame
+			import pygame_gui
+			from pygame_gui.elements import UIButton
+			import sys
+
+			pygame.init()
+			screen = pygame.display.set_mode((800, 600))
+			clock = pygame.time.Clock()
+			manager = pygame_gui.UIManager((800, 600))
+
+			hello_button = UIButton(
+				relative_rect=pygame.Rect(350, 275, 100, 50),
+				text='Hello World',
+				manager=manager
+			)
+
+			while True:
+				time_delta = clock.tick(60)
+				for event in pygame.event.get():
+					if event.type == pygame.QUIT:
+						sys.exit()
+					manager.process_events(event)
+				manager.update(time_delta/1000)
+				pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(0, 0, 800, 600))
+				manager.draw_ui(screen)
+				pygame.display.flip()
+		</code></pre>
+	</section>
+
+	<section>
+		<h2>Pygame_gui events</h2>
+		<ul>
+			<li>Lorsqu'on appuie sur le bouton cela déclenche un nouveau type d'événement.
+				<small><code>pygame_gui.UI_BUTTON_PRESSED</code></small>
+			</li>
+			<li>Les événements pygame_gui ont un attribut <code>ui_element</code> qui contient une référence vers le widget qui a créé l'événement.</li>
+		</ul>
+	</section>
+
+	<section class="code">
+		<h2>Pygame_gui events</h2>
+		<pre><code class="lang-python">
+			import pygame
+			import pygame_gui
+			from pygame_gui.elements import UIButton
+			import sys
+
+			pygame.init()
+			screen = pygame.display.set_mode((800, 600))
+			clock = pygame.time.Clock()
+			manager = pygame_gui.UIManager((800, 600))
+
+			hello_button = UIButton(
+				relative_rect=pygame.Rect(350, 275, 100, 50),
+				text='Hello World',
+				manager=manager
+			)
+
+			while True:
+				time_delta = clock.tick(60)
+				for event in pygame.event.get():
+					if event.type == pygame.QUIT:
+						sys.exit()
+
+					if event.type == pygame_gui.UI_BUTTON_PRESSED:
+						if event.ui_element == hello_button:
+							print('Hello World!')
+
+					manager.process_events(event)
+				manager.update(time_delta/1000)
+				pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(0, 0, 800, 600))
+				manager.draw_ui(screen)
+				pygame.display.flip()
+		</code></pre>
+	</section>
+
+	<section class="code">
+		<h2>Interaction entre Widget</h2>
+		<pre><code class="lang-python">
+			import pygame
+			import pygame_gui
+			from pygame_gui.elements import UIButton, UILabel, UITextEntryLine
+			import sys
+			
+			pygame.init()
+			screen = pygame.display.set_mode((800, 600))
+			clock = pygame.time.Clock()
+			manager = pygame_gui.UIManager((800, 600))
+			
+			hello_button = UIButton(
+				relative_rect=pygame.Rect(350, 275, 100, 50),
+				text='Hello',
+				manager=manager
+			)
+			
+			input = UITextEntryLine(
+				relative_rect=pygame.Rect(350, 220, 100, 50),
+				manager=manager
+			)
+			
+			display = UILabel(
+				relative_rect=pygame.Rect(350, 330, 100, 50),
+				text='',
+				manager=manager
+			)
+			
+			while True:
+				time_delta = clock.tick(60)
+				for event in pygame.event.get():
+					if event.type == pygame.QUIT:
+						sys.exit()
+
+					if event.type == pygame_gui.UI_BUTTON_PRESSED:
+						if event.ui_element == hello_button:
+							display.set_text('Hello {}'.format(input.get_text()))
+
+					manager.process_events(event)
+				manager.update(time_delta/1000)
+				pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(0, 0, 800, 600))
+				manager.draw_ui(screen)
+				pygame.display.flip()
+		</code></pre>
+	</section>
+
+	<section class="code">
+		<h2>Exemple avec des classes</h2>
+		<pre><code class="lang-python">
+			import pygame
+			import pygame_gui
+			from pygame_gui.elements import UIButton, UITextEntryLine
+			import sys
+
+
+			class Ball:
+				def __init__(self, pos, radius):
+					self.__pos = pos
+					self.__radius = radius
+
+				def set_pos(self, pos):
+					self.__pos = pos
+
+				def set_radius(self, radius):
+					self.__radius = radius
+
+				def draw(self, screen):
+					pygame.draw.circle(screen, (255, 0, 0), self.__pos, self.__radius)
+
+
+			class App:
+				def __init__(self):
+					pygame.init()
+					self.__screen = pygame.display.set_mode((800, 600))
+					self.__manager = pygame_gui.UIManager((800, 600))
+
+					self.__input = UITextEntryLine(
+						relative_rect=pygame.Rect(10, 10, 100, 50),
+						manager=self.__manager
+					)
+					self.__input.set_text("20")
+
+					self.__ok = UIButton(
+						relative_rect=pygame.Rect(120, 10, 100, 50),
+						text='OK',
+						manager=self.__manager
+					)
+
+					self.__ball = Ball((100, 100), 20)
+
+				def process_events(self, event):
+					if event.type == pygame_gui.UI_BUTTON_PRESSED:
+						if event.ui_element == self.__ok:
+							self.__ball.set_radius(float(self.__input.get_text()))
+					if event.type == pygame.MOUSEMOTION:
+						self.__ball.set_pos(event.pos)
+
+				def draw(self):
+					self.__ball.draw(self.__screen)
+
+				def run(self):
+					clock = pygame.time.Clock()
+					while True:
+						time_delta = clock.tick(60)/1000
+						for event in pygame.event.get():
+							if event.type == pygame.QUIT:
+								sys.exit()
+							self.process_events(event)
+							self.__manager.process_events(event)
+						self.__manager.update(time_delta)
+						pygame.draw.rect(self.__screen, (0, 0, 0), pygame.Rect(0, 0, 800, 600))
+						self.draw()
+						self.__manager.draw_ui(self.__screen)
+						pygame.display.flip()
+
+			App().run()
+		</code></pre>
+	</section>
+
+	<section>
+		<h2>Documentation</h2>
+		<h3>Pygame</h3>
+		<p><a href="https://www.pygame.org/docs/">www.pygame.org/docs/</a></p>
+		<h3>Pygame_gui</h3>
+		<p><a href="https://pygame-gui.readthedocs.io/en/latest/">pygame-gui.readthedocs.io/en/latest/</a></p>
+	</section>
+
 	<!--<section>
 		<h2>Rappels</h2>
 		
