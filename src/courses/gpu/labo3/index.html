@@ -53,7 +53,7 @@
 	</ul>
 	<p>All these vectors are normalized.</p>
 	<p>
-		The reflected specular intensity \(\vec{I_s}\) is calculated by \[\vec{I_s} = (\vec{R} \cdot{} \vec{V})^{\alpha}\vec{C_l}\] where \(\vec{C_l}\) is the color of the light and (\alpha\) is the brightness of the material.
+		The reflected specular intensity \(\vec{I_s}\) is calculated by \[\vec{I_s} = (\vec{R} \cdot{} \vec{V})^{\alpha}\vec{C_l}\] where \(\vec{C_l}\) is the color of the light and \(\alpha\) is the brightness of the material.
 	</p>
 	<p>To calculate \(\vec{R}\) we use \[\vec{R} = 2(\vec{N} \cdot{} \vec{L})\vec{N}-\vec{L}\]</p>
 	<p><strong>Modify your shaders to account for specular lighting.</strong></p>
@@ -68,7 +68,7 @@
 	<ul>
 		<li>\(\vec{N}\) is the normal vector to the surface. </li>
 		<li>\(\vec{T}\) is the tangent vector that follows the texture coordinates \(u\).</li>
-		<li>\(\vec{B}\) is the binormal vector that is perpendicular to the other two.</li>
+		<li>\(\vec{B}\) is the bitangent vector that is perpendicular to the other two.</li>
 	</ul>
 	<p>\(\vec{N}\) and \(\vec{T}\) are part of the Vertex Data. \(\vec{B}\) can be computed by \[\vec{B} = \vec{N} \times{} \vec{T}\]</p>
 	<p>These vectors are in general known in the model space. To pass from the tangent space to the model space we use the matrix:\[ \left ( \begin{matrix} T_x & B_x & N_x \\ T_y & B_y & N_y \\ T_z & B_z & N_z \end{matrix} \right ) \]</p>
