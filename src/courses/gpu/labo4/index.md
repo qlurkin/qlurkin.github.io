@@ -39,7 +39,7 @@ Place your particles in a box and let it bounce on the 6 faces. A box can be imp
 <figure id="cube2"></figure>
 <script type='module' src='exercice3.js'> </script>
 
-## Gravité
+## Gravity
 
 Gravity is more an acceleration than a force. It directly modifies the speed of the particles:
 
