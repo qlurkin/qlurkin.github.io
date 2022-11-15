@@ -8,7 +8,9 @@ In this session we will start simulating some particles. We will start by doing 
 
 A particle is simply a point which has a position $(x, y, z)$ and a velocity $(v_x, v_y, v_z)$. To animate it, you just have to update its position at each *frame*.
 
-$$ \begin{array}{rcl} x & = & x + \Delta t \cdot v_x \\ y & = & y + \Delta t \cdot v_y \\ z & = & z + \Delta t \cdot v_z\end{array} $$
+$$ x = x + \Delta t \cdot v_x $$
+$$ y = y + \Delta t \cdot v_y $$
+$$ z = z + \Delta t \cdot v_z $$
 
 In `wgpu-bootstrap`, You can update the state of the App by implementing the `update` method of the `Application` trait. This method receive the $\Delta t$ as parameter.
 
@@ -41,7 +43,9 @@ Place your particles in a box and let it bounce on the 6 faces. A box can be imp
 
 Gravity is more an acceleration than a force. It directly modifies the speed of the particles:
 
-$$ \begin{array}{rcl} v_x & = & v_x + \Delta t \cdot g_x \\ v_y & = & v_y + \Delta t \cdot g_y \\ v_z & = & v_z + \Delta t \cdot g_z\end{array} $$
+$$ v_x = v_x + \Delta t \cdot g_x $$
+$$ v_y = v_y + \Delta t \cdot g_y $$
+$$ v_z = v_z + \Delta t \cdot g_z $$
 
 ### Exercice
 
