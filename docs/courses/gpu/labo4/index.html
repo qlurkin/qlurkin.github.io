@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 4 - Simulation on CPU</title>
+    <script src="/document.js" defer></script>
+</head>
+<body>
+    <h1>Lab 4 - Simulation on CPU 
+        
+    </h1>
+    
+    <p>In this session we will start simulating some particles. We will start by doing it on the CPU to understand how these simulations work. In the next sessions we will see how to calculate them on GPU</p>
+<h2 id="animate-a-particle">Animate a particle</h2>
+<p>A particle is simply a point which has a position $(x, y, z)$ and a velocity $(v_x, v_y, v_z)$. To animate it, you just have to update its position at each <em>frame</em>.</p>
+<p>$$ \begin{array}{rcl} x &amp; = &amp; x + \Delta t \cdot v_x \ y &amp; = &amp; y + \Delta t \cdot v_y \ z &amp; = &amp; z + \Delta t \cdot v_z\end{array} $$</p>
+<p>In <code>wgpu-bootstrap</code>, You can update the state of the App by implementing the <code>update</code> method of the <code>Application</code> trait. This method receive the $\Delta t$ as parameter.</p>
+<h3 id="exercice">Exercice</h3>
+<p>To draw multiple particles we will use wgpu instances. It is possible to draw multiple instances of the same vertex buffer in one draw call. In order to draw each instance at its own position we add an instance buffer that contains data for each instance such position or any other meaningfull data.</p>
+<p>In <code>wgpu-bootstrap</code>, there is a <code>Particle</code> struct that contains the position and velocity of a particle. This struct has a <code>desc</code> method that let you use it as an Instance Buffer. With <code>Particle</code> as instance buffer, you can use the position of the particle in your shader to translate the vertices used to display that particle.</p>
+<p>Make a program that update the Particle Instance Buffer at each frame.</p>
+<h2 id="collision">Collision</h2>
+<p>When a collision is detected, the particle is reflected with respect to the normal to the collision surface. So it is the direction of the velocity vector of the particle that changes.</p>
+<p>The detection of the collision and the calculation of the normal depend on the collision surface. For a plane with equation $ ax + by + cz + d = 0 $ the normal is $(a, b, c)$. Such a plane separates the space in 2 regions: The region where the expression $ ax + by + cz + d $ is positive and the one where it is negative. We generally choose the positive region as the allowed area for the particle and we detect a collision as soon as it passes in the negative region.</p>
+<p>Once the collision is detected, the particle is in the &quot;forbidden zone&quot;. It is usually necessary to move it back into the allowed area before letting the simulation continue.</p>
+<p>It is of course possible to detect collisions with other primitives than planes.</p>
+<h3 id="exercice-1">Exercice</h3>
+<p>Place your particles in a box and let it bounce on the 6 faces. A box can be implemented by 6 planes or by <a href="https://www.iquilezles.org/www/articles/boxfunctions/boxfunctions.htm">a suitable SDF <em>(Signed Distance Field)</em> function</a>.</p>
+<figure id="cube2"></figure>
+<script type='module' src='exercice3.js'> </script>
+
+<h2 id="gravité">Gravité</h2>
+<p>Gravity is more an acceleration than a force. It directly modifies the speed of the particles:</p>
+<p>$$ \begin{array}{rcl} v_x &amp; = &amp; v_x + \Delta t \cdot g_x \ v_y &amp; = &amp; v_y + \Delta t \cdot g_y \ v_z &amp; = &amp; v_z + \Delta t \cdot g_z\end{array} $$</p>
+<h3 id="exercice-2">Exercice</h3>
+<p>Update your program to add gravity.</p>
+<figure id="cube3"></figure>
+<script type='module' src='exercice4.js'> </script>
+
+
+
+</body>
+</html>
