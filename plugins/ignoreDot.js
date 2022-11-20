@@ -7,7 +7,8 @@ function ignoreDot() {
             let ignore = false
             for(const part of parts) {
                 if(part.startsWith('.')) {
-                    ignore = true
+                    if(part !== '.gitignore')
+                        ignore = true
                 }
             }
             if(ignore) {

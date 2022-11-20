@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cours 6 - Principes SOLID</title>
+    <title>Cours 6 - Principes SOLID (1)</title>
     <script src="https://quentin.lurkin.xyz/deck.js" defer></script>
     <style>
         .letter {
@@ -19,7 +19,7 @@
 </head>
 <body>
    <section>
-      <h1>PO3T - programmation Orientée Objets <small>Cours 6 - Principes SOLID</small></h1>
+      <h1>PO3T - programmation Orientée Objets <small>Cours 6 - Principes SOLID (1)</small></h1>
       <p>Quentin Lurkin</p>
    </section> 
    <section>
@@ -41,58 +41,492 @@
    </section>
 
    <section>
+    <h2>Application exemple</h2>
+
+    <ul>
+        <li>Application de vente fictive</li>
+    </ul>
+   </section>
+
+   <section class="code">
+    <h2>Classe Item</h2>
+    <pre><code class="lang-csharp">
+        namespace solid {
+            class Item {
+                private String name;
+                private double price;
+                public String Name { get { return name; } }
+                public double Price { get { return price; } }
+        
+                public Item(String name, double price) {
+                    this.name = name;
+                    this.price = price;
+                }
+            }
+        }
+    </code></pre>
+   </section>
+
+   <section class="code">
+    <h2>Classe Order</h2>
+    <pre><code class="lang-csharp">
+        namespace solid {
+            class Order {
+                class OrderItem {
+                    private Item item;
+                    private int quantity;
+        
+                    public Item Item { get { return item; }}
+        
+                    public int Quantity { get { return quantity; } }
+        
+                    public OrderItem(Item item, int quantity) {
+                        this.item = item;
+                        this.quantity = quantity;
+                    }
+                }
+        
+                public enum OrderStatus {
+                    Open,
+                    Paid
+                }
+        
+                private List&lt;OrderItem> items;
+                private OrderStatus status;
+        
+                public OrderStatus Status { get { return status; } }
+        
+                public Order() {
+                    items = new List&lt;OrderItem>();
+                    status = OrderStatus.Open;
+                }
+        
+                public void Add_item(Item item, int quantity) {
+                    items.Add(new OrderItem(item, quantity));
+                }
+        
+                public double Total_price() {
+                    double total = 0;
+                    foreach(OrderItem oi in items) {
+                        total += oi.Item.Price * oi.Quantity;
+                    }
+                    return total;
+                }
+        
+                public void Pay(String payment_type, String security_code) {
+                    if(payment_type == "debit") {
+                        Console.WriteLine("Processing Debit Payement");
+                        Console.WriteLine("Verifying Security Code: {0}", security_code);
+                        status = OrderStatus.Paid;
+                    }
+                    else if(payment_type == "credit") {
+                        Console.WriteLine("Processing Credit Payement");
+                        Console.WriteLine("Verifying Security Code: {0}", security_code);
+                        status = OrderStatus.Paid;
+                    }
+                    else {
+                        throw new Exception(String.Format("Unknown Payement Type: {0}", payment_type));
+                    }
+                }
+            }
+        }
+    </code></pre>
+   </section>
+
+   <section>
+    <h2>Utilisation</h2>
+    <pre><code class="lang-csharp">
+        namespace solid {
+            class Program {
+                public static void Main() {
+                    Order order = new Order();
+        
+                    order.Add_item(new Item("Keyboard", 50), 1);
+                    order.Add_item(new Item("SSD", 150), 1);
+                    order.Add_item(new Item("USB Cable", 2), 5);
+        
+                    Console.WriteLine(order.Total_price());
+                    order.Pay("credit", "7683625");
+                    Console.WriteLine(order.Status);
+                }
+            }
+        }
+    </code></pre>
+    <pre class="terminal">
+        <strong>$> dotnet run</strong>
+        210
+        Processing Credit Payement
+        Verifying Security Code: 7683625
+        Paid
+    </pre>
+   </section>
+
+   <section>
     <h1>Single Responsibility Principle</h1>
    </section>
-   <section>
-    <h1>Open/closed Principle</h1>
-   </section>
-   <section>
-    <h1>Liskov Substitution Principle</h1>
-   </section>
-   <section>
-    <h1>Interface Segregation Principle</h1>
-   </section>
-   <section>
-    <h1>Dependency Inversion Principle</h1>
-   </section>
 
    <section>
-    <h1>Principes STUPID</h1>
-   </section>
+    <h2>Single Responsibility Principle</h2>
 
-   <section>
-    <h2>STUPID</h2>
     <ul>
-        <li>Les six principes à retenir avec l’acronyme <strong>STUPID</strong>
-            <ul>
-                <li><span class='letter'>S</span>ingleton</li>
-                <li><span class='letter'>T</span>ight Coupling</li>
-                <li><span class='letter'>U</span>ntestability</li>
-                <li><span class='letter'>P</span>remature Optimization</li>
-                <li><span class='letter'>I</span>ndescriptive Naming</li>
-                <li><span class='letter'>D</span>uplication</li>
-            </ul>
-        </li>
+        <li>Les classes et les méthodes ne doivent être responsables que d'une chose</li>
+        <li>Cela permet d'avoir une grande cohésion</li>
     </ul>
    </section>
 
    <section>
-    <h1>Singleton</h1>
+    <h2>Problème dans l'application exemple</h2>
+    <ul>
+        <li>La classe <code>Order</code> fait trop de chose</li>
+        <li>Construire la commande</li>
+        <li>Exécute le paiement</li>
+        <li>Il faut la diviser <small>Création de la classe <code>PaymentProcessor</code></small></li>
+    </ul>
    </section>
-   <section>
-    <h1>Tight Coupling</h1>
+
+   <section class="code">
+        <h2>Classe PaymentProcessor</h2>
+        <pre><code class="lang-csharp">
+            namespace solid {
+                class PaymentProcessor {
+                    public void Pay_credit(Order order, String security_code) {
+                        Console.WriteLine("Processing Credit Payement");
+                        Console.WriteLine("Verifying Security Code: {0}", security_code);
+                        order.Status = Order.OrderStatus.Paid;
+                    }
+            
+                    public void Pay_debit(Order order, String security_code) {
+                        Console.WriteLine("Processing Debit Payement");
+                        Console.WriteLine("Verifying Security Code: {0}", security_code);
+                        order.Status = Order.OrderStatus.Paid;
+                    }
+                }
+            }
+        </code></pre>
    </section>
-   <section>
-    <h1>Untestability</h1>
+
+   <section class="code">
+    <h2>Classe Order</h2>
+    <pre><code class="lang-csharp">
+        namespace solid {
+            class Order {
+                class OrderItem {
+                    private Item item;
+                    private int quantity;
+        
+                    public Item Item { get { return item; }}
+        
+                    public int Quantity { get { return quantity; } }
+        
+                    public OrderItem(Item item, int quantity) {
+                        this.item = item;
+                        this.quantity = quantity;
+                    }
+                }
+        
+                public enum OrderStatus {
+                    Open,
+                    Paid
+                }
+        
+                private List&lt;OrderItem> items;
+                private OrderStatus status;
+        
+                public OrderStatus Status {
+                    get { return status; }
+                    set { status = value; }
+                }
+        
+                public Order() {
+                    items = new List&lt;OrderItem>();
+                    status = OrderStatus.Open;
+                }
+        
+                public void Add_item(Item item, int quantity) {
+                    items.Add(new OrderItem(item, quantity));
+                }
+        
+                public double Total_price() {
+                    double total = 0;
+                    foreach(OrderItem oi in items) {
+                        total += oi.Item.Price * oi.Quantity;
+                    }
+                    return total;
+                }
+            }
+        }
+    </code></pre>
    </section>
+
    <section>
-    <h1>Premature Optimization</h1>
+    <h2>Utilisation</h2>
+    <pre><code class="lang-csharp">
+        namespace solid {
+            class Program {
+                public static void Main() {
+                    Order order = new Order();
+        
+                    order.Add_item(new Item("Keyboard", 50), 1);
+                    order.Add_item(new Item("SSD", 150), 1);
+                    order.Add_item(new Item("USB Cable", 2), 5);
+        
+                    Console.WriteLine(order.Total_price());
+                    new PaymentProcessor().Pay_credit(order, "7683625");
+                    Console.WriteLine(order.Status);
+                }
+            }
+        }
+    </code></pre>
+    <pre class="terminal">
+        <strong>$> dotnet run</strong>
+        210
+        Processing Credit Payement
+        Verifying Security Code: 7683625
+        Paid
+    </pre>
    </section>
+
    <section>
-    <h1>Indescriptive Naming</h1>
+    <h1>Open/closed Principle</h1>
    </section>
+
    <section>
-    <h1>Duplication</h1>
+    <h2>Open/closed Principle</h2>
+    <ul>
+        <li>Open: Le code doit être ouvert aux extensions <small>
+            On doit pouvoir ajouter des fonctionnalités
+        </small></li>
+        <li>Closed: le code doit être fermé aux modifications <small>
+            Sans modifier le code existant
+        </small></li>
+    </ul>
+   </section>
+
+   <section>
+    <h2>Problème dans l'application exemple</h2>
+    <ul>
+        <li>L'ajout d'un type de paiement nécessite de modifier le code de <code>PaymentProcessor</code></li>
+        <li>Nous allons utiliser une interface et des sous-classes</li>
+    </ul>
+   </section>
+
+   <section class="code">
+    <h2>Interface PaymentProcessor</h2>
+    <pre><code class="lang-csharp">
+        namespace solid {
+            interface PaymentProcessor {
+                void Pay(Order order, String security_code);
+            }
+        }
+    </code></pre>
+   </section>
+
+   <section class="code">
+    <h2>Classe CreditPaymentProcessor</h2>
+    <pre><code class="lang-csharp">
+        namespace solid {
+            class CreditPaymentProcessor : PaymentProcessor {
+                public void Pay(Order order, String security_code) {
+                    Console.WriteLine("Processing Credit Payement");
+                    Console.WriteLine("Verifying Security Code: {0}", security_code);
+                    order.Status = Order.OrderStatus.Paid;
+                }
+            }
+        }
+    </code></pre>
+   </section>
+
+   <section class="code">
+    <h2>Classe DebitPaymentProcessor</h2>
+    <pre><code class="lang-csharp">
+        namespace solid {
+            class DebitPaymentProcessor : PaymentProcessor {
+                public void Pay(Order order, String security_code) {
+                    Console.WriteLine("Processing Debit Payement");
+                    Console.WriteLine("Verifying Security Code: {0}", security_code);
+                    order.Status = Order.OrderStatus.Paid;
+                }
+            }
+        }
+    </code></pre>
+   </section>
+
+   <section>
+    <h2>Open/Closed Principle</h2>
+    <ul>
+        <li>Ajoutons Paypal</li>
+    </ul>
+    <pre><code class="lang-csharp">
+        namespace solid {
+            class PaypalPaymentProcessor : PaymentProcessor {
+                public void Pay(Order order, String security_code) {
+                    Console.WriteLine("Processing Paypal Payement");
+                    Console.WriteLine("Verifying Email Address: {0}", security_code);
+                    order.Status = Order.OrderStatus.Paid;
+                }
+            }
+        }
+    </code></pre>
+   </section>
+
+   <section>
+    <h2>Utilisation</h2>
+    <pre><code class="lang-csharp">
+        namespace solid {
+            class Program {
+                public static void Main() {
+                    Order order = new Order();
+        
+                    order.Add_item(new Item("Keyboard", 50), 1);
+                    order.Add_item(new Item("SSD", 150), 1);
+                    order.Add_item(new Item("USB Cable", 2), 5);
+        
+                    Console.WriteLine(order.Total_price());
+                    new PaypalPaymentProcessor().Pay(order, "lur@ecam.be");
+                    Console.WriteLine(order.Status);
+                }
+            }
+        }
+    </code></pre>
+    <pre class="terminal">
+        <strong>$> dotnet run</strong>
+        210
+        Processing Paypal Payement
+        Verifying Email Address: lur@ecam.be
+        Paid
+    </pre>
+   </section>
+
+   <section>
+    <h1>Liskov Substitution Principle</h1>
+   </section>
+
+   <section>
+    <h2>Liskov Substitution Principle</h2>
+    <ul>
+        <li>Un type devrait pouvoir être remplacé par un sous-type
+            <small>Sans que le programme devienne sémantiquement incorrect</small>
+        </li>
+        <li><strong>Attention: syntaxiquement, un sous-type peut toujours remplacer un de ses types de base</strong></li>
+        <li>LSP impose qu'un remplacement par un sous-type doit toujours <strong>avoir du sens</strong>.</li>
+    </ul>
+   </section>
+
+   <section>
+    <h2>Problème dans l'application exemple</h2>
+    <ul>
+        <li>La class PaypalPaymentProcessor prend l'adresse email dans un paramètre destiné à un code de sécurité.</li>
+        <li>Déplaçons les informations propre à la méthode de paiement dans le constructeur</li>
+    </ul>
+   </section>
+
+   <section class="code">
+    <h2>Interface PaymentProcessor</h2>
+    <pre><code class="lang-csharp">
+        namespace solid {
+            interface PaymentProcessor {
+                void Pay(Order order);
+            }
+        }
+    </code></pre>
+   </section>
+
+   <section class="code">
+    <h2>Class PaypalPaymentProcessor</h2>
+    <pre><code class="lang-csharp">
+        namespace solid {
+            class PaypalPaymentProcessor : PaymentProcessor {
+                private String email;
+        
+                public PaypalPaymentProcessor(String email) {
+                    this.email = email;
+                }
+        
+                public void Pay(Order order) {
+                    Console.WriteLine("Processing Paypal Payement");
+                    Console.WriteLine("Verifying Email Address: {0}", email);
+                    order.Status = Order.OrderStatus.Paid;
+                }
+            }
+        }
+    </code></pre>
+   </section>
+
+   <section class="code">
+    <h2>Class CreditPaymentProcessor</h2>
+    <pre><code class="lang-csharp">
+        namespace solid {
+            class CreditPaymentProcessor : PaymentProcessor {
+                private String security_code;
+        
+                CreditPaymentProcessor(string security_code) {
+                    this.security_code = security_code;
+                }
+        
+                public void Pay(Order order) {
+                    Console.WriteLine("Processing Credit Payement");
+                    Console.WriteLine("Verifying Security Code: {0}", security_code);
+                    order.Status = Order.OrderStatus.Paid;
+                }
+            }
+        }
+    </code></pre>
+   </section>
+
+   <section class="code">
+    <h2>Class DebitPaymentProcessor</h2>
+    <pre><code class="lang-csharp">
+        namespace solid {
+            class DebitPaymentProcessor : PaymentProcessor {
+                private String security_code;
+        
+                DebitPaymentProcessor(string security_code) {
+                    this.security_code = security_code;
+                }
+                
+                public void Pay(Order order) {
+                    Console.WriteLine("Processing Debit Payement");
+                    Console.WriteLine("Verifying Security Code: {0}", security_code);
+                    order.Status = Order.OrderStatus.Paid;
+                }
+            }
+        }
+    </code></pre>
+   </section>
+
+   <section>
+    <h2>Utilisation</h2>
+    <pre><code class="lang-csharp">
+        namespace solid {
+            class Program {
+                public static void Main() {
+                    Order order = new Order();
+        
+                    order.Add_item(new Item("Keyboard", 50), 1);
+                    order.Add_item(new Item("SSD", 150), 1);
+                    order.Add_item(new Item("USB Cable", 2), 5);
+        
+                    Console.WriteLine(order.Total_price());
+                    new PaypalPaymentProcessor("lur@ecam.be").Pay(order);
+                    Console.WriteLine(order.Status);
+                }
+            }
+        }
+    </code></pre>
+    <pre class="terminal">
+        <strong>$> dotnet run</strong>
+        210
+        Processing Paypal Payement
+        Verifying Email Address: lur@ecam.be
+        Paid
+    </pre>
+   </section>
+
+   <section>
+    <h2>Crédit</h2>
+    <ul>
+        <li><a href="https://www.youtube.com/watch?v=pTB30aXS77U">https://www.youtube.com/watch?v=pTB30aXS77U</a></li>
+    </ul>
    </section>
 </body>
 </html>
