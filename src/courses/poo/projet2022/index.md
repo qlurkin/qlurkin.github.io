@@ -1,8 +1,6 @@
 ---
-title: Écosystème
+title: Projet 2022 - Écosystème
 ---
-
-# PO3L - Projet <small>Écosystème</small>
 
 ## Description
 
@@ -33,11 +31,9 @@ On vous demande de réaliser un simulateur d'**écosystème simplifié**. Dans c
 
 **Dans un dépôt Github** vous remettrez:
 
-- **Un projet** correspondant à la description ci-dessus dans **un langage de votre choix** mais permettant de faire l'**héritage** et des **classes abstraites**.
+- **Un projet C# MAUI** correspondant à la description ci-dessus.
 
     La description ne mentionne rien sur comment les différentes formes de vie s'organisent pour se déplacer, se nourrir, se reproduire. Il est bien entendu possible d'implémenter beaucoup d'espèces différentes qui auraient des comportements divers et variés. Votre projet devra implémenter, au minimum, une espèce de carnivore, une espèce d'herbivore et une espèce de plante. Il devra être conçu pour qu'il soit facile **d'ajouter des espèces**.
-
-    Il n'est pas obligatoire que votre projet ai une interface graphique mais il faudra qu'on puisse voir que **la simulation fonctionne**.
 
 - Un **Rapport** comprenant :
     - un diagramme de classes,
@@ -46,7 +42,7 @@ On vous demande de réaliser un simulateur d'**écosystème simplifié**. Dans c
 
     Le rapport sera inclus dans le dépôt Github au format **Markdown**.
 
-Les liens de vos dépôts sont à remettre sur **[claco](https://claco.ecam.be/#/desktop/workspaces/open/3bepo30/resources/remise-projet-2021)** pour le **3 janvier à 18h**. Tous les commit ultérieurs seront ignorés.
+Les liens de vos dépôts sont à remettre sur **[Teams](https://ecambxl.sharepoint.com/:x:/s/PO3TL-ProgrammationOrienteObjets2022-2023/EeX-LCyocDdGnukG68_I5iYB7p3Hk6QhUZRqr00i4TcmCA?e=E3UZbM)** pour le **8 janvier 2023 à 23h59**. Tous les commits ultérieurs seront ignorés.
 
 Le projet est à faire en **binôme**.
 
