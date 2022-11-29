@@ -12,5 +12,14 @@ export function Particle(x, y, z, vx, vy, vz, geometry, material) {
         }
     }
 
+    that.verlet = function (dt, accFn) {
+        for (let k of ['x', 'y', 'z']) {
+            const a = accFn(that.position)
+            that.position[k] += that.velocity[k] * dt + 0.5 * a[k] * dt * dt
+            const aa = accFn(that.position)
+            that.velocity[k] += (a[k] + aa[k])/2 * dt
+        }
+    }
+
     return that
 }

@@ -45,6 +45,7 @@ const animate = function () {
     const dt = 0.016
     for(let point of particles) {
         point.update(dt)
+        //point.verlet(dt, () => new THREE.Vector3(0.0, 0.0, -9.81))
         box(point, new THREE.Vector3(0.45, 0.45, 0.45))
         point.velocity.z += -9.81 * dt
     }

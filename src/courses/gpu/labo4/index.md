@@ -1,5 +1,5 @@
 ---
-title: Lab 4 - Simulation on CPU
+title: Lab 4 & 5 - Simulation on CPU
 ---
 
 In this session we will start simulating some particles. We will start by doing it on the CPU to understand how these simulations work. In the next sessions we will see how to calculate them on GPU
@@ -54,4 +54,6 @@ Update your program to add gravity.
 <figure id="cube3"></figure>
 <script type='module' src='exercice4.js'> </script>
 
+## Compute shader
 
+Use a Compute Shader to run the simulation. You must create a Compute Pipeline and the associated Bind Groups. `wgpu_bootstrap` provide a `Computation` struct to send computation commands to the GPU. You can start from [this example](https://github.com/qlurkin/wgpu-bootstrap/blob/main/examples/compute.rs).
