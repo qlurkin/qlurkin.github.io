@@ -9,6 +9,7 @@
         "Lurkin",
         "Matplotlib",
         "numpy",
+        "Paypal",
         "pygame",
         "tinylr"
     ],

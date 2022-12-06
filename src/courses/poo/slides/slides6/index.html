@@ -115,17 +115,17 @@
         
                 public void Pay(String payment_type, String security_code) {
                     if(payment_type == "debit") {
-                        Console.WriteLine("Processing Debit Payement");
+                        Console.WriteLine("Processing Debit Payment");
                         Console.WriteLine("Verifying Security Code: {0}", security_code);
                         status = OrderStatus.Paid;
                     }
                     else if(payment_type == "credit") {
-                        Console.WriteLine("Processing Credit Payement");
+                        Console.WriteLine("Processing Credit Payment");
                         Console.WriteLine("Verifying Security Code: {0}", security_code);
                         status = OrderStatus.Paid;
                     }
                     else {
-                        throw new Exception(String.Format("Unknown Payement Type: {0}", payment_type));
+                        throw new Exception(String.Format("Unknown Payment Type: {0}", payment_type));
                     }
                 }
             }
@@ -155,7 +155,7 @@
     <pre class="terminal">
         <strong>$> dotnet run</strong>
         210
-        Processing Credit Payement
+        Processing Credit Payment
         Verifying Security Code: 7683625
         Paid
     </pre>
@@ -190,13 +190,13 @@
             namespace solid {
                 class PaymentProcessor {
                     public void Pay_credit(Order order, String security_code) {
-                        Console.WriteLine("Processing Credit Payement");
+                        Console.WriteLine("Processing Credit Payment");
                         Console.WriteLine("Verifying Security Code: {0}", security_code);
                         order.Status = Order.OrderStatus.Paid;
                     }
             
                     public void Pay_debit(Order order, String security_code) {
-                        Console.WriteLine("Processing Debit Payement");
+                        Console.WriteLine("Processing Debit Payment");
                         Console.WriteLine("Verifying Security Code: {0}", security_code);
                         order.Status = Order.OrderStatus.Paid;
                     }
@@ -280,7 +280,7 @@
     <pre class="terminal">
         <strong>$> dotnet run</strong>
         210
-        Processing Credit Payement
+        Processing Credit Payment
         Verifying Security Code: 7683625
         Paid
     </pre>
@@ -327,7 +327,7 @@
         namespace solid {
             class CreditPaymentProcessor : PaymentProcessor {
                 public void Pay(Order order, String security_code) {
-                    Console.WriteLine("Processing Credit Payement");
+                    Console.WriteLine("Processing Credit Payment");
                     Console.WriteLine("Verifying Security Code: {0}", security_code);
                     order.Status = Order.OrderStatus.Paid;
                 }
@@ -342,7 +342,7 @@
         namespace solid {
             class DebitPaymentProcessor : PaymentProcessor {
                 public void Pay(Order order, String security_code) {
-                    Console.WriteLine("Processing Debit Payement");
+                    Console.WriteLine("Processing Debit Payment");
                     Console.WriteLine("Verifying Security Code: {0}", security_code);
                     order.Status = Order.OrderStatus.Paid;
                 }
@@ -360,7 +360,7 @@
         namespace solid {
             class PaypalPaymentProcessor : PaymentProcessor {
                 public void Pay(Order order, String security_code) {
-                    Console.WriteLine("Processing Paypal Payement");
+                    Console.WriteLine("Processing Paypal Payment");
                     Console.WriteLine("Verifying Email Address: {0}", security_code);
                     order.Status = Order.OrderStatus.Paid;
                 }
@@ -391,7 +391,7 @@
     <pre class="terminal">
         <strong>$> dotnet run</strong>
         210
-        Processing Paypal Payement
+        Processing Paypal Payment
         Verifying Email Address: lur@ecam.be
         Paid
     </pre>
@@ -443,7 +443,7 @@
                 }
         
                 public void Pay(Order order) {
-                    Console.WriteLine("Processing Paypal Payement");
+                    Console.WriteLine("Processing Paypal Payment");
                     Console.WriteLine("Verifying Email Address: {0}", email);
                     order.Status = Order.OrderStatus.Paid;
                 }
@@ -459,12 +459,12 @@
             class CreditPaymentProcessor : PaymentProcessor {
                 private String security_code;
         
-                CreditPaymentProcessor(string security_code) {
+                public CreditPaymentProcessor(string security_code) {
                     this.security_code = security_code;
                 }
         
                 public void Pay(Order order) {
-                    Console.WriteLine("Processing Credit Payement");
+                    Console.WriteLine("Processing Credit Payment");
                     Console.WriteLine("Verifying Security Code: {0}", security_code);
                     order.Status = Order.OrderStatus.Paid;
                 }
@@ -480,12 +480,12 @@
             class DebitPaymentProcessor : PaymentProcessor {
                 private String security_code;
         
-                DebitPaymentProcessor(string security_code) {
+                public DebitPaymentProcessor(string security_code) {
                     this.security_code = security_code;
                 }
                 
                 public void Pay(Order order) {
-                    Console.WriteLine("Processing Debit Payement");
+                    Console.WriteLine("Processing Debit Payment");
                     Console.WriteLine("Verifying Security Code: {0}", security_code);
                     order.Status = Order.OrderStatus.Paid;
                 }
@@ -516,7 +516,7 @@
     <pre class="terminal">
         <strong>$> dotnet run</strong>
         210
-        Processing Paypal Payement
+        Processing Paypal Payment
         Verifying Email Address: lur@ecam.be
         Paid
     </pre>
