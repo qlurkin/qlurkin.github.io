@@ -1,5 +1,6 @@
 class PriorityQueue:
-	data = []
+	def __init__(self):
+		self.data = []
 
 	def enqueue(self, value, priority):
 		# Could be better
@@ -48,11 +49,8 @@ def successors(node):
 	for dl, dc in directions:
 		nl = l + dl
 		nc = c + dc
-		try:
-			if laby[nl][nc] in [' ', 'E']:
-				res.append((nl, nc))
-		except IndexError:
-			pass
+		if laby[nl][nc] in [' ', 'E']:
+			res.append((nl, nc))
 	return res
 
 def heuristic(node):

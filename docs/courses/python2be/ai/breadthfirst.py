@@ -1,5 +1,6 @@
 class Queue:
-	data = []
+	def __init__(self):
+		self.data = []
 
 	def enqueue(self, value):
 		self.data.append(value)
@@ -46,11 +47,8 @@ def successors(node):
 	for dl, dc in directions:
 		nl = l + dl
 		nc = c + dc
-		try:
-			if laby[nl][nc] in [' ', 'E']:
-				res.append((nl, nc))
-		except IndexError:
-			pass
+		if laby[nl][nc] in [' ', 'E']:
+			res.append((nl, nc))
 	return res
 
 print(BFS((8, 1), successors, [(1, 9)]))
