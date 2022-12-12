@@ -352,7 +352,8 @@
 	<h2>Breadth-First Search</h2>
 	<pre><code>
 		class Queue:
-			data = []
+			def __init__(self):
+				self.data = []
 
 			def enqueue(self, value):
 				self.data.append(value)
@@ -399,11 +400,8 @@
 			for dl, dc in directions:
 				nl = l + dl
 				nc = c + dc
-				try:
-					if laby[nl][nc] in [' ', 'E']:
-						res.append((nl, nc))
-				except IndexError:
-					pass
+				if laby[nl][nc] in [' ', 'E']:
+					res.append((nl, nc))
 			return res
 
 		print(BFS((8, 1), successors, [(1, 9)]))
@@ -440,7 +438,8 @@
 	<h2>Depth-First Search</h2>
 	<pre><code>
 		class Stack:
-			data = []
+			def __init__(self):
+				self.data = []
 
 			def push(self, value):
 				self.data.append(value)
@@ -487,11 +486,8 @@
 			for dl, dc in directions:
 				nl = l + dl
 				nc = c + dc
-				try:
-					if laby[nl][nc] in [' ', 'E']:
-						res.append((nl, nc))
-				except IndexError:
-					pass
+				if laby[nl][nc] in [' ', 'E']:
+					res.append((nl, nc))
 			return res
 
 		print(DFS((8, 1), successors, [(1, 9)]))
@@ -535,11 +531,8 @@
 			for dl, dc in directions:
 				nl = l + dl
 				nc = c + dc
-				try:
-					if laby[nl][nc] in [' ', 'E']:
-						res.append((nl, nc))
-				except IndexError:
-					pass
+				if laby[nl][nc] in [' ', 'E']:
+					res.append((nl, nc))
 			return res
 
 		res = []
@@ -584,7 +577,8 @@
 	<h2>Greedy Best-First Search</h2>
 	<pre><code>
 		class PriorityQueue:
-			data = []
+			def __init__(self):
+				self.data = []
 
 			def enqueue(self, value, priority):
 				# Could be better
@@ -633,11 +627,8 @@
 			for dl, dc in directions:
 				nl = l + dl
 				nc = c + dc
-				try:
-					if laby[nl][nc] in [' ', 'E']:
-						res.append((nl, nc))
-				except IndexError:
-					pass
+				if laby[nl][nc] in [' ', 'E']:
+					res.append((nl, nc))
 			return res
 
 		def heuristic(node):
