@@ -10,6 +10,11 @@
 </head>
 
 <body>
+    
+
+
+
+
     <section>
         <h1>Activity Lifecycle</h1>
     </section>
@@ -111,13 +116,137 @@
         </ul>
     </section>
     <section>
+        <h2>Configuration Change</h2>
+        <ul>
+            <li>Activities are restarted on each <strong>Configuration change</strong></li>
+            <li>Example: Rotate the the device</li>
+        </ul>
+    </section>
+    <section>
+        <h2>Problem when recreating an Activity</h2>
+        <ul>
+            <li>Data stored in the Activity instance are lost</li>
+            <li>Ui State must be stored somewhere else</li>
+        </ul>
+    </section>
+    <section>
+        <h2>ViewModel</h2>
+        <ul>
+            <li>A ViewModel is a class that will survive configuration changes</li>
+        </ul>
+        <figure>
+            <img src="./viewmodel.svg" alt="">
+        </figure>
+    </section>
+    <section>
+        <h2>ViewModel</h2>
+        <ul>
+            <li>Add dependency to your build.gradle(Module)</li>
+        </ul>
+        <pre><code class="lang-kotlin">
+            implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1"
+        </code></pre>
+    </section>
+    <section>
+        <h2>UI Layer</h2>
+        <figure>
+            <img src="./viewmodel.png" alt="">
+        </figure>
+    </section>
+    <section>
+        <h2>UI State</h2>
+        <ul>
+            <li>Create a class that hold the state of your UI
+                <pre><code class="lang-kotlin">
+                    data class UiState(
+                        val quotes: List&lt;Quote> = dataSource()
+                    )
+                </code></pre>
+            </li>
+            <li>Based on a model
+                <pre><code class="lang-kotlin">
+                    data class Quote(
+                        val content: String,
+                        val author: String
+                    )
+                </code></pre>
+            </li>
+        </ul>
+    </section>
+    <section>
+        <h2>ViewModel</h2>
+        <pre><code class="lang-kotlin">
+            class AppViewModel: ViewModel() {
+                private val _uiState = MutableStateFlow(UiState())
+                val uiState: StateFlow&lt;UiState> = _uiState.asStateFlow()
+            }
+        </code></pre>
+        <ul>
+            <li>StateFlow are Observable</li>
+            <li>They can trigger Recomposition of the UI</li>
+        </ul>
+    </section>
+    <section>
+        <h2>ViewModel Use in UI</h2>
+        <pre><code class="lang-kotlin">
+            @Composable
+            fun QuotesApp(appViewModel: AppViewModel = viewModel()) {
+                val uiState by appViewModel.uiState.collectAsState()
+                
+                ThingsTheme {
+                    Surface(
+                        modifier = Modifier.fillMaxSize(),
+                        color = MaterialTheme.colors.background
+                    ) {
+                        QuoteList(quoteList = uiState.quotes)
+                    }
+                }
+            }
+        </code></pre>
+        <ul>
+            <li>The <code>viewModel()</code> function create or reuse an <code>AppViewModel</code> instance</li>
+            <li>the <code>by</code> keyword delegate the <code>get()</code> and <code>set()</code> of the property to the <code>getValue()</code> and <code>setValue()</code> method of the instance that follow.</li>
+        </ul>
+        <pre><code class="lang-kotlin">
+            @Composable
+            fun QuoteList(quoteList: List&lt;Quote>, modifier: Modifier = Modifier) {
+                LazyColumn {
+                    items(quoteList){quote ->
+                        QuoteCard(quote)
+                    }
+                }
+            }
+
+            @Composable
+            fun QuoteCard(quote: Quote, modifier: Modifier = Modifier) {
+                Card(modifier = modifier.padding(8.dp), elevation = 4.dp) {
+                    Column {
+                        Surface(color= MaterialTheme.colors.primary, modifier = Modifier.fillMaxWidth()) {
+                            Text(
+                                text = quote.author,
+                                modifier = Modifier.padding(16.dp),
+                                style = MaterialTheme.typography.h5,
+                                color = Color.White,
+                            )
+                        }
+                        Text(
+                            text = quote.content,
+                            modifier = Modifier.padding(16.dp),
+                            style = MaterialTheme.typography.body1,
+                        )
+                    }
+                }
+            }
+        </code></pre>
+    </section>
+    <!--<section>
         <h2>Problem when recreating an Activity</h2>
         <ul>
             <li>All values that only exist in memory are lost<small> Dynamic text in TextView, ...</small></li>
             <li>Relevant data must be saved !</li>
         </ul>
-    </section>
-    <section>
+    </section>-->
+    <!--<section>
         <h2>Data Persistence</h2>
         <ul>
             <li>SavedInstanceState: key/value pairs, temporary</li>
@@ -163,7 +292,7 @@
                 </code></pre>
             </li>
         </ul>
-    </section>
+    </section>-->
 </body>
 
 </html>
