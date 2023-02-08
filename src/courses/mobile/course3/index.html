@@ -139,6 +139,16 @@
         </figure>
     </section>
     <section>
+        <h2>UI Layer</h2>
+        <ul>
+            <li>ViewModel hold the in-memory state of the UI</li>
+            <li>The data comes from a data source (DB, file, cloud, ...) aka <strong>The Data Layer</strong></li>
+        </ul>
+        <figure>
+            <img src="./viewmodel.png" alt="" class="half">
+        </figure>
+    </section>
+    <section>
         <h2>ViewModel</h2>
         <ul>
             <li>Add dependency to your build.gradle(Module)</li>
@@ -148,15 +158,10 @@
         </code></pre>
     </section>
     <section>
-        <h2>UI Layer</h2>
-        <figure>
-            <img src="./viewmodel.png" alt="">
-        </figure>
-    </section>
-    <section>
         <h2>UI State</h2>
         <ul>
             <li>Create a class that hold the state of your UI
+                <small><code>dataSource() represent the Data Layer</code></small>
                 <pre><code class="lang-kotlin">
                     data class UiState(
                         val quotes: List&lt;Quote> = dataSource()
