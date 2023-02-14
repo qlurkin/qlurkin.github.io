@@ -1,0 +1,286 @@
+.widget {
+    width: 60%;
+    background-color: rgb(124, 170, 170);
+    margin: 0 auto;
+    padding: 0.6em 0;
+}
+
+.widget h3 {
+    font-family: 'Yellowtail', cursive;
+    margin: 1.2em;
+    margin-top: 0;
+}
+
+.widget p {
+    margin: 2.5em;
+    margin-top: 0;
+    margin-bottom: 1em;
+    text-align: left;
+}
+
+.widget input {
+    display: block;
+    width: 80%;
+    margin: 0.5em auto;
+    margin-top: 0;
+    line-height: 2;
+    padding: 0.5em;
+}
+
+.widget button {
+    display: block;
+    width: 70%;
+    margin: 0 auto;
+    line-height: 2;
+    padding: 0.5em;
+    border: 1px solid rgb(56, 126, 97);
+    border-radius: 5px;
+    background-color: rgb(71, 156, 121);
+}
+
+
+.widget2 {
+    width: 60%;
+    background-color: rgb(124, 170, 170);
+    margin: 0 auto;
+    padding: 0.6em;
+}
+
+.widget2 h3 {
+    font-family: 'Yellowtail', cursive;
+    margin: 0;
+    margin-bottom: 1.2em;
+    text-align: justify;
+}
+
+.widget2 p {
+    margin: 0;
+    margin-bottom: 1em;
+}
+
+.widget2 input {
+    display: block;
+    width: 100%;
+    margin: 0;
+    margin-bottom: 0.5em;
+    line-height: 2;
+    padding: 0.5em;
+}
+
+.widget2 button {
+    display: block;
+    width: 100%;
+    margin: 0;
+    line-height: 2;
+    padding: 0.5em;
+    border: 1px solid rgb(56, 126, 97);
+    border-radius: 5px;
+    background-color: rgb(71, 156, 121);
+}
+
+
+.widget3 {
+    width: 60%;
+    background-color: rgb(224, 228, 204);
+    margin: 0 auto;
+    padding: 0.6em;
+}
+
+.widget3 h3 {
+    font-family: 'Yellowtail', cursive;
+    margin: 0;
+    margin-bottom: 1.2em;
+    text-align: justify;
+    color: rgb(109, 143, 141)
+}
+
+.widget3 p {
+    margin: 0;
+    margin-bottom: 1em;
+}
+
+.widget3 input {
+    display: block;
+    width: 100%;
+    margin: 0;
+    margin-bottom: 0.5em;
+    line-height: 2;
+    padding: 0.5em;
+}
+
+.widget3 button {
+    display: block;
+    width: 100%;
+    margin: 0;
+    line-height: 2;
+    padding: 0.5em;
+    border: 1px solid rgb(250, 105, 0);
+    border-radius: 5px;
+    background-color: rgb(243, 134, 48);
+}
+
+
+.widget4 {
+    width: 60%;
+    background-color: rgb(224, 228, 204);
+    margin: 0 auto;
+    padding: 0.6em;
+}
+
+.widget4 h3 {
+    font-family: "Roboto Slab", serif;
+    margin: 0;
+    margin-bottom: 1.2em;
+    text-align: justify;
+    color: rgb(109, 143, 141)
+}
+
+.widget4 p {
+    margin: 0;
+    margin-bottom: 1em;
+}
+
+.widget4 input {
+    display: block;
+    width: 100%;
+    margin: 0;
+    margin-bottom: 0.5em;
+    line-height: 2;
+    padding: 0.5em;
+
+}
+
+.widget4 input:placeholder-shown {
+    font-style: italic;
+}
+
+.widget4 button {
+    display: block;
+    width: 100%;
+    margin: 0;
+    line-height: 2;
+    padding: 0.5em;
+    border: 1px solid rgb(250, 105, 0);
+    border-radius: 5px;
+    background-color: rgb(243, 134, 48);
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+
+.widget5 {
+    position: relative;
+    top: -3em;
+    width: 60%;
+    background-color: rgb(224, 228, 204);
+    margin: 0 auto;
+    padding: 4rem;
+    line-height: 1.5;
+    box-sizing: content-box;
+}
+
+.mode-document .widget5 {
+    top: 0;
+}
+
+.mode-document section {
+    margin-bottom: 1em;
+}
+
+.widget5 h3 {
+    font-family: "Roboto Slab", serif;
+    margin: 0;
+    margin-bottom: 2rem;
+    text-align: justify;
+    color: rgb(109, 143, 141)
+}
+
+.widget5 p {
+    margin: 0;
+    margin-bottom: 2rem;
+}
+
+.widget5 input {
+    display: block;
+    width: 100%;
+    margin: 0;
+    margin-bottom: 2rem;
+    line-height: 2;
+    padding: 0.5em;
+
+}
+
+.widget5 input:placeholder-shown {
+    font-style: italic;
+}
+
+.widget5 button {
+    display: block;
+    width: 100%;
+    margin: 0;
+    line-height: 2;
+    padding: 0.5em;
+    border: 1px solid rgb(250, 105, 0);
+    border-radius: 5px;
+    background-color: rgb(243, 134, 48);
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+
+.spacebar {
+    font-size: 0.8em;
+    text-align: center;
+    display: inline-block;
+    width: 1em;
+    background-color: gray;
+    vertical-align: bottom;
+    border-radius: 5px;
+    color: white;
+}
+
+.colourbar {
+    position: relative;
+    font-size: 0.6em;
+}
+
+.colourbar .label {
+    position: absolute;
+    top: 0.5em;
+    left: 0.5em;
+}
+
+.colourbar .code {
+    position: absolute;
+    top: 0.5em;
+    right: 0.5em;
+}
+
+
+
+.custom-css {
+    --base-color-h: 14;
+    --base-color-s: 100%;
+    --base-color-l: 57%;
+    --base-color: hsl(var(--base-color-h),
+            var(--base-color-s),
+            var(--base-color-l));
+    --base-color-darken-20: hsl(var(--base-color-h),
+            var(--base-color-s),
+            calc(var(--base-color-l) - 20%));
+    --length-M: 1rem;
+    --length-L: calc(var(--length-M) * 2);
+    --length-S: calc(var(--length-M) / 2);
+}
+
+.custom-css .base {
+    background-color: var(--base-color);
+    height: var(--length-M);
+    margin-bottom: 1rem;
+}
+
+.custom-css .darken {
+    background-color: var(--base-color-darken-20);
+    height: var(--length-L);
+    margin-bottom: 1rem;
+}
