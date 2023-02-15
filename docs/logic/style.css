@@ -1,0 +1,12 @@
+body {
+    font-family: 'Roboto Mono', monospace;
+    font-weight: bold;
+}
+
+.ghost {
+    pointer-events: none;
+}
+
+.connector:hover, .input:hover {
+    stroke: cyan;
+}
