@@ -4,6 +4,7 @@ import NOT from './NOT.js'
 import INPUT from './INPUT.js'
 import OUTPUT from './OUTPUT.js'
 import wire from './wire.js'
+import { showMenu } from './menu.js'
 
 const {inputSide, outputSide, wires} = init()
 

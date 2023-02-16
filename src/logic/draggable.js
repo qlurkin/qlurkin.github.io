@@ -1,4 +1,8 @@
-export function draggable(obj) {
+import { canvas } from "./canvas.js"
+
+export function draggable(obj, addClickListener) {
+    if(addClickListener === undefined) addClickListener = true
+
     let rx
     let ry
 
@@ -13,15 +17,17 @@ export function draggable(obj) {
 
         move(event)
 
-        obj.on('click', startDrag)
-        obj.off('click', stopDrag)
+        canvas.off('mouseup', stopDrag)
+        event.stopImmediatePropagation()
 
-        event.stopPropagation()
+        setTimeout(() => {
+            if(addClickListener) obj.on('click', startDrag)
+        }, 1)
     }
 
     function start(x, y) {
         obj.off('click', startDrag)
-        obj.on('click', stopDrag)
+        canvas.on('mouseup', stopDrag)
 
         rx = obj.x() - x
         ry = obj.y() - y
@@ -34,7 +40,7 @@ export function draggable(obj) {
         event.stopPropagation()
     }
 
-    obj.on('click', startDrag)
+    if(addClickListener) obj.on('click', startDrag)
     obj.startDrag = () => {
         start(obj.x(), obj.y())
     }

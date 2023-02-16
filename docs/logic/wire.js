@@ -1,3 +1,4 @@
+import { showMenu } from './menu.js'
 import { Color } from './svg.esm.js'
 
 export function Wire(a, b) {
@@ -23,8 +24,12 @@ export function Wire(a, b) {
 }
 
 function ui(canvas, uiConnector0, uiConnector1, wire) {
-    const line = canvas.line(uiConnector0.x(), uiConnector0.y(), uiConnector1.x(), uiConnector1.y())
-    const width = 2
+    const group = canvas.group()
+    const line = group.line(uiConnector0.x(), uiConnector0.y(), uiConnector1.x(), uiConnector1.y())
+    const outline = group.line(uiConnector0.x(), uiConnector0.y(), uiConnector1.x(), uiConnector1.y()).stroke({color: 'cyan', opacity: 0, width: 7}).addClass('outline')
+    const width = 3
+
+    
 
     function observer() {
         let count = 0
@@ -42,24 +47,26 @@ function ui(canvas, uiConnector0, uiConnector1, wire) {
 
     function positionObserver() {
         line.plot(uiConnector0.x(), uiConnector0.y(), uiConnector1.x(), uiConnector1.y())
+        outline.plot(uiConnector0.x(), uiConnector0.y(), uiConnector1.x(), uiConnector1.y())
     }
 
     uiConnector0.connect(positionObserver)
     uiConnector1.connect(positionObserver)
 
-    function destroyObserver() {
+    function destroy() {
         uiConnector0.connector.disconnect(observer)
         uiConnector1.connector.disconnect(observer)
         uiConnector0.disconnect(positionObserver)
         uiConnector1.disconnect(positionObserver)
-        uiConnector0.off('destroy', destroyObserver)
-        uiConnector1.off('destroy', destroyObserver)
+        uiConnector0.off('destroy', destroy)
+        uiConnector1.off('destroy', destroy)
         wire.destroy()
         line.remove()
+        outline.remove()
     }
 
-    uiConnector0.on('destroy', destroyObserver)
-    uiConnector1.on('destroy', destroyObserver)
+    uiConnector0.on('destroy', destroy)
+    uiConnector1.on('destroy', destroy)
 
     const that = {
         ends: [
@@ -67,6 +74,14 @@ function ui(canvas, uiConnector0, uiConnector1, wire) {
             uiConnector1
         ]
     }
+
+    outline.on('contextmenu', event => {
+        showMenu(event.offsetX, event.offsetY, [
+            {label: 'Delete', action: () => {destroy()}}
+        ])
+        event.preventDefault()
+        event.stopPropagation()
+    })
 
     return that
 }

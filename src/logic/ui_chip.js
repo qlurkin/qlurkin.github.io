@@ -1,6 +1,8 @@
 import {step} from './config.js'
 import {UiConnector} from './connector.js'
 import { draggable } from './draggable.js'
+import { showMenu } from './menu.js'
+
 
 export function UiChip(canvas, label, inputs, outputs, color) {
     let _x = 0
@@ -66,12 +68,15 @@ export function UiChip(canvas, label, inputs, outputs, color) {
         }
     }
 
+    draggable(that)
+
     that.on('contextmenu', event => {
-        that.destroy()
+        showMenu(event.offsetX, event.offsetY, [
+            {label: 'Delete', action: () => {that.destroy()}},
+            {label: 'Move', action: () => {that.startDrag()}}
+        ])
         event.preventDefault()
     })
-
-    draggable(that)
 
     return that
 }

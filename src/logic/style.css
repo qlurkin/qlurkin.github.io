@@ -1,6 +1,7 @@
 body {
     font-family: 'Roboto Mono', monospace;
     font-weight: bold;
+    background-color: #353535;
 }
 
 .ghost {
@@ -11,6 +12,11 @@ body {
     stroke: cyan;
 }
 
+#simulation {
+    width: 800px;
+    margin: 0 auto;
+}
+
 svg text {
     pointer-events: none;
     cursor: default;
@@ -18,4 +24,56 @@ svg text {
 }
 svg text::selection {
     background: none;
+}
+
+#wires line {
+    pointer-events: auto;
+}
+
+#wires line.outline:hover {
+    stroke-opacity: 0.3;
+}
+
+#simulation {
+    position: relative;
+}
+
+#menu {
+    position: absolute;
+    width: 100px;
+    top: 100px;
+    left: -1000px;
+}
+
+#menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border: 1px solid #ccc;
+    background-color: #999;
+}
+
+#menu ul li {
+    padding: 5px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+#menu ul li:hover {
+    background-color: #ccc;
+}
+
+#buttons {
+    width: 800px;
+    margin: 0 auto;
+}
+
+#buttons button {
+    display: inline-block;
+    background-color: #555;
+    color: #ccc;
+    margin: 0;
+    border: 1px solid black;
+    padding: 0.3rem 0.5rem;
+    font-weight: bold;
 }

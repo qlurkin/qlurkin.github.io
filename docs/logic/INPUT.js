@@ -1,5 +1,7 @@
 import { Connector, UiConnector } from './connector.js'
 import { observable } from './observable.js'
+import { showMenu } from './menu.js'
+import { draggable } from './draggable.js'
 
 function Input() {
     let state = observable(false)
@@ -31,11 +33,12 @@ function Input() {
     }
 }
 
-function ui(canvas, y, logic) {
+function ui(canvas, logic) {
+    let _y = 0
     const group = canvas.group()
-    const line = group.line(20, y, 36, y).stroke({color: 'black', width: 3})
-    UiConnector(group, 16, 0, logic.connector).move(20, y)
-    const big = group.circle(20).center(20, y).addClass('input')
+    const line = group.line(20, _y, 36, _y).stroke({color: 'black', width: 3})
+    const uiConnector = UiConnector(group, 16, 0, logic.connector)
+    const big = group.circle(20).addClass('input')
 
     function observer(state) {
         if(state) {
@@ -57,18 +60,47 @@ function ui(canvas, y, logic) {
 
     big.on('click', click)
 
-    return {
-        destroy: () => {
-            logic.disconnect(observer)
-            big.off('click', click)
-            group.remove()
+    function destroy() {
+        logic.disconnect(observer)
+        big.off('click', click)
+        uiConnector.destroy()
+        group.remove()
+    }
+
+    const that = {
+        destroy,
+        x: () => 20,
+        y: () => _y,
+        on: (eventType, handler) => {
+            big.on(eventType, handler)
+        },
+        off: (eventType, handler) => {
+            big.off(eventType, handler)
+        },
+        move: (x, y) => {
+            _y = y
+            line.plot(20, y, 36, y)
+            uiConnector.move(20, y)
+            big.center(20, y)
         }
     }
+
+    draggable(that, false)
+
+    big.on('contextmenu', event => {
+        showMenu(event.offsetX, event.offsetY, [
+            {label: 'Delete', action: () => {destroy()}},
+            {label: 'Move', action: () => {that.startDrag()}}
+        ])
+        event.preventDefault()
+    })
+
+    return that
 }
 
 function create(canvas, y) {
     const logic = Input()
-    return ui(canvas, y, logic)
+    return ui(canvas, logic).move(0, y)
 }
 
 export default {
