@@ -10,3 +10,12 @@ body {
 .connector:hover, .input:hover {
     stroke: cyan;
 }
+
+svg text {
+    pointer-events: none;
+    cursor: default;
+    user-select: none;
+}
+svg text::selection {
+    background: none;
+}

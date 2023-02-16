@@ -12,7 +12,7 @@ function Output() {
 function ui(canvas, y, logic) {
     const group = canvas.group()
     const line = group.line(width-20, y, width-36, y).stroke({color: 'black', width: 3})
-    UiConnector(group, width-36, y, logic.connector)
+    UiConnector(group, -16, 0, logic.connector).move(width-20, y)
     const big = group.circle(20).center(width-20, y)
 
     logic.connector.connect(state => {

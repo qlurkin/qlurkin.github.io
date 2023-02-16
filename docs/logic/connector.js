@@ -1,42 +1,30 @@
-import {emit} from './simulation.js'
+import { observable } from './observable.js'
+import { canvas } from './canvas.js'
 
 export function Connector() {
-    let state = false
-    const observers = []
+    const state = observable(false)
 
-    const that = {
-        getState: () => state,
-        setState: value => {
-            if(value == state) return
-            state = value
-            for(const observer of observers) {
-                observer(state)
-            }
-        },
-        connect: observer => {
-            observers.push(observer)
-            observer(state)
-        },
-        disconnect: observer => {
-            const index = observers.findIndex(item => item == observer)
-            observers.splice(index, 1)
-        },
+    return {
+        getState: state.getValue,
+        setState: state.setValue,
+        connect: state.observe,
+        disconnect: state.forget,
         set: () => {
-            that.setState(true)
+            state.setValue(true)
         },
         reset: () => {
-            that.setState(false)
+            state.setValue(false)
         },
         toggle: () => {
-            that.setState(!that.getState())
-        }
+            state.setValue(!state.getValue())
+        },
+        destroy: () => {}
     }
-
-    return that
 }
 
-export function UiConnector(group, x, y, connector) {
-    const circle = group.circle(10).center(x, y).addClass('connector')
+export function UiConnector(group, rx, ry, connector) {
+    const circle = group.circle(10).addClass('connector')
+    const position = observable({x: rx, y: ry})
 
     connector.connect(state => {
         if(state) {
@@ -49,15 +37,31 @@ export function UiConnector(group, x, y, connector) {
 
     const that =  {
         connector,
-        x, y,
+        x: () => position.getValue().x,
+        y: () => position.getValue().y,
         on: (eventType, handler) => {
             circle.on(eventType, handler)
         },
-        uiWires: []
+        off: (eventType, handler) => {
+            circle.off(eventType, handler)
+        },
+        connect: position.observe,
+        disconnect: position.forget,
+        destroy: () => {
+            circle.fire('destroy')
+            circle.remove()
+            connector.destroy()
+        }
+    }
+
+    that.move = (x, y) => {
+        position.setValue({x: rx+x, y: ry+y})
+        circle.center(rx + x, ry + y)
+        return that
     }
 
     circle.on('click', event => {
-        emit('connector_clicked', that)
+        canvas.fire('connector_clicked', that)
         event.stopPropagation()
     })
 

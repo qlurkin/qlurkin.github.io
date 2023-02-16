@@ -1,32 +1,14 @@
-import {init} from './canvas.js'
+import {canvas, init} from './canvas.js'
 import AND from './AND.js'
 import NOT from './NOT.js'
 import INPUT from './INPUT.js'
 import OUTPUT from './OUTPUT.js'
-import {on, emit} from './simulation.js'
 import wire from './wire.js'
 
-const {canvas, inputSide, outputSide, wires} = init()
-
-let selected_gate = null
-
-canvas.on('click', event => {
-    const x = event.offsetX-1
-    const y = event.offsetY-1
-    console.log(`click (x=${x}, y=${y})`)
-
-    if(selected_gate) {
-        selected_gate.create(canvas, x, y)
-    }
-})
-
-on('escape', () => {
-    selected_gate = null
-})
+const {inputSide, outputSide, wires} = init()
 
 inputSide.on('click', event => {
     const y = event.offsetY-1
-    console.log(`input (y=${y})`)
 
     INPUT.create(canvas, y)    
     event.stopPropagation()
@@ -34,7 +16,6 @@ inputSide.on('click', event => {
 
 outputSide.on('click', event => {
     const y = event.offsetY-1
-    console.log(`output (y=${y})`)
 
     OUTPUT.create(canvas, y)    
     event.stopPropagation()
@@ -42,7 +23,8 @@ outputSide.on('click', event => {
 
 let startWire = null
 
-on('connector_clicked', connector => {
+canvas.on('connector_clicked', event => {
+    const connector = event.detail
     if(!startWire) {
         startWire = connector
     }
@@ -53,17 +35,19 @@ on('connector_clicked', connector => {
 })
 
 document.getElementById('AND').addEventListener('click', event => {
-    selected_gate = AND
+    //selected_gate = AND
+    AND.create(canvas, -100, -100).startDrag()
 })
 
 document.getElementById('NOT').addEventListener('click', event => {
-    selected_gate = NOT
+    //selected_gate = NOT
+    NOT.create(canvas, -100, -100).startDrag()
 })
 
 window.addEventListener('keydown', event => {
     //console.log(event.code)
     if (event.code === 'Escape') {
-        emit('escape')
+        canvas.fire('escape')
     }
 })
 

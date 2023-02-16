@@ -14,6 +14,7 @@ export function NOT() {
     }
 
     in0.connect(observer)
+    out.connect(observer)
 
     return {
         inputs: [in0],
@@ -22,12 +23,12 @@ export function NOT() {
 }
 
 function ui(canvas, x, y, logic) {
-    UiChip(canvas, 'NOT', x, y, logic.inputs, logic.outputs, '#f55')
+    return UiChip(canvas, 'NOT', logic.inputs, logic.outputs, '#f55').move(x, y)
 }
 
 function create(canvas, x, y) {
     const logic = NOT()
-    ui(canvas, x, y, logic)
+    return ui(canvas, x, y, logic)
 }
 
 export default {

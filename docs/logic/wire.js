@@ -1,37 +1,32 @@
-import {timing} from './config.js'
 import { Color } from './svg.esm.js'
 
-
 export function Wire(a, b) {
-    if(a.getState() || b.getState()) {
-        a.set()
-        b.set()
+    function aObserver(state) {
+        b.setState(state)
     }
+    a.connect(aObserver)
 
-    const observer = state => {
-        setTimeout(() => {
-            a.setState(state)
-            b.setState(state)
-        }, timing)
+    function bObserver(state) {
+        a.setState(state)
     }
-
-    a.connect(observer)
-    b.connect(observer)
+    b.connect(bObserver)
 
     return {
-        remove: () => {
-            a.disconnect(observer)
-            b.disconnect(observer)
+        destroy: () => {
+            a.disconnect(aObserver)
+            b.disconnect(bObserver)
+            a.reset()
+            b.reset()
         },
         ends: [a, b]
     }
 }
 
-function ui(canvas, uiConnector0, uiConnector1) {
-    const line = canvas.line(uiConnector0.x, uiConnector0.y, uiConnector1.x, uiConnector1.y)
+function ui(canvas, uiConnector0, uiConnector1, wire) {
+    const line = canvas.line(uiConnector0.x(), uiConnector0.y(), uiConnector1.x(), uiConnector1.y())
     const width = 2
 
-    const observer = () => {
+    function observer() {
         let count = 0
         if(uiConnector0.connector.getState()) {
             count += 1
@@ -45,6 +40,27 @@ function ui(canvas, uiConnector0, uiConnector1) {
     uiConnector0.connector.connect(observer)
     uiConnector1.connector.connect(observer)
 
+    function positionObserver() {
+        line.plot(uiConnector0.x(), uiConnector0.y(), uiConnector1.x(), uiConnector1.y())
+    }
+
+    uiConnector0.connect(positionObserver)
+    uiConnector1.connect(positionObserver)
+
+    function destroyObserver() {
+        uiConnector0.connector.disconnect(observer)
+        uiConnector1.connector.disconnect(observer)
+        uiConnector0.disconnect(positionObserver)
+        uiConnector1.disconnect(positionObserver)
+        uiConnector0.off('destroy', destroyObserver)
+        uiConnector1.off('destroy', destroyObserver)
+        wire.destroy()
+        line.remove()
+    }
+
+    uiConnector0.on('destroy', destroyObserver)
+    uiConnector1.on('destroy', destroyObserver)
+
     const that = {
         ends: [
             uiConnector0,
@@ -56,10 +72,8 @@ function ui(canvas, uiConnector0, uiConnector1) {
 }
 
 function create(canvas, uiConnector0, uiConnector1) {
-    Wire(uiConnector0.connector, uiConnector1.connector)
-    const uiWire = ui(canvas, uiConnector0, uiConnector1)
-    uiConnector0.uiWires.push(uiWire)
-    uiConnector1.uiWires.push(uiWire)
+    const logic = Wire(uiConnector0.connector, uiConnector1.connector)
+    return ui(canvas, uiConnector0, uiConnector1, logic)
 }
 
 export default {

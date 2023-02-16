@@ -1,7 +1,11 @@
 import {step} from './config.js'
 import {UiConnector} from './connector.js'
+import { draggable } from './draggable.js'
 
-export function UiChip(canvas, label, x, y, inputs, outputs, color) {
+export function UiChip(canvas, label, inputs, outputs, color) {
+    let _x = 0
+    let _y = 0
+
     if(!color) color = 'yellow'
 
     const group = canvas.group()
@@ -15,32 +19,59 @@ export function UiChip(canvas, label, x, y, inputs, outputs, color) {
     const textHeight = Math.ceil((text.bbox().height)/step) * step
     const boxHeight = Math.max(connectorsHeight, textHeight)
 
-    const inputsX = x
-    const outputsX = x + boxWidth
-    const boxX = x
-    const boxY = y + (inputs.length-1) * step - boxHeight / 2
-
-    const rect = group.rect(boxWidth, boxHeight).move(boxX, boxY).fill(color)
+    const rect = group.rect(boxWidth, boxHeight).fill(color)
     rect.after(text) // Put text after rect
-    text.cx(rect.cx())
-    text.cy(rect.cy())
 
-    let connectorY = y
+    const uiConnectors = []
+
+    let connectorRelativeY = -(inputs.length - 1) * step
     for(const connector of inputs) {
-        UiConnector(group, inputsX, connectorY, connector)
-        connectorY += step*2
+        uiConnectors.push(UiConnector(group, -boxWidth/2, connectorRelativeY, connector))
+        connectorRelativeY += step*2
     }
 
-    connectorY = boxY + boxHeight/2 - (outputs.length-1)*step
+    connectorRelativeY = -(outputs.length - 1) * step
     for(const connector of outputs) {
-        UiConnector(group, outputsX, connectorY, connector)
-        connectorY += step*2
+        uiConnectors.push(UiConnector(group, boxWidth/2, connectorRelativeY, connector))
+        connectorRelativeY += step*2
     }
 
-    return {
-        x, y,
+    const that = {
+        x: () => _x,
+        y: () => _y,
         on: (eventType, handler) => {
             rect.on(eventType, handler)
+        },
+        off: (eventType, handler) => {
+            rect.off(eventType, handler)
+        },
+        destroy: () => {
+            for(const uiConnector of uiConnectors) {
+                uiConnector.destroy()
+            }
+            group.remove()
+        },
+        move: (x, y) => {
+            _x = x
+            _y = y
+            //const boxX = x
+            //const boxY = y + (inputs.length-1) * step - boxHeight / 2
+            rect.center(x, y)
+            text.cx(rect.cx())
+            text.cy(rect.cy())
+            for(const uiConnector of uiConnectors) {
+                uiConnector.move(x, y)
+            }
+            return that
         }
     }
+
+    that.on('contextmenu', event => {
+        that.destroy()
+        event.preventDefault()
+    })
+
+    draggable(that)
+
+    return that
 }
