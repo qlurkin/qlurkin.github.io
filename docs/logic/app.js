@@ -1,10 +1,9 @@
-import {canvas, inputSide, outputSide, workspace, wires} from './canvas.js'
+import {canvas, inputSide, outputSide, workspace} from './canvas.js'
 import AND from './AND.js'
 import NOT from './NOT.js'
 import INPUT from './INPUT.js'
 import OUTPUT from './OUTPUT.js'
 import wire from './wire.js'
-import { showMenu } from './menu.js'
 import free_connector from './free_connector.js'
 
 workspace.on('click', event => {
@@ -44,7 +43,7 @@ canvas.on('connector_clicked', event => {
     const connector = event.detail
     if(!startWire) {
         startWire = connector
-        ghostLine.stroke({opacity: 0.6})
+        ghostLine.plot(0, 0, 0, 0).stroke({opacity: 0.6})
         workspace.on('mousemove', moveGhostLine)
     }
     else {

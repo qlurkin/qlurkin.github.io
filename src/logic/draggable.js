@@ -22,6 +22,7 @@ export function draggable(obj, addClickListener) {
 
         setTimeout(() => {
             if(addClickListener) obj.on('click', startDrag)
+            obj.afterDrop()
         }, 1)
     }
 
@@ -42,6 +43,9 @@ export function draggable(obj, addClickListener) {
 
     if(addClickListener) obj.on('click', startDrag)
     obj.startDrag = () => {
+        obj.onStartDrag()
         start(obj.x(), obj.y())
     }
+    obj.onStartDrag = () => {}
+    obj.afterDrop = () => {}
 }

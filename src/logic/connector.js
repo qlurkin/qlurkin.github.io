@@ -23,6 +23,7 @@ export function Connector() {
 }
 
 export function UiConnector(group, rx, ry, connector) {
+    let ghost = false
     const circle = group.circle(10).addClass('connector')
     const position = observable({x: rx, y: ry})
 
@@ -51,6 +52,10 @@ export function UiConnector(group, rx, ry, connector) {
             circle.fire('destroy')
             circle.remove()
             connector.destroy()
+        },
+        ghost: value => {
+            console.log('ghost', value)
+            ghost = value
         }
     }
 
@@ -61,6 +66,7 @@ export function UiConnector(group, rx, ry, connector) {
     }
 
     circle.on('click', event => {
+        if(ghost) return
         canvas.fire('connector_clicked', that)
         event.stopPropagation()
     })

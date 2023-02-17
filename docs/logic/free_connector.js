@@ -1,5 +1,4 @@
 import { snapX, snapY } from './canvas.js'
-import {step} from './config.js'
 import {UiConnector} from './connector.js'
 import { draggable } from './draggable.js'
 import { showMenu } from './menu.js'
@@ -46,6 +45,14 @@ function ui(canvas, logic) {
     }
 
     draggable(that, false)
+
+    that.onStartDrag = () => {
+        uiConnector.ghost(true)
+    }
+
+    that.afterDrop = () => {
+        uiConnector.ghost(false)
+    }
 
     that.on('contextmenu', event => {
         showMenu(event.offsetX, event.offsetY, [
