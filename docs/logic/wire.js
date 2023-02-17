@@ -1,5 +1,7 @@
+import free_connector from './free_connector.js'
 import { showMenu } from './menu.js'
 import { Color } from './svg.esm.js'
+import { canvas as rootCanvas, wires } from './canvas.js'
 
 export function Wire(a, b) {
     function aObserver(state) {
@@ -28,8 +30,6 @@ function ui(canvas, uiConnector0, uiConnector1, wire) {
     const line = group.line(uiConnector0.x(), uiConnector0.y(), uiConnector1.x(), uiConnector1.y())
     const outline = group.line(uiConnector0.x(), uiConnector0.y(), uiConnector1.x(), uiConnector1.y()).stroke({color: 'cyan', opacity: 0, width: 7}).addClass('outline')
     const width = 3
-
-    
 
     function observer() {
         let count = 0
@@ -75,9 +75,22 @@ function ui(canvas, uiConnector0, uiConnector1, wire) {
         ]
     }
 
+    function split(x, y) {
+        destroy()
+        const mid = free_connector.create(rootCanvas, x, y)
+        create(uiConnector0, mid.uiConnector)
+        create(mid.uiConnector, uiConnector1)
+        mid.startDrag()
+    }
+
+    outline.on('click', event => {
+        split(event.offsetX, event.offsetY)
+    })
+
     outline.on('contextmenu', event => {
         showMenu(event.offsetX, event.offsetY, [
-            {label: 'Delete', action: () => {destroy()}}
+            {label: 'Delete', action: () => {destroy()}},
+            {label: 'Split', action: () => {split(event.offsetX, event.offsetY)}},
         ])
         event.preventDefault()
         event.stopPropagation()
@@ -86,9 +99,9 @@ function ui(canvas, uiConnector0, uiConnector1, wire) {
     return that
 }
 
-function create(canvas, uiConnector0, uiConnector1) {
+function create(uiConnector0, uiConnector1) {
     const logic = Wire(uiConnector0.connector, uiConnector1.connector)
-    return ui(canvas, uiConnector0, uiConnector1, logic)
+    return ui(wires, uiConnector0, uiConnector1, logic)
 }
 
 export default {

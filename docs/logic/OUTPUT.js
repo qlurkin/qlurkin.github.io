@@ -1,5 +1,5 @@
 import { Connector, UiConnector } from './connector.js'
-import { width } from './config.js'
+import { outerWidth, snapY } from './canvas.js'
 import { draggable } from './draggable.js'
 import { showMenu } from './menu.js'
 
@@ -14,8 +14,8 @@ function Output() {
 function ui(canvas, logic) {
     let _y = 0
     const group = canvas.group()
-    const line = group.line(width-20, _y, width-36, _y).stroke({color: 'black', width: 3})
-    const uiConnector = UiConnector(group, -16, 0, logic.connector)
+    const line = group.line(outerWidth()-20, _y, outerWidth()-36, _y).stroke({color: 'black', width: 3})
+    const uiConnector = UiConnector(group, -18, 0, logic.connector)
     const big = group.circle(20)
 
     logic.connector.connect(state => {
@@ -49,10 +49,11 @@ function ui(canvas, logic) {
             big.off(eventType, handler)
         },
         move: (x, y) => {
+            y = snapY(y)
             _y = y
-            line.plot(width-20, y, width-36, y)
-            uiConnector.move(width-20, y)
-            big.center(width-20, y)
+            line.plot(outerWidth()-20, y, outerWidth()-36, y)
+            uiConnector.move(outerWidth()-20, y)
+            big.center(outerWidth()-20, y)
         }
     }
 

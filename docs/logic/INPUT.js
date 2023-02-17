@@ -2,6 +2,7 @@ import { Connector, UiConnector } from './connector.js'
 import { observable } from './observable.js'
 import { showMenu } from './menu.js'
 import { draggable } from './draggable.js'
+import { snapY } from './canvas.js'
 
 function Input() {
     let state = observable(false)
@@ -36,8 +37,8 @@ function Input() {
 function ui(canvas, logic) {
     let _y = 0
     const group = canvas.group()
-    const line = group.line(20, _y, 36, _y).stroke({color: 'black', width: 3})
-    const uiConnector = UiConnector(group, 16, 0, logic.connector)
+    const line = group.line(20, _y, 38, _y).stroke({color: 'black', width: 3})
+    const uiConnector = UiConnector(group, 18, 0, logic.connector)
     const big = group.circle(20).addClass('input')
 
     function observer(state) {
@@ -78,6 +79,7 @@ function ui(canvas, logic) {
             big.off(eventType, handler)
         },
         move: (x, y) => {
+            y = snapY(y)
             _y = y
             line.plot(20, y, 36, y)
             uiConnector.move(20, y)

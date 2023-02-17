@@ -1,3 +1,4 @@
+import { snapX, snapY } from './canvas.js'
 import {step} from './config.js'
 import {UiConnector} from './connector.js'
 import { draggable } from './draggable.js'
@@ -54,6 +55,8 @@ export function UiChip(canvas, label, inputs, outputs, color) {
             group.remove()
         },
         move: (x, y) => {
+            x = snapX(x)
+            y = snapY(y)
             _x = x
             _y = y
             //const boxX = x
