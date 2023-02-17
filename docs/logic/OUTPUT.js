@@ -40,7 +40,7 @@ function ui(canvas, logic) {
 
     const that = {
         destroy,
-        x: () => width-20,
+        x: () => outerWidth()-20,
         y: () => _y,
         on: (eventType, handler) => {
             big.on(eventType, handler)

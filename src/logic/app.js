@@ -1,4 +1,4 @@
-import {canvas, inputSide, outputSide, workspace} from './canvas.js'
+import {canvas, inputSide, outputSide, workspace, snapX, snapY} from './canvas.js'
 import AND from './AND.js'
 import NOT from './NOT.js'
 import INPUT from './INPUT.js'
@@ -31,7 +31,7 @@ outputSide.on('click', event => {
 let startWire = null
 const ghostLine = canvas.line(0, 0, 0, 0).stroke({width: 3, color: 'black', opacity: 0}).addClass('ghost')
 function moveGhostLine(event) {
-    ghostLine.plot(startWire.x(), startWire.y(), event.offsetX, event.offsetY)
+    ghostLine.plot(startWire.x(), startWire.y(), snapX(event.offsetX), snapY(event.offsetY))
 }
 function abortWire() {
     startWire = null
