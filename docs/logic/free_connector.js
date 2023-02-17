@@ -5,7 +5,7 @@ import { showMenu } from './menu.js'
 import { Connector } from './connector.js'
 
 function free_connector() {
-    const connector = Connector()
+    const connector = Connector('')
 
     return {
         connector

@@ -68,3 +68,12 @@ svg text::selection {
     padding: 0.3rem 0.5rem;
     font-weight: bold;
 }
+
+.connector-label {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.connector:hover ~ .connector-label {
+    opacity: 1;
+}

@@ -3,9 +3,9 @@ import { Connector } from './connector.js'
 import { UiChip } from './ui_chip.js'
 
 function AND() {
-    const in0 = Connector()
-    const in1 = Connector()
-    const out = Connector()
+    const in0 = Connector('in0')
+    const in1 = Connector('in1')
+    const out = Connector('out')
 
     const observer = () => {
         const a = in0.getState()

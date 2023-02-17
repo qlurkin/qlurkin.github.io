@@ -1,7 +1,7 @@
 import { observable } from './observable.js'
-import { canvas } from './canvas.js'
+import { canvas as rootCanvas } from './canvas.js'
 
-export function Connector() {
+export function Connector(label) {
     const state = observable(false)
 
     return {
@@ -18,13 +18,28 @@ export function Connector() {
         toggle: () => {
             state.setValue(!state.getValue())
         },
-        destroy: () => {}
+        destroy: () => {},
+        getLabel: () => label,
+        setLabel: value => {
+            label = value
+        }
     }
 }
 
-export function UiConnector(group, rx, ry, connector) {
+export function UiConnector(canvas, rx, ry, connector) {
     let ghost = false
+    const group = canvas.group()
     const circle = group.circle(10).addClass('connector')
+    const label = group.text('').font({fill: '#ccc', size: 10}).addClass('connector-label')
+    const labelBox = group.rect(0, 0).addClass('connector-label')
+    labelBox.after(label)
+
+    function placeLabel(value) {
+        label.text(value)
+        labelBox.size(label.bbox().width+2, label.bbox().height)
+    }
+    placeLabel(connector.getLabel())
+    
     const position = observable({x: rx, y: ry})
 
     connector.connect(state => {
@@ -50,24 +65,32 @@ export function UiConnector(group, rx, ry, connector) {
         disconnect: position.forget,
         destroy: () => {
             circle.fire('destroy')
-            circle.remove()
+            group.remove()
             connector.destroy()
         },
         ghost: value => {
             console.log('ghost', value)
             ghost = value
-        }
+        },
+        getLabel: connector.getLabel,
+        setLabel: value => {
+            connector.setLabel(value)
+            placeLabel(value)
+            that.move(that.x()-rx, that.y()-ry)
+        } 
     }
 
     that.move = (x, y) => {
         position.setValue({x: rx+x, y: ry+y})
         circle.center(rx + x, ry + y)
+        labelBox.center(rx + x, ry + y - labelBox.height()/2-5)
+        label.cx(labelBox.cx()).cy(labelBox.cy())
         return that
     }
 
     circle.on('click', event => {
         if(ghost) return
-        canvas.fire('connector_clicked', that)
+        rootCanvas.fire('connector_clicked', that)
         event.stopPropagation()
     })
 

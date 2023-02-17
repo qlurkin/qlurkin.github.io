@@ -4,7 +4,7 @@ import { draggable } from './draggable.js'
 import { showMenu } from './menu.js'
 
 function Output() {
-    const connector = Connector()
+    const connector = Connector('')
 
     return {
         connector
@@ -59,10 +59,16 @@ function ui(canvas, logic) {
 
     draggable(that, false)
 
+    function rename() {
+        const value = prompt("Input Label", uiConnector.getLabel())
+        if(value) uiConnector.setLabel(value)
+    }
+
     big.on('contextmenu', event => {
         showMenu(event.offsetX, event.offsetY, [
             {label: 'Delete', action: () => {destroy()}},
-            {label: 'Move', action: () => {that.startDrag()}}
+            {label: 'Move', action: () => {that.startDrag()}},
+            {label: 'Rename', action: () => {rename()}}
         ])
         event.preventDefault()
     })

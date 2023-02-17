@@ -1,3 +1,5 @@
+import { outerHeight, outerWidth } from "./canvas.js"
+
 const menu = document.getElementById('menu')
 
 export function closeMenu() {
@@ -17,6 +19,12 @@ export function showMenu(x, y, items) {
             event.stopPropagation()
         })
         ul.appendChild(li)
+    }
+    if(x>outerWidth()/2) {
+        x = x - 100
+    }
+    if(y>outerHeight()/2) {
+        y = y - document.getElementById('menu').offsetHeight
     }
     menu.style.left = `${x}px`
     menu.style.top = `${y}px`

@@ -7,7 +7,7 @@ import { snapY } from './canvas.js'
 function Input() {
     let state = observable(false)
     
-    const connector = Connector()
+    const connector = Connector('')
 
     connector.connect(() => {
         setTimeout(() => {
@@ -38,8 +38,8 @@ function ui(canvas, logic) {
     let _y = 0
     const group = canvas.group()
     const line = group.line(20, _y, 38, _y).stroke({color: 'black', width: 3})
-    const uiConnector = UiConnector(group, 18, 0, logic.connector)
     const big = group.circle(20).addClass('input')
+    const uiConnector = UiConnector(group, 18, 0, logic.connector)
 
     function observer(state) {
         if(state) {
@@ -89,10 +89,16 @@ function ui(canvas, logic) {
 
     draggable(that, false)
 
+    function rename() {
+        const value = prompt("Input Label", uiConnector.getLabel())
+        if(value) uiConnector.setLabel(value)
+    }
+
     big.on('contextmenu', event => {
         showMenu(event.offsetX, event.offsetY, [
             {label: 'Delete', action: () => {destroy()}},
-            {label: 'Move', action: () => {that.startDrag()}}
+            {label: 'Move', action: () => {that.startDrag()}},
+            {label: 'Rename', action: () => {rename()}},
         ])
         event.preventDefault()
     })
