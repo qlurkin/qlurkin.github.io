@@ -1,6 +1,7 @@
 import { snapX, snapY } from './canvas.js'
 import {step} from './config.js'
 import {UiConnector} from './connector.js'
+import { addElement, removeElement } from './current.js'
 import { draggable } from './draggable.js'
 import { showMenu } from './menu.js'
 
@@ -8,6 +9,8 @@ import { showMenu } from './menu.js'
 export function UiChip(canvas, label, inputs, outputs, color) {
     let _x = 0
     let _y = 0
+
+    const that = {}
 
     if(!color) color = 'yellow'
 
@@ -29,32 +32,33 @@ export function UiChip(canvas, label, inputs, outputs, color) {
 
     let connectorRelativeY = -(inputs.length - 1) * step
     for(const connector of inputs) {
-        uiConnectors.push(UiConnector(group, -boxWidth/2, connectorRelativeY, connector))
+        uiConnectors.push(UiConnector(group, -boxWidth/2, connectorRelativeY, that, connector))
         connectorRelativeY += step*2
     }
 
     connectorRelativeY = -(outputs.length - 1) * step
     for(const connector of outputs) {
-        uiConnectors.push(UiConnector(group, boxWidth/2, connectorRelativeY, connector))
+        uiConnectors.push(UiConnector(group, boxWidth/2, connectorRelativeY, that, connector))
         connectorRelativeY += step*2
     }
 
-    const that = {
-        x: () => _x,
-        y: () => _y,
-        on: (eventType, handler) => {
+    
+    that.x = () => _x
+    that.y = () => _y
+    that.on = (eventType, handler) => {
             rect.on(eventType, handler)
-        },
-        off: (eventType, handler) => {
+        }
+    that.off = (eventType, handler) => {
             rect.off(eventType, handler)
-        },
-        destroy: () => {
+        }
+    that.destroy = () => {
             for(const uiConnector of uiConnectors) {
                 uiConnector.destroy()
             }
             group.remove()
-        },
-        move: (x, y) => {
+            removeElement(that)
+        }
+    that.move = (x, y) => {
             x = snapX(x)
             y = snapY(y)
             _x = x
@@ -69,7 +73,6 @@ export function UiChip(canvas, label, inputs, outputs, color) {
             }
             return that
         }
-    }
 
     draggable(that)
 
@@ -80,6 +83,7 @@ export function UiChip(canvas, label, inputs, outputs, color) {
         ])
         event.preventDefault()
     })
-
+    
+    addElement(that)
     return that
 }

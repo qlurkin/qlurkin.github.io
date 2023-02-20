@@ -23,7 +23,9 @@ export function NOT() {
 }
 
 function ui(canvas, x, y, logic) {
-    return UiChip(canvas, 'NOT', logic.inputs, logic.outputs, '#f55').move(x, y)
+    const element = UiChip(canvas, 'NOT', logic.inputs, logic.outputs, '#f55').move(x, y)
+    element.type = 'NOT'
+    return element
 }
 
 function create(canvas, x, y) {

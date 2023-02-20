@@ -3,11 +3,12 @@ import { observable } from './observable.js'
 import { showMenu } from './menu.js'
 import { draggable } from './draggable.js'
 import { snapY } from './canvas.js'
+import { addElement, nextInput, removeElement } from './current.js'
 
-function Input() {
+function Input(label) {
     let state = observable(false)
     
-    const connector = Connector('')
+    const connector = Connector(label)
 
     connector.connect(() => {
         setTimeout(() => {
@@ -36,10 +37,11 @@ function Input() {
 
 function ui(canvas, logic) {
     let _y = 0
+    const that = {}
     const group = canvas.group()
     const line = group.line(20, _y, 38, _y).stroke({color: 'black', width: 3})
     const big = group.circle(20).addClass('input')
-    const uiConnector = UiConnector(group, 18, 0, logic.connector)
+    const uiConnector = UiConnector(group, 18, 0, that, logic.connector)
 
     function observer(state) {
         if(state) {
@@ -66,25 +68,28 @@ function ui(canvas, logic) {
         big.off('click', click)
         uiConnector.destroy()
         group.remove()
+        removeElement(that)
     }
 
-    const that = {
-        destroy,
-        x: () => 20,
-        y: () => _y,
-        on: (eventType, handler) => {
+    that.type = 'INPUT'
+    that.destroy = destroy
+    that.x = () => uiConnector.x()
+    that.y = () => _y
+    that.on = (eventType, handler) => {
             big.on(eventType, handler)
-        },
-        off: (eventType, handler) => {
+        }
+    that.off = (eventType, handler) => {
             big.off(eventType, handler)
-        },
-        move: (x, y) => {
+        }
+    that.move = (_, y) => {
             y = snapY(y)
             _y = y
             line.plot(20, y, 36, y)
             uiConnector.move(20, y)
             big.center(20, y)
         }
+    that.getLabel = () => {
+      return uiConnector.getLabel()
     }
 
     draggable(that, false)
@@ -102,12 +107,13 @@ function ui(canvas, logic) {
         ])
         event.preventDefault()
     })
-
+    
+    addElement(that)
     return that
 }
 
 function create(canvas, y) {
-    const logic = Input()
+    const logic = Input(nextInput())
     return ui(canvas, logic).move(0, y)
 }
 

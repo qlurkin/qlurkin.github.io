@@ -3,6 +3,7 @@ import {UiConnector} from './connector.js'
 import { draggable } from './draggable.js'
 import { showMenu } from './menu.js'
 import { Connector } from './connector.js'
+import { addElement, removeElement } from './current.js'
 
 function free_connector() {
     const connector = Connector('')
@@ -15,26 +16,28 @@ function free_connector() {
 function ui(canvas, logic) {
     let _x = 0
     let _y = 0
+    const that = {}
 
     const group = canvas.group()
 
-    const uiConnector = UiConnector(group, 0, 0, logic.connector)
+    const uiConnector = UiConnector(group, 0, 0, that, logic.connector)
 
-    const that = {
-        uiConnector,
-        x: () => _x,
-        y: () => _y,
-        on: (eventType, handler) => {
+    that.type = 'CONNECTOR',
+    that.uiConnector = uiConnector
+    that.x = () => _x
+    that.y = () => _y
+    that.on = (eventType, handler) => {
             uiConnector.on(eventType, handler)
-        },
-        off: (eventType, handler) => {
+        }
+    that.off = (eventType, handler) => {
             uiConnector.off(eventType, handler)
-        },
-        destroy: () => {
+        }
+    that.destroy = () => {
             uiConnector.destroy()
             group.remove()
-        },
-        move: (x, y) => {
+            removeElement(that)
+        }
+    that.move = (x, y) => {
             x = snapX(x)
             y = snapY(y)
             _x = x
@@ -42,7 +45,6 @@ function ui(canvas, logic) {
             uiConnector.move(x, y)
             return that
         }
-    }
 
     draggable(that, false)
 
@@ -61,7 +63,8 @@ function ui(canvas, logic) {
         ])
         event.preventDefault()
     })
-
+    
+    addElement(that)
     return that
 }
 

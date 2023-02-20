@@ -26,7 +26,7 @@ export function Connector(label) {
     }
 }
 
-export function UiConnector(canvas, rx, ry, connector) {
+export function UiConnector(canvas, rx, ry, element, connector) {
     let ghost = false
     const group = canvas.group()
     const circle = group.circle(10).addClass('connector')
@@ -52,6 +52,7 @@ export function UiConnector(canvas, rx, ry, connector) {
     })
 
     const that =  {
+        element,
         connector,
         x: () => position.getValue().x,
         y: () => position.getValue().y,
