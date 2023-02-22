@@ -3,7 +3,7 @@ import AND from './AND.js'
 import NOT from './NOT.js'
 import INPUT from './INPUT.js'
 import OUTPUT from './OUTPUT.js'
-import wire from './wire.js'
+import WIRE from './WIRE.js'
 import free_connector from './CONNECT.js'
 import { clear, fromJson } from './current.js'
 import { loadLibrary, saveCurrent, showButtons } from './library.js'
@@ -12,7 +12,7 @@ import { showMenu } from './menu.js'
 workspace.on('click', event => {
     const fc = free_connector.create(canvas, event.offsetX, event.offsetY)
     if(startWire) {
-        wire.create(startWire, fc.uiConnector)
+        WIRE.create(startWire, fc.uiConnector)
         startWire = fc.uiConnector
     }
 })
@@ -50,7 +50,7 @@ canvas.on('connector_clicked', event => {
         workspace.on('mousemove', moveGhostLine)
     }
     else {
-        wire.create(startWire, connector)
+        WIRE.create(startWire, connector)
         abortWire()
     }
 })
