@@ -70,7 +70,6 @@ export function UiConnector(canvas, rx, ry, element, connector) {
             connector.destroy()
         },
         ghost: value => {
-            console.log('ghost', value)
             ghost = value
         },
         getLabel: connector.getLabel,

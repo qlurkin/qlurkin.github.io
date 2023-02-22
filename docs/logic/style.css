@@ -3,6 +3,7 @@ body {
     font-weight: bold;
     background-color: #353535;
     margin: 0 auto;
+    position: relative;
 }
 
 .ghost {
@@ -11,6 +12,10 @@ body {
 
 .connector:hover, .input:hover {
     stroke: cyan;
+}
+
+svg {
+  display: block;
 }
 
 svg text {

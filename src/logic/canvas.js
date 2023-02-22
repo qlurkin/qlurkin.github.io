@@ -29,6 +29,14 @@ export function gridY(y) {
   return (y-offsetY()) / step
 }
 
+export function grid2X(x) {
+  return (x * step) + offsetX()
+}
+
+export function grid2Y(y) {
+  return (y * step) + offsetY()
+}
+
 export function outerHeight() {
     return innerHeight() + 2*offsetY()
 }

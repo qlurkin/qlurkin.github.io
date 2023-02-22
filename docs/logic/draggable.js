@@ -1,4 +1,5 @@
 import { canvas } from "./canvas.js"
+import { dirty } from "./current.js"
 
 export function draggable(obj, addClickListener) {
     if(addClickListener === undefined) addClickListener = true
@@ -23,6 +24,7 @@ export function draggable(obj, addClickListener) {
         setTimeout(() => {
             if(addClickListener) obj.on('click', startDrag)
             obj.afterDrop()
+            dirty()
         }, 1)
     }
 

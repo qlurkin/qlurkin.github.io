@@ -1,10 +1,13 @@
-import {canvas, inputSide, outputSide, workspace, snapX, snapY} from './canvas.js'
+import {canvas, inputSide, outputSide, workspace, snapX, snapY, outerHeight} from './canvas.js'
 import AND from './AND.js'
 import NOT from './NOT.js'
 import INPUT from './INPUT.js'
 import OUTPUT from './OUTPUT.js'
 import wire from './wire.js'
-import free_connector from './free_connector.js'
+import free_connector from './CONNECT.js'
+import { clear, fromJson } from './current.js'
+import { loadLibrary, saveCurrent, showButtons } from './library.js'
+import { showMenu } from './menu.js'
 
 workspace.on('click', event => {
     const fc = free_connector.create(canvas, event.offsetX, event.offsetY)
@@ -57,13 +60,42 @@ canvas.on('escape', () => {
 })
 
 document.getElementById('AND').addEventListener('click', event => {
-    //selected_gate = AND
     AND.create(canvas, -100, -100).startDrag()
 })
 
 document.getElementById('NOT').addEventListener('click', event => {
-    //selected_gate = NOT
     NOT.create(canvas, -100, -100).startDrag()
+})
+
+document.getElementById('CREATE').addEventListener('click', event => {
+  const name = prompt("chip name ?")
+  if(name) saveCurrent(name)
+})
+
+document.getElementById('CLEAR').addEventListener('click', event => {
+  clear()
+})
+
+function getAbsoluteGeometry(element, parent) {
+  let x = 0
+  let y = 0
+  let el = element
+  while(el !== parent) {
+      x += el.offsetLeft
+      y += el.offsetTop
+      el = el.offsetParent
+  }
+  return {x, y}
+}
+
+document.getElementById('CREATE').addEventListener('contextmenu', event => {
+  showMenu(event.offsetX, event.offsetY + outerHeight(), [{label:'yop', action: () => {}}])
+  event.preventDefault()
+})
+document.getElementById('NOT').addEventListener('contextmenu', event => {
+  const {x, y} = getAbsoluteGeometry(event.target, document.body)
+  showMenu(event.offsetX+x, event.offsetY + y, [{label:'yop', action: () => {}}])
+  event.preventDefault()
 })
 
 window.addEventListener('keydown', event => {
@@ -72,6 +104,9 @@ window.addEventListener('keydown', event => {
         canvas.fire('escape')
     }
 })
+
+loadLibrary()
+fromJson(localStorage.getItem('current'))
 
 // let ghost = null
 // let state = 'normal'
