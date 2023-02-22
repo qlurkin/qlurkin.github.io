@@ -19,8 +19,8 @@ export function UiChip(canvas, label, inputs, outputs, color, id) {
     const text = group.text(label.replace(' ', '\n'))
     const boxWidth = Math.ceil((text.bbox().width+20)/step) * step
 
-    const inputsHeight = (Object.keys(inputs).length+1) * step
-    const outputsHeight = (Object.keys(outputs).length+1) * step
+    const inputsHeight = (Object.keys(inputs).length) * step * 2
+    const outputsHeight = (Object.keys(outputs).length) * step * 2
     const connectorsHeight = Math.max(inputsHeight, outputsHeight)
     const textHeight = Math.ceil((text.bbox().height)/step) * step
     const boxHeight = Math.max(connectorsHeight, textHeight)

@@ -10,7 +10,10 @@ function free_connector() {
   const connector = Connector('')
 
   return {
-    connector
+    connector,
+    // BERK
+    inputs: [connector],
+    outputs: []
   }
 }
 
