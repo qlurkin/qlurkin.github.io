@@ -1,40 +1,52 @@
 import { gridX, gridY, canvas } from "./canvas.js"
 
-const elements = []
+//const elements = []
+let current = null
+
+function new_current() {
+  current = {
+    name: null,
+    description: "",
+    elements: [],
+    color: "#00FF00"
+  }
+}
+
+new_current()
 
 function nextId() {
-  if(elements.length === 0) return "e0"
-  return `e${Math.max(...elements.map(elm => parseInt(elm.id.slice(1), 10)))+1}`  
+  if(current.elements.length === 0) return "e0"
+  return `e${Math.max(...current.elements.map(elm => parseInt(elm.id.slice(1), 10)))+1}`  
 }
 
 export function nextInput() {
-  const inputs = elements.filter(elm => elm.type === 'INPUT')
+  const inputs = current.elements.filter(elm => elm.type === 'INPUT')
   const nums = inputs.map(elm => parseInt(elm.getLabel().slice(2), 10)).filter(elm => !isNaN(elm))
   if(inputs.length === 0) return "in0"
   return `in${Math.max(...nums)+1}`
 }
 
 export function nextOutput() {
-  const outputs = elements.filter(elm => elm.type === 'OUTPUT')
+  const outputs = current.elements.filter(elm => elm.type === 'OUTPUT')
   const nums = outputs.map(elm => parseInt(elm.getLabel().slice(3), 10)).filter(elm => !isNaN(elm))
   if(outputs.length === 0) return "out0"
   return `out${Math.max(...nums)+1}`
 }
 
 export function findConnector(chipId, connectorLabel) {
-  return elements.find(elm => elm.id === chipId).getConnector(connectorLabel)
+  return current.elements.find(elm => elm.id === chipId).getConnector(connectorLabel)
 }
 
 export function addElement(element, id) {
   if(!id) id = nextId()
   element.id = id
-  elements.push(element)
+  current.elements.push(element)
   dirty()
 }
 
 export function removeElement(element) {
-  const index = elements.findIndex(item => item == element)
-  elements.splice(index, 1)
+  const index = current.elements.findIndex(item => item == element)
+  current.elements.splice(index, 1)
   dirty()
 }
 
@@ -56,10 +68,15 @@ function clean() {
 }
 
 export function toObj() {
-  const res = []
-  for(const elm of elements) {
+  const res = {
+    name: current.name,
+    description: current.description,
+    elements: [],
+    color: current.color
+  }
+  for(const elm of current.elements) {
     const obj = elm.toObj()
-    res.push(obj)
+    res.elements.push(obj)
   }
   return res
 }
@@ -68,8 +85,12 @@ export function toJson() {
   return JSON.stringify(toObj())
 }
 
-export function fromObj(objs) {
-  for(const obj of objs) {
+export function fromObj(save) {
+  new_current()
+  current.name = save.name
+  current.description = save.description
+  current.color = save.color
+  for(const obj of save.elements) {
     import(`./${obj.type}.js`)
       .then(ELM => {
         ELM.default.createFromObj(canvas, obj)
@@ -81,12 +102,21 @@ export function fromObj(objs) {
 }
 
 export function clear() {
-  for(const element of [...elements]) {
+  for(const element of [...current.elements]) {
     if(element.type !== 'WIRE')
       element.destroy()
   }
+  new_current()
 }
 
 export function fromJson(json) {
   fromObj(JSON.parse(json))
+}
+
+export function getCurrentName() {
+  return current.name
+}
+
+export function setCurrentName(value) {
+  current.name = value
 }

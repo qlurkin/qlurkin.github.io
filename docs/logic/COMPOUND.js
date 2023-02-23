@@ -60,8 +60,8 @@ function COMPOUND(objs) {
   }
 }
 
-function ui(canvas, name, x, y, logic, id) {
-  const element = UiChip(canvas, name, logic.inputs, logic.outputs, 'green', id).move(x, y)
+function ui(canvas, name, x, y, logic, color, id) {
+  const element = UiChip(canvas, name, logic.inputs, logic.outputs, color, id).move(x, y)
   element.type = 'COMPOUND'
   element.name = name
   element.toObj = () => {
@@ -78,22 +78,23 @@ function ui(canvas, name, x, y, logic, id) {
 }
 
 function create(canvas, name, x, y) {
-  const objs = getCompound(name)
-  const logic = COMPOUND(objs)
-  const elem = ui(canvas, name, x, y, logic)
+  const save = getCompound(name)
+  const logic = COMPOUND(save.elements)
+  const elem = ui(canvas, name, x, y, logic, save.color)
   dirty()
   return elem
 }
 
 function logicFromObj(obj) {
-  const objs = getCompound(obj.name)
-  const logic = COMPOUND(objs)
+  const save = getCompound(obj.name)
+  const logic = COMPOUND(save.elements)
   return logic
 }
 
 function createFromObj(canvas, obj) {
-  const logic = logicFromObj(obj)
-  return ui(canvas, obj.name, grid2X(obj.x), grid2Y(obj.y), logic, obj.id)
+  const save = getCompound(obj.name)
+  const logic = COMPOUND(save.elements)
+  return ui(canvas, obj.name, grid2X(obj.x), grid2Y(obj.y), logic, save.color, obj.id)
 }
 
 export default {

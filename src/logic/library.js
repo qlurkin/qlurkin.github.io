@@ -16,9 +16,10 @@ export function loadLibrary() {
   showButtons()
 }
 
-export function saveCurrent(name) {
-  if(chips[name]) throw Error(`Name (${name}) already used !`)
-  chips[name] = toObj()
+export function saveCurrent() {
+  //if(chips[name]) throw Error(`Name (${name}) already used !`)
+  const obj = toObj()
+  chips[obj.name] = obj
   clear()
   showButtons()
   saveLibrary()
@@ -26,8 +27,8 @@ export function saveCurrent(name) {
 
 export function edit(name) {
   clear()
-  const objs = getCompound(name)
-  fromObj(objs)
+  const save = getCompound(name)
+  fromObj(save)
 }
 
 export function deleteCompound(name) {

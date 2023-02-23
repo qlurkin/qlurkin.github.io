@@ -1,17 +1,16 @@
-import {canvas, inputSide, outputSide, workspace, snapX, snapY, outerHeight} from './canvas.js'
+import {canvas, inputSide, outputSide, workspace, snapX, snapY } from './canvas.js'
 import AND from './AND.js'
 import NOT from './NOT.js'
 import INPUT from './INPUT.js'
 import OUTPUT from './OUTPUT.js'
 import WIRE from './WIRE.js'
 import free_connector from './CONNECT.js'
-import { clear, fromJson } from './current.js'
-import { loadLibrary, saveCurrent, showButtons } from './library.js'
-import { showMenu } from './menu.js'
+import { clear, fromJson, getCurrentName, setCurrentName } from './current.js'
+import { loadLibrary, saveCurrent } from './library.js'
 
 workspace.on('click', event => {
-    const fc = free_connector.create(canvas, event.offsetX, event.offsetY)
     if(startWire) {
+        const fc = free_connector.create(canvas, event.offsetX, event.offsetY)
         WIRE.create(startWire, fc.uiConnector)
         startWire = fc.uiConnector
     }
@@ -67,9 +66,12 @@ document.getElementById('NOT').addEventListener('click', event => {
     NOT.create(canvas, -100, -100).startDrag()
 })
 
-document.getElementById('CREATE').addEventListener('click', event => {
-  const name = prompt("chip name ?")
-  if(name) saveCurrent(name)
+document.getElementById('SAVE').addEventListener('click', event => {
+  if(getCurrentName() === null) {
+    const name = prompt("chip name ?")
+    setCurrentName(name)
+  }
+  saveCurrent()
 })
 
 document.getElementById('CLEAR').addEventListener('click', event => {
@@ -87,16 +89,6 @@ function getAbsoluteGeometry(element, parent) {
   }
   return {x, y}
 }
-
-document.getElementById('CREATE').addEventListener('contextmenu', event => {
-  showMenu(event.offsetX, event.offsetY + outerHeight(), [{label:'yop', action: () => {}}])
-  event.preventDefault()
-})
-document.getElementById('NOT').addEventListener('contextmenu', event => {
-  const {x, y} = getAbsoluteGeometry(event.target, document.body)
-  showMenu(event.offsetX+x, event.offsetY + y, [{label:'yop', action: () => {}}])
-  event.preventDefault()
-})
 
 window.addEventListener('keydown', event => {
     //console.log(event.code)

@@ -10,11 +10,11 @@ function AND() {
   const out = Connector('out')
 
   const observer = () => {
-    const a = in0.getState()
-    const b = in1.getState()
     setTimeout(() => {
+      const a = in0.getState()
+      const b = in1.getState()
       out.setState(a && b)
-    }, timing)
+    }, timing())
   }
 
   in0.connect(observer)

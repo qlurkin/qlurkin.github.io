@@ -9,10 +9,10 @@ export function NOT() {
   const out = Connector('out')
 
   const observer = () => {
-    const a = in0.getState()
     setTimeout(() => {
+      const a = in0.getState()
       out.setState(!a)
-    }, timing)
+    }, timing())
   }
 
   in0.connect(observer)
