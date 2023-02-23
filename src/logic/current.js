@@ -120,3 +120,19 @@ export function getCurrentName() {
 export function setCurrentName(value) {
   current.name = value
 }
+
+export function getCurrentColor() {
+  return current.color
+}
+
+export function setCurrentColor(value) {
+  current.color = value
+}
+
+export function getCurrentDescription() {
+  return current.description
+}
+
+export function setCurrentDescription(value) {
+  current.description = value
+}

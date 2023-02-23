@@ -5,8 +5,10 @@ import INPUT from './INPUT.js'
 import OUTPUT from './OUTPUT.js'
 import WIRE from './WIRE.js'
 import free_connector from './CONNECT.js'
-import { clear, fromJson, getCurrentName, setCurrentName } from './current.js'
+import { clear, fromJson, getCurrentColor, getCurrentDescription, getCurrentName, setCurrentColor, setCurrentDescription, setCurrentName } from './current.js'
 import { loadLibrary, saveCurrent } from './library.js'
+import { colorPicker } from './colorPicker.js'
+import { modal } from './modal.js'
 
 workspace.on('click', event => {
     if(startWire) {
@@ -67,11 +69,17 @@ document.getElementById('NOT').addEventListener('click', event => {
 })
 
 document.getElementById('SAVE').addEventListener('click', event => {
-  if(getCurrentName() === null) {
+  /*if(getCurrentName() === null) {
     const name = prompt("chip name ?")
     setCurrentName(name)
   }
-  saveCurrent()
+  saveCurrent()*/
+  modal(document.getElementById('chip-modal'), {name: getCurrentName(), description: getCurrentDescription(), color: getCurrentColor()}, data => {
+    setCurrentName(data.name)
+    setCurrentColor(data.color)
+    setCurrentDescription(data.description)
+    saveCurrent()
+  })
 })
 
 document.getElementById('CLEAR').addEventListener('click', event => {
@@ -91,10 +99,17 @@ function getAbsoluteGeometry(element, parent) {
 }
 
 window.addEventListener('keydown', event => {
-    //console.log(event.code)
     if (event.code === 'Escape') {
         canvas.fire('escape')
     }
+})
+
+
+colorPicker(document.querySelector('#chip-modal form #color-picker'), 100, 50, 65, (r, g, b) => {
+  const color = `rgb(${r}, ${g}, ${b})`
+  const input = document.querySelector('#chip-modal form #color-input')
+  input.value = color
+  input.style.backgroundColor = color
 })
 
 loadLibrary()

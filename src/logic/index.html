@@ -18,5 +18,24 @@
     <div id="buttons">
         <button id="SAVE">SAVE</button><button id="CLEAR">CLEAR</button><button id="AND">AND</button><button id="NOT">NOT</button><span id="compounds"></span>
     </div>
+    <div id='chip-modal' class='modal'>
+      <form class="column">
+        <label for="name">Name</label>
+        <input type="text" name="name" value="">
+        <div class="row separate">
+          <div class="column">
+            <label for="color">Color</label>
+            <input id="color-input" type="text" name="color" value="">
+          </div>
+          <span id="color-picker" class="separate"></span>
+        </div>
+        <label for="description" class="separate">Description</label>
+        <textarea name="description"></textarea>
+        <div class='row separate'>
+          <button type="submit">Ok</button>
+          <button class="cancel" type="button">Cancel</button>
+        </div>
+      </form>
+    </div>
 </body>
 </html>

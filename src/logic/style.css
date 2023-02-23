@@ -64,11 +64,11 @@ svg text::selection {
     background-color: #ccc;
 }
 
-#buttons button {
+button {
     display: inline-block;
     background-color: #555;
     color: #ccc;
-    margin: 0;
+    margin: 0 1px;
     border: 1px solid black;
     padding: 0.3rem 0.5rem;
     font-weight: bold;
@@ -81,4 +81,56 @@ svg text::selection {
 
 .connector:hover ~ .connector-label {
     opacity: 1;
+}
+
+.modal {
+  display: none;
+}
+
+.modal.show {
+  display: flex;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  align-items: center;
+  justify-content: center;
+}
+
+.modal.show form {
+  background-color: #ccc;
+  padding: 1rem;
+  border: 2px solid black;
+}
+
+.row {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.row > * {
+  flex-grow: 1;
+}
+
+.row > .separate {
+  margin-left: 1rem;
+}
+
+.column {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  align-items: stretch;
+}
+
+.column > * {
+  flex-grow: 1;
+}
+
+.column > .separate {
+  margin-top: 1rem;
 }
