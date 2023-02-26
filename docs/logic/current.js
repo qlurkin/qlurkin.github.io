@@ -1,4 +1,4 @@
-import { gridX, gridY, canvas } from "./canvas.js"
+import { canvas } from "./canvas.js"
 
 //const elements = []
 let current = null

@@ -28,7 +28,7 @@ function AND() {
 }
 
 function ui(canvas, x, y, logic, id) {
-  const element = UiChip(canvas, 'AND', logic.inputs, logic.outputs, 'yellow', id).move(x, y)
+  const element = UiChip(canvas, 'AND', logic.inputs, logic.outputs, '#f7fa48', id).move(x, y)
   element.type = 'AND'
   element.toObj = () => {
     return {

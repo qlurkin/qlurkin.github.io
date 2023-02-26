@@ -39,15 +39,20 @@ export function draggable(obj, addClickListener) {
     }
 
     function startDrag(event) {
+        obj.onStartDrag()
         start(event.offsetX, event.offsetY)
         event.stopPropagation()
     }
 
     if(addClickListener) obj.on('click', startDrag)
+
     obj.startDrag = () => {
         obj.onStartDrag()
         start(obj.x(), obj.y())
     }
-    obj.onStartDrag = () => {}
-    obj.afterDrop = () => {}
+
+    if(!obj.onStartDrag)
+      obj.onStartDrag = () => {}
+    if(!obj.afterDrop)
+      obj.afterDrop = () => {}
 }

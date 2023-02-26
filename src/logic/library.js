@@ -2,7 +2,8 @@ import { clear, fromObj, toObj } from "./current.js"
 import { showMenu } from "./menu.js"
 import { getAbsoluteGeometry } from "./utils.js"
 import COMPOUND from "./COMPOUND.js"
-import { canvas, offsetX } from "./canvas.js"
+import { canvas } from "./canvas.js"
+import { alert } from "./modal.js"
 
 const chips = {}
 
@@ -45,10 +46,14 @@ export function showButtons() {
     button.innerText = name
     button.addEventListener('contextmenu', event => {
       const {x, y} = getAbsoluteGeometry(event.target, document.body)
-      showMenu(event.offsetX+x, event.offsetY+y, [
+      const menu_items = [
         {label: 'Delete', action: () => {deleteCompound(name)}},
         {label: 'Edit', action: () => {edit(name)}}
-      ])
+      ]
+      if(chips[name].description) {
+        menu_items.push({label: 'Description', action: () => { alert(chips[name].description) }})
+      }
+      showMenu(event.offsetX+x, event.offsetY+y, menu_items)
       event.preventDefault()
     })
     button.addEventListener('click', event => {

@@ -4,6 +4,7 @@ import { draggable } from './draggable.js'
 import { showMenu } from './menu.js'
 import { addElement, dirty, nextOutput, removeElement } from './current.js'
 import { gridX, gridY, grid2X, grid2Y } from './canvas.js'
+import { prompt } from './modal.js'
 
 function Output(label) {
   const connector = Connector(label)
@@ -18,8 +19,8 @@ function ui(canvas, logic, id) {
   const that = {}
   const group = canvas.group()
   const line = group.line(outerWidth()-20, _y, outerWidth()-36, _y).stroke({color: 'black', width: 3})
-  const uiConnector = UiConnector(group, -18, 0, that, logic.connector)
   const big = group.circle(20)
+  const uiConnector = UiConnector(group, -18, 0, that, logic.connector)
 
   logic.connector.connect(state => {
     if(state) {
@@ -72,16 +73,17 @@ function ui(canvas, logic, id) {
       y: gridY(that.y())
     }
   }
-  that.getConnector = label => {
+  that.getConnector = _label => {
     return uiConnector
   }
 
   draggable(that, false)
 
   function rename() {
-    const value = prompt("Input Label", uiConnector.getLabel())
-    if(value) uiConnector.setLabel(value)
-    dirty()
+    prompt("Output Label", uiConnector.getLabel(), value => {
+      if(value) uiConnector.setLabel(value)
+      dirty()
+    })
   }
 
   big.on('contextmenu', event => {

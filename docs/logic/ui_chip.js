@@ -1,9 +1,11 @@
 import { snapX, snapY } from './canvas.js'
 import {step} from './config.js'
 import {UiConnector} from './connector.js'
-import { addElement, dirty, removeElement } from './current.js'
+import { addElement, removeElement } from './current.js'
 import { draggable } from './draggable.js'
 import { showMenu } from './menu.js'
+import { Color } from './svg.esm.js'
+import { getForegroundColor } from './utils.js'
 
 
 export function UiChip(canvas, label, inputs, outputs, color, id) {
@@ -12,11 +14,12 @@ export function UiChip(canvas, label, inputs, outputs, color, id) {
 
     const that = {}
 
-    if(!color) color = 'yellow'
-
     const group = canvas.group()
 
-    const text = group.text(label.replace(' ', '\n'))
+    const {r, g, b} = (new Color(color)).rgb()
+    const foreground = getForegroundColor(r, g, b)
+
+    const text = group.text(label.replace(' ', '\n')).fill(foreground)
     const boxWidth = Math.ceil((text.bbox().width+20)/step) * step
 
     const inputsHeight = (Object.keys(inputs).length) * step * 2

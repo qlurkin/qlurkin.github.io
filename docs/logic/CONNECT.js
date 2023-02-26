@@ -57,10 +57,11 @@ function ui(canvas, logic, id) {
       y: gridY(that.y())
     }
   }
-  that.getConnector = label => {
+  that.getConnector = _label => {
     return uiConnector
   }
-
+  
+  that.startDrag = () => { console.log('Not draggable yet') }
   draggable(that, false)
 
   that.onStartDrag = () => {

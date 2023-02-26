@@ -41,7 +41,7 @@ svg text::selection {
 
 #menu {
     position: absolute;
-    width: 100px;
+    min-width: 100px;
     top: 100px;
     left: -1000px;
 }
@@ -99,7 +99,7 @@ button {
   justify-content: center;
 }
 
-.modal.show form {
+.frame {
   background-color: #ccc;
   padding: 1rem;
   border: 2px solid black;
@@ -133,4 +133,16 @@ button {
 
 .column > .separate {
   margin-top: 1rem;
+}
+
+.column > .row.pull-right {
+  justify-content: flex-end;
+}
+
+.row.pull-right > * {
+  flex-grow: 0;
+}
+
+#alert-content {
+  font-weight: normal;
 }
