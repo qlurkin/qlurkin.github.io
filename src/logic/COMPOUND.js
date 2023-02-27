@@ -27,10 +27,12 @@ function COMPOUND(objs) {
 
   const otherObjs = objs.filter(obj => (obj.type !== 'OUTPUT') && (obj.type !== 'INPUT') && (obj.type !== 'WIRE'))
   const promises = []
+  const logics = []
   for(const obj of otherObjs) {
     promises.push(import(`./${obj.type}.js`)
       .then(ELM => {
         const logic = ELM.default.logicFromObj(obj)
+        logics.push(logic)
         elements[obj.id] = {}
         for(const connector of logic.inputs.concat(logic.outputs)) {
           elements[obj.id][connector.getLabel()] = connector
@@ -57,11 +59,16 @@ function COMPOUND(objs) {
   return {
     inputs,
     outputs,
+    destroy: () => {
+      for(const logic of logics) {
+        logic.destroy()
+      }
+    }
   }
 }
 
 function ui(canvas, name, x, y, logic, color, id) {
-  const element = UiChip(canvas, name, logic.inputs, logic.outputs, null, color, id).move(x, y)
+  const element = UiChip(canvas, name, logic, color, id).move(x, y)
   element.type = 'COMPOUND'
   element.name = name
   element.toObj = () => {

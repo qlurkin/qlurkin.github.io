@@ -8,9 +8,13 @@ import { Color } from './svg.esm.js'
 import { getForegroundColor } from './utils.js'
 
 
-export function UiChip(canvas, label, inputs, outputs, display, color, id) {
+export function UiChip(canvas, label, logic, color, id) {
     let _x = 0
     let _y = 0
+
+    const inputs = logic.inputs
+    const outputs = logic.outputs
+    const display = logic.group
 
     const that = {}
 
@@ -22,8 +26,8 @@ export function UiChip(canvas, label, inputs, outputs, display, color, id) {
     const text = group.text(label.replace(' ', '\n')).fill(foreground)
     const boxWidth = Math.ceil((text.bbox().width+20)/step) * step
 
-    const inputsHeight = (Object.keys(inputs).length) * step * 2
-    const outputsHeight = (Object.keys(outputs).length) * step * 2
+    const inputsHeight = inputs.length * step * 2
+    const outputsHeight = outputs.length * step * 2
     const connectorsHeight = Math.max(inputsHeight, outputsHeight)
     const textHeight = Math.ceil((text.bbox().height)/step) * step
     const boxHeight = Math.max(connectorsHeight, textHeight)
@@ -63,6 +67,7 @@ export function UiChip(canvas, label, inputs, outputs, display, color, id) {
             if(display) {
               display.remove()
             }
+            logic.destroy()
         }
     that.move = (x, y) => {
             x = snapX(x)

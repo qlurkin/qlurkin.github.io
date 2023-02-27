@@ -13,7 +13,10 @@ function free_connector() {
     connector,
     // BERK
     inputs: [connector],
-    outputs: []
+    outputs: [],
+    destroy: () => {
+      connector.destroy()
+    }
   }
 }
 

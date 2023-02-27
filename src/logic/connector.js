@@ -22,6 +22,9 @@ export function Connector(label) {
         getLabel: () => label,
         setLabel: value => {
             label = value
+        },
+        destroy: () => {
+          state.clear()
         }
     }
 }

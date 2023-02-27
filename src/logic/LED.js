@@ -1,4 +1,3 @@
-import { timing } from './config.js'
 import { Connector } from './connector.js'
 import { UiChip } from './ui_chip.js'
 import { grid2X, grid2Y, gridX, gridY } from './canvas.js'
@@ -10,30 +9,35 @@ function LED(canvas) {
 
   const group = canvas.group()
   const circle = group.circle(30).move(0, 0)
-  
-  connector.connect(state => {
-    setTimeout(() => {
+
+  function observer(state) {
       if(state) {
         circle.fill('red')
       }
       else {
         circle.fill('black')
       }
-    }, timing())
-  })
+  }
+  
+  connector.connect(observer)
   
   return {
     inputs: [connector],
     outputs: [],
     group,
     width: 30,
-    height: 30
+    height: 30,
+    destroy: () => {
+      connector.disconnect(observer)
+      connector.destroy()
+      group.remove()
+    }
   }
 }
 
 
 function ui(canvas, x, y, logic, id) {
-  const element = UiChip(canvas, 'LED', logic.inputs, logic.outputs, logic.group, '#222', id).move(x, y)
+  const element = UiChip(canvas, 'LED', logic, '#222', id).move(x, y)
   element.type = 'LED'
   element.toObj = () => {
     return {

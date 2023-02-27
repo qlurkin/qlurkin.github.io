@@ -6,17 +6,20 @@ import { grid2X, grid2Y, snapY } from './canvas.js'
 import { addElement, dirty, nextInput, removeElement } from './current.js'
 import { gridX, gridY } from './canvas.js'
 import { prompt } from './modal.js'
+import { addJob } from './randomExecutionQueue.js'
 
 function Input(label) {
   let state = observable(false)
 
   const connector = Connector(label)
 
-  connector.connect(() => {
-    setTimeout(() => {
+  function observer() {
+    addJob(() => {
       connector.setState(state.getValue())
     })
-  })
+  }
+
+  connector.connect(observer)
 
   return {
     connector,
@@ -33,7 +36,12 @@ function Input(label) {
       connector.setState(state.getValue())
     },
     connect: state.observe,
-    disconnect: state.forget
+    disconnect: state.forget,
+    destroy: () => {
+      connector.disconnect(observer)
+      connector.destroy()
+      state.clear()
+    }
   }
 }
 

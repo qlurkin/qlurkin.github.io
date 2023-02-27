@@ -21,20 +21,21 @@ function nextId() {
 
 export function nextInput() {
   const inputs = current.elements.filter(elm => elm.type === 'INPUT')
+  console.log(inputs)
   const nums = inputs.map(elm => parseInt(elm.getLabel().slice(2), 10)).filter(elm => !isNaN(elm))
-  if(inputs.length === 0) return "in0"
+  console.log(nums)
+  if(nums.length === 0) return "in0"
   return `in${Math.max(...nums)+1}`
 }
 
 export function nextOutput() {
   const outputs = current.elements.filter(elm => elm.type === 'OUTPUT')
   const nums = outputs.map(elm => parseInt(elm.getLabel().slice(3), 10)).filter(elm => !isNaN(elm))
-  if(outputs.length === 0) return "out0"
+  if(nums.length === 0) return "out0"
   return `out${Math.max(...nums)+1}`
 }
 
 export function findConnector(chipId, connectorLabel) {
-  console.log(chipId, connectorLabel)
   return current.elements.find(elm => elm.id === chipId).getConnector(connectorLabel)
 }
 

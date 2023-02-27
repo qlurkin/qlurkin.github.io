@@ -10,7 +10,10 @@ function Output(label) {
   const connector = Connector(label)
 
   return {
-    connector
+    connector,
+    destroy: () => {
+      connector.destroy()
+    }
   }
 }
 

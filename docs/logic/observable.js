@@ -2,7 +2,6 @@ export function observable(value) {
     const observers = []
     return {
         setValue: newValue => {
-            //console.log({old: value, new: value})
             if(newValue === value) return
             value = newValue
             for(const observer of observers) {

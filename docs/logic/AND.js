@@ -1,8 +1,8 @@
-import { timing } from './config.js'
 import { Connector } from './connector.js'
 import { UiChip } from './ui_chip.js'
 import { grid2X, grid2Y, gridX, gridY } from './canvas.js'
 import { dirty } from './current.js'
+import { addJob } from './randomExecutionQueue.js'
 
 function AND() {
   const in0 = Connector('in0')
@@ -10,11 +10,11 @@ function AND() {
   const out = Connector('out')
 
   const observer = () => {
-    setTimeout(() => {
+    addJob(() => {
       const a = in0.getState()
       const b = in1.getState()
       out.setState(a && b)
-    }, timing())
+    })
   }
 
   in0.connect(observer)
@@ -23,12 +23,20 @@ function AND() {
 
   return {
     inputs: [in0, in1],
-    outputs: [out]
+    outputs: [out],
+    destroy: () => {
+        in0.disconnect(observer)
+        in1.disconnect(observer)
+        out.disconnect(observer)
+        in0.destroy()
+        in1.destroy()
+        out.destroy()
+    }
   }
 }
 
 function ui(canvas, x, y, logic, id) {
-  const element = UiChip(canvas, 'AND', logic.inputs, logic.outputs, null, '#f7fa48', id).move(x, y)
+  const element = UiChip(canvas, 'AND', logic, '#f7fa48', id).move(x, y)
   element.type = 'AND'
   element.toObj = () => {
     return {
