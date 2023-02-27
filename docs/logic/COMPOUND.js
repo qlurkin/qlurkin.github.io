@@ -61,7 +61,7 @@ function COMPOUND(objs) {
 }
 
 function ui(canvas, name, x, y, logic, color, id) {
-  const element = UiChip(canvas, name, logic.inputs, logic.outputs, color, id).move(x, y)
+  const element = UiChip(canvas, name, logic.inputs, logic.outputs, null, color, id).move(x, y)
   element.type = 'COMPOUND'
   element.name = name
   element.toObj = () => {

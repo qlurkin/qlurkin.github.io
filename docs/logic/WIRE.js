@@ -3,7 +3,6 @@ import { showMenu } from './menu.js'
 import { Color } from './svg.esm.js'
 import { canvas as rootCanvas, wires } from './canvas.js'
 import { addElement, findConnector, removeElement, dirty } from './current.js'
-import { UiConnector } from './connector.js'
 
 export function Wire(a, b) {
   function aObserver(state) {

@@ -25,7 +25,7 @@ export function NOT() {
 }
 
 function ui(canvas, x, y, logic, id) {
-  const element = UiChip(canvas, 'NOT', logic.inputs, logic.outputs, '#f55', id).move(x, y)
+  const element = UiChip(canvas, 'NOT', logic.inputs, logic.outputs, null, '#f55', id).move(x, y)
   element.type = 'NOT'
   element.toObj = () => {
     return {

@@ -34,6 +34,7 @@ export function nextOutput() {
 }
 
 export function findConnector(chipId, connectorLabel) {
+  console.log(chipId, connectorLabel)
   return current.elements.find(elm => elm.id === chipId).getConnector(connectorLabel)
 }
 
@@ -90,8 +91,9 @@ export function fromObj(save) {
   current.name = save.name
   current.description = save.description
   current.color = save.color
+  let promise = Promise.resolve()
   for(const obj of save.elements) {
-    import(`./${obj.type}.js`)
+    promise = promise.then(() => import(`./${obj.type}.js`))
       .then(ELM => {
         ELM.default.createFromObj(canvas, obj)
       })

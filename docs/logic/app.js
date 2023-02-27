@@ -4,6 +4,7 @@ import NOT from './NOT.js'
 import INPUT from './INPUT.js'
 import OUTPUT from './OUTPUT.js'
 import WIRE from './WIRE.js'
+import LED from './LED.js'
 import free_connector from './CONNECT.js'
 import { clear, fromJson, getCurrentColor, getCurrentDescription, getCurrentName, setCurrentColor, setCurrentDescription, setCurrentName } from './current.js'
 import { loadLibrary, saveCurrent } from './library.js'
@@ -66,6 +67,10 @@ document.getElementById('AND').addEventListener('click', _event => {
 
 document.getElementById('NOT').addEventListener('click', _event => {
     NOT.create(canvas, -100, -100).startDrag()
+})
+
+document.getElementById('LED').addEventListener('click', _event => {
+    LED.create(canvas, -100, -100).startDrag()
 })
 
 document.getElementById('SAVE').addEventListener('click', _event => {

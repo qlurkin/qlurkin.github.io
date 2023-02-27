@@ -8,7 +8,7 @@ import { Color } from './svg.esm.js'
 import { getForegroundColor } from './utils.js'
 
 
-export function UiChip(canvas, label, inputs, outputs, color, id) {
+export function UiChip(canvas, label, inputs, outputs, display, color, id) {
     let _x = 0
     let _y = 0
 
@@ -60,6 +60,9 @@ export function UiChip(canvas, label, inputs, outputs, color, id) {
             }
             group.remove()
             removeElement(that)
+            if(display) {
+              display.remove()
+            }
         }
     that.move = (x, y) => {
             x = snapX(x)
@@ -73,6 +76,12 @@ export function UiChip(canvas, label, inputs, outputs, color, id) {
             text.cy(rect.cy())
             for(const uiConnector of uiConnectors) {
                 uiConnector.move(x, y)
+            }
+            if(display) {
+              display.transform({
+                translateX: x,
+                translateY: y
+              })
             }
             return that
         }

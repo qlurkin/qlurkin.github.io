@@ -1,4 +1,4 @@
-import { micromark } from './micromark.js'
+import { parseMd } from './markdown.js'
 
 export function modal(element) {
   element.classList.add('show')
@@ -13,7 +13,7 @@ export function modal(element) {
 
 export function alert(msg) {
   const element = document.getElementById('alert-modal')
-  element.querySelector('#alert-content').innerHTML = micromark(msg)
+  element.querySelector('#alert-content').innerHTML = parseMd(msg)
   modal(element)
 }
 

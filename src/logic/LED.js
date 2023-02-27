@@ -4,32 +4,37 @@ import { UiChip } from './ui_chip.js'
 import { grid2X, grid2Y, gridX, gridY } from './canvas.js'
 import { dirty } from './current.js'
 
-function AND() {
-  const in0 = Connector('in0')
-  const in1 = Connector('in1')
-  const out = Connector('out')
 
-  const observer = () => {
+function LED(canvas) {
+  const connector = Connector('in')
+
+  const group = canvas.group()
+  const circle = group.circle(30).move(0, 0)
+  
+  connector.connect(state => {
     setTimeout(() => {
-      const a = in0.getState()
-      const b = in1.getState()
-      out.setState(a && b)
+      if(state) {
+        circle.fill('red')
+      }
+      else {
+        circle.fill('black')
+      }
     }, timing())
-  }
-
-  in0.connect(observer)
-  in1.connect(observer)
-  out.connect(observer)
-
+  })
+  
   return {
-    inputs: [in0, in1],
-    outputs: [out]
+    inputs: [connector],
+    outputs: [],
+    group,
+    width: 30,
+    height: 30
   }
 }
 
+
 function ui(canvas, x, y, logic, id) {
-  const element = UiChip(canvas, 'AND', logic.inputs, logic.outputs, null, '#f7fa48', id).move(x, y)
-  element.type = 'AND'
+  const element = UiChip(canvas, 'LED', logic.inputs, logic.outputs, logic.group, '#222', id).move(x, y)
+  element.type = 'LED'
   element.toObj = () => {
     return {
       id: element.id,
@@ -43,18 +48,18 @@ function ui(canvas, x, y, logic, id) {
 }
 
 function create(canvas, x, y) {
-  const logic = AND()
+  const logic = LED(canvas)
   const elem = ui(canvas, x, y, logic)
   dirty()
   return elem
 }
 
 function logicFromObj(_obj) {
-  return AND()
+  return LED()
 }
 
 function createFromObj(canvas, obj) {
-  const logic = logicFromObj(obj)
+  const logic = LED(canvas)
   return ui(canvas, grid2X(obj.x), grid2Y(obj.y), logic, obj.id)
 }
 
