@@ -14,9 +14,9 @@ function Input(label) {
   const connector = Connector(label)
 
   function observer() {
-    addJob(() => {
+    setTimeout(() => {
       connector.setState(state.getValue())
-    })
+    }, 100)
   }
 
   connector.connect(observer)

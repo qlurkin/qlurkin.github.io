@@ -9,17 +9,25 @@ function AND() {
   const in1 = Connector('in1')
   const out = Connector('out')
 
-  const observer = () => {
-    addJob(() => {
+  function compute() {
       const a = in0.getState()
       const b = in1.getState()
       out.setState(a && b)
-    })
   }
+
+  function observer() {
+    addJob(compute)
+  }
+
+  function outObserver() {
+    setTimeout(compute, 100)
+  }
+
+
 
   in0.connect(observer)
   in1.connect(observer)
-  out.connect(observer)
+  out.connect(outObserver)
 
   return {
     inputs: [in0, in1],
@@ -27,7 +35,7 @@ function AND() {
     destroy: () => {
         in0.disconnect(observer)
         in1.disconnect(observer)
-        out.disconnect(observer)
+        out.disconnect(outObserver)
         in0.destroy()
         in1.destroy()
         out.destroy()

@@ -8,22 +8,28 @@ export function NOT() {
   const in0 = Connector('in')
   const out = Connector('out')
 
-  const observer = () => {
-    addJob(() => {
+  function compute() {
       const a = in0.getState()
       out.setState(!a)
-    })
+  }
+
+  function observer() {
+    addJob(compute)
+  }
+
+  function outObserver() {
+    setTimeout(compute, 100)
   }
 
   in0.connect(observer)
-  out.connect(observer)
+  out.connect(outObserver)
 
   return {
     inputs: [in0],
     outputs: [out],
     destroy: () => {
       in0.disconnect(observer)
-      out.disconnect(observer)
+      out.disconnect(outObserver)
       in0.destroy()
       out.destroy()
     }
