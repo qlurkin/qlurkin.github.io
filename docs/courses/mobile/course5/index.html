@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course 5</title>
+    <script src="/deck.js" defer></script>
+</head>
+<body>
+    <section>
+        <h1>AM4C - Course 5</h1>
+    </section>
+    <section>
+        <h2>Background Work</h2>
+        <ul>
+            <li>Responsive for your users</li>
+            <li>Good citizen on the Android platform</li>
+            <li>Work on the main thread => poor user experience</li>
+        </ul>
+    </section>
+    <section>
+        <h2>Long-Running Tasks</h2>
+        <ul>
+            <li>accessing storage</li>
+            <li>network requests</li>
+            <li>...</li>
+        </ul>
+    </section>
+    <section>
+        <h2>types of background work</h2>
+        <ul>
+            <li><strong>Immediate</strong>: Needs to execute right away and complete soon.</li>
+            <li><strong>Long Running</strong>: May take some time to complete.</li>
+            <li><strong>Deferrable</strong>: Does not need to run right away.</li>
+        </ul>
+    </section>
+    <section>
+        <h2>Persistence</h2>
+        <ul>
+            <li><strong>Persistent</strong>: Remains scheduled through app restarts and device reboots.</li>
+            <li><strong>Impersistent</strong>: No longer scheduled after the process ends.</li>
+        </ul>
+    </section>
+    <section>
+        <h2>Immediate Work</h2>
+        <ul>
+            <li>Need to execute right away</li>
+            <li>Important to the user</li>
+            <li><strong>Examples</strong>: load data from a data source (Impersistent), send a message in a chat app (Persistent)</li>
+        </ul>
+    </section>
+    <section>
+        <h2>Long-running work</h2>
+        <ul>
+            <li>Likely to take more than ten minutes</li>
+            <li><strong>Example</strong>: download a large file</li>
+        </ul>
+    </section>
+    <section>
+        <h2>Deferrable work</h2>
+        <ul>
+            <li>Does not need to run right away</li>
+            <li><strong>Example</strong>: regularly sync data with a backend</li>
+        </ul>
+    </section>
+    <section>
+        <h2>Approaches to background work</h2>
+        <table>
+            <tr>
+                <th></th>
+                <th>Persistent</th>
+                <th>Impersistent</th>
+            </tr>
+            <tr>
+                <th>Immediate</th>
+                <td>WorkManager</td>
+                <td>Coroutines</td>
+            </tr>
+            <tr>
+                <th>Long-Running</th>
+                <td>WorkManager</td>
+                <td>Don't do this !</td>
+            </tr>
+            <tr>
+                <th>Deferrable</th>
+                <td>WorkManager</td>
+                <td>Don't do this !</td>
+            </tr>
+        </table>
+        <figure>
+            <img src="./background.svg" alt="" class="third2">
+        </figure>
+    </section>
+    <section>
+        <h2>WorkManager</h2>
+        <ul>
+            <li>One-time or repeatedly</li>
+            <li>Stored in an internally managed SQLite database</li>
+            <li>Persists and is rescheduled across device reboots</li>
+            <li>Adheres to power-saving features</li>
+            <li>Flexible retry policies</li>
+            <li>Chain individual work tasks together</li>
+        </ul>
+    </section>
+    <section>
+        <h2>WorkManager</h2>
+        <figure>
+            <img src="./workmanager_main.svg" alt="">
+        </figure>
+    </section>
+    <section>
+        <h2>build.gradle(Module: app)</h2>
+        <pre><code class="lang-kotlin">
+            dependencies {
+                def work_version = "2.8.0"
+                implementation "androidx.work:work-runtime-ktx:$work_version"
+            }
+        </code></pre>
+    </section>
+    <section>
+        <h2>Define the Work</h2>
+        <ul>
+            <li>Subclass <code>Worker</code> class</li>
+            <li>Implement <code>doWork()</code> method</li>
+        </ul>
+        <pre><code class="lang-kotlin">
+            class UploadWorker(appContext: Context, workerParams: WorkerParameters):
+                Worker(appContext, workerParams) {
+                override fun doWork(): Result {
+
+                    // Do the work here--in this case, upload the images.
+                    uploadImages()
+
+                    // Indicate whether the work finished successfully with the Result
+                    return Result.success()
+                }
+            }
+        </code></pre>
+    </section>
+    <section>
+        <h2>Result</h2>
+        <ul>
+            <li><code>Result.success()</code>: The work finished successfully</li>
+            <li><code>Result.failure()</code>: The work Failed</li>
+            <li><code>Result.retry()</code>: The work failed and should be tried at another time according to its retry policy</li>
+        </ul>
+    </section>
+    <section>
+        <h2>Create a WorkRequest</h2>
+        <pre><code class="lang-kotlin">
+            val uploadWorkRequest: WorkRequest =
+                OneTimeWorkRequestBuilder&lt;UploadWorker>()
+                    .build()
+            WorkManager
+                .getInstance(myContext)
+                .enqueue(uploadWorkRequest)
+        </code></pre>
+    </section>
+    <section>
+        <h2>Expedited Work</h2>
+        <ul>
+            <li>For immediate work</li>
+        </ul>
+        <pre><code class="lang-kotlin">
+            val request = OneTimeWorkRequestBuilder()
+                .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
+                .build()
+
+            WorkManager.getInstance(context)
+                .enqueue(request)
+        </code></pre>
+        <ul>
+            <li>While your app is in the foreground, quotas won’t limit the execution of expedited work</li>
+        </ul>
+    </section>
+    <section>
+        <h2>Schedule periodic work</h2>
+        <pre><code class="lang-kotlin">
+            val saveRequest =
+                PeriodicWorkRequestBuilder&lt;SaveImageToFileWorker>(1, TimeUnit.HOURS)
+                // Additional configuration
+                    .build()
+        </code></pre>
+    </section>
+    <section>
+        <h2>Work constraints</h2>
+        <pre><code class="lang-kotlin">
+            val constraints = Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.UNMETERED)
+                .setRequiresCharging(true)
+                .build()
+
+            val myWorkRequest: WorkRequest =
+                OneTimeWorkRequestBuilder&lt;MyWork>()
+                    .setConstraints(constraints)
+                    .build()
+        </code></pre>
+    </section>
+    <section>
+        <h2>Tag work</h2>
+        <p>Let you:</p>
+        <ul>
+            <li>cancels all work requests with a particular tag</li>
+            <li>determine the current work state</li>
+        </ul>
+        <pre><code class="lang-kotlin">
+            val myWorkRequest = OneTimeWorkRequestBuilder&lt;MyWork>()
+                .addTag("cleanup")
+                .build()
+        </code></pre>
+    </section>
+    <section>
+        <h2>Assign input data</h2>
+        <pre><code class="lang-kotlin">
+            // Define the Worker requiring input
+            class UploadWork(appContext: Context, workerParams: WorkerParameters)
+                : Worker(appContext, workerParams) {
+
+                override fun doWork(): Result {
+                    val imageUriInput =
+                        inputData.getString("IMAGE_URI") ?: return Result.failure()
+
+                    uploadFile(imageUriInput)
+                    return Result.success()
+                }
+                ...
+            }
+
+            // Create a WorkRequest for your Worker and sending it input
+            val myUploadWork = OneTimeWorkRequestBuilder&lt;UploadWork>()
+                .setInputData(workDataOf(
+                    "IMAGE_URI" to "http://..."
+                ))
+                .build()
+        </code></pre>
+    </section>
+    <section>
+        <h2>Broadcasts</h2>
+        <ul>
+            <li>Apps can send Broadcasts</li>
+            <li>Apps can receive Broadcasts</li>
+            <li>System can send Broadcasts</li>
+        </ul>
+    </section>
+    <section>
+        <h2>Receiving broadcasts</h2>
+        <ul>
+            <li>Manifest-declared receivers</li>
+            <li>Context-registered receivers</li>
+        </ul>
+    </section>
+    <section>
+        <h2>Manifest-declared receivers</h2>
+        <ul>
+            <li>declare a broadcast receiver in your manifest</li>
+            <li>the system launches your app when the broadcast is sent</li>
+        </ul>
+    </section>
+    <section>
+        <h2>Manifest</h2>
+        <pre><code class="lang-xml">
+            &lt;!-- If this receiver listens for broadcasts sent from the system or from
+                other apps, even other apps that you own, set android:exported to "true". -->
+            &lt;receiver android:name=".MyBroadcastReceiver" android:exported="false">
+                &lt;intent-filter>
+                    &lt;action android:name="APP_SPECIFIC_BROADCAST" />
+                &lt;/intent-filter>
+            &lt;/receiver>
+        </code></pre>
+    </section>
+    <section>
+        <h2>Subclass <code>BroadcastReceiver</code></h2>
+        <pre><code class="lang-kotlin">
+            class MyBroadcastReceiver : BroadcastReceiver() {
+
+                override fun onReceive(context: Context, intent: Intent) {
+                    ...
+                }
+            }
+        </code></pre>
+    </section>
+    <section>
+        <h2>Context-registered receivers</h2>
+        <ul>
+            <li>receive broadcasts as long as their registering context is valid</li>
+        </ul>
+    </section>
+    <section>
+        <h2>dependencies</h2>
+        <ul>
+            <li>include version 1.9.0 or higher of the AndroidX Core library</li>
+        </ul>
+        <pre><code class="lang-kotlin">
+            dependencies {
+                val core_version = "1.9.0"
+            
+                // Kotlin
+                implementation("androidx.core:core-ktx:$core_version")
+            }
+        </code></pre>
+    </section>
+    <section>
+        <h2>Register Receiver</h2>
+        <pre><code class="lang-kotlin">
+            val br: BroadcastReceiver = MyBroadcastReceiver()
+            val filter = IntentFilter(APP_SPECIFIC_BROADCAST)
+            ContextCompat.registerReceiver(context, br, filter, ContextCompat.RECEIVER_NOT_EXPORTED)
+        </code></pre>
+    </section>
+    <section>
+        <h2>Sending broadcast</h2>
+        <pre><code class="lang-kotlin">
+            Intent().also { intent ->
+                intent.setAction("com.example.broadcast.MY_NOTIFICATION")
+                intent.putExtra("data", "Nothing to see here, move along.")
+                sendBroadcast(intent)
+            }
+        </code></pre>
+    </section>
+</body>
+</html>
