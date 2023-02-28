@@ -14,26 +14,39 @@ export function UiChip(canvas, label, logic, color, id) {
 
     const inputs = logic.inputs
     const outputs = logic.outputs
-    const display = logic.group
+    
+    let display = null
+    let displayWidth = 0
+    let displayHeight = 0
+
+    if(logic.group) {
+      display = logic.group
+      displayWidth = logic.width
+      displayHeight = logic.height
+    }
+    else {
+      display = canvas.group()
+      const {r, g, b} = (new Color(color)).rgb()
+      const foreground = getForegroundColor(r, g, b)
+      const text = display.text(label.replaceAll(' ', '\n')).move(10, 0).fill(foreground)
+      displayWidth = text.bbox().width+20
+      displayHeight = text.bbox().height
+    }
 
     const that = {}
 
     const group = canvas.group()
 
-    const {r, g, b} = (new Color(color)).rgb()
-    const foreground = getForegroundColor(r, g, b)
-
-    const text = group.text(label.replace(' ', '\n')).fill(foreground)
-    const boxWidth = Math.ceil((text.bbox().width+20)/step) * step
+    const boxWidth = Math.ceil(displayWidth/step) * step
 
     const inputsHeight = inputs.length * step * 2
     const outputsHeight = outputs.length * step * 2
     const connectorsHeight = Math.max(inputsHeight, outputsHeight)
-    const textHeight = Math.ceil((text.bbox().height)/step) * step
-    const boxHeight = Math.max(connectorsHeight, textHeight)
+    const boxHeight = Math.max(connectorsHeight, Math.ceil(displayHeight/step) * step)
 
     const rect = group.rect(boxWidth, boxHeight).fill(color)
-    rect.after(text) // Put text after rect
+    group.add(display)
+    rect.after(display) // Put text after rect
 
     const uiConnectors = []
 
@@ -53,10 +66,10 @@ export function UiChip(canvas, label, logic, color, id) {
     that.x = () => _x
     that.y = () => _y
     that.on = (eventType, handler) => {
-            rect.on(eventType, handler)
+            group.on(eventType, handler)
         }
     that.off = (eventType, handler) => {
-            rect.off(eventType, handler)
+            group.off(eventType, handler)
         }
     that.destroy = () => {
             for(const uiConnector of uiConnectors) {
@@ -77,15 +90,15 @@ export function UiChip(canvas, label, logic, color, id) {
             //const boxX = x
             //const boxY = y + (inputs.length-1) * step - boxHeight / 2
             rect.center(x, y)
-            text.cx(rect.cx())
-            text.cy(rect.cy())
+            //text.cx(rect.cx())
+            //text.cy(rect.cy())
             for(const uiConnector of uiConnectors) {
                 uiConnector.move(x, y)
             }
             if(display) {
               display.transform({
-                translateX: x,
-                translateY: y
+                translateX: rect.cx()-displayWidth/2,
+                translateY: rect.cy()-displayHeight/2
               })
             }
             return that

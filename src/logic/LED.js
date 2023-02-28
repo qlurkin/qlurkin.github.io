@@ -8,7 +8,23 @@ function LED(canvas) {
   const connector = Connector('in')
 
   const group = canvas.group()
+  group.polyline([
+    [15, 15],
+    [3, 35],
+    [5, 38],
+    [8, 32],
+    [11, 38],
+    [14, 32],
+    [17, 38],
+    [20, 32],
+    [25, 32],
+    [25, 35],
+    [21, 35],
+    [29, 35]
+  ]).fill('none').stroke({width: 2, color: 'black'})
+  group.polyline([[22, 38], [28, 38]]).fill('none').stroke({width: 2, color: 'black'})
   const circle = group.circle(30).move(0, 0)
+
 
   function observer(state) {
       if(state) {
@@ -26,7 +42,7 @@ function LED(canvas) {
     outputs: [],
     group,
     width: 30,
-    height: 30,
+    height: 40,
     destroy: () => {
       connector.disconnect(observer)
       connector.destroy()
@@ -37,7 +53,7 @@ function LED(canvas) {
 
 
 function ui(canvas, x, y, logic, id) {
-  const element = UiChip(canvas, 'LED', logic, '#222', id).move(x, y)
+  const element = UiChip(canvas, 'LED', logic, '#aaa', id).move(x, y)
   element.type = 'LED'
   element.toObj = () => {
     return {
