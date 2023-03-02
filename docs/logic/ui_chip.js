@@ -20,9 +20,14 @@ export function UiChip(canvas, label, logic, color, id) {
     let displayHeight = 0
 
     if(logic.group) {
-      display = logic.group
-      displayWidth = logic.width
-      displayHeight = logic.height
+      display = canvas.group()
+      display.add(logic.group)
+      logic.group.transform({
+        translateX: 2.5,
+        translateY: 2.5,
+      })
+      displayWidth = logic.width + 5
+      displayHeight = logic.height + 5
     }
     else {
       display = canvas.group()
@@ -50,15 +55,15 @@ export function UiChip(canvas, label, logic, color, id) {
 
     const uiConnectors = []
 
-    let connectorRelativeY = -(inputs.length - 1) * step
+    let connectorRelativeY = -(inputs.length - 1) * step + boxHeight/2
     for(const connector of inputs) {
-        uiConnectors.push(UiConnector(group, -boxWidth/2, connectorRelativeY, that, connector))
+        uiConnectors.push(UiConnector(group, 0, connectorRelativeY, that, connector))
         connectorRelativeY += step*2
     }
 
-    connectorRelativeY = -(outputs.length - 1) * step
+    connectorRelativeY = -(outputs.length - 1) * step + boxHeight/2
     for(const connector of outputs) {
-        uiConnectors.push(UiConnector(group, boxWidth/2, connectorRelativeY, that, connector))
+        uiConnectors.push(UiConnector(group, boxWidth, connectorRelativeY, that, connector))
         connectorRelativeY += step*2
     }
 
@@ -89,7 +94,7 @@ export function UiChip(canvas, label, logic, color, id) {
             _y = y
             //const boxX = x
             //const boxY = y + (inputs.length-1) * step - boxHeight / 2
-            rect.center(x, y)
+            rect.move(x, y)
             //text.cx(rect.cx())
             //text.cy(rect.cy())
             for(const uiConnector of uiConnectors) {

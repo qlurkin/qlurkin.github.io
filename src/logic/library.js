@@ -57,7 +57,9 @@ export function showButtons() {
       event.preventDefault()
     })
     button.addEventListener('click', event => {
-      COMPOUND.create(canvas, name, event.offsetX, event.offsetY).startDrag()
+      COMPOUND.create(canvas, name, event.offsetX, event.offsetY).then(elem => {
+        elem.startDrag()
+      })
     })
     root.appendChild(button)
   }

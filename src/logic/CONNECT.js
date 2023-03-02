@@ -9,7 +9,7 @@ import { gridX, gridY } from './canvas.js'
 function free_connector() {
   const connector = Connector('')
 
-  return {
+  return Promise.resolve({
     connector,
     // BERK
     inputs: [connector],
@@ -17,7 +17,7 @@ function free_connector() {
     destroy: () => {
       connector.destroy()
     }
-  }
+  })
 }
 
 function ui(canvas, logic, id) {
@@ -88,19 +88,21 @@ function ui(canvas, logic, id) {
 }
 
 function create(canvas, x, y) {
-  const logic = free_connector()
-  const elem = ui(canvas, logic).move(x, y)
-  dirty()
-  return elem
+  return free_connector().then(logic => {
+    const elem = ui(canvas, logic).move(x, y)
+    dirty()
+    return elem
+  })
 }
 
-function logicFromObj(_obj) {
+function logicFromObj(_canvas, _obj) {
   return free_connector()
 }
 
 function createFromObj(canvas, obj) {
-  const logic = logicFromObj(obj)
-  return ui(canvas, logic, obj.id).move(grid2X(obj.x), grid2Y(obj.y))
+  return logicFromObj(canvas, obj).then(logic => {
+    return ui(canvas, logic, obj.id).move(grid2X(obj.x), grid2Y(obj.y))
+  })
 }
 
 export default {

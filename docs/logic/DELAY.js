@@ -2,7 +2,6 @@ import { Connector } from './connector.js'
 import { UiChip } from './ui_chip.js'
 import { grid2X, grid2Y, gridX, gridY } from './canvas.js'
 import { dirty } from './current.js'
-import { addJob } from './randomExecutionQueue.js'
 
 export function DELAY() {
   const in0 = Connector('in')
@@ -24,7 +23,7 @@ export function DELAY() {
   in0.connect(observer)
   out.connect(outObserver)
 
-  return {
+  return Promise.resolve({
     inputs: [in0],
     outputs: [out],
     destroy: () => {
@@ -33,7 +32,7 @@ export function DELAY() {
       in0.destroy()
       out.destroy()
     }
-  }
+  })
 }
 
 function ui(canvas, x, y, logic, id) {
@@ -51,19 +50,21 @@ function ui(canvas, x, y, logic, id) {
 }
 
 function create(canvas, x, y) {
-  const logic = DELAY()
-  const elem = ui(canvas, x, y, logic)
-  dirty()
-  return elem
+  return DELAY().then(logic => {
+    const elem = ui(canvas, x, y, logic)
+    dirty()
+    return elem
+  })
 }
 
-function logicFromObj(_obj) {
+function logicFromObj(_canvas, _obj) {
   return DELAY()
 }
 
 function createFromObj(canvas, obj) {
-  const logic = logicFromObj(obj)
-  return ui(canvas, grid2X(obj.x), grid2Y(obj.y), logic, obj.id)
+  return logicFromObj(canvas, obj).then(logic => {
+    return ui(canvas, grid2X(obj.x), grid2Y(obj.y), logic, obj.id)
+  })
 }
 
 export default {

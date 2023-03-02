@@ -9,12 +9,12 @@ import { prompt } from './modal.js'
 function Output(label) {
   const connector = Connector(label)
 
-  return {
+  return Promise.resolve({
     connector,
     destroy: () => {
       connector.destroy()
     }
-  }
+  })
 }
 
 function ui(canvas, logic, id) {
@@ -103,19 +103,21 @@ function ui(canvas, logic, id) {
 }
 
 function create(canvas, y) {
-  const logic = Output(nextOutput())
-  const elem = ui(canvas, logic).move(0, y)
-  dirty()
-  return elem
+  return Output(nextOutput()).then(logic => {
+    const elem = ui(canvas, logic).move(0, y)
+    dirty()
+    return elem
+  })
 }
 
-function logicFromObj(obj) {
+function logicFromObj(_canvas, obj) {
   return Output(obj.label)
 }
 
 function createFromObj(canvas, obj) {
-  const logic = logicFromObj(obj)
-  return ui(canvas, logic, obj.id).move(grid2X(obj.x), grid2Y(obj.y))
+  return logicFromObj(canvas, obj).then(logic => {
+    return ui(canvas, logic, obj.id).move(grid2X(obj.x), grid2Y(obj.y))
+  })
 }
 
 export default {

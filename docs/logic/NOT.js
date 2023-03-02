@@ -24,7 +24,7 @@ export function NOT() {
   in0.connect(observer)
   out.connect(outObserver)
 
-  return {
+  return Promise.resolve({
     inputs: [in0],
     outputs: [out],
     destroy: () => {
@@ -33,7 +33,7 @@ export function NOT() {
       in0.destroy()
       out.destroy()
     }
-  }
+  })
 }
 
 function ui(canvas, x, y, logic, id) {
@@ -51,19 +51,21 @@ function ui(canvas, x, y, logic, id) {
 }
 
 function create(canvas, x, y) {
-  const logic = NOT()
-  const elem = ui(canvas, x, y, logic)
-  dirty()
-  return elem
+  return NOT().then(logic => {
+    const elem = ui(canvas, x, y, logic)
+    dirty()
+    return elem
+  })
 }
 
-function logicFromObj(_obj) {
+function logicFromObj(_canvas, _obj) {
   return NOT()
 }
 
 function createFromObj(canvas, obj) {
-  const logic = logicFromObj(obj)
-  return ui(canvas, grid2X(obj.x), grid2Y(obj.y), logic, obj.id)
+  return logicFromObj(canvas, obj).then(logic => {
+    return ui(canvas, grid2X(obj.x), grid2Y(obj.y), logic, obj.id)
+  })
 }
 
 export default {

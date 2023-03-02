@@ -10,14 +10,16 @@ import free_connector from './CONNECT.js'
 import { clear, fromJson, getCurrentColor, getCurrentDescription, getCurrentName, setCurrentColor, setCurrentDescription, setCurrentName } from './current.js'
 import { loadLibrary, saveCurrent } from './library.js'
 import { colorPicker } from './colorPicker.js'
-import { form_modal } from './modal.js'
+import { form_modal, prompt } from './modal.js'
+import TEXT from './TEXT.js'
 
 workspace.on('click', event => {
-    if(startWire) {
-        const fc = free_connector.create(canvas, event.offsetX, event.offsetY)
-        WIRE.create(startWire, fc.uiConnector)
-        startWire = fc.uiConnector
-    }
+  if(startWire) {
+    free_connector.create(canvas, event.offsetX, event.offsetY).then(fc => {
+      WIRE.create(startWire, fc.uiConnector)
+      startWire = fc.uiConnector
+    })
+  }
 })
 
 inputSide.on('click', event => {
@@ -63,19 +65,35 @@ canvas.on('escape', () => {
 })
 
 document.getElementById('AND').addEventListener('click', _event => {
-    AND.create(canvas, -100, -100).startDrag()
+  AND.create(canvas, -100, -100).then(elem => {
+    elem.startDrag()
+  })
 })
 
 document.getElementById('NOT').addEventListener('click', _event => {
-    NOT.create(canvas, -100, -100).startDrag()
+  NOT.create(canvas, -100, -100).then(elem => {
+    elem.startDrag()
+  })
 })
 
 document.getElementById('DELAY').addEventListener('click', _event => {
-    DELAY.create(canvas, -100, -100).startDrag()
+  DELAY.create(canvas, -100, -100).then(elem => {
+    elem.startDrag()
+  })
 })
 
 document.getElementById('LED').addEventListener('click', _event => {
-    LED.create(canvas, -100, -100).startDrag()
+  LED.create(canvas, -100, -100).then(elem => {
+    elem.startDrag()
+  })
+})
+
+document.getElementById('TEXT').addEventListener('click', _event => {
+  prompt('The text ?', '', value => {
+    TEXT.create(canvas, -100, -100, value).then(elem => {
+      elem.startDrag()
+    })
+  })
 })
 
 document.getElementById('SAVE').addEventListener('click', _event => {

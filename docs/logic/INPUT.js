@@ -21,7 +21,7 @@ function Input(label) {
 
   connector.connect(observer)
 
-  return {
+  return Promise.resolve({
     connector,
     set: () => {
       state.setValue(true)
@@ -42,7 +42,7 @@ function Input(label) {
       connector.destroy()
       state.clear()
     }
-  }
+  })
 }
 
 function ui(canvas, logic, id) {
@@ -137,20 +137,21 @@ function ui(canvas, logic, id) {
 }
 
 function create(canvas, y) {
-  const logic = Input(nextInput())
-  const elem = ui(canvas, logic).move(0, y)
-  dirty()
-  return elem
+  return Input(nextInput()).then(logic => {
+    const elem = ui(canvas, logic).move(0, y)
+    dirty()
+    return elem
+  })
 }
 
-function logicFromObj(obj) {
+function logicFromObj(_canvas, obj) {
   return Input(obj.label)
 }
 
 function createFromObj(canvas, obj) {
-  const logic = logicFromObj(obj)
-  const elem = ui(canvas, logic, obj.id).move(grid2X(obj.x), grid2Y(obj.y))
-  return elem
+  return logicFromObj(canvas, obj).then(logic => {
+    return ui(canvas, logic, obj.id).move(grid2X(obj.x), grid2Y(obj.y))
+  })
 }
 
 export default {

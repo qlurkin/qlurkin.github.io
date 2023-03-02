@@ -37,7 +37,7 @@ function LED(canvas) {
   
   connector.connect(observer)
   
-  return {
+  return Promise.resolve({
     inputs: [connector],
     outputs: [],
     group,
@@ -48,7 +48,7 @@ function LED(canvas) {
       connector.destroy()
       group.remove()
     }
-  }
+  })
 }
 
 
@@ -68,19 +68,21 @@ function ui(canvas, x, y, logic, id) {
 }
 
 function create(canvas, x, y) {
-  const logic = LED(canvas)
-  const elem = ui(canvas, x, y, logic)
-  dirty()
-  return elem
+  return LED(canvas).then(logic => {
+    const elem = ui(canvas, x, y, logic)
+    dirty()
+    return elem
+  })
 }
 
-function logicFromObj(_obj) {
-  return LED()
+function logicFromObj(canvas, _obj) {
+  return LED(canvas)
 }
 
 function createFromObj(canvas, obj) {
-  const logic = LED(canvas)
-  return ui(canvas, grid2X(obj.x), grid2Y(obj.y), logic, obj.id)
+  return LED(canvas).then(logic => {
+    return ui(canvas, grid2X(obj.x), grid2Y(obj.y), logic, obj.id)
+  })
 }
 
 export default {

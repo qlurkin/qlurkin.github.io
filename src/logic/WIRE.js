@@ -15,7 +15,7 @@ export function Wire(a, b) {
   }
   b.connect(bObserver)
 
-  return {
+  return Promise.resolve({
     destroy: () => {
       a.disconnect(aObserver)
       b.disconnect(bObserver)
@@ -23,7 +23,7 @@ export function Wire(a, b) {
       b.reset()
     },
     ends: [a, b]
-  }
+  })
 }
 
 function ui(canvas, uiConnector0, uiConnector1, wire, id) {
@@ -94,10 +94,11 @@ function ui(canvas, uiConnector0, uiConnector1, wire, id) {
 
   function split(x, y) {
     destroy()
-    const mid = free_connector.create(rootCanvas, x, y)
-    create(uiConnector0, mid.uiConnector)
-    create(mid.uiConnector, uiConnector1)
-    mid.startDrag()
+    free_connector.create(rootCanvas, x, y).then(mid => {
+      create(uiConnector0, mid.uiConnector)
+      create(mid.uiConnector, uiConnector1)
+      mid.startDrag()
+    })
   }
 
   outline.on('click', event => {
@@ -118,22 +119,25 @@ function ui(canvas, uiConnector0, uiConnector1, wire, id) {
 }
 
 function create(uiConnector0, uiConnector1) {
-  const logic = Wire(uiConnector0.connector, uiConnector1.connector)
-  const elem = ui(wires, uiConnector0, uiConnector1, logic)
-  dirty()
-  return elem
+  return Wire(uiConnector0.connector, uiConnector1.connector).then(logic => {
+    const elem = ui(wires, uiConnector0, uiConnector1, logic)
+    dirty()
+    return elem
+  })
 }
 
-function logicFromObj(obj) {
-  return null
-}
-
-function createFromObj(canvas, obj) {
+function logicFromObj(_canvas, obj) {
   const uiConnector0 = findConnector(obj.ends[0].element, obj.ends[0].connector)
   const uiConnector1 = findConnector(obj.ends[1].element, obj.ends[1].connector)
-  const logic = Wire(uiConnector0.connector, uiConnector1.connector)
-  const elem = ui(wires, uiConnector0, uiConnector1, logic, obj.id)
-  return elem
+  return Wire(uiConnector0.connector, uiConnector1.connector)
+}
+
+function createFromObj(_canvas, obj) {
+  const uiConnector0 = findConnector(obj.ends[0].element, obj.ends[0].connector)
+  const uiConnector1 = findConnector(obj.ends[1].element, obj.ends[1].connector)
+  return Wire(uiConnector0.connector, uiConnector1.connector).then(logic => {
+    return ui(wires, uiConnector0, uiConnector1, logic, obj.id)
+  })
 }
 
 export default {

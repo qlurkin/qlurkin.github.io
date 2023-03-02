@@ -29,7 +29,7 @@ function AND() {
   in1.connect(observer)
   out.connect(outObserver)
 
-  return {
+  return Promise.resolve({
     inputs: [in0, in1],
     outputs: [out],
     destroy: () => {
@@ -40,7 +40,7 @@ function AND() {
         in1.destroy()
         out.destroy()
     }
-  }
+  })
 }
 
 function ui(canvas, x, y, logic, id) {
@@ -59,19 +59,21 @@ function ui(canvas, x, y, logic, id) {
 }
 
 function create(canvas, x, y) {
-  const logic = AND()
-  const elem = ui(canvas, x, y, logic)
-  dirty()
-  return elem
+  return AND().then(logic => {
+    const elem = ui(canvas, x, y, logic)
+    dirty()
+    return elem
+  })
 }
 
-function logicFromObj(_obj) {
+function logicFromObj(_canvas, _obj) {
   return AND()
 }
 
 function createFromObj(canvas, obj) {
-  const logic = logicFromObj(obj)
-  return ui(canvas, grid2X(obj.x), grid2Y(obj.y), logic, obj.id)
+  return logicFromObj(canvas, obj).then(logic => {
+    return ui(canvas, grid2X(obj.x), grid2Y(obj.y), logic, obj.id)
+  })
 }
 
 export default {

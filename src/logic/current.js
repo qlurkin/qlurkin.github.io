@@ -96,7 +96,7 @@ export function fromObj(save) {
   for(const obj of save.elements) {
     promise = promise.then(() => import(`./${obj.type}.js`))
       .then(ELM => {
-        ELM.default.createFromObj(canvas, obj)
+        return ELM.default.createFromObj(canvas, obj)
       })
       .catch(err => {
         console.log(err)
