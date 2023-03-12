@@ -199,7 +199,7 @@ En plus des messages, on pourra utiliser des commandes tel que `/join` et `/quit
 Welcome to Messenger !
 > /join 192.168.1.42 3000
 192.168.1.42:3000 JOINED
-> Hello, ça farte ?
+> Hello, <a href="https://youtu.be/dhZ_kkVzx18" style='color: black; text-decoration: none;'>ça farte ?</a>
 192.168.1.42 said: Top, et toi ?
 > Ouais, je suis un pro du réseau now xD
 192.168.1.42 said: A fond (y)
@@ -207,9 +207,30 @@ Welcome to Messenger !
 BEY
 </pre>
 
-## Défis
+## Ajoutons un serveur (TCP)
 
 Ajoutez un server central qui garde la liste des clients connectés avec leurs pseudos et adresses pour permettre de contacter les autres clients par leurs pseudos.
+
+Au démarrage du programme, on indique le pseudo que l'on souhaite utiliser:
+
+<pre>
+#> python chat.py big_boss
+</pre>
+
+Le client de chat s'inscrit alors auprès du serveur central. Celui-ci enregistre l'IP, le port, et le pseudo utilisé.
+
+Le client de chat aura une nouvelle commande `/list` qui permettra de récupérer la liste des clients connectés:
+
+<pre>
+#> python chat.py solid_snake
+Welcome to Messenger !
+> /list
+big_boss
+> /join big_boss
+big_boss JOINED
+> <a href="https://youtu.be/JqRNO1zQx_Y?t=174" style='color: black; text-decoration: none;'>How can you still be alive?</a>
+big_boss said: <a href="https://youtu.be/JqRNO1zQx_Y?t=179" style='color: black; text-decoration: none;'>That body Liquid burned on the Volta wasn't mine...</a>
+</pre>
 
 
 
