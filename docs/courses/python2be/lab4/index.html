@@ -87,10 +87,15 @@ with socket.socket() as s:
 </code></pre>
 <p>Vous pouvez utiliser la communication réseau entre deux programme qui tournent sur le même ordinateur. Il vous suffit d&#39;utiliser <code>&#39;127.0.0.1&#39;</code> ou <code>&#39;localhost&#39;</code> comme adresse dans le <code>connect()</code></p>
 <p>Ce server s&#39;arrête dès qu&#39;il reçoit un message mais on peut bien sûr mettre le <code>accept()</code> et la gestion du client dans une boucle.</p>
-<pre><code class="language-python">while True:
-    client, address = s.accept()
-    with client:
+<pre><code class="language-python">s.settimeout(0.5) # Pour que l&#39;accept() ne bloque que 0.5 seconde
+while True:
+    try:
+      client, address = s.accept()
+      with client:
         message = client.recv(2048).decode()
+    except socket.timeout:
+      pass
+      
 </code></pre>
 <p>On crée ici, délibérément, une boucle infinie car il est généralement souhaitable qu&#39;un serveur tourne sans s&#39;arrêter. On forcera l&#39;arrêt en tapant <strong>Ctrl-C</strong> dans le terminal.</p>
 <h2 id="lets-chat">Let&#39;s Chat</h2>

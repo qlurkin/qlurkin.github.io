@@ -134,10 +134,15 @@ Vous pouvez utiliser la communication réseau entre deux programme qui tournent 
 Ce server s'arrête dès qu'il reçoit un message mais on peut bien sûr mettre le `accept()` et la gestion du client dans une boucle.
 
 ```python
+s.settimeout(0.5) # Pour que l'accept() ne bloque que 0.5 seconde
 while True:
-    client, address = s.accept()
-    with client:
+    try:
+      client, address = s.accept()
+      with client:
         message = client.recv(2048).decode()
+    except socket.timeout:
+      pass
+      
 ```
 
 On crée ici, délibérément, une boucle infinie car il est généralement souhaitable qu'un serveur tourne sans s'arrêter. On forcera l'arrêt en tapant **Ctrl-C** dans le terminal.
