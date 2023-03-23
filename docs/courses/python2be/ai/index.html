@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cours 7: Recherche, Théorie des jeux</title>
+    <title>Cours 6: Recherche, Théorie des jeux</title>
     <script src="/deck.js" defer></script>
     
     
@@ -13,7 +13,7 @@
 </head>
 <body>
 <section>
-    <h1>Cours 7: Recherche, Théorie des jeux </h1>
+    <h1>Cours 6: Recherche, Théorie des jeux </h1>
     
 </section>
 
@@ -361,23 +361,29 @@
 			def dequeue(self):
 				return self.data.pop(0)
 
+			def isEmpty(self):
+				return len(self.data) == 0
+
 		def BFS(start, successors, goals):
 			q = Queue()
 			parent = {}
 			parent[start] = None
-			node = start
-			while node not in goals:
+			q.enqueue(start)
+			while not q.isEmpty():
+				node = q.dequeue()
+				if node in goals:
+					break
 				for successor in successors(node):
 					if successor not in parent:
 						parent[successor] = node
 						q.enqueue(successor)
-				node = q.dequeue()
-
+				node = None
+		
 			res = []
 			while node is not None:
 				res.append(node)
 				node = parent[node]
-
+		
 			return list(reversed(res))
 
 		def successors(node):
@@ -447,23 +453,29 @@
 			def pop(self):
 				return self.data.pop()
 
+			def isEmpty(self):
+				return len(self.data) == 0
+
 		def DFS(start, successors, goals):
 			s = Stack()
 			parent = {}
 			parent[start] = None
-			node = start
-			while node not in goals:
+			s.push(start)
+			while not s.isEmpty():
+				node = s.pop()
+				if node in goals:
+					break
 				for successor in successors(node):
 					if successor not in parent:
 						parent[successor] = node
 						s.push(successor)
-				node = s.pop()
-
+				node = None
+		
 			res = []
 			while node is not None:
 				res.append(node)
 				node = parent[node]
-
+		
 			return list(reversed(res))
 
 		def successors(node):
@@ -588,23 +600,29 @@
 			def dequeue(self):
 				return self.data.pop(0)['value']
 
+			def isEmpty(self):
+				return len(self.data) == 0
+
 		def BestFS(start, successors, goals, heuristic):
 			q = PriorityQueue()
 			parent = {}
 			parent[start] = None
-			node = start
-			while node not in goals:
+			q.enqueue(start, heuristic(start))
+			while not q.isEmpty():
+				node = q.dequeue()
+				if node in goals:
+					break
 				for successor in successors(node):
 					if successor not in parent:
 						parent[successor] = node
 						q.enqueue(successor, heuristic(successor))
-				node = q.dequeue()
-
+				node = None
+		
 			res = []
 			while node is not None:
 				res.append(node)
 				node = parent[node]
-
+		
 			return list(reversed(res))
 
 		def successors(node):
