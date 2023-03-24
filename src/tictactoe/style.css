@@ -1,0 +1,34 @@
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+h1 {
+    text-align: center;
+}
+
+#board {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto;
+    width: 75vmin;
+    height: 75vmin;
+    margin: 1rem auto;
+}
+
+.cell {
+    width: 25vmin;
+    height: 25vmin;
+    border: 1px solid black;
+    text-align: center;
+    line-height: 25vmin;
+    font-size: 20vmin;
+    cursor: pointer;
+}
