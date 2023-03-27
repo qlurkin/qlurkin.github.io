@@ -1,3 +1,5 @@
+console.info('IA based on Negamax with alpha/beta pruning')
+
 const lines = [
 	[0, 1, 2],
 	[3, 4, 5],
@@ -152,5 +154,3 @@ document.querySelectorAll('.cell').forEach(cell => {
     })
     i = i + 1
 })
-
-console.info('IA based on Negamax with alpha/beta pruning')
