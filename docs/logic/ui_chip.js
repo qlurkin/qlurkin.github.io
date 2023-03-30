@@ -47,7 +47,8 @@ export function UiChip(canvas, label, logic, color, id) {
     const inputsHeight = inputs.length * step * 2
     const outputsHeight = outputs.length * step * 2
     const connectorsHeight = Math.max(inputsHeight, outputsHeight)
-    const boxHeight = Math.max(connectorsHeight, Math.ceil(displayHeight/step) * step)
+    const displaySteps = Math.ceil(displayHeight/step)
+    const boxHeight = Math.max(connectorsHeight, (displaySteps+displaySteps%2) * step)
 
     const rect = group.rect(boxWidth, boxHeight).fill(color)
     group.add(display)

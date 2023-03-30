@@ -8,10 +8,11 @@ import LED from './LED.js'
 import DELAY from './DELAY.js'
 import free_connector from './CONNECT.js'
 import { clear, fromJson, getCurrentColor, getCurrentDescription, getCurrentName, setCurrentColor, setCurrentDescription, setCurrentName } from './current.js'
-import { loadLibrary, saveCurrent } from './library.js'
+import { exportLibrary, importLibrary, loadLibrary, saveCurrent } from './library.js'
 import { colorPicker } from './colorPicker.js'
-import { form_modal, prompt } from './modal.js'
+import { file, form_modal, prompt } from './modal.js'
 import TEXT from './TEXT.js'
+import { showMenu } from './menu.js'
 
 workspace.on('click', event => {
   if(startWire) {
@@ -20,6 +21,27 @@ workspace.on('click', event => {
       startWire = fc.uiConnector
     })
   }
+})
+
+workspace.on('contextmenu', event => {
+  showMenu(event.offsetX, menu.offsetX, [
+    {label: 'Save', action: () => {
+      form_modal(document.getElementById('chip-modal'), {name: getCurrentName(), description: getCurrentDescription(), color: getCurrentColor()}, data => {
+        setCurrentName(data.name)
+        setCurrentColor(data.color)
+        setCurrentDescription(data.description)
+        saveCurrent()
+      })
+    }},
+    {label: 'Export', action: exportLibrary},
+    {label: 'Import', action: () => {
+      file(content => {
+        importLibrary(content)
+      })
+    }},
+    {label: 'Clear', action: clear},
+  ])
+  event.preventDefault()
 })
 
 inputSide.on('click', event => {
@@ -94,24 +116,6 @@ document.getElementById('TEXT').addEventListener('click', _event => {
       elem.startDrag()
     })
   })
-})
-
-document.getElementById('SAVE').addEventListener('click', _event => {
-  /*if(getCurrentName() === null) {
-    const name = prompt("chip name ?")
-    setCurrentName(name)
-  }
-  saveCurrent()*/
-  form_modal(document.getElementById('chip-modal'), {name: getCurrentName(), description: getCurrentDescription(), color: getCurrentColor()}, data => {
-    setCurrentName(data.name)
-    setCurrentColor(data.color)
-    setCurrentDescription(data.description)
-    saveCurrent()
-  })
-})
-
-document.getElementById('CLEAR').addEventListener('click', _event => {
-  clear()
 })
 
 window.addEventListener('keydown', event => {

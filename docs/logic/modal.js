@@ -59,3 +59,18 @@ export function prompt(msg, value, callback) {
 
   form_modal(element, { value }, cb)
 }
+
+export function file(callback) {
+  const element = document.getElementById('file-modal')
+
+  function cb(obj) {
+    const reader = new FileReader()
+    reader.addEventListener('load', (event) => {
+      callback(event.target.result)
+    })
+    reader.readAsText(obj.file)
+    console.log(obj)
+  }
+
+  form_modal(element, {}, cb)
+}
