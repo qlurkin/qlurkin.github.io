@@ -11,9 +11,10 @@
         "numpy",
         "Paypal",
         "pygame",
-        "tinylr"
+        "tinylr",
+        "webgpu"
     ],
-    "liveServer.settings.root": "/docs",
+    "liveServer.settings.root": "/src",
     "liveServer.settings.port": 5501,
     "jupyter.jupyterServerType": "local"
 }

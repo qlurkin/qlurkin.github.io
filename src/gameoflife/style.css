@@ -1,0 +1,11 @@
+body {
+    text-align: center;
+}
+
+.alert {
+    color: red;
+}
+
+.small {
+    font-size: 0.7em;
+}
