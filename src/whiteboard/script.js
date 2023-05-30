@@ -8,39 +8,46 @@ let current_stroke_array = null
 let current_color = 'rgb(0, 0, 0)'
 let current_width = 4
 
-draw.on('mousemove', event => {
-  if(current_stroke) {
-    current_stroke_array.push([event.offsetX, event.offsetY])
-    current_stroke.plot(current_stroke_array)
+function render_stroke(points, stroke) {
+  points = simplify(points)
+  stroke.clear()
+  if(points.length == 1) {
+    stroke
+      .circle(current_width)
+      .fill(current_color)
+      .center(points[0][0], points[0][1])
   }
-})
-
-draw.on('mousedown', event => {
-  current_stroke_array = [[event.offsetX, event.offsetY]]
-  current_stroke = draw
-    .polyline(current_stroke_array)
-    .fill('none')
-    .stroke({ color: current_color, width: current_width, linecap: 'round', linejoin: 'round' })
-})
-
-draw.on('mouseup', () => {
-  current_stroke_array = simplify(current_stroke_array)
-  if(current_stroke_array.length == 1) {
-    current_stroke.remove()
-    draw.circle(current_width).fill(current_color).center(current_stroke_array[0][0], current_stroke_array[0][1])
-  }
-  else if(current_stroke_array.length == 2) {
-    current_stroke.plot(current_stroke_array)
+  else if(points.length == 2) {
+    stroke
+      .polyline(points)
+      .fill('none')
+      .stroke({ color: current_color, width: current_width, linecap: 'round', linejoin: 'round' })
   }
   else {
-    const path_string = catmullRom2bezier(current_stroke_array)
-    current_stroke.remove()
-    draw
+    const path_string = catmullRom2bezier(points)
+    stroke
       .path(path_string)
       .fill('none')
       .stroke({ color: current_color, width: current_width, linecap: 'round', linejoin: 'round' })
   }
+}
 
+draw.on('pointermove', event => {
+  if(current_stroke) {
+    current_stroke_array.push([event.offsetX, event.offsetY])
+    render_stroke(current_stroke_array, current_stroke)
+  }
+})
+
+draw.on('pointerdown', event => {
+  current_stroke_array = [[event.offsetX, event.offsetY]]
+  current_stroke = draw.group()
+    render_stroke(current_stroke_array, current_stroke)
+})
+
+draw.on('pointerup', () => {
+  current_stroke_array.push([event.offsetX, event.offsetY])
+  render_stroke(current_stroke_array, current_stroke)
   current_stroke = null
   current_stroke_array = null
 })
