@@ -1,5 +1,7 @@
 import { SVG } from 'https://cdnjs.cloudflare.com/ajax/libs/svg.js/3.1.2/svg.esm.min.js' 
-import { catmullRom2bezier, simplify } from './simplify.js'
+import { catmullRom2bezier } from './simplify.js'
+import { brush as make_brush } from './brush.js'
+
 
 var draw = SVG().addTo('body').size(300, 300)
 
@@ -9,7 +11,6 @@ let current_color = 'rgb(0, 0, 0)'
 let current_width = 4
 
 function render_stroke(points, stroke) {
-  points = simplify(points)
   stroke.clear()
   if(points.length == 1) {
     stroke
@@ -32,22 +33,26 @@ function render_stroke(points, stroke) {
   }
 }
 
-draw.on('pointermove', event => {
+const brush = make_brush(point => {
   if(current_stroke) {
-    current_stroke_array.push([event.offsetX, event.offsetY])
+    current_stroke_array.push(point)
     render_stroke(current_stroke_array, current_stroke)
   }
+}, 5)
+
+draw.on('pointermove', event => {
+  brush([event.offsetX, event.offsetY])
 })
 
 draw.on('pointerdown', event => {
-  current_stroke_array = [[event.offsetX, event.offsetY]]
+  current_stroke_array = []
   current_stroke = draw.group()
-    render_stroke(current_stroke_array, current_stroke)
+  brush([event.offsetX, event.offsetY], true)
 })
 
-draw.on('pointerup', () => {
-  current_stroke_array.push([event.offsetX, event.offsetY])
-  render_stroke(current_stroke_array, current_stroke)
+draw.on('pointerup', event => {
+  brush([event.offsetX, event.offsetY], true)
+  
   current_stroke = null
   current_stroke_array = null
 })
