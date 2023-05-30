@@ -38,7 +38,7 @@ const brush = make_brush(point => {
     current_stroke_array.push(point)
     render_stroke(current_stroke_array, current_stroke)
   }
-}, 5)
+}, 2)
 
 draw.on('pointermove', event => {
   brush([event.offsetX, event.offsetY])
