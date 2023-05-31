@@ -15,7 +15,7 @@ svg {
   left: 0;
   padding: 0.5rem;
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: row wrap;
   gap: 4px;
   justify-content: space-between;
   pointer-events: none;
