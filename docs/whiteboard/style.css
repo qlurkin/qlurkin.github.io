@@ -4,6 +4,10 @@ html, body, svg {
   margin: 0;
 }
 
+svg {
+  touch-action: none;
+}
+
 #tools {
   position: fixed;
   top: 0;
