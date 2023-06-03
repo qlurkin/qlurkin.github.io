@@ -4,6 +4,7 @@ import { brush as make_brush } from './brush.js'
 
 
 var draw = SVG().addTo('body').size(300, 300)
+draw.addClass('drawing')
 
 let current_stroke = null
 let current_stroke_array = null
@@ -64,7 +65,7 @@ function removeSelected(selector) {
 }
 
 document.querySelectorAll('.size').forEach(elem => {
-  elem.addEventListener('click', event => {
+  elem.addEventListener('click', () => {
     const width = parseInt(elem.querySelector('circle').getAttribute('r'), 10)*2
     current_width = width
     removeSelected('.size')
@@ -73,7 +74,7 @@ document.querySelectorAll('.size').forEach(elem => {
 })
 
 document.querySelectorAll('.color').forEach(elem => {
-  elem.addEventListener('click', event => {
+  elem.addEventListener('click', () => {
     const color = elem.querySelector('circle').getAttribute('fill')
     current_color = color
     removeSelected('.color')
@@ -89,3 +90,21 @@ document.querySelector('.undo').addEventListener('click', () => {
 document.querySelector('.clear').addEventListener('click', () => {
   draw.clear()
 })
+
+function download(filename, text) {
+  const element = document.createElement('a')
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text))
+  element.setAttribute('download', filename)
+
+  element.style.display = 'none'
+  document.body.appendChild(element)
+
+  element.click()
+
+  document.body.removeChild(element)
+}
+
+document.querySelector('.download').addEventListener('click', () => {
+  download('whiteboard.svg', `<?xml version="1.0" standalone="no"?><svg viewBox="0 0 ${window.innerWidth} ${window.innerHeight}" style="background-color:#ffffffff" width="${window.innerWidth}" height="${window.innerHeight}" xmlns="http://www.w3.org/2000/svg" xmlns:xlink= "http://www.w3.org/1999/xlink">${document.querySelector('svg.drawing').innerHTML}</svg>`)
+})
+
