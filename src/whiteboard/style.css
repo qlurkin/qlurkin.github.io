@@ -35,9 +35,10 @@ button > svg {
   vertical-align: middle;
 }
 
-button > .material-icons {
+button > img {
+  width: 32px;
+  display: inline-block;
   vertical-align: middle;
-  font-size: 32px;
 }
 
 button.selected {
