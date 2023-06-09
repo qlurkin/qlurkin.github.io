@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>SA4L - Labo 1</title>
+	<script src="https://quentin.lurkin.xyz/document.js" defer></script>
+	<style>
+		canvas {
+			max-width: 100%;
+		}
+	</style>
+</head>
+<body>
+	<h1>SA4L - Labo 1</h1>
+	<h2 class="nocount">Instructions</h2>
+	<ol>
+		<li>Installer la librairie <a href="https://www.raylib.com/" style='font-family: monospace;'>raylib</a>.</li>
+		<li>réaliser l'animation suivante:
+			<figure id="resultat"></figure>
+			<script type="module">
+				import * as THREE from './three.module.js'
+				import { OrbitControls } from './OrbitControls.js'
+
+				const width = 1200
+				const height = 800
+
+				const scene = new THREE.Scene()
+				const camera = new THREE.PerspectiveCamera(30, width / height, 0.1, 1000)
+				camera.position.set(1, 0, 5)
+				camera.up.set(0, 0, 1)
+
+				const renderer = new THREE.WebGLRenderer({antialias: true})
+				renderer.setClearColor( 0xffffff, 1)
+				renderer.setSize(width, height)
+				document.getElementById('resultat').appendChild(renderer.domElement)
+
+				const controls = new OrbitControls( camera, renderer.domElement )
+				
+				const geometry = new THREE.BoxGeometry();
+				const redMaterial = new THREE.MeshBasicMaterial( { color: 0xff0000 } )
+				const cube = new THREE.Mesh( geometry, redMaterial )
+				cube.scale.set(0.5, 0.5, 0.5)
+
+				scene.add(cube)
+
+				const group = new THREE.Group()
+
+				const level2 = []
+				const subgroup = []
+				const level3 = []
+
+				function addCube(group, array) {
+					for(let i=0; i<3; i++) {
+						const cube2 = new THREE.Mesh( geometry, redMaterial )
+						array.push(cube2)
+						cube2.scale.set(0.3, 0.3, 0.3)
+						cube2.position.set(Math.cos(i*2*Math.PI/3), Math.sin(i*2*Math.PI/3), 0)
+						group.add(cube2)
+					}
+				}
+				
+				addCube(group, level2)
+
+				for(let i=0; i<3; i++) {
+					const group2 = new THREE.Group()
+					group2.position.set(Math.cos(i*2*Math.PI/3), Math.sin(i*2*Math.PI/3), 0)
+					group2.scale.set(0.3, 0.3, 0.3)
+					addCube(group2, level3)
+					group.add(group2)
+					subgroup.push(group2)
+				}
+
+
+				scene.add(group)
+
+				renderer.domElement.style=''
+
+				const animate = function () {
+					requestAnimationFrame( animate )
+					cube.rotation.z += 0.01
+					group.rotation.z -= 0.01
+					for(let i=0; i<3; i++){
+						level2[i].rotation.z -= 0.01
+						subgroup[i].rotation.z += 0.02
+					}
+					for(let i=0; i<level3.length; i++) {
+						level3[i].rotation.z -= 0.02
+					}
+					controls.update();
+					renderer.render( scene, camera )
+				}
+
+				animate()
+			</script>
+		</li>
+		<li>Bonus: ajouter le contrôle de la vue à la souris.</li>
+	</ol>
+</body>
+</html>

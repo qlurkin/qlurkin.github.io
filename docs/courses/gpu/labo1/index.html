@@ -12,28 +12,26 @@
         
     </h1>
     
-    <h2 id="installation">Installation</h2>
+    <h2>Installation</h2>
 <p><em>Note: If you&#39;re on MacOS, make sure you&#39;ve installed Xcode and its developer tools by typing <code>xcode-select --install</code>. Note: If you&#39;re on Linux, make sure you&#39;ve installed gcc. Deb: <code>sudo apt install gcc</code>. Yum: <code>sudo yum -y install gcc</code>.</em></p>
 <p>Follow the instructions on <a href="https://rustup.rs">rustup.rs</a>. This will install <code>rustc</code> (the Rust compiler) and <code>cargo</code> (the build toolchain). <code>cargo</code> is for Rust what <code>npm</code> is for Javascript.</p>
-<h2 id="create-a-project">Create a project</h2>
+<h2>Create a project</h2>
 <p>To create a project use <code>cargo</code>.</p>
 <pre class="terminal">
 $> cargo new project_name
 </pre>
 
 <p>This will create the following file tree.</p>
-<pre><code class="language-plaintext">📦 project-name
+<pre><code class="hljs language-plaintext">📦 project-name
 ┣ 📂 src
 ┃ ┗ 📜 main.rs
 ┗ 📜 Cargo.toml
-</code></pre>
-<p>We can <code>cd</code> into the newly created project root folder.</p>
+</code></pre><p>We can <code>cd</code> into the newly created project root folder.</p>
 <p>Then you can add your code in <code>main.rs</code>.</p>
-<pre><code class="language-rust">fn main() {
-    println!(&quot;Hello, world!&quot;);
+<pre><code class="hljs language-rust"><span class="hljs-keyword">fn</span> <span class="hljs-title function_">main</span>() {
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Hello, world!&quot;</span>);
 }
-</code></pre>
-<p>You can then run it with:</p>
+</code></pre><p>You can then run it with:</p>
 <pre class="terminal">
 <b>$> cargo run</b>
    <b style='color: chartreuse'>Compiling</b> project-name v0.1.0 (./project-name)
@@ -42,12 +40,12 @@ $> cargo new project_name
 Hello, world!
 </pre>
 
-<h2 id="development-environment">Development Environment</h2>
+<h2>Development Environment</h2>
 <p>The use of an editor that support <em>Language Server Protocol</em> (LSP) is recommended. The best language server for Rust is <code>rust-analyzer</code>.</p>
 <p><strong>Visual Studio Code</strong> is a good choice and you can easily install <code>rust-analyzer</code> as a VSCode Extension.</p>
-<h2 id="documentation">Documentation</h2>
+<h2>Documentation</h2>
 <p>The best source to learn about Rust is the <strong><a href="https://doc.rust-lang.org/stable/book/">Rust Book</a></strong>. You can find more resource at <a href="https://www.rust-lang.org/learn">www.rust-lang.org/learn</a></p>
-<h2 id="exercices">Exercices</h2>
+<h2>Exercices</h2>
 <p>To train ourselves to write Rust programs, we will follow the <code>rustlings</code> project which contains small exercices to practice various aspects of the language.</p>
 <p class='center'><a href='https://github.com/rust-lang/rustlings'>github.com/rust-lang/rustlings</a></p>
 

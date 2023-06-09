@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=1024, user-scalable=no">
+	<title>SA4L - Introduction au C++</title>
+	<script src="https://quentin.lurkin.xyz/deck.js" defer></script>
+	<style>
+		pre > code {
+			font-size: 75% !important;
+		}
+	</style>
+</head>
+<body>
+	<section>
+		<h1>SA4L - Introduction au C++</h1>
+	</section>
+	<section>
+		<h2>Le C++</h2>
+		<ul>
+			<li>Superset du C</li>
+			<li>Orienté Objets</li>
+			<li>Une bibliothèque standard</li>
+		</ul>
+	</section>
+	<section>
+		<h2>Hello World!</h2>
+		<pre><code class="language-cpp">
+			#include &lt;iostream>
+			int main(int argc, char* args[])
+			{
+				std::cout << "Hello World!" << std::endl;
+
+				return 0;
+			}
+		</code></pre>
+	</section>
+	<section>
+		<h2>Hello World!</h2>
+		<pre><code class="language-cpp">
+			#include &lt;iostream>
+
+			using namespace std;
+
+			int main(int argc, char* args[])
+			{
+				cout << "Hello World!" << endl;
+
+				return 0;
+			}
+		</code></pre>
+	</section>
+	<section>
+		<h2>Gestion de la mémoire dynamique</h2>
+		<p><code class="language-cpp">new</code> et <code class="language-cpp">delete</code> au lieu de <code class="language-cpp">malloc</code> et <code class="language-cpp">free</code></p>
+		<pre><code class="language-cpp">int* a = NULL;       // pointeur comme en C
+			a = new int;         // allocation de mémoire
+			*a = 5;              // utilisation de la mémoire
+			delete a;            // libération de la mémoire 
+			int* b = new int(5)  // tout en une fois
+			delete b;
+		</code></pre>
+	</section>
+	<section>
+		<h2>Les références</h2>
+		<ul>
+			<li>Alias d'une variable</li>
+			<li>Ne peut être assignée qu'à la création.<small>Les assignations utlérieures modifient la variable référencée</small></li>
+		</ul>
+		<pre><code class="language-cpp">
+			int a = 5;     
+			int& b = a;    // b est un alias de a
+			int& c(a);     // autre syntaxe possible
+			               // c est un alias de a
+			b = 10;
+			cout << a << ", " << c;   // affiche "10, 10"
+		</code></pre>
+	</section>
+	<section>
+		<h2>Passage par référence</h2>
+		<p>On peut passer une référence à une fonction</p>
+		<pre><code class="language-cpp">
+			void inc(int &x)
+			{
+				x++;
+			}
+
+			void main()
+			{
+				int a = 42;
+				inc(a);
+				cout << a;  // affiche 43
+			}
+		</code></pre>
+	</section>
+	<section>
+		<h2>Retour de référence</h2>
+		<p>On peut retourner une référence</p>
+		<pre><code class="language-cpp">
+			int& answer()
+			{
+				int a = 42;
+				return a;
+			}
+
+			void main()
+			{
+				int& a = answer();
+				cout << a;          // Segmentation Fault !!!?
+			}
+		</code></pre>
+	</section>
+	<section>
+		<h2>Retour de référence</h2>
+		<p>On peut retourner une référence</p>
+		<pre><code class="language-cpp">
+			int a = 42;            // Evil ]:-)
+
+			int& answer()
+			{
+				return a;
+			}
+
+			void main()
+			{
+				int& a = answer();
+				cout << a;         // Display 42
+			}
+		</code></pre>
+	</section>
+	<section>
+		<h2>Retour de référence</h2>
+		<p>Bof Bof</p>
+		<pre><code class="language-cpp">
+			int& answer()
+			{
+				int* a = new int(42);
+				return *a;
+			}
+
+			void main()
+			{
+				int& a = answer();
+				cout << a;         // Display 42
+			}
+
+			// Where is the delete?
+		</code></pre>
+	</section>
+	<section>
+		<h2>Retour de référence</h2>
+		<p>Bof Bof</p>
+		<pre><code class="language-cpp">
+			int& answer()
+			{
+				int* a = new int(42);
+				return *a;
+			}
+
+			void main()
+			{
+				int& a = answer();
+				cout << a;         // Display 42
+				delete &a;         // UGLY !!!
+			}
+		</code></pre>
+	</section>
+	<section>
+		<h2>Retour de référence</h2>
+		<p>Vous pouvez retourner une référence si la variable référencée vivra plus longtemps que la référence retrournée.</p>
+	</section>
+	<section>
+		<h2>Orienté Objet</h2>
+		<p>Définir une classe</p>
+		<pre><code class="language-cpp">
+			class Answer
+			{
+				private:
+				int a = 42;
+
+				public:
+				int getA();
+				void setA(int value);
+			};
+
+			int Answer::getA() { return a; }
+			void Answer::setA(int value) { a = value; }
+		</code></pre>
+	</section>
+	<section>
+		<h2>Orienté Objet</h2>
+		<p>Créer une instance</p>
+		<pre><code class="language-cpp">
+			Answer ans;                 // instance statique
+			cout << ans.getA();
+			Answer* ans2 = new Answer;  // instance dynamique
+			cout << ans2->getA();       // raccourci pour (*ans2).getA()
+			delete ans2;
+		</code></pre>
+	</section>
+	<section>
+		<h2>Constructeur et desctructeur</h2>
+		<pre><code class="language-cpp">
+			class Answer
+			{
+				private:
+				int a;
+
+				public:
+				Answer(int value);
+				~Answer();
+				int getA();
+				void setA(int value);
+			};
+
+			Answer::Answer(int value) { a = value; }
+			Answer::~Answer() { cout << "BOOM" << endl; }
+
+			int Answer::getA() { return a; }
+			void Answer::setA(int value) { a = value; }
+		</code></pre>
+	</section>
+	<section>
+		<h2>Orienté Objets et gestion mémoire</h2>
+		<p>Composition "par valeur"</p>
+		<pre><code class="language-cpp">
+			class Answer {
+				public:
+				int value;
+				Answer(int v) { value = v; }
+			};
+
+			class Everything
+			{
+				public:
+				Answer a;
+				Everything(): a(42) {}
+			};
+
+			int main()
+			{
+				Everything all;
+			}
+		</code></pre>
+	</section>
+	<section>
+		<h2>Orienté Objets et gestion mémoire</h2>
+		<p>Composition "par pointeur"</p>
+		<pre><code class="language-cpp">
+			class Answer {
+				public:
+				int value;
+				Answer(int v) { value = v; }
+			};
+
+			class Everything
+			{
+				public:
+				Answer* a;
+				Everything() { a = new Answer(42); }
+				~Everything() { delete a; }
+			};
+
+			int main()
+			{
+				Everything all;
+			}
+		</code></pre>
+	</section>
+	<section>
+		<h2>Héritage</h2>
+		<p>Surcharge de méthode</p>
+		<pre><code class="language-cpp">
+			class Mammal
+			{
+				public:
+				double weight;
+				Mammal(double weight) { this->weight = weight; }
+				virtual void yell() { cout << "..."; }
+			};
+
+			class Dog : public Mammal
+			{
+				public:
+				Dog(double weight): Mammal(weight) {}
+				void yell() { cout << "Woof"; }
+			};
+
+			int main()
+			{
+				Mammal* itch = new Dog(35);
+				itch->yell();
+			}
+		</code></pre>
+	</section>
+	<section>
+		<h2>Héritage</h2>
+		<p>Méthode abstraite</p>
+		<pre><code class="language-cpp">
+			class Mammal
+			{
+				public:
+				double weight;
+				Mammal(double weight) { this->weight = weight; }
+				virtual void yell() = 0;
+			};
+
+			class Dog : public Mammal
+			{
+				public:
+				Dog(double weight): Mammal(weight) {}
+				void yell() { cout << "Woof"; }
+			};
+
+			int main()
+			{
+				Mammal* itch = new Dog(35);
+				itch->yell();
+			}
+		</code></pre>
+	</section>
+	<section>
+		<h2>Héritage</h2>
+		<p>Accès aux membres masqués de la classe de base</p>
+		<pre><code class="language-cpp">
+			class Mammal
+			{
+				public:
+				double weight;
+				Mammal(double weight) { this->weight = weight; }
+				virtual void yell() { cout << "..."; };
+			};
+
+			class Dog : public Mammal
+			{
+				public:
+				Dog(double weight): Mammal(weight) {}
+				void yell() { cout << "Woof"; Mammal::yell(); }
+			};
+
+			int main()
+			{
+				Mammal* itch = new Dog(35);
+				itch->yell();
+			}
+		</code></pre>
+	</section>
+	<section>
+		<h2>Ressource Additionnelle</h2>
+		<p><a href="https://cpp.developpez.com/cours/cpp/">https://cpp.developpez.com/cours/cpp/</a></p>
+	</section>
+</body>
+</html>
