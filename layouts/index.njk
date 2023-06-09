@@ -11,9 +11,9 @@
   <h1>{{ title }}</h1>
   <ul>
   {% for link in links %}
-    <li><a href="/{{ link.link }}">{{ link.title }}</a></li>
+    <li><a href="{{ link.link }}">{{ link.title }}</a></li>
   {% endfor %}
   </ul>
-  {{ contents | safe }}
+  {{ content | safe }}
 </body>
 </html>

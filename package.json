@@ -1,8 +1,9 @@
 {
   "name": "qlurkin.github.io",
   "version": "1.0.0",
-  "description": "",
+  "description": "Site used for my lectures",
   "main": "build.js",
+  "type": "module",
   "scripts": {
     "build": "node build.js",
     "bundles": "npx rollup -c"

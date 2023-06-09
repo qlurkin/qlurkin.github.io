@@ -1,3 +1,4 @@
-const build = require('./build_fun')
+import { build } from "build_lib"
 
-build()
+await build('docs')
+console.log('build finished')
