@@ -2,30 +2,23 @@
   "name": "qlurkin.github.io",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "build.js",
   "scripts": {
-    "build": "node build.js",
-    "start": "node start.js"
+    "build": "node build.js"
   },
   "keywords": [],
   "author": "Quentin Lurkin",
   "license": "ISC",
   "dependencies": {
-    "@compodoc/live-server": "^1.2.3",
-    "@metalsmith/layouts": "^2.4.0",
-    "@metalsmith/markdown": "^1.4.0",
-    "@rollup/plugin-commonjs": "^21.0.2",
-    "arrow-line": "^0.7.5",
-    "chokidar": "^3.5.3",
-    "highlight.js": "^11.4.0",
-    "http-server": "^14.1.1",
-    "jstransformer-nunjucks": "^1.0.0",
-    "metalsmith": "^2.4.2",
-    "metalsmith-ancestry": "^1.6.1",
-    "metalsmith-debug": "^1.2.0",
-    "rollup": "^2.69.1",
-    "rollup-plugin-node-resolve": "^5.2.0",
-    "rollup-plugin-sass": "^1.2.10",
-    "sass": "^1.49.9"
+    "@rollup/plugin-commonjs": "^24.0.1",
+    "@rollup/plugin-node-resolve": "^15.0.1",
+    "build_lib": "file:./build_lib",
+    "highlight.js": "^11.8.0",
+    "js-yaml": "^4.1.0",
+    "marked": "^5.0.5",
+    "marked-highlight": "^2.0.1",
+    "nunjucks": "^3.2.4",
+    "rollup": "^3.20.0",
+    "rollup-plugin-sass": "^1.12.19"
   }
 }
