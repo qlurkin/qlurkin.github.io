@@ -1,0 +1,6 @@
+{
+  "name": "build_lib",
+  "type": "module",
+  "main": "index.mjs",
+  "types": "index.d.ts"
+}
