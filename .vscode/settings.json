@@ -14,7 +14,7 @@
         "tinylr",
         "webgpu"
     ],
-    "liveServer.settings.root": "/src",
+    "liveServer.settings.root": "/docs",
     "liveServer.settings.port": 5501,
     "jupyter.jupyterServerType": "local"
 }
