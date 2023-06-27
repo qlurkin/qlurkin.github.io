@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapitre 1</title>
+    <script src="/document.js" defer></script>
+</head>
+<body>
+    <h1>Chapitre 1 
+        
+            <small>
+                La programmation
+            </small>
+        
+    </h1>
+    
+    <h2>Qu&#39;est-ce qu&#39;un programme?</h2>
+<p>De manière générale, un programme est une suite d&#39;actions à entreprendre visant à atteindre un but. On peut par exemple dire d&#39;une recette de cuisine que c&#39;est un programme pour réaliser un plat <a href="#oeuf">(cf figure &quot;cuire un oeuf&quot;)</a>. On parle également de programme pour un lave-linge où, suivant le type de linge, la suite d&#39;actions (rotations du tambour) est différente.</p>
+<p>Un programme est donc constitué d&#39;une suite d&#39;instructions à exécuter dans un certain ordre.</p>
+<figure>
+<a id="oeuf"></a>
+<pre class="mermaid">
+flowchart TD
+    BEGIN((début)) --> A(faire chauffer la poêle)
+    A --> B(mettre de l'huile dans la poêle)
+    B --> C(casser l'œuf dans la poêle)
+    C --> D(ajouter du sel et du poivre)
+    D --> E{Est-ce que\nc'est cuit ?}
+    E --> |non| F(On attend 10 secondes)
+    F --> E
+    E ---> |oui| G((fin))
+</pre>
+<figcaption>Cuire un oeuf</figcaption>
+</figure>
+
+<p>Dans le domaine de l&#39;informatique, un programme est une suite d&#39;instructions visant à la résolution d&#39;un problème. La résolution d&#39;une équation du deuxième degré que vous avez apprise en secondaire ressemble déjà beaucoup à un programme informatique (cf figure \ref{diag-2edeg}).</p>
+<figure>
+<pre class='mermaid'>
+flowchart TD
+    BEGIN((début)) --> A(yop)
+</pre>
+</figure>
+</body>
+</html>

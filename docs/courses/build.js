@@ -1,4 +1,6 @@
-import { build_and_index } from "build_lib"
+import { build_and_index, build } from "build_lib"
+
+build('python1ba/book')
 
 build_and_index([
   'gpu',
