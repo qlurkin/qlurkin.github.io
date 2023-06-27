@@ -46,7 +46,7 @@ function getSVG(parent) {
         parentElement.appendChild(svg)
 
         const g = createSVGElement("g")
-        g.setAttribute('transform', 'translate(0.5,0.5)')
+        g.setAttribute('transform', 'translate(-0.5, -0.5)')
         g.setAttribute('class', 'center-pixel')
         svg.appendChild(g)
     }
@@ -55,6 +55,12 @@ function getSVG(parent) {
 }
 
 function sdfRoundedBox(x, y, geom) {
+    const matrix = inv2D(geom.transform)
+    console.log('inv', matrix)
+    const new_x = matrix[0]*x + matrix[1]*y
+    const new_y = matrix[2]*x + matrix[3]*y
+    x = new_x
+    y = new_y
     const radiusBottom = x > 0 ? geom.radiusBottomRight : geom.radiusBottomLeft
     const radiusTop = x > 0 ? geom.radiusTopRight : geom.radiusTopLeft
     const radius = y > 0 ? radiusBottom : radiusTop
@@ -73,7 +79,7 @@ function contactBox(geom, toX, toY) {
     do {
         midX = (inX + outX) / 2
         midY = (inY + outY) / 2
-        d = sdfRoundedBox(midX-geom.cx, midY-geom.cy, geom)
+        d = sdfRoundedBox(midX-geom.cx, midY-geom.cy, geom, 0)
         if(d < 0) {
             inX = midX
             inY = midY
@@ -90,21 +96,37 @@ function contactBox(geom, toX, toY) {
     }
 }
 
+function inv2D(matrix) {
+    console.log('matrix', matrix)
+    const [a, b, c, d] = matrix
+    const det = a*d-b*c
+    console.log(det)
+    return [d/det, -b/det, -c/det, a/det]
+}
+
 function getAbsoluteGeometry(element, parent) {
+    console.log(element)
     let x = 0
     let y = 0
     element = getElement(element)
     let el = element
     const parentElement = getElement(parent)
     while(el !== parentElement) {
+        console.log(el)
         x += el.offsetLeft
         y += el.offsetTop
         el = el.offsetParent
     }
-    const radiusTopRight = window.getComputedStyle(element).borderTopRightRadius
-    const radiusTopLeft = window.getComputedStyle(element).borderTopLeftRadius
-    const radiusBottomRight = window.getComputedStyle(element).borderBottomRightRadius
-    const radiusBottomLeft = window.getComputedStyle(element).borderBottomLeftRadius
+    const computedStyle = window.getComputedStyle(element)
+    const radiusTopRight = computedStyle.borderTopRightRadius
+    const radiusTopLeft = computedStyle.borderTopLeftRadius
+    const radiusBottomRight = computedStyle.borderBottomRightRadius
+    const radiusBottomLeft = computedStyle.borderBottomLeftRadius
+    const transform = computedStyle.transform
+    let matrix = [1, 0, 0, 1]
+    if(transform !== 'none')
+        matrix = transform.split('(')[1].split(')')[0].split(',').map(s => parseFloat(s.trim())).slice(0, 4)
+    console.log(matrix)
     if(!radiusTopRight.endsWith('px')) console.log("WARNING: use pixel for border-radius")
     if(!radiusTopLeft.endsWith('px')) console.log("WARNING: use pixel for border-radius")
     if(!radiusBottomRight.endsWith('px')) console.log("WARNING: use pixel for border-radius")
@@ -119,7 +141,8 @@ function getAbsoluteGeometry(element, parent) {
         radiusTopRight: Math.min(parseInt(radiusTopRight.slice(0, -2), 10), element.offsetWidth/2, element.offsetHeight/2),
         radiusTopLeft: Math.min(parseInt(radiusTopLeft.slice(0, -2), 10), element.offsetWidth/2, element.offsetHeight/2),
         radiusBottomRight: Math.min(parseInt(radiusBottomRight.slice(0, -2), 10), element.offsetWidth/2, element.offsetHeight/2),
-        radiusBottomLeft: Math.min(parseInt(radiusBottomLeft.slice(0, -2), 10), element.offsetWidth/2, element.offsetHeight/2)
+        radiusBottomLeft: Math.min(parseInt(radiusBottomLeft.slice(0, -2), 10), element.offsetWidth/2, element.offsetHeight/2),
+        transform: matrix
     }
 
     return geom
@@ -149,13 +172,13 @@ function line(source, destination, color, width, startArrow, endArrow, parent) {
     const contactSource = contactBox(sourceGeometry, destinationGeometry.cx, destinationGeometry.cy)
     const contactDestination = contactBox(destinationGeometry, sourceGeometry.cx, sourceGeometry.cy)
     drawLine(contactSource.x, contactSource.y, contactDestination.x, contactDestination.y, color, width, parent)
-    const size = 10
+    const size = 5
     const angle = 180*Math.atan2(contactDestination.y - contactSource.y, contactDestination.x - contactSource.x)/Math.PI
     startArrow(contactSource.x, contactSource.y, angle+180, color, size, width, parent)
     endArrow(contactDestination.x, contactDestination.y, angle, color, size, width, parent)
 }
 
-export function simpleArrow(x, y, angle, color, size, width, parent) {
+export function arrow(x, y, angle, color, size, width, parent) {
     const svg = getSVG(parent)
     const path = createPath(`M ${-size} ${-size} L ${0} ${0} L ${-size} ${+size}`, "none", color, width)
     path.setAttributeNS(null, "transform", `translate(${x} ${y}) rotate(${angle})`)
@@ -193,38 +216,36 @@ export function inheritance(x, y, angle, color, size, width, parent) {
 }
 
 export function Context(context) {
-    if(context === undefined) context = {
-        parent: document.body,
-        width: 1,
-        color: "black",
-        startTarget: null,
-        startArrow: noArrow,
-        endTarget: null,
-        endArrow: noArrow
+    context = context || document.body
+    if(context.startArrow === undefined || context.endArrow === undefined) {
+        context = {
+            parent: context,
+            width: 1,
+            color: "black",
+            startTarget: null,
+            startArrow: noArrow,
+            endTarget: null,
+            endArrow: noArrow
+        }
     }
 
     return {
-        parent: (parent) => {
-            const newContext = { ...context }
-            newContext.parent = parent
-            return Context(newContext)
-        },
         stroke: (width, color) => {
             const newContext = { ...context }
-            newContext.width = width
-            newContext.color = color
+            newContext.width = width || 1
+            newContext.color = color || 'black'
             return Context(newContext)
         },
         start: (target, arrow) => {
             const newContext = { ...context }
             newContext.startTarget = target
-            newContext.startArrow = arrow
+            newContext.startArrow = arrow || noArrow
             return Context(newContext)
         },
         end: (target, arrow) => {
             const newContext = { ...context }
             newContext.endTarget = target
-            newContext.endArrow = arrow
+            newContext.endArrow = arrow || noArrow
             return Context(newContext)
         },
         line: () => {
@@ -237,3 +258,5 @@ export function Context(context) {
         }
     }
 }
+
+export default {Context, inheritance, composition, arrow, noArrow, backArrow, aggregation}

@@ -59813,7 +59813,7 @@ var Deck = (function (exports) {
     	document.head.insertBefore(script , null);
     });
 
-    const ready = new Promise((resolve) => {
+    const ready$1 = new Promise((resolve) => {
     	if (document.readyState === "complete" || document.readyState === "loaded" || document.readyState === "interactive") {
     		setTimeout(resolve, 1);
     	}
@@ -59824,7 +59824,7 @@ var Deck = (function (exports) {
     	}
     });
 
-    ready.then(() => {
+    ready$1.then(() => {
     	console.log('DOM Ready');
     });
 
@@ -59876,7 +59876,7 @@ var Deck = (function (exports) {
         });
     });
 
-    const readyToDraw = Promise.all([mathReady, codeReady, fontReady]).then(() => {
+    const ready = Promise.all([mathReady, codeReady, fontReady]).then(() => {
         console.log("Ready To Draw");
     });
 
@@ -60097,7 +60097,7 @@ var Deck = (function (exports) {
     exports.initDeck = initDeck;
     exports.nextSlide = nextSlide;
     exports.previousSlide = previousSlide;
-    exports.readyToDraw = readyToDraw;
+    exports.ready = ready;
     exports.setCurrent = setCurrent;
     exports.toggleView = toggleView;
 

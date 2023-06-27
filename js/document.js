@@ -1,7 +1,7 @@
 import '../scss/document.scss'
 import renderCode from './code'
 import renderMath from './math'
-import { readyToDraw } from './readyToDraw'
+import { ready } from './ready'
 
 function initDocument() {
     renderMath()
@@ -10,4 +10,4 @@ function initDocument() {
 
 initDocument()
 
-export { readyToDraw }
+export { ready }
