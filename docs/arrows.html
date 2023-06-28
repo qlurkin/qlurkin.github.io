@@ -13,57 +13,58 @@
     <p>Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum <span id="truc">caca</span> Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum </p>
     
     <figure>
-        <div id='diagram'>
-            <div class="grid" style="width: 600px; height: 600px; position: relative;">
-                <div id="start" class="start c1 l1"></div>
-                <div id="delta" class="round l2 c1">calculer <code>b*b-4*a*c</code> et appeler le résultat D</div>
-                <div id="test_delta" class="round c1 l3">Est-ce que D est négatif ?</div>
-                <div id="if1" class="diamond l4 c1"></div>
-                <div id="non1" class="c1 l5">non</div>
-                <div id="test_null" class="round c1 l6">Est-ce que D est nul ?</div>
-                <div id="if2" class="diamond c1 l7"></div>
-                <div id="non2" class="c1 l8">non</div>
-                <div id="root1" class="round c1 l9">La 1<sup>re</sup> racine est <code>(-b+sqrt(D))/(2*a)</code></div>
-                <div id="root2" class="round c1 l10">La 2<sup>e</sup> racine est <code>(-b-sqrt(D))/(2*a)</code></div>
-                <div id="oui2" class="c2 l7">oui</div>
-                <div id="dummy" class="dummy c1 l11"></div>
-                <div id="dummy2" class="dummy c3 l7"></div>
-                <div id="droot" class="round c3 l9">La racine double est <code>-b/(2*a)</code></div>
-                <div id="dummy3" class="dummy c3 l11"></div>
-                <div id="oui1" class="c2 l4">oui</div>
-                <div id="dummy4" class="dummy c4 l4"></div>
-                <div id="noroot" class="round c4 l6">Pas de racine réelle</div>
-                <div id="dummy5" class="dummy c4 l11"></div>
-                <div id="end" class="end c1 l12"></div>
-            </div>
-        </div>
+        <div id='diagram'></div>
         <figcaption>Second degré</figcaption>
     </figure>
     <script type="module" defer>
         import {Context, noArrow, arrow, inheritance, composition} from './draw.js'
         await Doc.ready
-        const context = Context('#diagram>.grid')
-        context.start('#start').end('#delta', arrow).line()
-        context.start('#delta').end('#test_delta').line()
-        context.start('#test_delta').end('#if1', arrow).line()
-        context.start('#if1').end('#non1').line()
-        context.start('#non1').end('#test_null').line()
-        context.start('#test_null').end('#if2', arrow).line()
-        context.start('#if2').end('#non2').line()
-        context.start('#non2').end('#root1').line()
-        context.start('#root1').end('#root2').line()
-        context.start('#root2').end('#dummy').line()
-        context.start('#dummy').end('#end', arrow).line()
-        context.start('#if2').end('#oui2').line()
-        context.start('#oui2').end('#dummy2').line()
-        context.start('#dummy2').end('#droot', arrow).line()
-        context.start('#droot').end('#dummy3').line()
-        context.start('#dummy3').end('#dummy', arrow).line()
-        context.start('#if1').end('#oui1').line()
-        context.start('#oui1').end('#dummy4').line()
-        context.start('#dummy4').end('#noroot', arrow).line()
-        context.start('#noroot').end('#dummy5').line()
-        context.start('#dummy5').end('#dummy', arrow).line()
+        const context = Context('#diagram', 600, 600)
+
+        const start = context.startNode()
+        const delta = context.round('calculer <code>b*b-4*a*c</code> et appeler le résultat D').belowOf(start)
+        const test_delta = context.round('Est-ce que D est négatif ?').belowOf(delta)
+        const if1 = context.diamond().belowOf(test_delta)
+        const non1 = context.node('non').belowOf(if1)
+        const test_null = context.round('Est-ce que D est nul ?').belowOf(non1)
+        const if2 = context.diamond().belowOf(test_null)
+        const non2 = context.node('non').belowOf(if2)
+        const root1 = context.round('La 1<sup>re</sup> racine est <code>(-b+sqrt(D))/(2*a)</code>').belowOf(non2)
+        const root2 = context.round('La 2<sup>e</sup> racine est <code>(-b-sqrt(D))/(2*a)</code>').belowOf(root1)
+        const dummy = context.dummy().belowOf(root2)
+        const end = context.endNode().belowOf(dummy)
+
+        const oui1 = context.node('oui').rightOf(if1)
+        const dummy2 = context.dummy().rightOf(oui1, 2)
+        const noroot = context.round('Pas de racine réelle').rightOf(test_null, 3)
+        const dummy3 = context.dummy().rightOf(dummy, 3)
+
+        const oui2 = context.node('oui').rightOf(if2)
+        const dummy4 = context.dummy().rightOf(oui2)
+        const droot = context.round('La racine double est <code>-b/(2*a)</code>').rightOf(root1, 2)
+        const dummy5 = context.dummy().rightOf(dummy, 2)
+
+        context.start(start).end(delta, arrow).line()
+        context.start(delta).end(test_delta).line()
+        context.start(test_delta).end(if1, arrow).line()
+        context.start(if1).end(non1).line()
+        context.start(non1).end(test_null).line()
+        context.start(test_null).end(if2, arrow).line()
+        context.start(if2).end(non2).line()
+        context.start(non2).end(root1).line()
+        context.start(root1).end(root2).line()
+        context.start(root2).end(dummy).line()
+        context.start(dummy).end(end, arrow).line()
+        context.start(if2).end(oui2).line()
+        context.start(oui2).end(dummy4).line()
+        context.start(dummy4).end(droot, arrow).line()
+        context.start(droot).end(dummy5).line()
+        context.start(dummy5).end(dummy, arrow).line()
+        context.start(if1).end(oui1).line()
+        context.start(oui1).end(dummy2).line()
+        context.start(dummy2).end(noroot, arrow).line()
+        context.start(noroot).end(dummy3).line()
+        context.start(dummy3).end(dummy, arrow).line()
     </script>
 </body>
 </html>

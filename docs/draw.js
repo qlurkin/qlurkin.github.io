@@ -56,7 +56,6 @@ function getSVG(parent) {
 
 function sdfRoundedBox(x, y, geom) {
     const matrix = inv2D(geom.transform)
-    console.log('inv', matrix)
     const new_x = matrix[0]*x + matrix[1]*y
     const new_y = matrix[2]*x + matrix[3]*y
     x = new_x
@@ -97,22 +96,18 @@ function contactBox(geom, toX, toY) {
 }
 
 function inv2D(matrix) {
-    console.log('matrix', matrix)
     const [a, b, c, d] = matrix
     const det = a*d-b*c
-    console.log(det)
     return [d/det, -b/det, -c/det, a/det]
 }
 
 function getAbsoluteGeometry(element, parent) {
-    console.log(element)
     let x = 0
     let y = 0
     element = getElement(element)
     let el = element
     const parentElement = getElement(parent)
     while(el !== parentElement) {
-        console.log(el)
         x += el.offsetLeft
         y += el.offsetTop
         el = el.offsetParent
@@ -126,7 +121,6 @@ function getAbsoluteGeometry(element, parent) {
     let matrix = [1, 0, 0, 1]
     if(transform !== 'none')
         matrix = transform.split('(')[1].split(')')[0].split(',').map(s => parseFloat(s.trim())).slice(0, 4)
-    console.log(matrix)
     if(!radiusTopRight.endsWith('px')) console.log("WARNING: use pixel for border-radius")
     if(!radiusTopLeft.endsWith('px')) console.log("WARNING: use pixel for border-radius")
     if(!radiusBottomRight.endsWith('px')) console.log("WARNING: use pixel for border-radius")
@@ -215,11 +209,87 @@ export function inheritance(x, y, angle, color, size, width, parent) {
     svg.appendChild(path)
 }
 
-export function Context(context) {
+function setup(root, width, height) {
+    const grid = document.createElement('div')
+    grid.classList.add('grid')
+    grid.style.width = String(width) + 'px'
+    grid.style.height = String(height) + 'px'
+    grid.style.position = 'relative'
+    root.appendChild(grid)
+    return grid
+}
+
+function Node(content) {
+    content = content || ''
+    const div = document.createElement('div')
+    div.innerHTML = content
+    
+    const that = {
+        elem: div,
+        classes: cls => {
+            if(cls && cls.length > 0) {
+                if(!Array.isArray(cls))
+                    cls = cls.split(' ')
+                for(const cl of cls) {
+                    div.classList.add(cl)
+                }
+            }
+            else {
+                div.className = ''
+            }
+            return that
+        },
+        move: (row, column) => {
+            that.row = row
+            that.column = column
+            div.style.gridColumnStart = column
+            div.style.gridRowStart = row
+            return that
+        },
+        belowOf: (node, inc) => {
+            inc = inc || 1
+            that.move(node.row + inc, node.column)
+            return that
+        },
+        aboveOf: (node, inc) => {
+            inc = inc || 1
+            that.move(node.row - inc, node.column)
+            return that
+        },
+        rightOf: (node, inc) => {
+            inc = inc || 1
+            that.move(node.row, node.column + inc)
+            return that
+        },
+        leftOf: (node, inc) => {
+            inc = inc || 1
+            that.move(node.row, node.column - inc)
+            return that
+        },
+    }
+
+    that.move(1, 1)
+
+    return that
+}
+
+function isContext(obj) {
+    return obj.startArrow !== undefined && obj.endArrow !== undefined
+}
+
+function isNode(obj) {
+    return obj.elem !== undefined && obj.column !== undefined && obj.row !== undefined
+}
+
+export function Context(context, width, height) {
     context = context || document.body
-    if(context.startArrow === undefined || context.endArrow === undefined) {
+    if(!isContext(context)) {
+        const parent = getElement(context)
         context = {
-            parent: context,
+            parent,
+            width,
+            height,
+            grid: setup(parent, width, height),
             width: 1,
             color: "black",
             startTarget: null,
@@ -229,7 +299,7 @@ export function Context(context) {
         }
     }
 
-    return {
+    const that = {
         stroke: (width, color) => {
             const newContext = { ...context }
             newContext.width = width || 1
@@ -238,25 +308,56 @@ export function Context(context) {
         },
         start: (target, arrow) => {
             const newContext = { ...context }
-            newContext.startTarget = target
+            if(isNode(target))
+                newContext.startTarget = target.elem
+            else
+                newContext.startTarget = getElement(target)
             newContext.startArrow = arrow || noArrow
             return Context(newContext)
         },
         end: (target, arrow) => {
             const newContext = { ...context }
-            newContext.endTarget = target
+            if(isNode(target))
+                newContext.endTarget = target.elem
+            else
+                newContext.endTarget = getElement(target)
             newContext.endArrow = arrow || noArrow
             return Context(newContext)
         },
         line: () => {
             const f = () => {
-                line(context.startTarget, context.endTarget, context.color, context.width, context.startArrow, context.endArrow, context.parent)
+                line(context.startTarget, context.endTarget, context.color, context.width, context.startArrow, context.endArrow, context.grid)
             }
             f()
             toRedraw.push(f)
             return Context(context)
+        },
+        node: (content) => {
+            const n = Node(content)
+            context.grid.appendChild(n.elem)
+            return n
+        },
+        dummy: () => {
+            return that.node().classes('dummy')
+        },
+        diamond: () => {
+            return that.node().classes('diamond')
+        },
+        startNode: () => {
+            return that.node().classes('start')
+        },
+        endNode: () => {
+            return that.node().classes('end')
+        },
+        round: (content) => {
+            return that.node(content).classes('round')
+        },
+        rect: (content) => {
+            return that.node(content).classes('rect')
         }
     }
+
+    return that
 }
 
 export default {Context, inheritance, composition, arrow, noArrow, backArrow, aggregation}
