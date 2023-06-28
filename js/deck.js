@@ -2,6 +2,7 @@ import '../scss/deck.scss'
 import renderCode from './code'
 import renderMath from './math'
 import { ready } from './ready'
+import { Draw } from './draw'
 
 function setHash(str) {
 	if(history.replaceState) {
@@ -213,4 +214,4 @@ export function deckMode() {
 
 initDeck()
 
-export { ready }
+export { ready, Draw }

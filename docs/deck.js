@@ -14,7 +14,7 @@ var Deck = (function (exports) {
         return css;
     }
 
-    ___$insertStyle("@import url(\"https://fonts.googleapis.com/css2?family=Roboto&family=Roboto+Slab&family=Source+Code+Pro&display=swap\");\n@import url(\"https://fonts.googleapis.com/icon?family=Material+Icons\");\n/*\n\nOriginal highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>\n\n*/\npre {\n  tab-size: 3;\n}\n\n.hljs {\n  display: block;\n}\n\n/* Base color: saturation 0; */\n.hljs,\n.hljs-subst {\n  color: #444;\n}\n\n.hljs-comment {\n  color: #888888;\n}\n\n.hljs-keyword,\n.hljs-attribute,\n.hljs-selector-tag,\n.hljs-meta-keyword,\n.hljs-doctag,\n.hljs-name {\n  font-weight: bold;\n}\n\n/* User color: hue: 0 */\n.hljs-type,\n.hljs-string,\n.hljs-number,\n.hljs-selector-id,\n.hljs-selector-class,\n.hljs-quote,\n.hljs-template-tag,\n.hljs-deletion {\n  color: #880000;\n}\n\n.hljs-title,\n.hljs-section {\n  color: #880000;\n  font-weight: bold;\n}\n\n.hljs-regexp,\n.hljs-symbol,\n.hljs-variable,\n.hljs-template-variable,\n.hljs-link,\n.hljs-selector-attr,\n.hljs-selector-pseudo {\n  color: #BC6060;\n}\n\n/* Language color: hue: 90; */\n.hljs-literal {\n  color: #78A960;\n}\n\n.hljs-built_in,\n.hljs-bullet,\n.hljs-code,\n.hljs-addition {\n  color: #397300;\n}\n\n/* Meta color: hue: 200 */\n.hljs-meta {\n  color: #1f7199;\n}\n\n.hljs-meta-string {\n  color: #4d99bf;\n}\n\n/* Misc effects */\n.hljs-emphasis {\n  font-style: italic;\n}\n\n.hljs-strong {\n  font-weight: bold;\n}\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n}\n\nbody {\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n  text-rendering: optimizeLegibility;\n  background-color: white;\n}\n\ncode {\n  font-size: 0.875em;\n  color: #d63384;\n  word-wrap: break-word;\n  font-family: \"Source Code Pro\", monospace;\n}\n\npre {\n  font-family: \"Source Code Pro\", monospace;\n  overflow-x: auto;\n  padding: 1em 0.8em;\n  background: #F0F0F0;\n  border-radius: 4px;\n  font-size: 75%;\n}\n\npre > code {\n  font-size: 100%;\n}\n\np, li, pre, figure, h1, h2, h3, h4 {\n  margin-bottom: 1rem;\n}\n\nh1, h2, h3, h4, pre, table, img {\n  break-inside: avoid-page;\n}\n\nh1, h2, h3, h4 {\n  margin-top: 2rem;\n}\n\nul, ol, figure, pre, .file-title, .terminal {\n  margin-top: 1rem;\n}\n\n/* hack that avoid page break after h2 et h3 */\nh2::after, h3::after, h4::after {\n  content: \"\";\n  display: block;\n  height: 100px;\n  margin-bottom: -100px;\n}\n\np, li {\n  text-align: justify;\n}\n\nli {\n  margin-left: 30px;\n}\n\nfigure {\n  text-align: center;\n}\nfigure figcaption {\n  text-align: center;\n  font-style: italic;\n  font-size: 0.8em;\n}\nfigure img, figure canvas {\n  max-width: 100%;\n}\nfigure img.half, figure canvas.half {\n  width: 50%;\n}\nfigure img.third, figure canvas.third {\n  width: 33%;\n}\nfigure img.third2, figure canvas.third2 {\n  width: 66%;\n}\nfigure img.fourth, figure canvas.fourth {\n  width: 25%;\n}\nfigure img.fourth3, figure canvas.fourth3 {\n  width: 75%;\n}\nfigure img.zoom, figure canvas.zoom {\n  width: 75%;\n}\nfigure img.max, figure canvas.max {\n  width: 100%;\n}\n\nh1 > small {\n  display: block;\n  font-size: 0.6em;\n  font-weight: normal;\n  color: gray;\n  margin: 1rem 0;\n}\n\n.row {\n  display: grid;\n  grid-template-columns: repeat(12, 1fr);\n  column-gap: 10px;\n  justify-items: stretch;\n  align-items: stretch;\n  justify-content: stretch;\n  align-content: stretch;\n}\n.row .span2 {\n  grid-column-end: span 2;\n}\n.row .span3 {\n  grid-column-end: span 3;\n}\n.row .span4 {\n  grid-column-end: span 4;\n}\n.row .span5 {\n  grid-column-end: span 5;\n}\n.row .span6 {\n  grid-column-end: span 6;\n}\n.row .span7 {\n  grid-column-end: span 7;\n}\n.row .span8 {\n  grid-column-end: span 8;\n}\n.row .span9 {\n  grid-column-end: span 9;\n}\n.row .span10 {\n  grid-column-end: span 10;\n}\n.row .span11 {\n  grid-column-end: span 11;\n}\n\n.indent {\n  padding-left: 3ex;\n}\n\n.center {\n  text-align: center;\n}\n\n.big {\n  font-size: 1.5em;\n}\n\n.right {\n  text-align: right;\n}\n\n.break-before {\n  page-break-before: always;\n}\n\n.break-after {\n  page-break-after: always;\n}\n\ncode.wrap {\n  white-space: pre-wrap !important;\n}\n\n.terminal {\n  background-color: darkslategray;\n  color: white;\n  font-family: consolas, monospace;\n  white-space: pre;\n  padding: 1rem;\n  font-size: 0.9em;\n  margin-bottom: 1rem;\n}\n.terminal::before {\n  content: \"Terminal\";\n  display: block;\n  background-color: black;\n  text-align: center;\n  margin: -1rem;\n  padding: 0.5rem;\n  margin-bottom: 1rem;\n}\n\n.file-title {\n  margin-bottom: -1rem !important;\n  font-family: consolas, monospace;\n  font-size: 0.9em;\n  color: white;\n  padding: 0.5rem;\n  text-align: center;\n  background-color: #686868;\n}\n\ntable {\n  border-collapse: collapse;\n  border: 2px solid black;\n}\ntable td {\n  border: 1px solid black;\n}\ntable th {\n  border: 2px solid black;\n}\ntable td, table th {\n  padding: 0.5em;\n  text-align: center;\n}\n\n@page {\n  margin: 1cm;\n}\nhtml {\n  background-color: white;\n}\n\nbody {\n  font-family: \"Roboto\", sans-serif;\n}\n\nh3 {\n  font-size: 1em;\n  font-variant: small-caps;\n  font-weight: bolder;\n}\n\nstrong {\n  font-weight: normal;\n  color: red;\n}\n\nli small {\n  display: block;\n  padding-left: 3ex;\n  margin-top: 0.5em;\n  font-size: 1em;\n  color: gray;\n}\n\nh1 {\n  cursor: pointer;\n}\n\n.mode-deck p, .mode-deck li, .mode-deck pre, .mode-deck figure, .mode-deck h1, .mode-deck h2, .mode-deck h3, .mode-deck h4 {\n  margin-bottom: 2rem;\n}\n.mode-deck li p, .mode-deck li li, .mode-deck li pre, .mode-deck li figure, .mode-deck li h1, .mode-deck li h2, .mode-deck li h3, .mode-deck li h4 {\n  margin-bottom: 1rem;\n}\n.mode-deck .document-only {\n  display: none;\n}\n.mode-deck .deck-before, .mode-deck .deck-previous, .mode-deck .deck-next, .mode-deck .deck-after {\n  position: absolute;\n  left: -1000vw;\n}\n.mode-deck .deck-current {\n  display: flex;\n  font-size: 3.5vh;\n  width: 133vh;\n  min-height: 100vh;\n  flex-direction: column;\n  justify-content: center;\n  margin: 0 auto;\n  padding: 12vh 4vh 4vh 4vh;\n}\n.mode-deck .deck-current h2 {\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  margin: 0;\n  padding: 2vh 10vh;\n  font-family: \"Roboto Slab\", serif;\n  font-size: 1.2em;\n  color: white;\n  background-color: green;\n  text-align: right;\n  z-index: 1000;\n}\n.mode-deck .deck-current h1 {\n  font-family: \"Roboto Slab\", serif;\n  font-size: 2em;\n}\n.mode-deck .deck-current > * {\n  flex: 0 0 auto;\n}\n.mode-deck .deck-current.full {\n  width: 100vw;\n  height: 100vh;\n  padding: 0;\n}\n.mode-deck .deck-current.full h2 {\n  background-color: rgba(0, 0, 0, 0.5);\n}\n.mode-deck .deck-current.full img {\n  width: 100%;\n  height: 100%;\n  object-fit: cover;\n  margin: 0;\n}\n.mode-deck .deck-current.code {\n  width: 95%;\n}\n.mode-deck .deck-current.code::before {\n  position: fixed;\n  background-color: #f0f0f0;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  content: \"\";\n  z-index: 10;\n  display: block;\n}\n.mode-deck .deck-current.code::after {\n  content: \"\";\n  position: fixed;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  width: 3%;\n  background-color: #bbb;\n  z-index: 20;\n}\n.mode-deck .deck-current.code > * {\n  z-index: 100;\n}\n.mode-deck .deck-current.code h2 {\n  z-index: 1000;\n  background-color: #555;\n}\n\n.mode-document {\n  max-width: 60ex;\n  margin: 0 auto;\n  padding: 1rem;\n}\n.mode-document .deck-only {\n  display: none;\n}\n.mode-document h2 {\n  font-size: 1.1em;\n}\n.mode-document h1 {\n  text-align: right;\n  border-bottom: 1px solid lightgray;\n  padding: 1em 0;\n}\n.mode-document .full img {\n  max-width: 100%;\n}\n\n@media (print) {\n  .mode-document {\n    padding: 0;\n  }\n}");
+    ___$insertStyle("@import url(\"https://fonts.googleapis.com/css2?family=Roboto&family=Roboto+Slab&family=Source+Code+Pro&display=swap\");\n@import url(\"https://fonts.googleapis.com/icon?family=Material+Icons\");\n/*\n\nOriginal highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>\n\n*/\npre {\n  tab-size: 3;\n}\n\n.hljs {\n  display: block;\n}\n\n/* Base color: saturation 0; */\n.hljs,\n.hljs-subst {\n  color: #444;\n}\n\n.hljs-comment {\n  color: #888888;\n}\n\n.hljs-keyword,\n.hljs-attribute,\n.hljs-selector-tag,\n.hljs-meta-keyword,\n.hljs-doctag,\n.hljs-name {\n  font-weight: bold;\n}\n\n/* User color: hue: 0 */\n.hljs-type,\n.hljs-string,\n.hljs-number,\n.hljs-selector-id,\n.hljs-selector-class,\n.hljs-quote,\n.hljs-template-tag,\n.hljs-deletion {\n  color: #880000;\n}\n\n.hljs-title,\n.hljs-section {\n  color: #880000;\n  font-weight: bold;\n}\n\n.hljs-regexp,\n.hljs-symbol,\n.hljs-variable,\n.hljs-template-variable,\n.hljs-link,\n.hljs-selector-attr,\n.hljs-selector-pseudo {\n  color: #BC6060;\n}\n\n/* Language color: hue: 90; */\n.hljs-literal {\n  color: #78A960;\n}\n\n.hljs-built_in,\n.hljs-bullet,\n.hljs-code,\n.hljs-addition {\n  color: #397300;\n}\n\n/* Meta color: hue: 200 */\n.hljs-meta {\n  color: #1f7199;\n}\n\n.hljs-meta-string {\n  color: #4d99bf;\n}\n\n/* Misc effects */\n.hljs-emphasis {\n  font-style: italic;\n}\n\n.hljs-strong {\n  font-weight: bold;\n}\n\n.draw-wrapper .grid {\n  display: grid;\n  margin: 1rem auto;\n  font-size: 80%;\n}\n.draw-wrapper .grid code {\n  white-space: nowrap;\n}\n.draw-wrapper .grid .node {\n  justify-self: center;\n  align-self: center;\n  padding: 0 0.4rem;\n}\n.draw-wrapper .grid .node .content {\n  position: relative;\n}\n.draw-wrapper .grid > svg {\n  padding: 0;\n}\n.draw-wrapper .grid .node.diamond {\n  width: 20px;\n  height: 20px;\n  border: 1px solid black;\n  transform-origin: center;\n  transform: rotate(45deg);\n  padding: 0;\n  position: relative;\n}\n.draw-wrapper .grid .node.diamond > .content {\n  transform: rotate(-45deg) translate(-1.5px, -1.5px);\n  width: 28px;\n  height: 28px;\n  top: -5px;\n  left: -5px;\n}\n.draw-wrapper .grid .node.start {\n  width: 20px;\n  height: 20px;\n  border-radius: 10px;\n  background-color: black;\n}\n.draw-wrapper .grid .node.end {\n  width: 20px;\n  height: 20px;\n  border-radius: 10px;\n  border: 1px solid black;\n  position: relative;\n}\n.draw-wrapper .grid .node.end::before {\n  content: \" \";\n  position: absolute;\n  top: 3px;\n  left: 3px;\n  width: 12px;\n  height: 12px;\n  border-radius: 50%;\n  background-color: black;\n}\n.draw-wrapper .grid .node.dummy {\n  width: 0;\n  height: 0;\n  padding: 0;\n}\n.draw-wrapper .grid .node.rect {\n  padding: 0.5rem 1rem;\n  border: 1px solid gray;\n}\n.draw-wrapper .grid .node.round {\n  padding: 0.5rem 1rem;\n  border: 1px solid gray;\n  border-radius: 10px;\n}\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n}\n\nbody {\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n  text-rendering: optimizeLegibility;\n  background-color: white;\n}\n\ncode {\n  font-size: 0.875em;\n  color: #d63384;\n  word-wrap: break-word;\n  font-family: \"Source Code Pro\", monospace;\n}\n\npre {\n  font-family: \"Source Code Pro\", monospace;\n  overflow-x: auto;\n  padding: 1em 0.8em;\n  background: #F0F0F0;\n  border-radius: 4px;\n  font-size: 75%;\n}\n\npre > code {\n  font-size: 100%;\n}\n\np, li, pre, figure, h1, h2, h3, h4 {\n  margin-bottom: 1rem;\n}\n\nh1, h2, h3, h4, pre, table, img {\n  break-inside: avoid-page;\n}\n\nh1, h2, h3, h4 {\n  margin-top: 2rem;\n}\n\nul, ol, figure, pre, .file-title, .terminal {\n  margin-top: 1rem;\n}\n\n/* hack that avoid page break after h2 et h3 */\nh2::after, h3::after, h4::after {\n  content: \"\";\n  display: block;\n  height: 100px;\n  margin-bottom: -100px;\n}\n\np, li {\n  text-align: justify;\n}\n\nli {\n  margin-left: 30px;\n}\n\nfigure {\n  text-align: center;\n}\nfigure figcaption {\n  text-align: center;\n  font-style: italic;\n  font-size: 0.8em;\n}\nfigure img, figure canvas {\n  max-width: 100%;\n}\nfigure img.half, figure canvas.half {\n  width: 50%;\n}\nfigure img.third, figure canvas.third {\n  width: 33%;\n}\nfigure img.third2, figure canvas.third2 {\n  width: 66%;\n}\nfigure img.fourth, figure canvas.fourth {\n  width: 25%;\n}\nfigure img.fourth3, figure canvas.fourth3 {\n  width: 75%;\n}\nfigure img.zoom, figure canvas.zoom {\n  width: 75%;\n}\nfigure img.max, figure canvas.max {\n  width: 100%;\n}\n\nh1 > small {\n  display: block;\n  font-size: 0.6em;\n  font-weight: normal;\n  color: gray;\n  margin: 1rem 0;\n}\n\n.row {\n  display: grid;\n  grid-template-columns: repeat(12, 1fr);\n  column-gap: 10px;\n  justify-items: stretch;\n  align-items: stretch;\n  justify-content: stretch;\n  align-content: stretch;\n}\n.row .span2 {\n  grid-column-end: span 2;\n}\n.row .span3 {\n  grid-column-end: span 3;\n}\n.row .span4 {\n  grid-column-end: span 4;\n}\n.row .span5 {\n  grid-column-end: span 5;\n}\n.row .span6 {\n  grid-column-end: span 6;\n}\n.row .span7 {\n  grid-column-end: span 7;\n}\n.row .span8 {\n  grid-column-end: span 8;\n}\n.row .span9 {\n  grid-column-end: span 9;\n}\n.row .span10 {\n  grid-column-end: span 10;\n}\n.row .span11 {\n  grid-column-end: span 11;\n}\n\n.indent {\n  padding-left: 3ex;\n}\n\n.center {\n  text-align: center;\n}\n\n.big {\n  font-size: 1.5em;\n}\n\n.right {\n  text-align: right;\n}\n\n.break-before {\n  page-break-before: always;\n}\n\n.break-after {\n  page-break-after: always;\n}\n\ncode.wrap {\n  white-space: pre-wrap !important;\n}\n\n.terminal {\n  background-color: darkslategray;\n  color: white;\n  font-family: consolas, monospace;\n  white-space: pre;\n  padding: 1rem;\n  font-size: 0.9em;\n  margin-bottom: 1rem;\n}\n.terminal::before {\n  content: \"Terminal\";\n  display: block;\n  background-color: black;\n  text-align: center;\n  margin: -1rem;\n  padding: 0.5rem;\n  margin-bottom: 1rem;\n}\n\n.file-title {\n  margin-bottom: -1rem !important;\n  font-family: consolas, monospace;\n  font-size: 0.9em;\n  color: white;\n  padding: 0.5rem;\n  text-align: center;\n  background-color: #686868;\n}\n\ntable {\n  border-collapse: collapse;\n  border: 2px solid black;\n}\ntable td {\n  border: 1px solid black;\n}\ntable th {\n  border: 2px solid black;\n}\ntable td, table th {\n  padding: 0.5em;\n  text-align: center;\n}\n\n@page {\n  margin: 1cm;\n}\nhtml {\n  background-color: white;\n}\n\nbody {\n  font-family: \"Roboto\", sans-serif;\n}\n\nh3 {\n  font-size: 1em;\n  font-variant: small-caps;\n  font-weight: bolder;\n}\n\nstrong {\n  font-weight: normal;\n  color: red;\n}\n\nli small {\n  display: block;\n  padding-left: 3ex;\n  margin-top: 0.5em;\n  font-size: 1em;\n  color: gray;\n}\n\nh1 {\n  cursor: pointer;\n}\n\n.mode-deck p, .mode-deck li, .mode-deck pre, .mode-deck figure, .mode-deck h1, .mode-deck h2, .mode-deck h3, .mode-deck h4 {\n  margin-bottom: 2rem;\n}\n.mode-deck li p, .mode-deck li li, .mode-deck li pre, .mode-deck li figure, .mode-deck li h1, .mode-deck li h2, .mode-deck li h3, .mode-deck li h4 {\n  margin-bottom: 1rem;\n}\n.mode-deck .document-only {\n  display: none;\n}\n.mode-deck .deck-before, .mode-deck .deck-previous, .mode-deck .deck-next, .mode-deck .deck-after {\n  position: absolute;\n  left: -1000vw;\n}\n.mode-deck .deck-current {\n  display: flex;\n  font-size: 3.5vh;\n  width: 133vh;\n  min-height: 100vh;\n  flex-direction: column;\n  justify-content: center;\n  margin: 0 auto;\n  padding: 12vh 4vh 4vh 4vh;\n}\n.mode-deck .deck-current h2 {\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  margin: 0;\n  padding: 2vh 10vh;\n  font-family: \"Roboto Slab\", serif;\n  font-size: 1.2em;\n  color: white;\n  background-color: green;\n  text-align: right;\n  z-index: 1000;\n}\n.mode-deck .deck-current h1 {\n  font-family: \"Roboto Slab\", serif;\n  font-size: 2em;\n}\n.mode-deck .deck-current > * {\n  flex: 0 0 auto;\n}\n.mode-deck .deck-current.full {\n  width: 100vw;\n  height: 100vh;\n  padding: 0;\n}\n.mode-deck .deck-current.full h2 {\n  background-color: rgba(0, 0, 0, 0.5);\n}\n.mode-deck .deck-current.full img {\n  width: 100%;\n  height: 100%;\n  object-fit: cover;\n  margin: 0;\n}\n.mode-deck .deck-current.code {\n  width: 95%;\n}\n.mode-deck .deck-current.code::before {\n  position: fixed;\n  background-color: #f0f0f0;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  content: \"\";\n  z-index: 10;\n  display: block;\n}\n.mode-deck .deck-current.code::after {\n  content: \"\";\n  position: fixed;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  width: 3%;\n  background-color: #bbb;\n  z-index: 20;\n}\n.mode-deck .deck-current.code > * {\n  z-index: 100;\n}\n.mode-deck .deck-current.code h2 {\n  z-index: 1000;\n  background-color: #555;\n}\n\n.mode-document {\n  max-width: 60ex;\n  margin: 0 auto;\n  padding: 1rem;\n}\n.mode-document .deck-only {\n  display: none;\n}\n.mode-document h2 {\n  font-size: 1.1em;\n}\n.mode-document h1 {\n  text-align: right;\n  border-bottom: 1px solid lightgray;\n  padding: 1em 0;\n}\n.mode-document .full img {\n  max-width: 100%;\n}\n\n@media (print) {\n  .mode-document {\n    padding: 0;\n  }\n}");
 
     function getDefaultExportFromCjs (x) {
     	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
@@ -59880,6 +59880,455 @@ var Deck = (function (exports) {
         console.log("Ready To Draw");
     });
 
+    const toRedraw = [];
+
+    addEventListener('resize', (event) => {
+        const svgs = document.querySelectorAll('.svg-drawOnHtml');
+        svgs.forEach((svg) => {
+            svg.remove();
+        });
+        for(let f of toRedraw) {
+            f();
+        }
+    });
+
+    function getElement(element) {
+        if(element === undefined) {
+            return document.body
+        }
+        if(typeof element === "string") {
+            return document.querySelector(element)
+        }
+        else return element
+    }
+
+    function createSVGElement(tagname) {
+        return document.createElementNS("http://www.w3.org/2000/svg", tagname)
+    }
+
+    function createPath(path, fillColor, strokeColor, strokeWidth) {
+        const shape = createSVGElement("path");
+        shape.setAttributeNS(null, "d", path);
+        shape.setAttributeNS(null, "fill", fillColor);
+        shape.setAttributeNS(null, "stroke", strokeColor);
+        shape.setAttributeNS(null, "stroke-width", strokeWidth);
+        return shape
+    }
+
+    function getSVG(parent) {
+        const parentElement = getElement(parent);
+        let svg = parentElement.querySelector('.svg-drawOnHtml');
+        if (svg === null) {
+            svg = createSVGElement("svg");
+            svg.setAttribute('class', 'svg-drawOnHtml');
+            svg.setAttribute('style', 'position:absolute;top:0px;left:0px');
+            svg.setAttribute('width', parentElement.clientWidth);
+            svg.setAttribute('height', parentElement.clientHeight);
+            svg.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:xlink", "http://www.w3.org/1999/xlink");
+            parentElement.appendChild(svg);
+
+            const g = createSVGElement("g");
+            g.setAttribute('transform', 'translate(-0.5, -0.5)');
+            g.setAttribute('class', 'center-pixel');
+            svg.appendChild(g);
+        }
+        const g = svg.querySelector('.center-pixel');
+        return g
+    }
+
+    function sdfRoundedBox(x, y, geom) {
+        const matrix = inv2D(geom.transform);
+        const new_x = matrix[0]*x + matrix[1]*y;
+        const new_y = matrix[2]*x + matrix[3]*y;
+        x = new_x;
+        y = new_y;
+        const radiusBottom = x > 0 ? geom.radiusBottomRight : geom.radiusBottomLeft;
+        const radiusTop = x > 0 ? geom.radiusTopRight : geom.radiusTopLeft;
+        const radius = y > 0 ? radiusBottom : radiusTop;
+        const qx = Math.abs(x) - geom.width/2 + radius;
+        const qy = Math.abs(y) - geom.height/2 + radius;
+        return Math.min(Math.max(qx, qy), 0.0) + Math.sqrt(Math.pow(Math.max(qx, 0), 2) + Math.pow(Math.max(qy, 0), 2)) - radius
+    }
+
+    function contactBox(geom, toX, toY) {
+        if(sdfRoundedBox(toX-geom.cx, toY-geom.cy, geom) < 0) {
+            throw new Error('To(X, Y) cannot be inside geom')
+        }
+        let inX = geom.cx;
+        let inY = geom.cy;
+        let outX = toX;
+        let outY = toY;
+        let midX, midY;
+        let d;
+        do {
+            midX = (inX + outX) / 2;
+            midY = (inY + outY) / 2;
+            d = sdfRoundedBox(midX-geom.cx, midY-geom.cy, geom);
+            if(d < 0) {
+                inX = midX;
+                inY = midY;
+            }
+            else {
+                outX = midX;
+                outY = midY;
+            }
+        } while(Math.abs(d) > 0.1)
+
+        return {
+            x: midX,
+            y: midY,
+        }
+    }
+
+    function inv2D(matrix) {
+        const [a, b, c, d] = matrix;
+        const det = a*d-b*c;
+        return [d/det, -b/det, -c/det, a/det]
+    }
+
+    function getAbsoluteGeometry(element, parent) {
+        let x = 0;
+        let y = 0;
+        element = getElement(element);
+        let el = element;
+        const parentElement = getElement(parent);
+        while(el !== parentElement) {
+            x += el.offsetLeft;
+            y += el.offsetTop;
+            el = el.offsetParent;
+        }
+        const computedStyle = window.getComputedStyle(element);
+        const radiusTopRight = computedStyle.borderTopRightRadius;
+        const radiusTopLeft = computedStyle.borderTopLeftRadius;
+        const radiusBottomRight = computedStyle.borderBottomRightRadius;
+        const radiusBottomLeft = computedStyle.borderBottomLeftRadius;
+        const transform = computedStyle.transform;
+        let matrix = [1, 0, 0, 1];
+        if(transform !== 'none')
+            matrix = transform.split('(')[1].split(')')[0].split(',').map(s => parseFloat(s.trim())).slice(0, 4);
+        if(!radiusTopRight.endsWith('px')) console.log("WARNING: use pixel for border-radius");
+        if(!radiusTopLeft.endsWith('px')) console.log("WARNING: use pixel for border-radius");
+        if(!radiusBottomRight.endsWith('px')) console.log("WARNING: use pixel for border-radius");
+        if(!radiusBottomLeft.endsWith('px')) console.log("WARNING: use pixel for border-radius");
+        const geom =  {
+            x,
+            y,
+            width: element.offsetWidth,
+            height: element.offsetHeight,
+            cx: x + element.offsetWidth/2,
+            cy: y + element.offsetHeight/2,
+            radiusTopRight: Math.min(parseInt(radiusTopRight.slice(0, -2), 10), element.offsetWidth/2, element.offsetHeight/2),
+            radiusTopLeft: Math.min(parseInt(radiusTopLeft.slice(0, -2), 10), element.offsetWidth/2, element.offsetHeight/2),
+            radiusBottomRight: Math.min(parseInt(radiusBottomRight.slice(0, -2), 10), element.offsetWidth/2, element.offsetHeight/2),
+            radiusBottomLeft: Math.min(parseInt(radiusBottomLeft.slice(0, -2), 10), element.offsetWidth/2, element.offsetHeight/2),
+            transform: matrix
+        };
+
+        return geom
+    }
+
+    function drawLine(x1, y1, x2, y2, color, width, parent) {
+        const svg = getSVG(parent);
+        const path = createPath(`M ${x1} ${y1} L ${x2} ${y2}`, "none", color, width);
+        svg.appendChild(path);
+    }
+
+    function line(source, destination, color, width, startArrow, endArrow, parent) {
+        const sourceElement = getElement(source);
+        const destinationElement = getElement(destination);
+        const sourceGeometry = getAbsoluteGeometry(sourceElement, parent);
+        const destinationGeometry = getAbsoluteGeometry(destinationElement, parent);
+        const contactSource = contactBox(sourceGeometry, destinationGeometry.cx, destinationGeometry.cy);
+        const contactDestination = contactBox(destinationGeometry, sourceGeometry.cx, sourceGeometry.cy);
+        drawLine(contactSource.x, contactSource.y, contactDestination.x, contactDestination.y, color, width, parent);
+        const size = 5;
+        const angle = 180*Math.atan2(contactDestination.y - contactSource.y, contactDestination.x - contactSource.x)/Math.PI;
+        startArrow(contactSource.x, contactSource.y, angle+180, color, size, width, parent);
+        endArrow(contactDestination.x, contactDestination.y, angle, color, size, width, parent);
+    }
+
+    function HVLine(source, destination, color, width, startArrow, endArrow, parent) {
+        const sourceElement = getElement(source);
+        const destinationElement = getElement(destination);
+        const sourceGeometry = getAbsoluteGeometry(sourceElement, parent);
+        const destinationGeometry = getAbsoluteGeometry(destinationElement, parent);
+        const corner = {
+            cx: destinationGeometry.cx,
+            cy: sourceGeometry.cy,
+        };
+        const contactSource = contactBox(sourceGeometry, corner.cx, corner.cy);
+        const contactDestination = contactBox(destinationGeometry, corner.cx, corner.cy);
+        drawLine(contactSource.x, contactSource.y, corner.cx, corner.cy, color, width, parent);
+        drawLine(corner.cx, corner.cy, contactDestination.x, contactDestination.y, color, width, parent);
+        const size = 5;
+        startArrow(contactSource.x, contactSource.y, sourceGeometry.cx < destinationGeometry.cx ? 180 : 0, color, size, width, parent);
+        endArrow(contactDestination.x, contactDestination.y, sourceGeometry.cy < destinationGeometry.cy ? 90 : 270, color, size, width, parent);
+    }
+
+    function arrow(x, y, angle, color, size, width, parent) {
+        const svg = getSVG(parent);
+        const path = createPath(`M ${-size} ${-size} L ${0} ${0} L ${-size} ${+size}`, "none", color, width);
+        path.setAttributeNS(null, "transform", `translate(${x} ${y}) rotate(${angle})`);
+        svg.appendChild(path);
+    }
+
+    function noArrow(x, y, angle, color, size, width, parent) {}
+
+    function backArrow(x, y, angle, color, size, width, parent) {
+        const svg = getSVG(parent);
+        const path = createPath(`M ${0} ${-size} L ${-1.5*size} ${0} L ${0} ${+size}`, "white", color, width);
+        path.setAttributeNS(null, "transform", `translate(${x} ${y}) rotate(${angle})`);
+        svg.appendChild(path);
+    }
+
+    function aggregation(x, y, angle, color, size, width, parent) {
+        const svg = getSVG(parent);
+        const path = createPath(`M ${-size} ${-size/2} L ${0} ${0} L ${-size} ${+size/2} L ${-2*size} ${0} Z`, "white", color, width);
+        path.setAttributeNS(null, "transform", `translate(${x} ${y}) rotate(${angle})`);
+        svg.appendChild(path);
+    }
+
+    function composition(x, y, angle, color, size, width, parent) {
+        const svg = getSVG(parent);
+        const path = createPath(`M ${-size} ${-size/2} L ${0} ${0} L ${-size} ${+size/2} L ${-2*size} ${0} Z`, color, color, width);
+        path.setAttributeNS(null, "transform", `translate(${x} ${y}) rotate(${angle})`);
+        svg.appendChild(path);
+    }
+
+    function inheritance(x, y, angle, color, size, width, parent) {
+        const svg = getSVG(parent);
+        const path = createPath(`M ${-1.6*size} ${-size} L ${0} ${0} L ${-1.6*size} ${+size} Z`, "white", color, width);
+        path.setAttributeNS(null, "transform", `translate(${x} ${y}) rotate(${angle})`);
+        svg.appendChild(path);
+    }
+
+    function setup(root, width, height) {
+        const grid = document.createElement('div');
+        grid.classList.add('grid');
+        grid.style.width = String(width) + 'px';
+        grid.style.height = String(height) + 'px';
+        grid.style.position = 'relative';
+        root.appendChild(grid);
+        return grid
+    }
+
+    function Node(content) {
+        content = content || '';
+        const div = document.createElement('div');
+        div.classList.add('node');
+        const content_div = document.createElement('div');
+        content_div.classList.add('content');
+        content_div.innerHTML = content;
+        div.appendChild(content_div);
+        
+        const that = {
+            elem: div,
+            content: content_div,
+            classes: cls => {
+                if(cls && cls.length > 0) {
+                    if(!Array.isArray(cls))
+                        cls = cls.split(' ');
+                    for(const cl of cls) {
+                        div.classList.add(cl);
+                    }
+                }
+                else {
+                    div.className = '';
+                }
+                return that
+            },
+            move: (row, column) => {
+                that.row = row;
+                that.column = column;
+                div.style.gridColumnStart = column;
+                div.style.gridRowStart = row;
+                return that
+            },
+            belowOf: (node, inc) => {
+                inc = inc || 1;
+                that.move(node.row + inc, node.column);
+                return that
+            },
+            aboveOf: (node, inc) => {
+                inc = inc || 1;
+                that.move(node.row - inc, node.column);
+                return that
+            },
+            rightOf: (node, inc) => {
+                inc = inc || 1;
+                that.move(node.row, node.column + inc);
+                return that
+            },
+            leftOf: (node, inc) => {
+                inc = inc || 1;
+                that.move(node.row, node.column - inc);
+                return that
+            },
+            absolute: (node, dx, dy) => {
+                node = getElement(node);
+                that.elem.removeAttribute('style');
+                delete that.column;
+                delete that.row;
+                that.elem.remove();
+                node.content.appendChild(that.elem);
+                that.elem.style.position = 'absolute';
+                that.elem.style.top = `${node.content.offsetHeight/2 - that.elem.offsetHeight/2 + dy}px`; //`${node.content.offsetHeight/2 + dy - that.elem.offsetHeight/2}px` 
+                that.elem.style.left = `${node.content.offsetWidth/2 - that.elem.offsetWidth/2 + dx}px`; //`${node.content.offsetWidth/2 + dx - that.elem.offsetWidth/2}px`
+                return that
+            }
+        };
+
+        that.move(1, 1);
+
+        return that
+    }
+
+    function isNode(obj) {
+        return obj.elem !== undefined
+    }
+
+    function charToArrow(c) {
+        if(c === '>' || c === '<')
+            return arrow
+        if(c === 'i')
+            return inheritance
+        if(c === 'a')
+            return aggregation
+        if(c === 'c')
+            return composition
+        if(c === 'b')
+            return backArrow
+        return noArrow
+    }
+
+    function linePattern(pattern) {
+        if(pattern.length === 2) {
+            return {
+                line: pattern,
+                start: noArrow,
+                end: noArrow
+            }
+        }
+        if(pattern.length === 3) {
+            if(pattern[0] === '-' || pattern[0] === '|') {
+                return {
+                    line: pattern.slice(0, 2),
+                    start: noArrow,
+                    end: charToArrow(pattern[2])
+                }
+            }
+            else {
+                return {
+                    line: pattern.slice(1),
+                    start: charToArrow(pattern[0]),
+                    end: noArrow
+                }
+            }
+        }
+        if(pattern.length === 4) {
+            return {
+                line: pattern.slice(1, 3),
+                start: charToArrow(pattern[0]),
+                end: charToArrow(pattern[3])
+            }
+        }
+    }
+
+    async function Draw(parent, width, height) {
+        await document.fonts.ready;
+        parent = getElement(parent || document.body);
+        parent.classList.add('draw-wrapper');
+
+        const state = {
+            parent,
+            width,
+            height,
+            grid: setup(parent, width, height),
+            width: 1,
+            color: 'black',
+            startTarget: null,
+            endTarget: null,
+        };
+
+        function make_methods(state) {
+            const that = {
+                stroke: (width, color) => {
+                    const newState = { ...state };
+                    newState.width = width || 1;
+                    newState.color = color || 'black';
+                    return make_methods(newState)
+                },
+                start: (target) => {
+                    const newState = { ...state };
+                    if(isNode(target))
+                        newState.startTarget = target.elem;
+                    else
+                        newState.startTarget = getElement(target);
+                    return make_methods(newState)
+                },
+                end: (target) => {
+                    const newState = { ...state };
+                    if(isNode(target))
+                        newState.endTarget = target.elem;
+                    else
+                        newState.endTarget = getElement(target);
+                    return make_methods(newState)
+                },
+                line: (pattern) => {
+                    pattern = pattern || '--';
+                    pattern = linePattern(pattern);
+                    const f = () => {
+                        if(pattern.line === '--')
+                            line(state.startTarget, state.endTarget, state.color, state.width, pattern.start, pattern.end, state.grid);
+                        if(pattern.line === '-|')
+                            HVLine(state.startTarget, state.endTarget, state.color, state.width, pattern.start, pattern.end, state.grid);
+                        if(pattern.line === '|-')
+                            HVLine(state.endTarget, state.startTarget, state.color, state.width, pattern.end, pattern.start, state.grid);
+                    };
+                    f();
+                    toRedraw.push(f);
+                    return that
+                },
+                polyline: arr => {
+                    for(let i=0; i<arr.length-2; i+=2) {
+                        const start = arr[i];
+                        const line = arr[i+1];
+                        const end = arr[i+2];
+                        that.start(start).end(end).line(line);
+                    }
+                    return that
+                },
+                node: (content) => {
+                    const n = Node(content);
+                    state.grid.appendChild(n.elem);
+                    return n
+                },
+                dummy: () => {
+                    return that.node().classes('dummy')
+                },
+                diamond: () => {
+                    return that.node().classes('diamond')
+                },
+                startNode: () => {
+                    return that.node().classes('start')
+                },
+                endNode: () => {
+                    return that.node().classes('end')
+                },
+                round: (content) => {
+                    return that.node(content).classes('round')
+                },
+                rect: (content) => {
+                    return that.node(content).classes('rect')
+                }
+            };
+
+            return that
+        }
+
+        return make_methods(state)
+    }
+
     function setHash(str) {
     	if(history.replaceState) {
     		history.replaceState(null, null, '#'+str);
@@ -60090,6 +60539,7 @@ var Deck = (function (exports) {
 
     initDeck();
 
+    exports.Draw = Draw;
     exports.currentSlide = currentSlide;
     exports.deckMode = deckMode;
     exports.documentMode = documentMode;

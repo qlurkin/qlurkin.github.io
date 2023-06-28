@@ -69,6 +69,9 @@ function sdfRoundedBox(x, y, geom) {
 }
 
 function contactBox(geom, toX, toY) {
+    if(sdfRoundedBox(toX-geom.cx, toY-geom.cy, geom, 0) < 0) {
+        throw new Error('To(X, Y) cannot be inside geom')
+    }
     let inX = geom.cx
     let inY = geom.cy
     let outX = toX
@@ -112,8 +115,6 @@ function getAbsoluteGeometry(element, parent) {
         y += el.offsetTop
         el = el.offsetParent
     }
-    console.log(element)
-    console.log(x, y)
     const computedStyle = window.getComputedStyle(element)
     const radiusTopRight = computedStyle.borderTopRightRadius
     const radiusTopLeft = computedStyle.borderTopLeftRadius
@@ -242,10 +243,15 @@ function setup(root, width, height) {
 function Node(content) {
     content = content || ''
     const div = document.createElement('div')
-    div.innerHTML = content
+    div.classList.add('node')
+    const content_div = document.createElement('div')
+    content_div.classList.add('content')
+    content_div.innerHTML = content
+    div.appendChild(content_div)
     
     const that = {
         elem: div,
+        content: content_div,
         classes: cls => {
             if(cls && cls.length > 0) {
                 if(!Array.isArray(cls))
@@ -288,17 +294,14 @@ function Node(content) {
         },
         absolute: (node, dx, dy) => {
             node = getElement(node)
-            console.log(node.elem.offsetParent)
-            const geom = getAbsoluteGeometry(node.elem, node.elem.offsetParent)
             that.elem.removeAttribute('style')
             delete that.column
             delete that.row
+            that.elem.remove()
+            node.content.appendChild(that.elem)
             that.elem.style.position = 'absolute'
-            console.log(geom)
-            console.log(dx, dy)
-            that.elem.style.top = `${geom.cy + dy - that.elem.offsetHeight/2}px` 
-            that.elem.style.left = `${geom.cx + dx - that.elem.offsetWidth/2}px`
-            console.log(that.elem.style.cssText)
+            that.elem.style.top = `${node.content.offsetHeight/2 - that.elem.offsetHeight/2 + dy}px` //`${node.content.offsetHeight/2 + dy - that.elem.offsetHeight/2}px` 
+            that.elem.style.left = `${node.content.offsetWidth/2 - that.elem.offsetWidth/2 + dx}px` //`${node.content.offsetWidth/2 + dx - that.elem.offsetWidth/2}px`
             return that
         }
     }
@@ -363,94 +366,99 @@ function linePattern(pattern) {
     }
 }
 
-export function Context(context, width, height) {
-    context = context || document.body
-    if(!isContext(context)) {
-        const parent = getElement(context)
-        context = {
-            parent,
-            width,
-            height,
-            grid: setup(parent, width, height),
-            width: 1,
-            color: "black",
-            startTarget: null,
-            endTarget: null,
-        }
+export async function Draw(parent, width, height) {
+    await document.fonts.ready
+    parent = getElement(parent || document.body)
+    parent.classList.add('draw-wrapper')
+
+    const state = {
+        parent,
+        width,
+        height,
+        grid: setup(parent, width, height),
+        width: 1,
+        color: 'black',
+        startTarget: null,
+        endTarget: null,
     }
 
-    const that = {
-        stroke: (width, color) => {
-            const newContext = { ...context }
-            newContext.width = width || 1
-            newContext.color = color || 'black'
-            return Context(newContext)
-        },
-        start: (target) => {
-            const newContext = { ...context }
-            if(isNode(target))
-                newContext.startTarget = target.elem
-            else
-                newContext.startTarget = getElement(target)
-            return Context(newContext)
-        },
-        end: (target) => {
-            const newContext = { ...context }
-            if(isNode(target))
-                newContext.endTarget = target.elem
-            else
-                newContext.endTarget = getElement(target)
-            return Context(newContext)
-        },
-        line: (pattern) => {
-            pattern = pattern || '--'
-            pattern = linePattern(pattern)
-            const f = () => {
-                if(pattern.line === '--')
-                    line(context.startTarget, context.endTarget, context.color, context.width, pattern.start, pattern.end, context.grid)
-                if(pattern.line === '-|')
-                    HVLine(context.startTarget, context.endTarget, context.color, context.width, pattern.start, pattern.end, context.grid)
-                if(pattern.line === '|-')
-                    HVLine(context.endTarget, context.startTarget, context.color, context.width, pattern.end, pattern.start, context.grid)
+    function make_methods(state) {
+        const that = {
+            stroke: (width, color) => {
+                const newState = { ...state }
+                newState.width = width || 1
+                newState.color = color || 'black'
+                return make_methods(newState)
+            },
+            start: (target) => {
+                const newState = { ...state }
+                if(isNode(target))
+                    newState.startTarget = target.elem
+                else
+                    newState.startTarget = getElement(target)
+                return make_methods(newState)
+            },
+            end: (target) => {
+                const newState = { ...state }
+                if(isNode(target))
+                    newState.endTarget = target.elem
+                else
+                    newState.endTarget = getElement(target)
+                return make_methods(newState)
+            },
+            line: (pattern) => {
+                pattern = pattern || '--'
+                pattern = linePattern(pattern)
+                const f = () => {
+                    if(pattern.line === '--')
+                        line(state.startTarget, state.endTarget, state.color, state.width, pattern.start, pattern.end, state.grid)
+                    if(pattern.line === '-|')
+                        HVLine(state.startTarget, state.endTarget, state.color, state.width, pattern.start, pattern.end, state.grid)
+                    if(pattern.line === '|-')
+                        HVLine(state.endTarget, state.startTarget, state.color, state.width, pattern.end, pattern.start, state.grid)
+                }
+                f()
+                toRedraw.push(f)
+                return that
+            },
+            polyline: arr => {
+                for(let i=0; i<arr.length-2; i+=2) {
+                    const start = arr[i]
+                    const line = arr[i+1]
+                    const end = arr[i+2]
+                    that.start(start).end(end).line(line)
+                }
+                return that
+            },
+            node: (content) => {
+                const n = Node(content)
+                state.grid.appendChild(n.elem)
+                return n
+            },
+            dummy: () => {
+                return that.node().classes('dummy')
+            },
+            diamond: () => {
+                return that.node().classes('diamond')
+            },
+            startNode: () => {
+                return that.node().classes('start')
+            },
+            endNode: () => {
+                return that.node().classes('end')
+            },
+            round: (content) => {
+                return that.node(content).classes('round')
+            },
+            rect: (content) => {
+                return that.node(content).classes('rect')
             }
-            f()
-            toRedraw.push(f)
-            return Context(context)
-        },
-        polyline: arr => {
-            for(let i=0; i<arr.length-2; i+=2) {
-                const start = arr[i]
-                const line = arr[i+1]
-                const end = arr[i+2]
-                that.start(start).end(end).line(line)
-            }
-        },
-        node: (content) => {
-            const n = Node(content)
-            context.grid.appendChild(n.elem)
-            return n
-        },
-        dummy: () => {
-            return that.node().classes('dummy')
-        },
-        diamond: () => {
-            return that.node().classes('diamond')
-        },
-        startNode: () => {
-            return that.node().classes('start')
-        },
-        endNode: () => {
-            return that.node().classes('end')
-        },
-        round: (content) => {
-            return that.node(content).classes('round')
-        },
-        rect: (content) => {
-            return that.node(content).classes('rect')
         }
+
+        return that
     }
 
-    return that
+    return make_methods(state)
 }
 
-export default {Context, inheritance, composition, arrow, noArrow, backArrow, aggregation}
+export default Draw
