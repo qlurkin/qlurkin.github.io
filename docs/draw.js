@@ -172,6 +172,24 @@ function line(source, destination, color, width, startArrow, endArrow, parent) {
     endArrow(contactDestination.x, contactDestination.y, angle, color, size, width, parent)
 }
 
+function HVLine(source, destination, color, width, startArrow, endArrow, parent) {
+    const sourceElement = getElement(source)
+    const destinationElement = getElement(destination)
+    const sourceGeometry = getAbsoluteGeometry(sourceElement, parent)
+    const destinationGeometry = getAbsoluteGeometry(destinationElement, parent)
+    const corner = {
+        cx: destinationGeometry.cx,
+        cy: sourceGeometry.cy,
+    }
+    const contactSource = contactBox(sourceGeometry, corner.cx, corner.cy)
+    const contactDestination = contactBox(destinationGeometry, corner.cx, corner.cy)
+    drawLine(contactSource.x, contactSource.y, corner.cx, corner.cy, color, width, parent)
+    drawLine(corner.cx, corner.cy, contactDestination.x, contactDestination.y, color, width, parent)
+    const size = 5
+    startArrow(contactSource.x, contactSource.y, sourceGeometry.cx < destinationGeometry.cx ? 180 : 0, color, size, width, parent)
+    endArrow(contactDestination.x, contactDestination.y, sourceGeometry.cy < destinationGeometry.cy ? 90 : 270, color, size, width, parent)
+}
+
 export function arrow(x, y, angle, color, size, width, parent) {
     const svg = getSVG(parent)
     const path = createPath(`M ${-size} ${-size} L ${0} ${0} L ${-size} ${+size}`, "none", color, width)
@@ -274,11 +292,58 @@ function Node(content) {
 }
 
 function isContext(obj) {
-    return obj.startArrow !== undefined && obj.endArrow !== undefined
+    return obj.startTarget !== undefined && obj.endTarget !== undefined
 }
 
 function isNode(obj) {
     return obj.elem !== undefined && obj.column !== undefined && obj.row !== undefined
+}
+
+function charToArrow(c) {
+    if(c === '>' || c === '<')
+        return arrow
+    if(c === 'i')
+        return inheritance
+    if(c === 'a')
+        return aggregation
+    if(c === 'c')
+        return composition
+    if(c === 'b')
+        return backArrow
+    return noArrow
+}
+
+function linePattern(pattern) {
+    if(pattern.length === 2) {
+        return {
+            line: pattern,
+            start: noArrow,
+            end: noArrow
+        }
+    }
+    if(pattern.length === 3) {
+        if(pattern[0] === '-' || pattern[0] === '|') {
+            return {
+                line: pattern.slice(0, 2),
+                start: noArrow,
+                end: charToArrow(pattern[2])
+            }
+        }
+        else {
+            return {
+                line: pattern.slice(1),
+                start: charToArrow(pattern[0]),
+                end: noArrow
+            }
+        }
+    }
+    if(pattern.length === 4) {
+        return {
+            line: pattern.slice(1, 3),
+            start: charToArrow(pattern[0]),
+            end: charToArrow(pattern[3])
+        }
+    }
 }
 
 export function Context(context, width, height) {
@@ -293,9 +358,7 @@ export function Context(context, width, height) {
             width: 1,
             color: "black",
             startTarget: null,
-            startArrow: noArrow,
             endTarget: null,
-            endArrow: noArrow
         }
     }
 
@@ -306,31 +369,44 @@ export function Context(context, width, height) {
             newContext.color = color || 'black'
             return Context(newContext)
         },
-        start: (target, arrow) => {
+        start: (target) => {
             const newContext = { ...context }
             if(isNode(target))
                 newContext.startTarget = target.elem
             else
                 newContext.startTarget = getElement(target)
-            newContext.startArrow = arrow || noArrow
             return Context(newContext)
         },
-        end: (target, arrow) => {
+        end: (target) => {
             const newContext = { ...context }
             if(isNode(target))
                 newContext.endTarget = target.elem
             else
                 newContext.endTarget = getElement(target)
-            newContext.endArrow = arrow || noArrow
             return Context(newContext)
         },
-        line: () => {
+        line: (pattern) => {
+            pattern = pattern || '--'
+            pattern = linePattern(pattern)
             const f = () => {
-                line(context.startTarget, context.endTarget, context.color, context.width, context.startArrow, context.endArrow, context.grid)
+                if(pattern.line === '--')
+                    line(context.startTarget, context.endTarget, context.color, context.width, pattern.start, pattern.end, context.grid)
+                if(pattern.line === '-|')
+                    HVLine(context.startTarget, context.endTarget, context.color, context.width, pattern.start, pattern.end, context.grid)
+                if(pattern.line === '|-')
+                    HVLine(context.endTarget, context.startTarget, context.color, context.width, pattern.end, pattern.start, context.grid)
             }
             f()
             toRedraw.push(f)
             return Context(context)
+        },
+        polyline: arr => {
+            for(let i=0; i<arr.length-2; i+=2) {
+                const start = arr[i]
+                const line = arr[i+1]
+                const end = arr[i+2]
+                that.start(start).end(end).line(line)
+            }
         },
         node: (content) => {
             const n = Node(content)

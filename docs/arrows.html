@@ -35,36 +35,15 @@
         const end = context.endNode().belowOf(dummy)
 
         const oui1 = context.node('oui').rightOf(if1)
-        const dummy2 = context.dummy().rightOf(oui1, 2)
         const noroot = context.round('Pas de racine réelle').rightOf(test_null, 3)
-        const dummy3 = context.dummy().rightOf(dummy, 3)
-
+        
         const oui2 = context.node('oui').rightOf(if2)
-        const dummy4 = context.dummy().rightOf(oui2)
         const droot = context.round('La racine double est <code>-b/(2*a)</code>').rightOf(root1, 2)
-        const dummy5 = context.dummy().rightOf(dummy, 2)
 
-        context.start(start).end(delta, arrow).line()
-        context.start(delta).end(test_delta).line()
-        context.start(test_delta).end(if1, arrow).line()
-        context.start(if1).end(non1).line()
-        context.start(non1).end(test_null).line()
-        context.start(test_null).end(if2, arrow).line()
-        context.start(if2).end(non2).line()
-        context.start(non2).end(root1).line()
-        context.start(root1).end(root2).line()
-        context.start(root2).end(dummy).line()
-        context.start(dummy).end(end, arrow).line()
-        context.start(if2).end(oui2).line()
-        context.start(oui2).end(dummy4).line()
-        context.start(dummy4).end(droot, arrow).line()
-        context.start(droot).end(dummy5).line()
-        context.start(dummy5).end(dummy, arrow).line()
-        context.start(if1).end(oui1).line()
-        context.start(oui1).end(dummy2).line()
-        context.start(dummy2).end(noroot, arrow).line()
-        context.start(noroot).end(dummy3).line()
-        context.start(dummy3).end(dummy, arrow).line()
+
+        context.polyline([start, '-->', delta, '--', test_delta, '-->', if1, '--', non1, '--', test_null, '-->', if2, '--', non2, '--', root1, '--', root2, '--', dummy, '-->', end])
+        context.polyline([if2, '--', oui2, '-|>', droot, '|->', dummy])
+        context.polyline([if1, '--', oui1, '-|>', noroot, '|->', dummy])
     </script>
 </body>
 </html>
