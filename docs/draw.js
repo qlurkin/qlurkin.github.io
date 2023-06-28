@@ -112,6 +112,8 @@ function getAbsoluteGeometry(element, parent) {
         y += el.offsetTop
         el = el.offsetParent
     }
+    console.log(element)
+    console.log(x, y)
     const computedStyle = window.getComputedStyle(element)
     const radiusTopRight = computedStyle.borderTopRightRadius
     const radiusTopLeft = computedStyle.borderTopLeftRadius
@@ -284,6 +286,21 @@ function Node(content) {
             that.move(node.row, node.column - inc)
             return that
         },
+        absolute: (node, dx, dy) => {
+            node = getElement(node)
+            console.log(node.elem.offsetParent)
+            const geom = getAbsoluteGeometry(node.elem, node.elem.offsetParent)
+            that.elem.removeAttribute('style')
+            delete that.column
+            delete that.row
+            that.elem.style.position = 'absolute'
+            console.log(geom)
+            console.log(dx, dy)
+            that.elem.style.top = `${geom.cy + dy - that.elem.offsetHeight/2}px` 
+            that.elem.style.left = `${geom.cx + dx - that.elem.offsetWidth/2}px`
+            console.log(that.elem.style.cssText)
+            return that
+        }
     }
 
     that.move(1, 1)
@@ -296,7 +313,7 @@ function isContext(obj) {
 }
 
 function isNode(obj) {
-    return obj.elem !== undefined && obj.column !== undefined && obj.row !== undefined
+    return obj.elem !== undefined
 }
 
 function charToArrow(c) {
