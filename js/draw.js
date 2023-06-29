@@ -186,8 +186,15 @@ function HVLine(source, destination, color, width, startArrow, endArrow, parent)
     }
     const contactSource = contactBox(sourceGeometry, corner.cx, corner.cy)
     const contactDestination = contactBox(destinationGeometry, corner.cx, corner.cy)
-    drawLine(contactSource.x, contactSource.y, corner.cx, corner.cy, color, width, parent)
-    drawLine(corner.cx, corner.cy, contactDestination.x, contactDestination.y, color, width, parent)
+    //drawLine(contactSource.x, contactSource.y, corner.cx, corner.cy, color, width, parent)
+    //drawLine(corner.cx, corner.cy, contactDestination.x, contactDestination.y, color, width, parent)
+    const radius = 10
+    const hdir = contactDestination.x > contactSource.x ? 1 : -1
+    const vdir = contactDestination.y > contactSource.y ? 1 : -1
+    console.log(hdir, vdir)
+    const svg = getSVG(parent)
+    const path = createPath(`M ${contactSource.x} ${contactSource.y} L ${corner.cx - hdir * radius} ${corner.cy} A ${radius} ${radius} 0 0 ${hdir * vdir < 0 ? 0 : 1} ${corner.cx} ${corner.cy + vdir * radius} L ${contactDestination.x} ${contactDestination.y}`, "none", color, width)
+    svg.appendChild(path)
     const size = 5
     startArrow(contactSource.x, contactSource.y, sourceGeometry.cx < destinationGeometry.cx ? 180 : 0, color, size, width, parent)
     endArrow(contactDestination.x, contactDestination.y, sourceGeometry.cy < destinationGeometry.cy ? 90 : 270, color, size, width, parent)
@@ -309,10 +316,6 @@ function Node(content) {
     that.move(1, 1)
 
     return that
-}
-
-function isContext(obj) {
-    return obj.startTarget !== undefined && obj.endTarget !== undefined
 }
 
 function isNode(obj) {

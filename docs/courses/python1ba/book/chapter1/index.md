@@ -35,8 +35,6 @@ De manière générale, un programme est une suite d'actions à entreprendre vis
 
 Un programme est donc constitué d'une suite d'instructions à exécuter dans un certain ordre.
 
-
-
 Dans le domaine de l'informatique, un programme est une suite d'instructions visant à la résolution d'un problème. La résolution d'une équation du deuxième degré que vous avez apprise en secondaire ressemble déjà beaucoup à un programme informatique [(cf figure "Second degré")](#2deg).
 
 <figure>
