@@ -1,8 +1,8 @@
 import { stat, readdir, writeFile, readFile } from 'node:fs/promises'
 import child_process from 'child_process'
 import { marked } from 'marked'
-import { markedHighlight } from "marked-highlight"
-import hljs from 'highlight.js'
+//import { markedHighlight } from "marked-highlight"
+//import hljs from 'highlight.js'
 import { parse, join, resolve, relative } from 'path'
 import nunjucks from 'nunjucks'
 import yaml from 'js-yaml'
