@@ -72,7 +72,7 @@
     const droot = draw.round('La racine double est <code>-b/(2*a)</code>').width(150).absolute(if2, 170, 0)
     draw.polyline([start, '-->', delta, '--', test_delta, '-->', if1, '--', non1, '--', test_null, '-->', if2, '--', non2, '--', root1, '--', root2, '--', dummy, '-->', end])
     draw.polyline([if2, '--', oui2, '-->', droot, '|->', dummy])
-    draw.polyline([if1, '--', oui1, '-|>', noroot, '|->', dummy])
+    draw.polyline([if1, '--', oui1, '-|>', noroot, '|-', dummy])
 </script>
 </body>
 </html>
