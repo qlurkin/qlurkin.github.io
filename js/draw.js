@@ -301,7 +301,7 @@ function Node(content) {
         },
         absolute: (node, dx, dy) => {
             node = getElement(node)
-            that.elem.removeAttribute('style')
+            //that.elem.removeAttribute('style')
             delete that.column
             delete that.row
             that.elem.remove()
@@ -309,6 +309,14 @@ function Node(content) {
             that.elem.style.position = 'absolute'
             that.elem.style.top = `${node.content.offsetHeight/2 - that.elem.offsetHeight/2 + dy}px` //`${node.content.offsetHeight/2 + dy - that.elem.offsetHeight/2}px` 
             that.elem.style.left = `${node.content.offsetWidth/2 - that.elem.offsetWidth/2 + dx}px` //`${node.content.offsetWidth/2 + dx - that.elem.offsetWidth/2}px`
+            return that
+        },
+        width: value => {
+            that.elem.style.width = `${value}px`
+            return that
+        },
+        height: value => {
+            that.elem.style.height = `${value}px`
             return that
         }
     }
