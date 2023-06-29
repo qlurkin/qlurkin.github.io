@@ -39,7 +39,7 @@ p, li, pre, figure, h1, h2, h3, h4 {
 }
 
 h1, h2, h3, h4, pre, table, img {
-    break-inside: avoid-page;
+    break-inside: avoid;
 }
 
 h1, h2, h3, h4 {
@@ -68,6 +68,7 @@ li {
 
 figure {
     text-align: center;
+    break-inside: avoid;
 
     figcaption {
         text-align: center;
