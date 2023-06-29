@@ -15,11 +15,11 @@ De manière générale, un programme est une suite d'actions à entreprendre vis
     const draw = await Doc.Draw('#oeuf', 350, 500)
     const start = draw.start().move(1, 2)
     const hot = draw.round('faire chauffer la poêle').belowOf(start)
-    const oil = draw.round('mettre de l’huile dans la poêle').belowOf(hot)
-    const egg = draw.round('casser l’œuf dans la poêle').belowOf(oil)
+    const oil = draw.round('mettre de l\'huile dans la poêle').belowOf(hot)
+    const egg = draw.round('casser l\'œuf dans la poêle').belowOf(oil)
     const salt = draw.round('ajouter du sel et du poivre').belowOf(egg)
     const dummyTop = draw.dummy().belowOf(salt)
-    const cooked = draw.round('Est-ce que c’est cuit ?').belowOf(dummyTop)
+    const cooked = draw.round('Est-ce que c\'est cuit ?').belowOf(dummyTop)
     const if1 = draw.diamond().belowOf(cooked)
     const non = draw.node('non').belowOf(if1)
     const wait = draw.round('On attend 10 secondes').belowOf(non)
@@ -107,5 +107,13 @@ else:
 ```
 <figcaption><span data-caption='python_2deg'>Python, second degré</span></figcaption>
 <figure>
+
+Dans un programme, chaque ligne du code est une instruction. Les instructions sont exécutées dans l'ordre où elles apparaissent dans le code du programme.
+
+Comme le code d'un programme est un simple texte, la seule chose dont on a besoin pour écrire un programme est un éditeur de texte (bloc-note, ...). Il est cependant plus pratique d'utiliser un éditeur spécialisé pour écrire le code. Ces éditeurs facilitent fortement l'écriture et la lisibilité du code (Notepad++, Sublime Text, ...)
+
+Pour pouvoir exécuter le code d'un programme, il est par contre indispensable d'avoir une application capable de comprendre le langage utilisé dans le code. Dans le cas de Python, on appelle cette application "l'interpréteur Python".
+
+Il existe également des éditeurs qui facilitent à la fois l'écriture, l'exécution et le débogage. On parle alors d'IDE pour Integrated Development Environment (pyCharm, Spyder, ...)
 
 
