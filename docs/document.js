@@ -60375,9 +60375,6 @@ var Doc = (function (exports) {
 	        };
 	    });
 
-	    console.log(types);
-	    console.log(labels);
-
 	    document.querySelectorAll('span[data-caption]').forEach(elem => {
 	        const ref = elem.getAttribute('data-caption');
 	        const content = elem.innerHTML;

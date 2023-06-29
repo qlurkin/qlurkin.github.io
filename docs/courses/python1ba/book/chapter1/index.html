@@ -20,7 +20,7 @@
 <p>De manière générale, un programme est une suite d&#39;actions à entreprendre visant à atteindre un but. On peut par exemple dire d&#39;une recette de cuisine que c&#39;est un programme pour réaliser un plat (cf <span data-link='oeuf'>figure</span>). On parle également de programme pour un lave-linge où, suivant le type de linge, la suite d&#39;actions (rotations du tambour) est différente.</p>
 <figure>
     <div id='oeuf' data-ref='figure'></div>
-    <figcaption><span data-caption='oeuf'></span> - Cuire un œuf</figcaption>
+    <figcaption><span data-caption='oeuf'>Cuire un œuf</span></figcaption>
 </figure>
 <script type="module" defer>
     const draw = await Doc.Draw('#oeuf', 350, 500)
@@ -98,16 +98,17 @@ b*b-4*a*c <strong>&#8594;</strong> D
 <p>Pour écrire un vrai programme, il faut choisir un langage de programmation et respecter sa syntaxe. Le langage que nous allons utiliser dans ce cours est le <strong>Python</strong>. Voici la version Python du précédent pseudo-code:</p>
 <figure id='python_2deg' data-ref='code'>
 
-<pre><code class="hljs language-python">D = b*b-<span class="hljs-number">4</span>*a*c
-<span class="hljs-keyword">if</span> D &lt; <span class="hljs-number">0</span>:
-    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Pas de solution réelle&quot;</span>)
-<span class="hljs-keyword">else</span>:
-    <span class="hljs-keyword">if</span> D == <span class="hljs-number">0</span>:
-        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;La racine double est&quot;</span>, -b/(<span class="hljs-number">2</span>*a))
-    <span class="hljs-keyword">else</span>:
-        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;La 1re racine est&quot;</span>, (-b-sqrt(D))/(<span class="hljs-number">2</span>*a))
-        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;La 2e racine est&quot;</span>, (-b-sqrt(D))/(<span class="hljs-number">2</span>*a))
-</code></pre><figcaption><span data-caption='python_2deg'>Python, second degré</span></figcaption>
+<pre><code class="language-python">D = b*b-4*a*c
+if D &lt; 0:
+    print(&quot;Pas de solution réelle&quot;)
+else:
+    if D == 0:
+        print(&quot;La racine double est&quot;, -b/(2*a))
+    else:
+        print(&quot;La 1re racine est&quot;, (-b-sqrt(D))/(2*a))
+        print(&quot;La 2e racine est&quot;, (-b-sqrt(D))/(2*a))
+</code></pre>
+<figcaption><span data-caption='python_2deg'>Python, second degré</span></figcaption>
 <figure>
 
 

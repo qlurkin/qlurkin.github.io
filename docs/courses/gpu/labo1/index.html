@@ -22,16 +22,18 @@ $> cargo new project_name
 </pre>
 
 <p>This will create the following file tree.</p>
-<pre><code class="hljs language-plaintext">📦 project-name
+<pre><code class="language-plaintext">📦 project-name
 ┣ 📂 src
 ┃ ┗ 📜 main.rs
 ┗ 📜 Cargo.toml
-</code></pre><p>We can <code>cd</code> into the newly created project root folder.</p>
+</code></pre>
+<p>We can <code>cd</code> into the newly created project root folder.</p>
 <p>Then you can add your code in <code>main.rs</code>.</p>
-<pre><code class="hljs language-rust"><span class="hljs-keyword">fn</span> <span class="hljs-title function_">main</span>() {
-    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Hello, world!&quot;</span>);
+<pre><code class="language-rust">fn main() {
+    println!(&quot;Hello, world!&quot;);
 }
-</code></pre><p>You can then run it with:</p>
+</code></pre>
+<p>You can then run it with:</p>
 <pre class="terminal">
 <b>$> cargo run</b>
    <b style='color: chartreuse'>Compiling</b> project-name v0.1.0 (./project-name)

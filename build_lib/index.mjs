@@ -40,13 +40,13 @@ marked.use({
   gfm: true,
 })
 
-marked.use(markedHighlight({
-  langPrefix: 'hljs language-',
-  highlight(code, lang) {
-    const language = hljs.getLanguage(lang) ? lang : 'plaintext'
-    return hljs.highlight(code, { language }).value
-  }
-}))
+// marked.use(markedHighlight({
+//   langPrefix: 'hljs language-',
+//   highlight(code, lang) {
+//     const language = hljs.getLanguage(lang) ? lang : 'plaintext'
+//     return hljs.highlight(code, { language }).value
+//   }
+// }))
 
 function runScript(scriptPath, args, options) {
   return new Promise((resolve, reject) => {
