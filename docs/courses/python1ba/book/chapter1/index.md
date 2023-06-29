@@ -106,9 +106,53 @@ else:
         print("La 2e racine est", (-b-sqrt(D))/(2*a))
 ```
 <figcaption><span data-caption='python_2deg'>Python, second degré</span></figcaption>
-<figure>
+</figure>
 
 Dans un programme, chaque ligne du code est une instruction. Les instructions sont exécutées dans l'ordre où elles apparaissent dans le code du programme.
+
+"Les instructions sont exécutées...", mais comment sont elle exécutées et par quoi&nbsp;? Où se trouve ce fameux code du programme&nbsp;?
+
+Pour bien comprendre tout cela, nous allons devoir nous intéresser au fonctionnement d'un ordinateur.
+
+## Qu'est ce qu'un ordinateur ?
+
+Nous allons ici essayer de comprendre comment un ordinateur fait pour exécuter du code. Pour pouvoir programmer nous n'avons pas besoin de tout connaître dans les détails. Mais, comprendre les bases du fonctionnement d'un ordinateur nous aidera pour le programmer et pour l'utiliser correctement.
+
+Un ordinateur est, avant tout, un système composé de plusieurs éléments: Processeur, Mémoire, Stockage, périphériques, ...
+
+<figure id="system" data-ref="figure">
+<img src="./system.svg">
+<figcaption><span data-caption="system">CPU, RAM, et stockage</span></figcation>
+</figure>
+
+### Le processeur
+
+Le processeur *(CPU: Central Processing Unit)* exécute les instructions d'un programme une par une. Ces instructions proviennent de la mémoire et manipulent généralement des données se trouvant également dans la mémoire.
+
+Le processeur est donc grosso-modo capable de deux choses:
+- Calculer
+- Sauver/lire des valeurs en mémoire
+
+### La mémoire
+
+La mémoire *(RAM: Random Access Memory)* contient les instructions du programme et les données qu'il manipule. Sa taille ne dépasse généralement pas quelques giga-octet (Go) et son contenu est temporaire.
+
+Pour garder ses données, la mémoire à besoin d'être alimentée ce qui veut dire que le contenu de la mémoire est perdu si on lui coupe le courant.
+
+### Le stockage
+
+Le stockage de masse *(SSD: Solid State Drive, HDD: Hard Disk Drive, Clé USB, carte SD, ...)* contient des fichiers organisés dans une hiérarchie de dossiers. Les opérations d'écriture et de lecture de fichiers sont beaucoup plus lentes que les accès à des données en RAM. Les stockages de masse n'ont pas besoin d'être alimenté pour conserver les données et peuvent contenir jusqu'à plusieurs tera-octet (To).
+
+
+
+
+
+
+
+
+
+
+
 
 Comme le code d'un programme est un simple texte, la seule chose dont on a besoin pour écrire un programme est un éditeur de texte (bloc-note, ...). Il est cependant plus pratique d'utiliser un éditeur spécialisé pour écrire le code. Ces éditeurs facilitent fortement l'écriture et la lisibilité du code (Notepad++, Sublime Text, ...)
 

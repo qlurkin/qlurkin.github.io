@@ -109,9 +109,31 @@ else:
         print(&quot;La 2e racine est&quot;, (-b-sqrt(D))/(2*a))
 </code></pre>
 <figcaption><span data-caption='python_2deg'>Python, second degré</span></figcaption>
-<figure>
+</figure>
 
 <p>Dans un programme, chaque ligne du code est une instruction. Les instructions sont exécutées dans l&#39;ordre où elles apparaissent dans le code du programme.</p>
+<p>&quot;Les instructions sont exécutées...&quot;, mais comment sont elle exécutées et par quoi&nbsp;? Où se trouve ce fameux code du programme&nbsp;?</p>
+<p>Pour bien comprendre tout cela, nous allons devoir nous intéresser au fonctionnement d&#39;un ordinateur.</p>
+<h2>Qu&#39;est ce qu&#39;un ordinateur ?</h2>
+<p>Nous allons ici essayer de comprendre comment un ordinateur fait pour exécuter du code. Pour pouvoir programmer nous n&#39;avons pas besoin de tout connaître dans les détails. Mais, comprendre les bases du fonctionnement d&#39;un ordinateur nous aidera pour le programmer et pour l&#39;utiliser correctement.</p>
+<p>Un ordinateur est, avant tout, un système composé de plusieurs éléments: Processeur, Mémoire, Stockage, périphériques, ...</p>
+<figure id="system" data-ref="figure">
+<img src="./system.svg">
+<figcaption><span data-caption="system">CPU, RAM, et stockage</span></figcation>
+</figure>
+
+<h3>Le processeur</h3>
+<p>Le processeur <em>(CPU: Central Processing Unit)</em> exécute les instructions d&#39;un programme une par une. Ces instructions proviennent de la mémoire et manipulent généralement des données se trouvant également dans la mémoire.</p>
+<p>Le processeur est donc grosso-modo capable de deux choses:</p>
+<ul>
+<li>Calculer</li>
+<li>Sauver/lire des valeurs en mémoire</li>
+</ul>
+<h3>La mémoire</h3>
+<p>La mémoire <em>(RAM: Random Access Memory)</em> contient les instructions du programme et les données qu&#39;il manipule. Sa taille ne dépasse généralement pas quelques giga-octet (Go) et son contenu est temporaire.</p>
+<p>Pour garder ses données, la mémoire à besoin d&#39;être alimentée ce qui veut dire que le contenu de la mémoire est perdu si on lui coupe le courant.</p>
+<h3>Le stockage</h3>
+<p>Le stockage de masse <em>(SSD: Solid State Drive, HDD: Hard Disk Drive, Clé USB, carte SD, ...)</em> contient des fichiers organisés dans une hiérarchie de dossiers. Les opérations d&#39;écriture et de lecture de fichiers sont beaucoup plus lentes que les accès à des données en RAM. Les stockages de masse n&#39;ont pas besoin d&#39;être alimenté pour conserver les données et peuvent contenir jusqu&#39;à plusieurs tera-octet (To).</p>
 <p>Comme le code d&#39;un programme est un simple texte, la seule chose dont on a besoin pour écrire un programme est un éditeur de texte (bloc-note, ...). Il est cependant plus pratique d&#39;utiliser un éditeur spécialisé pour écrire le code. Ces éditeurs facilitent fortement l&#39;écriture et la lisibilité du code (Notepad++, Sublime Text, ...)</p>
 <p>Pour pouvoir exécuter le code d&#39;un programme, il est par contre indispensable d&#39;avoir une application capable de comprendre le langage utilisé dans le code. Dans le cas de Python, on appelle cette application &quot;l&#39;interpréteur Python&quot;.</p>
 <p>Il existe également des éditeurs qui facilitent à la fois l&#39;écriture, l&#39;exécution et le débogage. On parle alors d&#39;IDE pour Integrated Development Environment (pyCharm, Spyder, ...)</p>
