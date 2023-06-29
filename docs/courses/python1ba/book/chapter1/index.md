@@ -5,15 +5,14 @@ subtitle: La programmation
 
 ## Qu'est-ce qu'un programme?
 
-De manière générale, un programme est une suite d'actions à entreprendre visant à atteindre un but. On peut par exemple dire d'une recette de cuisine que c'est un programme pour réaliser un plat [(cf figure "cuire un œuf")](#oeuf). On parle également de programme pour un lave-linge où, suivant le type de linge, la suite d'actions (rotations du tambour) est différente.
+De manière générale, un programme est une suite d'actions à entreprendre visant à atteindre un but. On peut par exemple dire d'une recette de cuisine que c'est un programme pour réaliser un plat (cf <span data-link='oeuf'>figure</span>). On parle également de programme pour un lave-linge où, suivant le type de linge, la suite d'actions (rotations du tambour) est différente.
 
 <figure>
-    <a id='oeuf'></a>
-    <div id='diagram_oeuf'></div>
-    <figcaption>Cuire un œuf</figcaption>
+    <div id='oeuf' data-ref='figure'></div>
+    <figcaption><span data-caption='oeuf'>Cuire un œuf</span></figcaption>
 </figure>
 <script type="module" defer>
-    const draw = await Doc.Draw('#diagram_oeuf', 350, 500)
+    const draw = await Doc.Draw('#oeuf', 350, 500)
     const start = draw.start().move(1, 2)
     const hot = draw.round('faire chauffer la poêle').belowOf(start)
     const oil = draw.round('mettre de l’huile dans la poêle').belowOf(hot)
@@ -36,17 +35,15 @@ De manière générale, un programme est une suite d'actions à entreprendre vis
 
 Un programme est donc constitué d'une suite d'instructions à exécuter dans un certain ordre.
 
-Dans le domaine de l'informatique, un programme est une suite d'instructions visant à la résolution d'un problème. La résolution d'une équation du deuxième degré que vous avez apprise en secondaire ressemble déjà beaucoup à un programme informatique [(cf figure "Second degré")](#2deg).
+Dans le domaine de l'informatique, un programme est une suite d'instructions visant à la résolution d'un problème. La résolution d'une équation du deuxième degré que vous avez apprise en secondaire ressemble déjà beaucoup à un programme informatique (cf <span data-link='d2deg'>figure</span>).
 
 <figure>
-    <a id='2deg'></a>
-    <div id='diagram_2deg'></div>
-    <figcaption>Second degré</figcaption>
+    <div id='d2deg' data-ref='figure'></div>
+    <figcaption><span data-caption='d2deg'>Second degré</span></figcaption>
 </figure>
 <script type="module" defer>
-    const draw = await Doc.Draw('#diagram_2deg', 600, 600)
+    const draw = await Doc.Draw('#d2deg', 600, 600)
     const start = draw.start()
-    //const ghost = draw.dummy().rightOf(start, 2)
     const delta = draw.round('calculer <code>b*b-4*a*c</code> et appeler le résultat D').belowOf(start)
     const test_delta = draw.round('Est-ce que D est négatif ?').belowOf(delta)
     const if1 = draw.diamond().belowOf(test_delta)
@@ -67,4 +64,48 @@ Dans le domaine de l'informatique, un programme est une suite d'instructions vis
     draw.polyline([if1, '--', oui1, '-|>', noroot, '|-', dummy])
     draw.done()
 </script>
+
+### Code et langage de programmation
+
+Les figures <span data-link='oeuf'></span> et <span data-link='d2deg'></span> sont des représentations graphiques de programmes. On les appelle organigrammes ou encore diagrammes d'activité. Un vrai programme se fait dans un langage de programmation. Un programme écrit dans un langage de programmation se présente donc comme du texte. Ce texte est appelé le code du programme.
+
+Une façon d'écrire en texte le programme de résolution d'une équation du second degré pourrait être la suivante :
+
+<figure id="code_2deg" data-ref='code'>
+
+<pre>
+b*b-4*a*c <strong>&#8594;</strong> D
+<strong>si</strong> D &lt; 0 <strong>alors:</strong>
+    <strong>affiche</strong> <span class='hljs-string'>"Pas de solution réelle"</span>
+<strong>sinon:</strong>
+    <strong>si</strong> D = 0 <strong>alors:</strong>
+        <strong>affiche</strong> <span class='hljs-string'>"La racine double est"</span> -b/(2*a)
+    <strong>sinon:</strong>
+        <strong>affiche</strong> <span class='hljs-string'>"La 1<sup>re</sup> racine est"</span> (-b-sqrt(D))/(2*a)
+        <strong>affiche</strong> <span class='hljs-string'>"La 2<sup>e</sup> racine est"</span> (-b+sqrt(D))/(2*a)
+</pre>
+
+<figcaption><span data-caption='code_2deg'>Pseudo code, second degré</span></figcaption>
+</figure>
+
+Le texte ci-dessus est souvent appelé "pseudo-code" car il a une structure très proche d'un vrai code de programme mais il n'est écrit dans aucun langage de programmation particulier.
+
+Pour écrire un vrai programme, il faut choisir un langage de programmation et respecter sa syntaxe. Le langage que nous allons utiliser dans ce cours est le **Python**. Voici la version Python du précédent pseudo-code:
+
+<figure id='python_2deg' data-ref='code'>
+
+```python
+D = b*b-4*a*c
+if D < 0:
+    print("Pas de solution réelle")
+else:
+    if D == 0:
+        print("La racine double est", -b/(2*a))
+    else:
+        print("La 1re racine est", (-b-sqrt(D))/(2*a))
+        print("La 2e racine est", (-b-sqrt(D))/(2*a))
+```
+<figcaption><span data-caption='python_2deg'>Python, second degré</span></figcaption>
+<figure>
+
 
