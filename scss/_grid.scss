@@ -1,4 +1,6 @@
 .draw-wrapper {
+    break-inside: avoid;
+
     .grid {
         display: grid;
         margin: 1rem auto;

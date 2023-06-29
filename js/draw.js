@@ -139,10 +139,27 @@ function getAbsoluteGeometry(element, parent) {
         radiusTopLeft: Math.min(parseInt(radiusTopLeft.slice(0, -2), 10), element.offsetWidth/2, element.offsetHeight/2),
         radiusBottomRight: Math.min(parseInt(radiusBottomRight.slice(0, -2), 10), element.offsetWidth/2, element.offsetHeight/2),
         radiusBottomLeft: Math.min(parseInt(radiusBottomLeft.slice(0, -2), 10), element.offsetWidth/2, element.offsetHeight/2),
-        transform: matrix
+        transform: matrix,
+        xmin: x,
+        ymin: y,
+        xmax: x + element.offsetWidth,
+        ymax: y + element.offsetHeight,
     }
 
     return geom
+}
+
+function combineBoundingBoxes(bb1, bb2) {
+    if(!bb1 && !bb2) throw new Error('Both BB can\'t be undefined')
+    if(!bb1) return bb2
+    if(!bb2) return bb1
+
+    return {
+        xmin: Math.min(bb1.xmin, bb2.xmin),
+        ymin: Math.min(bb1.ymin, bb2.ymin),
+        xmax: Math.max(bb1.xmax, bb2.xmax),
+        ymax: Math.max(bb1.ymax, bb2.ymax),
+    }
 }
 
 function drawLine(x1, y1, x2, y2, color, width, parent) {
@@ -154,11 +171,25 @@ function drawLine(x1, y1, x2, y2, color, width, parent) {
 function drawCircle(x, y, radius, color, parent) {
     const svg = getSVG(parent);
     const shape = createSVGElement("circle")
-    shape.setAttributeNS(null, "cx", x);
-    shape.setAttributeNS(null, "cy", y);
-    shape.setAttributeNS(null, "r",  radius);
-    shape.setAttributeNS(null, "fill", color);
-    svg.appendChild(shape);
+    shape.setAttributeNS(null, "cx", x)
+    shape.setAttributeNS(null, "cy", y)
+    shape.setAttributeNS(null, "r",  radius)
+    shape.setAttributeNS(null, "fill", color)
+    svg.appendChild(shape)
+}
+
+function drawRect(xmin, ymin, xmax, ymax, color, parent) {
+    const width = xmax - xmin
+    const height = ymax - ymin
+    const svg = getSVG(parent)
+    const shape = createSVGElement("rect")
+    shape.setAttributeNS(null, "x", xmin)
+    shape.setAttributeNS(null, "y", ymin)
+    shape.setAttributeNS(null, "width",  width)
+    shape.setAttributeNS(null, "height",  height)
+    shape.setAttributeNS(null, "stroke", color)
+    shape.setAttributeNS(null, "fill", 'none')
+    svg.appendChild(shape)
 }
 
 function line(source, destination, color, width, startArrow, endArrow, parent) {
@@ -191,7 +222,6 @@ function HVLine(source, destination, color, width, startArrow, endArrow, parent)
     const radius = 10
     const hdir = contactDestination.x > contactSource.x ? 1 : -1
     const vdir = contactDestination.y > contactSource.y ? 1 : -1
-    console.log(hdir, vdir)
     const svg = getSVG(parent)
     const path = createPath(`M ${contactSource.x} ${contactSource.y} L ${corner.cx - hdir * radius} ${corner.cy} A ${radius} ${radius} 0 0 ${hdir * vdir < 0 ? 0 : 1} ${corner.cx} ${corner.cy + vdir * radius} L ${contactDestination.x} ${contactDestination.y}`, "none", color, width)
     svg.appendChild(path)
@@ -382,94 +412,88 @@ export async function Draw(parent, width, height) {
     parent = getElement(parent || document.body)
     parent.classList.add('draw-wrapper')
 
-    const state = {
-        parent,
-        width,
-        height,
-        grid: setup(parent, width, height),
-        width: 1,
-        color: 'black',
-        startTarget: null,
-        endTarget: null,
-    }
+    const grid = setup(parent, width, height)
+    let stroke_width = 1
+    let stroke_color = 'black'
+    const nodes = []
 
-    function make_methods(state) {
-        const that = {
-            stroke: (width, color) => {
-                const newState = { ...state }
-                newState.width = width || 1
-                newState.color = color || 'black'
-                return make_methods(newState)
-            },
-            start: (target) => {
-                const newState = { ...state }
-                if(isNode(target))
-                    newState.startTarget = target.elem
-                else
-                    newState.startTarget = getElement(target)
-                return make_methods(newState)
-            },
-            end: (target) => {
-                const newState = { ...state }
-                if(isNode(target))
-                    newState.endTarget = target.elem
-                else
-                    newState.endTarget = getElement(target)
-                return make_methods(newState)
-            },
-            line: (pattern) => {
-                pattern = pattern || '--'
-                pattern = linePattern(pattern)
-                const f = () => {
-                    if(pattern.line === '--')
-                        line(state.startTarget, state.endTarget, state.color, state.width, pattern.start, pattern.end, state.grid)
-                    if(pattern.line === '-|')
-                        HVLine(state.startTarget, state.endTarget, state.color, state.width, pattern.start, pattern.end, state.grid)
-                    if(pattern.line === '|-')
-                        HVLine(state.endTarget, state.startTarget, state.color, state.width, pattern.end, pattern.start, state.grid)
-                }
-                f()
-                toRedraw.push(f)
-                return that
-            },
-            polyline: arr => {
-                for(let i=0; i<arr.length-2; i+=2) {
-                    const start = arr[i]
-                    const line = arr[i+1]
-                    const end = arr[i+2]
-                    that.start(start).end(end).line(line)
-                }
-                return that
-            },
-            node: (content) => {
-                const n = Node(content)
-                state.grid.appendChild(n.elem)
-                return n
-            },
-            dummy: () => {
-                return that.node().classes('dummy')
-            },
-            diamond: () => {
-                return that.node().classes('diamond')
-            },
-            startNode: () => {
-                return that.node().classes('start')
-            },
-            endNode: () => {
-                return that.node().classes('end')
-            },
-            round: (content) => {
-                return that.node(content).classes('round')
-            },
-            rect: (content) => {
-                return that.node(content).classes('rect')
+    const that = {
+        stroke: (width, color) => {
+            stroke_width = width || 1
+            stroke_color = color || 'black'
+            return that
+        },
+        line: (start, pattern, end) => {
+            if(isNode(start))
+                start = start.elem
+            else
+                start = getElement(start)
+
+            if(isNode(end))
+                end = end.elem
+            else
+                end = getElement(end)
+
+            pattern = pattern || '--'
+            pattern = linePattern(pattern)
+
+            const f = () => {
+                if(pattern.line === '--')
+                    line(start, end, stroke_color, stroke_width, pattern.start, pattern.end, grid)
+                if(pattern.line === '-|')
+                    HVLine(start, end, stroke_color, stroke_width, pattern.start, pattern.end, grid)
+                if(pattern.line === '|-')
+                    HVLine(end, start, stroke_color, stroke_width, pattern.end, pattern.start, grid)
             }
+            f()
+            toRedraw.push(f)
+            return that
+        },
+        polyline: arr => {
+            for(let i=0; i<arr.length-2; i+=2) {
+                const start = arr[i]
+                const line = arr[i+1]
+                const end = arr[i+2]
+                that.line(start, line, end)
+            }
+            return that
+        },
+        node: (content) => {
+            const n = Node(content)
+            grid.appendChild(n.elem)
+            nodes.push(n)
+            return n
+        },
+        dummy: () => {
+            return that.node().classes('dummy')
+        },
+        diamond: () => {
+            return that.node().classes('diamond')
+        },
+        start: () => {
+            return that.node().classes('start')
+        },
+        end: () => {
+            return that.node().classes('end')
+        },
+        round: (content) => {
+            return that.node(content).classes('round')
+        },
+        rect: (content) => {
+            return that.node(content).classes('rect')
+        },
+        done: () => {
+            let bb = undefined
+            for(const node of nodes) {
+                const geom = getAbsoluteGeometry(node.elem, grid)
+                bb = combineBoundingBoxes(bb, geom)
+            }
+            grid.style.left = `${width/2 - (bb.xmin + bb.xmax)/2}px`
+            grid.style.top = `${height/2 - (bb.ymin + bb.ymax)/2}px`
         }
-
-        return that
     }
 
-    return make_methods(state)
+    return that
 }
 
 export default Draw

@@ -14,7 +14,7 @@ var Doc = (function (exports) {
 	    return css;
 	}
 
-	___$insertStyle("@charset \"UTF-8\";\n@import url(\"https://fonts.googleapis.com/css?family=Lora|Source+Code+Pro&display=swap\");\n/*\n\nOriginal highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>\n\n*/\npre {\n  tab-size: 3;\n}\n\n.hljs {\n  display: block;\n}\n\n/* Base color: saturation 0; */\n.hljs,\n.hljs-subst {\n  color: #444;\n}\n\n.hljs-comment {\n  color: #888888;\n}\n\n.hljs-keyword,\n.hljs-attribute,\n.hljs-selector-tag,\n.hljs-meta-keyword,\n.hljs-doctag,\n.hljs-name {\n  font-weight: bold;\n}\n\n/* User color: hue: 0 */\n.hljs-type,\n.hljs-string,\n.hljs-number,\n.hljs-selector-id,\n.hljs-selector-class,\n.hljs-quote,\n.hljs-template-tag,\n.hljs-deletion {\n  color: #880000;\n}\n\n.hljs-title,\n.hljs-section {\n  color: #880000;\n  font-weight: bold;\n}\n\n.hljs-regexp,\n.hljs-symbol,\n.hljs-variable,\n.hljs-template-variable,\n.hljs-link,\n.hljs-selector-attr,\n.hljs-selector-pseudo {\n  color: #BC6060;\n}\n\n/* Language color: hue: 90; */\n.hljs-literal {\n  color: #78A960;\n}\n\n.hljs-built_in,\n.hljs-bullet,\n.hljs-code,\n.hljs-addition {\n  color: #397300;\n}\n\n/* Meta color: hue: 200 */\n.hljs-meta {\n  color: #1f7199;\n}\n\n.hljs-meta-string {\n  color: #4d99bf;\n}\n\n/* Misc effects */\n.hljs-emphasis {\n  font-style: italic;\n}\n\n.hljs-strong {\n  font-weight: bold;\n}\n\n.draw-wrapper .grid {\n  display: grid;\n  margin: 1rem auto;\n  font-size: 13px;\n}\n.draw-wrapper .grid code {\n  white-space: nowrap;\n}\n.draw-wrapper .grid .node {\n  justify-self: center;\n  align-self: center;\n  padding: 0 0.4rem;\n}\n.draw-wrapper .grid .node .content {\n  position: relative;\n}\n.draw-wrapper .grid > svg {\n  padding: 0;\n}\n.draw-wrapper .grid .node.diamond {\n  width: 20px;\n  height: 20px;\n  border: 1px solid black;\n  transform-origin: center;\n  transform: rotate(45deg);\n  padding: 0;\n  position: relative;\n}\n.draw-wrapper .grid .node.diamond > .content {\n  transform: rotate(-45deg) translate(-1.5px, -1.5px);\n  width: 28px;\n  height: 28px;\n  top: -5px;\n  left: -5px;\n}\n.draw-wrapper .grid .node.start {\n  width: 20px;\n  height: 20px;\n  border-radius: 10px;\n  background-color: black;\n}\n.draw-wrapper .grid .node.end {\n  width: 20px;\n  height: 20px;\n  border-radius: 10px;\n  border: 1px solid black;\n  position: relative;\n}\n.draw-wrapper .grid .node.end::before {\n  content: \" \";\n  position: absolute;\n  top: 3px;\n  left: 3px;\n  width: 12px;\n  height: 12px;\n  border-radius: 50%;\n  background-color: black;\n}\n.draw-wrapper .grid .node.dummy {\n  width: 0;\n  height: 0;\n  padding: 0;\n}\n.draw-wrapper .grid .node.rect {\n  padding: 0.5rem 1rem;\n  border: 1px solid black;\n}\n.draw-wrapper .grid .node.round {\n  padding: 0.5rem 1rem;\n  border: 1px solid black;\n  border-radius: 10px;\n}\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n}\n\nbody {\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n  text-rendering: optimizeLegibility;\n  background-color: white;\n}\n\ncode {\n  font-size: 0.875em;\n  color: #d63384;\n  word-wrap: break-word;\n  font-family: \"Source Code Pro\", monospace;\n}\n\npre {\n  font-family: \"Source Code Pro\", monospace;\n  overflow-x: auto;\n  padding: 1em 0.8em;\n  background: #F0F0F0;\n  border-radius: 4px;\n  font-size: 75%;\n}\n\npre > code {\n  font-size: 100%;\n}\n\np, li, pre, figure, h1, h2, h3, h4 {\n  margin-bottom: 1rem;\n}\n\nh1, h2, h3, h4, pre, table, img {\n  break-inside: avoid-page;\n}\n\nh1, h2, h3, h4 {\n  margin-top: 2rem;\n}\n\nul, ol, figure, pre, .file-title, .terminal {\n  margin-top: 1rem;\n}\n\n/* hack that avoid page break after h2 et h3 */\nh2::after, h3::after, h4::after {\n  content: \"\";\n  display: block;\n  height: 100px;\n  margin-bottom: -100px;\n}\n\np, li {\n  text-align: justify;\n}\n\nli {\n  margin-left: 30px;\n}\n\nfigure {\n  text-align: center;\n}\nfigure figcaption {\n  text-align: center;\n  font-style: italic;\n  font-size: 0.8em;\n}\nfigure img, figure canvas {\n  max-width: 100%;\n}\nfigure img.half, figure canvas.half {\n  width: 50%;\n}\nfigure img.third, figure canvas.third {\n  width: 33%;\n}\nfigure img.third2, figure canvas.third2 {\n  width: 66%;\n}\nfigure img.fourth, figure canvas.fourth {\n  width: 25%;\n}\nfigure img.fourth3, figure canvas.fourth3 {\n  width: 75%;\n}\nfigure img.zoom, figure canvas.zoom {\n  width: 75%;\n}\nfigure img.max, figure canvas.max {\n  width: 100%;\n}\n\nh1 > small {\n  display: block;\n  font-size: 0.6em;\n  font-weight: normal;\n  color: gray;\n  margin: 1rem 0;\n}\n\n.row {\n  display: grid;\n  grid-template-columns: repeat(12, 1fr);\n  column-gap: 10px;\n  justify-items: stretch;\n  align-items: stretch;\n  justify-content: stretch;\n  align-content: stretch;\n}\n.row .span2 {\n  grid-column-end: span 2;\n}\n.row .span3 {\n  grid-column-end: span 3;\n}\n.row .span4 {\n  grid-column-end: span 4;\n}\n.row .span5 {\n  grid-column-end: span 5;\n}\n.row .span6 {\n  grid-column-end: span 6;\n}\n.row .span7 {\n  grid-column-end: span 7;\n}\n.row .span8 {\n  grid-column-end: span 8;\n}\n.row .span9 {\n  grid-column-end: span 9;\n}\n.row .span10 {\n  grid-column-end: span 10;\n}\n.row .span11 {\n  grid-column-end: span 11;\n}\n\n.indent {\n  padding-left: 3ex;\n}\n\n.center {\n  text-align: center;\n}\n\n.big {\n  font-size: 1.5em;\n}\n\n.right {\n  text-align: right;\n}\n\n.break-before {\n  page-break-before: always;\n}\n\n.break-after {\n  page-break-after: always;\n}\n\ncode.wrap {\n  white-space: pre-wrap !important;\n}\n\n.terminal {\n  background-color: darkslategray;\n  color: white;\n  font-family: consolas, monospace;\n  white-space: pre;\n  padding: 1rem;\n  font-size: 0.9em;\n  margin-bottom: 1rem;\n}\n.terminal::before {\n  content: \"Terminal\";\n  display: block;\n  background-color: black;\n  text-align: center;\n  margin: -1rem;\n  padding: 0.5rem;\n  margin-bottom: 1rem;\n}\n\n.file-title {\n  margin-bottom: -1rem !important;\n  font-family: consolas, monospace;\n  font-size: 0.9em;\n  color: white;\n  padding: 0.5rem;\n  text-align: center;\n  background-color: #686868;\n}\n\ntable {\n  border-collapse: collapse;\n  border: 2px solid black;\n}\ntable td {\n  border: 1px solid black;\n}\ntable th {\n  border: 2px solid black;\n}\ntable td, table th {\n  padding: 0.5em;\n  text-align: center;\n}\n\n@page {\n  margin: 2cm;\n}\nbody {\n  font-family: \"Lora\", serif;\n  counter-reset: section;\n  max-width: 40rem;\n  margin: auto;\n  font-size: 12pt;\n  padding: 1rem;\n  position: relative;\n}\n\nh1 {\n  font-weight: normal;\n  font-size: 2.5rem;\n  text-align: center;\n  margin: 3.236rem 0 2rem 0;\n}\n\nh2 {\n  font-size: 1.5rem;\n  counter-reset: subsection;\n}\nh2:before {\n  content: counter(section) \"  \";\n  counter-increment: section;\n}\nh2.nocount:before {\n  content: none;\n  counter-increment: none;\n}\n\nh3 {\n  counter-reset: subsubsection;\n}\nh3:before {\n  content: counter(section) \".\" counter(subsection) \"  \";\n  counter-increment: subsection;\n}\nh3.nocount:before {\n  content: none;\n  counter-increment: none;\n}\n\nh4:before {\n  content: counter(section) \".\" counter(subsection) \".\" counter(subsubsection) \"  \";\n  counter-increment: subsubsection;\n}\nh4:before.nocount:before {\n  content: none;\n  counter-increment: none;\n}\n\nul {\n  list-style-type: none;\n}\nul > li {\n  position: relative;\n}\nul > li::before {\n  content: \"— \";\n  position: absolute;\n  left: -1.5em;\n}\n\nfigure {\n  max-width: 100%;\n  margin: 1rem auto 1rem auto;\n  text-align: center;\n}");
+	___$insertStyle("@charset \"UTF-8\";\n@import url(\"https://fonts.googleapis.com/css?family=Lora|Source+Code+Pro&display=swap\");\n/*\n\nOriginal highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>\n\n*/\npre {\n  tab-size: 3;\n}\n\n.hljs {\n  display: block;\n}\n\n/* Base color: saturation 0; */\n.hljs,\n.hljs-subst {\n  color: #444;\n}\n\n.hljs-comment {\n  color: #888888;\n}\n\n.hljs-keyword,\n.hljs-attribute,\n.hljs-selector-tag,\n.hljs-meta-keyword,\n.hljs-doctag,\n.hljs-name {\n  font-weight: bold;\n}\n\n/* User color: hue: 0 */\n.hljs-type,\n.hljs-string,\n.hljs-number,\n.hljs-selector-id,\n.hljs-selector-class,\n.hljs-quote,\n.hljs-template-tag,\n.hljs-deletion {\n  color: #880000;\n}\n\n.hljs-title,\n.hljs-section {\n  color: #880000;\n  font-weight: bold;\n}\n\n.hljs-regexp,\n.hljs-symbol,\n.hljs-variable,\n.hljs-template-variable,\n.hljs-link,\n.hljs-selector-attr,\n.hljs-selector-pseudo {\n  color: #BC6060;\n}\n\n/* Language color: hue: 90; */\n.hljs-literal {\n  color: #78A960;\n}\n\n.hljs-built_in,\n.hljs-bullet,\n.hljs-code,\n.hljs-addition {\n  color: #397300;\n}\n\n/* Meta color: hue: 200 */\n.hljs-meta {\n  color: #1f7199;\n}\n\n.hljs-meta-string {\n  color: #4d99bf;\n}\n\n/* Misc effects */\n.hljs-emphasis {\n  font-style: italic;\n}\n\n.hljs-strong {\n  font-weight: bold;\n}\n\n.draw-wrapper {\n  break-inside: avoid;\n}\n.draw-wrapper .grid {\n  display: grid;\n  margin: 1rem auto;\n  font-size: 13px;\n}\n.draw-wrapper .grid code {\n  white-space: nowrap;\n}\n.draw-wrapper .grid .node {\n  justify-self: center;\n  align-self: center;\n  padding: 0 0.4rem;\n}\n.draw-wrapper .grid .node .content {\n  position: relative;\n}\n.draw-wrapper .grid > svg {\n  padding: 0;\n}\n.draw-wrapper .grid .node.diamond {\n  width: 20px;\n  height: 20px;\n  border: 1px solid black;\n  transform-origin: center;\n  transform: rotate(45deg);\n  padding: 0;\n  position: relative;\n}\n.draw-wrapper .grid .node.diamond > .content {\n  transform: rotate(-45deg) translate(-1.5px, -1.5px);\n  width: 28px;\n  height: 28px;\n  top: -5px;\n  left: -5px;\n}\n.draw-wrapper .grid .node.start {\n  width: 20px;\n  height: 20px;\n  border-radius: 10px;\n  background-color: black;\n}\n.draw-wrapper .grid .node.end {\n  width: 20px;\n  height: 20px;\n  border-radius: 10px;\n  border: 1px solid black;\n  position: relative;\n}\n.draw-wrapper .grid .node.end::before {\n  content: \" \";\n  position: absolute;\n  top: 3px;\n  left: 3px;\n  width: 12px;\n  height: 12px;\n  border-radius: 50%;\n  background-color: black;\n}\n.draw-wrapper .grid .node.dummy {\n  width: 0;\n  height: 0;\n  padding: 0;\n}\n.draw-wrapper .grid .node.rect {\n  padding: 0.5rem 1rem;\n  border: 1px solid black;\n}\n.draw-wrapper .grid .node.round {\n  padding: 0.5rem 1rem;\n  border: 1px solid black;\n  border-radius: 10px;\n}\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n}\n\nbody {\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n  text-rendering: optimizeLegibility;\n  background-color: white;\n}\n\ncode {\n  font-size: 0.875em;\n  color: #d63384;\n  word-wrap: break-word;\n  font-family: \"Source Code Pro\", monospace;\n}\n\npre {\n  font-family: \"Source Code Pro\", monospace;\n  overflow-x: auto;\n  padding: 1em 0.8em;\n  background: #F0F0F0;\n  border-radius: 4px;\n  font-size: 75%;\n}\n\npre > code {\n  font-size: 100%;\n}\n\np, li, pre, figure, h1, h2, h3, h4 {\n  margin-bottom: 1rem;\n}\n\nh1, h2, h3, h4, pre, table, img {\n  break-inside: avoid-page;\n}\n\nh1, h2, h3, h4 {\n  margin-top: 2rem;\n}\n\nul, ol, figure, pre, .file-title, .terminal {\n  margin-top: 1rem;\n}\n\n/* hack that avoid page break after h2 et h3 */\nh2::after, h3::after, h4::after {\n  content: \"\";\n  display: block;\n  height: 100px;\n  margin-bottom: -100px;\n}\n\np, li {\n  text-align: justify;\n}\n\nli {\n  margin-left: 30px;\n}\n\nfigure {\n  text-align: center;\n}\nfigure figcaption {\n  text-align: center;\n  font-style: italic;\n  font-size: 0.8em;\n}\nfigure img, figure canvas {\n  max-width: 100%;\n}\nfigure img.half, figure canvas.half {\n  width: 50%;\n}\nfigure img.third, figure canvas.third {\n  width: 33%;\n}\nfigure img.third2, figure canvas.third2 {\n  width: 66%;\n}\nfigure img.fourth, figure canvas.fourth {\n  width: 25%;\n}\nfigure img.fourth3, figure canvas.fourth3 {\n  width: 75%;\n}\nfigure img.zoom, figure canvas.zoom {\n  width: 75%;\n}\nfigure img.max, figure canvas.max {\n  width: 100%;\n}\n\nh1 > small {\n  display: block;\n  font-size: 0.6em;\n  font-weight: normal;\n  color: gray;\n  margin: 1rem 0;\n}\n\n.row {\n  display: grid;\n  grid-template-columns: repeat(12, 1fr);\n  column-gap: 10px;\n  justify-items: stretch;\n  align-items: stretch;\n  justify-content: stretch;\n  align-content: stretch;\n}\n.row .span2 {\n  grid-column-end: span 2;\n}\n.row .span3 {\n  grid-column-end: span 3;\n}\n.row .span4 {\n  grid-column-end: span 4;\n}\n.row .span5 {\n  grid-column-end: span 5;\n}\n.row .span6 {\n  grid-column-end: span 6;\n}\n.row .span7 {\n  grid-column-end: span 7;\n}\n.row .span8 {\n  grid-column-end: span 8;\n}\n.row .span9 {\n  grid-column-end: span 9;\n}\n.row .span10 {\n  grid-column-end: span 10;\n}\n.row .span11 {\n  grid-column-end: span 11;\n}\n\n.indent {\n  padding-left: 3ex;\n}\n\n.center {\n  text-align: center;\n}\n\n.big {\n  font-size: 1.5em;\n}\n\n.right {\n  text-align: right;\n}\n\n.break-before {\n  page-break-before: always;\n}\n\n.break-after {\n  page-break-after: always;\n}\n\ncode.wrap {\n  white-space: pre-wrap !important;\n}\n\n.terminal {\n  background-color: darkslategray;\n  color: white;\n  font-family: consolas, monospace;\n  white-space: pre;\n  padding: 1rem;\n  font-size: 0.9em;\n  margin-bottom: 1rem;\n}\n.terminal::before {\n  content: \"Terminal\";\n  display: block;\n  background-color: black;\n  text-align: center;\n  margin: -1rem;\n  padding: 0.5rem;\n  margin-bottom: 1rem;\n}\n\n.file-title {\n  margin-bottom: -1rem !important;\n  font-family: consolas, monospace;\n  font-size: 0.9em;\n  color: white;\n  padding: 0.5rem;\n  text-align: center;\n  background-color: #686868;\n}\n\ntable {\n  border-collapse: collapse;\n  border: 2px solid black;\n}\ntable td {\n  border: 1px solid black;\n}\ntable th {\n  border: 2px solid black;\n}\ntable td, table th {\n  padding: 0.5em;\n  text-align: center;\n}\n\n@page {\n  margin: 2cm;\n}\nbody {\n  font-family: \"Lora\", serif;\n  counter-reset: section;\n  max-width: 40rem;\n  margin: auto;\n  font-size: 12pt;\n  padding: 1rem;\n  position: relative;\n}\n\nh1 {\n  font-weight: normal;\n  font-size: 2.5rem;\n  text-align: center;\n  margin: 3.236rem 0 2rem 0;\n}\n\nh2 {\n  font-size: 1.5rem;\n  counter-reset: subsection;\n}\nh2:before {\n  content: counter(section) \"  \";\n  counter-increment: section;\n}\nh2.nocount:before {\n  content: none;\n  counter-increment: none;\n}\n\nh3 {\n  counter-reset: subsubsection;\n}\nh3:before {\n  content: counter(section) \".\" counter(subsection) \"  \";\n  counter-increment: subsection;\n}\nh3.nocount:before {\n  content: none;\n  counter-increment: none;\n}\n\nh4:before {\n  content: counter(section) \".\" counter(subsection) \".\" counter(subsubsection) \"  \";\n  counter-increment: subsubsection;\n}\nh4:before.nocount:before {\n  content: none;\n  counter-increment: none;\n}\n\nul {\n  list-style-type: none;\n}\nul > li {\n  position: relative;\n}\nul > li::before {\n  content: \"— \";\n  position: absolute;\n  left: -1.5em;\n}\n\nfigure {\n  max-width: 100%;\n  margin: 1rem auto 1rem auto;\n  text-align: center;\n}");
 
 	function getDefaultExportFromCjs (x) {
 		return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
@@ -60021,10 +60021,27 @@ var Doc = (function (exports) {
 	        radiusTopLeft: Math.min(parseInt(radiusTopLeft.slice(0, -2), 10), element.offsetWidth/2, element.offsetHeight/2),
 	        radiusBottomRight: Math.min(parseInt(radiusBottomRight.slice(0, -2), 10), element.offsetWidth/2, element.offsetHeight/2),
 	        radiusBottomLeft: Math.min(parseInt(radiusBottomLeft.slice(0, -2), 10), element.offsetWidth/2, element.offsetHeight/2),
-	        transform: matrix
+	        transform: matrix,
+	        xmin: x,
+	        ymin: y,
+	        xmax: x + element.offsetWidth,
+	        ymax: y + element.offsetHeight,
 	    };
 
 	    return geom
+	}
+
+	function combineBoundingBoxes(bb1, bb2) {
+	    if(!bb1 && !bb2) throw new Error('Both BB can\'t be undefined')
+	    if(!bb1) return bb2
+	    if(!bb2) return bb1
+
+	    return {
+	        xmin: Math.min(bb1.xmin, bb2.xmin),
+	        ymin: Math.min(bb1.ymin, bb2.ymin),
+	        xmax: Math.max(bb1.xmax, bb2.xmax),
+	        ymax: Math.max(bb1.ymax, bb2.ymax),
+	    }
 	}
 
 	function drawLine(x1, y1, x2, y2, color, width, parent) {
@@ -60063,7 +60080,6 @@ var Doc = (function (exports) {
 	    const radius = 10;
 	    const hdir = contactDestination.x > contactSource.x ? 1 : -1;
 	    const vdir = contactDestination.y > contactSource.y ? 1 : -1;
-	    console.log(hdir, vdir);
 	    const svg = getSVG(parent);
 	    const path = createPath(`M ${contactSource.x} ${contactSource.y} L ${corner.cx - hdir * radius} ${corner.cy} A ${radius} ${radius} 0 0 ${hdir * vdir < 0 ? 0 : 1} ${corner.cx} ${corner.cy + vdir * radius} L ${contactDestination.x} ${contactDestination.y}`, "none", color, width);
 	    svg.appendChild(path);
@@ -60254,94 +60270,88 @@ var Doc = (function (exports) {
 	    parent = getElement(parent || document.body);
 	    parent.classList.add('draw-wrapper');
 
-	    const state = {
-	        parent,
-	        width,
-	        height,
-	        grid: setup(parent, width, height),
-	        width: 1,
-	        color: 'black',
-	        startTarget: null,
-	        endTarget: null,
+	    const grid = setup(parent, width, height);
+	    let stroke_width = 1;
+	    let stroke_color = 'black';
+	    const nodes = [];
+
+	    const that = {
+	        stroke: (width, color) => {
+	            stroke_width = width || 1;
+	            stroke_color = color || 'black';
+	            return that
+	        },
+	        line: (start, pattern, end) => {
+	            if(isNode(start))
+	                start = start.elem;
+	            else
+	                start = getElement(start);
+
+	            if(isNode(end))
+	                end = end.elem;
+	            else
+	                end = getElement(end);
+
+	            pattern = pattern || '--';
+	            pattern = linePattern(pattern);
+
+	            const f = () => {
+	                if(pattern.line === '--')
+	                    line(start, end, stroke_color, stroke_width, pattern.start, pattern.end, grid);
+	                if(pattern.line === '-|')
+	                    HVLine(start, end, stroke_color, stroke_width, pattern.start, pattern.end, grid);
+	                if(pattern.line === '|-')
+	                    HVLine(end, start, stroke_color, stroke_width, pattern.end, pattern.start, grid);
+	            };
+	            f();
+	            toRedraw.push(f);
+	            return that
+	        },
+	        polyline: arr => {
+	            for(let i=0; i<arr.length-2; i+=2) {
+	                const start = arr[i];
+	                const line = arr[i+1];
+	                const end = arr[i+2];
+	                that.line(start, line, end);
+	            }
+	            return that
+	        },
+	        node: (content) => {
+	            const n = Node(content);
+	            grid.appendChild(n.elem);
+	            nodes.push(n);
+	            return n
+	        },
+	        dummy: () => {
+	            return that.node().classes('dummy')
+	        },
+	        diamond: () => {
+	            return that.node().classes('diamond')
+	        },
+	        start: () => {
+	            return that.node().classes('start')
+	        },
+	        end: () => {
+	            return that.node().classes('end')
+	        },
+	        round: (content) => {
+	            return that.node(content).classes('round')
+	        },
+	        rect: (content) => {
+	            return that.node(content).classes('rect')
+	        },
+	        done: () => {
+	            let bb = undefined;
+	            for(const node of nodes) {
+	                const geom = getAbsoluteGeometry(node.elem, grid);
+	                bb = combineBoundingBoxes(bb, geom);
+	            }
+	            grid.style.left = `${width/2 - (bb.xmin + bb.xmax)/2}px`;
+	            grid.style.top = `${height/2 - (bb.ymin + bb.ymax)/2}px`;
+	        }
 	    };
 
-	    function make_methods(state) {
-	        const that = {
-	            stroke: (width, color) => {
-	                const newState = { ...state };
-	                newState.width = width || 1;
-	                newState.color = color || 'black';
-	                return make_methods(newState)
-	            },
-	            start: (target) => {
-	                const newState = { ...state };
-	                if(isNode(target))
-	                    newState.startTarget = target.elem;
-	                else
-	                    newState.startTarget = getElement(target);
-	                return make_methods(newState)
-	            },
-	            end: (target) => {
-	                const newState = { ...state };
-	                if(isNode(target))
-	                    newState.endTarget = target.elem;
-	                else
-	                    newState.endTarget = getElement(target);
-	                return make_methods(newState)
-	            },
-	            line: (pattern) => {
-	                pattern = pattern || '--';
-	                pattern = linePattern(pattern);
-	                const f = () => {
-	                    if(pattern.line === '--')
-	                        line(state.startTarget, state.endTarget, state.color, state.width, pattern.start, pattern.end, state.grid);
-	                    if(pattern.line === '-|')
-	                        HVLine(state.startTarget, state.endTarget, state.color, state.width, pattern.start, pattern.end, state.grid);
-	                    if(pattern.line === '|-')
-	                        HVLine(state.endTarget, state.startTarget, state.color, state.width, pattern.end, pattern.start, state.grid);
-	                };
-	                f();
-	                toRedraw.push(f);
-	                return that
-	            },
-	            polyline: arr => {
-	                for(let i=0; i<arr.length-2; i+=2) {
-	                    const start = arr[i];
-	                    const line = arr[i+1];
-	                    const end = arr[i+2];
-	                    that.start(start).end(end).line(line);
-	                }
-	                return that
-	            },
-	            node: (content) => {
-	                const n = Node(content);
-	                state.grid.appendChild(n.elem);
-	                return n
-	            },
-	            dummy: () => {
-	                return that.node().classes('dummy')
-	            },
-	            diamond: () => {
-	                return that.node().classes('diamond')
-	            },
-	            startNode: () => {
-	                return that.node().classes('start')
-	            },
-	            endNode: () => {
-	                return that.node().classes('end')
-	            },
-	            round: (content) => {
-	                return that.node(content).classes('round')
-	            },
-	            rect: (content) => {
-	                return that.node(content).classes('rect')
-	            }
-	        };
-
-	        return that
-	    }
-
-	    return make_methods(state)
+	    return that
 	}
 
 	function initDocument() {
