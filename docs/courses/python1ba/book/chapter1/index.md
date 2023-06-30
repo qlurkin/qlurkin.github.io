@@ -67,7 +67,7 @@ Dans le domaine de l'informatique, un programme est une suite d'instructions vis
 
 ### Code et langage de programmation
 
-Les figures <span data-link='oeuf'></span> et <span data-link='d2deg'></span> sont des représentations graphiques de programmes. On les appelle organigrammes ou encore diagrammes d'activité. Un vrai programme se fait dans un langage de programmation. Un programme écrit dans un langage de programmation se présente donc comme du texte. Ce texte est appelé le code du programme.
+Les figures <span data-link='oeuf'></span> et <span data-link='d2deg'></span> sont des représentations graphiques de programmes. On les appelle organigrammes ou encore diagrammes d'activité. Un vrai programme se fait dans un langage de programmation. Un programme écrit dans un langage de programmation se présente donc comme du texte. Ce texte est appelé le code source du programme.
 
 Une façon d'écrire en texte le programme de résolution d'une équation du second degré pourrait être la suivante :
 
@@ -133,15 +133,17 @@ Les instructions manipulent généralement des données. Par exemple, l'instruct
 
 En bref, le processeur est donc grosso-modo capable de deux choses: Calculer et Sauver/lire des valeurs en mémoire.
 
+Encore une petite remarque à propos du processeur : il ne comprend que le langage pour lequel il a été conçu. On appelle ce langage **le jeux d'instruction du processeur** ou encore **langage machine**. Il existe des jeux d'instruction différents pour chaque architecture de processeur (x86, ARM, ...).
+
 ### La mémoire
 
 La mémoire *(RAM: Random Access Memory)* contient les instructions du programme et les données qu'il manipule. Sa taille ne dépasse généralement pas quelques giga-octet (Go).
 
 On peut se représenter la mémoire comme une longue liste de cases ayant chacune un numéro. Lorsque le processeur veut obtenir une instruction ou une donnée en mémoire, il doit mentionner le numéro de la case qu'il souhaite consulter.
 
-programmeur utilise variables
-
 Pour garder ses données, la mémoire à besoin d'être alimentée ce qui veut dire que le contenu de la mémoire est perdu si on lui coupe le courant. On dit que la mémoire est volatile.
+
+Quand nous écrirons des programme, nous manipulerons beaucoup la mémoire par l'intermédiaire **des variables**.
 
 ### Le stockage
 
@@ -154,7 +156,7 @@ Il en existe plusieurs sortes&nbsp;:
 - carte SD (Secure Digital)
 - ...
 
-Le stockage de masse contient des fichiers et des répertoires. Un répertoire peut contenir plusieurs fichiers et plusieurs autres répertoires. Le contenu du stockage de masse est donc organisé en une hiérarchie de répertoires et chaque élément dans cette hiérarchie peut être localisé par son **chemin d'accès**. Le chemin d'accès est constitué de la suite de répertoires à ouvrir pour attendre l'élément.
+Le stockage de masse contient des fichiers et des répertoires. Un répertoire peut contenir plusieurs fichiers et plusieurs autres répertoires. Le contenu du stockage de masse est donc organisé en une hiérarchie de répertoires et chaque élément dans cette hiérarchie peut être localisé par son **chemin d'accès**. Le chemin d'accès est constitué de la suite de répertoires à ouvrir pour atteindre l'élément.
 
 Exemple:
 - Sous Windows: C:\Users\lur\Documents\note.txt
@@ -166,7 +168,23 @@ De même, pour qu'un programme en cours d'exécution puisse accéder au contenu 
 
 Les opérations d'écriture et de lecture de fichiers sont beaucoup plus lentes que les accès à des données en RAM. Les stockages de masse n'ont pas besoin d'être alimenté pour conserver les données et peuvent contenir jusqu'à plusieurs tera-octet (To).
 
+Comme nous l'avons vu, un programme se présente en pratique comme un simple texte et nous sauverons ce texte dans un fichier.
 
+## Langage de programmation
+
+Les fichiers contenant des programmes contiennent les instructions du programme dans le langage propre au processeur. Par exemple, le jeu d'instructions des processeurs x86 *(i3, i5, i7, amd ryzen, ...)* est complètement différent de celui des processeurs ARM *(Apple Silicon, Snapdragon, ...)*.
+
+Ces jeux d'instructions sont fait pour s'exécuter aussi efficacement que possible par le processeur. Mais ils sont particulièrement difficile à lire et à écrire par un être humain.
+
+Pour créer un programme on passe donc généralement par un langage de programmation.
+
+Un langage de programmation est fait pour être écrit et lu par un être humain. Le code source d'un programme est un simple fichier texte. Le code source doit ensuite être traduit en langage machine pour pouvoir être exécuter par le processeur. En fonction du moment où cette traduction a lieu, on distingue deux grandes familles de langage de programmation: les langages compilés et les langages interprétés.
+
+Dans un **langage compilé**, la traduction se fait par un programme appelé compilateur. Le compilateur génère un fichier exécutable à partir du fichier de code source. Le contenu de ce fichier exécutable peut ensuite être exécuter directement par le processeur et le compilateur n'est plus nécessaire.
+
+Dans un **langage interprété**, la traduction se fait par un programme appelé interpréteur. L'interpréteur ne produit pas de fichier exécutable. Il exécute directement chaque instruction qu'il rencontre dans le code source. On a donc le processeur qui exécute l'interpréteur et l'interpréteur qui exécute notre code source. Dans ce cas, l'interpréteur est nécessaire pour chaque exécution du code source.
+
+Le langage que nous allons utiliser dans ce cours est un langage interprété nommé **Python**. Pour exécuter un programme Python, il est nécessaire d'installer l'interpréteur Python.
 
 
 
@@ -182,5 +200,4 @@ Comme le code d'un programme est un simple texte, la seule chose dont on a besoi
 Pour pouvoir exécuter le code d'un programme, il est par contre indispensable d'avoir une application capable de comprendre le langage utilisé dans le code. Dans le cas de Python, on appelle cette application "l'interpréteur Python".
 
 Il existe également des éditeurs qui facilitent à la fois l'écriture, l'exécution et le débogage. On parle alors d'IDE pour Integrated Development Environment (pyCharm, Spyder, ...)
-
 
