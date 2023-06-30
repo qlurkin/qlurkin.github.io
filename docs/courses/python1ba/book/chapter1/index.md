@@ -127,21 +127,44 @@ Un ordinateur est, avant tout, un système composé de plusieurs éléments: Pro
 
 ### Le processeur
 
-Le processeur *(CPU: Central Processing Unit)* exécute les instructions d'un programme une par une. Ces instructions proviennent de la mémoire et manipulent généralement des données se trouvant également dans la mémoire.
+Le processeur *(CPU: Central Processing Unit)* exécute les instructions d'un programme une par une. Ces instructions proviennent de la mémoire. Après avoir exécuter une instruction, il passe automatiquement à celle qui suit dans la mémoire. Certaines instructions peuvent cependant le faire sauter à un tout autre endroit de la mémoire pour continuer l'exécution.
 
-Le processeur est donc grosso-modo capable de deux choses:
-- Calculer
-- Sauver/lire des valeurs en mémoire
+Les instructions manipulent généralement des données. Par exemple, l'instruction permettant d'additionner va nécessiter d'aller chercher les valeurs à additionner. Les données sont elles aussi en mémoire. Et les résultats des calculs sont eux aussi sauver en mémoire une fois qu'ils ont été calculés.
+
+En bref, le processeur est donc grosso-modo capable de deux choses: Calculer et Sauver/lire des valeurs en mémoire.
 
 ### La mémoire
 
-La mémoire *(RAM: Random Access Memory)* contient les instructions du programme et les données qu'il manipule. Sa taille ne dépasse généralement pas quelques giga-octet (Go) et son contenu est temporaire.
+La mémoire *(RAM: Random Access Memory)* contient les instructions du programme et les données qu'il manipule. Sa taille ne dépasse généralement pas quelques giga-octet (Go).
 
-Pour garder ses données, la mémoire à besoin d'être alimentée ce qui veut dire que le contenu de la mémoire est perdu si on lui coupe le courant.
+On peut se représenter la mémoire comme une longue liste de cases ayant chacune un numéro. Lorsque le processeur veut obtenir une instruction ou une donnée en mémoire, il doit mentionner le numéro de la case qu'il souhaite consulter.
+
+programmeur utilise variables
+
+Pour garder ses données, la mémoire à besoin d'être alimentée ce qui veut dire que le contenu de la mémoire est perdu si on lui coupe le courant. On dit que la mémoire est volatile.
 
 ### Le stockage
 
-Le stockage de masse *(SSD: Solid State Drive, HDD: Hard Disk Drive, Clé USB, carte SD, ...)* contient des fichiers organisés dans une hiérarchie de dossiers. Les opérations d'écriture et de lecture de fichiers sont beaucoup plus lentes que les accès à des données en RAM. Les stockages de masse n'ont pas besoin d'être alimenté pour conserver les données et peuvent contenir jusqu'à plusieurs tera-octet (To).
+Puisque la mémoire est volatile et limitée en taille, comment stocke-t-on de grandes quantités de données et comment fait-on quand on éteint l'ordinateur ? On utilise un stockage de masse.
+
+Il en existe plusieurs sortes&nbsp;:
+- Disque SSD (Solid State Drive)
+- Disque dur (HDD: Hard Disk Drive)
+- Clé USB (Universal Serial Bus)
+- carte SD (Secure Digital)
+- ...
+
+Le stockage de masse contient des fichiers et des répertoires. Un répertoire peut contenir plusieurs fichiers et plusieurs autres répertoires. Le contenu du stockage de masse est donc organisé en une hiérarchie de répertoires et chaque élément dans cette hiérarchie peut être localisé par son **chemin d'accès**. Le chemin d'accès est constitué de la suite de répertoires à ouvrir pour attendre l'élément.
+
+Exemple:
+- Sous Windows: C:\Users\lur\Documents\note.txt
+- Sous MacOS: /Users/lur/note.txt
+
+Lorsqu'un programme doit être exécuté, ses instructions se trouvent initialement dans un fichier dans le stockage de masse. Les fichiers contenant des instructions pour le processeur sont appelés des fichiers exécutable (sous Windows on les reconnaît car leurs noms finissent par ".exe"). Pour exécuter un de ces fichiers, le système d'exploitation (OS: Operating System) va d'abord le copier dans la mémoire. Le processeur pourra alors commencer à en executer les instructions.
+
+De même, pour qu'un programme en cours d'exécution puisse accéder au contenu d'un fichier, il devra d'abord le charger en mémoire.
+
+Les opérations d'écriture et de lecture de fichiers sont beaucoup plus lentes que les accès à des données en RAM. Les stockages de masse n'ont pas besoin d'être alimenté pour conserver les données et peuvent contenir jusqu'à plusieurs tera-octet (To).
 
 
 
