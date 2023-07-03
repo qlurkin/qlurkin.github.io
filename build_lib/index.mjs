@@ -3,9 +3,10 @@ import child_process from 'child_process'
 import { marked } from 'marked'
 //import { markedHighlight } from "marked-highlight"
 //import hljs from 'highlight.js'
-import { parse, join, resolve, relative } from 'path'
+import { parse, join, resolve, relative, dirname, basename } from 'path'
 import nunjucks from 'nunjucks'
 import yaml from 'js-yaml'
+import puppeteer from 'puppeteer'
 
 const build_script = 'build.js'
 
@@ -140,6 +141,23 @@ export async function redirect(target, opts) {
   opts.target = link
   const content = nunjucks.render('redirect.njk', opts);
   await writeFile('index.html', content)
+}
+
+export async function screenshot_website(url, filename, width, height, actions) {
+  const browser = await puppeteer.launch({
+    headless: "new"
+  })
+  const page = await browser.newPage()
+  await page.goto(url, {
+    waitUntil: 'networkidle2',
+  })
+  await page.setViewport({width, height})
+  if(actions)
+    await actions(page)
+  await page.screenshot({
+    path: filename
+  })
+  await browser.close()
 }
 
 export default { build, index, build_and_index, redirect }
