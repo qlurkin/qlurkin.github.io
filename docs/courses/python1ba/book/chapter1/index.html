@@ -160,9 +160,80 @@ else:
 <p>Dans un <strong>langage compilé</strong>, la traduction se fait par un programme appelé compilateur. Le compilateur génère un fichier exécutable à partir du fichier de code source. Le contenu de ce fichier exécutable peut ensuite être exécuter directement par le processeur et le compilateur n&#39;est plus nécessaire.</p>
 <p>Dans un <strong>langage interprété</strong>, la traduction se fait par un programme appelé interpréteur. L&#39;interpréteur ne produit pas de fichier exécutable. Il exécute directement chaque instruction qu&#39;il rencontre dans le code source. On a donc le processeur qui exécute l&#39;interpréteur et l&#39;interpréteur qui exécute notre code source. Dans ce cas, l&#39;interpréteur est nécessaire pour chaque exécution du code source.</p>
 <p>Le langage que nous allons utiliser dans ce cours est un langage interprété nommé <strong>Python</strong>. Pour exécuter un programme Python, il est nécessaire d&#39;installer l&#39;interpréteur Python.</p>
-<p>Comme le code d&#39;un programme est un simple texte, la seule chose dont on a besoin pour écrire un programme est un éditeur de texte (bloc-note, ...). Il est cependant plus pratique d&#39;utiliser un éditeur spécialisé pour écrire le code. Ces éditeurs facilitent fortement l&#39;écriture et la lisibilité du code (Notepad++, Sublime Text, ...)</p>
-<p>Pour pouvoir exécuter le code d&#39;un programme, il est par contre indispensable d&#39;avoir une application capable de comprendre le langage utilisé dans le code. Dans le cas de Python, on appelle cette application &quot;l&#39;interpréteur Python&quot;.</p>
-<p>Il existe également des éditeurs qui facilitent à la fois l&#39;écriture, l&#39;exécution et le débogage. On parle alors d&#39;IDE pour Integrated Development Environment (pyCharm, Spyder, ...)</p>
+<h2>Exécuter mon premier programme Python !</h2>
+<p>La première chose à faire est d&#39;installer l&#39;interpréteur Python. Pour cela, il faut commencer par le télécharger sur <a href="https://python.org">https://python.org</a>. <strong>Attention&nbsp;: Sous Windows, cochez la case &quot;Add Python to PATH&quot;&nbsp;!</strong></p>
+<figure id="python_org" data-ref="figure">
+<img src="./python.org.jpg">
+<figcaption><span data-caption="python_org">Site de Python</span></figcaption>
+</figure>
+
+<p>Cela fait, nous avons l&#39;interpréteur Python installé. Cet interpréteur va nous permettre d&#39;exécuter nos programmes. Il ne va par contre pas nous aider à écrire notre programme.</p>
+<p>Comme le code d&#39;un programme est un simple texte, la seule chose dont on a besoin pour écrire un programme est un éditeur de texte (bloc-note sous Windows, TextEdit sous MacOS, ...). Il est cependant plus pratique d&#39;utiliser un éditeur spécialisé pour écrire le code. Ces éditeurs facilitent fortement l&#39;écriture et la lisibilité du code (Visual Studio Code, Notepad++, Sublime Text, ...). Dans ce cours nous utiliserons <strong>Visual Studio Code</strong> comme éditeur.</p>
+<p>Pour installer Visual Studio Code, il faut le télécharger sur le site <a href="https://code.visualstudio.com/">https://code.visualstudio.com/</a>. <strong>Sous Windows, durant l&#39;installation, cochez les cases&nbsp;:</strong></p>
+<ul>
+<li><strong>Ajouter l&#39;action &quot;Ouvrir avec Code&quot; au menu contextuel de fichier...</strong></li>
+<li><strong>Ajouter l&#39;action &quot;Ouvrir avec Code&quot; au menu contextuel de répertoire...</strong></li>
+<li><strong>Ajouter à PATH...</strong></li>
+</ul>
+<figure id="code_visualstudio_com" data-ref="figure">
+<img src="./code_visualstudio_com.jpg">
+<figcaption><span data-caption="code_visualstudio_com">Site de Visual Studio Code</span></figcaption>
+</figure>
+
+<p>Visual Studio Code <em>(VSCode)</em> est un éditeur open source qui supporte plusieurs langages. On peut lui ajouter des fonctionnalités en installant des extensions. Il existe une extension Python qui ajoute pas mal de fonctionnalités utiles lorsqu&#39;on développe des programmes en Python. Pour installer cette extension il suffit de cliquer sur l&#39;icône extensions (<svg width="0.9em" height="0.9em" viewBox="0 0 50 50">
+    <rect
+        x="2"
+        y="8"
+        width="20"
+        height="20"
+        ry="3"
+        rx="3"
+        style="fill: none; stroke: #000; stroke-width: 3px"
+    />
+    <rect
+        x="22"
+        y="28"
+        width="20"
+        height="20"
+        ry="3"
+        rx="3"
+        style="fill: none; stroke: #000; stroke-width: 3px"
+    />
+    <rect
+        x="2"
+        y="28"
+        width="20"
+        height="20"
+        ry="3"
+        rx="3"
+        style="fill: none; stroke: #000; stroke-width: 3px"
+    />
+    <rect
+        x="28"
+        y="2"
+        width="20"
+        height="20"
+        ry="3"
+        rx="3"
+        style="fill: none; stroke: #000; stroke-width: 3px"
+    />
+    </svg>), taper &quot;python&quot; dans le champ de recherche et cliquer sur installer.</p>
+<p>Une fois VSCode installé, nous allons choisir dans quel répertoire nous allons sauver nos fichiers. Souvenez-vous que sur un stockage de masse, chaque fichier est identifier par son chemin d&#39;accès. Pour pouvoir retrouver nos fichiers plus tard, il faudra que l&#39;on sache où ils ont été sauvés. VSCode permet d&#39;ouvrir un répertoire pour facilement travailler sur son contenu. Nous allons donc démarrer VSCode et cliquer sur &quot;File&quot; dans le menu en haut, puis sur &quot;Open Folder...&quot;. Nous pouvons ensuite sélectionner le répertoire dans lequel nous voulons travailler.</p>
+<p>Maintenant que VSCode est lancé et que nous avons ouvert le répertoire de travail, nous pouvons créer un nouveau fichier avec le contenu suivant&nbsp;:</p>
+<figure id="helloworld" data-ref="code">
+
+<pre><code class="language-python">print(&#39;Hello World !&#39;)
+</code></pre>
+<figcaption><span data-caption="helloworld">Le fichier <code>hello.py</code></span></figcaption>
+</figure>
+
+<p>Une fois le code écrit, enregistrez le fichier sous le nom <code>hello.py</code>. Le fait de faire terminer le nom du fichier par l&#39;extension <code>.py</code> est une convention qui aide à identifier le type de contenu d&#39;un fichier sans avoir nécessairement besoin de l&#39;ouvrir.</p>
+<p>Maintenant que notre fichier est créé, nous allons pourvoir l&#39;exécuter avec l&#39;interpréteur Python. Le problème, c&#39;est que l&#39;interpréteur n&#39;a pas d&#39;interface graphique&nbsp;!</p>
+<p>Il est probable que la plupart des programme que vous avez eu l&#39;habitude d&#39;utiliser par le passé soit des programme ayant une interface graphique. On interagit généralement avec ce genre de programme en cliquant sur l&#39;interface graphique avec la souris de l&#39;ordinateur. L&#39;interpréteur Python, lui, n&#39;a pas d&#39;interface graphique et les programmes que nous allons créer dans un premier temps n&#39;en auront pas non plus. Il va donc falloir que nous apprenions à utiliser le <strong>Terminal</strong> pour interagir avec des programme en <strong>lignes de commande</strong>.</p>
+<p>Nous nous pencherons sur l&#39;utilisation du Terminal dans la section suivante. Pour le moment, nous allons essayer de lancer rapidement notre premier programme. Pour cela, cliquez sur le menu &quot;Terminal&quot; en haut de VScode et puis sur &quot;New Terminal&quot;. Un Terminal s&#39;ouvre en bas de VSCode. Comme ce Terminal est intégré à VSCode et que nous avons ouvert notre répertoire de travail dans VSCode, ce Terminal sait déjà dans quel répertoire on travaille. Nous pouvons donc taper la commande qui suit pour démarrer l&#39;interpréteur avec notre fichier <code>hello.py</code>&nbsp;. <strong>Attention: le <code>&gt;</code> représente l&#39;invite de commande. Vous ne devez pas le taper</strong>. Sous MacOS, vous devrez sans doute utiliser la commande <code>python3</code> à la place de <code>python</code>.</p>
+<pre class='terminal'>
+> python hello.py
+</pre>
 
 </body>
 </html>
