@@ -18,12 +18,12 @@
     
     <h2>Qu&#39;est-ce qu&#39;un programme?</h2>
 <p>De manière générale, un programme est une suite d&#39;actions à entreprendre visant à atteindre un but. On peut par exemple dire d&#39;une recette de cuisine que c&#39;est un programme pour réaliser un plat (cf <span data-link='oeuf'>figure</span>). On parle également de programme pour un lave-linge où, suivant le type de linge, la suite d&#39;actions (rotations du tambour) est différente.</p>
-<figure>
-    <div id='oeuf' data-ref='figure'></div>
-    <figcaption><span data-caption='oeuf'>Cuire un œuf</span></figcaption>
+<figure id='oeuf' data-ref='figure'>
+    <div></div>
+    <figcaption>Cuire un œuf</figcaption>
 </figure>
 <script type="module" defer>
-    const draw = await Doc.Draw('#oeuf', 350, 500)
+    const draw = await Doc.Draw('#oeuf > div', 350, 500)
     const start = draw.start().move(1, 2)
     const hot = draw.round('faire chauffer la poêle').belowOf(start)
     const oil = draw.round('mettre de l\'huile dans la poêle').belowOf(hot)
@@ -46,12 +46,12 @@
 
 <p>Un programme est donc constitué d&#39;une suite d&#39;instructions à exécuter dans un certain ordre.</p>
 <p>Dans le domaine de l&#39;informatique, un programme est une suite d&#39;instructions visant à la résolution d&#39;un problème. La résolution d&#39;une équation du deuxième degré que vous avez apprise en secondaire ressemble déjà beaucoup à un programme informatique (cf <span data-link='d2deg'>figure</span>).</p>
-<figure>
-    <div id='d2deg' data-ref='figure'></div>
-    <figcaption><span data-caption='d2deg'>Second degré</span></figcaption>
+<figure id='d2deg' data-ref='figure'>
+    <div></div>
+    <figcaption>Second degré</figcaption>
 </figure>
 <script type="module" defer>
-    const draw = await Doc.Draw('#d2deg', 600, 600)
+    const draw = await Doc.Draw('#d2deg > div', 600, 600)
     const start = draw.start()
     const delta = draw.round('calculer <code>b*b-4*a*c</code> et appeler le résultat D').belowOf(start)
     const test_delta = draw.round('Est-ce que D est négatif ?').belowOf(delta)
@@ -91,7 +91,7 @@ b*b-4*a*c <strong>&#8594;</strong> D
         <strong>affiche</strong> <span class='hljs-string'>"La 2<sup>e</sup> racine est"</span> (-b+sqrt(D))/(2*a)
 </pre>
 
-<figcaption><span data-caption='code_2deg'>Pseudo code, second degré</span></figcaption>
+<figcaption>Pseudo code, second degré</figcaption>
 </figure>
 
 <p>Le texte ci-dessus est souvent appelé &quot;pseudo-code&quot; car il a une structure très proche d&#39;un vrai code de programme mais il n&#39;est écrit dans aucun langage de programmation particulier.</p>
@@ -108,7 +108,7 @@ else:
         print(&quot;La 1re racine est&quot;, (-b-sqrt(D))/(2*a))
         print(&quot;La 2e racine est&quot;, (-b-sqrt(D))/(2*a))
 </code></pre>
-<figcaption><span data-caption='python_2deg'>Python, second degré</span></figcaption>
+<figcaption>Python, second degré</figcaption>
 </figure>
 
 <p>Dans un programme, chaque ligne du code est une instruction. Les instructions sont exécutées dans l&#39;ordre où elles apparaissent dans le code du programme.</p>
@@ -119,7 +119,7 @@ else:
 <p>Un ordinateur est, avant tout, un système composé de plusieurs éléments: Processeur, Mémoire, Stockage, périphériques, ...</p>
 <figure id="system" data-ref="figure">
 <img src="./system.svg">
-<figcaption><span data-caption="system">CPU, RAM, et stockage</span></figcation>
+<figcaption>CPU, RAM, et stockage</figcation>
 </figure>
 
 <h3>Le processeur</h3>
@@ -161,10 +161,10 @@ else:
 <p>Dans un <strong>langage interprété</strong>, la traduction se fait par un programme appelé interpréteur. L&#39;interpréteur ne produit pas de fichier exécutable. Il exécute directement chaque instruction qu&#39;il rencontre dans le code source. On a donc le processeur qui exécute l&#39;interpréteur et l&#39;interpréteur qui exécute notre code source. Dans ce cas, l&#39;interpréteur est nécessaire pour chaque exécution du code source.</p>
 <p>Le langage que nous allons utiliser dans ce cours est un langage interprété nommé <strong>Python</strong>. Pour exécuter un programme Python, il est nécessaire d&#39;installer l&#39;interpréteur Python.</p>
 <h2>Exécuter mon premier programme Python !</h2>
-<p>La première chose à faire est d&#39;installer l&#39;interpréteur Python. Pour cela, il faut commencer par le télécharger sur <a href="https://python.org">https://python.org</a>. <strong>Attention&nbsp;: Sous Windows, cochez la case &quot;Add Python to PATH&quot;&nbsp;!</strong></p>
+<p>La première chose à faire est d&#39;installer l&#39;interpréteur Python. Pour cela, il faut commencer par le télécharger sur <a href="https://python.org">https://python.org</a>. <strong>Attention&nbsp;: Sous Windows, cochez la case &quot;Add Python to PATH&quot; durant l&#39;installation&nbsp;!</strong></p>
 <figure id="python_org" data-ref="figure">
 <img src="./python.org.jpg">
-<figcaption><span data-caption="python_org">Site de Python</span></figcaption>
+<figcaption>Site de Python</figcaption>
 </figure>
 
 <p>Cela fait, nous avons l&#39;interpréteur Python installé. Cet interpréteur va nous permettre d&#39;exécuter nos programmes. Il ne va par contre pas nous aider à écrire notre programme.</p>
@@ -177,7 +177,7 @@ else:
 </ul>
 <figure id="code_visualstudio_com" data-ref="figure">
 <img src="./code_visualstudio_com.jpg">
-<figcaption><span data-caption="code_visualstudio_com">Site de Visual Studio Code</span></figcaption>
+<figcaption>Site de Visual Studio Code</figcaption>
 </figure>
 
 <p>Visual Studio Code <em>(VSCode)</em> est un éditeur open source qui supporte plusieurs langages. On peut lui ajouter des fonctionnalités en installant des extensions. Il existe une extension Python qui ajoute pas mal de fonctionnalités utiles lorsqu&#39;on développe des programmes en Python. Pour installer cette extension il suffit de cliquer sur l&#39;icône extensions (<svg width="0.9em" height="0.9em" viewBox="0 0 50 50">
@@ -218,22 +218,37 @@ else:
         style="fill: none; stroke: #000; stroke-width: 3px"
     />
     </svg>), taper &quot;python&quot; dans le champ de recherche et cliquer sur installer.</p>
-<p>Une fois VSCode installé, nous allons choisir dans quel répertoire nous allons sauver nos fichiers. Souvenez-vous que sur un stockage de masse, chaque fichier est identifier par son chemin d&#39;accès. Pour pouvoir retrouver nos fichiers plus tard, il faudra que l&#39;on sache où ils ont été sauvés. VSCode permet d&#39;ouvrir un répertoire pour facilement travailler sur son contenu. Nous allons donc démarrer VSCode et cliquer sur &quot;File&quot; dans le menu en haut, puis sur &quot;Open Folder...&quot;. Nous pouvons ensuite sélectionner le répertoire dans lequel nous voulons travailler.</p>
-<p>Maintenant que VSCode est lancé et que nous avons ouvert le répertoire de travail, nous pouvons créer un nouveau fichier avec le contenu suivant&nbsp;:</p>
+<p>Une fois VSCode installé, nous pouvons créer un nouveau fichier avec le contenu suivant&nbsp;:</p>
 <figure id="helloworld" data-ref="code">
 
 <pre><code class="language-python">print(&#39;Hello World !&#39;)
 </code></pre>
-<figcaption><span data-caption="helloworld">Le fichier <code>hello.py</code></span></figcaption>
+<figcaption>Le fichier <code>hello.py</code></figcaption>
 </figure>
 
-<p>Une fois le code écrit, enregistrez le fichier sous le nom <code>hello.py</code>. Le fait de faire terminer le nom du fichier par l&#39;extension <code>.py</code> est une convention qui aide à identifier le type de contenu d&#39;un fichier sans avoir nécessairement besoin de l&#39;ouvrir.</p>
+<p>Une fois le code écrit, enregistrez le fichier sous le nom <code>hello.py</code>. Faites attention au répertoire dans lequel vous sauvez votre fichier. Nous aurons en effet besoin de connaître le chemin d&#39;accès de notre fichier pour l&#39;exécuter avec l&#39;interpréteur Python. Le fait de faire terminer le nom du fichier par l&#39;extension <code>.py</code> est une convention qui aide à identifier le type de contenu d&#39;un fichier sans avoir nécessairement besoin de l&#39;ouvrir.</p>
 <p>Maintenant que notre fichier est créé, nous allons pourvoir l&#39;exécuter avec l&#39;interpréteur Python. Le problème, c&#39;est que l&#39;interpréteur n&#39;a pas d&#39;interface graphique&nbsp;!</p>
 <p>Il est probable que la plupart des programme que vous avez eu l&#39;habitude d&#39;utiliser par le passé soit des programme ayant une interface graphique. On interagit généralement avec ce genre de programme en cliquant sur l&#39;interface graphique avec la souris de l&#39;ordinateur. L&#39;interpréteur Python, lui, n&#39;a pas d&#39;interface graphique et les programmes que nous allons créer dans un premier temps n&#39;en auront pas non plus. Il va donc falloir que nous apprenions à utiliser le <strong>Terminal</strong> pour interagir avec des programme en <strong>lignes de commande</strong>.</p>
-<p>Nous nous pencherons sur l&#39;utilisation du Terminal dans la section suivante. Pour le moment, nous allons essayer de lancer rapidement notre premier programme. Pour cela, cliquez sur le menu &quot;Terminal&quot; en haut de VScode et puis sur &quot;New Terminal&quot;. Un Terminal s&#39;ouvre en bas de VSCode. Comme ce Terminal est intégré à VSCode et que nous avons ouvert notre répertoire de travail dans VSCode, ce Terminal sait déjà dans quel répertoire on travaille. Nous pouvons donc taper la commande qui suit pour démarrer l&#39;interpréteur avec notre fichier <code>hello.py</code>&nbsp;. <strong>Attention: le <code>&gt;</code> représente l&#39;invite de commande. Vous ne devez pas le taper</strong>. Sous MacOS, vous devrez sans doute utiliser la commande <code>python3</code> à la place de <code>python</code>.</p>
+<p>Nous nous pencherons sur l&#39;utilisation du Terminal dans la section suivante. Pour le moment, nous allons essayer de lancer rapidement notre premier programme. Lancez un Terminal (Application &quot;Powershell&quot; sous windows et &quot;Terminal&quot; sous MacOS) et tapez la commande qui suit pour démarrer l&#39;interpréteur avec notre fichier <code>hello.py</code>. Le chemin d&#39;accès mentionné est un exemple. Vous devez utiliser le chemin d&#39;accès du fichier que vous avez créé précédemment. <strong>Attention: le premier caractère <code>&gt;</code> représente l&#39;invite de commande. Vous ne devez pas le taper</strong>. Sous MacOS, vous devrez sans doute utiliser la commande <code>python3</code> à la place de <code>python</code>. Prenez garde aussi au format du chemin d&#39;accès; il est différent entre Windows et MacOS.</p>
+<p><strong>Sous Windows&nbsp;:</strong></p>
 <pre class='terminal'>
-> python hello.py
+> python C:\Users\lur\Documents\Programmation\hello.py
 </pre>
 
+<p><strong>Sous MacOS&nbsp;:</strong></p>
+<pre class='terminal'>
+> python3 /Users/lur/Documents/Programmation/hello.py
+</pre>
+
+<p>Validez avec la touche <em>Enter</em>. Vous devriez maintenant voir apparaître le message &quot;Hello World !&quot; dans le Terminal en dessous de la commande que vous avez tapée.</p>
+<p><strong>Félicitations vous venez d&#39;exécuter votre premier programme&nbsp;!</strong></p>
+<p>Il faut bien avouer que de taper le chemin complet du fichier est un petit peu fastidieux. Nous allons donc essayer d&#39;en apprendre un peu plus sur le Terminal pour pouvoir l&#39;utiliser plus efficacement.</p>
+<!--
+nous allons choisir dans quel répertoire nous allons sauver nos fichiers. Souvenez-vous que sur un stockage de masse, chaque fichier est identifier par son chemin d'accès. Pour pouvoir retrouver nos fichiers plus tard, il faudra que l'on sache où ils ont été sauvés. VSCode permet d'ouvrir un répertoire pour facilement travailler sur son contenu. Nous allons donc démarrer VSCode et cliquer sur "File" dans le menu en haut, puis sur "Open Folder...". Nous pouvons ensuite sélectionner le répertoire dans lequel nous voulons travailler.
+
+Maintenant que VSCode est lancé et que nous avons ouvert le répertoire de travail,
+
+Comme ce Terminal est intégré à VSCode et que nous avons ouvert notre répertoire de travail dans VSCode, ce Terminal sait déjà dans quel répertoire on travaille.
+-->
 </body>
 </html>

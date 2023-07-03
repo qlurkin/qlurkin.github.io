@@ -60373,6 +60373,16 @@ var Doc = (function (exports) {
 	            number: types[type],
 	            type
 	        };
+	        if(elem.tagName === 'FIGURE') {
+	            const caption = elem.querySelector('figcaption');
+	            if(caption) {
+	                const content = caption.innerHTML;
+	                if(content.trim().length > 0)
+	                    caption.innerHTML = `${capitalize(labels[label].type)} ${labels[label].number} - ${content}`;
+	                else
+	                    caption.innerHTML = `${capitalize(labels[label].type)} ${labels[label].number}`;
+	            }
+	        }
 	    });
 
 	    document.querySelectorAll('span[data-caption]').forEach(elem => {
