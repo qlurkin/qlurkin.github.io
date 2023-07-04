@@ -1,8 +1,18 @@
 
+
+
 function capitalize(s) {
     const first = s[0]
     const rest = s.slice(1)
     return `${first.toUpperCase()}${rest}`
+}
+
+export function setChapterNb(nb) {
+    document.documentElement.style.setProperty('--chapter-nb', nb)
+    document.body.classList.add('chapter')
+    document.querySelectorAll('.chapter-nb').forEach(elem => {
+        elem.innerHTML = `${nb}`
+    })
 }
 
 export function renderRefs() {
@@ -15,7 +25,7 @@ export function renderRefs() {
             types[type] = 0
         types[type]++
         labels[label] = {
-            number: types[type],
+            number: `<span class="ref-nb">${types[type]}</span>`,
             type
         }
         if(elem.tagName === 'FIGURE') {
