@@ -1,7 +1,11 @@
 ---
-title: Chapitre 1
+title: "Chapitre 1"
 subtitle: La programmation
 ---
+
+<script type="module" defer>
+Doc.setChapterNb(1)
+</script>
 
 ## Qu'est-ce qu'un programme?
 
