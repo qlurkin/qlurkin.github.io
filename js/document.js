@@ -3,7 +3,7 @@ import renderCode from './code'
 import renderMath from './math'
 import { ready } from './ready'
 import { Draw } from './draw'
-import { renderRefs } from './refs'
+import { renderRefs, setChapterNb } from './refs'
 
 function initDocument() {
     renderMath()
@@ -13,4 +13,4 @@ function initDocument() {
 
 initDocument()
 
-export { ready, Draw }
+export { ready, Draw, setChapterNb }
