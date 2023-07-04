@@ -23,6 +23,7 @@ async function get_root() {
 }
 
 function enforceList(obj) {
+    if(!obj) return
     if(!Array.isArray(obj))
         return [obj]
     return obj
@@ -115,12 +116,14 @@ export async function index(dirs, opts) {
     let title = dir
     if((await readdir(dir)).includes('index.html')) {
       const content = await readFile(join(dir, 'index.html'), {encoding: 'utf8'})
-      const re = new RegExp("<title>(.*)</title>")
+      const re = new RegExp("<title>(.*)<\/title>")
       const matches = content.match(re)
       if(matches) {
         title = matches[1]
+        
       }
     }
+    console.log(title)
     const link = relative(server_root, `./${dir}`)
     return {
       link: `/${link}/`,
