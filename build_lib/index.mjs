@@ -1,12 +1,12 @@
 import { stat, readdir, writeFile, readFile } from 'node:fs/promises'
 import child_process from 'child_process'
 import { marked } from 'marked'
-//import { markedHighlight } from "marked-highlight"
-//import hljs from 'highlight.js'
-import { parse, join, resolve, relative, dirname, basename } from 'path'
+import { parse, join, resolve, relative } from 'path'
 import nunjucks from 'nunjucks'
 import yaml from 'js-yaml'
 import puppeteer from 'puppeteer'
+import express from 'express'
+import { PDFDocument } from 'pdf-lib'
 
 const build_script = 'build.js'
 
@@ -123,7 +123,6 @@ export async function index(dirs, opts) {
         
       }
     }
-    console.log(title)
     const link = relative(server_root, `./${dir}`)
     return {
       link: `/${link}/`,
@@ -161,6 +160,49 @@ export async function screenshot_website(url, filename, width, height, actions) 
     path: filename
   })
   await browser.close()
+}
+
+function filenamify(s) {
+  const re = new RegExp('[<>:"/\|?*]', 'g')
+  return s.replace(re, '_')
+}
+
+export async function pdf(chapters, filename) {
+  const app = express()
+
+  app.use(express.static(join(root, 'docs')))
+
+  const srv = app.listen(0, async () => {
+    const port = srv.address().port
+
+    const browser = await puppeteer.launch({
+      headless: "new"
+    })
+
+    const pdfDoc = await PDFDocument.create()
+  
+    for(const chapter of chapters) {
+      
+      const url = `http://localhost:${port}/${relative(server_root, chapter)}`
+      const page = await browser.newPage()
+      await page.goto(url, {
+        waitUntil: 'networkidle2',
+      })
+      const bytes = await page.pdf({ format: 'a4', printBackground: true })
+      const pdf = await PDFDocument.load(bytes)
+      for(let i=0; i<pdf.getPageCount(); i++) {
+        const [page] = await pdfDoc.copyPages(pdf, [i])
+        pdfDoc.addPage(page)
+      }
+    }
+
+    await writeFile(filename, await pdfDoc.save()) 
+  
+    await browser.close()
+
+    srv.close()
+    srv.emit('close')
+  })
 }
 
 export default { build, index, build_and_index, redirect }
