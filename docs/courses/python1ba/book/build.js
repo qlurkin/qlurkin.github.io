@@ -1,5 +1,11 @@
-import { build_and_index } from "build_lib";
+import { build_and_index, pdf } from "build_lib";
 
-build_and_index([
-    'chapter1'
+await build_and_index([
+    'chapter1',
+    'chapter2',
 ])
+
+pdf([
+    'chapter1',
+    'chapter2',
+], 'book.pdf')
