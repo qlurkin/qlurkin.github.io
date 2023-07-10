@@ -329,7 +329,7 @@ On indique le nouveau répertoire courant par son chemin relatif ou absolut&nbsp
   - Sous MacOS ou Linux&nbsp;: `/Users/lur`
 - Un chemin relatif l'indique en partant du répertoire courant. Si le répertoire courant est `C:\Users` alors le chemin relatif `lur\Documents\hello.py` correspond au chemin absolu `C:\Users\lur\Documents\hello.py`.
 
-Remarques&nbsp;:
+**Remarques&nbsp;:**
 - Dans un chemin, l'utilisation de `..` permet de remonter d'un repertoire. La commande `cd ..` permet donc de passer au répertoire parent. Un `.` seul représente le répertoire courant. Le chemin relatif mentionné plus haut peut donc aussi s'écrire `.\lur\Documents\hello.py`.
 - Windows utilise des anti-slash (`\`) pour séparer les différentes parties du chemin alors que MacOS et Linux utilisent des slash (`/`).
 - Dans la plupart des terminaux, la touche tabulation (`Tab ↹`) permet d'auto-compléter les éléments des chemins.
@@ -338,6 +338,8 @@ Remarques&nbsp;:
 <img src='./keyboard.svg' class="half">
 <figcaption>La touche <code>Tab</code></figcaption>
 </figure>
+
+- La touche <code>&#8593;</code> permet de reprendre des commandes précédentes.
 
 
 
