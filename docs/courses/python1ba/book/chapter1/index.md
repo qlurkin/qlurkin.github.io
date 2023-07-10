@@ -273,13 +273,13 @@ Nous nous pencherons sur l'utilisation du Terminal dans la section suivante. Pou
 **Sous Windows&nbsp;:**
 
 <pre class='terminal'>
-> python C:\Users\lur\Documents\Programmation\hello.py
+<b>> python C:\Users\lur\Documents\Programmation\hello.py</b>
 </pre>
 
 **Sous MacOS&nbsp;:**
 
 <pre class='terminal'>
-> python3 /Users/lur/Documents/Programmation/hello.py
+<b>> python3 /Users/lur/Documents/Programmation/hello.py</b>
 </pre>
 
 Validez avec la touche *Enter*. Vous devriez maintenant voir apparaître le message "Hello World !" dans le Terminal en dessous de la commande que vous avez tapée.
@@ -303,22 +303,22 @@ Les développeurs et les ingénieurs sont régulièrement amenés à utiliser le
 La première notion à intégré est la notion de répertoire courant. Lorsqu'on utilise le terminal, il y a toujours un dossier de l'arborescence qui est considéré comme notre position actuelle. On peut afficher le chemin de ce dossier avec la commande `pwd` pour *print working directory*. Beaucoup de commandes agissent directement sur le répertoire courant.
 
 <pre class="terminal">
-> pwd
+<b>> pwd</b>
 C:\Users\lur
 </pre>
 
 La commande `ls` permet de lister le contenu du répertoire courant
 
 <pre class="terminal">
-> ls
+<b>> ls</b>
 Desktop Documents
 </pre>
 
 La commande `cd` (*change directory*) permet de changer le répertoire courant. 
 
 <pre class="terminal">
-> cd Documents
-> pwd
+<b>> cd Documents</b>
+<b>> pwd</b>
 C:\Users\lur\Documents
 </pre>
 
@@ -341,9 +341,40 @@ On indique le nouveau répertoire courant par son chemin relatif ou absolut&nbsp
 
 - La touche <code>&#8593;</code> permet de reprendre des commandes précédentes.
 
+Du coup pour pouvoir démarrer notre programme Python plus facilement, il suffit de mettre le répertoire contenant le fichier `.py`  comme répertoire courant&nbsp;:
 
+<pre class='terminal'>
+<b>> pwd</b>
+C:\Users\lur
+<b>> cd Documents\Programmation</b>
+<b>> pwd</b>
+C:\Users\lur\Documents\Programmation
+<b>> python hello.py</b>
+</pre>
 
+De plus, si on souhaite relancer le programme, il suffit d'appuyer sur <code>&#8593;</code> pour récupérer la dernière commande et puis de valider avec `Enter`.
 
+Sachez aussi qu'il est possible d'ouvrir un Terminal dans l'interface de VSCode. Si vous ouvrez votre répertoire de travail dans VSCode *(File &#8594; Open Folder...)*, tous les terminaux que vous ouvrirez commenceront automatiquement avec votre répertoire de travail comme répertoire courrant! 
+
+### La variable d'envirronement `PATH`
+
+Nous avons cu plus haut que l'interpréteur Python était un programme dont les instructions en langage machine se trouvent dans un fichier exécutable nommé `python.exe` (sous Windows). Mais comment fait le Terminal pour savoir où se trouve ce fichier exécutable lorsqu'on tape la commande `python`?
+
+En réalité le fichier `python.exe` peut se trouver à plusieurs endroits. Si vous avez fait une installation simple, il se trouve normalement dans&nbsp;:
+
+<p class='center'><code>C:\Users\lur\AppData\Local\Programs\Python\Python<span class="pypathversion">3XX</span>\python.exe</code></p>
+
+Et on peut démarrer un programme dans le terminal en utilisant ce chemin complet&nbsp;:
+
+<pre class='terminal' style='font-size: 50%'>
+<b>> C:\Users\lur\AppData\Local\Programs\Python\Python311\python.exe C:\Users\lur\Documents\Programmation\hello.py</b>
+</pre>
+
+Mais ce n'est pas très pratique.
+
+Pour éviter d'avoir à taper les chemins entier des fichiers exécutables, la variable `PATH` contient une liste de dossiers dans laquelle le système d'exploitation va pouvoir chercher.
+
+Lors de l'installation de l'interpréteur Python, vous avez normalement coché la case **"Add Python to PATH"**. Cela a fait en sorte que le programme d'installation ajoute le répertoire <code>C:\\...\Python<span class="pypathversion">3XX</span></code> à la liste de dossiers de la variable `PATH`. Et maintenant, à chaque fois que l'on utilise la commande `python`, le système d'exploitation cherche un programme nommé `python.exe` dans les dossiers listés dans `PATH` et il le trouve dans <code>C:\\...\Python<span class="pypathversion">3XX</span></code>. 
 <!--
 nous allons choisir dans quel répertoire nous allons sauver nos fichiers. Souvenez-vous que sur un stockage de masse, chaque fichier est identifier par son chemin d'accès. Pour pouvoir retrouver nos fichiers plus tard, il faudra que l'on sache où ils ont été sauvés. VSCode permet d'ouvrir un répertoire pour facilement travailler sur son contenu. Nous allons donc démarrer VSCode et cliquer sur "File" dans le menu en haut, puis sur "Open Folder...". Nous pouvons ensuite sélectionner le répertoire dans lequel nous voulons travailler.
 
@@ -351,3 +382,21 @@ Maintenant que VSCode est lancé et que nous avons ouvert le répertoire de trav
 
 Comme ce Terminal est intégré à VSCode et que nous avons ouvert notre répertoire de travail dans VSCode, ce Terminal sait déjà dans quel répertoire on travaille.
 -->
+<script>
+  fetch("https://endoflife.date/api/python.json")
+    .then((response) => response.json())
+    .then((data) => {
+      const version = data[0].latest;
+      const shortVersion = version.split(".").slice(0, 2).join(".");
+      const pathVersion = shortVersion.split(".").join("")
+      document.querySelectorAll(".pyversion").forEach((elem) => {
+        elem.innerHTML = version;
+      });
+      document.querySelectorAll(".pyshortversion").forEach((elem) => {
+        elem.innerHTML = shortVersion;
+      });
+      document.querySelectorAll(".pypathversion").forEach((elem) => {
+        elem.innerHTML = pathVersion;
+      });
+    });
+</script>
