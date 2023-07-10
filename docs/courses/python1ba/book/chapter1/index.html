@@ -242,6 +242,57 @@ else:
 <p>Validez avec la touche <em>Enter</em>. Vous devriez maintenant voir apparaître le message &quot;Hello World !&quot; dans le Terminal en dessous de la commande que vous avez tapée.</p>
 <p><strong>Félicitations vous venez d&#39;exécuter votre premier programme&nbsp;!</strong></p>
 <p>Il faut bien avouer que de taper le chemin complet du fichier est un petit peu fastidieux. Nous allons donc essayer d&#39;en apprendre un peu plus sur le Terminal pour pouvoir l&#39;utiliser plus efficacement.</p>
+<h3>Terminal</h3>
+<p>Une bonne partie de l&#39;utilisation d&#39;un ordinateur passe par la création, l&#39;édition et la gestion de fichiers dans l&#39;arborescence de dossiers du stockage de masse. Bien que de nos jour la plupart des gens fasse ces opérations en utilisant une interface graphique, il est aussi possible de les réaliser en ligne de commande dans un terminal.</p>
+<p>Sous Windows, il y a plusieurs programmes permettant d&#39;utiliser les lignes de commande&nbsp;:</p>
+<ul>
+<li>cmd: invite de commande</li>
+<li>Powershell</li>
+</ul>
+<p>Sous MacOS, le programme s&#39;appelle simplement &quot;Terminal&quot;.</p>
+<p>Les développeurs et les ingénieurs sont régulièrement amenés à utiliser le terminal. Il est donc important d&#39;apprendre les bases de son utilisation.</p>
+<p>La première notion à intégré est la notion de répertoire courant. Lorsqu&#39;on utilise le terminal, il y a toujours un dossier de l&#39;arborescence qui est considéré comme notre position actuelle. On peut afficher le chemin de ce dossier avec la commande <code>pwd</code> pour <em>print working directory</em>. Beaucoup de commandes agissent directement sur le répertoire courant.</p>
+<pre class="terminal">
+> pwd
+C:\Users\lur
+</pre>
+
+<p>La commande <code>ls</code> permet de lister le contenu du répertoire courant</p>
+<pre class="terminal">
+> ls
+Desktop Documents
+</pre>
+
+<p>La commande <code>cd</code> (<em>change directory</em>) permet de changer le répertoire courant. </p>
+<pre class="terminal">
+> cd Documents
+> pwd
+C:\Users\lur\Documents
+</pre>
+
+<p>On indique le nouveau répertoire courant par son chemin relatif ou absolut&nbsp;:</p>
+<ul>
+<li>Un chemin absolu indique un éléments de l&#39;arborescence de fichiers en partant de la racine de celle-ci&nbsp;:<ul>
+<li>Sous Windows&nbsp;: <code>C:\Users\lur</code></li>
+<li>Sous MacOS ou Linux&nbsp;: <code>/Users/lur</code></li>
+</ul>
+</li>
+<li>Un chemin relatif l&#39;indique en partant du répertoire courant. Si le répertoire courant est <code>C:\Users</code> alors le chemin relatif <code>lur\Documents\hello.py</code> correspond au chemin absolu <code>C:\Users\lur\Documents\hello.py</code>.</li>
+</ul>
+<p>Remarques&nbsp;:</p>
+<ul>
+<li>Dans un chemin, l&#39;utilisation de <code>..</code> permet de remonter d&#39;un repertoire. La commande <code>cd ..</code> permet donc de passer au répertoire parent. Un <code>.</code> seul représente le répertoire courant. Le chemin relatif mentionné plus haut peut donc aussi s&#39;écrire <code>.\lur\Documents\hello.py</code>.</li>
+<li>Windows utilise des anti-slash (<code>\</code>) pour séparer les différentes parties du chemin alors que MacOS et Linux utilisent des slash (<code>/</code>).</li>
+<li>Dans la plupart des terminaux, la touche tabulation (<code>Tab ↹</code>) permet d&#39;auto-compléter les éléments des chemins.</li>
+</ul>
+<figure id="tab" data-ref="figure">
+<img src='./keyboard.svg' class="half">
+<figcaption>La touche <code>Tab</code></figcaption>
+</figure>
+
+
+
+
 <!--
 nous allons choisir dans quel répertoire nous allons sauver nos fichiers. Souvenez-vous que sur un stockage de masse, chaque fichier est identifier par son chemin d'accès. Pour pouvoir retrouver nos fichiers plus tard, il faudra que l'on sache où ils ont été sauvés. VSCode permet d'ouvrir un répertoire pour facilement travailler sur son contenu. Nous allons donc démarrer VSCode et cliquer sur "File" dans le menu en haut, puis sur "Open Folder...". Nous pouvons ensuite sélectionner le répertoire dans lequel nous voulons travailler.
 
@@ -249,5 +300,6 @@ Maintenant que VSCode est lancé et que nous avons ouvert le répertoire de trav
 
 Comme ce Terminal est intégré à VSCode et que nous avons ouvert notre répertoire de travail dans VSCode, ce Terminal sait déjà dans quel répertoire on travaille.
 -->
+
 </body>
 </html>

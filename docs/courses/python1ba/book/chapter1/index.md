@@ -288,6 +288,58 @@ Validez avec la touche *Enter*. Vous devriez maintenant voir apparaître le mess
 
 Il faut bien avouer que de taper le chemin complet du fichier est un petit peu fastidieux. Nous allons donc essayer d'en apprendre un peu plus sur le Terminal pour pouvoir l'utiliser plus efficacement.
 
+### Terminal
+
+Une bonne partie de l'utilisation d'un ordinateur passe par la création, l'édition et la gestion de fichiers dans l'arborescence de dossiers du stockage de masse. Bien que de nos jour la plupart des gens fasse ces opérations en utilisant une interface graphique, il est aussi possible de les réaliser en ligne de commande dans un terminal.
+
+Sous Windows, il y a plusieurs programmes permettant d'utiliser les lignes de commande&nbsp;:
+- cmd: invite de commande
+- Powershell
+
+Sous MacOS, le programme s'appelle simplement "Terminal".
+
+Les développeurs et les ingénieurs sont régulièrement amenés à utiliser le terminal. Il est donc important d'apprendre les bases de son utilisation.
+
+La première notion à intégré est la notion de répertoire courant. Lorsqu'on utilise le terminal, il y a toujours un dossier de l'arborescence qui est considéré comme notre position actuelle. On peut afficher le chemin de ce dossier avec la commande `pwd` pour *print working directory*. Beaucoup de commandes agissent directement sur le répertoire courant.
+
+<pre class="terminal">
+> pwd
+C:\Users\lur
+</pre>
+
+La commande `ls` permet de lister le contenu du répertoire courant
+
+<pre class="terminal">
+> ls
+Desktop Documents
+</pre>
+
+La commande `cd` (*change directory*) permet de changer le répertoire courant. 
+
+<pre class="terminal">
+> cd Documents
+> pwd
+C:\Users\lur\Documents
+</pre>
+
+On indique le nouveau répertoire courant par son chemin relatif ou absolut&nbsp;:
+
+- Un chemin absolu indique un éléments de l'arborescence de fichiers en partant de la racine de celle-ci&nbsp;:
+  - Sous Windows&nbsp;: `C:\Users\lur`
+  - Sous MacOS ou Linux&nbsp;: `/Users/lur`
+- Un chemin relatif l'indique en partant du répertoire courant. Si le répertoire courant est `C:\Users` alors le chemin relatif `lur\Documents\hello.py` correspond au chemin absolu `C:\Users\lur\Documents\hello.py`.
+
+Remarques&nbsp;:
+- Dans un chemin, l'utilisation de `..` permet de remonter d'un repertoire. La commande `cd ..` permet donc de passer au répertoire parent. Un `.` seul représente le répertoire courant. Le chemin relatif mentionné plus haut peut donc aussi s'écrire `.\lur\Documents\hello.py`.
+- Windows utilise des anti-slash (`\`) pour séparer les différentes parties du chemin alors que MacOS et Linux utilisent des slash (`/`).
+- Dans la plupart des terminaux, la touche tabulation (`Tab ↹`) permet d'auto-compléter les éléments des chemins.
+
+<figure id="tab" data-ref="figure">
+<img src='./keyboard.svg' class="half">
+<figcaption>La touche <code>Tab</code></figcaption>
+</figure>
+
+
 
 
 <!--
