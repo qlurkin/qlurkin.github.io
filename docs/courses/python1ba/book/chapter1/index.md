@@ -107,7 +107,7 @@ else:
         print("La racine double est", -b/(2*a))
     else:
         print("La 1re racine est", (-b-sqrt(D))/(2*a))
-        print("La 2e racine est", (-b-sqrt(D))/(2*a))
+        print("La 2e racine est", (-b+sqrt(D))/(2*a))
 ```
 <figcaption>Python, second degré</figcaption>
 </figure>
@@ -195,7 +195,7 @@ Le langage que nous allons utiliser dans ce cours est un langage interprété no
 La première chose à faire est d'installer l'interpréteur Python. Pour cela, il faut commencer par le télécharger sur <https://python.org>. **Attention&nbsp;: Sous Windows, cochez la case "Add Python to PATH" durant l'installation&nbsp;!**
 
 <figure id="python_org" data-ref="figure">
-<img src="./python.org.jpg">
+<img src="./python.org.webp">
 <figcaption>Site de Python</figcaption>
 </figure>
 
@@ -209,7 +209,7 @@ Pour installer Visual Studio Code, il faut le télécharger sur le site <https:/
 - **Ajouter à PATH...**
 
 <figure id="code_visualstudio_com" data-ref="figure">
-<img src="./code_visualstudio_com.jpg">
+<img src="./code_visualstudio_com.webp">
 <figcaption>Site de Visual Studio Code</figcaption>
 </figure>
 
