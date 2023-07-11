@@ -126,7 +126,7 @@ Un ordinateur est, avant tout, un système composé de plusieurs éléments: Pro
 
 <figure id="system" data-ref="figure">
 <img src="./system.svg">
-<figcaption>CPU, RAM, et stockage</figcation>
+<figcaption>CPU, RAM, et stockage</figcaption>
 </figure>
 
 ### Le processeur
@@ -374,15 +374,47 @@ Mais ce n'est pas très pratique.
 
 Pour éviter d'avoir à taper les chemins entier des fichiers exécutables, la variable `PATH` contient une liste de dossiers dans laquelle le système d'exploitation va pouvoir chercher.
 
-Lors de l'installation de l'interpréteur Python, vous avez normalement coché la case **"Add Python to PATH"**. Cela a fait en sorte que le programme d'installation ajoute le répertoire <code>C:\\...\Python<span class="pypathversion">3XX</span></code> à la liste de dossiers de la variable `PATH`. Et maintenant, à chaque fois que l'on utilise la commande `python`, le système d'exploitation cherche un programme nommé `python.exe` dans les dossiers listés dans `PATH` et il le trouve dans <code>C:\\...\Python<span class="pypathversion">3XX</span></code>. 
+Lors de l'installation de l'interpréteur Python, vous avez normalement coché la case **"Add Python to PATH"**. Cela a fait en sorte que le programme d'installation ajoute le répertoire <code>C:\\...\Python<span class="pypathversion">3XX</span></code> à la liste de dossiers de la variable `PATH`. Et maintenant, à chaque fois que l'on utilise la commande `python`, le système d'exploitation cherche un programme nommé `python.exe` dans les dossiers listés dans `PATH` et il le trouve dans <code>C:\\...\Python<span class="pypathversion">3XX</span></code>.
+
+Pour finir, voici un schema qui récapitule les opérations qui ont lieu quand on lance une commande (`python`) dans le terminal&nbsp;:
+
+<figure id="command" data-ref="figure">
+    <div></div>
+    <figcaption>Exécution de la commande python par le terminal</figcaption>
+</figure>
+<script type="module" defer>
+    const draw = await Doc.Draw('#command > div', 500, 700)
+    const start = draw.start().move(1, 2)
+    const command = draw.round('Réception de la commande <code>python hello.py</code>').belowOf(start)
+    const path = draw.round('Recherche <code>python.exe</code> dans les répertoires de <code>PATH</code>').belowOf(command)
+    const dia1 = draw.diamond().belowOf(path)
+    const found = draw.round('<code>C:\\...\\Python<span class="pypathversion">3XX</span>\\python.exe</code> trouvé, chargement en RAM').belowOf(dia1)
+    const run = draw.round('Exécution de l\'interpréteur par le CPU').belowOf(found)
+    const fetch = draw.round('L\'interpréteur demande à l\'OS le fichier <code>hello.py</code>').belowOf(run)
+    const file = draw.round('<code>hello.py</code> est un chemin relatif, recherche à partir du <strong>répertoire courant</strong>').belowOf(fetch)
+    const dia2 = draw.diamond().belowOf(file)
+    const foundpy = draw.round('<code>hello.py</code> trouvé, chargement en RAM').belowOf(dia2)
+    const running = draw.round('L\'interpréteur exécute le code Python 🙌').classes('success').belowOf(foundpy)
+    const end = draw.end().belowOf(running)
+    const exenotfound = draw.round('<code>python.exe</code> non trouvé').rightOf(found)
+    const error1 = draw.round('Erreur&nbsp;: commande <code>python</code> inconnue').classes('error').belowOf(exenotfound)
+    const enderror1 = draw.end().belowOf(error1)
+    const pynotfound = draw.round('<code>hello.py</code> non trouvé').rightOf(foundpy)
+    const error2 = draw.round('Erreur&nbsp;: fichier <code>hello.py</code> introuvable').classes('error').belowOf(pynotfound)
+    const enderror2 = draw.end().belowOf(error2)
+    draw.polyline([start, '-->', command, '-->', path, '-->', dia1, '-->', found, '-->', run, '-->', fetch, '-->', file, '-->', dia2, '-->', foundpy, '-->', running, '-->', end])
+    draw.polyline([dia1, '-|>', exenotfound, '-->', error1, '-->', enderror1])
+    draw.polyline([dia2, '-|>', pynotfound, '-->', error2, '-->', enderror2])
+    draw.done()
+</script>
+
 <!--
 nous allons choisir dans quel répertoire nous allons sauver nos fichiers. Souvenez-vous que sur un stockage de masse, chaque fichier est identifier par son chemin d'accès. Pour pouvoir retrouver nos fichiers plus tard, il faudra que l'on sache où ils ont été sauvés. VSCode permet d'ouvrir un répertoire pour facilement travailler sur son contenu. Nous allons donc démarrer VSCode et cliquer sur "File" dans le menu en haut, puis sur "Open Folder...". Nous pouvons ensuite sélectionner le répertoire dans lequel nous voulons travailler.
-
 Maintenant que VSCode est lancé et que nous avons ouvert le répertoire de travail,
-
 Comme ce Terminal est intégré à VSCode et que nous avons ouvert notre répertoire de travail dans VSCode, ce Terminal sait déjà dans quel répertoire on travaille.
 -->
-<script>
+
+<script type="module" defer>
   fetch("https://endoflife.date/api/python.json")
     .then((response) => response.json())
     .then((data) => {
