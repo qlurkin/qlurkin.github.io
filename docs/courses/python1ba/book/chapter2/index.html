@@ -15,7 +15,312 @@
 Doc.setChapterNb(2)
 </script>
 
-<h2>Hello?</h2>
+<h2>Equations du second degré</h2>
+<p>Souvenez-vous, nous avions vu un exemple de programme pour résoudre les équations du second degré&nbsp;:</p>
+<figure id='python_2deg' data-ref='code'>
+
+<pre><code class="language-python">D = b*b-4*a*c
+if D &lt; 0:
+    print(&quot;Pas de solution réelle&quot;)
+else:
+    if D == 0:
+        print(&quot;La racine double est&quot;, -b/(2*a))
+    else:
+        print(&quot;La 1re racine est&quot;, (-b-sqrt(D))/(2*a))
+        print(&quot;La 2e racine est&quot;, (-b+sqrt(D))/(2*a))
+</code></pre>
+<figcaption>Python, second degré</figcaption>
+</figure>
+
+<p>Il est maintenant temps d&#39;essayer de l&#39;exécuter. Sauvez ce programme dans un fichier, <code>2nd_order.py</code> et essayez de le lancer&nbsp;:</p>
+<pre class="terminal" style="font-size: 85%">
+<b>> python 2nd_order.py</b>
+Traceback (most recent call last):
+  File "C:\Users\lur\Programmation\2nd_order.py", line 1, in &lt;module&gt;
+    D = b*b-4*a*c
+        ^
+NameError: name 'b' is not defined
+</pre>
+
+<p>Il semblerait que quelque chose se soit mal passé. Ce que nous avons là est un message d&#39;erreur. C&#39;est un des grands avantages de la programmation. Lorsqu&#39;on fait une erreur, il y a généralement un message d&#39;erreur pour nous aider à la corriger. Il est important d&#39;apprendre à lire ces messages car toute l&#39;information dont on a besoin pour corriger l&#39;erreur se trouve généralement dans le message.</p>
+<p>Ici le message d&#39;erreur nous indique que le problème se trouve dans le fichier <code>2nd_order.py</code> à la ligne 1. Le caractère <code>^</code> indique à quel endroit de la ligne se trouve l&#39;erreur. Et la dernière ligne du message est une description de l&#39;erreur. Ici, on nous dit que le nom <code>b</code> n&#39;est pas définit.</p>
+<p>En effet, nous n&#39;avons, dans ce programme, pas définit les valeurs de <code>a</code>, <code>b</code> et <code>c</code>. Python ne peut donc pas effectuer le calcul <code>b*b-4*a*c</code>. Le message d&#39;erreur nous parle de <code>b</code> car c&#39;est la première variable non-definie qu&#39;il rencontre.</p>
+<p>Ajoutons des définitions pour ces 3 variables&nbsp;:</p>
+<figure id='python_2deg_corrected' data-ref='code'>
+
+<pre><code class="language-python">a = 1
+b = 0
+c = -4
+D = b*b-4*a*c
+if D &lt; 0:
+    print(&quot;Pas de solution réelle&quot;)
+else:
+    if D == 0:
+        print(&quot;La racine double est&quot;, -b/(2*a))
+    else:
+        print(&quot;La 1re racine est&quot;, (-b-sqrt(D))/(2*a))
+        print(&quot;La 2e racine est&quot;, (-b+sqrt(D))/(2*a))
+</code></pre>
+<figcaption>définitions des valeurs <code>a</code>, <code>b</code> et <code>c</code></figcaption>
+</figure>
+
+<p>Relançons le programme&nbsp;:</p>
+<pre class="terminal" style="font-size: 85%">
+<b>> python 2nd_order.py</b>
+Traceback (most recent call last):
+  File "C:\Users\lur\Programmation\2nd_order.py", line 11, in &lt;module&gt;
+    print("La 1re racine est", (-b-sqrt(D))/(2*a))
+                                   ^^^^
+NameError: name 'sqrt' is not defined
+</pre>
+
+<p>Encore une erreur, la fonction <code>sqrt()</code> qui permet de calculer les racines carrées n&#39;est pas chargée par défaut en Python. Comme nous ne l&#39;avons pas chargée, le nom <code>sqrt</code> n&#39;est pas définit. Ajoutons le chargement de la fonction <code>sqrt</code>&nbsp;:</p>
+<figure id='python_2deg_corrected_2' data-ref='code'>
+
+<pre><code class="language-python">from math import sqrt
+
+a = 1
+b = 0
+c = -4
+D = b*b-4*a*c
+if D &lt; 0:
+    print(&quot;Pas de solution réelle&quot;)
+else:
+    if D == 0:
+        print(&quot;La racine double est&quot;, -b/(2*a))
+    else:
+        print(&quot;La 1re racine est&quot;, (-b-sqrt(D))/(2*a))
+        print(&quot;La 2e racine est&quot;, (-b+sqrt(D))/(2*a))
+</code></pre>
+<figcaption>Chargement de la fonction <code>sqrt</code></figcaption>
+</figure>
+
+<p>Relançons le programme&nbsp;:</p>
+<pre class="terminal">
+<b>> python 2nd_order.py</b>
+La 1re racine est -2.0
+La 2e racine est 2.0
+</pre>
+
+<p>Et voilà ! Ca marche.</p>
+<p>Nous avons eu ici un exemple classique de rédaction de programme. On écrit du code, on teste, on lit les messages d&#39;erreur, on corrige et on recommence.</p>
+<h2>Variables, valeurs et types</h2>
+<p>Dans le programme précédents, nous avons utilisé plusieurs variables, <code>a</code>, <code>b</code>, <code>c</code> et <code>D</code>.</p>
+<p>Une variable est une sorte de boite possédant un nom et pouvant contenir une valeur. Pour mettre une valeur dans la variable, on utilise le signe <code>=</code>. Une fois la valeur de la variable définie son contenu peut être utiliser dans le code en utilisant sont nom.</p>
+<pre><code class="language-python">a = 42
+print(a) # affiche 42
+</code></pre>
+<p><em>Remarque: le caractère <code>#</code> permet d&#39;indiquer que le reste de la ligne est un commentaire. Les commentaires sont ignorés par l&#39;interpréteur Python.</em></p>
+<figure id="variable" data-ref="figure">
+<svg width="50%" viewBox="0 0 1780 941" version="1.1">
+  <g>
+    <rect
+      x="718.473"
+      y="186.234"
+      width="511.1"
+      height="511.1"
+      style="fill: none; stroke: #000; stroke-width: 15.66px"
+    />
+    <text
+      x="435.195px"
+      y="507.148px"
+      style="
+        font-family: 'Consolas', monospace;
+        font-size: 266.667px;
+        fill: #008802;
+      "
+    >
+      a
+    </text>
+    <text
+      x="832.291px"
+      y="528.046px"
+      style="
+        font-family: 'Consolas', monospace;
+        font-size: 266.667px;
+        fill: #0053d8;
+      "
+    >
+      42
+    </text>
+    <ellipse
+      cx="916.27"
+      cy="448.593"
+      rx="556.47"
+      ry="374.94"
+      style="fill: none; stroke: #de0000; stroke-width: 15.66px"
+    />
+    <text
+      x="1207.1px"
+      y="72.482px"
+      style="font-size: 100px; fill: #de0000"
+    >
+      La variable
+    </text>
+    <text
+      x="1366.77px"
+      y="895.116px"
+      style="font-size: 100px; fill: #0053d8"
+    >
+      La valeur
+    </text>
+    <text
+      x="-6.862px"
+      y="728.803px"
+      style="font-size: 100px; fill: #008802"
+    >
+      Le nom
+    </text>
+    <path
+      d="M483.334,598.628l23.199,-35.414l23.767,35.035"
+      style="
+        fill: none;
+        stroke: #008802;
+        stroke-width: 15.66px;
+        stroke-linejoin: miter;
+        stroke-miterlimit: 10;
+      "
+    />
+    <path
+      d="M359.8,693.598c138.621,-3.775 147.112,-42.337 146.733,-130.384"
+      style="fill: none; stroke: #008802; stroke-width: 15.66px"
+    />
+    <path
+      d="M950.341,624.014l24.803,-34.31l22.13,36.091"
+      style="
+        fill: none;
+        stroke: #0053d8;
+        stroke-width: 15.66px;
+        stroke-linejoin: miter;
+        stroke-miterlimit: 10;
+      "
+    />
+    <path
+      d="M1333.51,859.91c-199.807,-4.867 -365.219,-12.486 -358.367,-270.206"
+      style="fill: none; stroke: #0053d8; stroke-width: 15.66px"
+    />
+  </g>
+</svg>
+<figcaption>Variable et valeur</figcaption>
+</figure>
+
+<p>Il est important ici de constater que le signe <code>=</code> a une signification très différente de ce que l&#39;on retrouve en mathématique. En programmation, le <code>=</code> prend la valeur qui est à sa droite pour la mettre dans la variable qui est à sa gauche. Cela signifie que <code>42 = a</code> n&#39;a aucun sens en Python.</p>
+<p>La valeur de la variable peut être modifiée en lui assignant une autre valeur.</p>
+<pre><code class="language-python">a = 42
+print(a) # affiche 42
+a = 0
+print(a) # affiche 0
+</code></pre>
+<p>Il y d&#39;autres moyens de mettre la valeur <code>42</code> dans la variable <code>a</code>&nbsp;:</p>
+<pre><code class="language-python">a = 21 + 21
+a = 2 * 21
+# ...
+</code></pre>
+<p>La valeur qui est à droite du signe <code>=</code> peut être écrite directement; on parle alors d&#39;un <strong>littéral</strong>. Ou elle peut être le résultat d&#39;un calcul. Plus généralement, on appelle <strong>expressions</strong> tous ce qui a une valeur. Un littéral est donc une expression mais toutes les expressions ne sont pas des littéraux.</p>
+<h2>Types de valeurs</h2>
+<p>Les valeurs peuvent être de différents types :</p>
+<ul>
+<li>Les entiers (<code>int</code>)</li>
+</ul>
+<pre><code class="language-python">a = 42 # littéral
+a = 2 * 21 # expression
+</code></pre>
+<ul>
+<li>Les nombre à virgule flottante (<code>float</code>)</li>
+</ul>
+<pre><code class="language-python">a = 0.42 # littéral
+a = 42e-2 # littéral en notation scientifique
+a = 1 / 2 # expression
+</code></pre>
+<ul>
+<li>Les chaînes de caractères (<code>str</code>: <em>string</em>). Les <em>strings</em> sont un cas particulier d&#39;une famille de types plus générale qu&#39;on appelle <strong>les séquences</strong>.</li>
+</ul>
+<pre><code class="language-python">a = &quot;hello&quot; # littéral
+b = &#39;coucou&#39; # littéral
+c = 2 * a + &quot;!!&quot; # expression
+</code></pre>
+<ul>
+<li>Les booléens (<code>bool</code>)</li>
+</ul>
+<pre><code class="language-python">a = True # littéral
+b = a or 5 &lt; 0 # expression
+</code></pre>
+<ul>
+<li><strong>Et bien d&#39;autres...</strong></li>
+</ul>
+<p>Physiquement, le contenu des variables est sauvé dans la RAM de l&#39;ordinateur. Dans la RAM, toutes les valeurs sont sauvegardées avec des <code>1</code> et des <code>0</code>. C&#39;est le type de la valeur qui indique à Python comment interpréter ces <code>1</code> et ces <code>0</code>.</p>
+<p>Il est important de garder à l&#39;esprit les types des valeurs que l&#39;on manipule car les opérations que l&#39;on peut effectuer avec chaque type ne sont pas les mêmes.</p>
+<p>Apportons une petite modification au programme de résolution d&#39;équations du second degré pour illustrer cela.</p>
+<p>Bien que le programme fonctionne, il est nécessaire de modifier les définitions de <code>a</code>, <code>b</code> et <code>c</code> pour résoudre une autre équations. Ce n&#39;est pas idéal. Nous allons donc faire en sorte que le programme demande à l&#39;utilisateur d&#39;entrer les valeurs des coefficients de l&#39;équation. Pour cela, on utilise la fonction <code>input()</code>. Cette dernière interrompt l&#39;exécution du programme pour permettre à l&#39;utilisateur d&#39;entrer quelque-chose au clavier. Elle laisse ensuite le programme reprendre et renvoie la valeur tapée&nbsp;:</p>
+<figure id='python_2deg_corrected_2' data-ref='code'>
+
+<pre><code class="language-python">from math import sqrt
+
+a = input(&#39;entrez la valeur de a : &#39;)
+b = input(&#39;entrez la valeur de b : &#39;)
+c = input(&#39;entrez la valeur de c : &#39;)
+D = b*b-4*a*c
+if D &lt; 0:
+    print(&quot;Pas de solution réelle&quot;)
+else:
+    if D == 0:
+        print(&quot;La racine double est&quot;, -b/(2*a))
+    else:
+        print(&quot;La 1re racine est&quot;, (-b-sqrt(D))/(2*a))
+        print(&quot;La 2e racine est&quot;, (-b+sqrt(D))/(2*a))
+</code></pre>
+<figcaption>Utilisation de <code>input</code></figcaption>
+</figure>
+
+<p>Relançons le programme et entrons les valeurs demandées&nbsp;:</p>
+<pre class="terminal" style="font-size: 85%">
+<b>> python 2nd_order.py</b>
+entrez la valeur de a : 1
+entrez la valeur de b : 0
+entrez la valeur de c : -4
+Traceback (most recent call last):
+  File "C:\Users\lur\Programmation\2nd_order.py", line 5, in &lt;module&gt;
+    D = b*b-4*a*c
+        ~^~
+TypeError: can't multiply sequence by non-int of type 'str'
+</pre>
+
+<p>Voilà un nouveau message d&#39;erreur ! Celui-ci nous indique que lors du calcul de <code>b*b</code>, on ne peut pas multiplier une sequence par une valeur de type <code>str</code>. On se rend compte ici que lorsqu&#39;on a tapé <code>0</code> pour indiquer la valeur de <code>b</code>, la fonction <code>input()</code> a renvoyé une valeur de type <code>str</code>. Et cela pose problème pour la suite des calculs.</p>
+<p>En fait, il s&#39;agit du comportement normal de la fonction <code>input()</code>. comme cette fonction demande à l&#39;utilisateur d&#39;entrer quelque-chose au clavier, elle ne fait que renvoyer la suite de caractères qui a été tapée. <code>input()</code> renvoie donc toujours une valeur de type <code>str</code>.</p>
+<p>Pour pouvoir continuer les calculs, il faut convertir la chaîne de caractères en nombre. Comme l&#39;utilisateur pourrait taper des nombres à virgule, nous allons les convertir en <code>float</code>. Pour cela, il existe une fonction <code>float()</code> qui convertit ce qu&#39;on lui passe en paramètre en valeur de type <code>float</code>.</p>
+<p>Ajoutons donc la fonction <code>float()</code> à notre programme. Notez que l&#39;on peut directement utiliser la valeur renvoyée par <code>input()</code> comme paramètre de <code>float()</code>&nbsp;:</p>
+<figure id='python_2deg_corrected_3' data-ref='code'>
+
+<pre><code class="language-python">from math import sqrt
+
+a = float(input(&#39;entrez la valeur de a : &#39;))
+b = float(input(&#39;entrez la valeur de b : &#39;))
+c = float(input(&#39;entrez la valeur de c : &#39;))
+D = b*b-4*a*c
+if D &lt; 0:
+    print(&quot;Pas de solution réelle&quot;)
+else:
+    if D == 0:
+        print(&quot;La racine double est&quot;, -b/(2*a))
+    else:
+        print(&quot;La 1re racine est&quot;, (-b-sqrt(D))/(2*a))
+        print(&quot;La 2e racine est&quot;, (-b+sqrt(D))/(2*a))
+</code></pre>
+<figcaption>Utilisation de <code>float</code></figcaption>
+</figure>
+
+<p>Relançons le programme&nbsp;:</p>
+<pre class="terminal">
+<b>> python 2nd_order.py</b>
+entrez la valeur de a : 1
+entrez la valeur de b : 0
+entrez la valeur de c : -4
+La 1re racine est -2.0
+La 2e racine est 2.0
+</pre>
+
+<p>Parfait !</p>
+<p><strong>Dans un premier temps les fonctions <code>input()</code> et <code>print()</code> seront nos seuls moyens de communication avec l&#39;utilisateur. On utilise <code>input()</code> pour recevoir des données de l&#39;utilisateur. Et on utilise <code>print()</code> pour afficher les résultats.</strong></p>
 
 </body>
 </html>
