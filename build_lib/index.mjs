@@ -157,7 +157,7 @@ export async function screenshot_website(url, filename, width, height, actions) 
   if(actions)
     await actions(page)
   await page.screenshot({
-    path: filename
+    path: filename,
   })
   await browser.close()
 }
