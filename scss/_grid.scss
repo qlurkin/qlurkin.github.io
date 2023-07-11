@@ -5,6 +5,15 @@
         display: grid;
         margin: 1rem auto;
         font-size: 13px;
+        column-gap: 10px;
+
+        .error {
+          background-color: rgba(255, 0, 0, 0.3)
+        }
+
+        .success {
+          background-color: rgba(0, 255, 0, 0.3)
+        }
 
         code {
             white-space: nowrap;
