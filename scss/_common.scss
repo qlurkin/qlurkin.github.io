@@ -250,3 +250,14 @@ table {
         text-align: center;
     }
 }
+
+.middle {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.nowrap {
+  white-space: nowrap;
+}
