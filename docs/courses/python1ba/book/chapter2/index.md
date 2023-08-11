@@ -6,9 +6,9 @@ title: "Chapitre 2"
 Doc.setChapterNb(2)
 </script>
 
-## Equations du second degré
+## Équations du second degré
 
-Souvenez-vous, nous avions vu un exemple de programme pour résoudre les équations du second degré&nbsp;:
+Souvenez vous, nous avions vu un exemple de programme pour résoudre les équations du second degré&nbsp;:
 
 <figure id='python_2deg' data-ref='code'>
 
@@ -41,7 +41,7 @@ Il semblerait que quelque chose se soit mal passé. Ce que nous avons là est un
 
 Ici le message d'erreur nous indique que le problème se trouve dans le fichier `2nd_order.py` à la ligne 1. Le caractère `^` indique à quel endroit de la ligne se trouve l'erreur. Et la dernière ligne du message est une description de l'erreur. Ici, on nous dit que le nom `b` n'est pas définit.
 
-En effet, nous n'avons, dans ce programme, pas définit les valeurs de `a`, `b` et `c`. Python ne peut donc pas effectuer le calcul `b*b-4*a*c`. Le message d'erreur nous parle de `b` car c'est la première variable non-definie qu'il rencontre.
+En effet, nous n'avons, dans ce programme, pas définit les valeurs de `a`, `b` et `c`. Python ne peut donc pas effectuer le calcul `b*b-4*a*c`. Le message d'erreur nous parle de `b` car c'est la première variable non définie qu'il rencontre.
 
 Ajoutons des définitions pour ces 3 variables&nbsp;:
 
@@ -106,7 +106,7 @@ La 1re racine est -2.0
 La 2e racine est 2.0
 </pre>
 
-Et voilà ! Ca marche.
+Et voilà ! Ça marche.
 
 Nous avons eu ici un exemple classique de rédaction de programme. On écrit du code, on teste, on lit les messages d'erreur, on corrige et on recommence.
       
@@ -274,11 +274,21 @@ b = a or 5 < 0 # expression
 
 Physiquement, le contenu des variables est sauvé dans la RAM de l'ordinateur. Dans la RAM, toutes les valeurs sont sauvegardées avec des `1` et des `0`. C'est le type de la valeur qui indique à Python comment interpréter ces `1` et ces `0`.
 
-Il est important de garder à l'esprit les types des valeurs que l'on manipule car les opérations que l'on peut effectuer avec chaque type ne sont pas les mêmes.
+Il est important de garder à l'esprit les types des valeurs que l'on manipule car les opérations que l'on peut effectuer avec chaque type ne sont pas les mêmes et ne font pas toujours la même chose&nbsp;:
 
-Apportons une petite modification au programme de résolution d'équations du second degré pour illustrer cela.
+<figure id='operations_type' data-ref='code'>
 
-Bien que le programme fonctionne, il est nécessaire de modifier les définitions de `a`, `b` et `c` pour résoudre une autre équations. Ce n'est pas idéal. Nous allons donc faire en sorte que le programme demande à l'utilisateur d'entrer les valeurs des coefficients de l'équation. Pour cela, on utilise la fonction `input()`. Cette dernière interrompt l'exécution du programme pour permettre à l'utilisateur d'entrer quelque-chose au clavier. Elle laisse ensuite le programme reprendre et renvoie la valeur tapée&nbsp;:
+```python
+i = 21
+print(i + i) # affiche 42
+s = "21"
+print(s + s) # affiche 2121
+print(i + s) # interdit
+```
+<figcaption>Somme entre <code>int</code> et <code>float</code></figcaption>
+</figure>
+
+Pour illustrer cela, apportons une petite modification au programme de résolution d'équations du second degré. Bien que le programme fonctionne, il est nécessaire de modifier les définitions de `a`, `b` et `c` pour résoudre une autre équations. Ce n'est pas idéal. Nous allons donc faire en sorte que le programme demande à l'utilisateur d'entrer les valeurs des coefficients de l'équation. Pour cela, on utilise la fonction `input()`. Cette dernière interrompt l'exécution du programme pour permettre à l'utilisateur d'entrer quelque chose au clavier. Elle laisse ensuite le programme reprendre et renvoie la valeur tapée&nbsp;:
 
 <figure id='python_2deg_corrected_2' data-ref='code'>
 
@@ -315,9 +325,9 @@ Traceback (most recent call last):
 TypeError: can't multiply sequence by non-int of type 'str'
 </pre>
 
-Voilà un nouveau message d'erreur ! Celui-ci nous indique que lors du calcul de `b*b`, on ne peut pas multiplier une sequence par une valeur de type `str`. On se rend compte ici que lorsqu'on a tapé `0` pour indiquer la valeur de `b`, la fonction `input()` a renvoyé une valeur de type `str`. Et cela pose problème pour la suite des calculs.
+Voilà un nouveau message d'erreur ! Celui-ci nous indique que lors du calcul de `b*b`, on ne peut pas multiplier une séquence par une valeur de type `str`. On se rend compte ici que lorsqu'on a tapé `0` pour indiquer la valeur de `b`, la fonction `input()` a renvoyé une valeur de type `str`. Et cela pose problème pour la suite des calculs.
 
-En fait, il s'agit du comportement normal de la fonction `input()`. comme cette fonction demande à l'utilisateur d'entrer quelque-chose au clavier, elle ne fait que renvoyer la suite de caractères qui a été tapée. `input()` renvoie donc toujours une valeur de type `str`.
+En fait, il s'agit du comportement normal de la fonction `input()`. comme cette fonction demande à l'utilisateur d'entrer quelque chose au clavier, elle ne fait que renvoyer la suite de caractères qui a été tapée. `input()` renvoie donc toujours une valeur de type `str`.
 
 Pour pouvoir continuer les calculs, il faut convertir la chaîne de caractères en nombre. Comme l'utilisateur pourrait taper des nombres à virgule, nous allons les convertir en `float`. Pour cela, il existe une fonction `float()` qui convertit ce qu'on lui passe en paramètre en valeur de type `float`.
 
@@ -358,4 +368,71 @@ La 2e racine est 2.0
 Parfait !
 
 **Dans un premier temps les fonctions `input()` et `print()` seront nos seuls moyens de communication avec l'utilisateur. On utilise `input()` pour recevoir des données de l'utilisateur. Et on utilise `print()` pour afficher les résultats.**
+
+## Expressions
+
+En programmation, une expression est tous ce qui a une valeur. On dit aussi qu'une expression **renvoie** une valeur. Une expression peut donc être&nbsp;:
+
+- **un littéral**, c'est à dire, une valeur écrite littéralement,
+
+```python
+42            # Littéral entier
+3.141592      # Littéral flottant
+'Hello World' # Littéral chaîne de caractères
+True          # Littéral booléen
+```
+
+- **un nom de variable définie**, dans ce cas la valeur de l'expression est la valeur de la variable,
+
+```python
+a = 42        # Définition de la variable a
+a             # expression valant 42
+```
+
+- **un appel de fonction**, comme par exemple la fonction `sqrt`,
+
+```python
+from math import sqrt
+sqrt(4)       # Expression valant 2.0
+```
+
+- **une combinaison d'expressions**, grâce à des opérateurs. 
+
+### Opérateurs
+
+Comme nous l'avons vu dans le <span data-link="operations_type">code</span>, les opérateurs disponibles et la façon de combiner les valeurs dépend de leurs types.
+
+Les opérateurs suivants sont définis pour **les valeurs numériques**&nbsp;:
+
+<figure id='number_operators' data-ref='code'>
+
+```python
+1 + 2 # somme de deux nombres
+1 - 2 # différence de deux nombres
+2 * 2 # produit de deux nombres
+4 ** 2 # puissance de deux nombres (ici 4²)
+4 / 2 # quotient de deux nombre
+5 // 2 # division entière
+5 % 2 # modulo, reste de la division entière
+```
+<figcaption>Opérations sur les nombres</figcaption>
+</figure>
+
+Les deux dernières opérations nécessitent probablement un peu d'explications. Lorsqu'on parle de la division entière de `5` par `2` on veut savoir combien de fois `2` entre entièrement dans `5`. `2` entre deux fois dans `5`, en effet, `2 x 2 = 4`. `2` n'entre pas trois fois dans `5` car `3 x 2 = 6` ce qui est plus grand que `5`.
+
+Le reste de la division entière de `5` par `2` est la partie de `5` qui n'a pas pu être divisée lors de la division entière. Comme on ne peut mettre que deux fois `2` dans `5` et que `2 x 2 = 4`, il reste `1` qui n'a pas pu être divisé. On dit donc que le reste de la division entière de `5` par `2` est égale à `1`.
+
+Souvenez vous des divisions écrites que vous avez apprises en primaire. Si vous vous arrêtez avant de calculer les décimales, vous obtenez la division entière et le reste.
+
+<figure id="division" data-ref="figure">
+<img src="./division_ecrite.svg" class="third">
+<figcaption>Division écrite</figcaption>
+</figure>
+
+Il y a plein de moment où la division entière et le modulo peuvent être utiles. Par exemple, si vous voulez convertir un nombre quelconque de minutes (disons 200) en heures/minutes. Pour obtenir le nombre d'heure, il suffit de faire une division entière par 60: `200 // 60 = 3`. Nous avons donc 3 heures. Et pour obtenir le nombre de minutes restantes, on utilise le modulo 60: `200 % 60 = 20`. Il reste donc 20 minutes. 200 minutes correspond à 3 heures et 20 minutes.
+
+### Opérateurs de comparaison
+
+### Opérateurs booléens
+
 

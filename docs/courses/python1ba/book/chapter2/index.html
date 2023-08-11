@@ -15,8 +15,8 @@
 Doc.setChapterNb(2)
 </script>
 
-<h2>Equations du second degré</h2>
-<p>Souvenez-vous, nous avions vu un exemple de programme pour résoudre les équations du second degré&nbsp;:</p>
+<h2>Équations du second degré</h2>
+<p>Souvenez vous, nous avions vu un exemple de programme pour résoudre les équations du second degré&nbsp;:</p>
 <figure id='python_2deg' data-ref='code'>
 
 <pre><code class="language-python">D = b*b-4*a*c
@@ -44,7 +44,7 @@ NameError: name 'b' is not defined
 
 <p>Il semblerait que quelque chose se soit mal passé. Ce que nous avons là est un message d&#39;erreur. C&#39;est un des grands avantages de la programmation. Lorsqu&#39;on fait une erreur, il y a généralement un message d&#39;erreur pour nous aider à la corriger. Il est important d&#39;apprendre à lire ces messages car toute l&#39;information dont on a besoin pour corriger l&#39;erreur se trouve généralement dans le message.</p>
 <p>Ici le message d&#39;erreur nous indique que le problème se trouve dans le fichier <code>2nd_order.py</code> à la ligne 1. Le caractère <code>^</code> indique à quel endroit de la ligne se trouve l&#39;erreur. Et la dernière ligne du message est une description de l&#39;erreur. Ici, on nous dit que le nom <code>b</code> n&#39;est pas définit.</p>
-<p>En effet, nous n&#39;avons, dans ce programme, pas définit les valeurs de <code>a</code>, <code>b</code> et <code>c</code>. Python ne peut donc pas effectuer le calcul <code>b*b-4*a*c</code>. Le message d&#39;erreur nous parle de <code>b</code> car c&#39;est la première variable non-definie qu&#39;il rencontre.</p>
+<p>En effet, nous n&#39;avons, dans ce programme, pas définit les valeurs de <code>a</code>, <code>b</code> et <code>c</code>. Python ne peut donc pas effectuer le calcul <code>b*b-4*a*c</code>. Le message d&#39;erreur nous parle de <code>b</code> car c&#39;est la première variable non définie qu&#39;il rencontre.</p>
 <p>Ajoutons des définitions pour ces 3 variables&nbsp;:</p>
 <figure id='python_2deg_corrected' data-ref='code'>
 
@@ -102,7 +102,7 @@ La 1re racine est -2.0
 La 2e racine est 2.0
 </pre>
 
-<p>Et voilà ! Ca marche.</p>
+<p>Et voilà ! Ça marche.</p>
 <p>Nous avons eu ici un exemple classique de rédaction de programme. On écrit du code, on teste, on lit les messages d&#39;erreur, on corrige et on recommence.</p>
 <h2>Variables, valeurs et types</h2>
 <p>Dans le programme précédents, nous avons utilisé plusieurs variables, <code>a</code>, <code>b</code>, <code>c</code> et <code>D</code>.</p>
@@ -249,9 +249,19 @@ b = a or 5 &lt; 0 # expression
 <li><strong>Et bien d&#39;autres...</strong></li>
 </ul>
 <p>Physiquement, le contenu des variables est sauvé dans la RAM de l&#39;ordinateur. Dans la RAM, toutes les valeurs sont sauvegardées avec des <code>1</code> et des <code>0</code>. C&#39;est le type de la valeur qui indique à Python comment interpréter ces <code>1</code> et ces <code>0</code>.</p>
-<p>Il est important de garder à l&#39;esprit les types des valeurs que l&#39;on manipule car les opérations que l&#39;on peut effectuer avec chaque type ne sont pas les mêmes.</p>
-<p>Apportons une petite modification au programme de résolution d&#39;équations du second degré pour illustrer cela.</p>
-<p>Bien que le programme fonctionne, il est nécessaire de modifier les définitions de <code>a</code>, <code>b</code> et <code>c</code> pour résoudre une autre équations. Ce n&#39;est pas idéal. Nous allons donc faire en sorte que le programme demande à l&#39;utilisateur d&#39;entrer les valeurs des coefficients de l&#39;équation. Pour cela, on utilise la fonction <code>input()</code>. Cette dernière interrompt l&#39;exécution du programme pour permettre à l&#39;utilisateur d&#39;entrer quelque-chose au clavier. Elle laisse ensuite le programme reprendre et renvoie la valeur tapée&nbsp;:</p>
+<p>Il est important de garder à l&#39;esprit les types des valeurs que l&#39;on manipule car les opérations que l&#39;on peut effectuer avec chaque type ne sont pas les mêmes et ne font pas toujours la même chose&nbsp;:</p>
+<figure id='operations_type' data-ref='code'>
+
+<pre><code class="language-python">i = 21
+print(i + i) # affiche 42
+s = &quot;21&quot;
+print(s + s) # affiche 2121
+print(i + s) # interdit
+</code></pre>
+<figcaption>Somme entre <code>int</code> et <code>float</code></figcaption>
+</figure>
+
+<p>Pour illustrer cela, apportons une petite modification au programme de résolution d&#39;équations du second degré. Bien que le programme fonctionne, il est nécessaire de modifier les définitions de <code>a</code>, <code>b</code> et <code>c</code> pour résoudre une autre équations. Ce n&#39;est pas idéal. Nous allons donc faire en sorte que le programme demande à l&#39;utilisateur d&#39;entrer les valeurs des coefficients de l&#39;équation. Pour cela, on utilise la fonction <code>input()</code>. Cette dernière interrompt l&#39;exécution du programme pour permettre à l&#39;utilisateur d&#39;entrer quelque chose au clavier. Elle laisse ensuite le programme reprendre et renvoie la valeur tapée&nbsp;:</p>
 <figure id='python_2deg_corrected_2' data-ref='code'>
 
 <pre><code class="language-python">from math import sqrt
@@ -285,8 +295,8 @@ Traceback (most recent call last):
 TypeError: can't multiply sequence by non-int of type 'str'
 </pre>
 
-<p>Voilà un nouveau message d&#39;erreur ! Celui-ci nous indique que lors du calcul de <code>b*b</code>, on ne peut pas multiplier une sequence par une valeur de type <code>str</code>. On se rend compte ici que lorsqu&#39;on a tapé <code>0</code> pour indiquer la valeur de <code>b</code>, la fonction <code>input()</code> a renvoyé une valeur de type <code>str</code>. Et cela pose problème pour la suite des calculs.</p>
-<p>En fait, il s&#39;agit du comportement normal de la fonction <code>input()</code>. comme cette fonction demande à l&#39;utilisateur d&#39;entrer quelque-chose au clavier, elle ne fait que renvoyer la suite de caractères qui a été tapée. <code>input()</code> renvoie donc toujours une valeur de type <code>str</code>.</p>
+<p>Voilà un nouveau message d&#39;erreur ! Celui-ci nous indique que lors du calcul de <code>b*b</code>, on ne peut pas multiplier une séquence par une valeur de type <code>str</code>. On se rend compte ici que lorsqu&#39;on a tapé <code>0</code> pour indiquer la valeur de <code>b</code>, la fonction <code>input()</code> a renvoyé une valeur de type <code>str</code>. Et cela pose problème pour la suite des calculs.</p>
+<p>En fait, il s&#39;agit du comportement normal de la fonction <code>input()</code>. comme cette fonction demande à l&#39;utilisateur d&#39;entrer quelque chose au clavier, elle ne fait que renvoyer la suite de caractères qui a été tapée. <code>input()</code> renvoie donc toujours une valeur de type <code>str</code>.</p>
 <p>Pour pouvoir continuer les calculs, il faut convertir la chaîne de caractères en nombre. Comme l&#39;utilisateur pourrait taper des nombres à virgule, nous allons les convertir en <code>float</code>. Pour cela, il existe une fonction <code>float()</code> qui convertit ce qu&#39;on lui passe en paramètre en valeur de type <code>float</code>.</p>
 <p>Ajoutons donc la fonction <code>float()</code> à notre programme. Notez que l&#39;on peut directement utiliser la valeur renvoyée par <code>input()</code> comme paramètre de <code>float()</code>&nbsp;:</p>
 <figure id='python_2deg_corrected_3' data-ref='code'>
@@ -321,6 +331,58 @@ La 2e racine est 2.0
 
 <p>Parfait !</p>
 <p><strong>Dans un premier temps les fonctions <code>input()</code> et <code>print()</code> seront nos seuls moyens de communication avec l&#39;utilisateur. On utilise <code>input()</code> pour recevoir des données de l&#39;utilisateur. Et on utilise <code>print()</code> pour afficher les résultats.</strong></p>
+<h2>Expressions</h2>
+<p>En programmation, une expression est tous ce qui a une valeur. On dit aussi qu&#39;une expression <strong>renvoie</strong> une valeur. Une expression peut donc être&nbsp;:</p>
+<ul>
+<li><strong>un littéral</strong>, c&#39;est à dire, une valeur écrite littéralement,</li>
+</ul>
+<pre><code class="language-python">42            # Littéral entier
+3.141592      # Littéral flottant
+&#39;Hello World&#39; # Littéral chaîne de caractères
+True          # Littéral booléen
+</code></pre>
+<ul>
+<li><strong>un nom de variable définie</strong>, dans ce cas la valeur de l&#39;expression est la valeur de la variable,</li>
+</ul>
+<pre><code class="language-python">a = 42        # Définition de la variable a
+a             # expression valant 42
+</code></pre>
+<ul>
+<li><strong>un appel de fonction</strong>, comme par exemple la fonction <code>sqrt</code>,</li>
+</ul>
+<pre><code class="language-python">from math import sqrt
+sqrt(4)       # Expression valant 2.0
+</code></pre>
+<ul>
+<li><strong>une combinaison d&#39;expressions</strong>, grâce à des opérateurs.</li>
+</ul>
+<h3>Opérateurs</h3>
+<p>Comme nous l&#39;avons vu dans le <span data-link="operations_type">code</span>, les opérateurs disponibles et la façon de combiner les valeurs dépend de leurs types.</p>
+<p>Les opérateurs suivants sont définis pour <strong>les valeurs numériques</strong>&nbsp;:</p>
+<figure id='number_operators' data-ref='code'>
+
+<pre><code class="language-python">1 + 2 # somme de deux nombres
+1 - 2 # différence de deux nombres
+2 * 2 # produit de deux nombres
+4 ** 2 # puissance de deux nombres (ici 4²)
+4 / 2 # quotient de deux nombre
+5 // 2 # division entière
+5 % 2 # modulo, reste de la division entière
+</code></pre>
+<figcaption>Opérations sur les nombres</figcaption>
+</figure>
+
+<p>Les deux dernières opérations nécessitent probablement un peu d&#39;explications. Lorsqu&#39;on parle de la division entière de <code>5</code> par <code>2</code> on veut savoir combien de fois <code>2</code> entre entièrement dans <code>5</code>. <code>2</code> entre deux fois dans <code>5</code>, en effet, <code>2 x 2 = 4</code>. <code>2</code> n&#39;entre pas trois fois dans <code>5</code> car <code>3 x 2 = 6</code> ce qui est plus grand que <code>5</code>.</p>
+<p>Le reste de la division entière de <code>5</code> par <code>2</code> est la partie de <code>5</code> qui n&#39;a pas pu être divisée lors de la division entière. Comme on ne peut mettre que deux fois <code>2</code> dans <code>5</code> et que <code>2 x 2 = 4</code>, il reste <code>1</code> qui n&#39;a pas pu être divisé. On dit donc que le reste de la division entière de <code>5</code> par <code>2</code> est égale à <code>1</code>.</p>
+<p>Souvenez vous des divisions écrites que vous avez apprises en primaire. Si vous vous arrêtez avant de calculer les décimales, vous obtenez la division entière et le reste.</p>
+<figure id="division" data-ref="figure">
+<img src="./division_ecrite.svg" class="third">
+<figcaption>Division écrite</figcaption>
+</figure>
+
+<p>Il y a plein de moment où la division entière et le modulo peuvent être utiles. Par exemple, si vous voulez convertir un nombre quelconque de minutes (disons 200) en heures/minutes. Pour obtenir le nombre d&#39;heure, il suffit de faire une division entière par 60: <code>200 // 60 = 3</code>. Nous avons donc 3 heures. Et pour obtenir le nombre de minutes restantes, on utilise le modulo 60: <code>200 % 60 = 20</code>. Il reste donc 20 minutes. 200 minutes correspond à 3 heures et 20 minutes.</p>
+<h3>Opérateurs de comparaison</h3>
+<h3>Opérateurs booléens</h3>
 
 </body>
 </html>
