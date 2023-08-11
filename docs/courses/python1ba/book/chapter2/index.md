@@ -418,9 +418,9 @@ Les opérateurs suivants sont définis pour **les valeurs numériques**&nbsp;:
 <figcaption>Opérations sur les nombres</figcaption>
 </figure>
 
-Les deux dernières opérations nécessitent probablement un peu d'explications. Lorsqu'on parle de la division entière de `5` par `2` on veut savoir combien de fois `2` entre entièrement dans `5`. `2` entre deux fois dans `5`, en effet, `2 x 2 = 4`. `2` n'entre pas trois fois dans `5` car `3 x 2 = 6` ce qui est plus grand que `5`.
+Les deux dernières opérations nécessitent probablement un peu d'explications. Lorsqu'on parle de la division entière de `5` par `2` on veut savoir combien de fois `2` entre entièrement dans `5`. `2` entre deux fois dans `5`, en effet, `2 x 2 => 4`. `2` n'entre pas trois fois dans `5` car `3 x 2 => 6` ce qui est plus grand que `5`.
 
-Le reste de la division entière de `5` par `2` est la partie de `5` qui n'a pas pu être divisée lors de la division entière. Comme on ne peut mettre que deux fois `2` dans `5` et que `2 x 2 = 4`, il reste `1` qui n'a pas pu être divisé. On dit donc que le reste de la division entière de `5` par `2` est égale à `1`.
+Le reste de la division entière de `5` par `2` est la partie de `5` qui n'a pas pu être divisée lors de la division entière. Comme on ne peut mettre que deux fois `2` dans `5` et que `2 x 2 => 4`, il reste `1` qui n'a pas pu être divisé. On dit donc que le reste de la division entière de `5` par `2` est égale à `1`.
 
 Souvenez vous des divisions écrites que vous avez apprises en primaire. Si vous vous arrêtez avant de calculer les décimales, vous obtenez la division entière et le reste.
 
@@ -429,10 +429,73 @@ Souvenez vous des divisions écrites que vous avez apprises en primaire. Si vous
 <figcaption>Division écrite</figcaption>
 </figure>
 
-Il y a plein de moment où la division entière et le modulo peuvent être utiles. Par exemple, si vous voulez convertir un nombre quelconque de minutes (disons 200) en heures/minutes. Pour obtenir le nombre d'heure, il suffit de faire une division entière par 60: `200 // 60 = 3`. Nous avons donc 3 heures. Et pour obtenir le nombre de minutes restantes, on utilise le modulo 60: `200 % 60 = 20`. Il reste donc 20 minutes. 200 minutes correspond à 3 heures et 20 minutes.
+Il y a plein de moment où la division entière et le modulo peuvent être utiles. Par exemple, si vous voulez convertir un nombre quelconque de minutes (disons 200) en heures/minutes. Pour obtenir le nombre d'heure, il suffit de faire une division entière par 60: `200 // 60 => 3`. Nous avons donc 3 heures. Et pour obtenir le nombre de minutes restantes, on utilise le modulo 60: `200 % 60 => 20`. Il reste donc 20 minutes. 200 minutes correspond à 3 heures et 20 minutes.
 
 ### Opérateurs de comparaison
 
+Les opérateurs de comparaison renvoient un booléen en fonction de deux valeurs à comparer. Par exemple `4 < 3 => False` et `3.5 > 0 => True`.
+
+<figure id='comparators' data-ref='code'>
+
+```python
+a < b # inférieur à
+a > b # supérieur à
+a <= b # inférieur ou égale à
+a >= b # supérieur ou égale à
+a == b # égale à
+a != b # différent de
+```
+<figcaption>Opérateurs de comparaison</figcaption>
+</figure>
+
+Les comparaisons fonctionnent aussi sur les chaines de caractères. Un `str` est inférieur à un autre `str` s'il vient avant dans l'ordre alphabétique (`'aab' < 'abc' => True`).
+
 ### Opérateurs booléens
 
+Les opérateurs booléens permettent de combiner des valeurs booléennes entre elles. Ces opérateurs sont le `and`, le `or` et le `not`. La valeur renvoyée est aussi booléenne. Voici la **table de vérité** qui indique le résultat de chaque opération possible&nbsp;:
+
+<figure id="trues_table" data-ref='table'>
+<table class='center'>
+    <thead>
+        <tr>
+            <th><code>a</code></th>
+            <th><code>b</code></th>
+            <th><code>not a</code></th>
+            <th><code>a and b</code></th>
+            <th><code>a or b</code></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>True</code></td>
+            <td><code>True</code></td>
+            <td><code>False</code></td>
+            <td><code>True</code></td>
+            <td><code>True</code></td>
+        </tr>
+        <tr>
+            <td><code>True</code></td>
+            <td><code>False</code></td>
+            <td><code>False</code></td>
+            <td><code>False</code></td>
+            <td><code>True</code></td>
+        </tr>
+        <tr>
+            <td><code>False</code></td>
+            <td><code>False</code></td>
+            <td><code>True</code></td>
+            <td><code>False</code></td>
+            <td><code>False</code></td>
+        </tr>
+        <tr>
+            <td><code>False</code></td>
+            <td><code>True</code></td>
+            <td><code>True</code></td>
+            <td><code>False</code></td>
+            <td><code>True</code></td>
+        </tr>
+    </tbody>
+</table>
+<figcaption>Table de vérité</figcaption>
+</figure>
 

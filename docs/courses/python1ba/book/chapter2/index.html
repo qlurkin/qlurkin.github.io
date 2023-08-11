@@ -372,17 +372,77 @@ sqrt(4)       # Expression valant 2.0
 <figcaption>Opérations sur les nombres</figcaption>
 </figure>
 
-<p>Les deux dernières opérations nécessitent probablement un peu d&#39;explications. Lorsqu&#39;on parle de la division entière de <code>5</code> par <code>2</code> on veut savoir combien de fois <code>2</code> entre entièrement dans <code>5</code>. <code>2</code> entre deux fois dans <code>5</code>, en effet, <code>2 x 2 = 4</code>. <code>2</code> n&#39;entre pas trois fois dans <code>5</code> car <code>3 x 2 = 6</code> ce qui est plus grand que <code>5</code>.</p>
-<p>Le reste de la division entière de <code>5</code> par <code>2</code> est la partie de <code>5</code> qui n&#39;a pas pu être divisée lors de la division entière. Comme on ne peut mettre que deux fois <code>2</code> dans <code>5</code> et que <code>2 x 2 = 4</code>, il reste <code>1</code> qui n&#39;a pas pu être divisé. On dit donc que le reste de la division entière de <code>5</code> par <code>2</code> est égale à <code>1</code>.</p>
+<p>Les deux dernières opérations nécessitent probablement un peu d&#39;explications. Lorsqu&#39;on parle de la division entière de <code>5</code> par <code>2</code> on veut savoir combien de fois <code>2</code> entre entièrement dans <code>5</code>. <code>2</code> entre deux fois dans <code>5</code>, en effet, <code>2 x 2 =&gt; 4</code>. <code>2</code> n&#39;entre pas trois fois dans <code>5</code> car <code>3 x 2 =&gt; 6</code> ce qui est plus grand que <code>5</code>.</p>
+<p>Le reste de la division entière de <code>5</code> par <code>2</code> est la partie de <code>5</code> qui n&#39;a pas pu être divisée lors de la division entière. Comme on ne peut mettre que deux fois <code>2</code> dans <code>5</code> et que <code>2 x 2 =&gt; 4</code>, il reste <code>1</code> qui n&#39;a pas pu être divisé. On dit donc que le reste de la division entière de <code>5</code> par <code>2</code> est égale à <code>1</code>.</p>
 <p>Souvenez vous des divisions écrites que vous avez apprises en primaire. Si vous vous arrêtez avant de calculer les décimales, vous obtenez la division entière et le reste.</p>
 <figure id="division" data-ref="figure">
 <img src="./division_ecrite.svg" class="third">
 <figcaption>Division écrite</figcaption>
 </figure>
 
-<p>Il y a plein de moment où la division entière et le modulo peuvent être utiles. Par exemple, si vous voulez convertir un nombre quelconque de minutes (disons 200) en heures/minutes. Pour obtenir le nombre d&#39;heure, il suffit de faire une division entière par 60: <code>200 // 60 = 3</code>. Nous avons donc 3 heures. Et pour obtenir le nombre de minutes restantes, on utilise le modulo 60: <code>200 % 60 = 20</code>. Il reste donc 20 minutes. 200 minutes correspond à 3 heures et 20 minutes.</p>
+<p>Il y a plein de moment où la division entière et le modulo peuvent être utiles. Par exemple, si vous voulez convertir un nombre quelconque de minutes (disons 200) en heures/minutes. Pour obtenir le nombre d&#39;heure, il suffit de faire une division entière par 60: <code>200 // 60 =&gt; 3</code>. Nous avons donc 3 heures. Et pour obtenir le nombre de minutes restantes, on utilise le modulo 60: <code>200 % 60 =&gt; 20</code>. Il reste donc 20 minutes. 200 minutes correspond à 3 heures et 20 minutes.</p>
 <h3>Opérateurs de comparaison</h3>
+<p>Les opérateurs de comparaison renvoient un booléen en fonction de deux valeurs à comparer. Par exemple <code>4 &lt; 3 =&gt; False</code> et <code>3.5 &gt; 0 =&gt; True</code>.</p>
+<figure id='comparators' data-ref='code'>
+
+<pre><code class="language-python">a &lt; b # inférieur à
+a &gt; b # supérieur à
+a &lt;= b # inférieur ou égale à
+a &gt;= b # supérieur ou égale à
+a == b # égale à
+a != b # différent de
+</code></pre>
+<figcaption>Opérateurs de comparaison</figcaption>
+</figure>
+
+<p>Les comparaisons fonctionnent aussi sur les chaines de caractères. Un <code>str</code> est inférieur à un autre <code>str</code> s&#39;il vient avant dans l&#39;ordre alphabétique (<code>&#39;aab&#39; &lt; &#39;abc&#39; =&gt; True</code>).</p>
 <h3>Opérateurs booléens</h3>
+<p>Les opérateurs booléens permettent de combiner des valeurs booléennes entre elles. Ces opérateurs sont le <code>and</code>, le <code>or</code> et le <code>not</code>. La valeur renvoyée est aussi booléenne. Voici la <strong>table de vérité</strong> qui indique le résultat de chaque opération possible&nbsp;:</p>
+<figure id="trues_table" data-ref='table'>
+<table class='center'>
+    <thead>
+        <tr>
+            <th><code>a</code></th>
+            <th><code>b</code></th>
+            <th><code>not a</code></th>
+            <th><code>a and b</code></th>
+            <th><code>a or b</code></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>True</code></td>
+            <td><code>True</code></td>
+            <td><code>False</code></td>
+            <td><code>True</code></td>
+            <td><code>True</code></td>
+        </tr>
+        <tr>
+            <td><code>True</code></td>
+            <td><code>False</code></td>
+            <td><code>False</code></td>
+            <td><code>False</code></td>
+            <td><code>True</code></td>
+        </tr>
+        <tr>
+            <td><code>False</code></td>
+            <td><code>False</code></td>
+            <td><code>True</code></td>
+            <td><code>False</code></td>
+            <td><code>False</code></td>
+        </tr>
+        <tr>
+            <td><code>False</code></td>
+            <td><code>True</code></td>
+            <td><code>True</code></td>
+            <td><code>False</code></td>
+            <td><code>True</code></td>
+        </tr>
+    </tbody>
+</table>
+<figcaption>Table de vérité</figcaption>
+</figure>
+
 
 </body>
 </html>
