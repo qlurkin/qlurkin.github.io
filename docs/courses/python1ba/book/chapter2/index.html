@@ -443,6 +443,164 @@ a != b # différent de
 <figcaption>Table de vérité</figcaption>
 </figure>
 
+<h3>Priorité des opérateurs</h3>
+<p>Il est bien sûr possible de combiner toutes ces opérations pour créer des expressions plus complexes. Il est intéressant de savoir que Python suis la même priorité des opérations que celle que vous avez vue en Mathématique (Les multiplication sont évaluées avant les additions). Voici, en détail, les priorités des opérations en Python (des plus prioritaires au moins prioritaires):</p>
+<figure id="operation_precedence" data-ref='table'>
+<table>
+    <tr>
+        <th>Opération</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td><code>**</code></td>
+        <td>Puissance</td>
+    </tr>
+    <tr>
+        <td><code>-</code> </td>
+        <td>Négatif (<code>-x</code>)</td>
+    </tr>
+    <tr>
+        <td><code>*</code>, <code>/</code>, <code>//</code>, <code>%</code></td>
+        <td>Multiplication, Division, ...</td>
+    </tr>
+    <tr>
+        <td><code>+</code>, <code>-</code></td>
+        <td>Addition et soustraction</td>
+    </tr>
+    <tr>
+        <td><code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code>, <code>&gt;=</code>, <code>==</code>, <code>!=</code></td>
+        <td>Comparaisons</td>
+    </tr>
+    <tr>
+        <td><code>not</code></td>
+        <td>NON booléen</td>
+    </tr>
+    <tr>
+        <td><code>and</code></td>
+        <td>ET Booléen</td>
+    </tr>
+    <tr>
+        <td><code>or</code></td>
+        <td>OU Booléen</td>
+    </tr>
+</table>
+<figcaption>Priorité des opérations</figcaption>
+</figure>
+
+<p>Comme en Math, il est possible d&#39;utiliser des <strong>parenthèses</strong> pour contrôler l&#39;ordre d&#39;évaluation des opérateurs. Nous en avons déjà utilisé dans le programme de résolution d&#39;équations du second degré, <code>(-b-sqrt(D))/(2*a)</code>.</p>
+<p>Voici un exemple d&#39;expression complexe:</p>
+<pre><code class="language-python">1 + 3.14 * 6 &lt;= 6 % 2**2 and &#39;aab&#39; &gt; &#39;abc&#39; or True == (not 42 != 21 + 21)
+</code></pre>
+<h2>Le contrôle de flux</h2>
+<p>Les instructions d&#39;un programme s’exécutent toujours dans l&#39;ordre dans lequel elles sont écrites dans le programme. On appelle cette séquence d&#39;instructions le flux du programme. Il est possible de réaliser des embranchements et des boucles dans ce flux.</p>
+<h3>Les instructions conditionnelles</h3>
+<p>Dans un programme, il est souvent intéressant d&#39;avoir des portions de code qui ne s&#39;exécutent que si certaines conditions sont remplies. Cela permet au programme de réagir en fonction des circonstances.</p>
+<p>Pour cela, on utilise le <code>if</code>. Voici un exemple&nbsp;:</p>
+<div class="row">
+<div class="span6 middle">
+
+<pre><code class="language-python">a = −5
+if a &lt; 0:
+   print(&quot;a est négatif&quot;)
+</code></pre>
+</div>
+<div class="span6">
+<figure id='if' data-ref='figure'>
+    <div></div>
+    <figcaption>Le <code>if</code></figcaption>
+</figure>
+<script type="module" defer>
+    const draw = await Doc.Draw('#if > div', 220, 300)
+    const start = draw.start()
+    const assign = draw.round('On met la valeur <code>-5</code> dans <code>a</code>').belowOf(start)
+    const cond = draw.round('<code>a</code> est inférieur à 0&nbsp;?').belowOf(assign)
+    const if1 = draw.diamond().belowOf(cond)
+    const oui = draw.node('oui').belowOf(if1)
+    const non = draw.node('non').absolute(if1, 50, 0)
+    const disp = draw.round('Affiche <code>a est négatif</code>').belowOf(oui)
+    const dummy = draw.dummy().rightOf(disp)
+    const end = draw.end().belowOf(disp)
+    draw.polyline([start, '-->', assign, '-->', cond, '-->', if1, '--', oui, '-->', disp, '-->', end])
+    draw.polyline([if1, '--', non, '-|', dummy, '|->', end])
+    draw.done()
+</script>
+</div>
+</div>
+
+<p>Nous pouvons voir qu&#39;il y a une condition après le <code>if</code>. Une condition est une expression dont la valeur est booléenne.</p>
+<p>L&#39;instruction <code>if</code> est le premier exemple d&#39;instruction composée que nous rencontrons. Une instruction composée comporte une ligne d&#39;en-tête se terminant par un <code>:</code> suivie d’un bloc d’instructions indentées <em>(décalées vers la droite)</em>.</p>
+<figure id="indentation" data-ref="figure">
+<img src="./indentation.svg" class='half'>
+<figcaption>Instructions composée</figcaption>
+</figure>
+
+<p><strong>Attention : toutes les instructions du bloc doivent être indentées de la même manière. En particulier, on ne peut pas indenter une ligne avec des espaces et une autre avec des tabulations même si cela semble visuellement identique ! Dans VSCode, il est possible d&#39;activé l&#39;affichage des caractères blancs pour identifier plus facilement les espaces et les tabulations</strong></p>
+<p>Il est possible de définir un bloc à exécuter si la condition est fausse avec l&#39;instruction <code>else</code> <em>(sinon)</em>&nbsp;:</p>
+<div class="row">
+<div class="span5 middle">
+
+<pre><code class="language-python">a = −5
+if a &lt; 0:
+   print(&quot;a est négatif&quot;)
+else:
+   print(&quot;a est positif&quot;)
+</code></pre>
+</div>
+<div class="span7">
+<figure id='if_else' data-ref='figure'>
+    <div></div>
+    <figcaption>Le <code>if else</code></figcaption>
+</figure>
+<script type="module" defer>
+    const draw = await Doc.Draw('#if_else > div', 350, 350)
+    const start = draw.start().move(1, 2)
+    const assign = draw.round('On met la valeur <code>-5</code> dans <code>a</code>').belowOf(start)
+    const cond = draw.round('<code>a</code> est inférieur à 0&nbsp;?').belowOf(assign)
+    const if1 = draw.diamond().belowOf(cond)
+    const oui = draw.node('oui').belowOf(if1)
+    const non = draw.node('non').absolute(if1, 50, 0)
+    const dispOui = draw.round('Affiche <code>a est négatif</code>').belowOf(oui)
+    const dispNon = draw.round('Affiche <code>a est positif</code>').rightOf(oui)
+    const end = draw.end().belowOf(dispOui)
+    draw.polyline([start, '-->', assign, '-->', cond, '-->', if1, '--', oui, '-->', dispOui, '-->', end])
+    draw.polyline([if1, '--', non, '-|>', dispNon, '|->', end])
+    draw.done()
+</script>
+</div>
+</div>
+
+<p>L&#39;instruction <code>elif</code> (contraction de &quot;<code>else if</code>&quot;) permet d’avoir plus de deux branches&nbsp;:</p>
+<pre><code class="language-python">a = −5
+if a == 0:
+   print(&quot;a est nul&quot;)
+elif a &lt; 0:
+   print(&quot;a est négatif&quot;)
+else:
+   print(&quot;a est positif&quot;)
+</code></pre>
+<figure id='if_elif_else' data-ref='figure'>
+    <div></div>
+    <figcaption>Le <code>if elif else</code></figcaption>
+</figure>
+<script type="module" defer>
+    const draw = await Doc.Draw('#if_elif_else > div', 350, 350)
+    const start = draw.start().move(1, 2)
+    const assign = draw.round('On met la valeur <code>-5</code> dans <code>a</code>').belowOf(start)
+    const if1 = draw.diamond().belowOf(assign)
+    const neg = draw.node('<s>a == 0</s><br>a < 0').belowOf(if1)
+    const pos = draw.node('<s>a == 0<br>a < 0</s>').rightOf(if1)
+    const nul = draw.node('a == 0').leftOf(if1)
+    const dispNeg = draw.round('Affiche <code>a est négatif</code>').belowOf(neg)
+    const dispPos = draw.round('Affiche <code>a est positif</code>').rightOf(neg)
+    const dispNul = draw.round('Affiche <code>a est nul</code>').leftOf(neg)
+    const end = draw.end().belowOf(dispNeg)
+    draw.polyline([start, '-->', assign, '-->', if1, '--', neg, '-->', dispNeg, '-->', end])
+    draw.polyline([if1, '--', pos, '-->', dispPos, '|->', end])
+    draw.polyline([if1, '--', nul, '-->', dispNul, '|->', end])
+    draw.done()
+</script>
+
+<p>Dans ce dernier exemple, il est important de comprendre que Python choisi la première branche pour laquelle la condition est vraie. Si la première condition <code class="nowrap">a == 0</code> est vraie, alors la deuxième condition n&#39;est même pas évaluée. Par contre, si on arrive dans la deuxième branche, celle du <code>elif</code>, cela implique que la première condition était fausse et donc que <code>a != 0</code>.</p>
 
 </body>
 </html>
