@@ -492,7 +492,7 @@ a != b # différent de
 <pre><code class="language-python">1 + 3.14 * 6 &lt;= 6 % 2**2 and &#39;aab&#39; &gt; &#39;abc&#39; or True == (not 42 != 21 + 21)
 </code></pre>
 <h2>Le contrôle de flux</h2>
-<p>Les instructions d&#39;un programme s’exécutent toujours dans l&#39;ordre dans lequel elles sont écrites dans le programme. On appelle cette séquence d&#39;instructions le flux du programme. Il est possible de réaliser des embranchements et des boucles dans ce flux.</p>
+<p>Les instructions d&#39;un programme s&#39;exécutent toujours dans l&#39;ordre dans lequel elles sont écrites dans le programme. On appelle cette séquence d&#39;instructions le flux du programme. Il est possible de réaliser des embranchements et des boucles dans ce flux.</p>
 <h3>Les instructions conditionnelles</h3>
 <p>Dans un programme, il est souvent intéressant d&#39;avoir des portions de code qui ne s&#39;exécutent que si certaines conditions sont remplies. Cela permet au programme de réagir en fonction des circonstances.</p>
 <p>Pour cela, on utilise le <code>if</code>. Voici un exemple&nbsp;:</p>
@@ -528,7 +528,7 @@ if a &lt; 0:
 </div>
 
 <p>Nous pouvons voir qu&#39;il y a une condition après le <code>if</code>. Une condition est une expression dont la valeur est booléenne.</p>
-<p>L&#39;instruction <code>if</code> est le premier exemple d&#39;instruction composée que nous rencontrons. Une instruction composée comporte une ligne d&#39;en-tête se terminant par un <code>:</code> suivie d’un bloc d’instructions indentées <em>(décalées vers la droite)</em>.</p>
+<p>L&#39;instruction <code>if</code> est le premier exemple d&#39;instruction composée que nous rencontrons. Une instruction composée comporte une ligne d&#39;en-tête se terminant par un <code>:</code> suivie d&#39;un bloc d&#39;instructions indentées <em>(décalées vers la droite)</em>.</p>
 <figure id="indentation" data-ref="figure">
 <img src="./indentation.svg" class='half'>
 <figcaption>Instructions composée</figcaption>
@@ -569,7 +569,7 @@ else:
 </div>
 </div>
 
-<p>L&#39;instruction <code>elif</code> (contraction de &quot;<code>else if</code>&quot;) permet d’avoir plus de deux branches&nbsp;:</p>
+<p>L&#39;instruction <code>elif</code> (contraction de &quot;<code>else if</code>&quot;) permet d&#39;avoir plus de deux branches&nbsp;:</p>
 <pre><code class="language-python">a = −5
 if a == 0:
    print(&quot;a est nul&quot;)
@@ -583,7 +583,7 @@ else:
     <figcaption>Le <code>if elif else</code></figcaption>
 </figure>
 <script type="module" defer>
-    const draw = await Doc.Draw('#if_elif_else > div', 350, 350)
+    const draw = await Doc.Draw('#if_elif_else > div', 550, 300)
     const start = draw.start().move(1, 2)
     const assign = draw.round('On met la valeur <code>-5</code> dans <code>a</code>').belowOf(start)
     const if1 = draw.diamond().belowOf(assign)
@@ -601,6 +601,85 @@ else:
 </script>
 
 <p>Dans ce dernier exemple, il est important de comprendre que Python choisi la première branche pour laquelle la condition est vraie. Si la première condition <code class="nowrap">a == 0</code> est vraie, alors la deuxième condition n&#39;est même pas évaluée. Par contre, si on arrive dans la deuxième branche, celle du <code>elif</code>, cela implique que la première condition était fausse et donc que <code>a != 0</code>.</p>
+<h3>Les boucles</h3>
+<p>Dans un programme, il arrive très souvent qu&#39;il faille exécuter une même portion de code un certain nombre de fois. C&#39;est d&#39;ailleurs un des grands points forts de l&#39;informatique : exécuter des opérations répétitives à une vitesse prodigieuse.</p>
+<p>Pour réaliser une boucle dans le flux d&#39;exécution du programme, on utilise l&#39;instruction composée <code>while</code>&nbsp;:</p>
+<div class="row">
+<div class="span5 middle">
+
+<pre><code class="language-python">i = 0
+while i &lt; 5:
+    i = i + 1
+    print(i)
+</code></pre>
+</div>
+<div class="span7">
+<figure id='while' data-ref='figure'>
+    <div></div>
+    <figcaption>Le <code>while</code></figcaption>
+</figure>
+<script type="module" defer>
+    const draw = await Doc.Draw('#while > div', 350, 350)
+    const start = draw.start().move(1, 2)
+    const init = draw.round('Met la valeur <code>0</code> dans <code>i</code>').belowOf(start)
+    const back = draw.dummy().belowOf(init)
+    const cond = draw.round('i < 5 ?').belowOf(back)
+    const if1 = draw.diamond().belowOf(cond)
+    const oui = draw.node('oui').belowOf(if1)
+    const non = draw.node('non').rightOf(if1)
+    const dummy = draw.dummy().leftOf(if1)
+    const inc = draw.round('Incrémente <code>i</code>').belowOf(oui)
+    const show = draw.round('Affiche la veleur de <code>i</code>').belowOf(inc)
+    const end = draw.end().belowOf(show)
+    draw.polyline([start, '-->', init, '--', back, '-->', cond, '-->', if1, '--', oui, '-->', inc, '-->', show, '-|', dummy, '|->', back])
+    draw.polyline([if1, '--', non, '|->' , end])
+    draw.done()
+</script>
+</div>
+</div>
+
+<p><strong>L&#39;instruction while exécute son bloc tant que sa condition est vraie.</strong></p>
+<p>Dans ce cas-ci, le bloc commence par l&#39;incrémentation de <code>i</code>. Cette instruction nécessite une petite explication. Il s&#39;agit ici encore d&#39;un exemple flagrant de la différence qu&#39;il existe entre le <code>=</code> de la programmation et le <code>=</code> des mathématiques. En effet, l&#39;expression <code>i = i + 1</code> n&#39;a aucun sens en mathématique. Elle est cependant parfaitement valide <em>(et très courante)</em> en programmation. Elle signifie &quot;mettre la valeur de l&#39;expression <code>i + 1</code> <em>(quelle que soit la valeur de <code>i</code>)</em> dans la variable <code>i</code>&quot;. Il faut comprendre ici que la valeur de l&#39;expression <code>i + 1</code> est calculée d&#39;abord. Puis, cette valeur est assignée à <code>i</code> c&#39;est-à-dire qu&#39;elle va remplacer la valeur qu&#39;avait <code>i</code>. En bref, l&#39;instruction <code>i = i + 1</code> augmente la valeur de <code>i</code> de <code>1</code>.</p>
+<p>Le bloc se termine par l&#39;affichage de <code>i</code>.</p>
+<p>Nous avons donc un bloc d&#39;instructions qui sera répété tant que <code>i</code> sera inférieur à <code>5</code> et ce bloc incrémente puis affiche <code>i</code>. Comme <code>i</code> démarre à <code>0</code>, l&#39;affichage final sera le suivant&nbsp;:</p>
+<div class="terminal">
+1
+2
+3
+4
+5
+</div>
+
+<p>Il est a noter que la condition du <code>while</code> est testée avant le début de chaque tour de boucle. Il peut donc arriver que la boucle ne fasse aucun tour si la condition est fausse dès le départ.</p>
+<p><strong>Il est bien sûr évident qu&#39;il faut s&#39;arranger pour que la condition ne soit pas vraie pour toujours car, dans ces conditions, la boucle ne s&#39;arrêterait jamais et le programme serait bloqué.</strong></p>
+<pre><code class="language-python">n = 1
+while n &lt;= 5:
+   print(n)      # boucle infinie !!
+</code></pre>
+<pre><code class="language-python">n = 1
+while n &gt; 0:
+   print(n)
+   n += 1        # boucle infinie !!
+</code></pre>
+<p>Il est également possible de contrôler le déroulement de la boucle à partir de l&#39;intérieur du bloc avec les instructions <code>break</code> et <code>continue</code>.</p>
+<p>L&#39;instruction <code>break</code> permet de mettre immédiatement fin à la boucle&nbsp;:</p>
+<pre><code class="language-python"># recherche le plus petit naturel non nul divisible par 38 et 46
+n = 1
+while True:
+   if n % 38 == 0 and n % 46 == 0:
+      break
+   n += 1
+print(n, &quot;est le plus petit nombre divisible par 38 et 46&quot;)
+</code></pre>
+<p>L&#39;instruction <code>continue</code> permet de mettre immédiatement fin au tour de boucle en cours&nbsp;:</p>
+<pre><code class="language-python"># affiche tous les nombres pairs plus petits que 100
+n = 0
+while n &lt;= 100:
+   n += 1
+   if n % 2 != 0:
+      continue
+   print(n)
+</code></pre>
 
 </body>
 </html>

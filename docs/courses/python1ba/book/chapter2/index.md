@@ -555,7 +555,7 @@ Voici un exemple d'expression complexe:
 
 ## Le contrôle de flux
 
-Les instructions d'un programme s’exécutent toujours dans l'ordre dans lequel elles sont écrites dans le programme. On appelle cette séquence d'instructions le flux du programme. Il est possible de réaliser des embranchements et des boucles dans ce flux.
+Les instructions d'un programme s'exécutent toujours dans l'ordre dans lequel elles sont écrites dans le programme. On appelle cette séquence d'instructions le flux du programme. Il est possible de réaliser des embranchements et des boucles dans ce flux.
 
 ### Les instructions conditionnelles
 
@@ -598,7 +598,7 @@ if a < 0:
 
 Nous pouvons voir qu'il y a une condition après le `if`. Une condition est une expression dont la valeur est booléenne.
 
-L'instruction `if` est le premier exemple d'instruction composée que nous rencontrons. Une instruction composée comporte une ligne d'en-tête se terminant par un `:` suivie d’un bloc d’instructions indentées *(décalées vers la droite)*.
+L'instruction `if` est le premier exemple d'instruction composée que nous rencontrons. Une instruction composée comporte une ligne d'en-tête se terminant par un `:` suivie d'un bloc d'instructions indentées *(décalées vers la droite)*.
 
 <figure id="indentation" data-ref="figure">
 <img src="./indentation.svg" class='half'>
@@ -644,7 +644,7 @@ else:
 </div>
 </div>
 
-L'instruction `elif` (contraction de "`else if`") permet d’avoir plus de deux branches&nbsp;:
+L'instruction `elif` (contraction de "`else if`") permet d'avoir plus de deux branches&nbsp;:
 
 ```python
 a = −5
@@ -661,7 +661,7 @@ else:
     <figcaption>Le <code>if elif else</code></figcaption>
 </figure>
 <script type="module" defer>
-    const draw = await Doc.Draw('#if_elif_else > div', 350, 350)
+    const draw = await Doc.Draw('#if_elif_else > div', 550, 300)
     const start = draw.start().move(1, 2)
     const assign = draw.round('On met la valeur <code>-5</code> dans <code>a</code>').belowOf(start)
     const if1 = draw.diamond().belowOf(assign)
@@ -679,4 +679,105 @@ else:
 </script>
 
 Dans ce dernier exemple, il est important de comprendre que Python choisi la première branche pour laquelle la condition est vraie. Si la première condition <code class="nowrap">a == 0</code> est vraie, alors la deuxième condition n'est même pas évaluée. Par contre, si on arrive dans la deuxième branche, celle du `elif`, cela implique que la première condition était fausse et donc que `a != 0`.
+
+### Les boucles
+
+Dans un programme, il arrive très souvent qu'il faille exécuter une même portion de code un certain nombre de fois. C'est d'ailleurs un des grands points forts de l'informatique : exécuter des opérations répétitives à une vitesse prodigieuse.
+
+Pour réaliser une boucle dans le flux d'exécution du programme, on utilise l'instruction composée `while`&nbsp;:
+
+<div class="row">
+<div class="span5 middle">
+
+```python
+i = 0
+while i < 5:
+    i = i + 1
+    print(i)
+```
+
+</div>
+<div class="span7">
+<figure id='while' data-ref='figure'>
+    <div></div>
+    <figcaption>Le <code>while</code></figcaption>
+</figure>
+<script type="module" defer>
+    const draw = await Doc.Draw('#while > div', 350, 350)
+    const start = draw.start().move(1, 2)
+    const init = draw.round('Met la valeur <code>0</code> dans <code>i</code>').belowOf(start)
+    const back = draw.dummy().belowOf(init)
+    const cond = draw.round('i < 5 ?').belowOf(back)
+    const if1 = draw.diamond().belowOf(cond)
+    const oui = draw.node('oui').belowOf(if1)
+    const non = draw.node('non').rightOf(if1)
+    const dummy = draw.dummy().leftOf(if1)
+    const inc = draw.round('Incrémente <code>i</code>').belowOf(oui)
+    const show = draw.round('Affiche la veleur de <code>i</code>').belowOf(inc)
+    const end = draw.end().belowOf(show)
+    draw.polyline([start, '-->', init, '--', back, '-->', cond, '-->', if1, '--', oui, '-->', inc, '-->', show, '-|', dummy, '|->', back])
+    draw.polyline([if1, '--', non, '|->' , end])
+    draw.done()
+</script>
+</div>
+</div>
+
+**L'instruction while exécute son bloc tant que sa condition est vraie.**
+
+Dans ce cas-ci, le bloc commence par l'incrémentation de `i`. Cette instruction nécessite une petite explication. Il s'agit ici encore d'un exemple flagrant de la différence qu'il existe entre le `=` de la programmation et le `=` des mathématiques. En effet, l'expression `i = i + 1` n'a aucun sens en mathématique. Elle est cependant parfaitement valide *(et très courante)* en programmation. Elle signifie "mettre la valeur de l'expression `i + 1` *(quelle que soit la valeur de `i`)* dans la variable `i`". Il faut comprendre ici que la valeur de l'expression `i + 1` est calculée d'abord. Puis, cette valeur est assignée à `i` c'est-à-dire qu'elle va remplacer la valeur qu'avait `i`. En bref, l'instruction `i = i + 1` augmente la valeur de `i` de `1`.
+
+Le bloc se termine par l'affichage de `i`.
+
+Nous avons donc un bloc d'instructions qui sera répété tant que `i` sera inférieur à `5` et ce bloc incrémente puis affiche `i`. Comme `i` démarre à `0`, l'affichage final sera le suivant&nbsp;:
+
+<div class="terminal">
+1
+2
+3
+4
+5
+</div>
+
+Il est a noter que la condition du `while` est testée avant le début de chaque tour de boucle. Il peut donc arriver que la boucle ne fasse aucun tour si la condition est fausse dès le départ.
+
+**Il est bien sûr évident qu'il faut s'arranger pour que la condition ne soit pas vraie pour toujours car, dans ces conditions, la boucle ne s'arrêterait jamais et le programme serait bloqué.**
+
+```python
+n = 1
+while n <= 5:
+   print(n)      # boucle infinie !!
+```
+
+```python
+n = 1
+while n > 0:
+   print(n)
+   n += 1        # boucle infinie !!
+```
+
+Il est également possible de contrôler le déroulement de la boucle à partir de l'intérieur du bloc avec les instructions `break` et `continue`.
+
+L'instruction `break` permet de mettre immédiatement fin à la boucle&nbsp;:
+
+```python
+# recherche le plus petit naturel non nul divisible par 38 et 46
+n = 1
+while True:
+   if n % 38 == 0 and n % 46 == 0:
+      break
+   n += 1
+print(n, "est le plus petit nombre divisible par 38 et 46")
+```
+
+L'instruction `continue` permet de mettre immédiatement fin au tour de boucle en cours&nbsp;:
+
+```python
+# affiche tous les nombres pairs plus petits que 100
+n = 0
+while n <= 100:
+   n += 1
+   if n % 2 != 0:
+      continue
+   print(n)
+```
 
