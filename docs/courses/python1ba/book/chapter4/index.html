@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapitre 4 - Programmation graphique</title>
+    <script src="/document.js" defer></script>
+    
+</head>
+<body>
+    <h1>Chapitre 4 <small>Programmation graphique</small></h1>
+    
+    <script type="module" defer>
+Doc.setChapterNb(4)
+</script>
+
+<p>Jusqu&#39;à présent, nous toujours présenté nos résultat à l&#39;utilisateur en affichant des chaines de caractères avec le fonction <code>print()</code>. Il est maintenant temps d&#39;aller plus loin et de commencer à créer des applications graphiques. On entend par applications graphiques, des applications qui s&#39;ouvriront dans une fenêtre et qui pourront recevoir les événements (clavier, souris, ...). Les fenêtres et les événements sont gérés par le système d&#39;exploitation. Il faudra donc interagir avec l&#39;OS pour réaliser ce genre d&#39;application.</p>
+<h2>Bibliothèque</h2>
+<p>Comme vous le savez peut-être python est un langage extrêmement populaire. Cela est du en partie au fait que Python est assez facile à apprendre mais aussi au fait qu&#39;il existe énormément de bibliothèque pour Python.</p>
+<p>Une bibliothèque est un ensemble de fonctionnalité que l&#39;on peut installer en plus de l&#39;installation de base de Python. Ces bibliothèques peuvent être créée par n&#39;importe qui. Il existe plusieurs moyen de les rendre disponible au monde entier mais le plus courant est dépôt de paquets <a href="https://pypi.org">PyPI</a>.</p>
+<p>Nous n&#39;allons pas apprendre ici à créer et publier des paquets mais nous allons devoir en installer un. En effet, nous allons créer nos application graphique grâce à la bibliothèque <a href="https://www.pygame.org">Pygame</a>. Pygame à l&#39;avantage d&#39;être facile à utiliser. De plus, c&#39;est une librairie de bas niveau qui permet de bien comprendre ce qu&#39;il se passe dans une application graphique.</p>
+<h3>Installation</h3>
+<p>Pour installer une bibliothèque provenant de PyPI, on utilise le module <code>pip</code> <em>(Pip Install Package)</em> de Python. Cela veut dire que nous allons utiliser l&#39;interpréteur Python pour installer la bibliothèque. Comme toujours, l&#39;interpréteur s&#39;utilise en ligne de commande et nous allons donc taper la commande suivante pour installer Pygame&nbsp;:</p>
+<div class="terminal">
+> python -m pip install pygame
+</div>
+
+<p>Une fois que vous validerez la commande, vous verrez que le téléchargement de Pygame commence.</p>
+<p>Lorsque Pygame est installer il est possible de l&#39;importer dans vos programme&nbsp;:</p>
+<pre><code class="language-python">import pygame
+</code></pre>
+<h2>Premier programme graphique</h2>
+<p>Voici le code d&#39;un programme simple utilisant Pygame&nbsp;:</p>
+<pre><code class="language-python">import pygame
+
+# initialisation de pygame
+pygame.init()
+
+# demande une fenêtre de 800x600 pixels
+screen = pygame.display.set_mode([800, 600])
+
+# boucle jusqu&#39;à ce qu&#39;on quitte
+while not pygame.event.peek(pygame.QUIT):
+
+    # dessine un cercle rouge centré en (100, 300) de
+    # rayon 20 dans le tampon caché
+    pygame.draw.circle(screen, [255, 0, 0], [100, 300], 20)
+
+    # échange les tampons
+    pygame.display.flip()
+</code></pre>
+<p>Nous pouvons voir dans ce programme que toutes les fonctionnalités de Pygame sont accessibles en tapant &quot;<code>pygame.</code>&quot;. On dit que <code>pygame</code> est un <strong>espace de noms</strong>. Les espaces de nom permettent aux différentes bibliothèques d&#39;utiliser les mêmes noms de fonctions sans qu&#39;il y ait de conflits entre elles.</p>
+<p>Un autre élément important dans le programme ci-dessus est qu&#39;il se compose essentiellement d&#39;une boucle <code>while</code>. Les programmes en ligne de commande que nous avons réalisés jusqu&#39;à présent, quittaient immédiatement après avoir afficher leurs résultats. Les applications graphiques ne se comportent généralement pas comme ça. Elle <strong>continue de tourner</strong> tant qu&#39;on ne ferme pas la fenêtre. Le <code>while</code> qui est ici tourne tant que l&#39;application ne reçoit pas <strong>l&#39;événement <code>QUIT</code></strong>. Cette boucle garde donc le programme en exécution. L&#39;événement <code>QUIT</code> peut être déclencher de plusieurs façons. L&#39;une d&#39;entre elles est de fermer la fenêtre de l&#39;application. </p>
+<p>Avant de démarrer la boucle, on peut voir qu&#39;il est nécessaire d&#39;initialiser Pygame et de demander <strong>au système d&#39;exploitation</strong> d&#39;ouvrir une fenêtre.</p>
+<p>Pour bien comprendre ce qu&#39;il se passe dans la boucle, il faut savoir que chaque fenêtre contient au moins <strong>deux tampons de dessin</strong>. L&#39;un d&#39;eux est utiliser par la carte graphique de l&#39;ordinateur pour afficher le contenu de la fenêtre à l&#39;écran. Si on dessine sur ce tampon, le résultat est directement visible à l&#39;écran. Cela peut poser problème car le dessin de l&#39;interface d&#39;un programme ne se fait pas instantanément et les étapes intermédiaires du dessin peuvent être visibles. C&#39;est pour palier à ce problème qu&#39;il existe un deuxième tampon de dessin qui est caché. L&#39;idée est de faire le dessin de l&#39;application sur le tampon caché et l&#39;<strong>échanger</strong> avec l&#39;autre que au moment où le dessin est terminé. Dans la boucle, nous faisons donc deux choses&nbsp;: nous dessinons un cercle rouge dans le tampon caché de la fenêtre puis nous échangeons les tampons.</p>
+<h2>Animations</h2>
+<p>Le programme que venons de réaliser redessine le cercle rouge à chaque tour de boucle exactement au même endroit. On a donc l&#39;impression que rien ne se passe dans notre application. Nous pourrions essayer de changer la position du cercle à chaque fois qu&#39;on le dessine. Cela permettrait de donner l&#39;impression que le cercle bouge.</p>
+<pre><code class="language-python">import pygame
+
+# initialisation de pygame
+pygame.init()
+
+# demande une fenêtre de 800x600 pixels
+screen = pygame.display.set_mode([800, 600])
+
+xCircle = 100
+
+# boucle jusqu&#39;à ce qu&#39;on quitte
+while not pygame.event.peek(pygame.QUIT):
+
+    # dessine un rectangle noir pour effacer l&#39;image
+    pygame.draw.rect(screen, [0, 0, 0], pygame.Rect(0, 0, 800, 600))
+
+    # dessine un cercle rouge centré en (xCircle, 300) de rayon 20
+    pygame.draw.circle(screen, [255, 0, 0], [xCircle, 300], 20)
+    
+    # déplace le cercle
+    xCircle += 1
+
+    # affiche l&#39;image qui vient d&#39;être dessinée
+    pygame.display.flip()
+</code></pre>
+<p>Dans ce code nous avons créer une variable <code>xCircle</code> qui servira pour l&#39;abscisse du centre du cercle et nous modifions sa valeur à chaque tour de boucle. Vous pouvez aussi voir qu&#39;avant de dessiner le cercle, nous effaçons le tampon. Si nous ne le faisions pas, nous verrions toujours les cercles dessinés aux tours de boucle précédents.</p>
+<p>En fonction de votre ordinateur, il est possible que l&#39;animation du cercle soie trop rapide. En effet dans son état actuel, la boucle <code>while</code> peut faire plusieurs centaines de tours par seconde. Sachant que la plupart des écrans ne se rafraichissent que 60 fois par seconde, c&#39;est complètement inutile. Nous allons donc utiliser une <code>Clock</code> de Pygame pour temporiser notre boucle <code>while</code>.</p>
+<pre><code class="language-python">import pygame
+
+# initialisation de pygame
+pygame.init()
+
+# demande une fenêtre de 800x600 pixels
+screen = pygame.display.set_mode([800, 600])
+
+xCircle = 100
+
+# la clock sert à limiter le nombre d&#39;images par seconde
+clock = pygame.time.Clock()
+
+# boucle jusqu&#39;à ce qu&#39;on quitte
+while not pygame.event.peek(pygame.QUIT):
+
+    # attends qu&#39;il se soit passé au moins 1/60
+    # de seconde depuis le dernier tick
+    clock.tick(60)
+
+    # dessine un rectangle noir pour effacer l&#39;image
+    pygame.draw.rect(screen, [0, 0, 0], pygame.Rect(0, 0, 800, 600))
+
+    # dessine un cercle rouge centré en (xCircle, 300) de rayon 20
+    pygame.draw.circle(screen, [255, 0, 0], [xCircle, 300], 20)
+    
+    # déplace le cercle
+    xCircle += 1
+
+    # affiche l&#39;image qui vient d&#39;être dessinée
+    pygame.display.flip()
+</code></pre>
+<p>L&#39;instruction <code>pygame.time.Clock()</code> crée une valeur de type <code>Clock</code>. Si type de valeur a été créé par la bibliothèque Pygame. Remarquez que la valeur de type <code>Clock</code> est sauvegardée dans une variable nommée <code>clock</code> <em>(avec un c minuscule)</em>. Il s&#39;agit là d&#39;une pratique assez courante en programmation. Une fois crée, la <code>clock</code> nous fourni la fonctionnalité <code>tick</code> qui nous permet de temporiser le programme.</p>
+<p>La vitesse du cercle devrait maintenant être raisonnable et identique d&#39;un ordinateur à l&#39;autre.</p>
+<h2>Événements</h2>
+
+</body>
+</html>

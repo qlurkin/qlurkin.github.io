@@ -4,10 +4,12 @@ await build_and_index([
     'chapter1',
     'chapter2',
     'chapter3',
+    'chapter4',
 ])
 
 pdf([
     'chapter1',
     'chapter2',
     'chapter3',
+    'chapter4',
 ], 'book.pdf')
