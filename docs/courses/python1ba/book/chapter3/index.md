@@ -130,7 +130,7 @@ v = L.pop(2) # enlève et renvoie l'élément d'indice 2
 
 #### Concaténation
 
-Il est possible de créer une nouvelle séquence correspondant à la concaténation de deux séquences, c’est-à-dire, de la mise bout à bout de ces deux séquences. Pour cela, on utilise l’opération +.
+Il est possible de créer une **nouvelle séquence** correspondant à la concaténation de deux séquences, c'est-à-dire, de la mise bout à bout de ces deux séquences. Pour cela, on utilise l'opération `+`.
 
 ```python
 L1 = [1, 2, 3]
@@ -141,3 +141,146 @@ s1 = 'hello '
 s2 = 'world'
 s3 = s1 + s2   # s3 sera égal à 'hello world'
 ```
+
+#### Répétition
+
+On peut également créer une **nouvelle séquence** correspondant à la répétition d'une séquence en utilisant l'opérateur `*`.
+
+```python
+L1 = [1, 2, 3]
+L2 = L1 ∗ 2    # L2 sera égal à [1, 2, 3, 1, 2, 3]
+
+s1 = 'hello '
+s2 = s1 ∗ 3    # s2 sera égal à 'hello hello hello'
+```
+
+#### L'opérateur `in`
+
+L'opérateur `in` renvoie `True` si l'élément à sa gauche est dans la séquence à sa droite.
+
+Pour vérifier si une valeur se trouve dans une liste, on peut utiliser l'instruction `in` dans
+un `if`&nbsp;:
+
+```python
+L = [1, 2, 5, 6]
+if 2 in L:
+    print("2 est dans la liste")
+else:
+    print("2 n'est pas dans la liste")
+```
+
+Cela fonctionne aussi avec les chaines de caractères&nbsp;:
+
+```python
+if "l" in "salut":
+    print("'l' est une lettre de 'salut'")
+```
+
+Et aussi quand l'opérande de droite est une sous-chaîne&nbsp;:
+
+```python
+if "al" in "salut":
+    print("'al' est une sous-chaine de 'salut'")
+```
+
+### L'instruction `for … in …`
+
+Pour effectuer un traitement sur tous les éléments d'une séquence, il est bien sûr possible d'utiliser une boucle `while`. Cependant, le Python prévoit une boucle <code class="nowrap">for … in …</code> permettant de le faire de façon plus pratique.
+
+<div class="row">
+<div class="span5 middle">
+
+```python
+for variable in séquence:
+    bloc_d_instruction
+```
+
+</div>
+<div class="span7">
+<figure id='for_in' data-ref='figure'>
+    <div></div>
+    <figcaption>Le <code>for … in …</code></figcaption>
+</figure>
+<script type="module" defer>
+    const draw = await Doc.Draw('#for_in > div', 350, 400)
+    const start = draw.start().move(1, 2)
+    const init = draw.round('On démarre du premier élément de la liste').belowOf(start)
+    const back = draw.dummy().belowOf(init)
+    const cond = draw.round('l’élément existe-t-il ?').belowOf(back)
+    const if1 = draw.diamond().belowOf(cond)
+    const oui = draw.node('oui').belowOf(if1)
+    const non = draw.node('non').rightOf(if1)
+    const dummy = draw.dummy().leftOf(if1)
+    const assign = draw.round('<code>variable</code> prend la valeur de l\'élément').belowOf(oui)
+    const bloc = draw.round('exécution du <code>bloc_d_instructions</code>').belowOf(assign)
+    const inc = draw.round('On passe à l\'élément suivant').belowOf(bloc)
+    const end = draw.end().belowOf(inc)
+    draw.polyline([start, '-->', init, '--', back, '-->', cond, '-->', if1, '--', oui, '-->', assign, '-->', bloc, '-->', inc, '-|', dummy, '|->', back])
+    draw.polyline([if1, '--', non, '|->' , end])
+    draw.done()
+</script>
+</div>
+</div>
+
+Dans une boucle `for … in …`, la variable prend successivement la valeur de chaque élément de la liste.
+
+Le code suivant&nbsp;:
+
+```python
+L = ['truc', 'machin', 'bidule']
+
+for a in L:
+    print(a)
+```
+
+affichera&nbsp;:
+
+<div class="terminal">
+    truc
+    machin
+    bidule
+</div>
+
+Dans le code ci-dessus, la variable `a` vaut `'truc'` au premier tour de boucle, `'machin'` au deuxième tour de boucle et `'bidule'` au troisième tour de boucle.
+
+Cela marche aussi avec les chaines de caractères. Le code suivant&nbsp;:
+
+```python
+s = "salut"
+
+for a in s:
+    print(a)
+```
+
+affichera&nbsp;:
+
+<div class="terminal">
+    s
+    a
+    l
+    u
+    t
+</div>
+
+### Les copies
+
+Nous allons voir voir ici que l'on peut facilement avoir des surprises lorsqu'on essaye de faire une copie d’une liste.
+
+Dans le code qui va suivre, nous allons essayer de créer une copie d'une liste pour pouvoir modifier la copie tout en gardant l'originale inchangée&nbsp;:
+
+```python
+originale = ['I', 'like', 'Python']   # liste originale
+copie = originale                     # copie de l'originale
+
+copie[1] = 'love'                     # modification de la copie
+
+print(originale)                      # affichage de l'originale
+print(copie)                          # affichage de la copie
+```
+
+Ce qui affiche&nbsp;:
+
+<div class="terminal">
+['I', 'love', 'Python']
+['I', 'love', 'Python']
+</div>
