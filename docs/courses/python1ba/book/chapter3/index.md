@@ -169,19 +169,6 @@ else:
     print("2 n'est pas dans la liste")
 ```
 
-Cela fonctionne aussi avec les chaines de caractères&nbsp;:
-
-```python
-if "l" in "salut":
-    print("'l' est une lettre de 'salut'")
-```
-
-Et aussi quand l'opérande de droite est une sous-chaîne&nbsp;:
-
-```python
-if "al" in "salut":
-    print("'al' est une sous-chaine de 'salut'")
-```
 
 ### L'instruction `for … in …`
 
@@ -243,25 +230,6 @@ affichera&nbsp;:
 
 Dans le code ci-dessus, la variable `a` vaut `'truc'` au premier tour de boucle, `'machin'` au deuxième tour de boucle et `'bidule'` au troisième tour de boucle.
 
-Cela marche aussi avec les chaines de caractères. Le code suivant&nbsp;:
-
-```python
-s = "salut"
-
-for a in s:
-    print(a)
-```
-
-affichera&nbsp;:
-
-<div class="terminal">
-    s
-    a
-    l
-    u
-    t
-</div>
-
 ### Les copies
 
 Nous allons voir voir ici que l'on peut facilement avoir des surprises lorsqu'on essaye de faire une copie d’une liste.
@@ -284,3 +252,121 @@ Ce qui affiche&nbsp;:
 ['I', 'love', 'Python']
 ['I', 'love', 'Python']
 </div>
+
+On constate donc que les deux listes ont été modifiées et que l'originale a été perdue. En effet, le fait d’écrire `copie = originale` ne crée pas de nouvelle liste.
+
+En Python, comme dans beaucoup d'autres langages de programmation, dès qu'elle contient un type plus complexe qu'un simple nombre, une variable ne contient pas directement sa valeur mais seulement une référence à celle-ci. Lorsqu'on écrit `copie = originale` on ne fait une copie que de la référence. On se retrouve donc avec deux variables qui manipulent la même liste.
+
+<figure id='references' data-ref='figure'>
+    <img src="./references.svg" class="half">
+    <figcaption>Deux références pour la même liste</figcaption>
+</figure>
+
+
+Ce système de référence existe car la copie de types complexes prend du temps et n'est souvent pas souhaitable.
+
+Pour créer une vraie copie de la liste, on peut utiliser un *slicing*&nbsp;:
+
+```python
+originale = ['I', 'like', 'Python']   # liste originale
+copie = originale[:]                  # copie de l'originale
+
+copie[1] = 'love'                     # modification de la copie
+
+print(originale)                      # affichage de l'originale
+print(copie)                          # affichage de la copie
+```
+
+Ce qui affiche&nbsp;:
+
+<div class="terminal">
+['I', 'like', 'Python']
+['I', 'love', 'Python']
+</div>
+
+
+Un *slicing* crée toujours une nouvelle liste. On obtient donc bien une vrai copie de l'originale. Il existe d'autres opérations que l'on peut exploiter pour obtenir le même résultat&nbsp;:
+
+```python
+copie = originale * 1
+copie = originale + []
+```
+
+On peut aussi utiliser la fonction `list()` qui crée une liste à partir de ce qu'on lui passe en paramètre&nbsp;:
+
+```python
+copie = list(originale)
+```
+
+## Les chaînes de caractères
+
+Comme nous l'avons déjà dit plus haut, les chaines de caractères et les liste partagent beaucoup de fonctionnalités&nbsp;:
+
+```python
+s = 'Python'
+
+print(s[1])      # affiche 'y'
+print(len(s))    # affiche 6
+print(s[1:3])    # affiche 'yt'
+print(s * 2)     # affiche 'PythonPython'
+print('I love ' + s) # affiche 'I love Python'
+
+for l in s:
+    print(l)     # affiche :
+                 # P
+                 # y
+                 # t
+                 # h
+                 # o
+                 # n
+```
+
+Il y a bien sûr quelques différences.
+
+### Opérateur `in`
+
+L'opérateur `in` fonctionne aussi avec les chaines de caractères&nbsp;:
+
+```python
+if "l" in "salut":
+    print("'l' est une lettre de 'salut'")
+```
+
+Mais il fonctionne aussi quand l'opérande de droite est une sous-chaîne&nbsp;:
+
+```python
+if "al" in "salut":
+    print("'al' est une sous-chaine de 'salut'")
+```
+### Immuable
+
+Il y a une grande différence entre les listes et les chaines de caractères : les listes sont des séquences modifiables alors que les chaines de caractères sont des séquences **non-modifiables** ou **immuable**.
+
+En gros, cela veut dire qu'on peut modifier une liste&nbsp;:
+
+```python
+L = ['I', 'like', 'Python']
+L[2] = 'love'     # ceci fonctionne
+```
+
+Mais qu'on ne peut pas modifier une chaine de caractères. Le code suivant ne fonctionne donc pas&nbsp;:
+
+```python
+s = "Le Python, c'est bon !"
+s[17] = "c"       # ceci ne fonctionne pas !
+```
+
+La suppression et l'insertion de caractères est également interdite pour les chaines de caractères.
+
+Voyons maintenant le code suivant&nbsp;:
+
+```python
+s = "Le Python, c'est bon !"
+s = s[:17] + "cool" + s[20:] # ceci fonctionne
+```
+
+Ce code affichera bien `Le Python, c'est cool !`. Il semble donc que la chaine de caractères `s` ait bien été modifiée; puisque sa valeur était `"Le Python, c'est bon !"` au départ. Mais en réalité, la chaine de départ n'a pas changé. C'est la référence dans la variable `s` qui a été remplacée. La somme `s[:17] + "cool" + s[20:]` crée une nouvelle chaine de caractères, indépendante de la chaine `"Le Python, c'est bon !"` d’origine. La variable 's' contient ensuite une référence vers cette nouvelle chaine à cause de l'assignation (`s =`). Du coup, plus aucune variable ne référence la chaine d'origine ce qui provoquera son effacement de la mémoire.
+
+## Tuple
+
+Un tuple, comme une liste, est une suite de valeurs pouvant être de différents types. La grosse différence entre les listes et les tuples c'est que les tuples sont **immuables**.

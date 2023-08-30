@@ -116,14 +116,6 @@ if 2 in L:
 else:
     print(&quot;2 n&#39;est pas dans la liste&quot;)
 </code></pre>
-<p>Cela fonctionne aussi avec les chaines de caractères&nbsp;:</p>
-<pre><code class="language-python">if &quot;l&quot; in &quot;salut&quot;:
-    print(&quot;&#39;l&#39; est une lettre de &#39;salut&#39;&quot;)
-</code></pre>
-<p>Et aussi quand l&#39;opérande de droite est une sous-chaîne&nbsp;:</p>
-<pre><code class="language-python">if &quot;al&quot; in &quot;salut&quot;:
-    print(&quot;&#39;al&#39; est une sous-chaine de &#39;salut&#39;&quot;)
-</code></pre>
 <h3>L&#39;instruction <code>for … in …</code></h3>
 <p>Pour effectuer un traitement sur tous les éléments d&#39;une séquence, il est bien sûr possible d&#39;utiliser une boucle <code>while</code>. Cependant, le Python prévoit une boucle <code class="nowrap">for … in …</code> permettant de le faire de façon plus pratique.</p>
 <div class="row">
@@ -174,21 +166,6 @@ for a in L:
 </div>
 
 <p>Dans le code ci-dessus, la variable <code>a</code> vaut <code>&#39;truc&#39;</code> au premier tour de boucle, <code>&#39;machin&#39;</code> au deuxième tour de boucle et <code>&#39;bidule&#39;</code> au troisième tour de boucle.</p>
-<p>Cela marche aussi avec les chaines de caractères. Le code suivant&nbsp;:</p>
-<pre><code class="language-python">s = &quot;salut&quot;
-
-for a in s:
-    print(a)
-</code></pre>
-<p>affichera&nbsp;:</p>
-<div class="terminal">
-    s
-    a
-    l
-    u
-    t
-</div>
-
 <h3>Les copies</h3>
 <p>Nous allons voir voir ici que l&#39;on peut facilement avoir des surprises lorsqu&#39;on essaye de faire une copie d’une liste.</p>
 <p>Dans le code qui va suivre, nous allons essayer de créer une copie d&#39;une liste pour pouvoir modifier la copie tout en gardant l&#39;originale inchangée&nbsp;:</p>
@@ -202,9 +179,89 @@ print(copie)                          # affichage de la copie
 </code></pre>
 <p>Ce qui affiche&nbsp;:</p>
 <div class="terminal">
-['I', 'like', 'Python']
-['I', 'like', 'Python']
+['I', 'love', 'Python']
+['I', 'love', 'Python']
 </div>
+
+<p>On constate donc que les deux listes ont été modifiées et que l&#39;originale a été perdue. En effet, le fait d’écrire <code>copie = originale</code> ne crée pas de nouvelle liste.</p>
+<p>En Python, comme dans beaucoup d&#39;autres langages de programmation, dès qu&#39;elle contient un type plus complexe qu&#39;un simple nombre, une variable ne contient pas directement sa valeur mais seulement une référence à celle-ci. Lorsqu&#39;on écrit <code>copie = originale</code> on ne fait une copie que de la référence. On se retrouve donc avec deux variables qui manipulent la même liste.</p>
+<figure id='references' data-ref='figure'>
+    <img src="./references.svg" class="half">
+    <figcaption>Deux références pour la même liste</figcaption>
+</figure>
+
+
+<p>Ce système de référence existe car la copie de types complexes prend du temps et n&#39;est souvent pas souhaitable.</p>
+<p>Pour créer une vraie copie de la liste, on peut utiliser un <em>slicing</em>&nbsp;:</p>
+<pre><code class="language-python">originale = [&#39;I&#39;, &#39;like&#39;, &#39;Python&#39;]   # liste originale
+copie = originale[:]                  # copie de l&#39;originale
+
+copie[1] = &#39;love&#39;                     # modification de la copie
+
+print(originale)                      # affichage de l&#39;originale
+print(copie)                          # affichage de la copie
+</code></pre>
+<p>Ce qui affiche&nbsp;:</p>
+<div class="terminal">
+['I', 'like', 'Python']
+['I', 'love', 'Python']
+</div>
+
+
+<p>Un <em>slicing</em> crée toujours une nouvelle liste. On obtient donc bien une vrai copie de l&#39;originale. Il existe d&#39;autres opérations que l&#39;on peut exploiter pour obtenir le même résultat&nbsp;:</p>
+<pre><code class="language-python">copie = originale * 1
+copie = originale + []
+</code></pre>
+<p>On peut aussi utiliser la fonction <code>list()</code> qui crée une liste à partir de ce qu&#39;on lui passe en paramètre&nbsp;:</p>
+<pre><code class="language-python">copie = list(originale)
+</code></pre>
+<h2>Les chaînes de caractères</h2>
+<p>Comme nous l&#39;avons déjà dit plus haut, les chaines de caractères et les liste partagent beaucoup de fonctionnalités&nbsp;:</p>
+<pre><code class="language-python">s = &#39;Python&#39;
+
+print(s[1])      # affiche &#39;y&#39;
+print(len(s))    # affiche 6
+print(s[1:3])    # affiche &#39;yt&#39;
+print(s * 2)     # affiche &#39;PythonPython&#39;
+print(&#39;I love &#39; + s) # affiche &#39;I love Python&#39;
+
+for l in s:
+    print(l)     # affiche :
+                 # P
+                 # y
+                 # t
+                 # h
+                 # o
+                 # n
+</code></pre>
+<p>Il y a bien sûr quelques différences.</p>
+<h3>Opérateur <code>in</code></h3>
+<p>L&#39;opérateur <code>in</code> fonctionne aussi avec les chaines de caractères&nbsp;:</p>
+<pre><code class="language-python">if &quot;l&quot; in &quot;salut&quot;:
+    print(&quot;&#39;l&#39; est une lettre de &#39;salut&#39;&quot;)
+</code></pre>
+<p>Mais il fonctionne aussi quand l&#39;opérande de droite est une sous-chaîne&nbsp;:</p>
+<pre><code class="language-python">if &quot;al&quot; in &quot;salut&quot;:
+    print(&quot;&#39;al&#39; est une sous-chaine de &#39;salut&#39;&quot;)
+</code></pre>
+<h3>Immuable</h3>
+<p>Il y a une grande différence entre les listes et les chaines de caractères : les listes sont des séquences modifiables alors que les chaines de caractères sont des séquences <strong>non-modifiables</strong> ou <strong>immuable</strong>.</p>
+<p>En gros, cela veut dire qu&#39;on peut modifier une liste&nbsp;:</p>
+<pre><code class="language-python">L = [&#39;I&#39;, &#39;like&#39;, &#39;Python&#39;]
+L[2] = &#39;love&#39;     # ceci fonctionne
+</code></pre>
+<p>Mais qu&#39;on ne peut pas modifier une chaine de caractères. Le code suivant ne fonctionne donc pas&nbsp;:</p>
+<pre><code class="language-python">s = &quot;Le Python, c&#39;est bon !&quot;
+s[17] = &quot;c&quot;       # ceci ne fonctionne pas !
+</code></pre>
+<p>La suppression et l&#39;insertion de caractères est également interdite pour les chaines de caractères.</p>
+<p>Voyons maintenant le code suivant&nbsp;:</p>
+<pre><code class="language-python">s = &quot;Le Python, c&#39;est bon !&quot;
+s = s[:17] + &quot;cool&quot; + s[20:] # ceci fonctionne
+</code></pre>
+<p>Ce code affichera bien <code>Le Python, c&#39;est cool !</code>. Il semble donc que la chaine de caractères <code>s</code> ait bien été modifiée; puisque sa valeur était <code>&quot;Le Python, c&#39;est bon !&quot;</code> au départ. Mais en réalité, la chaine de départ n&#39;a pas changé. C&#39;est la référence dans la variable <code>s</code> qui a été remplacée. La somme <code>s[:17] + &quot;cool&quot; + s[20:]</code> crée une nouvelle chaine de caractères, indépendante de la chaine <code>&quot;Le Python, c&#39;est bon !&quot;</code> d’origine. La variable &#39;s&#39; contient ensuite une référence vers cette nouvelle chaine à cause de l&#39;assignation (<code>s =</code>). Du coup, plus aucune variable ne référence la chaine d&#39;origine ce qui provoquera son effacement de la mémoire.</p>
+<h2>Tuple</h2>
+<p>Un tuple, comme une liste, est une suite de valeurs pouvant être de différents types. La grosse différence entre les listes et les tuples c&#39;est que les tuples sont <strong>immuables</strong>.</p>
 
 </body>
 </html>
