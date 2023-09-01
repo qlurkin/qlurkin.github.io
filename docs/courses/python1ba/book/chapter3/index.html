@@ -260,8 +260,33 @@ s[17] = &quot;c&quot;       # ceci ne fonctionne pas !
 s = s[:17] + &quot;cool&quot; + s[20:] # ceci fonctionne
 </code></pre>
 <p>Ce code affichera bien <code>Le Python, c&#39;est cool !</code>. Il semble donc que la chaine de caractères <code>s</code> ait bien été modifiée; puisque sa valeur était <code>&quot;Le Python, c&#39;est bon !&quot;</code> au départ. Mais en réalité, la chaine de départ n&#39;a pas changé. C&#39;est la référence dans la variable <code>s</code> qui a été remplacée. La somme <code>s[:17] + &quot;cool&quot; + s[20:]</code> crée une nouvelle chaine de caractères, indépendante de la chaine <code>&quot;Le Python, c&#39;est bon !&quot;</code> d’origine. La variable &#39;s&#39; contient ensuite une référence vers cette nouvelle chaine à cause de l&#39;assignation (<code>s =</code>). Du coup, plus aucune variable ne référence la chaine d&#39;origine ce qui provoquera son effacement de la mémoire.</p>
-<h2>Tuple</h2>
-<p>Un tuple, comme une liste, est une suite de valeurs pouvant être de différents types. La grosse différence entre les listes et les tuples c&#39;est que les tuples sont <strong>immuables</strong>.</p>
+<h2>Les tuples</h2>
+<p>Un tuple, comme une liste, est une suite de valeurs pouvant être de différents types. La grosse différence entre les listes et les tuples c&#39;est que les tuples sont <strong>immuables</strong>. Les éléments d&#39;un tuple ne peuvent pas être réassignés et on ne peut pas en ajouter ou en enlever.</p>
+<p>Pour définir un tuple, on peut utiliser des parenthèses mais elle sont optionnelles&nbsp;:</p>
+<pre><code class="language-python"># Tuple vide
+a = ()
+
+# Tuples contenant un seul élément
+b = 1,
+c = (1,)
+
+# Tuples contenant trois éléments
+d = 1, 2, 3
+e = (1, 2, 3)
+</code></pre>
+<p>On remarque que pour le tuple à un seul élément, on est obligé de mettre une virgule à la fin. Sans cette virgule on ne saurait pas faire la différence entre une valeur et la même valeur seule dans un tuple.</p>
+<h3>Déballage</h3>
+<p>Tous comme il est possible d&#39;emballer plusieurs valeurs dans un tuple&nbsp;:</p>
+<pre><code class="language-python">t = 1, 2, 3
+</code></pre>
+<p>Il est également possible de déballer un tuple dans plusieurs variables&nbsp;:</p>
+<pre><code class="language-python">a, b, c = t
+</code></pre>
+<p>Il faut, bien entendu, qu&#39;il y ai autant de valeurs que de variables.</p>
+<p>Lorsqu&#39;on combine un emballage avec un déballage on obtient <strong>une assignation multiple</strong>&nbsp;:</p>
+<pre><code class="language-python">a, b, c = 1, 2, 3
+</code></pre>
+<h2>Les intervalles</h2>
 
 </body>
 </html>

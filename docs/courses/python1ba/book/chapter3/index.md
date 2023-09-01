@@ -367,6 +367,51 @@ s = s[:17] + "cool" + s[20:] # ceci fonctionne
 
 Ce code affichera bien `Le Python, c'est cool !`. Il semble donc que la chaine de caractères `s` ait bien été modifiée; puisque sa valeur était `"Le Python, c'est bon !"` au départ. Mais en réalité, la chaine de départ n'a pas changé. C'est la référence dans la variable `s` qui a été remplacée. La somme `s[:17] + "cool" + s[20:]` crée une nouvelle chaine de caractères, indépendante de la chaine `"Le Python, c'est bon !"` d’origine. La variable 's' contient ensuite une référence vers cette nouvelle chaine à cause de l'assignation (`s =`). Du coup, plus aucune variable ne référence la chaine d'origine ce qui provoquera son effacement de la mémoire.
 
-## Tuple
+## Les tuples
 
-Un tuple, comme une liste, est une suite de valeurs pouvant être de différents types. La grosse différence entre les listes et les tuples c'est que les tuples sont **immuables**.
+Un tuple, comme une liste, est une suite de valeurs pouvant être de différents types. La grosse différence entre les listes et les tuples c'est que les tuples sont **immuables**. Les éléments d'un tuple ne peuvent pas être réassignés et on ne peut pas en ajouter ou en enlever.
+
+Pour définir un tuple, on peut utiliser des parenthèses mais elle sont optionnelles&nbsp;:
+
+```python
+# Tuple vide
+a = ()
+
+# Tuples contenant un seul élément
+b = 1,
+c = (1,)
+
+# Tuples contenant trois éléments
+d = 1, 2, 3
+e = (1, 2, 3)
+```
+
+On remarque que pour le tuple à un seul élément, on est obligé de mettre une virgule à la fin. Sans cette virgule on ne saurait pas faire la différence entre une valeur et la même valeur seule dans un tuple.
+
+### Déballage
+
+Tous comme il est possible d'emballer plusieurs valeurs dans un tuple&nbsp;:
+
+```python
+t = 1, 2, 3
+```
+
+Il est également possible de déballer un tuple dans plusieurs variables&nbsp;:
+
+```python
+a, b, c = t
+```
+
+Il faut, bien entendu, qu'il y ai autant de valeurs que de variables.
+
+Lorsqu'on combine un emballage avec un déballage on obtient **une assignation multiple**&nbsp;:
+
+```python
+a, b, c = 1, 2, 3
+```
+
+## Les intervalles
+
+
+
+
