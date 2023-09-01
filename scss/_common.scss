@@ -16,8 +16,8 @@ body {
 
 code {
     font-size: .875em;
-    color: #d63384;
-    word-wrap: break-word;
+    color: #880000;
+    white-space: nowrap;
     font-family: 'Source Code Pro', monospace;
 }
 
@@ -260,4 +260,9 @@ table {
 
 .nowrap {
   white-space: nowrap;
+}
+
+.wrap {
+  white-space: normal;
+  overflow-wrap: break-word;
 }
