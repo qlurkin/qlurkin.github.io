@@ -530,5 +530,3 @@ Nous avons eu ici un exemple classique de rédaction de programme. **On écrit d
       });
     });
 </script>
-
-## Exercices
