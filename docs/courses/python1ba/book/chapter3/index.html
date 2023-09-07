@@ -287,6 +287,61 @@ e = (1, 2, 3)
 <pre><code class="language-python">a, b, c = 1, 2, 3
 </code></pre>
 <h2>Les intervalles</h2>
+<p>Un intervalle est une séquence numérique régulière. On les créé avec la fonction <code>range()</code>&nbsp;:</p>
+<pre><code class="language-python">range(5)         # séquence 0, 1, 2, 3, 4
+range(1, 5)      # séquence 1, 2, 3, 4
+range(1, 8, 2)   # séquence 1, 3, 5, 7
+range(5, 0, -1)  # séquence 5, 4, 3, 2, 1 
+</code></pre>
+<p>Lorsqu&#39;on ne passe qu&#39;un paramètre <code>n</code> à la fonction <code>range()</code>, elle retourne un intervalle démarrant à <code>0</code>, progressant par pas de <code>1</code> et s&#39;arrêtant un pas avant d&#39;atteindre <code>n</code>.</p>
+<p>Si on indique deux paramètres, l&#39;intervalle commencera à la valeur du premier et finira un pas avant le deuxième. Et si on en indique trois, le troisième sera utilisé comme pas.</p>
+<p>Si on tente d&#39;afficher un intervalle avec la fonction <code>print()</code>, le résultat n&#39;est pas très intéressant&nbsp;:</p>
+<pre><code class="language-python">print(range(5))  # affiche range(0, 5)
+</code></pre>
+<p>Si l&#39;on souhaite voir toutes les valeurs qui sont dans l&#39;intervalle, il est possible de le convertir en liste pour l&#39;affichage&nbsp;:</p>
+<pre><code class="language-python">print(list(range(5)))   # affiche [0, 1, 2, 3, 4]
+</code></pre>
+<p>Les intervalles sont des séquences <strong>immuables</strong>. Il supporte l&#39;accès au éléments et les tranches&nbsp;:</p>
+<pre><code class="language-python">r = range(1, 8, 2)
+
+print(r[2])    # affiche 5
+print(r[1:3])  # affiche range(3, 7, 2)
+</code></pre>
+<p>Comme les intervalles sont immuables on pourrait pensé qu&#39;ils sont équivalents aux tuples. Mais ils sont très différents en réalité. Si on crée un tuple <code>(1, 2, 3, 4, 5)</code>, les 5 entiers sont sauver en mémoire. Si on crée un tuple similaire qui va jusque <code>100</code>, ce sera 100 entiers sauvés en mémoire. Les intervalles ne sauve que 3 valeurs en mémoire: La valeur de début, la valeur de fin et le pas. Les éléments de l&#39;intervalle sont calculés au moment où on les demande.</p>
+<p>Les intervalles sont souvent utilisés dans les boucles <code>for</code>&nbsp;:</p>
+<pre><code class="language-python">for i in range(5):
+  print(i)
+</code></pre>
+<p>On les utilise couramment pour parcourir les indices d&#39;une liste&nbsp;:</p>
+<pre><code class="language-python">names = [&#39;Quentin&#39;, &#39;André&#39;, &#39;Clémence&#39;]
+for i in range(len(names)):
+    print(&quot;l&#39;élément d&#39;indice&quot;, i, &quot;est&quot;, names[i])
+</code></pre>
+<div class="terminal">
+l'élément d'indice 0 est Quentin
+l'élément d'indice 1 est André
+l'élément d'indice 2 est Clémence
+</div>
+
+<h2>Les énumérations</h2>
+<p>Il existe en Python une fonction appelée <code>enumerate()</code>. Cette fonction prend une séquence en paramètre et renvoie une séquence de tuples. Chaque tuple correspond à un des éléments de la liste de départ et contient un numéro d&#39;ordre <em>(commençant à <code>0</code>)</em> et l&#39;élément en question.</p>
+<p>Tous comme les intervalle, la séquence renvoyée n&#39;est pas sauvée en mémoire mais ses éléments sont calculés à la demande&nbsp;:</p>
+<pre><code class="language-python">L = [&#39;un&#39;, &#39;deux&#39;, &#39;trois&#39;]
+
+print(enumerate(L))        # affiche &lt;enumerate at 0x10035e570&gt;
+print(list(enumerate(L)))  # affiche [(0, &#39;un&#39;), (1, &#39;deux&#39;), (2, &#39;trois&#39;)]
+</code></pre>
+<p>On constate qu&#39;une énumération contient à la fois les indices et les valeurs de la liste de départ. En combinant cette fonction avec l&#39;<strong>assignation multiple</strong>, que l&#39;on a vue plus haut, il est facile de parcourir à la fois les indices et les valeurs d&#39;une séquence avec une boucle <code>for</code>&nbsp;:</p>
+<pre><code class="language-python">for i, value in enumerate(L):
+    print(&quot;l&#39;élément d&#39;indice&quot;, i, &quot;est&quot;, value)
+</code></pre>
+<div class="terminal">
+l'élément d'indice 0 est un
+l'élément d'indice 1 est deux
+l'élément d'indice 2 est trois
+</div>
+
+<p>A chaque tour de boucle un des tuples de l&#39;énumération est déballé dans les deux variables <code>i</code> et <code>value</code> du <code>for</code>.</p>
 
 </body>
 </html>

@@ -412,4 +412,87 @@ a, b, c = 1, 2, 3
 
 ## Les intervalles
 
+Un intervalle est une séquence numérique régulière. On les créé avec la fonction `range()`&nbsp;:
 
+```python
+range(5)         # séquence 0, 1, 2, 3, 4
+range(1, 5)      # séquence 1, 2, 3, 4
+range(1, 8, 2)   # séquence 1, 3, 5, 7
+range(5, 0, -1)  # séquence 5, 4, 3, 2, 1 
+```
+
+Lorsqu'on ne passe qu'un paramètre `n` à la fonction `range()`, elle retourne un intervalle démarrant à `0`, progressant par pas de `1` et s'arrêtant un pas avant d'atteindre `n`.
+
+Si on indique deux paramètres, l'intervalle commencera à la valeur du premier et finira un pas avant le deuxième. Et si on en indique trois, le troisième sera utilisé comme pas.
+
+Si on tente d'afficher un intervalle avec la fonction `print()`, le résultat n'est pas très intéressant&nbsp;:
+
+```python
+print(range(5))  # affiche range(0, 5)
+```
+Si l'on souhaite voir toutes les valeurs qui sont dans l'intervalle, il est possible de le convertir en liste pour l'affichage&nbsp;:
+
+```python
+print(list(range(5)))   # affiche [0, 1, 2, 3, 4]
+```
+
+Les intervalles sont des séquences **immuables**. Il supporte l'accès au éléments et les tranches&nbsp;:
+
+```python
+r = range(1, 8, 2)
+
+print(r[2])    # affiche 5
+print(r[1:3])  # affiche range(3, 7, 2)
+```
+
+Comme les intervalles sont immuables on pourrait pensé qu'ils sont équivalents aux tuples. Mais ils sont très différents en réalité. Si on crée un tuple `(1, 2, 3, 4, 5)`, les 5 entiers sont sauver en mémoire. Si on crée un tuple similaire qui va jusque `100`, ce sera 100 entiers sauvés en mémoire. Les intervalles ne sauve que 3 valeurs en mémoire: La valeur de début, la valeur de fin et le pas. Les éléments de l'intervalle sont calculés au moment où on les demande.
+
+
+Les intervalles sont souvent utilisés dans les boucles `for`&nbsp;:
+
+```python
+for i in range(5):
+  print(i)
+```
+
+On les utilise couramment pour parcourir les indices d'une liste&nbsp;:
+
+```python
+names = ['Quentin', 'André', 'Clémence']
+for i in range(len(names)):
+    print("l'élément d'indice", i, "est", names[i])
+```
+
+<div class="terminal">
+l'élément d'indice 0 est Quentin
+l'élément d'indice 1 est André
+l'élément d'indice 2 est Clémence
+</div>
+
+## Les énumérations
+
+Il existe en Python une fonction appelée `enumerate()`. Cette fonction prend une séquence en paramètre et renvoie une séquence de tuples. Chaque tuple correspond à un des éléments de la liste de départ et contient un numéro d'ordre *(commençant à `0`)* et l'élément en question.
+
+Tous comme les intervalle, la séquence renvoyée n'est pas sauvée en mémoire mais ses éléments sont calculés à la demande&nbsp;:
+
+```python
+L = ['un', 'deux', 'trois']
+
+print(enumerate(L))        # affiche <enumerate at 0x10035e570>
+print(list(enumerate(L)))  # affiche [(0, 'un'), (1, 'deux'), (2, 'trois')]
+```
+
+On constate qu'une énumération contient à la fois les indices et les valeurs de la liste de départ. En combinant cette fonction avec l'**assignation multiple**, que l'on a vue plus haut, il est facile de parcourir à la fois les indices et les valeurs d'une séquence avec une boucle `for`&nbsp;:
+
+```python
+for i, value in enumerate(L):
+    print("l'élément d'indice", i, "est", value)
+```
+
+<div class="terminal">
+l'élément d'indice 0 est un
+l'élément d'indice 1 est deux
+l'élément d'indice 2 est trois
+</div>
+
+A chaque tour de boucle un des tuples de l'énumération est déballé dans les deux variables `i` et `value` du `for`.
