@@ -7,7 +7,7 @@ subtitle: "Programmation graphique"
 Doc.setChapterNb(4)
 </script>
 
-Jusqu'à présent, nous toujours présenté nos résultat à l'utilisateur en affichant des chaines de caractères avec le fonction `print()`. Il est maintenant temps d'aller plus loin et de commencer à créer des applications graphiques. On entend par applications graphiques, des applications qui s'ouvriront dans une fenêtre et qui pourront recevoir les événements (clavier, souris, ...). Les fenêtres et les événements sont gérés par le système d'exploitation. Il faudra donc interagir avec l'OS pour réaliser ce genre d'application.
+Jusqu'à présent, nous toujours présenté nos résultats à l'utilisateur en affichant des chaines de caractères avec le fonction `print()`. Il est maintenant temps d'aller plus loin et de commencer à créer des applications graphiques. On entend par applications graphiques, des applications qui s'ouvriront dans une fenêtre et qui pourront recevoir les événements (clavier, souris, ...). Les fenêtres et les événements sont gérés par le système d'exploitation. Il faudra donc interagir avec l'OS pour réaliser ce genre d'application.
 
 ## Bibliothèque
 

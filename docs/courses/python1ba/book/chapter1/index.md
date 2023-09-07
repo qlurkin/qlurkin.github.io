@@ -408,6 +408,110 @@ Pour finir, voici un schema qui récapitule les opérations qui ont lieu quand o
     draw.done()
 </script>
 
+## Exécution et débuggage du programme
+
+Souvenez vous, nous avions vu un exemple de programme pour résoudre les équations du second degré&nbsp;:
+
+<figure id='python_2deg' data-ref='code'>
+
+```python
+D = b*b-4*a*c
+if D < 0:
+    print("Pas de solution réelle")
+else:
+    if D == 0:
+        print("La racine double est", -b/(2*a))
+    else:
+        print("La 1re racine est", (-b-sqrt(D))/(2*a))
+        print("La 2e racine est", (-b+sqrt(D))/(2*a))
+```
+<figcaption>Python, second degré</figcaption>
+</figure>
+
+Il est maintenant temps d'essayer de l'exécuter. Sauvez ce programme dans un fichier, `2nd_order.py` et essayez de le lancer&nbsp;:
+
+<pre class="terminal" style="font-size: 85%">
+<b>> python 2nd_order.py</b>
+Traceback (most recent call last):
+  File "C:\Users\lur\Programmation\2nd_order.py", line 1, in &lt;module&gt;
+    D = b*b-4*a*c
+        ^
+NameError: name 'b' is not defined
+</pre>
+
+Il semblerait que quelque chose se soit mal passé. Ce que nous avons là est un message d'erreur. C'est un des grands avantages de la programmation. Lorsqu'on fait une erreur, il y a généralement un message d'erreur pour nous aider à la corriger. Il est important d'apprendre à lire ces messages car toute l'information dont on a besoin pour corriger l'erreur se trouve généralement dans le message.
+
+Ici le message d'erreur nous indique que le problème se trouve dans le fichier `2nd_order.py` à la ligne 1. Le caractère `^` indique à quel endroit de la ligne se trouve l'erreur. Et la dernière ligne du message est une description de l'erreur. Ici, on nous dit que le nom `b` n'est pas définit.
+
+En effet, nous n'avons, dans ce programme, pas définit les valeurs de `a`, `b` et `c`. Python ne peut donc pas effectuer le calcul `b*b-4*a*c`. Le message d'erreur nous parle de `b` car c'est la première variable non définie qu'il rencontre.
+
+Ajoutons des définitions pour ces 3 variables&nbsp;:
+
+<figure id='python_2deg_corrected' data-ref='code'>
+
+```python
+a = 1
+b = 0
+c = -4
+D = b*b-4*a*c
+if D < 0:
+    print("Pas de solution réelle")
+else:
+    if D == 0:
+        print("La racine double est", -b/(2*a))
+    else:
+        print("La 1re racine est", (-b-sqrt(D))/(2*a))
+        print("La 2e racine est", (-b+sqrt(D))/(2*a))
+```
+<figcaption>définitions des valeurs <code>a</code>, <code>b</code> et <code>c</code></figcaption>
+</figure>
+
+Relançons le programme&nbsp;:
+
+<pre class="terminal" style="font-size: 85%">
+<b>> python 2nd_order.py</b>
+Traceback (most recent call last):
+  File "C:\Users\lur\Programmation\2nd_order.py", line 11, in &lt;module&gt;
+    print("La 1re racine est", (-b-sqrt(D))/(2*a))
+                                   ^^^^
+NameError: name 'sqrt' is not defined
+</pre>
+
+Encore une erreur, la fonction `sqrt()` qui permet de calculer les racines carrées n'est pas chargée par défaut en Python. Comme nous ne l'avons pas chargée, le nom `sqrt` n'est pas définit. Ajoutons le chargement de la fonction `sqrt`&nbsp;:
+
+<figure id='python_2deg_corrected_2' data-ref='code'>
+
+```python
+from math import sqrt
+
+a = 1
+b = 0
+c = -4
+D = b*b-4*a*c
+if D < 0:
+    print("Pas de solution réelle")
+else:
+    if D == 0:
+        print("La racine double est", -b/(2*a))
+    else:
+        print("La 1re racine est", (-b-sqrt(D))/(2*a))
+        print("La 2e racine est", (-b+sqrt(D))/(2*a))
+```
+<figcaption>Chargement de la fonction <code>sqrt</code></figcaption>
+</figure>
+
+Relançons le programme&nbsp;:
+
+<pre class="terminal">
+<b>> python 2nd_order.py</b>
+La 1re racine est -2.0
+La 2e racine est 2.0
+</pre>
+
+Et voilà ! Ça marche.
+
+Nous avons eu ici un exemple classique de rédaction de programme. On écrit du code, on teste, on lit les messages d'erreur, on corrige et on recommence.
+
 <!--
 nous allons choisir dans quel répertoire nous allons sauver nos fichiers. Souvenez-vous que sur un stockage de masse, chaque fichier est identifier par son chemin d'accès. Pour pouvoir retrouver nos fichiers plus tard, il faudra que l'on sache où ils ont été sauvés. VSCode permet d'ouvrir un répertoire pour facilement travailler sur son contenu. Nous allons donc démarrer VSCode et cliquer sur "File" dans le menu en haut, puis sur "Open Folder...". Nous pouvons ensuite sélectionner le répertoire dans lequel nous voulons travailler.
 Maintenant que VSCode est lancé et que nous avons ouvert le répertoire de travail,
