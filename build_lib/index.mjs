@@ -65,7 +65,6 @@ function runScript(scriptPath, args, options) {
   })
 }
 
-
 async function build_dir(path) {
   if(path === '.') return
   const files = await readdir(path)
