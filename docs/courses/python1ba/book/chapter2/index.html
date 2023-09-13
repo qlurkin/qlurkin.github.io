@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chapitre 2</title>
+    <title>Chapitre 2 - Valeurs, types et contrôle de flux</title>
     <script src="/document.js" defer></script>
     
 </head>
 <body>
-    <h1>Chapitre 2</h1>
+    <h1>Chapitre 2 <small>Valeurs, types et contrôle de flux</small></h1>
     
     <script type="module" defer>
 Doc.setChapterNb(2)
@@ -115,7 +115,7 @@ print(a) # affiche 42
 <figcaption>Variable et valeur</figcaption>
 </figure>
 
-<p>Il est important ici de constater que le signe <code>=</code> a une signification très différente de ce que l&#39;on retrouve en mathématique. En programmation, le <code>=</code> prend la valeur qui est à sa droite pour la mettre dans la variable qui est à sa gauche. Cela signifie que <code>42 = a</code> n&#39;a aucun sens en Python.</p>
+<p>Il est important ici de constater que le signe <code>=</code> a une signification très <strong>différente</strong> de ce que l&#39;on retrouve en <strong>mathématique</strong>. En programmation, le <code>=</code> prend <strong>la valeur qui est à sa droite</strong> pour la mettre dans <strong>la variable qui est à sa gauche</strong>. Cela signifie que <code>42 = a</code> n&#39;a aucun sens en Python.</p>
 <p>La valeur de la variable peut être modifiée en lui assignant une autre valeur.</p>
 <pre><code class="language-python">a = 42
 print(a) # affiche 42
@@ -159,8 +159,8 @@ b = a or 5 &lt; 0 # expression
 <ul>
 <li><strong>Et bien d&#39;autres...</strong></li>
 </ul>
-<p>Physiquement, le contenu des variables est sauvé dans la RAM de l&#39;ordinateur. Dans la RAM, toutes les valeurs sont sauvegardées avec des <code>1</code> et des <code>0</code>. C&#39;est le type de la valeur qui indique à Python comment interpréter ces <code>1</code> et ces <code>0</code>.</p>
-<p>Il est important de garder à l&#39;esprit les types des valeurs que l&#39;on manipule car les opérations que l&#39;on peut effectuer avec chaque type ne sont pas les mêmes et ne font pas toujours la même chose&nbsp;:</p>
+<p>Physiquement, le contenu des variables est sauvé dans la <strong>RAM</strong> de l&#39;ordinateur. Dans la RAM, toutes les valeurs sont sauvegardées avec des <code>1</code> et des <code>0</code>. C&#39;est le <strong>type</strong> de la valeur qui indique à Python comment interpréter ces <code>1</code> et ces <code>0</code>.</p>
+<p>Il est important de garder à l&#39;esprit les types des valeurs que l&#39;on manipule car les <strong>opérations</strong> que l&#39;on peut effectuer avec chaque type ne sont pas les mêmes et ne font pas toujours la même chose&nbsp;:</p>
 <figure id='operations_type' data-ref='code'>
 
 <pre><code class="language-python">i = 21
@@ -172,7 +172,7 @@ print(i + s) # interdit
 <figcaption>Somme entre <code>int</code> et <code>float</code></figcaption>
 </figure>
 
-<p>Pour illustrer cela, apportons une petite modification au programme de résolution d&#39;équations du second degré. Bien que le programme fonctionne, il est nécessaire de modifier les définitions de <code>a</code>, <code>b</code> et <code>c</code> pour résoudre une autre équations. Ce n&#39;est pas idéal. Nous allons donc faire en sorte que le programme demande à l&#39;utilisateur d&#39;entrer les valeurs des coefficients de l&#39;équation. Pour cela, on utilise la fonction <code>input()</code>. Cette dernière interrompt l&#39;exécution du programme pour permettre à l&#39;utilisateur d&#39;entrer quelque chose au clavier. Elle laisse ensuite le programme reprendre et renvoie la valeur tapée&nbsp;:</p>
+<p>Pour illustrer cela, apportons une petite modification au programme de résolution d&#39;équations du second degré. Bien que le programme fonctionne, il est nécessaire de modifier les définitions de <code>a</code>, <code>b</code> et <code>c</code> pour résoudre une autre équations. Ce n&#39;est pas idéal. Nous allons donc faire en sorte que le programme <strong>demande à l&#39;utilisateur</strong> d&#39;entrer les valeurs des coefficients de l&#39;équation. Pour cela, on utilise la fonction <code>input()</code>. Cette dernière <strong>interrompt</strong> l&#39;exécution du programme pour permettre à l&#39;utilisateur d&#39;entrer quelque chose au clavier. Elle laisse ensuite le programme <strong>reprendre</strong> et renvoie la valeur tapée&nbsp;:</p>
 <figure id='python_2deg_corrected_2' data-ref='code'>
 
 <pre><code class="language-python">from math import sqrt
@@ -206,10 +206,10 @@ Traceback (most recent call last):
 TypeError: can't multiply sequence by non-int of type 'str'
 </pre>
 
-<p>Voilà un nouveau message d&#39;erreur ! Celui-ci nous indique que lors du calcul de <code>b*b</code>, on ne peut pas multiplier une séquence par une valeur de type <code>str</code>. On se rend compte ici que lorsqu&#39;on a tapé <code>0</code> pour indiquer la valeur de <code>b</code>, la fonction <code>input()</code> a renvoyé une valeur de type <code>str</code>. Et cela pose problème pour la suite des calculs.</p>
-<p>En fait, il s&#39;agit du comportement normal de la fonction <code>input()</code>. comme cette fonction demande à l&#39;utilisateur d&#39;entrer quelque chose au clavier, elle ne fait que renvoyer la suite de caractères qui a été tapée. <code>input()</code> renvoie donc toujours une valeur de type <code>str</code>.</p>
-<p>Pour pouvoir continuer les calculs, il faut convertir la chaîne de caractères en nombre. Comme l&#39;utilisateur pourrait taper des nombres à virgule, nous allons les convertir en <code>float</code>. Pour cela, il existe une fonction <code>float()</code> qui convertit ce qu&#39;on lui passe en paramètre en valeur de type <code>float</code>.</p>
-<p>Ajoutons donc la fonction <code>float()</code> à notre programme. Notez que l&#39;on peut directement utiliser la valeur renvoyée par <code>input()</code> comme paramètre de <code>float()</code>&nbsp;:</p>
+<p>Voilà un nouveau message d&#39;erreur ! Celui-ci nous indique que lors du calcul de <code>b*b</code>, on ne peut pas multiplier une séquence par une valeur de type <code>str</code>. On se rend compte ici que lorsqu&#39;on a tapé <code>0</code> pour indiquer la valeur de <code>b</code>, la fonction <code>input()</code> a renvoyé une valeur <strong>de type <code>str</code></strong>. Et cela pose problème pour la suite des calculs.</p>
+<p>En fait, il s&#39;agit du comportement normal de la fonction <code>input()</code>. comme cette fonction demande à l&#39;utilisateur d&#39;entrer quelque chose au clavier, elle ne fait que renvoyer la suite de caractères qui a été tapée. <strong><code>input()</code> renvoie donc toujours une valeur de type <code>str</code></strong>.</p>
+<p>Pour pouvoir continuer les calculs, il faut <strong>convertir</strong> la chaîne de caractères en nombre. Comme l&#39;utilisateur pourrait taper des nombres à virgule, nous allons les convertir en <code>float</code>. Pour cela, il existe une fonction <code>float()</code> qui convertit ce qu&#39;on lui passe en paramètre en valeur de type <code>float</code>.</p>
+<p>Ajoutons donc la fonction <code>float()</code> à notre programme. Notez que l&#39;on peut directement utiliser la valeur renvoyée par <code>input()</code> comme <strong>paramètre</strong> de <code>float()</code>&nbsp;:</p>
 <figure id='python_2deg_corrected_3' data-ref='code'>
 
 <pre><code class="language-python">from math import sqrt
@@ -283,8 +283,8 @@ sqrt(4)       # Expression valant 2.0
 <figcaption>Opérations sur les nombres</figcaption>
 </figure>
 
-<p>Les deux dernières opérations nécessitent probablement un peu d&#39;explications. Lorsqu&#39;on parle de la division entière de <code>5</code> par <code>2</code> on veut savoir combien de fois <code>2</code> entre entièrement dans <code>5</code>. <code>2</code> entre deux fois dans <code>5</code>, en effet, <code>2 x 2 =&gt; 4</code>. <code>2</code> n&#39;entre pas trois fois dans <code>5</code> car <code>3 x 2 =&gt; 6</code> ce qui est plus grand que <code>5</code>.</p>
-<p>Le reste de la division entière de <code>5</code> par <code>2</code> est la partie de <code>5</code> qui n&#39;a pas pu être divisée lors de la division entière. Comme on ne peut mettre que deux fois <code>2</code> dans <code>5</code> et que <code>2 x 2 =&gt; 4</code>, il reste <code>1</code> qui n&#39;a pas pu être divisé. On dit donc que le reste de la division entière de <code>5</code> par <code>2</code> est égale à <code>1</code>.</p>
+<p>Les deux dernières opérations nécessitent probablement un peu d&#39;explications. Lorsqu&#39;on parle de la division entière de <code>5</code> par <code>2</code> on veut savoir combien de fois <code>2</code> entre <strong>entièrement</strong> dans <code>5</code>. <code>2</code> entre deux fois dans <code>5</code>, en effet, <code>2 x 2 =&gt; 4</code>. <code>2</code> n&#39;entre pas trois fois dans <code>5</code> car <code>3 x 2 =&gt; 6</code> ce qui est plus grand que <code>5</code>.</p>
+<p>Le <strong>reste</strong> de la division entière de <code>5</code> par <code>2</code> est la partie de <code>5</code> <strong>qui n&#39;a pas pu être divisée</strong> lors de la division entière. Comme on ne peut mettre que deux fois <code>2</code> dans <code>5</code> et que <code>2 x 2 =&gt; 4</code>, il reste <code>1</code> qui n&#39;a pas pu être divisé. On dit donc que le reste de la division entière de <code>5</code> par <code>2</code> est égale à <code>1</code>.</p>
 <p>Souvenez vous des divisions écrites que vous avez apprises en primaire. Si vous vous arrêtez avant de calculer les décimales, vous obtenez la division entière et le reste.</p>
 <figure id="division" data-ref="figure">
 <img src="./division_ecrite.svg" class="third">
@@ -293,7 +293,7 @@ sqrt(4)       # Expression valant 2.0
 
 <p>Il y a plein de moment où la division entière et le modulo peuvent être utiles. Par exemple, si vous voulez convertir un nombre quelconque de minutes (disons 200) en heures/minutes. Pour obtenir le nombre d&#39;heure, il suffit de faire une division entière par 60: <code>200 // 60 =&gt; 3</code>. Nous avons donc 3 heures. Et pour obtenir le nombre de minutes restantes, on utilise le modulo 60: <code>200 % 60 =&gt; 20</code>. Il reste donc 20 minutes. 200 minutes correspond à 3 heures et 20 minutes.</p>
 <h3>Opérateurs de comparaison</h3>
-<p>Les opérateurs de comparaison renvoient un booléen en fonction de deux valeurs à comparer. Par exemple <code>4 &lt; 3 =&gt; False</code> et <code>3.5 &gt; 0 =&gt; True</code>.</p>
+<p>Les opérateurs de comparaison renvoient un <strong>booléen</strong> en fonction de deux valeurs à comparer. Par exemple <code>4 &lt; 3 =&gt; False</code> et <code>3.5 &gt; 0 =&gt; True</code>.</p>
 <figure id='comparators' data-ref='code'>
 
 <pre><code class="language-python">a &lt; b # inférieur à
@@ -308,7 +308,7 @@ a != b # différent de
 
 <p>Les comparaisons fonctionnent aussi sur les chaines de caractères. Un <code>str</code> est inférieur à un autre <code>str</code> s&#39;il vient avant dans l&#39;ordre alphabétique (<code>&#39;aab&#39; &lt; &#39;abc&#39; =&gt; True</code>).</p>
 <h3>Opérateurs booléens</h3>
-<p>Les opérateurs booléens permettent de combiner des valeurs booléennes entre elles. Ces opérateurs sont le <code>and</code>, le <code>or</code> et le <code>not</code>. La valeur renvoyée est aussi booléenne. Voici la <strong>table de vérité</strong> qui indique le résultat de chaque opération possible&nbsp;:</p>
+<p>Les opérateurs booléens permettent de <strong>combiner</strong> des valeurs booléennes entre elles. Ces opérateurs sont le <code>and</code>, le <code>or</code> et le <code>not</code>. La valeur renvoyée est aussi booléenne. Voici la <strong>table de vérité</strong> qui indique le résultat de chaque opération possible&nbsp;:</p>
 <figure id="trues_table" data-ref='table'>
 <table class='center'>
     <thead>
@@ -355,7 +355,7 @@ a != b # différent de
 </figure>
 
 <h3>Priorité des opérateurs</h3>
-<p>Il est bien sûr possible de combiner toutes ces opérations pour créer des expressions plus complexes. Il est intéressant de savoir que Python suis la même priorité des opérations que celle que vous avez vue en Mathématique (Les multiplication sont évaluées avant les additions). Voici, en détail, les priorités des opérations en Python (des plus prioritaires au moins prioritaires):</p>
+<p>Il est bien sûr possible de combiner toutes ces opérations pour créer des expressions plus <strong>complexes</strong>. Il est intéressant de savoir que Python suis la même <strong>priorité</strong> des opérations que celle que vous avez vue en Mathématique (Les multiplication sont évaluées avant les additions). Voici, en détail, les priorités des opérations en Python (des plus prioritaires au moins prioritaires):</p>
 <figure id="operation_precedence" data-ref='table'>
 <table>
     <tr>
@@ -403,9 +403,9 @@ a != b # différent de
 <pre><code class="language-python">1 + 3.14 * 6 &lt;= 6 % 2**2 and &#39;aab&#39; &gt; &#39;abc&#39; or True == (not 42 != 21 + 21)
 </code></pre>
 <h2>Le contrôle de flux</h2>
-<p>Les instructions d&#39;un programme s&#39;exécutent toujours dans l&#39;ordre dans lequel elles sont écrites dans le programme. On appelle cette séquence d&#39;instructions le flux du programme. Il est possible de réaliser des embranchements et des boucles dans ce flux.</p>
+<p>Les instructions d&#39;un programme s&#39;exécutent toujours <strong>dans l&#39;ordre</strong> dans lequel elles sont écrites dans le programme. On appelle cette séquence d&#39;instructions le <strong>flux</strong> du programme. Il est possible de réaliser des embranchements et des boucles dans ce flux.</p>
 <h3>Les instructions conditionnelles</h3>
-<p>Dans un programme, il est souvent intéressant d&#39;avoir des portions de code qui ne s&#39;exécutent que si certaines conditions sont remplies. Cela permet au programme de réagir en fonction des circonstances.</p>
+<p>Dans un programme, il est souvent intéressant d&#39;avoir des portions de code qui ne s&#39;exécutent que si certaines <strong>conditions sont remplies</strong>. Cela permet au programme de réagir en fonction des circonstances.</p>
 <p>Pour cela, on utilise le <code>if</code>. Voici un exemple&nbsp;:</p>
 <div class="row">
 <div class="span6 middle">
@@ -438,8 +438,8 @@ if a &lt; 0:
 </div>
 </div>
 
-<p>Nous pouvons voir qu&#39;il y a une condition après le <code>if</code>. Une condition est une expression dont la valeur est booléenne.</p>
-<p>L&#39;instruction <code>if</code> est le premier exemple d&#39;instruction composée que nous rencontrons. Une instruction composée comporte une ligne d&#39;en-tête se terminant par un <code>:</code> suivie d&#39;un bloc d&#39;instructions indentées <em>(décalées vers la droite)</em>.</p>
+<p>Nous pouvons voir qu&#39;il y a une condition après le <code>if</code>. Une <strong>condition</strong> est une expression dont la valeur est <strong>booléenne</strong>.</p>
+<p>L&#39;instruction <code>if</code> est le premier exemple d&#39;<strong>instruction composée</strong> que nous rencontrons. Une instruction composée comporte une ligne d&#39;en-tête se terminant par un <code>:</code> suivie d&#39;un bloc d&#39;instructions <strong>indentées</strong> <em>(décalées vers la droite)</em>.</p>
 <figure id="indentation" data-ref="figure">
 <img src="./indentation.svg" class='half'>
 <figcaption>Instructions composée</figcaption>
@@ -511,9 +511,9 @@ else:
     draw.done()
 </script>
 
-<p>Dans ce dernier exemple, il est important de comprendre que Python choisi la première branche pour laquelle la condition est vraie. Si la première condition <code class="nowrap">a == 0</code> est vraie, alors la deuxième condition n&#39;est même pas évaluée. Par contre, si on arrive dans la deuxième branche, celle du <code>elif</code>, cela implique que la première condition était fausse et donc que <code>a != 0</code>.</p>
+<p>Dans ce dernier exemple, il est important de comprendre que Python choisi <strong>la première branche pour laquelle la condition est vraie</strong>. Si la première condition <code class="nowrap">a == 0</code> est vraie, alors la deuxième condition n&#39;est même pas évaluée. Par contre, si on arrive dans la deuxième branche, celle du <code>elif</code>, cela <strong>implique</strong> que la première condition était fausse et donc que <code>a != 0</code>.</p>
 <h3>Les boucles</h3>
-<p>Dans un programme, il arrive très souvent qu&#39;il faille exécuter une même portion de code un certain nombre de fois. C&#39;est d&#39;ailleurs un des grands points forts de l&#39;informatique : exécuter des opérations répétitives à une vitesse prodigieuse.</p>
+<p>Dans un programme, il arrive très souvent qu&#39;il faille exécuter une même portion de code un certain nombre de fois. C&#39;est d&#39;ailleurs un des grands points forts de l&#39;informatique : <strong>exécuter des opérations répétitives à une vitesse prodigieuse</strong>.</p>
 <p>Pour réaliser une boucle dans le flux d&#39;exécution du programme, on utilise l&#39;instruction composée <code>while</code>&nbsp;:</p>
 <div class="row">
 <div class="span5 middle">
@@ -550,7 +550,7 @@ while i &lt; 5:
 </div>
 
 <p><strong>L&#39;instruction while exécute son bloc tant que sa condition est vraie.</strong></p>
-<p>Dans ce cas-ci, le bloc commence par l&#39;incrémentation de <code>i</code>. Cette instruction nécessite une petite explication. Il s&#39;agit ici encore d&#39;un exemple flagrant de la différence qu&#39;il existe entre le <code>=</code> de la programmation et le <code>=</code> des mathématiques. En effet, l&#39;expression <code>i = i + 1</code> n&#39;a aucun sens en mathématique. Elle est cependant parfaitement valide <em>(et très courante)</em> en programmation. Elle signifie &quot;mettre la valeur de l&#39;expression <code>i + 1</code> <em>(quelle que soit la valeur de <code>i</code>)</em> dans la variable <code>i</code>&quot;. Il faut comprendre ici que la valeur de l&#39;expression <code>i + 1</code> est calculée d&#39;abord. Puis, cette valeur est assignée à <code>i</code> c&#39;est-à-dire qu&#39;elle va remplacer la valeur qu&#39;avait <code>i</code>. En bref, l&#39;instruction <code>i = i + 1</code> augmente la valeur de <code>i</code> de <code>1</code>.</p>
+<p>Dans ce cas-ci, le bloc commence par l&#39;incrémentation de <code>i</code>. Cette instruction nécessite une petite explication. Il s&#39;agit ici encore d&#39;un exemple flagrant de la différence qu&#39;il existe entre le <code>=</code> de la programmation et le <code>=</code> des mathématiques. En effet, l&#39;expression <code>i = i + 1</code> n&#39;a <strong>aucun sens en mathématique</strong>. Elle est cependant parfaitement valide <em>(et très courante)</em> en programmation. Elle signifie &quot;mettre la valeur de l&#39;expression <code>i + 1</code> <em>(quelle que soit la valeur de <code>i</code>)</em> dans la variable <code>i</code>&quot;. Il faut comprendre ici que la valeur de l&#39;expression <code>i + 1</code> <strong>est calculée d&#39;abord</strong>. Puis, cette valeur est assignée à <code>i</code> c&#39;est-à-dire qu&#39;elle va remplacer la valeur qu&#39;avait <code>i</code>. En bref, l&#39;instruction <code>i = i + 1</code> augmente la valeur de <code>i</code> de <code>1</code>.</p>
 <p>Le bloc se termine par l&#39;affichage de <code>i</code>.</p>
 <p>Nous avons donc un bloc d&#39;instructions qui sera répété tant que <code>i</code> sera inférieur à <code>5</code> et ce bloc incrémente puis affiche <code>i</code>. Comme <code>i</code> démarre à <code>0</code>, l&#39;affichage final sera le suivant&nbsp;:</p>
 <div class="terminal">
@@ -561,7 +561,7 @@ while i &lt; 5:
 5
 </div>
 
-<p>Il est a noter que la condition du <code>while</code> est testée avant le début de chaque tour de boucle. Il peut donc arriver que la boucle ne fasse aucun tour si la condition est fausse dès le départ.</p>
+<p>Il est a noter que la condition du <code>while</code> est testée <strong>avant le début de chaque tour de boucle</strong>. Il peut donc arriver que la boucle ne fasse aucun tour si la condition est fausse dès le départ.</p>
 <p><strong>Il est bien sûr évident qu&#39;il faut s&#39;arranger pour que la condition ne soit pas vraie pour toujours car, dans ces conditions, la boucle ne s&#39;arrêterait jamais et le programme serait bloqué.</strong></p>
 <pre><code class="language-python">n = 1
 while n &lt;= 5:
@@ -573,7 +573,7 @@ while n &gt; 0:
    n += 1        # boucle infinie !!
 </code></pre>
 <p>Il est également possible de contrôler le déroulement de la boucle à partir de l&#39;intérieur du bloc avec les instructions <code>break</code> et <code>continue</code>.</p>
-<p>L&#39;instruction <code>break</code> permet de mettre immédiatement fin à la boucle&nbsp;:</p>
+<p>L&#39;instruction <code>break</code> permet de mettre <strong>immédiatement</strong> fin à la boucle&nbsp;:</p>
 <pre><code class="language-python"># recherche le plus petit naturel non nul divisible par 38 et 46
 n = 1
 while True:
@@ -582,7 +582,7 @@ while True:
    n += 1
 print(n, &quot;est le plus petit nombre divisible par 38 et 46&quot;)
 </code></pre>
-<p>L&#39;instruction <code>continue</code> permet de mettre immédiatement fin au tour de boucle en cours&nbsp;:</p>
+<p>L&#39;instruction <code>continue</code> permet de mettre immédiatement fin au tour de boucle <strong>en cours</strong>&nbsp;:</p>
 <pre><code class="language-python"># affiche tous les nombres pairs plus petits que 100
 n = 0
 while n &lt;= 100:

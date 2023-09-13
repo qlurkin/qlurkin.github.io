@@ -497,7 +497,7 @@ else:
         print("La 1re racine est", (-b-sqrt(D))/(2*a))
         print("La 2e racine est", (-b+sqrt(D))/(2*a))
 ```
-<figcaption>Chargement de la fonction <code>sqrt</code></figcaption>
+<figcaption>Importation de la fonction <code>sqrt</code></figcaption>
 </figure>
 
 Relançons le programme&nbsp;:

@@ -1,5 +1,6 @@
 ---
 title: "Chapitre 2"
+subtitle: "Valeurs, types et contrôle de flux"
 ---
 
 <script type="module" defer>
@@ -112,7 +113,7 @@ print(a) # affiche 42
 <figcaption>Variable et valeur</figcaption>
 </figure>
 
-Il est important ici de constater que le signe `=` a une signification très différente de ce que l'on retrouve en mathématique. En programmation, le `=` prend la valeur qui est à sa droite pour la mettre dans la variable qui est à sa gauche. Cela signifie que `42 = a` n'a aucun sens en Python.
+Il est important ici de constater que le signe `=` a une signification très **différente** de ce que l'on retrouve en **mathématique**. En programmation, le `=` prend **la valeur qui est à sa droite** pour la mettre dans **la variable qui est à sa gauche**. Cela signifie que `42 = a` n'a aucun sens en Python.
 
 La valeur de la variable peut être modifiée en lui assignant une autre valeur.
 
@@ -169,9 +170,9 @@ b = a or 5 < 0 # expression
 
 - **Et bien d'autres...**
 
-Physiquement, le contenu des variables est sauvé dans la RAM de l'ordinateur. Dans la RAM, toutes les valeurs sont sauvegardées avec des `1` et des `0`. C'est le type de la valeur qui indique à Python comment interpréter ces `1` et ces `0`.
+Physiquement, le contenu des variables est sauvé dans la **RAM** de l'ordinateur. Dans la RAM, toutes les valeurs sont sauvegardées avec des `1` et des `0`. C'est le **type** de la valeur qui indique à Python comment interpréter ces `1` et ces `0`.
 
-Il est important de garder à l'esprit les types des valeurs que l'on manipule car les opérations que l'on peut effectuer avec chaque type ne sont pas les mêmes et ne font pas toujours la même chose&nbsp;:
+Il est important de garder à l'esprit les types des valeurs que l'on manipule car les **opérations** que l'on peut effectuer avec chaque type ne sont pas les mêmes et ne font pas toujours la même chose&nbsp;:
 
 <figure id='operations_type' data-ref='code'>
 
@@ -185,7 +186,7 @@ print(i + s) # interdit
 <figcaption>Somme entre <code>int</code> et <code>float</code></figcaption>
 </figure>
 
-Pour illustrer cela, apportons une petite modification au programme de résolution d'équations du second degré. Bien que le programme fonctionne, il est nécessaire de modifier les définitions de `a`, `b` et `c` pour résoudre une autre équations. Ce n'est pas idéal. Nous allons donc faire en sorte que le programme demande à l'utilisateur d'entrer les valeurs des coefficients de l'équation. Pour cela, on utilise la fonction `input()`. Cette dernière interrompt l'exécution du programme pour permettre à l'utilisateur d'entrer quelque chose au clavier. Elle laisse ensuite le programme reprendre et renvoie la valeur tapée&nbsp;:
+Pour illustrer cela, apportons une petite modification au programme de résolution d'équations du second degré. Bien que le programme fonctionne, il est nécessaire de modifier les définitions de `a`, `b` et `c` pour résoudre une autre équations. Ce n'est pas idéal. Nous allons donc faire en sorte que le programme **demande à l'utilisateur** d'entrer les valeurs des coefficients de l'équation. Pour cela, on utilise la fonction `input()`. Cette dernière **interrompt** l'exécution du programme pour permettre à l'utilisateur d'entrer quelque chose au clavier. Elle laisse ensuite le programme **reprendre** et renvoie la valeur tapée&nbsp;:
 
 <figure id='python_2deg_corrected_2' data-ref='code'>
 
@@ -222,13 +223,13 @@ Traceback (most recent call last):
 TypeError: can't multiply sequence by non-int of type 'str'
 </pre>
 
-Voilà un nouveau message d'erreur ! Celui-ci nous indique que lors du calcul de `b*b`, on ne peut pas multiplier une séquence par une valeur de type `str`. On se rend compte ici que lorsqu'on a tapé `0` pour indiquer la valeur de `b`, la fonction `input()` a renvoyé une valeur de type `str`. Et cela pose problème pour la suite des calculs.
+Voilà un nouveau message d'erreur ! Celui-ci nous indique que lors du calcul de `b*b`, on ne peut pas multiplier une séquence par une valeur de type `str`. On se rend compte ici que lorsqu'on a tapé `0` pour indiquer la valeur de `b`, la fonction `input()` a renvoyé une valeur **de type `str`**. Et cela pose problème pour la suite des calculs.
 
-En fait, il s'agit du comportement normal de la fonction `input()`. comme cette fonction demande à l'utilisateur d'entrer quelque chose au clavier, elle ne fait que renvoyer la suite de caractères qui a été tapée. `input()` renvoie donc toujours une valeur de type `str`.
+En fait, il s'agit du comportement normal de la fonction `input()`. comme cette fonction demande à l'utilisateur d'entrer quelque chose au clavier, elle ne fait que renvoyer la suite de caractères qui a été tapée. **`input()` renvoie donc toujours une valeur de type `str`**.
 
-Pour pouvoir continuer les calculs, il faut convertir la chaîne de caractères en nombre. Comme l'utilisateur pourrait taper des nombres à virgule, nous allons les convertir en `float`. Pour cela, il existe une fonction `float()` qui convertit ce qu'on lui passe en paramètre en valeur de type `float`.
+Pour pouvoir continuer les calculs, il faut **convertir** la chaîne de caractères en nombre. Comme l'utilisateur pourrait taper des nombres à virgule, nous allons les convertir en `float`. Pour cela, il existe une fonction `float()` qui convertit ce qu'on lui passe en paramètre en valeur de type `float`.
 
-Ajoutons donc la fonction `float()` à notre programme. Notez que l'on peut directement utiliser la valeur renvoyée par `input()` comme paramètre de `float()`&nbsp;:
+Ajoutons donc la fonction `float()` à notre programme. Notez que l'on peut directement utiliser la valeur renvoyée par `input()` comme **paramètre** de `float()`&nbsp;:
 
 <figure id='python_2deg_corrected_3' data-ref='code'>
 
@@ -315,9 +316,9 @@ Les opérateurs suivants sont définis pour **les valeurs numériques**&nbsp;:
 <figcaption>Opérations sur les nombres</figcaption>
 </figure>
 
-Les deux dernières opérations nécessitent probablement un peu d'explications. Lorsqu'on parle de la division entière de `5` par `2` on veut savoir combien de fois `2` entre entièrement dans `5`. `2` entre deux fois dans `5`, en effet, `2 x 2 => 4`. `2` n'entre pas trois fois dans `5` car `3 x 2 => 6` ce qui est plus grand que `5`.
+Les deux dernières opérations nécessitent probablement un peu d'explications. Lorsqu'on parle de la division entière de `5` par `2` on veut savoir combien de fois `2` entre **entièrement** dans `5`. `2` entre deux fois dans `5`, en effet, `2 x 2 => 4`. `2` n'entre pas trois fois dans `5` car `3 x 2 => 6` ce qui est plus grand que `5`.
 
-Le reste de la division entière de `5` par `2` est la partie de `5` qui n'a pas pu être divisée lors de la division entière. Comme on ne peut mettre que deux fois `2` dans `5` et que `2 x 2 => 4`, il reste `1` qui n'a pas pu être divisé. On dit donc que le reste de la division entière de `5` par `2` est égale à `1`.
+Le **reste** de la division entière de `5` par `2` est la partie de `5` **qui n'a pas pu être divisée** lors de la division entière. Comme on ne peut mettre que deux fois `2` dans `5` et que `2 x 2 => 4`, il reste `1` qui n'a pas pu être divisé. On dit donc que le reste de la division entière de `5` par `2` est égale à `1`.
 
 Souvenez vous des divisions écrites que vous avez apprises en primaire. Si vous vous arrêtez avant de calculer les décimales, vous obtenez la division entière et le reste.
 
@@ -330,7 +331,7 @@ Il y a plein de moment où la division entière et le modulo peuvent être utile
 
 ### Opérateurs de comparaison
 
-Les opérateurs de comparaison renvoient un booléen en fonction de deux valeurs à comparer. Par exemple `4 < 3 => False` et `3.5 > 0 => True`.
+Les opérateurs de comparaison renvoient un **booléen** en fonction de deux valeurs à comparer. Par exemple `4 < 3 => False` et `3.5 > 0 => True`.
 
 <figure id='comparators' data-ref='code'>
 
@@ -349,7 +350,7 @@ Les comparaisons fonctionnent aussi sur les chaines de caractères. Un `str` est
 
 ### Opérateurs booléens
 
-Les opérateurs booléens permettent de combiner des valeurs booléennes entre elles. Ces opérateurs sont le `and`, le `or` et le `not`. La valeur renvoyée est aussi booléenne. Voici la **table de vérité** qui indique le résultat de chaque opération possible&nbsp;:
+Les opérateurs booléens permettent de **combiner** des valeurs booléennes entre elles. Ces opérateurs sont le `and`, le `or` et le `not`. La valeur renvoyée est aussi booléenne. Voici la **table de vérité** qui indique le résultat de chaque opération possible&nbsp;:
 
 <figure id="trues_table" data-ref='table'>
 <table class='center'>
@@ -398,7 +399,7 @@ Les opérateurs booléens permettent de combiner des valeurs booléennes entre e
 
 ### Priorité des opérateurs
 
-Il est bien sûr possible de combiner toutes ces opérations pour créer des expressions plus complexes. Il est intéressant de savoir que Python suis la même priorité des opérations que celle que vous avez vue en Mathématique (Les multiplication sont évaluées avant les additions). Voici, en détail, les priorités des opérations en Python (des plus prioritaires au moins prioritaires):
+Il est bien sûr possible de combiner toutes ces opérations pour créer des expressions plus **complexes**. Il est intéressant de savoir que Python suis la même **priorité** des opérations que celle que vous avez vue en Mathématique (Les multiplication sont évaluées avant les additions). Voici, en détail, les priorités des opérations en Python (des plus prioritaires au moins prioritaires):
 
 <figure id="operation_precedence" data-ref='table'>
 <table>
@@ -452,11 +453,11 @@ Voici un exemple d'expression complexe:
 
 ## Le contrôle de flux
 
-Les instructions d'un programme s'exécutent toujours dans l'ordre dans lequel elles sont écrites dans le programme. On appelle cette séquence d'instructions le flux du programme. Il est possible de réaliser des embranchements et des boucles dans ce flux.
+Les instructions d'un programme s'exécutent toujours **dans l'ordre** dans lequel elles sont écrites dans le programme. On appelle cette séquence d'instructions le **flux** du programme. Il est possible de réaliser des embranchements et des boucles dans ce flux.
 
 ### Les instructions conditionnelles
 
-Dans un programme, il est souvent intéressant d'avoir des portions de code qui ne s'exécutent que si certaines conditions sont remplies. Cela permet au programme de réagir en fonction des circonstances.
+Dans un programme, il est souvent intéressant d'avoir des portions de code qui ne s'exécutent que si certaines **conditions sont remplies**. Cela permet au programme de réagir en fonction des circonstances.
 
 Pour cela, on utilise le `if`. Voici un exemple&nbsp;:
 
@@ -493,9 +494,9 @@ if a < 0:
 </div>
 </div>
 
-Nous pouvons voir qu'il y a une condition après le `if`. Une condition est une expression dont la valeur est booléenne.
+Nous pouvons voir qu'il y a une condition après le `if`. Une **condition** est une expression dont la valeur est **booléenne**.
 
-L'instruction `if` est le premier exemple d'instruction composée que nous rencontrons. Une instruction composée comporte une ligne d'en-tête se terminant par un `:` suivie d'un bloc d'instructions indentées *(décalées vers la droite)*.
+L'instruction `if` est le premier exemple d'**instruction composée** que nous rencontrons. Une instruction composée comporte une ligne d'en-tête se terminant par un `:` suivie d'un bloc d'instructions **indentées** *(décalées vers la droite)*.
 
 <figure id="indentation" data-ref="figure">
 <img src="./indentation.svg" class='half'>
@@ -575,11 +576,11 @@ else:
     draw.done()
 </script>
 
-Dans ce dernier exemple, il est important de comprendre que Python choisi la première branche pour laquelle la condition est vraie. Si la première condition <code class="nowrap">a == 0</code> est vraie, alors la deuxième condition n'est même pas évaluée. Par contre, si on arrive dans la deuxième branche, celle du `elif`, cela implique que la première condition était fausse et donc que `a != 0`.
+Dans ce dernier exemple, il est important de comprendre que Python choisi **la première branche pour laquelle la condition est vraie**. Si la première condition <code class="nowrap">a == 0</code> est vraie, alors la deuxième condition n'est même pas évaluée. Par contre, si on arrive dans la deuxième branche, celle du `elif`, cela **implique** que la première condition était fausse et donc que `a != 0`.
 
 ### Les boucles
 
-Dans un programme, il arrive très souvent qu'il faille exécuter une même portion de code un certain nombre de fois. C'est d'ailleurs un des grands points forts de l'informatique : exécuter des opérations répétitives à une vitesse prodigieuse.
+Dans un programme, il arrive très souvent qu'il faille exécuter une même portion de code un certain nombre de fois. C'est d'ailleurs un des grands points forts de l'informatique : **exécuter des opérations répétitives à une vitesse prodigieuse**.
 
 Pour réaliser une boucle dans le flux d'exécution du programme, on utilise l'instruction composée `while`&nbsp;:
 
@@ -621,7 +622,7 @@ while i < 5:
 
 **L'instruction while exécute son bloc tant que sa condition est vraie.**
 
-Dans ce cas-ci, le bloc commence par l'incrémentation de `i`. Cette instruction nécessite une petite explication. Il s'agit ici encore d'un exemple flagrant de la différence qu'il existe entre le `=` de la programmation et le `=` des mathématiques. En effet, l'expression `i = i + 1` n'a aucun sens en mathématique. Elle est cependant parfaitement valide *(et très courante)* en programmation. Elle signifie "mettre la valeur de l'expression `i + 1` *(quelle que soit la valeur de `i`)* dans la variable `i`". Il faut comprendre ici que la valeur de l'expression `i + 1` est calculée d'abord. Puis, cette valeur est assignée à `i` c'est-à-dire qu'elle va remplacer la valeur qu'avait `i`. En bref, l'instruction `i = i + 1` augmente la valeur de `i` de `1`.
+Dans ce cas-ci, le bloc commence par l'incrémentation de `i`. Cette instruction nécessite une petite explication. Il s'agit ici encore d'un exemple flagrant de la différence qu'il existe entre le `=` de la programmation et le `=` des mathématiques. En effet, l'expression `i = i + 1` n'a **aucun sens en mathématique**. Elle est cependant parfaitement valide *(et très courante)* en programmation. Elle signifie "mettre la valeur de l'expression `i + 1` *(quelle que soit la valeur de `i`)* dans la variable `i`". Il faut comprendre ici que la valeur de l'expression `i + 1` **est calculée d'abord**. Puis, cette valeur est assignée à `i` c'est-à-dire qu'elle va remplacer la valeur qu'avait `i`. En bref, l'instruction `i = i + 1` augmente la valeur de `i` de `1`.
 
 Le bloc se termine par l'affichage de `i`.
 
@@ -635,7 +636,7 @@ Nous avons donc un bloc d'instructions qui sera répété tant que `i` sera inf�
 5
 </div>
 
-Il est a noter que la condition du `while` est testée avant le début de chaque tour de boucle. Il peut donc arriver que la boucle ne fasse aucun tour si la condition est fausse dès le départ.
+Il est a noter que la condition du `while` est testée **avant le début de chaque tour de boucle**. Il peut donc arriver que la boucle ne fasse aucun tour si la condition est fausse dès le départ.
 
 **Il est bien sûr évident qu'il faut s'arranger pour que la condition ne soit pas vraie pour toujours car, dans ces conditions, la boucle ne s'arrêterait jamais et le programme serait bloqué.**
 
@@ -654,7 +655,7 @@ while n > 0:
 
 Il est également possible de contrôler le déroulement de la boucle à partir de l'intérieur du bloc avec les instructions `break` et `continue`.
 
-L'instruction `break` permet de mettre immédiatement fin à la boucle&nbsp;:
+L'instruction `break` permet de mettre **immédiatement** fin à la boucle&nbsp;:
 
 ```python
 # recherche le plus petit naturel non nul divisible par 38 et 46
@@ -666,7 +667,7 @@ while True:
 print(n, "est le plus petit nombre divisible par 38 et 46")
 ```
 
-L'instruction `continue` permet de mettre immédiatement fin au tour de boucle en cours&nbsp;:
+L'instruction `continue` permet de mettre immédiatement fin au tour de boucle **en cours**&nbsp;:
 
 ```python
 # affiche tous les nombres pairs plus petits que 100
