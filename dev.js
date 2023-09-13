@@ -1,8 +1,7 @@
 import { watch, existsSync } from 'fs'
 import { dirname, join } from 'path'
 import { build } from 'build_lib'
-//import live_server from 'live-server'
-//const live = require('live-server')
+import express from 'express'
 
 const server_config = await Bun.file("server.json").json()
 
@@ -17,6 +16,7 @@ function find_buildable_dir(filename) {
 let timeout_handle = null
 let to_build = null
 let building = false
+let websockets = []
 
 const watcher = watch(server_config.root, { recursive: true }, (_, filename) => {
   if(building) return
@@ -39,34 +39,81 @@ const watcher = watch(server_config.root, { recursive: true }, (_, filename) => 
     setTimeout(() => {
       to_build = null
       building = false
+      for(const ws of websockets) {
+        ws.send('Reload!!')
+      }
     }, 100)
   }, 0)
 })
 
+
+const app = express()
+const port = 3000
+
+app.use(async function(req, res, next) {
+  let url = req.url
+  if(url.endsWith('/')) {
+    url = join(url, 'index.html')
+  }
+
+  if(req.method === 'GET' && url.endsWith('.html')) {
+    const file = join(server_config.root, url) 
+    if(existsSync(file)) {
+      let html = await Bun.file(file).text()
+      html = html.replace('</body>', '<script src="/reload.js"></script></body>')
+      res.send(html)
+      return
+    }
+  }
+
+  next()
+});
+
+app.use(express.static(server_config.root))
+
+
+const server = app.listen(port, () => {
+  console.log(`Web server listening on port ${port}`)
+})
+
+
+const ws_server = Bun.serve({
+  port: 3003,
+  fetch(req, server) {
+    // upgrade the request to a WebSocket
+    if (server.upgrade(req)) {
+      return // do not return a Response
+    }
+    return new Response("Upgrade failed :(", { status: 500 })
+  },
+  websocket: {
+    open(ws) {
+      websockets.push(ws)
+      console.log(`Connection to WebSocket: ${websockets.length}`)
+    },
+    close(ws) {
+      const index = websockets.indexOf(ws)
+      websockets.splice(index, 1)
+      console.log(`Connection to WebSocket: ${websockets.length}`)
+    },
+    // this is called when a message is received
+    message() {
+      console.log(`Received ${message}`)
+    },
+  }, // handlers
+})
+
+console.log(`WebSocket on localhost:${ws_server.port}`)
+
 process.on('SIGINT', () => {
   console.log('\nClosing watcher...')
   watcher.close()
+  console.log('Closing server...')
+  server.close()
+  console.log('Closing WebSocket...')
+  ws_server.stop()
 
+  console.log('Bye')
   process.exit(0)
 });
 
-const params = {
-	port: 8181, // Set the server port. Defaults to 8080.
-	host: "0.0.0.0", // Set the address to bind to. Defaults to 0.0.0.0 or process.env.IP.
-	root: "docs", // Set root directory that's being served. Defaults to cwd.
-	open: true, // When false, it won't load your browser by default.
-	ignore: '**/*.md', // comma-separated string for paths to ignore
-	wait: 1000, // Waits for all changes, before reloading. Defaults to 0 sec.
-	logLevel: 2, // 0 = errors only, 1 = some, 2 = lots
-}
-
-//const server = live_server.start(params)
-//console.log(server)
-// const server = Bun.serve({
-//   port: 3000,
-//   fetch(request) {
-//     return new Response(import.meta.dir);
-//   },
-// });
-//
-// console.log(`Listening on localhost: ${server.port}`);
