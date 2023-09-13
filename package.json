@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "build": "node build.js",
-    "bundles": "npx rollup -c"
+    "bundles": "npx rollup -c",
+    "dev": "bun dev.js"
   },
   "keywords": [],
   "author": "Quentin Lurkin",
@@ -18,6 +19,7 @@
     "express": "^4.18.2",
     "highlight.js": "^11.8.0",
     "js-yaml": "^4.1.0",
+    "live-server": "^1.2.2",
     "marked": "^5.0.5",
     "nunjucks": "^3.2.4",
     "pdf-lib": "^1.17.1",
