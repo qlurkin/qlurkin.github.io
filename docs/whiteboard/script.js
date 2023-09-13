@@ -82,6 +82,8 @@ document.querySelectorAll('.color').forEach(elem => {
   })
 })
 
+document.querySelectorAll('img').forEach(elem => { elem.ondragstart = () => false })
+
 document.querySelector('.undo').addEventListener('click', () => {
   if(draw.children().length == 0) return
   draw.last().remove()
