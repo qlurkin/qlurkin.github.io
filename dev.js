@@ -2,6 +2,8 @@ import { watch, existsSync } from 'fs'
 import { dirname, join } from 'path'
 import { build } from 'build_lib'
 import express from 'express'
+// import { Router } from '@stricjs/router'
+// import { dir } from '@stricjs/utils'
 
 const server_config = await Bun.file("server.json").json()
 
@@ -34,7 +36,7 @@ const watcher = watch(server_config.root, { recursive: true }, (_, filename) => 
   clearTimeout(timeout_handle)
   timeout_handle = setTimeout(async () => {
     building = true
-    console.log(`Building ${dir}`)
+    process.stdout.write(`Building ${dir}...`)
     await build(dir)
     setTimeout(() => {
       to_build = null
@@ -42,15 +44,69 @@ const watcher = watch(server_config.root, { recursive: true }, (_, filename) => 
       for(const ws of websockets) {
         ws.send('Reload!!')
       }
+      process.stdout.write(` Done\n`)
     }, 100)
   }, 0)
 })
 
 
+// const appp = new Router()
+// appp.port = 4000
+// appp.get('/reload.js', async () => {
+//   const js = await Bun.file('reload.js').text()
+//   return new Response(js.replace('PORT', String(4000)), {
+//     headers: {'content-type': 'application/javascript; charset=utf-8'}
+//   })
+// })
+// appp.get('/*', async ctx => {
+//   let url = ctx.params['*']
+//   if(url.endsWith('/')) {
+//     url = join(url, 'index.html')
+//   }
+//
+//   if(url.endsWith('.html')) {
+//     const file = join(server_config.root, url) 
+//     if(existsSync(file)) {
+//       let html = await Bun.file(file).text()
+//       html = html.replace('</body>', '<script src="/reload.js"></script></body>')
+//       return new Response(html, {
+//         headers: { 'content-type': 'text/html; charset=utf-8' }
+//       })
+//     }
+//   }
+//
+//   return dir('docs')(ctx)
+// })
+// appp.ws('/ws', {
+//   open(ws) {
+//     websockets.push(ws)
+//     console.log(`Connection to WebSocket: ${websockets.length}`)
+//   },
+//   close(ws) {
+//     const index = websockets.indexOf(ws)
+//     websockets.splice(index, 1)
+//     console.log(`Connection to WebSocket: ${websockets.length}`)
+//   },
+//   // this is called when a message is received
+//   message() {
+//     console.log(`Received ${message}`)
+//   },
+// })
+//
+// Bun.serve(appp)
+
+
 const app = express()
 const port = 3000
+const ws_port = 3003
 
-app.use(async function(req, res, next) {
+app.get('/reload.js', async (_, res) => {
+  const js = await Bun.file('reload.js').text()
+  res.setHeader('content-type', 'application/javascript');
+  res.send(js.replace('PORT', String(ws_port)))
+})
+
+app.use(async (req, res, next) => {
   let url = req.url
   if(url.endsWith('/')) {
     url = join(url, 'index.html')
@@ -78,7 +134,7 @@ const server = app.listen(port, () => {
 
 
 const ws_server = Bun.serve({
-  port: 3003,
+  port: ws_port,
   fetch(req, server) {
     // upgrade the request to a WebSocket
     if (server.upgrade(req)) {
@@ -89,12 +145,12 @@ const ws_server = Bun.serve({
   websocket: {
     open(ws) {
       websockets.push(ws)
-      console.log(`Connection to WebSocket: ${websockets.length}`)
+      // console.log(`Connection to WebSocket: ${websockets.length}`)
     },
     close(ws) {
       const index = websockets.indexOf(ws)
       websockets.splice(index, 1)
-      console.log(`Connection to WebSocket: ${websockets.length}`)
+      // console.log(`Connection to WebSocket: ${websockets.length}`)
     },
     // this is called when a message is received
     message() {
