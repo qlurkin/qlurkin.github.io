@@ -203,8 +203,8 @@
       <h2>Informations générales</h2>
       <ul>
         <li>
-          7h30 de <strong>cours théoriques</strong>,
-          7h30 d'<strong>exercices à domicile</strong>
+          7h30 de <strong>présentiel</strong>,
+          7h30 <strong>à domicile</strong>
         </li>
         <li>
           Les documents utilisés sont sur
@@ -212,12 +212,9 @@
           <strong>quentin.lurkin.xyz/courses/python1ba/</strong></a>
         </li>
         <li>
-          Evaluation :
+          Évaluation :
           <ul>
-            <li>
-              Exercices à domicile (20%), <strong>non-réévaluable</strong>.
-            </li>
-            <li>Examen écrit sur PC (80%)</li>
+            <li>Examen écrit de type QCM(100%)</li>
           </ul>
         </li>
         <li><strong>Toutes les communications passent par Teams</strong></li>
@@ -849,12 +846,12 @@
       </p>
 
       <pre class="terminal">
-        <b>$&gt; pwd</b>
+        <b>&gt; pwd</b>
         C:\Users\lur
-        <b>$&gt; ls</b>
+        <b>&gt; ls</b>
         Desktop Documents
-        <b>$&gt; cd Documents</b>
-        <b>$&gt; pwd</b>
+        <b>&gt; cd Documents</b>
+        <b>&gt; pwd</b>
         C:\Users\lur\Documents
       </pre>
 
@@ -2107,16 +2104,16 @@
       <h2>Utilisation</h2>
       <p>Mode interactif</p>
       <pre class="terminal">
-        <b>$> python --version</b>
+        <b>> python --version</b>
         Python <span class="pyversion">3.X.X</span>
-        <b>$> python</b>
+        <b>> python</b>
         Python <span class="pyversion">3.X.X</span> ...
         Type "help", "copyright", "credits" or "license" for more
         information.
         >>> 1 + 1
         2
         >>> exit()
-        <b>$></b>
+        <b>></b>
         &nbsp; &nbsp;
       </pre>
       <p>
@@ -2157,9 +2154,9 @@
       </code></pre>
 
       <pre class="terminal">
-        <b>$> python hello.py</b>
+        <b>> python hello.py</b>
         Hello World
-        <b>$> &nbsp; &nbsp; &nbsp; &nbsp;</b>
+        <b>> &nbsp; &nbsp; &nbsp; &nbsp;</b>
       </pre>
       <p class="document-only">
         Le mode script permet d'exécuter le code se trouvant dans un fichier. Il
@@ -2278,45 +2275,23 @@
             ry="3"
             rx="3"
             style="fill: none; stroke: #000; stroke-width: 3px"
-          /></svg
-        >), taper "python" dans le champ de recherche et cliquer sur installer.
+          /></svg>), taper "python" dans le champ de recherche et cliquer sur installer.
       </p>
     </section>
 
     <section class="code">
       <h2>Exemple de programme</h2>
       <pre><code class='lang-python'>
-         from math import sqrt
-         
-         def bazooka(a, b, c):
-            delta = b**2 - 4*a*c
-            if delta &lt; 0:
-               return []
-            if delta == 0:
-               return [ -b/(2*a) ]
-            return [
-               (-b - sqrt(delta))/(2*a),
-               (-b + sqrt(delta))/(2*a)
-            ]
-
-         print(bazooka(1, -1, -2))
-         # [-1.0, 2.0]
+        D = b*b-4*a*c
+        if D &lt; 0:
+          print("Pas de solution réelle")
+        else:
+          if D == 0:
+            print("La racine double est", -b/(2*a))
+          else:
+            print("La 1re racine est", (-b-sqrt(D))/(2*a))
+            print("La 2e racine est", (-b+sqrt(D))/(2*a))
       </code></pre>
-
-      <p class="document-only">
-        Voici un exemple de fichier Python. Si vous l'examinez attentivement,
-        vous pouvez probablement deviner ce que fait ce programme.
-      </p>
-
-      <p>
-        Remarque: Un <code>#</code> indique que la fin de la ligne est un
-        commentaire.
-      </p>
-
-      <p class="document-only">
-        Nous allons maintenant expliquer les différents éléments de ce
-        programme.
-      </p>
     </section>
 
     <section>
@@ -2635,188 +2610,260 @@
     </section>
 
     <section>
-      <h2>Opérateurs logique</h2>
+      <h2>Sinon</h2>
       <ul>
-        <li>Opérations sur des <strong>valeurs booléenne</strong></li>
-        <li>NON logique (<code>not</code>) inverse une valeur</li>
-        <li>
-          ET logique (<code>and</code>) impose les deux expressions à
-          <code>True</code>
-        </li>
-        <li>
-          OU logique (<code>or</code>) nécessite une seule expression à
-          <code>True</code>
-        </li>
+      <li>Il est possible de définir un bloc à exécuter si la condition est fausse avec l'instruction <code>else</code> (sinon)</li>
       </ul>
-      <table>
-        <tr>
-          <th><code>a</code></th>
-          <th><code>b</code></th>
-          <th><code>not a</code></th>
-          <th><code>a and b</code></th>
-          <th><code>a or b</code></th>
-        </tr>
-        <tr>
-          <td><code>False</code></td>
-          <td><code>False</code></td>
-          <td><code>True</code></td>
-          <td><code>False</code></td>
-          <td><code>False</code></td>
-        </tr>
-        <tr>
-          <td><code>False</code></td>
-          <td><code>True</code></td>
-          <td></td>
-          <td><code>False</code></td>
-          <td><code>True</code></td>
-        </tr>
-        <tr>
-          <td><code>True</code></td>
-          <td><code>False</code></td>
-          <td><code>False</code></td>
-          <td><code>False</code></td>
-          <td><code>True</code></td>
-        </tr>
-        <tr>
-          <td><code>True</code></td>
-          <td><code>True</code></td>
-          <td></td>
-          <td><code>True</code></td>
-          <td><code>True</code></td>
-        </tr>
-      </table>
       <pre><code class="lang-python">
-         a = 8 > 2 and 12 <= 4 # a vaut False
-         b = 5 != 5 or 'PY' == 'P' + 'Y' # b vaut True
+        a = −5
+        if a < 0:
+           print("a est négatif")
+        else:
+           print("a est positif")
       </code></pre>
     </section>
 
     <section>
-      <h2>Fonctions</h2>
+      <h2>Erreurs</h2>
+      <p>Écrivons le programme dans un fichier nommé <code>2nd_order.py</code> et exécutons le:</p>
+      <div class='terminal'>
+        > python 2nd_order.py
+        Traceback (most recent call last):
+          File "C:\Users\lur\2nd_order.py", line 1, in &lt;module>
+            D = b*b-4*a*c
+                ^
+        NameError: name 'b' is not defined
+      </div>
+      <p>Il faut définir <code>a</code>, <code>b</code> et <code>c</code></p>
+    </section>
+
+    <section>
+      <h2>Erreurs (2)</h2>
+      <p>Réessayons !</p>
+      <div class='terminal'>
+        > python 2nd_order.py
+        Traceback (most recent call last):
+          File "C:\Users\lur\2nd_order.py", line 11, in &lt;module>
+            print("La 1re racine est", (-b-sqrt(D))/(2*a))
+                                           ^^^^
+        NameError: name 'sqrt' is not defined
+      </div>
+      <p>Il faut importer <code>sqrt</code></p>
+    </section>
+
+    <section>
+      <h2>Demander des valeurs</h2>
       <ul>
-        <li>
-          Qu’est-ce que c’est ?
-          <small>C’est un sous-programme réutilisable</small>
-        </li>
-        <li>
-          Comment les reconnaître ?
-          <small>Grâce aux () qui suivent son nom</small>
-        </li>
-        <li>
-          Un appel à une fonction <strong>a une valeur</strong>
-          <small>Elles peuvent être utilisée dans des expressions</small>
-        </li>
+        <li>Hardcoder les valeurs dans le programme n'est pas idéal</li>
+        <li>Utilisons la fonction <code>input()</code></li>
+        <li>Elle renvoie toujours des <code>str</code></li>
+        <li>Conversion des <code>str</code> en flottants avec la fonction <code>float</code></li>
       </ul>
+    </section>
+
+    <section>
+      <h2>Et voila !</h2>
       <pre><code class="lang-python">
-         from math import cos
-         from cmath import sqrt
-         
-         x = cos(0)
-         y = sqrt(4) # racine carrée (complexe)
-         
-         # on peut entrer un string
-         s = input("Entrez un nombre: ")
-         v = int(s) # conversion de valeur
-         
-         # print vaut None
-         a = print("La réponse est " + str(42))
-         print(a)
+        from math import sqrt
+
+        a = float(input('entrez la valeur de a : '))
+        b = float(input('entrez la valeur de b : '))
+        c = float(input('entrez la valeur de c : '))
+        D = b*b-4*a*c
+        if D &lt; 0:
+            print("Pas de solution réelle")
+        else:
+            if D == 0:
+                print("La racine double est", -b/(2*a))
+            else:
+                print("La 1re racine est", (-b-sqrt(D))/(2*a))
+                print("La 2e racine est", (-b+sqrt(D))/(2*a))
       </code></pre>
     </section>
 
-    <section>
-      <h2>Nos fonctions</h2>
-      <ul>
-        <li>
-          On peut définir nos propres fonctions
-          <pre><code class="lang-python">
-               def one():
-                  return 1
-            </code></pre>
-        </li>
-        <li>Le mot <code>def</code> sert à définir une fonction</li>
-        <li>
-          Le mot <code>return</code> sert à indiquer la
-          <strong>valeur</strong> de la fonction
-        </li>
-        <li>
-          La définition de fonction est une <strong>instruction bloc</strong>
-        </li>
-      </ul>
+    <!-- <section> -->
+    <!--   <h2>Opérateurs logique</h2> -->
+    <!--   <ul> -->
+    <!--     <li>Opérations sur des <strong>valeurs booléenne</strong></li> -->
+    <!--     <li>NON logique (<code>not</code>) inverse une valeur</li> -->
+    <!--     <li> -->
+    <!--       ET logique (<code>and</code>) impose les deux expressions à -->
+    <!--       <code>True</code> -->
+    <!--     </li> -->
+    <!--     <li> -->
+    <!--       OU logique (<code>or</code>) nécessite une seule expression à -->
+    <!--       <code>True</code> -->
+    <!--     </li> -->
+    <!--   </ul> -->
+    <!--   <table> -->
+    <!--     <tr> -->
+    <!--       <th><code>a</code></th> -->
+    <!--       <th><code>b</code></th> -->
+    <!--       <th><code>not a</code></th> -->
+    <!--       <th><code>a and b</code></th> -->
+    <!--       <th><code>a or b</code></th> -->
+    <!--     </tr> -->
+    <!--     <tr> -->
+    <!--       <td><code>False</code></td> -->
+    <!--       <td><code>False</code></td> -->
+    <!--       <td><code>True</code></td> -->
+    <!--       <td><code>False</code></td> -->
+    <!--       <td><code>False</code></td> -->
+    <!--     </tr> -->
+    <!--     <tr> -->
+    <!--       <td><code>False</code></td> -->
+    <!--       <td><code>True</code></td> -->
+    <!--       <td></td> -->
+    <!--       <td><code>False</code></td> -->
+    <!--       <td><code>True</code></td> -->
+    <!--     </tr> -->
+    <!--     <tr> -->
+    <!--       <td><code>True</code></td> -->
+    <!--       <td><code>False</code></td> -->
+    <!--       <td><code>False</code></td> -->
+    <!--       <td><code>False</code></td> -->
+    <!--       <td><code>True</code></td> -->
+    <!--     </tr> -->
+    <!--     <tr> -->
+    <!--       <td><code>True</code></td> -->
+    <!--       <td><code>True</code></td> -->
+    <!--       <td></td> -->
+    <!--       <td><code>True</code></td> -->
+    <!--       <td><code>True</code></td> -->
+    <!--     </tr> -->
+    <!--   </table> -->
+    <!--   <pre><code class="lang-python"> -->
+    <!--      a = 8 > 2 and 12 <= 4 # a vaut False -->
+    <!--      b = 5 != 5 or 'PY' == 'P' + 'Y' # b vaut True -->
+    <!--   </code></pre> -->
+    <!-- </section> -->
 
-      <p class="document-only">
-        Il peut y avoir plusieurs <code>return</code> dans une fonction mais
-        l'exécution du code d'une fonction s'arrête au premier
-        <code>return</code> rencontré.
-      </p>
-    </section>
+    <!-- <section> -->
+    <!--   <h2>Fonctions</h2> -->
+    <!--   <ul> -->
+    <!--     <li> -->
+    <!--       Qu’est-ce que c’est ? -->
+    <!--       <small>C’est un sous-programme réutilisable</small> -->
+    <!--     </li> -->
+    <!--     <li> -->
+    <!--       Comment les reconnaître ? -->
+    <!--       <small>Grâce aux () qui suivent son nom</small> -->
+    <!--     </li> -->
+    <!--     <li> -->
+    <!--       Un appel à une fonction <strong>a une valeur</strong> -->
+    <!--       <small>Elles peuvent être utilisée dans des expressions</small> -->
+    <!--     </li> -->
+    <!--   </ul> -->
+    <!--   <pre><code class="lang-python"> -->
+    <!--      from math import cos -->
+    <!--      from cmath import sqrt -->
+    <!---->
+    <!--      x = cos(0) -->
+    <!--      y = sqrt(4) # racine carrée (complexe) -->
+    <!---->
+    <!--      # on peut entrer un string -->
+    <!--      s = input("Entrez un nombre: ") -->
+    <!--      v = int(s) # conversion de valeur -->
+    <!---->
+    <!--      # print vaut None -->
+    <!--      a = print("La réponse est " + str(42)) -->
+    <!--      print(a) -->
+    <!--   </code></pre> -->
+    <!-- </section> -->
+    <!---->
+    <!-- <section> -->
+    <!--   <h2>Nos fonctions</h2> -->
+    <!--   <ul> -->
+    <!--     <li> -->
+    <!--       On peut définir nos propres fonctions -->
+    <!--       <pre><code class="lang-python"> -->
+    <!--            def one(): -->
+    <!--               return 1 -->
+    <!--         </code></pre> -->
+    <!--     </li> -->
+    <!--     <li>Le mot <code>def</code> sert à définir une fonction</li> -->
+    <!--     <li> -->
+    <!--       Le mot <code>return</code> sert à indiquer la -->
+    <!--       <strong>valeur</strong> de la fonction -->
+    <!--     </li> -->
+    <!--     <li> -->
+    <!--       La définition de fonction est une <strong>instruction bloc</strong> -->
+    <!--     </li> -->
+    <!--   </ul> -->
+    <!---->
+    <!--   <p class="document-only"> -->
+    <!--     Il peut y avoir plusieurs <code>return</code> dans une fonction mais -->
+    <!--     l'exécution du code d'une fonction s'arrête au premier -->
+    <!--     <code>return</code> rencontré. -->
+    <!--   </p> -->
+    <!-- </section> -->
+    <!---->
+    <!-- <section> -->
+    <!--   <h2>Paramètres de fonction</h2> -->
+    <!--   <ul> -->
+    <!--     <li> -->
+    <!--       Une fonction peut prendre des <strong>paramètres</strong> -->
+    <!--       <pre><code class="lang-python"> -->
+    <!--            def somme(a, b): -->
+    <!--               return a + b -->
+    <!---->
+    <!--            print(somme(40, 2)) # affiche 42 -->
+    <!--         </code></pre> -->
+    <!--     </li> -->
+    <!--     <li> -->
+    <!--       les valeurs de l'appel sont <strong>assignées</strong> aux paramètres -->
+    <!--       <small>Comme s'il y avait un <code>=</code></small> -->
+    <!--     </li> -->
+    <!--   </ul> -->
+    <!-- </section> -->
+    <!---->
+    <!-- <section> -->
+    <!--   <h2>Paramètres de fonction</h2> -->
+    <!--   <ul> -->
+    <!--     <li> -->
+    <!--       Certaines fonctions peuvent prendre un nombre quelconque de paramètres -->
+    <!--       <pre><code class="lang-python"> -->
+    <!--         # print affiche tous ses paramètres séparés par des espaces et  -->
+    <!--         # retourne à la ligne -->
+    <!--         print('Hello', 'World', '!!!') -->
+    <!--       </code></pre> -->
+    <!--     </li> -->
+    <!--     <li> -->
+    <!--       Les fonctions peuvent prendre des paramètres nommés -->
+    <!--       <pre><code class="lang-python"> -->
+    <!--         # la valeur de sep est utilisé entre les différentes valeurs -->
+    <!--         # affichées (espace par défaut) -->
+    <!--         print(21, 'juillet', 1831, sep='/') -->
+    <!---->
+    <!--         # la valeur de end est utilisé à la fin de l'affichage -->
+    <!--         # (passage à la ligne par défaut) -->
+    <!--         print('Hello', end=' ') -->
+    <!--         print('World') -->
+    <!--       </code></pre> -->
+    <!--     </li> -->
+    <!--   </ul> -->
+    <!-- </section> -->
 
-    <section>
-      <h2>Paramètres de fonction</h2>
-      <ul>
-        <li>
-          Une fonction peut prendre des <strong>paramètres</strong>
-          <pre><code class="lang-python">
-               def somme(a, b):
-                  return a + b
-               
-               print(somme(40, 2)) # affiche 42
-            </code></pre>
-        </li>
-        <li>
-          les valeurs de l'appel sont <strong>assignées</strong> aux paramètres
-          <small>Comme s'il y avait un <code>=</code></small>
-        </li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>Paramètres de fonction</h2>
-      <ul>
-        <li>
-          Certaines fonctions peuvent prendre un nombre quelconque de paramètres
-          <pre><code class="lang-python">
-            # print affiche tous ses paramètres séparés par des espaces et 
-            # retourne à la ligne
-            print('Hello', 'World', '!!!')
-          </code></pre>
-        </li>
-        <li>
-          Les fonctions peuvent prendre des paramètres nommés
-          <pre><code class="lang-python">
-            # la valeur de sep est utilisé entre les différentes valeurs
-            # affichées (espace par défaut)
-            print(21, 'juillet', 1831, sep='/')
-
-            # la valeur de end est utilisé à la fin de l'affichage
-            # (passage à la ligne par défaut)
-            print('Hello', end=' ')
-            print('World')
-          </code></pre>
-        </li>
-      </ul>
-    </section>
-
-    <section class="code deck-only">
-      <h2>Bazooka</h2>
-      <pre><code class="lang-python">
-         from math import sqrt
-         
-         def bazooka(a, b, c):
-            delta = b**2 - 4*a*c
-            if delta &lt; 0:
-               return []
-            if delta == 0:
-               return [ -b/(2*a) ]
-            return [
-               (-b - sqrt(delta))/(2*a),
-               (-b + sqrt(delta))/(2*a)
-            ]
-
-         print(bazooka(1, -1, -2))
-         # [-1.0, 2.0]
-      </code></pre>
-    </section>
+    <!-- <section class="code deck-only"> -->
+    <!--   <h2>Bazooka</h2> -->
+    <!--   <pre><code class="lang-python"> -->
+    <!--      from math import sqrt -->
+    <!---->
+    <!--      def bazooka(a, b, c): -->
+    <!--         delta = b**2 - 4*a*c -->
+    <!--         if delta &lt; 0: -->
+    <!--            return [] -->
+    <!--         if delta == 0: -->
+    <!--            return [ -b/(2*a) ] -->
+    <!--         return [ -->
+    <!--            (-b - sqrt(delta))/(2*a), -->
+    <!--            (-b + sqrt(delta))/(2*a) -->
+    <!--         ] -->
+    <!---->
+    <!--      print(bazooka(1, -1, -2)) -->
+    <!--      # [-1.0, 2.0] -->
+    <!--   </code></pre> -->
+    <!-- </section> -->
 
     <section>
       <h2>Documentation</h2>
@@ -2826,12 +2873,12 @@
       </p>
     </section>
 
-    <section class="deck-only">
-      <p class="center big">
-        N'oubliez pas de faire vos <a href="exercices1.zip">exercices</a> !
-      </p>
-      <p class="center">A remettre sur claco</p>
-    </section>
+    <!-- <section class="deck-only"> -->
+    <!--   <p class="center big"> -->
+    <!--     N'oubliez pas de faire vos <a href="exercices1.zip">exercices</a> ! -->
+    <!--   </p> -->
+    <!--   <p class="center">A remettre sur claco</p> -->
+    <!-- </section> -->
 
     <script>
       fetch("https://endoflife.date/api/python.json")
@@ -2849,4 +2896,3 @@
     </script>
   </body>
 </html>
-<!--javascript: (function(){var unencodedURL = (location.href); var websiteURL = encodeURIComponent(unencodedURL); var url = 'https://web-capture.net/?url=' + websiteURL; window.open(url, 'web-capture.net','')})();-->
