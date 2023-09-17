@@ -17,7 +17,7 @@
 <h2>Create a project</h2>
 <p>To create a project use <code>cargo</code>.</p>
 <pre class="terminal">
-$> cargo new project_name
+> cargo new project_name
 </pre>
 
 <p>This will create the following file tree.</p>
@@ -34,7 +34,7 @@ $> cargo new project_name
 </code></pre>
 <p>You can then run it with:</p>
 <pre class="terminal">
-<b>$> cargo run</b>
+<b>> cargo run</b>
    <b style='color: chartreuse'>Compiling</b> project-name v0.1.0 (./project-name)
     <b style='color: chartreuse'>Finished</b> dev [unoptimized + debuginfo] target(s) in 2.25s
      <b style='color: chartreuse'>Running</b> `target/debug/project-name`
@@ -44,6 +44,7 @@ Hello, world!
 <h2>Development Environment</h2>
 <p>The use of an editor that support <em>Language Server Protocol</em> (LSP) is recommended. The best language server for Rust is <code>rust-analyzer</code>.</p>
 <p><strong>Visual Studio Code</strong> is a good choice and you can easily install <code>rust-analyzer</code> as a VSCode Extension.</p>
+<p>You can also use <strong>RustRover</strong> from JetBrains which is a new Rust IDE that is in free early access.</p>
 <h2>Documentation</h2>
 <p>The best source to learn about Rust is the <strong><a href="https://doc.rust-lang.org/stable/book/">Rust Book</a></strong>. You can find more resource at <a href="https://www.rust-lang.org/learn">www.rust-lang.org/learn</a></p>
 <h2>Exercices</h2>
@@ -52,9 +53,9 @@ Hello, world!
 
 <p>To start with <code>rustlings</code>, you clone the repository latest release, <code>cd</code> in the root folder and use <code>cargo</code> to install it.</p>
 <pre class='terminal'>
-$> git clone -b 5.2.1 --depth 1 https://github.com/rust-lang/rustlings
-$> cd rustlings
-$> cargo install --force --path .
+> git clone -b 5.6.0 --depth 1 https://github.com/rust-lang/rustlings
+> cd rustlings
+> cargo install --force --path .
 </pre>
 
 <p>This will install the <code>rustlings</code> command.</p>
@@ -65,7 +66,7 @@ $> rustlings lsp
 
 <p>Then you can start the exercices by running:</p>
 <pre class='terminal' id='term2'>
-$> rustlings watch
+> rustlings watch
 </pre>
 
 <p>This will watch the exercices files and recompile it on each modification.</p>

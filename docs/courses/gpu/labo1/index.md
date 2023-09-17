@@ -13,7 +13,7 @@ Follow the instructions on [rustup.rs](https://rustup.rs). This will install `ru
 To create a project use `cargo`.
 
 <pre class="terminal">
-$> cargo new project_name
+> cargo new project_name
 </pre>
 
 This will create the following file tree.
@@ -38,7 +38,7 @@ fn main() {
 You can then run it with:
 
 <pre class="terminal">
-<b>$> cargo run</b>
+<b>> cargo run</b>
    <b style='color: chartreuse'>Compiling</b> project-name v0.1.0 (./project-name)
     <b style='color: chartreuse'>Finished</b> dev [unoptimized + debuginfo] target(s) in 2.25s
      <b style='color: chartreuse'>Running</b> `target/debug/project-name`
@@ -50,6 +50,8 @@ Hello, world!
 The use of an editor that support *Language Server Protocol* (LSP) is recommended. The best language server for Rust is `rust-analyzer`.
 
 **Visual Studio Code** is a good choice and you can easily install `rust-analyzer` as a VSCode Extension.
+
+You can also use **RustRover** from JetBrains which is a new Rust IDE that is in free early access.
 
 ## Documentation
 
@@ -64,9 +66,9 @@ To train ourselves to write Rust programs, we will follow the `rustlings` projec
 To start with `rustlings`, you clone the repository latest release, `cd` in the root folder and use `cargo` to install it.
 
 <pre class='terminal'>
-$> git clone -b 5.2.1 --depth 1 https://github.com/rust-lang/rustlings
-$> cd rustlings
-$> cargo install --force --path .
+> git clone -b 5.6.0 --depth 1 https://github.com/rust-lang/rustlings
+> cd rustlings
+> cargo install --force --path .
 </pre>
 
 This will install the `rustlings` command.
@@ -80,7 +82,7 @@ $> rustlings lsp
 Then you can start the exercices by running:
 
 <pre class='terminal' id='term2'>
-$> rustlings watch
+> rustlings watch
 </pre>
 
 This will watch the exercices files and recompile it on each modification.
