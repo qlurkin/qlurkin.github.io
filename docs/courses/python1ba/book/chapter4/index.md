@@ -140,3 +140,4 @@ L'instruction `pygame.time.Clock()` crée une valeur de type `Clock`. Si type de
 La vitesse du cercle devrait maintenant être raisonnable et identique d'un ordinateur à l'autre.
 
 ## Événements
+
