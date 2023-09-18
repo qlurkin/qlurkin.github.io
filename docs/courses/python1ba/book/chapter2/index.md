@@ -12,7 +12,7 @@ Doc.setChapterNb(2)
 
 Dans le programme de résolution d'équations du second degré, nous avons utilisé plusieurs variables, `a`, `b`, `c` et `D`.
 
-Une variable est une sorte de boite possédant un nom et pouvant contenir une valeur. Pour mettre une valeur dans la variable, on utilise le signe `=`. Une fois la valeur de la variable définie son contenu peut être utiliser dans le code en utilisant sont nom.
+Une variable est une sorte de boite possédant un nom et pouvant contenir une valeur. Pour mettre une valeur dans la variable, on utilise le signe `=`. Une fois la valeur de la variable définie, son contenu peut être utilisé dans le code en utilisant son nom.
 
 ```python
 a = 42
@@ -113,7 +113,7 @@ print(a) # affiche 42
 <figcaption>Variable et valeur</figcaption>
 </figure>
 
-Il est important ici de constater que le signe `=` a une signification très **différente** de ce que l'on retrouve en **mathématique**. En programmation, le `=` prend **la valeur qui est à sa droite** pour la mettre dans **la variable qui est à sa gauche**. Cela signifie que `42 = a` n'a aucun sens en Python.
+Il est important ici de constater que le signe `=` a une signification très **différente** de ce que l'on retrouve en **mathématiques**. En programmation, le `=` prend **la valeur qui est à sa droite** pour la mettre dans **la variable qui est à sa gauche**. Cela signifie que `42 = a` n'a aucun sens en Python.
 
 La valeur de la variable peut être modifiée en lui assignant une autre valeur.
 
@@ -132,7 +132,7 @@ a = 2 * 21
 # ...
 ```
 
-La valeur qui est à droite du signe `=` peut être écrite directement; on parle alors d'un **littéral**. Ou elle peut être le résultat d'un calcul. Plus généralement, on appelle **expressions** tous ce qui a une valeur. Un littéral est donc une expression mais toutes les expressions ne sont pas des littéraux.
+La valeur qui est à droite du signe `=` peut être écrite directement; on parle alors d'un **littéral**. Ou elle peut être le résultat d'un calcul. Plus généralement, on appelle **expression** tout ce qui a une valeur. Un littéral est donc une expression mais toutes les expressions ne sont pas des littéraux.
 
 ## Types de valeurs
 
@@ -145,7 +145,7 @@ a = 42 # littéral
 a = 2 * 21 # expression
 ```
 
-- Les nombre à virgule flottante (`float`)
+- Les nombres à virgule flottante (`float`)
 
 ```python
 a = 0.42 # littéral
@@ -186,7 +186,7 @@ print(i + s) # interdit
 <figcaption>Somme entre <code>int</code> et <code>float</code></figcaption>
 </figure>
 
-Pour illustrer cela, apportons une petite modification au programme de résolution d'équations du second degré. Bien que le programme fonctionne, il est nécessaire de modifier les définitions de `a`, `b` et `c` pour résoudre une autre équations. Ce n'est pas idéal. Nous allons donc faire en sorte que le programme **demande à l'utilisateur** d'entrer les valeurs des coefficients de l'équation. Pour cela, on utilise la fonction `input()`. Cette dernière **interrompt** l'exécution du programme pour permettre à l'utilisateur d'entrer quelque chose au clavier. Elle laisse ensuite le programme **reprendre** et renvoie la valeur tapée&nbsp;:
+Pour illustrer cela, apportons une petite modification au programme de résolution d'équations du second degré. Bien que le programme fonctionne, il est nécessaire de modifier les définitions de `a`, `b` et `c` pour résoudre une autre équation. Ce n'est pas idéal. Nous allons donc faire en sorte que le programme **demande à l'utilisateur** d'entrer les valeurs des coefficients de l'équation. Pour cela, on utilise la fonction `input()`. Cette dernière **interrompt** l'exécution du programme pour permettre à l'utilisateur d'entrer quelque chose au clavier. Elle laisse ensuite le programme **reprendre** et renvoie la valeur tapée&nbsp;:
 
 <figure id='python_2deg_corrected_2' data-ref='code'>
 
@@ -225,9 +225,9 @@ TypeError: can't multiply sequence by non-int of type 'str'
 
 Voilà un nouveau message d'erreur ! Celui-ci nous indique que lors du calcul de `b*b`, on ne peut pas multiplier une séquence par une valeur de type `str`. On se rend compte ici que lorsqu'on a tapé `0` pour indiquer la valeur de `b`, la fonction `input()` a renvoyé une valeur **de type `str`**. Et cela pose problème pour la suite des calculs.
 
-En fait, il s'agit du comportement normal de la fonction `input()`. comme cette fonction demande à l'utilisateur d'entrer quelque chose au clavier, elle ne fait que renvoyer la suite de caractères qui a été tapée. **`input()` renvoie donc toujours une valeur de type `str`**.
+En fait, il s'agit du comportement normal de la fonction `input()`. Comme cette fonction demande à l'utilisateur d'entrer quelque chose au clavier, elle ne fait que renvoyer la suite de caractères qui a été tapée. **`input()` renvoie donc toujours une valeur de type `str`**.
 
-Pour pouvoir continuer les calculs, il faut **convertir** la chaîne de caractères en nombre. Comme l'utilisateur pourrait taper des nombres à virgule, nous allons les convertir en `float`. Pour cela, il existe une fonction `float()` qui convertit ce qu'on lui passe en paramètre en valeur de type `float`.
+Pour pouvoir continuer les calculs, il faut **convertir** la chaîne de caractères en nombre. Comme l'utilisateur pourrait taper des nombres à virgule, nous allons les convertir en `float`. Pour cela, il existe une fonction `float()` qui convertit ce qu'elle reçoit en paramètre en valeur de type `float`.
 
 Ajoutons donc la fonction `float()` à notre programme. Notez que l'on peut directement utiliser la valeur renvoyée par `input()` comme **paramètre** de `float()`&nbsp;:
 
@@ -265,13 +265,13 @@ La 2e racine est 2.0
 
 Parfait !
 
-**Dans un premier temps les fonctions `input()` et `print()` seront nos seuls moyens de communication avec l'utilisateur. On utilise `input()` pour recevoir des données de l'utilisateur. Et on utilise `print()` pour afficher les résultats.**
+**Dans un premier temps, les fonctions `input()` et `print()` seront nos seuls moyens de communication avec l'utilisateur. On utilise `input()` pour recevoir des données de l'utilisateur. Et on utilise `print()` pour afficher les résultats.**
 
 ## Expressions
 
-En programmation, une expression est tous ce qui a une valeur. On dit aussi qu'une expression **renvoie** une valeur. Une expression peut donc être&nbsp;:
+En programmation, une expression est tout ce qui a une valeur. On dit aussi qu'une expression **renvoie** une valeur. Une expression peut donc être&nbsp;:
 
-- **un littéral**, c'est à dire, une valeur écrite littéralement,
+- **un littéral**, c'est-à-dire, une valeur écrite littéralement,
 
 ```python
 42            # Littéral entier
@@ -309,38 +309,38 @@ Les opérateurs suivants sont définis pour **les valeurs numériques**&nbsp;:
 1 - 2 # différence de deux nombres
 2 * 2 # produit de deux nombres
 4 ** 2 # puissance de deux nombres (ici 4²)
-4 / 2 # quotient de deux nombre
+4 / 2 # quotient de deux nombres
 5 // 2 # division entière
 5 % 2 # modulo, reste de la division entière
 ```
 <figcaption>Opérations sur les nombres</figcaption>
 </figure>
 
-Les deux dernières opérations nécessitent probablement un peu d'explications. Lorsqu'on parle de la division entière de `5` par `2` on veut savoir combien de fois `2` entre **entièrement** dans `5`. `2` entre deux fois dans `5`, en effet, `2 x 2 => 4`. `2` n'entre pas trois fois dans `5` car `3 x 2 => 6` ce qui est plus grand que `5`.
+Les deux dernières opérations nécessitent probablement un peu d'explications. Lorsqu'on parle de la division entière de `5` par `2`, on veut savoir combien de fois `2` entre **entièrement** dans `5`. `2` entre deux fois dans `5`, en effet, `2 x 2 ⇒ 4`. `2` n'entre pas trois fois dans `5` car `3 x 2 ⇒ 6`, ce qui est plus grand que `5`.
 
-Le **reste** de la division entière de `5` par `2` est la partie de `5` **qui n'a pas pu être divisée** lors de la division entière. Comme on ne peut mettre que deux fois `2` dans `5` et que `2 x 2 => 4`, il reste `1` qui n'a pas pu être divisé. On dit donc que le reste de la division entière de `5` par `2` est égale à `1`.
+Le **reste** de la division entière de `5` par `2` est la partie de `5` **qui n'a pas pu être divisée** lors de la division entière. Comme on ne peut mettre que deux fois `2` dans `5` et que `2 x 2 ⇒ 4`, il reste `1` qui n'a pas pu être divisé. On dit donc que le reste de la division entière de `5` par `2` est égale à `1`.
 
-Souvenez vous des divisions écrites que vous avez apprises en primaire. Si vous vous arrêtez avant de calculer les décimales, vous obtenez la division entière et le reste.
+Souvenez-vous des divisions écrites que vous avez apprises en primaire. Si vous vous arrêtez avant de calculer les décimales, vous obtenez la division entière et le reste.
 
 <figure id="division" data-ref="figure">
 <img src="./division_ecrite.svg" class="third">
 <figcaption>Division écrite</figcaption>
 </figure>
 
-Il y a plein de moment où la division entière et le modulo peuvent être utiles. Par exemple, si vous voulez convertir un nombre quelconque de minutes (disons 200) en heures/minutes. Pour obtenir le nombre d'heure, il suffit de faire une division entière par 60: `200 // 60 => 3`. Nous avons donc 3 heures. Et pour obtenir le nombre de minutes restantes, on utilise le modulo 60: `200 % 60 => 20`. Il reste donc 20 minutes. 200 minutes correspond à 3 heures et 20 minutes.
+Il y a plein de moments où la division entière et le modulo peuvent être utiles. Par exemple, si vous voulez convertir un nombre quelconque de minutes (disons 200) en heures/minutes. Pour obtenir le nombre d'heures, il suffit de faire une division entière par 60: `200 // 60 ⇒ 3`. Nous avons donc 3 heures. Et pour obtenir le nombre de minutes restantes, on utilise le modulo 60: `200 % 60 ⇒ 20`. Il reste donc 20 minutes. 200 minutes correspondent à 3 heures et 20 minutes.
 
 ### Opérateurs de comparaison
 
-Les opérateurs de comparaison renvoient un **booléen** en fonction de deux valeurs à comparer. Par exemple `4 < 3 => False` et `3.5 > 0 => True`.
+Les opérateurs de comparaison renvoient un **booléen** en fonction de deux valeurs à comparer. Par exemple `4 < 3 ⇒ False` et `3.5 > 0 ⇒ True`.
 
 <figure id='comparators' data-ref='code'>
 
 ```python
 a < b # inférieur à
 a > b # supérieur à
-a <= b # inférieur ou égale à
-a >= b # supérieur ou égale à
-a == b # égale à
+a <= b # inférieur ou égal à
+a >= b # supérieur ou égal à
+a == b # égal à
 a != b # différent de
 ```
 <figcaption>Opérateurs de comparaison</figcaption>
@@ -399,7 +399,7 @@ Les opérateurs booléens permettent de **combiner** des valeurs booléennes ent
 
 ### Priorité des opérateurs
 
-Il est bien sûr possible de combiner toutes ces opérations pour créer des expressions plus **complexes**. Il est intéressant de savoir que Python suis la même **priorité** des opérations que celle que vous avez vue en Mathématique (Les multiplication sont évaluées avant les additions). Voici, en détail, les priorités des opérations en Python (des plus prioritaires au moins prioritaires):
+Il est bien sûr possible de combiner toutes ces opérations pour créer des expressions plus **complexes**. Il est intéressant de savoir que Python suit la même **priorité** des opérations que celle que vous avez vue en mathématiques (Les multiplications sont évaluées avant les additions). Voici, en détail, les priorités des opérations en Python (des plus prioritaires au moins prioritaires):
 
 <figure id="operation_precedence" data-ref='table'>
 <table>
@@ -443,7 +443,7 @@ Il est bien sûr possible de combiner toutes ces opérations pour créer des exp
 <figcaption>Priorité des opérations</figcaption>
 </figure>
 
-Comme en Math, il est possible d'utiliser des **parenthèses** pour contrôler l'ordre d'évaluation des opérateurs. Nous en avons déjà utilisé dans le programme de résolution d'équations du second degré, `(-b-sqrt(D))/(2*a)`.
+Comme en mathématiques, il est possible d'utiliser des **parenthèses** pour contrôler l'ordre d'évaluation des opérateurs. Nous en avons déjà utilisées dans le programme de résolution d'équations du second degré, `(-b-sqrt(D))/(2*a)`.
 
 Voici un exemple d'expression complexe:
 
@@ -496,14 +496,14 @@ if a < 0:
 
 Nous pouvons voir qu'il y a une condition après le `if`. Une **condition** est une expression dont la valeur est **booléenne**.
 
-L'instruction `if` est le premier exemple d'**instruction composée** que nous rencontrons. Une instruction composée comporte une ligne d'en-tête se terminant par un `:` suivie d'un bloc d'instructions **indentées** *(décalées vers la droite)*.
+L'instruction `if` est le premier exemple d'**instruction composée** que nous rencontrons. Une instruction composée comporte une ligne d'en-tête se terminant par un `:` suivie d'un bloc d'instructions **indenté** *(décalé vers la droite)*.
 
 <figure id="indentation" data-ref="figure">
 <img src="./indentation.svg" class='half'>
-<figcaption>Instructions composée</figcaption>
+<figcaption>Instruction composée</figcaption>
 </figure>
 
-**Attention : toutes les instructions du bloc doivent être indentées de la même manière. En particulier, on ne peut pas indenter une ligne avec des espaces et une autre avec des tabulations même si cela semble visuellement identique ! Dans VSCode, il est possible d'activé l'affichage des caractères blancs pour identifier plus facilement les espaces et les tabulations**
+**Attention : toutes les instructions du bloc doivent être indentées de la même manière. En particulier, on ne peut pas indenter une ligne avec des espaces et une autre avec des tabulations même si cela semble visuellement identique ! Dans VSCode, il est possible d'activer l'affichage des caractères blancs pour identifier plus facilement les espaces et les tabulations.**
 
 Il est possible de définir un bloc à exécuter si la condition est fausse avec l'instruction `else` *(sinon)*&nbsp;:
 
@@ -576,7 +576,7 @@ else:
     draw.done()
 </script>
 
-Dans ce dernier exemple, il est important de comprendre que Python choisi **la première branche pour laquelle la condition est vraie**. Si la première condition <code class="nowrap">a == 0</code> est vraie, alors la deuxième condition n'est même pas évaluée. Par contre, si on arrive dans la deuxième branche, celle du `elif`, cela **implique** que la première condition était fausse et donc que `a != 0`.
+Dans ce dernier exemple, il est important de comprendre que Python choisit **la première branche pour laquelle la condition est vraie**. Si la première condition <code class="nowrap">a == 0</code> est vraie, alors la deuxième condition n'est même pas évaluée. Par contre, si on arrive dans la deuxième branche, celle du `elif`, cela **implique** que la première condition était fausse et donc que `a != 0`.
 
 ### Les boucles
 
@@ -611,7 +611,7 @@ while i < 5:
     const non = draw.node('non').rightOf(if1)
     const dummy = draw.dummy().leftOf(if1)
     const inc = draw.round('Incrémente <code>i</code>').belowOf(oui)
-    const show = draw.round('Affiche la veleur de <code>i</code>').belowOf(inc)
+    const show = draw.round('Affiche la valeur de <code>i</code>').belowOf(inc)
     const end = draw.end().belowOf(show)
     draw.polyline([start, '-->', init, '--', back, '-->', cond, '-->', if1, '--', oui, '-->', inc, '-->', show, '-|', dummy, '|->', back])
     draw.polyline([if1, '--', non, '|->' , end])
@@ -622,7 +622,7 @@ while i < 5:
 
 **L'instruction while exécute son bloc tant que sa condition est vraie.**
 
-Dans ce cas-ci, le bloc commence par l'incrémentation de `i`. Cette instruction nécessite une petite explication. Il s'agit ici encore d'un exemple flagrant de la différence qu'il existe entre le `=` de la programmation et le `=` des mathématiques. En effet, l'expression `i = i + 1` n'a **aucun sens en mathématique**. Elle est cependant parfaitement valide *(et très courante)* en programmation. Elle signifie "mettre la valeur de l'expression `i + 1` *(quelle que soit la valeur de `i`)* dans la variable `i`". Il faut comprendre ici que la valeur de l'expression `i + 1` **est calculée d'abord**. Puis, cette valeur est assignée à `i` c'est-à-dire qu'elle va remplacer la valeur qu'avait `i`. En bref, l'instruction `i = i + 1` augmente la valeur de `i` de `1`.
+Dans ce cas-ci, le bloc commence par l'incrémentation de `i`. Cette instruction nécessite une petite explication. Il s'agit ici encore d'un exemple flagrant de la différence qu'il existe entre le `=` de la programmation et le `=` des mathématiques. En effet, l'expression `i = i + 1` n'a **aucun sens en mathématiques**. Elle est cependant parfaitement valide *(et très courante)* en programmation. Elle signifie "mettre la valeur de l'expression `i + 1` *(quelle que soit la valeur de `i`)* dans la variable `i`". Il faut comprendre ici que la valeur de l'expression `i + 1` **est calculée d'abord**. Puis, cette valeur est assignée à `i` c'est-à-dire qu'elle va remplacer la valeur qu'avait `i`. En bref, l'instruction `i = i + 1` augmente la valeur de `i` de `1`.
 
 Le bloc se termine par l'affichage de `i`.
 
@@ -636,7 +636,7 @@ Nous avons donc un bloc d'instructions qui sera répété tant que `i` sera inf�
 5
 </div>
 
-Il est a noter que la condition du `while` est testée **avant le début de chaque tour de boucle**. Il peut donc arriver que la boucle ne fasse aucun tour si la condition est fausse dès le départ.
+Il est à noter que la condition du `while` est testée **avant le début de chaque tour de boucle**. Il peut donc arriver que la boucle ne fasse aucun tour si la condition est fausse dès le départ.
 
 **Il est bien sûr évident qu'il faut s'arranger pour que la condition ne soit pas vraie pour toujours car, dans ces conditions, la boucle ne s'arrêterait jamais et le programme serait bloqué.**
 
@@ -679,3 +679,22 @@ while n <= 100:
    print(n)
 ```
 
+## Exercices
+
+1. Écrire un programme qui demande un nombre et qui affiche s'il est pair ou impair.
+
+1. Écrire un programme qui demande un nombre et affiche sa valeur absolue.
+
+1. Écrire un programme qui demande une année en paramètre et qui affiche si elle est bissextile ou non.<br><br>
+Une année est bissextile si:
+   - elle est divisible par 4 et non divisible par 100, ou
+   - si elle est divisible par 400. 
+
+1. Écrire un programme qui demande un entier et qui affiche sa factorielle.<br><br>
+La factorielle de \\(n\\) se note \\(n!\\) et se calcule comme suit: $$n! = 1 \times 2 \times 3 \times 4 \times \dots \times n$$ *il est interdit d'importer le module `math`*
+
+1. Écrire un programme qui demande un entier et qui affiche s'il est premier ou non.<br><br>
+Un nombre premier est un nombre entier positif qui a exactement 2 diviseurs (1 et lui-même).<br><br>
+Exemple&nbsp;:
+   - 5 est premier car il n’est divisible que par 1 et 5.
+   - 1 n'est pas premier car il n'a qu'un diviseur.
