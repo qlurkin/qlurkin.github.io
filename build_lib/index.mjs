@@ -138,7 +138,7 @@ export async function build_and_index(dirs, opts) {
 }
 
 export async function redirect(target, opts) {
-  const link = relative(server_root, `./${target}`)
+  const link = target.startsWith('http') ? target : '/'+relative(server_root, `./${target}`)
   opts.target = link
   const content = nunjucks.render('redirect.njk', opts);
   await writeFile('index.html', content)
