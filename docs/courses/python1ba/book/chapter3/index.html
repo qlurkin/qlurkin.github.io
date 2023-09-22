@@ -16,7 +16,7 @@ Doc.setChapterNb(3)
 </script>
 
 <p>Les séquences sont des <strong>structures de données ordonnées</strong>, c&#39;est-à-dire, des suites de données individuelles rangées dans un ordre bien déterminé. Pour prendre un exemple, les chaînes de caractères sont des séquences. En effet, une chaine de caractères est une suite de caractères (les données) rangés dans un ordre déterminé (la chaine <code>&quot;python&quot;</code> n&#39;est pas équivalente à <code>&quot;yphtno&quot;</code>).</p>
-<p>En Python, les chaines de caractères ne sont pas les seules séquences. Dans ce chapitre, nous allons voir les listes, les tuples et les intervalles et nous verrons qu&#39;elles partagent beaucoup de fonctionnalités avec les chaînes de caractères.</p>
+<p>En Python, les chaines de caractères ne sont pas les seules séquences. Dans ce chapitre, nous allons voir les listes, les tuples et les intervalles. Nous verrons qu&#39;ils partagent beaucoup de fonctionnalités avec les chaînes de caractères.</p>
 <h2>Les listes</h2>
 <p>Les valeurs de type liste sont des valeurs qui peuvent <strong>contenir</strong> une liste de valeurs&nbsp;:</p>
 <pre><code class="language-python">nombres = [1, 2, 3, 4, 5, 6, 7]
@@ -48,7 +48,7 @@ print(nombres) # affichera [1, 2, 3, 5, 6, &#39;sept&#39;]
 <p>On peut également <strong>remplacer</strong> une tranche de liste par une autre&nbsp;:</p>
 <pre><code class="language-python">nombres[2:5] = [&#39;toto&#39;, &#39;tata&#39;, &#39;tutu&#39;, &#39;titi&#39;]
 </code></pre>
-<p>Après l&#39;instruction ci-dessus, la liste <code>nombres</code> contiendra [1, 2, &#39;toto&#39;, &#39;tata&#39;, &#39;tutu&#39;, &#39;titi&#39;, &#39;sept&#39;].</p>
+<p>Après l&#39;instruction ci-dessus, la liste <code>nombres</code> contiendra <code>[1, 2, &#39;toto&#39;, &#39;tata&#39;, &#39;tutu&#39;, &#39;titi&#39;, &#39;sept&#39;]</code>.</p>
 <p>Il est également possible d&#39;ajouter des éléments de cette manière&nbsp;:</p>
 <pre><code class="language-python">L = [1, 2, 5, 6]
 
@@ -72,13 +72,13 @@ L[len(L):] = [5]
 </code></pre>
 <h3>Méthodes</h3>
 <p>Nous avons vu plus haut comment ajouter des éléments dans une liste en utilisant des assignations à des tranches. Bien que cette façon de modifier une liste soit très puissante, elle n&#39;est <strong>pas</strong> très <strong>pratique</strong> à utiliser pour des opérations simples et courantes comme l&#39;ajout en fin de liste.</p>
-<p>En réalité il existe tout un tas de <strong>fonctionnalités</strong> associées au type <code>list</code>. l&#39;une d&#39;entre elle permet d&#39;ajouter un élément en fin de liste et s&#39;appelle <code>append</code>. Voici comment on l&#39;utilise&nbsp;:</p>
+<p>En réalité il existe tout un tas de <strong>fonctionnalités</strong> associées au type <code>list</code>. L&#39;une d&#39;entre elle permet d&#39;ajouter un élément en fin de liste et s&#39;appelle <code>append</code>. Voici comment on l&#39;utilise&nbsp;:</p>
 <pre><code class="language-python">L = [1, 2, 3, 4]
 L.append(5)
 # L vaut maintenant [1, 2, 3, 4, 5]
 </code></pre>
-<p>Vous pouvez voir que pour utiliser la fonctionnalités <code>append</code> des liste, on doit appeler la fonction <code>append()</code> attachée <strong>(avec un <code>.</code>)</strong> à la valeur de type <code>list</code> sur laquelle on souhaite appliquer la fonctionnalités.</p>
-<p>On appelle ce genre de fonctionnalités des <strong>méthodes</strong></p>
+<p>Vous pouvez voir que pour utiliser la fonctionnalité <code>append</code> des listes, on doit appeler la fonction <code>append()</code> attachée <strong>(avec un <code>.</code>)</strong> à la valeur de type <code>list</code> sur laquelle on souhaite appliquer la fonctionnalité.</p>
+<p>On appelle ce genre de fonctionnalités des <strong>méthodes</strong>.</p>
 <p>Nous n&#39;allons pas voir ici toutes les méthodes du type <code>list</code> mais nous allons quand même mentionner les méthodes <code>insert()</code> et <code>pop()</code>&nbsp;:</p>
 <pre><code class="language-python">L = [1, 2, 4, 5]
 L.insert(2, 3) # insère l&#39;élément 3 à l&#39;indice 2
@@ -135,7 +135,7 @@ else:
     const start = draw.start().move(1, 2)
     const init = draw.round('On démarre du premier élément de la liste').belowOf(start)
     const back = draw.dummy().belowOf(init)
-    const cond = draw.round('l'élément existe-t-il ?').belowOf(back)
+    const cond = draw.round('l\'élément existe-t-il ?').belowOf(back)
     const if1 = draw.diamond().belowOf(cond)
     const oui = draw.node('oui').belowOf(if1)
     const non = draw.node('non').rightOf(if1)
@@ -168,13 +168,13 @@ for a in L:
 <p>Dans le code ci-dessus, la variable <code>a</code> vaut <code>&#39;truc&#39;</code> au premier tour de boucle, <code>&#39;machin&#39;</code> au deuxième tour de boucle et <code>&#39;bidule&#39;</code> au troisième tour de boucle.</p>
 <h3>Les copies</h3>
 <p>Nous allons voir voir ici que l&#39;on peut facilement avoir des surprises lorsqu&#39;on essaye de faire une copie d&#39;une liste.</p>
-<p>Dans le code qui va suivre, nous allons essayer de créer une copie d&#39;une liste pour pouvoir modifier la copie tout en gardant l&#39;originale inchangée&nbsp;:</p>
-<pre><code class="language-python">originale = [&#39;I&#39;, &#39;like&#39;, &#39;Python&#39;]   # liste originale
-copie = originale                     # copie de l&#39;originale
+<p>Dans le code qui va suivre, nous allons essayer de créer une copie d&#39;une liste pour pouvoir modifier la copie tout en gardant l&#39;original inchangé&nbsp;:</p>
+<pre><code class="language-python">original = [&#39;I&#39;, &#39;like&#39;, &#39;Python&#39;]   # liste originale
+copie = original                     # copie de l&#39;originale
 
 copie[1] = &#39;love&#39;                     # modification de la copie
 
-print(originale)                      # affichage de l&#39;originale
+print(original)                      # affichage de l&#39;originale
 print(copie)                          # affichage de la copie
 </code></pre>
 <p>Ce qui affiche&nbsp;:</p>
@@ -183,8 +183,8 @@ print(copie)                          # affichage de la copie
 ['I', 'love', 'Python']
 </div>
 
-<p>On constate donc que les deux listes ont été modifiées et que l&#39;originale a été <strong>perdue</strong>. En effet, le fait d&#39;écrire <code>copie = originale</code> ne crée <strong>pas</strong> de nouvelle liste.</p>
-<p>En Python, comme dans beaucoup d&#39;autres langages de programmation, dès qu&#39;elle contient un type plus complexe qu&#39;un simple nombre, une variable ne contient pas directement sa valeur mais seulement une <strong>référence</strong> à celle-ci. Lorsqu&#39;on écrit <code>copie = originale</code> on ne fait une copie que de la référence. On se retrouve donc avec deux variables qui manipulent la même liste.</p>
+<p>On constate donc que les deux listes ont été modifiées et que l&#39;originale a été <strong>perdue</strong>. En effet, le fait d&#39;écrire <code>copie = original</code>, ne crée <strong>pas</strong> de nouvelle liste.</p>
+<p>En Python, comme dans beaucoup d&#39;autres langages de programmation, dès qu&#39;elle contient un type plus complexe qu&#39;un simple nombre, une variable ne contient pas directement sa valeur mais seulement une <strong>référence</strong> à celle-ci. Lorsqu&#39;on écrit <code>copie = original</code> on ne fait une copie que de la référence. On se retrouve donc avec deux variables qui manipulent la même liste.</p>
 <figure id='references' data-ref='figure'>
     <img src="./references.svg" class="half">
     <figcaption>Deux références pour la même liste</figcaption>
@@ -193,12 +193,12 @@ print(copie)                          # affichage de la copie
 
 <p>Ce système de référence existe car la copie de types complexes <strong>prend du temps</strong> et n&#39;est souvent pas souhaitable.</p>
 <p>Pour créer une vraie copie de la liste, on peut utiliser un <em>slicing</em>&nbsp;:</p>
-<pre><code class="language-python">originale = [&#39;I&#39;, &#39;like&#39;, &#39;Python&#39;]   # liste originale
-copie = originale[:]                  # copie de l&#39;originale
+<pre><code class="language-python">original = [&#39;I&#39;, &#39;like&#39;, &#39;Python&#39;]   # liste originale
+copie = original[:]                  # copie de l&#39;originale
 
 copie[1] = &#39;love&#39;                     # modification de la copie
 
-print(originale)                      # affichage de l&#39;originale
+print(original)                      # affichage de l&#39;originale
 print(copie)                          # affichage de la copie
 </code></pre>
 <p>Ce qui affiche&nbsp;:</p>
@@ -209,14 +209,14 @@ print(copie)                          # affichage de la copie
 
 
 <p>Un <em>slicing</em> crée toujours une <strong>nouvelle liste</strong>. On obtient donc bien une vrai copie de l&#39;originale. Il existe d&#39;autres opérations que l&#39;on peut exploiter pour obtenir le même résultat&nbsp;:</p>
-<pre><code class="language-python">copie = originale * 1
-copie = originale + []
+<pre><code class="language-python">copie = original * 1
+copie = original + []
 </code></pre>
 <p>On peut aussi utiliser la fonction <code>list()</code> qui <strong>crée une liste</strong> à partir de ce qu&#39;on lui passe en paramètre&nbsp;:</p>
-<pre><code class="language-python">copie = list(originale)
+<pre><code class="language-python">copie = list(original)
 </code></pre>
 <h2>Les chaînes de caractères</h2>
-<p>Comme nous l&#39;avons déjà dit plus haut, les chaines de caractères et les liste partagent beaucoup de fonctionnalités&nbsp;:</p>
+<p>Comme nous l&#39;avons déjà dit plus haut, les chaines de caractères et les listes partagent beaucoup de fonctionnalités&nbsp;:</p>
 <pre><code class="language-python">s = &#39;Python&#39;
 
 print(s[1])      # affiche &#39;y&#39;
@@ -245,7 +245,7 @@ for l in s:
     print(&quot;&#39;al&#39; est une sous-chaine de &#39;salut&#39;&quot;)
 </code></pre>
 <h3>Immuable</h3>
-<p>Il y a une grande différence entre les listes et les chaines de caractères : les listes sont des séquences modifiables alors que les chaines de caractères sont des séquences <strong>non-modifiables</strong> ou <strong>immuable</strong>.</p>
+<p>Il y a une grande différence entre les listes et les chaines de caractères : les listes sont des séquences modifiables alors que les chaines de caractères sont des séquences <strong>non-modifiables</strong> ou <strong>immuables</strong>.</p>
 <p>En gros, cela veut dire qu&#39;on peut modifier une liste&nbsp;:</p>
 <pre><code class="language-python">L = [&#39;I&#39;, &#39;like&#39;, &#39;Python&#39;]
 L[2] = &#39;love&#39;     # ceci fonctionne
@@ -259,10 +259,10 @@ s[17] = &quot;c&quot;       # ceci ne fonctionne pas !
 <pre><code class="language-python">s = &quot;Le Python, c&#39;est bon !&quot;
 s = s[:17] + &quot;cool&quot; + s[20:] # ceci fonctionne
 </code></pre>
-<p>Ce code affichera bien <code>Le Python, c&#39;est cool !</code>. Il semble donc que la chaine de caractères <code>s</code> ait bien été modifiée; puisque sa valeur était <code>&quot;Le Python, c&#39;est bon !&quot;</code> au départ. Mais en réalité, la chaine de départ n&#39;a pas changé. C&#39;est la <strong>référence</strong> dans la variable <code>s</code> qui a été <strong>remplacée</strong>. La somme <code>s[:17] + &quot;cool&quot; + s[20:]</code> crée <strong>une nouvelle chaine de caractères</strong>, indépendante de la chaine <code>&quot;Le Python, c&#39;est bon !&quot;</code> d&#39;origine. La variable <code>s</code> contient ensuite une référence vers cette nouvelle chaine à cause de l&#39;assignation (<code>s =</code>). Du coup, plus aucune variable ne référence la chaine d&#39;origine ce qui provoquera son <strong>effacement</strong> de la mémoire.</p>
+<p>Ce code affichera bien <code>Le Python, c&#39;est cool !</code>. Il semble donc que la chaine de caractères <code>s</code> ait bien été modifiée puisque sa valeur était <code>&quot;Le Python, c&#39;est bon !&quot;</code> au départ. Mais en réalité, la chaine de départ n&#39;a pas changé. C&#39;est la <strong>référence</strong> dans la variable <code>s</code> qui a été <strong>remplacée</strong>. La somme <code>s[:17] + &quot;cool&quot; + s[20:]</code> crée <strong>une nouvelle chaine de caractères</strong>, indépendante de la chaine <code>&quot;Le Python, c&#39;est bon !&quot;</code> d&#39;origine. La variable <code>s</code> contient ensuite une référence vers cette nouvelle chaine à cause de l&#39;assignation (<code>s =</code>). Du coup, plus aucune variable ne référence la chaine d&#39;origine ce qui provoquera son <strong>effacement</strong> de la mémoire.</p>
 <h2>Les tuples</h2>
-<p>Un tuple, comme une liste, est une suite de valeurs pouvant être de différents types. La grosse différence entre les listes et les tuples c&#39;est que les tuples sont <strong>immuables</strong>. Les éléments d&#39;un tuple ne peuvent pas être réassignés et on ne peut pas en ajouter ou en enlever.</p>
-<p>Pour définir un tuple, on peut utiliser des parenthèses mais elle sont <strong>optionnelles</strong>&nbsp;:</p>
+<p>Un tuple, comme une liste, est une suite de valeurs pouvant être de différents types. La grosse différence entre les listes et les tuples, c&#39;est que les tuples sont <strong>immuables</strong>. Les éléments d&#39;un tuple ne peuvent pas être réassignés et on ne peut pas en ajouter ou en enlever.</p>
+<p>Pour définir un tuple, on peut utiliser des parenthèses mais elles sont <strong>optionnelles</strong>&nbsp;:</p>
 <pre><code class="language-python"># Tuple vide
 a = ()
 
@@ -274,20 +274,20 @@ c = (1,)
 d = 1, 2, 3
 e = (1, 2, 3)
 </code></pre>
-<p>On remarque que pour le tuple à un seul élément, on est obligé de mettre <strong>une virgule</strong> à la fin. Sans cette virgule on ne saurait pas faire la différence entre une valeur et la même valeur seule dans un tuple.</p>
+<p>On remarque que pour le tuple à un seul élément, on est obligé de mettre <strong>une virgule</strong> à la fin. Sans cette virgule, on ne saurait pas faire la différence entre une valeur et la même valeur seule dans un tuple.</p>
 <h3>Déballage</h3>
-<p>Tous comme il est possible d&#39;<strong>emballer</strong> plusieurs valeurs dans un tuple&nbsp;:</p>
+<p>Tout comme il est possible d&#39;<strong>emballer</strong> plusieurs valeurs dans un tuple&nbsp;:</p>
 <pre><code class="language-python">t = 1, 2, 3
 </code></pre>
 <p>Il est également possible de <strong>déballer</strong> un tuple dans plusieurs variables&nbsp;:</p>
 <pre><code class="language-python">a, b, c = t
 </code></pre>
-<p>Il faut, bien entendu, qu&#39;il y ai <strong>autant de valeurs que de variables</strong>.</p>
-<p>Lorsqu&#39;on combine un emballage avec un déballage on obtient <strong>une assignation multiple</strong>&nbsp;:</p>
+<p>Il faut, bien entendu, qu&#39;il y ait <strong>autant de valeurs que de variables</strong>.</p>
+<p>Lorsqu&#39;on combine un emballage avec un déballage, on obtient <strong>une assignation multiple</strong>&nbsp;:</p>
 <pre><code class="language-python">a, b, c = 1, 2, 3
 </code></pre>
 <h2>Les intervalles</h2>
-<p>Un intervalle est une séquence numérique <strong>régulière</strong>. On les créé avec la fonction <code>range()</code>&nbsp;:</p>
+<p>Un intervalle est une séquence numérique <strong>régulière</strong>. On les crée avec la fonction <code>range()</code>&nbsp;:</p>
 <pre><code class="language-python">range(5)         # séquence 0, 1, 2, 3, 4
 range(1, 5)      # séquence 1, 2, 3, 4
 range(1, 8, 2)   # séquence 1, 3, 5, 7
@@ -301,13 +301,13 @@ range(5, 0, -1)  # séquence 5, 4, 3, 2, 1
 <p>Si l&#39;on souhaite voir toutes les valeurs qui sont dans l&#39;intervalle, il est possible de le <strong>convertir en liste</strong> pour l&#39;affichage&nbsp;:</p>
 <pre><code class="language-python">print(list(range(5)))   # affiche [0, 1, 2, 3, 4]
 </code></pre>
-<p>Les intervalles sont des séquences <strong>immuables</strong>. Il supporte l&#39;accès au éléments et les tranches&nbsp;:</p>
+<p>Les intervalles sont des séquences <strong>immuables</strong>. Ils supportent l&#39;accès aux éléments et les tranches&nbsp;:</p>
 <pre><code class="language-python">r = range(1, 8, 2)
 
 print(r[2])    # affiche 5
 print(r[1:3])  # affiche range(3, 7, 2)
 </code></pre>
-<p>Comme les intervalles sont immuables on pourrait pensé qu&#39;ils sont équivalents aux tuples. Mais ils sont très différents en réalité. Si on crée un tuple <code>(1, 2, 3, 4, 5)</code>, les 5 entiers sont <strong>sauver en mémoire</strong>. Si on crée un tuple similaire qui va jusque <code>100</code>, ce sera 100 entiers sauvés en mémoire. Les intervalles ne sauve que <strong>3 valeurs en mémoire</strong>: La valeur de début, la valeur de fin et le pas. Les éléments de l&#39;intervalle sont <strong>calculés au moment où on les demande</strong>.</p>
+<p>Comme les intervalles sont immuables, on pourrait penser qu&#39;ils sont équivalents aux tuples. Mais ils sont très différents en réalité. Si on crée un tuple <code>(1, 2, 3, 4, 5)</code>, les 5 entiers sont <strong>sauvés en mémoire</strong>. Si on crée un tuple similaire qui va jusque <code>100</code>, ce sera 100 entiers sauvés en mémoire. Les intervalles ne sauvent que <strong>3 valeurs en mémoire</strong>: la valeur de début, la valeur de fin et le pas. Les éléments de l&#39;intervalle sont <strong>calculés au moment où on les demande</strong>.</p>
 <p>Les intervalles sont souvent utilisés dans les boucles <code>for</code>&nbsp;:</p>
 <pre><code class="language-python">for i in range(5):
   print(i)
@@ -325,7 +325,7 @@ l'élément d'indice 2 est Clémence
 
 <h2>Les énumérations</h2>
 <p>Il existe en Python une fonction appelée <code>enumerate()</code>. Cette fonction prend une séquence en paramètre et renvoie une séquence de <strong>tuples</strong>. Chaque tuple correspond à un des éléments de la liste de départ et contient un numéro d&#39;ordre <em>(commençant à <code>0</code>)</em> et l&#39;élément en question.</p>
-<p>Tous comme les intervalle, la séquence renvoyée n&#39;est pas sauvée en mémoire mais ses éléments sont <strong>calculés à la demande</strong>&nbsp;:</p>
+<p>Tout comme les intervalles, la séquence renvoyée n&#39;est pas sauvée en mémoire mais ses éléments sont <strong>calculés à la demande</strong>&nbsp;:</p>
 <pre><code class="language-python">L = [&#39;un&#39;, &#39;deux&#39;, &#39;trois&#39;]
 
 print(enumerate(L))        # affiche &lt;enumerate at 0x10035e570&gt;
@@ -341,8 +341,8 @@ l'élément d'indice 1 est deux
 l'élément d'indice 2 est trois
 </div>
 
-<p>A chaque tour de boucle un des tuples de l&#39;énumération est <strong>déballé</strong> dans les deux variables <code>i</code> et <code>value</code> du <code>for</code>.</p>
-<p>Bien que les énumérations soient très utiles pour parcourir des séquences, elles ne sont pas des séquences elle-même. En effet, l&#39;accès à un élément (<code>[]</code>) ne fonctionne pas.</p>
+<p>À chaque tour de boucle, un des tuples de l&#39;énumération est <strong>déballé</strong> dans les deux variables <code>i</code> et <code>value</code> du <code>for</code>.</p>
+<p>Bien que les énumérations soient très utiles pour parcourir des séquences, elles ne sont pas des séquences elles-mêmes. En effet, l&#39;accès à un élément (<code>[]</code>) ne fonctionne pas.</p>
 
 </body>
 </html>

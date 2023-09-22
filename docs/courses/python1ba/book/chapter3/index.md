@@ -9,7 +9,7 @@ Doc.setChapterNb(3)
 
 Les séquences sont des **structures de données ordonnées**, c'est-à-dire, des suites de données individuelles rangées dans un ordre bien déterminé. Pour prendre un exemple, les chaînes de caractères sont des séquences. En effet, une chaine de caractères est une suite de caractères (les données) rangés dans un ordre déterminé (la chaine `"python"` n'est pas équivalente à `"yphtno"`).
 
-En Python, les chaines de caractères ne sont pas les seules séquences. Dans ce chapitre, nous allons voir les listes, les tuples et les intervalles et nous verrons qu'elles partagent beaucoup de fonctionnalités avec les chaînes de caractères.
+En Python, les chaines de caractères ne sont pas les seules séquences. Dans ce chapitre, nous allons voir les listes, les tuples et les intervalles. Nous verrons qu'ils partagent beaucoup de fonctionnalités avec les chaînes de caractères.
 
 ## Les listes
 
@@ -69,7 +69,7 @@ On peut également **remplacer** une tranche de liste par une autre&nbsp;:
 nombres[2:5] = ['toto', 'tata', 'tutu', 'titi']
 ```
 
-Après l'instruction ci-dessus, la liste `nombres` contiendra [1, 2, 'toto', 'tata', 'tutu', 'titi', 'sept'].
+Après l'instruction ci-dessus, la liste `nombres` contiendra `[1, 2, 'toto', 'tata', 'tutu', 'titi', 'sept']`.
 
 Il est également possible d'ajouter des éléments de cette manière&nbsp;:
 
@@ -104,16 +104,16 @@ L[len(L):] = [5]
 
 Nous avons vu plus haut comment ajouter des éléments dans une liste en utilisant des assignations à des tranches. Bien que cette façon de modifier une liste soit très puissante, elle n'est **pas** très **pratique** à utiliser pour des opérations simples et courantes comme l'ajout en fin de liste.
 
-En réalité il existe tout un tas de **fonctionnalités** associées au type `list`. l'une d'entre elle permet d'ajouter un élément en fin de liste et s'appelle `append`. Voici comment on l'utilise&nbsp;:
+En réalité il existe tout un tas de **fonctionnalités** associées au type `list`. L'une d'entre elle permet d'ajouter un élément en fin de liste et s'appelle `append`. Voici comment on l'utilise&nbsp;:
 
 ```python
 L = [1, 2, 3, 4]
 L.append(5)
 # L vaut maintenant [1, 2, 3, 4, 5]
 ```
-Vous pouvez voir que pour utiliser la fonctionnalités `append` des liste, on doit appeler la fonction `append()` attachée **(avec un `.`)** à la valeur de type `list` sur laquelle on souhaite appliquer la fonctionnalités.
+Vous pouvez voir que pour utiliser la fonctionnalité `append` des listes, on doit appeler la fonction `append()` attachée **(avec un `.`)** à la valeur de type `list` sur laquelle on souhaite appliquer la fonctionnalité.
 
-On appelle ce genre de fonctionnalités des **méthodes**
+On appelle ce genre de fonctionnalités des **méthodes**.
 
 Nous n'allons pas voir ici toutes les méthodes du type `list` mais nous allons quand même mentionner les méthodes `insert()` et `pop()`&nbsp;:
 
@@ -193,7 +193,7 @@ for variable in séquence:
     const start = draw.start().move(1, 2)
     const init = draw.round('On démarre du premier élément de la liste').belowOf(start)
     const back = draw.dummy().belowOf(init)
-    const cond = draw.round('l'élément existe-t-il ?').belowOf(back)
+    const cond = draw.round('l\'élément existe-t-il ?').belowOf(back)
     const if1 = draw.diamond().belowOf(cond)
     const oui = draw.node('oui').belowOf(if1)
     const non = draw.node('non').rightOf(if1)
@@ -234,15 +234,15 @@ Dans le code ci-dessus, la variable `a` vaut `'truc'` au premier tour de boucle,
 
 Nous allons voir voir ici que l'on peut facilement avoir des surprises lorsqu'on essaye de faire une copie d'une liste.
 
-Dans le code qui va suivre, nous allons essayer de créer une copie d'une liste pour pouvoir modifier la copie tout en gardant l'originale inchangée&nbsp;:
+Dans le code qui va suivre, nous allons essayer de créer une copie d'une liste pour pouvoir modifier la copie tout en gardant l'original inchangé&nbsp;:
 
 ```python
-originale = ['I', 'like', 'Python']   # liste originale
-copie = originale                     # copie de l'originale
+original = ['I', 'like', 'Python']   # liste originale
+copie = original                     # copie de l'originale
 
 copie[1] = 'love'                     # modification de la copie
 
-print(originale)                      # affichage de l'originale
+print(original)                      # affichage de l'originale
 print(copie)                          # affichage de la copie
 ```
 
@@ -253,9 +253,9 @@ Ce qui affiche&nbsp;:
 ['I', 'love', 'Python']
 </div>
 
-On constate donc que les deux listes ont été modifiées et que l'originale a été **perdue**. En effet, le fait d'écrire `copie = originale` ne crée **pas** de nouvelle liste.
+On constate donc que les deux listes ont été modifiées et que l'originale a été **perdue**. En effet, le fait d'écrire `copie = original`, ne crée **pas** de nouvelle liste.
 
-En Python, comme dans beaucoup d'autres langages de programmation, dès qu'elle contient un type plus complexe qu'un simple nombre, une variable ne contient pas directement sa valeur mais seulement une **référence** à celle-ci. Lorsqu'on écrit `copie = originale` on ne fait une copie que de la référence. On se retrouve donc avec deux variables qui manipulent la même liste.
+En Python, comme dans beaucoup d'autres langages de programmation, dès qu'elle contient un type plus complexe qu'un simple nombre, une variable ne contient pas directement sa valeur mais seulement une **référence** à celle-ci. Lorsqu'on écrit `copie = original` on ne fait une copie que de la référence. On se retrouve donc avec deux variables qui manipulent la même liste.
 
 <figure id='references' data-ref='figure'>
     <img src="./references.svg" class="half">
@@ -268,12 +268,12 @@ Ce système de référence existe car la copie de types complexes **prend du tem
 Pour créer une vraie copie de la liste, on peut utiliser un *slicing*&nbsp;:
 
 ```python
-originale = ['I', 'like', 'Python']   # liste originale
-copie = originale[:]                  # copie de l'originale
+original = ['I', 'like', 'Python']   # liste originale
+copie = original[:]                  # copie de l'originale
 
 copie[1] = 'love'                     # modification de la copie
 
-print(originale)                      # affichage de l'originale
+print(original)                      # affichage de l'originale
 print(copie)                          # affichage de la copie
 ```
 
@@ -288,19 +288,19 @@ Ce qui affiche&nbsp;:
 Un *slicing* crée toujours une **nouvelle liste**. On obtient donc bien une vrai copie de l'originale. Il existe d'autres opérations que l'on peut exploiter pour obtenir le même résultat&nbsp;:
 
 ```python
-copie = originale * 1
-copie = originale + []
+copie = original * 1
+copie = original + []
 ```
 
 On peut aussi utiliser la fonction `list()` qui **crée une liste** à partir de ce qu'on lui passe en paramètre&nbsp;:
 
 ```python
-copie = list(originale)
+copie = list(original)
 ```
 
 ## Les chaînes de caractères
 
-Comme nous l'avons déjà dit plus haut, les chaines de caractères et les liste partagent beaucoup de fonctionnalités&nbsp;:
+Comme nous l'avons déjà dit plus haut, les chaines de caractères et les listes partagent beaucoup de fonctionnalités&nbsp;:
 
 ```python
 s = 'Python'
@@ -340,7 +340,7 @@ if "al" in "salut":
 ```
 ### Immuable
 
-Il y a une grande différence entre les listes et les chaines de caractères : les listes sont des séquences modifiables alors que les chaines de caractères sont des séquences **non-modifiables** ou **immuable**.
+Il y a une grande différence entre les listes et les chaines de caractères : les listes sont des séquences modifiables alors que les chaines de caractères sont des séquences **non-modifiables** ou **immuables**.
 
 En gros, cela veut dire qu'on peut modifier une liste&nbsp;:
 
@@ -365,13 +365,13 @@ s = "Le Python, c'est bon !"
 s = s[:17] + "cool" + s[20:] # ceci fonctionne
 ```
 
-Ce code affichera bien `Le Python, c'est cool !`. Il semble donc que la chaine de caractères `s` ait bien été modifiée; puisque sa valeur était `"Le Python, c'est bon !"` au départ. Mais en réalité, la chaine de départ n'a pas changé. C'est la **référence** dans la variable `s` qui a été **remplacée**. La somme `s[:17] + "cool" + s[20:]` crée **une nouvelle chaine de caractères**, indépendante de la chaine `"Le Python, c'est bon !"` d'origine. La variable `s` contient ensuite une référence vers cette nouvelle chaine à cause de l'assignation (`s =`). Du coup, plus aucune variable ne référence la chaine d'origine ce qui provoquera son **effacement** de la mémoire.
+Ce code affichera bien `Le Python, c'est cool !`. Il semble donc que la chaine de caractères `s` ait bien été modifiée puisque sa valeur était `"Le Python, c'est bon !"` au départ. Mais en réalité, la chaine de départ n'a pas changé. C'est la **référence** dans la variable `s` qui a été **remplacée**. La somme `s[:17] + "cool" + s[20:]` crée **une nouvelle chaine de caractères**, indépendante de la chaine `"Le Python, c'est bon !"` d'origine. La variable `s` contient ensuite une référence vers cette nouvelle chaine à cause de l'assignation (`s =`). Du coup, plus aucune variable ne référence la chaine d'origine ce qui provoquera son **effacement** de la mémoire.
 
 ## Les tuples
 
-Un tuple, comme une liste, est une suite de valeurs pouvant être de différents types. La grosse différence entre les listes et les tuples c'est que les tuples sont **immuables**. Les éléments d'un tuple ne peuvent pas être réassignés et on ne peut pas en ajouter ou en enlever.
+Un tuple, comme une liste, est une suite de valeurs pouvant être de différents types. La grosse différence entre les listes et les tuples, c'est que les tuples sont **immuables**. Les éléments d'un tuple ne peuvent pas être réassignés et on ne peut pas en ajouter ou en enlever.
 
-Pour définir un tuple, on peut utiliser des parenthèses mais elle sont **optionnelles**&nbsp;:
+Pour définir un tuple, on peut utiliser des parenthèses mais elles sont **optionnelles**&nbsp;:
 
 ```python
 # Tuple vide
@@ -386,11 +386,11 @@ d = 1, 2, 3
 e = (1, 2, 3)
 ```
 
-On remarque que pour le tuple à un seul élément, on est obligé de mettre **une virgule** à la fin. Sans cette virgule on ne saurait pas faire la différence entre une valeur et la même valeur seule dans un tuple.
+On remarque que pour le tuple à un seul élément, on est obligé de mettre **une virgule** à la fin. Sans cette virgule, on ne saurait pas faire la différence entre une valeur et la même valeur seule dans un tuple.
 
 ### Déballage
 
-Tous comme il est possible d'**emballer** plusieurs valeurs dans un tuple&nbsp;:
+Tout comme il est possible d'**emballer** plusieurs valeurs dans un tuple&nbsp;:
 
 ```python
 t = 1, 2, 3
@@ -402,9 +402,9 @@ Il est également possible de **déballer** un tuple dans plusieurs variables&nb
 a, b, c = t
 ```
 
-Il faut, bien entendu, qu'il y ai **autant de valeurs que de variables**.
+Il faut, bien entendu, qu'il y ait **autant de valeurs que de variables**.
 
-Lorsqu'on combine un emballage avec un déballage on obtient **une assignation multiple**&nbsp;:
+Lorsqu'on combine un emballage avec un déballage, on obtient **une assignation multiple**&nbsp;:
 
 ```python
 a, b, c = 1, 2, 3
@@ -412,7 +412,7 @@ a, b, c = 1, 2, 3
 
 ## Les intervalles
 
-Un intervalle est une séquence numérique **régulière**. On les créé avec la fonction `range()`&nbsp;:
+Un intervalle est une séquence numérique **régulière**. On les crée avec la fonction `range()`&nbsp;:
 
 ```python
 range(5)         # séquence 0, 1, 2, 3, 4
@@ -436,7 +436,7 @@ Si l'on souhaite voir toutes les valeurs qui sont dans l'intervalle, il est poss
 print(list(range(5)))   # affiche [0, 1, 2, 3, 4]
 ```
 
-Les intervalles sont des séquences **immuables**. Il supporte l'accès au éléments et les tranches&nbsp;:
+Les intervalles sont des séquences **immuables**. Ils supportent l'accès aux éléments et les tranches&nbsp;:
 
 ```python
 r = range(1, 8, 2)
@@ -445,7 +445,7 @@ print(r[2])    # affiche 5
 print(r[1:3])  # affiche range(3, 7, 2)
 ```
 
-Comme les intervalles sont immuables on pourrait pensé qu'ils sont équivalents aux tuples. Mais ils sont très différents en réalité. Si on crée un tuple `(1, 2, 3, 4, 5)`, les 5 entiers sont **sauver en mémoire**. Si on crée un tuple similaire qui va jusque `100`, ce sera 100 entiers sauvés en mémoire. Les intervalles ne sauve que **3 valeurs en mémoire**: La valeur de début, la valeur de fin et le pas. Les éléments de l'intervalle sont **calculés au moment où on les demande**.
+Comme les intervalles sont immuables, on pourrait penser qu'ils sont équivalents aux tuples. Mais ils sont très différents en réalité. Si on crée un tuple `(1, 2, 3, 4, 5)`, les 5 entiers sont **sauvés en mémoire**. Si on crée un tuple similaire qui va jusque `100`, ce sera 100 entiers sauvés en mémoire. Les intervalles ne sauvent que **3 valeurs en mémoire**: la valeur de début, la valeur de fin et le pas. Les éléments de l'intervalle sont **calculés au moment où on les demande**.
 
 
 Les intervalles sont souvent utilisés dans les boucles `for`&nbsp;:
@@ -473,7 +473,7 @@ l'élément d'indice 2 est Clémence
 
 Il existe en Python une fonction appelée `enumerate()`. Cette fonction prend une séquence en paramètre et renvoie une séquence de **tuples**. Chaque tuple correspond à un des éléments de la liste de départ et contient un numéro d'ordre *(commençant à `0`)* et l'élément en question.
 
-Tous comme les intervalle, la séquence renvoyée n'est pas sauvée en mémoire mais ses éléments sont **calculés à la demande**&nbsp;:
+Tout comme les intervalles, la séquence renvoyée n'est pas sauvée en mémoire mais ses éléments sont **calculés à la demande**&nbsp;:
 
 ```python
 L = ['un', 'deux', 'trois']
@@ -495,6 +495,6 @@ l'élément d'indice 1 est deux
 l'élément d'indice 2 est trois
 </div>
 
-A chaque tour de boucle un des tuples de l'énumération est **déballé** dans les deux variables `i` et `value` du `for`.
+À chaque tour de boucle, un des tuples de l'énumération est **déballé** dans les deux variables `i` et `value` du `for`.
 
-Bien que les énumérations soient très utiles pour parcourir des séquences, elles ne sont pas des séquences elle-même. En effet, l'accès à un élément (`[]`) ne fonctionne pas.
+Bien que les énumérations soient très utiles pour parcourir des séquences, elles ne sont pas des séquences elles-mêmes. En effet, l'accès à un élément (`[]`) ne fonctionne pas.
