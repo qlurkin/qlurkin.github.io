@@ -498,3 +498,6 @@ l'élément d'indice 2 est trois
 À chaque tour de boucle, un des tuples de l'énumération est **déballé** dans les deux variables `i` et `value` du `for`.
 
 Bien que les énumérations soient très utiles pour parcourir des séquences, elles ne sont pas des séquences elles-mêmes. En effet, l'accès à un élément (`[]`) ne fonctionne pas.
+
+## Exercices
+
