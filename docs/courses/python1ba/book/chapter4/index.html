@@ -15,11 +15,11 @@
 Doc.setChapterNb(4)
 </script>
 
-<p>Jusqu&#39;à présent, nous avons toujours présenté nos résultats à l&#39;utilisateur en affichant des chaines de caractères avec la fonction <code>print()</code>. Il est maintenant temps d&#39;aller plus loin et de commencer à créer des <strong>applications graphiques</strong>. On entend par applications graphiques, des applications qui s&#39;ouvriront dans une fenêtre et qui pourront recevoir des <strong>événements</strong> (clavier, souris, ...). Les fenêtres et les événements sont gérés par <strong>le système d&#39;exploitation</strong>. Il faudra donc interagir avec l&#39;OS pour réaliser ce genre d&#39;application.</p>
+<p>Jusqu&#39;à présent, nous avons toujours présenté nos résultats à l&#39;utilisateur en affichant des chaînes de caractères avec la fonction <code>print()</code>. Il est maintenant temps d&#39;aller plus loin et de commencer à créer des <strong>applications graphiques</strong>. On entend par applications graphiques, des applications qui s&#39;ouvriront dans une fenêtre et qui pourront recevoir des <strong>événements</strong> (clavier, souris, ...). Les fenêtres et les événements sont gérés par <strong>le système d&#39;exploitation</strong>. Il faudra donc interagir avec l&#39;OS pour réaliser ce genre d&#39;application.</p>
 <h2>Bibliothèque</h2>
-<p>Comme vous le savez peut-être, python est un langage extrêmement populaire. C&#39;est du en partie au fait que Python est assez facile à apprendre mais aussi au fait qu&#39;il existe énormément de <strong>bibliothèques</strong> pour Python.</p>
+<p>Comme vous le savez peut-être, Python est un langage extrêmement populaire. C&#39;est dû en partie au fait que Python est assez facile à apprendre mais aussi au fait qu&#39;il existe énormément de <strong>bibliothèques</strong> pour Python.</p>
 <p>Une bibliothèque est un ensemble de fonctionnalités que l&#39;on peut <strong>installer</strong> en plus de l&#39;installation de base de Python. Ces bibliothèques peuvent être créées par n&#39;importe qui. Il existe plusieurs moyen de les rendre disponibles au monde entier mais le plus courant est le dépôt de paquets <a href="https://pypi.org">PyPI</a>.</p>
-<p>Nous n&#39;allons pas apprendre ici à créer et publier des paquets mais nous allons devoir en installer un. En effet, nous allons créer nos applications graphiques grâce à la bibliothèque <a href="https://www.pygame.org">Pygame</a>. Pygame à l&#39;avantage d&#39;être facile à utiliser. De plus, c&#39;est une librairie de bas niveau qui permet de bien comprendre ce qu&#39;il se passe dans une application graphique.</p>
+<p>Nous n&#39;allons pas apprendre ici à créer et publier des paquets mais nous allons devoir en installer un. En effet, nous allons créer nos applications graphiques grâce à la bibliothèque <a href="https://www.pygame.org">Pygame</a>. Pygame a l&#39;avantage d&#39;être facile à utiliser. De plus, c&#39;est une librairie de bas niveau qui permet de bien comprendre ce qu&#39;il se passe dans une application graphique.</p>
 <h3>Installation</h3>
 <p>Pour installer une bibliothèque provenant de PyPI, on utilise le module <code>pip</code> <em>(Pip Install Package)</em> de Python. Cela veut dire que nous allons utiliser l&#39;interpréteur Python pour installer la bibliothèque. Comme toujours, l&#39;interpréteur s&#39;utilise en ligne de commande et nous allons donc taper la commande suivante pour installer Pygame&nbsp;:</p>
 <div class="terminal">
@@ -27,7 +27,7 @@ Doc.setChapterNb(4)
 </div>
 
 <p>Une fois que vous validerez la commande, vous verrez que le téléchargement de Pygame commence.</p>
-<p>Lorsque Pygame est installer il est possible de l&#39;importer dans vos programme&nbsp;:</p>
+<p>Lorsque Pygame est installé, il est possible de l&#39;importer dans vos programmes&nbsp;:</p>
 <pre><code class="language-python">import pygame
 </code></pre>
 <h2>Premier programme graphique</h2>
@@ -38,14 +38,14 @@ Doc.setChapterNb(4)
 pygame.init()
 
 # demande une fenêtre de 800x600 pixels
-screen = pygame.display.set_mode([800, 600])
+screen = pygame.display.set_mode((800, 600))
 
 # boucle jusqu&#39;à ce qu&#39;on quitte
 while not pygame.event.peek(pygame.QUIT):
 
     # dessine un cercle rouge centré en (100, 300) de
     # rayon 20 dans le tampon caché
-    pygame.draw.circle(screen, [255, 0, 0], [100, 300], 20)
+    pygame.draw.circle(screen, (255, 0, 0), (100, 300), 20)
 
     # échange les tampons
     pygame.display.flip()
@@ -54,10 +54,10 @@ while not pygame.event.peek(pygame.QUIT):
   <img src="./redball.png">
 </figure>
 
-<p>Nous pouvons voir dans ce programme que toutes les fonctionnalités de Pygame sont accessibles en tapant &quot;<code>pygame.</code>&quot;. On dit que <code>pygame</code> est un <strong>espace de noms</strong>. Les espaces de nom permettent aux différentes bibliothèques d&#39;utiliser les mêmes noms de fonctions sans qu&#39;il y ait de conflits entre elles.</p>
-<p>Un autre élément important dans le programme ci-dessus est qu&#39;il se compose essentiellement d&#39;une boucle <code>while</code>. Les programmes en ligne de commande que nous avons réalisés jusqu&#39;à présent, quittaient immédiatement après avoir affiché leurs résultats. Les applications graphiques ne se comportent généralement pas comme ça. Elle <strong>continue de tourner</strong> tant qu&#39;on ne ferme pas la fenêtre. Le <code>while</code> qui est ici tourne tant que l&#39;application ne reçoit pas <strong>l&#39;événement <code>pygame.QUIT</code></strong>. Cette boucle garde donc le programme en exécution. L&#39;événement <code>pygame.QUIT</code> peut être déclenché de plusieurs façons. L&#39;une d&#39;entre elles est de fermer la fenêtre de l&#39;application. </p>
+<p>Nous pouvons voir dans ce programme que toutes les fonctionnalités de Pygame sont accessibles en tapant &quot;<code>pygame.</code>&quot;. On dit que <code>pygame</code> est un <strong>espace de noms</strong>. Les espaces de noms permettent aux différentes bibliothèques d&#39;utiliser les mêmes noms de fonctions sans qu&#39;il y ait de conflits entre elles.</p>
+<p>Un autre élément important dans le programme ci-dessus est qu&#39;il se compose essentiellement d&#39;une boucle <code>while</code>. Les programmes en ligne de commande que nous avons réalisés jusqu&#39;à présent, quittaient immédiatement après avoir affiché leurs résultats. Les applications graphiques ne se comportent généralement pas comme ça. Elles <strong>continuent de tourner</strong> tant qu&#39;on ne ferme pas la fenêtre. Le <code>while</code> qui est ici tourne tant que l&#39;application ne reçoit pas <strong>l&#39;événement <code>pygame.QUIT</code></strong>. Cette boucle garde donc le programme en exécution. L&#39;événement <code>pygame.QUIT</code> peut être déclenché de plusieurs façons. L&#39;une d&#39;entre elles est de fermer la fenêtre de l&#39;application. </p>
 <p>Avant de démarrer la boucle, on peut voir qu&#39;il est nécessaire d&#39;initialiser Pygame et de demander <strong>au système d&#39;exploitation</strong> d&#39;ouvrir une fenêtre.</p>
-<p>Pour bien comprendre ce qu&#39;il se passe dans la boucle, il faut savoir que chaque fenêtre contient au moins <strong>deux tampons de dessin</strong>. L&#39;un d&#39;eux est utilisé par la carte graphique de l&#39;ordinateur pour afficher le contenu de la fenêtre à l&#39;écran. Si on dessine sur ce tampon, le résultat est directement visible à l&#39;écran. Cela peut poser problème car le dessin de l&#39;interface d&#39;un programme ne se fait pas instantanément et les étapes intermédiaires du dessin peuvent être visibles. C&#39;est pour palier à ce problème qu&#39;il existe un deuxième tampon de dessin qui est caché. L&#39;idée est de faire le dessin de l&#39;application sur le tampon caché et ne l&#39;<strong>échanger</strong> avec l&#39;autre qu&#39;au moment où le dessin est terminé. Dans la boucle, nous faisons donc deux choses&nbsp;: nous dessinons un cercle rouge dans le tampon caché de la fenêtre puis nous échangeons les tampons.</p>
+<p>Pour bien comprendre ce qu&#39;il se passe dans la boucle, il faut savoir que chaque fenêtre contient au moins <strong>deux tampons de dessin</strong>. L&#39;un d&#39;eux est utilisé par la carte graphique de l&#39;ordinateur pour afficher le contenu de la fenêtre à l&#39;écran. Si on dessine sur ce tampon, le résultat est directement visible à l&#39;écran. Cela peut poser problème car le dessin de l&#39;interface d&#39;un programme ne se fait pas instantanément et les étapes intermédiaires du dessin peuvent être visibles. C&#39;est pour palier à ce problème qu&#39;il existe un deuxième tampon de dessin qui est caché. L&#39;idée est de faire le dessin de l&#39;application sur le tampon caché et de ne l&#39;<strong>échanger</strong> avec l&#39;autre qu&#39;au moment où le dessin est terminé. Dans la boucle, nous faisons donc deux choses&nbsp;: nous dessinons un cercle rouge dans le tampon caché de la fenêtre puis nous échangeons les tampons.</p>
 <h2>Animations</h2>
 <p>Le programme que nous venons de réaliser redessine le cercle rouge à chaque tour de boucle exactement au même endroit. On a donc l&#39;impression que rien ne se passe dans notre application. Nous pourrions essayer de changer la position du cercle <strong>à chaque fois</strong> qu&#39;on le dessine. Cela permettrait de donner l&#39;impression que le cercle bouge.</p>
 <pre><code class="language-python">import pygame
@@ -66,7 +66,7 @@ while not pygame.event.peek(pygame.QUIT):
 pygame.init()
 
 # demande une fenêtre de 800x600 pixels
-screen = pygame.display.set_mode([800, 600])
+screen = pygame.display.set_mode((800, 600))
 
 xCircle = 100
 
@@ -74,10 +74,10 @@ xCircle = 100
 while not pygame.event.peek(pygame.QUIT):
 
     # dessine un rectangle noir pour effacer l&#39;image
-    pygame.draw.rect(screen, [0, 0, 0], pygame.Rect(0, 0, 800, 600))
+    pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(0, 0, 800, 600))
 
     # dessine un cercle rouge centré en (xCircle, 300) de rayon 20
-    pygame.draw.circle(screen, [255, 0, 0], [xCircle, 300], 20)
+    pygame.draw.circle(screen, (255, 0, 0), (xCircle, 300), 20)
     
     # déplace le cercle
     xCircle += 1
@@ -85,15 +85,15 @@ while not pygame.event.peek(pygame.QUIT):
     # affiche l&#39;image qui vient d&#39;être dessinée
     pygame.display.flip()
 </code></pre>
-<p>Dans ce code nous avons créé une variable <code>xCircle</code> qui servira pour l&#39;abscisse du centre du cercle et nous modifions sa valeur à chaque tour de boucle. Vous pouvez aussi voir qu&#39;avant de dessiner le cercle, nous <strong>effaçons le tampon</strong>. Si nous ne le faisions pas, nous verrions toujours les cercles dessinés aux tours de boucle précédents.</p>
-<p>En fonction de votre ordinateur, il est possible que l&#39;animation du cercle soie trop rapide. En effet dans son état actuel, la boucle <code>while</code> peut faire plusieurs centaines de tours par seconde. C&#39;est <strong>inutile</strong> d&#39;en faire autant sachant que la plupart des écrans ne se rafraichissent que 60 fois par seconde. Nous allons donc utiliser une <code>Clock</code> de Pygame pour <strong>temporiser</strong> notre boucle <code>while</code>.</p>
+<p>Dans ce code, nous avons créé une variable <code>xCircle</code> qui servira pour l&#39;abscisse du centre du cercle et nous modifions sa valeur à chaque tour de boucle. Vous pouvez aussi voir qu&#39;avant de dessiner le cercle, nous <strong>effaçons le tampon</strong>. Si nous ne le faisions pas, nous verrions toujours les cercles dessinés aux tours de boucle précédents.</p>
+<p>En fonction de votre ordinateur, il est possible que l&#39;animation du cercle soit trop rapide. En effet, dans son état actuel, la boucle <code>while</code> peut faire plusieurs centaines de tours par seconde. C&#39;est <strong>inutile</strong> d&#39;en faire autant sachant que la plupart des écrans ne se rafraichissent que 60 fois par seconde. Nous allons donc utiliser une <code>Clock</code> de Pygame pour <strong>temporiser</strong> notre boucle <code>while</code>.</p>
 <pre><code class="language-python">import pygame
 
 # initialisation de pygame
 pygame.init()
 
 # demande une fenêtre de 800x600 pixels
-screen = pygame.display.set_mode([800, 600])
+screen = pygame.display.set_mode((800, 600))
 
 xCircle = 100
 
@@ -103,15 +103,15 @@ clock = pygame.time.Clock()
 # boucle jusqu&#39;à ce qu&#39;on quitte
 while not pygame.event.peek(pygame.QUIT):
 
-    # attends qu&#39;il se soit passé au moins 1/60
+    # attend qu&#39;il se soit passé au moins 1/60
     # de seconde depuis le dernier tick
     clock.tick(60)
 
     # dessine un rectangle noir pour effacer l&#39;image
-    pygame.draw.rect(screen, [0, 0, 0], pygame.Rect(0, 0, 800, 600))
+    pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(0, 0, 800, 600))
 
     # dessine un cercle rouge centré en (xCircle, 300) de rayon 20
-    pygame.draw.circle(screen, [255, 0, 0], [xCircle, 300], 20)
+    pygame.draw.circle(screen, (255, 0, 0), (xCircle, 300), 20)
     
     # déplace le cercle
     xCircle += 1
@@ -119,13 +119,13 @@ while not pygame.event.peek(pygame.QUIT):
     # affiche l&#39;image qui vient d&#39;être dessinée
     pygame.display.flip()
 </code></pre>
-<p>L&#39;instruction <code>pygame.time.Clock()</code> crée une valeur de type <code>Clock</code>. Si type de valeur a été créé par la bibliothèque Pygame. Remarquez que la valeur de type <code>Clock</code> est sauvegardée dans une variable nommée <code>clock</code> <em>(avec un c minuscule)</em>. Il s&#39;agit là d&#39;une pratique assez courante en programmation. Une fois crée, la <code>clock</code> nous fourni la fonctionnalité <code>tick</code> qui nous permet de temporiser le programme.</p>
+<p>L&#39;instruction <code>pygame.time.Clock()</code> crée une valeur de type <code>Clock</code>. Ce type de valeur a été créé par la bibliothèque Pygame. Remarquez que la valeur de type <code>Clock</code> est sauvegardée dans une variable nommée <code>clock</code> <em>(avec un c minuscule)</em>. Il s&#39;agit là d&#39;une pratique assez courante en programmation. Une fois créée, la <code>clock</code> nous fournit la fonctionnalité <code>tick</code> qui nous permet de temporiser le programme.</p>
 <p>La vitesse du cercle devrait maintenant être raisonnable et identique d&#39;un ordinateur à l&#39;autre.</p>
 <h2>Événements</h2>
 <p>On utilise généralement la souris et le clavier pour interagir avec une application graphique. Le système d&#39;exploitation envoie ces interactions à notre application sous forme <strong>d&#39;événements</strong>.</p>
 <p>Dans le code que nous avons écrit plus haut, nous gérions déjà un événement particulier&nbsp;: <code>pygame.QUIT</code>. Cet événement est envoyé à notre application quand l&#39;utilisateur la quitte <em>(par exemple en fermant la fenêtre)</em>.</p>
 <p>Tous les événements que le système d&#39;exploitation envoie à notre application sont conservés par Pygame dans une <strong>file d&#39;attente</strong>.</p>
-<p>Pour gérer l&#39;événement <code>pygame.QUIT</code>, nous utilisions la fonction <code>pygame.event.peek()</code> qui permet de vérifier si un événement d&#39;un <strong>type particulier</strong> attend dans la file. La fonction <code>pygame.event.peek()</code> est surtout pratique quand on a qu&#39;un type d&#39;événement à gérer.</p>
+<p>Pour gérer l&#39;événement <code>pygame.QUIT</code>, nous avons utilisé la fonction <code>pygame.event.peek()</code> qui permet de vérifier si un événement d&#39;un <strong>type particulier</strong> attend dans la file. La fonction <code>pygame.event.peek()</code> est surtout pratique quand on n&#39;a qu&#39;un type d&#39;événement à gérer.</p>
 <p>Pour gérer plusieurs types d&#39;événements, nous allons utiliser une boucle pour parcourir la file d&#39;événements. Nous allons donc transformer notre</p>
 <pre><code class="language-python"># boucle jusqu&#39;à ce qu&#39;on quitte
 while not pygame.event.peek(pygame.QUIT):
@@ -139,22 +139,22 @@ while True
       # Faire quelque chose avec l&#39;event
 </code></pre>
 <p>Nous pouvons voir que la boucle principale de notre programme est devenue une boucle infinie et qu&#39;à chacun de ses tours, nous parcourons <strong>tous les événements</strong> de la file avec le <code>for event in ...</code>.</p>
-<p>Pour continuer de gérer l&#39;événement <code>pygame.QUIT</code> il faut faire quelque chose avec dans la boucle <code>for</code>. Ajoutons donc un <code>if</code> qui s&#39;exécutera pour ce type d&#39;événement&nbsp;:</p>
+<p>Pour continuer de gérer l&#39;événement <code>pygame.QUIT</code>, il faut faire quelque chose avec dans la boucle <code>for</code>. Ajoutons donc un <code>if</code> qui s&#39;exécutera pour ce type d&#39;événement&nbsp;:</p>
 <pre><code class="language-python">while True
   for event in pygame.event.get():
       if event.type == pygame.QUIT:
       sys.exit()  # nécessite d&#39;importer le module sys
 </code></pre>
-<p>Lorsque le type de l&#39;événement est <code>pygame.QUIT</code>, on met fin au programme avec <code>sys.exit()</code>. Si on souhaite gérer d&#39;autres type d&#39;événements, il suffit d&#39;ajouter les <code>if</code> correspondants.</p>
+<p>Lorsque le type de l&#39;événement est <code>pygame.QUIT</code>, on met fin au programme avec <code>sys.exit()</code>. Si l&#39;on souhaite gérer d&#39;autres types d&#39;événements, il suffit d&#39;ajouter les <code>if</code> correspondants.</p>
 <h3>Événements clavier</h3>
-<p>Il y a deux types d&#39;événement qui nous intéressent lorsqu&#39;on veut gérer le clavier&nbsp;:</p>
+<p>Il y a deux types d&#39;événements qui nous intéressent lorsqu&#39;on veut gérer le clavier&nbsp;:</p>
 <ul>
-<li><p><code>pygame.KEYDOWN</code> : qui a lieu lorsqu&#39;une touche est <strong>appuyée</strong>,</p>
+<li><p><code>pygame.KEYDOWN</code> : il a lieu lorsqu&#39;une touche est <strong>appuyée</strong>,</p>
 </li>
-<li><p><code>pygame.KEYUP</code> : qui a lieu lorsqu&#39;une touche est <strong>relâchée</strong>.</p>
+<li><p><code>pygame.KEYUP</code> : il a lieu lorsqu&#39;une touche est <strong>relâchée</strong>.</p>
 </li>
 </ul>
-<p>Pour savoir à <strong>quelle touche</strong> une événement clavier se rapporte il faut inspecter <code>event.key</code>.</p>
+<p>Pour savoir à <strong>quelle touche</strong> un événement clavier se rapporte, il faut inspecter <code>event.key</code>.</p>
 <p>Voici l&#39;exemple de notre cercle rouge qui bouge. Lorsqu&#39;on appuie sur espace (<code>event.key == pygame.K_SPACE</code>), il change de sens.</p>
 <pre><code class="language-python">import pygame
 import sys
@@ -173,7 +173,7 @@ while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
-        # Changer la vitesse de la balle si on appuie sur espace
+        # Change la vitesse de la balle si on appuie sur espace
         if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
             vxCircle = -vxCircle
         
@@ -187,7 +187,7 @@ while True:
     pygame.display.flip()
 </code></pre>
 <h3>Événements souris</h3>
-<p>Nous allons voir trois types d&#39;événement souris&nbsp;:</p>
+<p>Nous allons voir trois types d&#39;événements souris&nbsp;:</p>
 <ul>
 <li><p><code>pygame.MOUSEBUTTONDOWN</code> : il a lieu quand on <strong>enfonce</strong> un bouton de la souris.</p>
 </li>
@@ -196,8 +196,8 @@ while True:
 <li><p><code>pygame.MOUSEMOTION</code> : il a lieu lorsqu&#39;on <strong>déplace</strong> la souris.</p>
 </li>
 </ul>
-<p>Pour les événement concernant les boutons de la souris, on peut consulter <code>event.button</code> pour savoir de <strong>quel bouton</strong> il s&#39;agit. La valeur de <code>event.button</code> sera 1, 2 ou 3 en fonction du bouton pressé (gauche, milieu ou droit).</p>
-<p>Les événements de bouton contiennent aussi <strong>la position</strong> de la souris au moment du clique. <code>event.pos</code> contient les coordonnées <code>(x, y)</code> de la souris au moment de l&#39;événement.</p>
+<p>Pour les événements concernant les boutons de la souris, on peut consulter <code>event.button</code> pour savoir de <strong>quel bouton</strong> il s&#39;agit. La valeur de <code>event.button</code> sera 1, 2 ou 3 en fonction du bouton pressé (gauche, milieu ou droit).</p>
+<p>Les événements de bouton contiennent aussi <strong>la position</strong> de la souris au moment du clic. <code>event.pos</code> contient les coordonnées <code>(x, y)</code> de la souris au moment de l&#39;événement.</p>
 <p>Les événements <code>pygame.MOUSEMOTION</code> contiennent aussi la position de la souris dans <code>event.pos</code>. Ils contiennent également la <strong>différence de position</strong> depuis l&#39;événement de déplacement précédent dans <code>event.rel</code>.</p>
 <p>A titre d&#39;exemple, on pourrait faire en sorte que le cercle rouge de notre programme précédent suive les déplacements <strong>horizontaux</strong> de la souris&nbsp;:</p>
 <pre><code class="language-python">import pygame
@@ -216,7 +216,7 @@ while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
-        # Changer la position de la balle quand la souris se déplace
+        # Change la position de la balle quand la souris se déplace
         if event.type == pygame.MOUSEMOTION:
             xCircle = event.pos[0]
         
@@ -227,7 +227,7 @@ while True:
     pygame.display.flip()
 </code></pre>
 <h2>Documentation</h2>
-<p>La bibliothèque <code>pygame</code> offre bien entendu, beaucoup <strong>d&#39;autres possibilités</strong>. Par exemple, nous n&#39;avons vu que les fonctions de dessin <code>pygame.draw.circle</code> et <code>pygame.draw.rect</code> mais il en existe bien d&#39;autres. Pour les découvrir, vous pouvez vous rendre sur <a href="https://www.pygame.org/docs/">la documentation officielle de Pygame</a>.</p>
+<p>La bibliothèque <code>pygame</code> offre, bien entendu, beaucoup <strong>d&#39;autres possibilités</strong>. Par exemple, nous n&#39;avons vu que les fonctions de dessin <code>pygame.draw.circle</code> et <code>pygame.draw.rect</code> mais il en existe bien d&#39;autres. Pour les découvrir, vous pouvez vous rendre sur <a href="https://www.pygame.org/docs/">la documentation officielle de Pygame</a>.</p>
 <h2>Exercices</h2>
 
 </body>
