@@ -4,7 +4,7 @@ await build_and_index([
     'chapter1',
     'chapter2',
     'chapter3',
-    // 'chapter4',
+    'chapter4',
 ], {title: 'Syllabus'})
 
 // pdf([
