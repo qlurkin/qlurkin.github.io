@@ -73,6 +73,7 @@ Pour bien comprendre ce qu'il se passe dans la boucle, il faut savoir que chaque
 
 Le programme que nous venons de réaliser redessine le cercle rouge à chaque tour de boucle exactement au même endroit. On a donc l'impression que rien ne se passe dans notre application. Nous pourrions essayer de changer la position du cercle **à chaque fois** qu'on le dessine. Cela permettrait de donner l'impression que le cercle bouge.
 
+<figure id="anim" data-ref="code">
 
 ```python
 import pygame
@@ -100,6 +101,9 @@ while not pygame.event.peek(pygame.QUIT):
     # affiche l'image qui vient d'être dessinée
     pygame.display.flip()
 ```
+
+  <figcaption>Cercle animé</figcaption>
+</figure>
 
 Dans ce code, nous avons créé une variable `xCircle` qui servira pour l'abscisse du centre du cercle et nous modifions sa valeur à chaque tour de boucle. Vous pouvez aussi voir qu'avant de dessiner le cercle, nous **effaçons le tampon**. Si nous ne le faisions pas, nous verrions toujours les cercles dessinés aux tours de boucle précédents.
 
@@ -279,3 +283,12 @@ La bibliothèque `pygame` offre, bien entendu, beaucoup **d'autres possibilités
 
 ## Exercices
 
+1. Écrire un programme qui demande un nombre de côtés et qui affiche un polygone régulier avec le nombre de côtés demandé. La fonction [`pygame.draw.line()`](https://www.pygame.org/docs/ref/draw.html#pygame.draw.line) peut vous aider. *Indice: un polygone régulier est inscrit dans un cercle, vous devriez connaitre les équations paramétriques d'un cercle*.
+
+1. Écrire un programme qui dessine une spirale.
+
+1. A partir du <span data-link="anim">code</span>, faites bouger le cercle en x et en y et faites le rebondir sur les bords de la fenêtre.
+
+1. Même exercice que le précédent, mais le programme demande un nombre de cercles à l'utilisateur et anime ensuite le nombre de cercles demandé.
+
+1. Écrire un programme qui permet de cliquer dans une fenêtre et qui dessine des lignes entre chaque point cliqué.

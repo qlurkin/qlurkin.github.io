@@ -60,6 +60,8 @@ while not pygame.event.peek(pygame.QUIT):
 <p>Pour bien comprendre ce qu&#39;il se passe dans la boucle, il faut savoir que chaque fenêtre contient au moins <strong>deux tampons de dessin</strong>. L&#39;un d&#39;eux est utilisé par la carte graphique de l&#39;ordinateur pour afficher le contenu de la fenêtre à l&#39;écran. Si on dessine sur ce tampon, le résultat est directement visible à l&#39;écran. Cela peut poser problème car le dessin de l&#39;interface d&#39;un programme ne se fait pas instantanément et les étapes intermédiaires du dessin peuvent être visibles. C&#39;est pour palier à ce problème qu&#39;il existe un deuxième tampon de dessin qui est caché. L&#39;idée est de faire le dessin de l&#39;application sur le tampon caché et de ne l&#39;<strong>échanger</strong> avec l&#39;autre qu&#39;au moment où le dessin est terminé. Dans la boucle, nous faisons donc deux choses&nbsp;: nous dessinons un cercle rouge dans le tampon caché de la fenêtre puis nous échangeons les tampons.</p>
 <h2>Animations</h2>
 <p>Le programme que nous venons de réaliser redessine le cercle rouge à chaque tour de boucle exactement au même endroit. On a donc l&#39;impression que rien ne se passe dans notre application. Nous pourrions essayer de changer la position du cercle <strong>à chaque fois</strong> qu&#39;on le dessine. Cela permettrait de donner l&#39;impression que le cercle bouge.</p>
+<figure id="anim" data-ref="code">
+
 <pre><code class="language-python">import pygame
 
 # initialisation de pygame
@@ -85,6 +87,9 @@ while not pygame.event.peek(pygame.QUIT):
     # affiche l&#39;image qui vient d&#39;être dessinée
     pygame.display.flip()
 </code></pre>
+  <figcaption>Cercle animé</figcaption>
+</figure>
+
 <p>Dans ce code, nous avons créé une variable <code>xCircle</code> qui servira pour l&#39;abscisse du centre du cercle et nous modifions sa valeur à chaque tour de boucle. Vous pouvez aussi voir qu&#39;avant de dessiner le cercle, nous <strong>effaçons le tampon</strong>. Si nous ne le faisions pas, nous verrions toujours les cercles dessinés aux tours de boucle précédents.</p>
 <p>En fonction de votre ordinateur, il est possible que l&#39;animation du cercle soit trop rapide. En effet, dans son état actuel, la boucle <code>while</code> peut faire plusieurs centaines de tours par seconde. C&#39;est <strong>inutile</strong> d&#39;en faire autant sachant que la plupart des écrans ne se rafraichissent que 60 fois par seconde. Nous allons donc utiliser une <code>Clock</code> de Pygame pour <strong>temporiser</strong> notre boucle <code>while</code>.</p>
 <pre><code class="language-python">import pygame
@@ -229,6 +234,18 @@ while True:
 <h2>Documentation</h2>
 <p>La bibliothèque <code>pygame</code> offre, bien entendu, beaucoup <strong>d&#39;autres possibilités</strong>. Par exemple, nous n&#39;avons vu que les fonctions de dessin <code>pygame.draw.circle</code> et <code>pygame.draw.rect</code> mais il en existe bien d&#39;autres. Pour les découvrir, vous pouvez vous rendre sur <a href="https://www.pygame.org/docs/">la documentation officielle de Pygame</a>.</p>
 <h2>Exercices</h2>
+<ol>
+<li><p>Écrire un programme qui demande un nombre de côtés et qui affiche un polygone régulier avec le nombre de côtés demandé. La fonction <a href="https://www.pygame.org/docs/ref/draw.html#pygame.draw.line"><code>pygame.draw.line()</code></a> peut vous aider. <em>Indice: un polygone régulier est inscrit dans un cercle, vous devriez connaitre les équations paramétriques d&#39;un cercle</em>.</p>
+</li>
+<li><p>Écrire un programme qui dessine une spirale.</p>
+</li>
+<li><p>A partir du <span data-link="anim">code</span>, faites bouger le cercle en x et en y et faites le rebondir sur les bords de la fenêtre.</p>
+</li>
+<li><p>Même exercice que le précédent, mais le programme demande un nombre de cercles à l&#39;utilisateur et anime ensuite le nombre de cercles demandé.</p>
+</li>
+<li><p>Écrire un programme qui permet de cliquer dans une fenêtre et qui dessine des lignes entre chaque point cliqué.</p>
+</li>
+</ol>
 
 </body>
 </html>
