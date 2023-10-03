@@ -51,7 +51,7 @@ You will :
 
 - store the **data** for which you are responsible,
 
-- Set up and document a procedure for **scaling** your service that can be automated.
+- set up and document a procedure for **scaling** your service that can be automated.
 
 The unavailability of other services must be taken into account.
 
