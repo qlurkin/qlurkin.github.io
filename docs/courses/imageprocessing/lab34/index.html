@@ -11,7 +11,64 @@
 <body>
     <h1>Labs 3 &amp; 4 - Stereovision</h1>
     
-    <h2>Files</h2>
+    <figure>
+<img src="./main.png" alt="">
+</figure>
+
+<p>Stereovision is a discipline that deals with the reconstruction of 3D information from images. For the reconstruction of a point, several images of this point are needed. These images must be taken from different points of view. The key step of the reconstruction, which is often problematic, is to identify the images of the point to be reconstructed in each view.</p>
+<h2>Epipolar Geometry</h2>
+<p>Epipolar geometry involves two cameras. The epipolar geometry describes the geometric properties between two views of the same scene and depends only on the intrinsic parameters of the cameras and their relative positions. It provides, in particular, the epipolar constraint, which will be very useful to produce the matches between views.</p>
+<h2>The Fondamental Matrix</h2>
+<figure>
+<img src="./epipolar.png" alt="">
+</figure>
+
+<p>Let us imagine that we have two images, right and left, of the world space. Let&#39;s take a point $\vec{x}$ in the right image space. The point $\vec{X}$ of the world space, of which $\vec{x}$ is the image, can be anywhere on the line passing through $\vec{x}$ and the optical center of the right camera. We will call this line the back-projected ray of $\vec{x}$. Let us note $\vec{x}&#39;$ the image of $\vec{X}$ in the left image space. The locus of $\vec{x}&#39;$ is therefore the image line of the back-projected ray of $\vec{x}$. This line is called the epipolar line and is denoted $\vec{l}&#39;$. The epipolar line passes through the epipole $\vec{e}&#39;$, image of the optical center of the right camera.</p>
+<p>In 2D projective geometry, a line with equation $ax+by+c = 0$ is represented by a vector with three components $(a, b, c)^T$ defined to within one factor. Thus, we have the following relationship:</p>
+<p><strong>The point $\vec{x}$ belongs to the line $\vec{l}$ if and only if $x^T\vec{l} = 0$.</strong></p>
+<p>Moreover, in 2D projective geometry, the following remarkable relations are valid:</p>
+<ul>
+<li>The intersection of two lines $l$ and $l&#39;$ is given by $x = l \times l&#39;$,</li>
+<li>The line passing through two points $x$ and $x&#39;$ is given by $l = x \times x&#39;$.</li>
+</ul>
+<p>Note that the vector product can be written as a product of matrix $x \times y = [x]_\times y$ where</p>
+<p>$$[x]_\times = \begin{pmatrix} 0 &amp; −x3 &amp; x2 \\ x3 &amp; 0 &amp; −x1 \\ −x2 &amp; x1 &amp; 0 \end{pmatrix}$$</p>
+<p>To find the equation of the epipolar line in the left image space, we just need to find the coordinates of two points of this line. The first is the image $P&#39;\vec{C}$ of the optical center $\vec{C}$ of the right camera where $P&#39;$ is the projection matrix of the left camera. The second is $P&#39;P^{+}\vec{x}$ where $P^{+}$ is the pseudo inverse of the projection matrix $P$ of the right camera. The epipolar line thus has the equation $l&#39; = [P&#39;\vec{C}]_\times{}P&#39;P^{+}\vec{x} = F\vec{x}$ with $F = [P&#39;\vec{C}]_\times{}P&#39;P^{+}$. $F$ is called fundamental matrix.</p>
+<p>Since the epipolar line $\vec{l}&#39; = F\vec{x}$ is the locus of $\vec{x}&#39;$, $\vec{x}&#39;$ therefore belongs to $\vec{l}&#39;$ which leads to the epipolar constraint :</p>
+<p><strong>The fundamental matrix is such that for any pair of points corresponding $\vec{x} \leftrightarrow \vec{x}&#39;$ in the two images, we have $\vec{x}&#39;^{T}F\vec{x} = 0$.</strong></p>
+<h2>Computation of the fundamental matrix</h2>
+<p>The fundamental matrix $F$ has seven degrees of freedom. It has nine components but these are defined to within one scale factor, which removes one degree of freedom. Moreover, the matrix $F$ is a singular matrix ($det(F) = 0$) which gives us seven degrees of freedom. So we need at least seven correspondences to compute $F$. The equation $x&#39;^{T}_iFx_i = 0$ and the seven correspondences allow us to write a system of equations of the form $Af = 0$, where $f$ is the vector which contains the components of the matrix $F$. Let us assume that $A$ is a 7×9 matrix of rank 7. The general solution of $Af = 0$ can be written $\alpha f_1 + (1-\alpha) f_2$ where $f_1$ and $f_2$ are two particular independent solutions of $Af = 0$. We then use the singularity constraint $det(\alpha F_1 + (1 - \alpha)F_2) = 0$ to determine $\alpha$. Since the singularity constraint gives rise to a third degree equation, we may have one or three solutions for $F$.</p>
+<h2>Goal</h2>
+<p>In the zip of the statement you will find two sequences of images taken by two cameras during the scanning of an object by a laser plane.</p>
+<figure>
+<img src="./scanRight/scan0010.png" alt="">
+</figure>
+
+<p>You will also find shots of a checkerboard in different positions that will help you calibrate your cameras.</p>
+<figure>
+<img src="./chessboards/c2Right.png" alt="">
+</figure>
+
+<p>The goal is to reconstruct the scanned object in 3D.</p>
+<h2>OpenCV</h2>
+<p>In practice you will use the OpenCV library. In python, you have access to its functions through the <code>cv2</code> module.</p>
+<p>OpenCV modelize the camera projection like this:$$ s\begin{pmatrix} u \\ v \\ 1 \end{pmatrix} = \begin{pmatrix} f_x &amp; 0 &amp; c_x \\ 0 &amp; f_y &amp; c_y \\ 0 &amp; 0 &amp; 1 \end{pmatrix} \begin{pmatrix} r_{11} &amp; r_{12} &amp; r_{13} &amp; t_1 \\ r_{21} &amp; r_{22} &amp; r_{23} &amp; t_2 \\ r_{31} &amp; r_{32} &amp; r_{33} &amp; t_3 \end{pmatrix} \begin{pmatrix} X \\ Y \\ Z \\ 1 \end{pmatrix}$$ donc $$ P = \begin{pmatrix} f_x &amp; 0 &amp; c_x \\ 0 &amp; f_y &amp; c_y \\ 0 &amp; 0 &amp; 1 \end{pmatrix} \begin{pmatrix} r_{11} &amp; r_{12} &amp; r_{13} &amp; t_1 \\ r_{21} &amp; r_{22} &amp; r_{23} &amp; t_2 \\ r_{31} &amp; r_{32} &amp; r_{33} &amp; t_3 \end{pmatrix} $$</p>
+<p>$$ P_{int} = \begin{pmatrix} f_x &amp; 0 &amp; c_x \\ 0 &amp; f_y &amp; c_y \\ 0 &amp; 0 &amp; 1 \end{pmatrix} $$</p>
+<p>$$ P_{ext} = \begin{pmatrix} r_{11} &amp; r_{12} &amp; r_{13} &amp; t_1 \\ r_{21} &amp; r_{22} &amp; r_{23} &amp; t_2 \\ r_{31} &amp; r_{32} &amp; r_{33} &amp; t_3 \end{pmatrix} = \begin{pmatrix} R &amp; T \end{pmatrix} $$</p>
+<p>$$ P = P_{int} P_{ext} $$</p>
+<p>if you compare this with the camera geometry we have seen in the first lab, it comes that $$ T = \begin{pmatrix} t_1 \\ t_2 \\ t_3 \end{pmatrix} = - \begin{pmatrix} r_{11} &amp; r_{12} &amp; r_{13} \\ r_{21} &amp; r_{22} &amp; r_{23} \\ r_{31} &amp; r_{32} &amp; r_{33} \end{pmatrix} \begin{pmatrix} c_1 \\ c_2 \\ c_3 \end{pmatrix} = - R C $$</p>
+<p>This relation will be usefull later.</p>
+<p><code>cv2.findChessboardCorners()</code>: This functiom will find image coordinates of chessboard corners.</p>
+<p><code>cv2.cornerSubPix()</code>: This function will improve precision of corner&#39;s positions.</p>
+<p><code>cv2.drawChessboardCorners()</code>: This function will draw found corners for visual validation purpose.</p>
+<p><code>cv2.calibrateCamera()</code>: This function will compute $P_{int}$, rotation vectors, and $T$, based on corners found on multiple chessboards.</p>
+<p><code>cv2.Rodrigues()</code>: This function will compute $R$ based on rotation vector.</p>
+<p>At this point you have $P_{int}$, $R$ and $T$. You can compute $P$ and $C$ which let you compute $F$.</p>
+<p>You can also compute $F$ with <code>cv2.findFundamentalMat()</code>.</p>
+<p>With $F$ and what you&#39;ve learn in the second lab you should be able to find matching pairs in left/right images.</p>
+<p><code>cv2.triangulatePoints()</code> will compute 3D points from projection matrices and matching pairs.</p>
+<p>You can find help with the calibration and reconstruction functions on the site <a href="https://docs.opencv.org/4.6.0/d9/d0c/group__calib3d.html">https://docs.opencv.org/4.6.0/d9/d0c/group__calib3d.html</a></p>
+<h2>Files</h2>
 <p>Here are the files needed for this lab: <a href="Lab3&4-StereovisionProject.zip">Files</a></p>
 <h2>Evaluation</h2>
 <p>You will present your results during the oral exam in January.</p>
