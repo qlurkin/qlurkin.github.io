@@ -1,3 +1,3 @@
-import { build } from 'build_lib'
+import { redirect } from 'build_lib'
 
-build('index.md')
+redirect('index.pdf', { title: 'Labo 2 - Relations entre classes et objets' })

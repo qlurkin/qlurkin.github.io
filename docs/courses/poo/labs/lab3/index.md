@@ -1,5 +1,5 @@
 ---
-title: Labo 2 - Multi-platform App User Interface (MAUI)
+title: Labo 3 - Multi-platform App User Interface (MAUI)
 ---
 
 ## Installation
