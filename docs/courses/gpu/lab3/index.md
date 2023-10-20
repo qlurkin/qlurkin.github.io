@@ -377,7 +377,7 @@ pub async fn start() {
       Event::WindowEvent {
         ref event,
         window_id,
-      } if window_id == context.window().id() => {
+      } if window_id == context.window.id() => {
         if !app.input(event) {
           match event {
             // ...
@@ -396,7 +396,8 @@ pub async fn start() {
             eprintln!("Out Of Memory");
             control_flow.set_exit()
           }
-          // All other errors (Outdated, Timeout) should be resolved by the next frame
+          // All other errors (Outdated, Timeout) should be resolved by
+          // the next frame
           Err(e) => eprintln!("{:?}", e),
         }
       }
@@ -407,6 +408,55 @@ pub async fn start() {
 ```
 
 With this, all the methods of our `App` will be called at the right moment !
+
+## First render
+
+To render something, we need to send commands with the command queue. These commands are grouped into **Render Pass**. The target of the render is a texture (an image) but we can't directly render to the texture. We must render to a View of the texture.
+
+So we'll begin by getting the `Texture`, then we'll create a `TextureView` of that texture, then we'll create a `CommandEncoder` that let us create a `RenderPass` and finally we submit that render pass to the `Queue`:
+
+```rust
+pub fn render(&mut self, context: &mut Context) -> Result<(), wgpu::SurfaceError> {
+  let output = context.surface().get_current_texture()?;
+
+  let view = output
+    .texture
+    .create_view(&wgpu::TextureViewDescriptor::default());
+
+  let mut encoder =
+    context
+      .device()
+      .create_command_encoder(&wgpu::CommandEncoderDescriptor {
+          label: Some("Render Encoder"),
+      });
+
+  {
+    let mut render_pass = encoder.begin_render_pass(&wgpu::RenderPassDescriptor {
+      label: Some("Render Pass"),
+      color_attachments: &[Some(wgpu::RenderPassColorAttachment {
+        view: &view,
+        resolve_target: None,
+        ops: wgpu::Operations {
+          load: wgpu::LoadOp::Clear(wgpu::Color {
+            r: 0.0,
+            g: 0.0,
+            b: 0.4,
+            a: 1.0,
+          }),
+          store: true,
+        },
+      })],
+      depth_stencil_attachment: None,
+    });
+  }
+
+  // submit will accept anything that implements IntoIter
+  context.queue().submit(std::iter::once(encoder.finish()));
+  output.present();
+
+  Ok(())
+}
+```
 
 ## Credits
 

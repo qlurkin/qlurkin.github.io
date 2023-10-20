@@ -323,7 +323,7 @@ pub async fn start() {
       Event::WindowEvent {
         ref event,
         window_id,
-      } if window_id == context.window().id() =&gt; {
+      } if window_id == context.window.id() =&gt; {
         if !app.input(event) {
           match event {
             // ...
@@ -342,7 +342,8 @@ pub async fn start() {
             eprintln!(&quot;Out Of Memory&quot;);
             control_flow.set_exit()
           }
-          // All other errors (Outdated, Timeout) should be resolved by the next frame
+          // All other errors (Outdated, Timeout) should be resolved by
+          // the next frame
           Err(e) =&gt; eprintln!(&quot;{:?}&quot;, e),
         }
       }
@@ -352,6 +353,50 @@ pub async fn start() {
 }
 </code></pre>
 <p>With this, all the methods of our <code>App</code> will be called at the right moment !</p>
+<h2>First render</h2>
+<p>To render something, we need to send commands with the command queue. These commands are grouped into <strong>Render Pass</strong>. The target of the render is a texture (an image) but we can&#39;t directly render to the texture. We must render to a View of the texture.</p>
+<p>So we&#39;ll begin by getting the <code>Texture</code>, then we&#39;ll create a <code>TextureView</code> of that texture, then we&#39;ll create a <code>CommandEncoder</code> that let us create a <code>RenderPass</code> and finally we submit that render pass to the <code>Queue</code>:</p>
+<pre><code class="language-rust">pub fn render(&amp;mut self, context: &amp;mut Context) -&gt; Result&lt;(), wgpu::SurfaceError&gt; {
+  let output = context.surface().get_current_texture()?;
+
+  let view = output
+    .texture
+    .create_view(&amp;wgpu::TextureViewDescriptor::default());
+
+  let mut encoder =
+    context
+      .device()
+      .create_command_encoder(&amp;wgpu::CommandEncoderDescriptor {
+          label: Some(&quot;Render Encoder&quot;),
+      });
+
+  {
+    let mut render_pass = encoder.begin_render_pass(&amp;wgpu::RenderPassDescriptor {
+      label: Some(&quot;Render Pass&quot;),
+      color_attachments: &amp;[Some(wgpu::RenderPassColorAttachment {
+        view: &amp;view,
+        resolve_target: None,
+        ops: wgpu::Operations {
+          load: wgpu::LoadOp::Clear(wgpu::Color {
+            r: 0.0,
+            g: 0.0,
+            b: 0.4,
+            a: 1.0,
+          }),
+          store: true,
+        },
+      })],
+      depth_stencil_attachment: None,
+    });
+  }
+
+  // submit will accept anything that implements IntoIter
+  context.queue().submit(std::iter::once(encoder.finish()));
+  output.present();
+
+  Ok(())
+}
+</code></pre>
 <h2>Credits</h2>
 <ul>
 <li><a href="https://codelabs.developers.google.com/your-first-webgpu-app">&quot;Your first WebGPU app&quot; Codelab</a></li>
