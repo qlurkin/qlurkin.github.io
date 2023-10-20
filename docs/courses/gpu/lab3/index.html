@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebGPU in Rust - Game Of Life</title>
+    <script src="/document.js" defer></script>
+    
+</head>
+<body>
+    <h1>WebGPU in Rust <small>Game Of Life</small></h1>
+    
+    <h2>Introduction</h2>
+<p>WebGPU is a new, modern API for accessing the capabilities of your GPU in web apps. But WebGPU is designed to be used beyond web apps. It is an excellent choice for authoring cross-platform GPU accelerated app.</p>
+<p>In this lab, you build <a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life">Conway&#39;s Game of Life</a> using WebGPU. The Game of Life is what&#39;s known as a cellular automaton, in which a grid of cells change state over time based on some set of rules. In the Game of Life cells become active or inactive depending on how many of their neighboring cells are active, which leads to interesting patterns that fluctuate as you watch.</p>
+<h2>Project Setup</h2>
+<p>We will begin by setup our Rust project:</p>
+<div class="terminal">
+  > cargo new my_project_name
+  > cd my_project_name
+</div>
+
+<p>To create a WebGPU app in Rust, we will need two crates:</p>
+<ul>
+<li><code>wgpu</code>: which is an Rust implmentation of the WebGPU standard,</li>
+<li><code>winit</code>: which let you open application windows and deal with input events.</li>
+<li><code>log</code> and <code>env_logger</code>: to get nice <code>wgpu</code> runtime error messages.</li>
+</ul>
+<p>So we add these crates in our dependencies (<code>Cargo.toml</code>):</p>
+<pre><code class="language-toml">[package]
+name = &quot;gpu_game_of_life&quot;
+version = &quot;0.1.0&quot;
+edition = &quot;2021&quot;
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+wgpu = &quot;0.17&quot;
+winit = &quot;0.28&quot;
+log = &quot;0.4&quot;
+env_logger = &quot;0.10&quot;
+</code></pre>
+<h2>Create a Window</h2>
+<p>Here&#39;s a simple example of how to use <code>winit</code> to create a window:</p>
+<pre><code class="language-rust">use winit::{
+    event::{Event, WindowEvent},
+    event_loop::EventLoop,
+    window::WindowBuilder,
+};
+
+pub fn start() {
+  let event_loop = EventLoop::new();
+  let window = WindowBuilder::new().build(&amp;event_loop).unwrap();
+
+  event_loop.run(move |event, _, control_flow| {
+    // ControlFlow::Poll continuously runs the event loop, even if the OS hasn&#39;t
+    // dispatched any events. This is ideal for games and similar applications.
+    control_flow.set_poll();
+
+    match event {
+      Event::WindowEvent {
+        ref event,
+        window_id,
+      } if window_id == window.id() =&gt; {
+        match event {
+          WindowEvent::CloseRequested =&gt; {
+            println!(&quot;The close button was pressed; stopping&quot;);
+            control_flow.set_exit();
+          }
+          _ =&gt; {}
+        }
+      },
+      Event::MainEventsCleared =&gt; {
+        // Application update code.
+
+        // Queue a RedrawRequested event.
+        window.request_redraw();
+      },
+      Event::RedrawRequested(_) =&gt; {
+        // Redraw the application.
+      },
+      _ =&gt; ()
+    }
+  });
+}
+
+fn main() {
+  env_logger::init();
+  start();
+}
+</code></pre>
+<p>The <code>event_loop</code> will run the closure <code>|event, _, control_flow| { ... }</code> for all events. In this example, we deal with three kind of events:</p>
+<ul>
+<li><code>MainEventsCleared</code>: Emitted when all of the event loop’s input events have been processed. This event is useful if you want to do stuff that happens as the “main body” of your event loop.</li>
+<li><code>RedrawRequested</code>: which happens each time a redraw is requested by the OS or by our code with <code>window.request_redraw()</code>,</li>
+<li><code>WindowEvent</code>: which can be of different types. Here, we only look for <code>CloseRequested</code> which happens when we close the window.</li>
+</ul>
+<p>It is very important to enable logging via <code>env_logger::init()</code>. When wgpu hits any error it panics with a generic message, while logging the real error via the log crate. This means if you don&#39;t include <code>env_logger::init()</code>, wgpu will fail silently, leaving you very confused! This has been done at the beginning of the <code>main()</code> function. </p>
+<h2>The <code>window</code> module</h2>
+<p>To keep our code organized, we&#39;ll divide it into several modules. We&#39;ll put our <code>start()</code> function in a new module called <code>window</code>. First we declare the module in the <code>main.rs</code> file:</p>
+<pre><code class="language-rust">mod window
+</code></pre>
+<p>Then we create a new a new file named <code>window.rs</code> and we put the <code>start()</code> function in it. To make our function accessible outside the module we must declare it as public.</p>
+<pre><code class="language-rust">use winit::{
+    event::{Event, WindowEvent},
+    event_loop::EventLoop,
+    window::WindowBuilder,
+};
+
+pub fn start() {
+  //...
+}
+</code></pre>
+<p>To use the function in our <code>main.rs</code> we need to bring it into the scope with a <code>use</code> statement. So in the <code>main.rs</code> file we add:</p>
+<pre><code class="language-rust">use crate::window::start;
+</code></pre>
+<p>Now our <code>main.rs</code> look like this:</p>
+<pre><code class="language-rust">mod window;
+
+use crate::window::start;
+
+fn main() {
+  env_logger::init();
+  start();
+}
+</code></pre>
+<h2>The surface</h2>
+<p>To use our GPU, we need tu create a <code>Device</code>, a <code>Queue</code>, a <code>Surface</code> and multiple other things. To keep all these handles, we&#39;ll create a <code>struct</code> named <code>Context</code> in the <code>window.rs</code> file.</p>
+<pre><code class="language-rust">use winit::window::Window;
+
+pub struct Context {
+  surface: wgpu::Surface,
+  device: wgpu::Device,
+  queue: wgpu::Queue,
+  config: wgpu::SurfaceConfiguration,
+  size: winit::dpi::PhysicalSize&lt;u32&gt;,
+  // The window must be declared after the surface so
+  // it gets dropped after it as the surface contains
+  // unsafe references to the window&#39;s resources.
+  window: Window,
+}
+</code></pre>
+<p>To create a <code>Context</code>, let&#39;s create a <code>new</code> method for it:</p>
+<pre><code class="language-rust">impl Context {
+  // Creating some of the wgpu types requires async code
+  pub async fn new(window: Window) -&gt; Self {
+    let size = window.inner_size();
+
+    // The instance is the context for all other wgpu objects.
+    // Backends::all =&gt; Vulkan + Metal + DX12
+    let instance = wgpu::Instance::new(wgpu::InstanceDescriptor {
+      backends: wgpu::Backends::all(),
+      dx12_shader_compiler: Default::default(),
+    });
+    
+    // # Safety
+    //
+    // The surface needs to live as long as the window that created it.
+    // State owns the window so this should be safe.
+    let surface = unsafe { instance.create_surface(&amp;window) }.unwrap();
+
+    // The adapter is a handle to a physical graphics and/or compute device.
+    let adapter = instance.request_adapter(
+      &amp;wgpu::RequestAdapterOptions {
+        power_preference: wgpu::PowerPreference::default(),
+        compatible_surface: Some(&amp;surface),
+        force_fallback_adapter: false,
+      },
+    ).await.unwrap();
+
+    // The Device is an open connection to a graphics and/or compute device.
+    // The Queue is a handle to a command queue on a device.
+    let (device, queue) = adapter.request_device(
+      &amp;wgpu::DeviceDescriptor {
+        features: wgpu::Features::empty(),
+        limits: wgpu::Limits::default(),
+        label: None,
+      },
+      None, // Trace path
+    ).await.unwrap();
+
+    let surface_caps = surface.get_capabilities(&amp;adapter);
+    // Shader code in this tutorial assumes an sRGB surface texture. Using a
+    // different one will result all the colors coming out darker. If you want
+    // to support non sRGB surfaces, you&#39;ll need to account for that when
+    // drawing to the frame.
+    let surface_format = surface_caps.formats.iter()
+      .copied()
+      .find(|f| f.is_srgb())            
+      .unwrap_or(surface_caps.formats[0]);
+    let config = wgpu::SurfaceConfiguration {
+      usage: wgpu::TextureUsages::RENDER_ATTACHMENT,
+      format: surface_format,
+      width: size.width,
+      height: size.height,
+      present_mode: surface_caps.present_modes[0],
+      alpha_mode: surface_caps.alpha_modes[0],
+      view_formats: vec![],
+    };
+    surface.configure(&amp;device, &amp;config);
+
+    Self {
+      window,
+      surface,
+      device,
+      queue,
+      config,
+      size,
+    }
+  }
+}
+</code></pre>
+<p>Now we can create our <code>Context</code> in the <code>start()</code> function:</p>
+<pre><code class="language-rust">pub async fn start() {
+  // Window setup...
+
+  let mut context = Context::new(window).await;
+
+  // Event loop...
+}
+</code></pre>
+<p>At this point we get a borrowing error because <code>window</code> has moved into the <code>Context</code> and we can no longer use it in our event loop. We just need to use the <code>window</code> inside the <code>Context</code> instead in:</p>
+<pre><code class="language-rust">Event::MainEventsCleared =&gt; {
+  context.window.request_redraw();
+},
+</code></pre>
+<p>and in:</p>
+<pre><code class="language-rust">Event::WindowEvent {
+    ref event,
+    window_id,
+} if window_id == context.window.id() =&gt; {
+  // ...
+}
+</code></pre>
+<p>The <code>start()</code> function must become <code>async</code> because it call the <code>Context::new()</code> that is <code>async</code>. To run <code>start()</code> in our <code>main()</code> function we need to use a crate that is able to await future. We will use <code>pollster</code> so let&#39; add it to our <code>Cargo.toml</code>:</p>
+<pre><code class="language-toml">[dependencies]
+# other deps...
+pollster = &quot;0.3&quot;
+</code></pre>
+<p>We can now update the <code>main()</code> to use <code>pollster</code>:</p>
+<pre><code class="language-rust">fn main() {
+  env_logger::init();
+  pollster::block_on(start());
+}
+</code></pre>
+<p>If we want to support resizing in our application, we&#39;re going to need to reconfigure the surface every time the window&#39;s size changes. That&#39;s the reason we stored the physical size and the config used to configure the surface. With all of these, we can add a resize method to our <code>Context</code>:</p>
+<pre><code class="language-rust">pub fn resize(&amp;mut self, new_size: winit::dpi::PhysicalSize&lt;u32&gt;) {
+  if new_size.width &gt; 0 &amp;&amp; new_size.height &gt; 0 {
+    self.size = new_size;
+    self.config.width = new_size.width;
+    self.config.height = new_size.height;
+    self.surface.configure(&amp;self.device, &amp;self.config);
+  }
+}
+</code></pre>
+<p>And we can call it when we get a <code>Resized</code> event or a <code>ScaleFactorChanged</code> event in our event loop:</p>
+<pre><code class="language-rust">// ...
+match event {
+    Event::WindowEvent {
+        ref event,
+        window_id,
+    } if window_id == context.window.id() =&gt; {
+        match event {
+            WindowEvent::CloseRequested =&gt; {
+                println!(&quot;The close button was pressed; stopping&quot;);
+                control_flow.set_exit();
+            },
+            WindowEvent::Resized(physical_size) =&gt; {
+                println!(&quot;Scaling Window&quot;);
+                context.resize(*physical_size);
+            },
+            WindowEvent::ScaleFactorChanged { new_inner_size, .. } =&gt; {
+                println!(&quot;Scale Factor Changed&quot;);
+                context.resize(**new_inner_size);
+            },
+            _ =&gt; {}
+        }
+    },
+    // other events
+</code></pre>
+<h2>Our App</h2>
+<p>All the previous code is actually boilerplate not specific to our application. We will put the code of our app in a separate module named <code>app</code>. So we declare the module in <code>main.rs</code> and we add a <code>app.rs</code> file with:</p>
+<pre><code class="language-rust">pub struct App {
+
+}
+
+impl App {
+  pub fn new(context: &amp;mut Context) -&gt; Self {
+    Self {
+
+    }
+  }
+
+  fn input(&amp;mut self, event: &amp;WindowEvent) -&gt; bool {
+    return false;  // means that the event must be handeld in the start() function
+  }
+
+  fn update(&amp;mut self) {
+
+  }
+
+  fn render(&amp;mut self) -&gt; Result&lt;(), wgpu::SurfaceError&gt; {
+
+  }
+}
+</code></pre>
+<p>The <code>new()</code> method will act as a constructor. The <code>input()</code> method will get events to let us react to user&#39;s inputs. The <code>update()</code> method will comtain the simulation logic. And the <code>render()</code> method will eb in charge of rendering the frame.</p>
+<p>We will create the <code>App</code> and call its methods in the <code>start()</code> function:</p>
+<pre><code class="language-rust">use crate::app::App;
+// ...
+
+pub async fn start() {
+  // ...
+  
+  let mut context = Context::new(window).await;
+  let mut app = App::new(&amp;mut context);
+
+  event_loop.run(move |event, _, control_flow| {
+    control_flow.set_poll();
+
+    match event {
+      Event::WindowEvent {
+        ref event,
+        window_id,
+      } if window_id == context.window().id() =&gt; {
+        if !app.input(event) {
+          match event {
+            // ...
+          }
+        }
+      },
+      // ...
+      Event::RedrawRequested(_) =&gt; {
+        app.update();
+        match app.render(&amp;mut context) {
+          Ok(_) =&gt; {}
+          // Reconfigure the surface if lost
+          Err(wgpu::SurfaceError::Lost) =&gt; context.resize(context.size),
+          // The system is out of memory, we should probably quit
+          Err(wgpu::SurfaceError::OutOfMemory) =&gt; {
+            eprintln!(&quot;Out Of Memory&quot;);
+            control_flow.set_exit()
+          }
+          // All other errors (Outdated, Timeout) should be resolved by the next frame
+          Err(e) =&gt; eprintln!(&quot;{:?}&quot;, e),
+        }
+      }
+      _ =&gt; (),
+    }
+  });
+}
+</code></pre>
+<p>With this, all the methods of our <code>App</code> will be called at the right moment !</p>
+<h2>Credits</h2>
+<ul>
+<li><a href="https://codelabs.developers.google.com/your-first-webgpu-app">&quot;Your first WebGPU app&quot; Codelab</a></li>
+<li><a href="https://sotrh.github.io/learn-wgpu/">Learn Wgpu</a></li>
+<li><a href="https://surma.dev/things/webgpu/">WebGPU — All of the cores, none of the canvas</a></li>
+</ul>
+<script>
+    function init() {
+        document.body.style.backgroundSize = "100%"
+        document.body.style.imageRendering = "pixelated"
+        const width = 40
+        const height = 80
+        const cellSize = 10
+        const canvas = document.createElement("canvas")
+        canvas.width = width*cellSize
+        canvas.height = height*cellSize
+
+        let context = undefined
+        if (canvas.getContext) {
+            context = canvas.getContext('2d')
+        }
+
+        return {
+            canvas,
+            width,
+            height,
+            context,
+            cellSize
+        }
+    }
+
+    function setPixel(x, y, state, ctx) {
+        if(state)
+        {
+            ctx.context.fillStyle = "rgba(128, 128, 128, 0.15)"
+            ctx.context.fillRect( x*ctx.cellSize, y*ctx.cellSize, ctx.cellSize, ctx.cellSize )
+        }
+    }
+
+    function drawWorld(world, ctx) {
+        ctx.canvas.width = ctx.canvas.width
+        for(let x=0; x<ctx.width; x++) {
+            for(let y=0; y<ctx.height; y++) {
+                setPixel(x, y, world[x][y], ctx)
+            }
+        }
+    }
+
+    function countNeighbor(world, x, y, ctx) {
+        function mod(n, d) {
+            return ((n % d) + d) % d
+        }
+
+        function get(x, y) {
+            return world[mod(x, ctx.width)][mod(y, ctx.height)]
+        }
+
+        let count = 0
+        for(let X=x-1; X<=x+1; X++)
+            for(let Y=y-1; Y<=y+1; Y++)
+                if(X != x || Y != y)
+                    if(get(X, Y))
+                        count++
+        return count
+    }
+
+    function createGrid(ctx) {
+        grid = []
+        for(let x=0; x<ctx.width; x++) {
+            grid.push([])
+            for(let y=0; y<ctx.height; y++) {
+                grid[x].push(Math.random()>0.5 ? true : false)
+            }
+        }
+        return grid
+    }
+
+    function next(cur, prev, ctx) {
+        for(let x=0; x<ctx.width; x++) {
+            for(let y=0; y<ctx.height; y++) {
+                const neighbor = countNeighbor(prev, x, y, ctx)
+                const alive = prev[x][y]
+                if(alive) {
+                    if(neighbor == 2 || neighbor == 3) cur[x][y] = true
+                    else cur[x][y] = false
+                }
+                else {
+                    if(neighbor == 3) cur[x][y] = true
+                    else cur[x][y] = false
+                }
+            }
+        }
+        drawWorld(cur, ctx)
+        document.body.style.backgroundImage = `url('${ctx.canvas.toDataURL()}')`;
+        setTimeout(() => { next(prev, cur, ctx) }, 500)
+    }
+
+    function main() {
+        const ctx = init()
+        next(createGrid(ctx), createGrid(ctx), ctx)
+    }
+
+    main()
+</script>
+
+</body>
+</html>
