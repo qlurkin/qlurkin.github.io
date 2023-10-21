@@ -458,6 +458,46 @@ pub fn render(&mut self, context: &mut Context) -> Result<(), wgpu::SurfaceError
 }
 ```
 
+You also have to specify what you want the render pass to do with the texture when it starts and when it ends:
+
+A `load` value of `Clear` indicates that you want the texture to be cleared when the render pass starts.
+A `store` value of `true` indicates that once the render pass is finished you want the results of any drawing done during the render pass saved into the texture.
+Once the render pass has begun we do... nothing! At least for now. The act of starting the render pass with `load: Clear()` is enough to clear the texture view and the canvas.
+
+You've probably notice the extra block (`{}`) around `encoder.begin_render_pass()`. `begin_render_pass()` borrows `encoder` mutably. We can't call `encoder.finish()` until we release that mutable borrow. The block tells rust to drop any variables within it when the code leaves that scope thus releasing the mutable borrow on `encoder` and allowing us to `finish()` it. If you don't like the `{}`, you can also use `drop(render_pass)` to achieve the same effect.
+
+Let's draw some triangles. Be warned now that it'll seem like a lot of work for such simple output, but that's because WebGPU is designed to render lots of geometry very efficiently. A side effect of this efficiency is that doing relatively simple things might feel unusually difficult, but that's the expectation if you're turning to an API like WebGPU—you want to do something a little more complex.
+
+## Understand how GPUs draw
+
+Before any more code changes, it's worth doing a very quick, simplified, high-level overview of how GPUs create the shapes you see on screen.
+
+Unlike an API like Pygame that has lots of shapes and options ready for you to use, your GPU really only deals with a few different types of shapes (or primitives as they're referred to by WebGPU): points, lines, and triangles. For the purposes of this lab you'll only use triangles.
+
+GPUs work almost exclusively with triangles because triangles have a lot of nice mathematical properties that make them easy to process in a predictable and efficient way. Almost everything you draw with the GPU needs to be split up into triangles before the GPU can draw it, and those triangles must be defined by their corner points.
+
+These points, or vertices, are given in terms of X, Y, and (for 3D content) Z values that define a point on a cartesian coordinate system defined by WebGPU or similar APIs. The structure of the coordinate system is easiest to think about in terms of how it relates to the surface on your window. No matter how wide or tall your canvas is, the left edge is always at -1 on the X axis, and the right edge is always at +1 on the X axis. Similarly, the bottom edge is always -1 on the Y axis, and the top edge is +1 on the Y axis. That means that (0, 0) is always the center of the canvas, (-1, -1) is always the bottom-left corner, and (1, 1) is always the top-right corner. This is known as **Clip Space**.
+
+<figure>
+<img src="./clip_space.png" alt="">
+</figure>
+
+The vertices are rarely defined in this coordinate system initially, so GPUs rely on small programs called vertex shaders to perform whatever math is necessary to transform the vertices into clip space, as well as any other calculations needed to draw the vertices. For example, the shader may apply some animation or calculate the direction from the vertex to a light source. These shaders are written by you, the WebGPU developer, and they provide an amazing amount of control over how the GPU works.
+
+From there, the GPU takes all the triangles made up by these transformed vertices and determines which pixels on the screen are needed to draw them. Then it runs another small program you write called a fragment shader that calculates what color each pixel should be. That calculation can be as simple as return green or as complex as calculating the angle of the surface relative to sunlight bouncing off of other nearby surfaces, filtered through fog, and modified by how metallic the surface is. It's entirely under your control, which can be both empowering and overwhelming.
+
+<figure><img src="./Pipeline.svg" alt=""></figure>
+
+The results of those pixel colors are then accumulated into a texture, which is then able to be shown on screen.
+
+## Define vertices
+
+As mentioned earlier, The Game of Life simulation is shown as a grid of cells. Your app needs a way to visualize the grid, distinguishing active cells from inactive cells. The approach used by this codelab will be to draw colored squares in the active cells and leave inactive cells empty.
+
+This means that you'll need to provide the GPU with four different points, one for each of the four corners of the square. For example, a square drawn in the center of the canvas, pulled in from the edges a ways, has corner coordinates like this:
+
+<figure><img src="./vertices.png" alt=""></figure>
+
 ## Credits
 
 - ["Your first WebGPU app" Codelab](https://codelabs.developers.google.com/your-first-webgpu-app)
