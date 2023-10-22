@@ -12,6 +12,7 @@
     <h1>WebGPU in Rust <small>Game Of Life</small></h1>
     
     <h2>Introduction</h2>
+<p><strong>This lab is a Rust version of a Javascript Codelab available <a href="https://codelabs.developers.google.com/your-first-webgpu-app">here</a>. Most of the Rust specific parts are heavily inspired from <a href="https://sotrh.github.io/learn-wgpu/">here</a>.</strong></p>
 <p>WebGPU is a new, modern API for accessing the capabilities of your GPU in web apps. But WebGPU is designed to be used beyond web apps. It is an excellent choice for authoring cross-platform GPU accelerated app.</p>
 <p>In this lab, you build <a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life">Conway&#39;s Game of Life</a> using WebGPU. The Game of Life is what&#39;s known as a cellular automaton, in which a grid of cells change state over time based on some set of rules. In the Game of Life cells become active or inactive depending on how many of their neighboring cells are active, which leads to interesting patterns that fluctuate as you watch.</p>
 <h2>Project Setup</h2>
@@ -353,6 +354,30 @@ pub async fn start() {
 }
 </code></pre>
 <p>With this, all the methods of our <code>App</code> will be called at the right moment !</p>
+<p>We have pass the <code>Context</code> to our <code>new()</code> method. It&#39;s because we will need multiple fieldof it. The problem is that none of these fields are public. So let&#39;s add some getters to our <code>Context</code> struct:</p>
+<pre><code class="language-rust">impl Context {
+ // ...
+ pub fn window(&amp;self) -&gt; &amp;Window {
+    &amp;self.window
+  }
+
+  pub fn surface(&amp;self) -&gt; &amp;wgpu::Surface {
+    &amp;self.surface
+  }
+
+  pub fn device(&amp;self) -&gt; &amp;wgpu::Device {
+    &amp;self.device
+  }
+
+  pub fn queue(&amp;self) -&gt; &amp;wgpu::Queue {
+    &amp;self.queue
+  }
+
+  pub fn config(&amp;self) -&gt; &amp;wgpu::SurfaceConfiguration {
+    &amp;self.config
+  }
+}
+</code></pre>
 <h2>First render</h2>
 <p>To render something, we need to send commands with the command queue. These commands are grouped into <strong>Render Pass</strong>. The target of the render is a texture (an image) but we can&#39;t directly render to the texture. We must render to a View of the texture.</p>
 <p>So we&#39;ll begin by getting the <code>Texture</code>, then we&#39;ll create a <code>TextureView</code> of that texture, then we&#39;ll create a <code>CommandEncoder</code> that let us create a <code>RenderPass</code> and finally we submit that render pass to the <code>Queue</code>:</p>
@@ -421,6 +446,226 @@ Once the render pass has begun we do... nothing! At least for now. The act of st
 <p>As mentioned earlier, The Game of Life simulation is shown as a grid of cells. Your app needs a way to visualize the grid, distinguishing active cells from inactive cells. The approach used by this codelab will be to draw colored squares in the active cells and leave inactive cells empty.</p>
 <p>This means that you&#39;ll need to provide the GPU with four different points, one for each of the four corners of the square. For example, a square drawn in the center of the canvas, pulled in from the edges a ways, has corner coordinates like this:</p>
 <figure><img src="./vertices.png" alt=""></figure>
+
+<p>In order to feed those coordinates to the GPU, you need to place the values in a Buffer. A buffer is a blob of data in the GPU memory. A buffer is guaranteed to be contiguous, meaning that all the data is stored sequentially in memory. Buffers are generally used to store simple things like structs or arrays, but they can store more complex stuff such as graph structures like trees (provided all the nodes are stored together and don&#39;t reference anything outside of the buffer). We are going to use buffers a lot, so let&#39;s get started with two of the most important ones: the vertex buffer, and the index buffer.</p>
+<p>we are going to use buffers to store the vertex data we want to draw. Before we do that though we need to describe what a vertex looks like. We&#39;ll do this by creating a new struct in the <code>app.rs</code> file.</p>
+<pre><code class="language-rust">#[repr(C)]
+#[derive(Copy, Clone, Debug, bytemuck::Pod, bytemuck::Zeroable)]
+struct Vertex {
+    position: [f32; 2],
+}
+</code></pre>
+<p>for now our vertices will just have a 2D position. WebGPU Buffer are just arrays of bytes (<code>&amp;[u8]</code>) so we will use the crate <code>bytemuck</code> to convert our array of <code>Vertex</code>. Let&#39;s add that dependency:</p>
+<pre><code class="language-toml">bytemuck = { version = &quot;1.12&quot;, features = [ &quot;derive&quot; ] }
+</code></pre>
+<p>The two derives <code>Pod</code> and <code>Zeroable</code> make our <code>Vertex</code> struct castable by <code>bytemuck</code>.</p>
+<p>Let&#39;s create the array of <code>Vertex</code> as a constant in the <code>app.rs</code> file:</p>
+<pre><code class="language-rust">const VERTICES: &amp;[Vertex] = &amp;[
+    Vertex {
+        position: [-0.8, -0.8],
+    },
+    Vertex {
+        position: [0.8, -0.8],
+    },
+    Vertex {
+        position: [0.8, 0.8],
+    },
+    Vertex {
+        position: [-0.8, -0.8],
+    },
+    Vertex {
+        position: [0.8, 0.8],
+    },
+    Vertex {
+        position: [-0.8, 0.8],
+    },
+];
+</code></pre>
+<p>This array is stored in the CPU memory. These 6 vertices describe the two triangles needed to draw our square. We arrange the vertices in counter-clockwise order: top, bottom left, bottom right. We do it this way partially out of tradition, but mostly because we will specify in the configuration of the render pipeline that we want the front face of our triangle to be <code>wgpu::FrontFace::Ccw</code> so that we cull the back face. This means that any triangle that should be facing us should have its vertices in counter-clockwise order.</p>
+<p>Let&#39;s add a field to our <code>App</code> struct to store our buffer:</p>
+<pre><code class="language-rust">pub struct App {
+  vertex_buffer: wgpu::Buffer,
+}
+</code></pre>
+<p>we will now create the buffer in the <code>new()</code> method:</p>
+<pre><code class="language-rust">// needed for create_buffer_init
+use wgpu::util::DeviceExt;
+
+// in the App impl
+pub fn new(context: &amp;mut Context) -&gt; Self {
+  let vertex_buffer =
+    context
+      .device()
+      .create_buffer_init(&amp;wgpu::util::BufferInitDescriptor {
+        label: Some(&quot;Vertex Buffer&quot;),
+        contents: bytemuck::cast_slice(VERTICES),
+        usage: wgpu::BufferUsages::VERTEX,
+      });
+
+  Self {
+    vertex_buffer,
+  }
+</code></pre>
+<h2>Define the vertex layout</h2>
+<p>Now you have a buffer with vertex data in it, but as far as the GPU is concerned it&#39;s just a blob of bytes. You need to supply a little bit more information if you&#39;re going to draw anything with it. You need to be able to tell WebGPU more about the structure of the vertex data.So we&#39;ll define the vertex data structure with a <code>VertexBufferLayout</code>:</p>
+<pre><code class="language-rust">// in new()
+let vertex_buffer_layout = wgpu::VertexBufferLayout {
+  array_stride: std::mem::size_of::&lt;Vertex&gt;() as wgpu::BufferAddress,
+  step_mode: wgpu::VertexStepMode::Vertex,
+  attributes: &amp;[wgpu::VertexAttribute {
+    offset: 0,
+    shader_location: 0,
+    format: wgpu::VertexFormat::Float32x2,
+  }],
+};
+</code></pre>
+<p>This can be a bit confusing at first glance, but it&#39;s relatively easy to break down.</p>
+<p>The first thing you give is the <code>array_stride</code>. This is the number of bytes the GPU needs to skip forward in the buffer when it&#39;s looking for the next vertex. Each vertex of your square is made up of two 32-bit floating point numbers. As mentioned earlier, a 32-bit float is 4 bytes, so two floats is 8 bytes. Here we just use the size of a <code>Vertex</code> to get that value.</p>
+<p>Next is the <code>attributes</code> field, which is an array. Attributes are the individual pieces of information encoded into each vertex. Your vertices only contain one attribute (the vertex position), but more advanced use cases frequently have vertices with multiple attributes in them like the color of a vertex or the direction the geometry surface is pointing. That&#39;s out of scope for this lab, though.</p>
+<p>In your single attribute, you first define the format of the data. This comes from a list of <code>VertexFormat</code> types that describe each type of vertex data that the GPU can understand. Your vertices have two 32-bit floats each, so you use the format <code>float32x2</code>. If your vertex data is instead made up of four 16-bit unsigned integers each, for example, you&#39;d use <code>uint16x4</code> instead. See the pattern?</p>
+<p>Next, the offset describes how many bytes into the vertex this particular attribute starts. You really only have to worry about this if your buffer has more than one attribute in it, which won&#39;t come up during this lab.</p>
+<p>Finally, you have the <code>shader_location</code>. This is an arbitrary number between 0 and 15 and must be unique for every attribute that you define. It links this attribute to a particular input in the vertex shader, which you will learn about in the next section.</p>
+<p>Notice that though you define these values now, you&#39;re not actually passing them into the WebGPU API anywhere just yet. That&#39;s coming up, but it&#39;s easiest to think about these values at the point that you define your vertices, so you&#39;re setting them up now for use later.</p>
+<h2>Start with shaders</h2>
+<p>Now you have the data you want to render, but you still need to tell the GPU exactly how to process it. A large part of that happens with shaders.</p>
+<p>Shaders are small programs that you write and that execute on your GPU. Each shader operates on a different stage of the data: Vertex processing, Fragment processing, or general Compute. Because they&#39;re on the GPU, they are structured more rigidly than your average Rust. But that structure allows them to execute very fast and, crucially, in parallel!</p>
+<p>Shaders in WebGPU are written in a shading language called WGSL (WebGPU Shading Language). WGSL is, syntactically, a bit like Rust, with features aimed at making common types of GPU work (like vector and matrix math) easier and faster. Teaching the entirety of the shading language is well beyond the scope of this lab, but hopefully you&#39;ll pick up some of the basics as you walk through some simple examples.</p>
+<p>The shaders themselves get passed into WebGPU as strings.</p>
+<pre><code class="language-rust">//in new()
+let shader = context
+  .device()
+  .create_shader_module(wgpu::ShaderModuleDescriptor {
+    label: Some(&quot;Shader&quot;),
+    source: wgpu::ShaderSource::Wgsl(include_str!(&quot;shader.wgsl&quot;).into()),
+  });
+</code></pre>
+<p>The <code>include_str!()</code> macro is executed during compilation and include the content of the <code>shader.wgsl</code> file as a string in the source of our program.</p>
+<p>Here is the content of the <code>shader.wgsl</code> file:</p>
+<pre><code class="language-rust">@vertex
+fn vertexMain(@location(0) pos: vec2&lt;f32&gt;) -&gt; @builtin(position) vec4&lt;f32&gt; {
+  return vec4(pos, 0.0, 1.0);
+}
+
+@fragment
+fn fragmentMain() -&gt; @location(0) vec4&lt;f32&gt; {
+  return vec4(1.0, 0.0, 0.0, 1.0);
+}
+</code></pre>
+<p>This file contains two functions, one for the Vertex Stage and one for the Fragment Stage.</p>
+<h2>The Vertex Shader</h2>
+<p>Start with the vertex shader because that&#39;s where the GPU starts, too!</p>
+<p>A vertex shader is defined as a function, and the GPU calls that function once for every vertex in your <code>vertex_buffer</code>. Since your <code>vertex_buffer</code> has six positions (vertices) in it, the function you define gets called six times. Each time it is called, a different position from the <code>vertex_buffer</code> is passed to the function as an argument, and it&#39;s the job of the vertex shader function to return a corresponding position in clip space.</p>
+<p>It&#39;s important to understand that they won&#39;t necessarily get called in sequential order, either. Instead, GPUs excel at running shaders like these in parallel, potentially processing hundreds (or even thousands!) of vertices at the same time! This is a huge part of what&#39;s responsible for GPUs incredible speed, but it comes with limitations. In order to ensure extreme parallelization, vertex shaders cannot communicate with each other. Each shader invocation can only see data for a single vertex at a time, and is only able to output values for a single vertex.</p>
+<p>In WGSL, a vertex shader function can be named whatever you want, but it must have the <code>@vertex</code> attribute in front of it in order to indicate which shader stage it represents.</p>
+<p>A vertex shader must return at least the final position of the vertex being processed in clip space. This is always given as a 4-dimensional vector. Vectors are such a common thing to use in shaders that they&#39;re treated as first-class primitives in the language, with their own types like <code>vec4f</code> for a 4-dimensional vector. There are similar types for 2D vectors (<code>vec2f</code>) and 3D vectors (<code>vec3f</code>), as well! To indicate that the value being returned is the required position, it is marked with the @builtin(position) attribute.</p>
+<p>As we want to make use of the data from the buffer that we created, we can declare an argument for the function with a @location() attribute and type that match what we described in the <code>vertex_buffer_layout</code>. We specified a <code>shader_location</code> of 0, so in our WGSL code, we mark the argument with <code>@location(0)</code>. We also defined the format as a <code>float32x2</code>, which is a 2D vector, so in WGSL our argument is a vec2f. We can name it whatever we like, but since these represent our vertex positions, a name like <code>pos</code> seems natural.</p>
+<h2>The Fragment Shader</h2>
+<p>Next up is the fragment shader. Fragment shaders operate in a very similar way to vertex shaders, but rather than being invoked for every vertex, they&#39;re invoked for every pixel being drawn.</p>
+<p>Fragment shaders are always called after vertex shaders. The GPU takes the output of the vertex shaders and triangulates it, creating triangles out of sets of three points. It then rasterizes each of those triangles by figuring out which pixels of the output color attachments are included in that triangle, and then calls the fragment shader once for each of those pixels. The fragment shader returns a color, typically calculated from values sent to it from the vertex shader and assets like textures, which the GPU writes to the color attachment.</p>
+<p>Just like vertex shaders, fragment shaders are executed in a massively parallel fashion. They&#39;re a little more flexible than vertex shaders in terms of their inputs and outputs, but you can consider them to simply return one color for each pixel of each triangle.</p>
+<p>A WGSL fragment shader function is denoted with the <code>@fragment</code> attribute and it also returns a <code>vec4f</code>. In this case, though, the vector represents a color, not a position. The return value needs to be given a <code>@location</code> attribute in order to indicate which <code>color_attachment</code> from the <code>begin_render_pass</code> call the returned color is written to. Since you only had one attachment, the location is 0.</p>
+<p>And that&#39;s a complete fragment shader! It&#39;s not a terribly interesting one; it just sets every pixel of every triangle to red, but that&#39;s sufficient for now.</p>
+<h2>Create a render pipeline</h2>
+<p>A shader module can&#39;t be used for rendering on its own. Instead, you have to use it as part of a <code>RenderPipeline</code>, created by calling <code>device.create_render_pipeline()</code>. The render pipeline controls how geometry is drawn, including things like which shaders are used, how to interpret data in vertex buffers, which kind of geometry should be rendered (lines, points, triangles...), and more!</p>
+<p>The render pipeline is the most complex object in the entire API.</p>
+<pre><code class="language-rust">// in new()
+let render_pipeline =
+  context
+    .device()
+    .create_render_pipeline(&amp;wgpu::RenderPipelineDescriptor {
+      label: Some(&quot;Render Pipeline&quot;),
+      layout: None, //Some(&amp;render_pipeline_layout),
+      vertex: wgpu::VertexState {
+        module: &amp;shader,
+        entry_point: &quot;vertexMain&quot;,
+        buffers: &amp;[vertex_buffer_layout],
+      },
+      fragment: Some(wgpu::FragmentState {
+        module: &amp;shader,
+        entry_point: &quot;fragmentMain&quot;,
+        targets: &amp;[Some(wgpu::ColorTargetState {
+          format: context.config().format,
+          blend: Some(wgpu::BlendState::REPLACE),
+          write_mask: wgpu::ColorWrites::ALL,
+        })],
+      }),
+      primitive: wgpu::PrimitiveState {
+        topology: wgpu::PrimitiveTopology::TriangleList,
+        strip_index_format: None,
+        front_face: wgpu::FrontFace::Ccw,
+        cull_mode: Some(wgpu::Face::Back),
+        // Setting this to anything other than Fill requires Features::NON_FILL_POLYGON_MODE
+        polygon_mode: wgpu::PolygonMode::Fill,
+        // Requires Features::DEPTH_CLIP_CONTROL
+        unclipped_depth: false,
+        // Requires Features::CONSERVATIVE_RASTERIZATION
+        conservative: false,
+      },
+      depth_stencil: None,
+      multisample: wgpu::MultisampleState {
+        count: 1,
+        mask: !0,
+        alpha_to_coverage_enabled: false,
+      },
+      multiview: None,
+    });
+</code></pre>
+<p>Every pipeline needs a <code>layout</code> that describes what types of inputs (other than vertex buffers) the pipeline needs, but we don&#39;t really have any. Fortunately, we can pass <code>None</code> for now, and the pipeline builds its own layout from the shaders.</p>
+<p>Next, we have to provide details about the vertex stage. The module is the <code>ShaderModule</code> that contains your vertex shader, and the <code>entry_point</code> gives the name of the function in the shader code that is called for every vertex invocation. (We can have multiple @vertex and @fragment functions in a single shader module!) The buffers is an array of <code>VertexBufferLayout</code> objects that describe how our data is packed in the vertex buffers that we use this pipeline with. Luckily, we already defined this earlier in our <code>vertex_buffer_layout</code>! Here&#39;s where we pass it in.</p>
+<p>Next, we have details about the fragment stage. This also includes a shader module and <code>entry_point</code>, like the vertex stage. The last bit is to define the targets that this pipeline is used with. This is an array of dictionaries giving details—such as the texture format—of the color attachments that the pipeline outputs to. These details need to match the textures given in the colorAttachments of any render passes that this pipeline is used with. Our render pass uses textures from the Surface, and uses the value we saved in the config of the Surface for its format, so we pass the same format here.</p>
+<p>The <code>primitive</code> field describes how to interpret our vertices when converting them into triangles. Using <code>PrimitiveTopology::TriangleList</code> means that every three vertices will correspond to one triangle.</p>
+<p>The <code>front_face</code> and <code>cull_mode</code> fields tell wgpu how to determine whether a given triangle is facing forward or not. <code>FrontFace::Ccw</code> means that a triangle is facing forward if the vertices are arranged in a counter-clockwise direction. Triangles that are not considered facing forward are culled (not included in the render) as specified by <code>CullMode::Back</code>.</p>
+<p>The rest of the method is pretty simple:</p>
+<ul>
+<li>We&#39;re not using a depth/stencil buffer currently, so we leave <code>depth_stencil</code> as <code>None</code>.</li>
+<li>count determines how many samples the pipeline will use. Multisampling is a complex topic, so we won&#39;t get into it here.</li>
+<li><code>mask</code> specifies which samples should be active. In this case, we are using all of them.</li>
+<li><code>alpha_to_coverage_enabled</code> has to do with anti-aliasing. We&#39;re not covering anti-aliasing here, so we&#39;ll leave this as <code>false</code> now.</li>
+<li><code>multiview</code> indicates how many array layers the render attachments can have. We won&#39;t be rendering to array textures so we can set this to <code>None</code>.</li>
+</ul>
+<p>We will need this <code>render_pipeline</code> in our <code>render()</code> method so we have to add it as a field of our <code>App</code> struct. We will also need the number of vertices so we will add this as well:</p>
+<pre><code class="language-rust">pub struct App {
+  vertex_buffer: wgpu::Buffer,
+  render_pipeline: wgpu::RenderPipeline,
+  num_vertices: u32,
+}
+
+impl App {
+  pub fn new(context: &amp;mut Context) -&gt; Self {
+    // ...
+
+    let num_vertices = VERTICES.len() as u32;
+
+    Self {
+      vertex_buffer,
+      render_pipeline,
+      num_vertices,
+    }
+  }
+
+  // ...
+}
+</code></pre>
+<h2>Draw the square</h2>
+<p>And with that, you now have everything that you need in order to draw your square!</p>
+<pre><code class="language-rust">{
+  let mut render_pass = encoder.begin_render_pass(
+    // ...
+  );
+
+  // 3 new lines
+  render_pass.set_pipeline(&amp;self.render_pipeline);
+  render_pass.set_vertex_buffer(0, self.vertex_buffer.slice(..));
+  render_pass.draw(0..self.num_vertices, 0..1);
+}
+</code></pre>
+<p>This supplies WebGPU with all the information necessary to draw your square. First, we use <code>set_pipeline()</code> to indicate which pipeline should be used to draw with. This includes the shaders that are used, the layout of the vertex data, and other relevant state data.</p>
+<p>Next, we call <code>set_vertex_buffer()</code> with the buffer containing the vertices for your square. You call it with 0 because this buffer corresponds to the 0th element in the current pipeline&#39;s <code>vertex.buffers</code> definition.</p>
+<p>And last, you make the <code>draw()</code> call, which seems strangely simple after all the setup that&#39;s come before. The only things you need to pass in is a range of vertices that it should render. The second parameter is a range of instance, we only draw one instance.</p>
+<p>If we run the program now, we should a big red rectangle.</p>
+<figure><img src="./red_rectangle.png" alt=""></figure>
+
+<div class="big center">To be continued !</div>
 
 <h2>Credits</h2>
 <ul>
