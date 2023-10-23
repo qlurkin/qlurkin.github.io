@@ -352,7 +352,7 @@ impl App {
 
   }
 
-  fn render(&mut self) -> Result<(), wgpu::SurfaceError> {
+  fn render(&mut self, context: &mut Context) -> Result<(), wgpu::SurfaceError> {
 
   }
 }
