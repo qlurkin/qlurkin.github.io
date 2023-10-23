@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapitre 5 - Les fonctions</title>
+    <script src="/document.js" defer></script>
+    
+</head>
+<body>
+    <h1>Chapitre 5 <small>Les fonctions</small></h1>
+    
+    <p>Une fonction est un <strong>sous-programme</strong> à qui on fournit des valeurs <em>(les valeurs d&#39;entrée)</em> et qui peut produire un résultat <em>(une valeur de sortie)</em>.</p>
+<p>Nous avons déjà utilisé la fonction <code>print().</code> Cette fonction est une fonction prédéfinie du Python. Elle prend un paramètre <em>(une valeur d&#39;entrée, la valeur à afficher)</em> et ne renvoie <strong>pas de résultat</strong>. Par contre, elle a bien une utilité puisqu&#39;elle affiche la valeur de son paramètre à l&#39;écran.</p>
+<p>Le Python contient déjà beaucoup de fonctions prédéfinies mais l&#39;objectif de ce chapitre est de voir comment <strong>ajouter</strong> de nouvelles fonctions au langage. L&#39;intérêt de créer ses propres fonctions est double. Premièrement, lorsqu&#39;un programme devient un peu long, il est possible et même fortement recommandé de le <strong>diviser</strong> en plusieurs fonctions pour que la complexité de chaque partie <em>(chaque fonction)</em> reste maitrisable. Deuxièmement, il arrive régulièrement qu&#39;un programme utilise plusieurs fois la même séquence d&#39;instructions. Là encore, les fonctions permettent de <strong>ne pas devoir écrire plusieurs fois la même chose</strong>.</p>
+<p>Pour définir une fonction, on utilise l&#39;instruction composée <code>def</code> :</p>
+<pre><code class="language-python">def nom_de_la_fonction:
+  bloc_d_instructions
+</code></pre>
+<p>Le code ci-dessus constitue la définition de la fonction, c&#39;est-à-dire, l&#39;ajout de la fonction au langage. Définir une fonction ne sert à rien si on n&#39;utilise pas la fonction quelque part. Pour utiliser la fonction (on dit souvent « appeler » la fonction), on utilise son nom suivit des parenthèses contenant les éventuels paramètres comme on l&#39;a fait à chaque fois qu&#39;on a utilisé la fonction <code>print()</code>. Il est important de bien différencier la définition de la fonction et le ou les appels à la fonction.</p>
+<h2>Fonctions sans paramètre et sans valeur de retour</h2>
+<p>La fonction dont la définition est la suivante&nbsp;:</p>
+<pre><code class="language-python">def hello():
+  print(&#39;Hello World!&#39;)
+</code></pre>
+<p>affiche <code>Hello World!</code>.</p>
+<p>Elle ne prend aucun paramètre <em>(les parenthèses sont vides)</em> et affichera donc exactement la même chose à chaque fois qu&#39;elle sera utilisée.</p>
+<p>Elle ne renvoie aucune valeur. Cela veut dire que ça n&#39;a <strong>aucun intérêt</strong> d&#39;écrire <code>a = hello()</code> (quelle valeur pourrait bien se retrouver dans a?). Cela n&#39;empêche pas la fonction d&#39;être utile puisqu&#39;elle affiche un message.</p>
+<h2>Fonctions avec un paramètre et sans valeur de retour</h2>
+<p>L&#39;utilité de la fonction <code>hello()</code> est quand même très limitée. Elle ne sait faire qu&#39;une chose très précise : afficher <code>Hello World!</code>.</p>
+<p>On peut facilement la rendre plus utile en utilisant un <strong>paramètre</strong>. Celui-ci sera un nom de personne à saluer.</p>
+<p>Voici la définition de la fonction modifiée :</p>
+<pre><code class="language-python">def hello(name):
+  print(&#39;Hello &#39; + name + &#39;!&#39;)
+</code></pre>
+<p>et voici quelques appels avec les résultats correspondants :</p>
+<pre><code class="language-python">hello(&#39;LUR&#39;)   # affichera Hello LUR!
+hello(&#39;1BA&#39;)   # affichera Hello 1BA!
+hello(&#39;ECAM&#39;)  # affichera Hello ECAM!
+</code></pre>
+<h2>Fonctions avec plusieurs paramètres et sans valeur de retour</h2>
+<p>Pouvoir passer un paramètre à une fonction est très utile mais il serait intéressant de pouvoir en passer <strong>plusieurs</strong>. Nous pourrions passer l&#39;heure de la journée pour adapter le message de salutation&nbsp;:</p>
+<pre><code class="language-python">def hello(name, hour):
+  msg = &#39;Bonjour&#39;
+  if hour &gt; 12:
+    msg = &#39;Bon après-midi&#39;
+  if hour &gt; 16:
+    msg = &#39;Bonsoir&#39;
+  if hour &gt; 22:
+    msg = &#39;Bonne nuit&#39;
+
+  print(msg + &#39; &#39; + name + &#39;!&#39;)
+</code></pre>
+<p>Il est donc maintenant possible d&#39;appeler la fonction comme suit&nbsp;:</p>
+<pre><code class="language-python">hello(&#39;Quentin&#39;, 17)   # affichera Bonsoir Quentin!
+</code></pre>
+<p>Par contre, il n&#39;est plus possible de l&#39;appeler en ne mentionnant qu&#39;un seul paramètre comme avant. Il serait intéressant de pouvoir appeler la fonction des deux manières : soit on ne mentionne qu&#39;un paramètre et on utilise <code>Bonjour</code>, soit on mentionne deux paramètres et le message est adapté à l&#39;heure. Et bien c&#39;est possible et relativement simple à obtenir. Il suffit pour cela de donner des <strong>valeurs par défaut</strong> aux paramètres :</p>
+<pre><code class="language-python">def hello(name, hour=10):
+  msg = &#39;Bonjour&#39;
+  if hour &gt; 12:
+    msg = &#39;Bon après-midi&#39;
+  if hour &gt; 16:
+    msg = &#39;Bonsoir&#39;
+  if hour &gt; 22:
+    msg = &#39;Bonne nuit&#39;
+
+  print(msg + &#39; &#39; + name + &#39;!&#39;)
+</code></pre>
+<p>Avec cette définition, il est possible d&#39;appeler la fonction des deux façons&nbsp;:</p>
+<pre><code class="language-python">hello(&#39;Quentin&#39;, 17)        # affichera Bonsoir Quentin!
+hello(&#39;Lurkin&#39;)             # affichera Bonjour Lurkin!
+hello(hour=15, name=&#39;ECAM&#39;) # affichera Bonjour Lurkin!
+</code></pre>
+<p>Comme on le voit dans le troisième appel, il est possible de <strong>nommer explicitement</strong> les paramètres auxquels on veut donner une valeur et donc de les mentionner dans un autre ordre si on le souhaite.</p>
+<h2>Fonctions avec valeur de retour</h2>
+<p>Les fonctions que nous avons écrites jusqu&#39;à présent ne renvoient pas de valeur. C&#39;est-à- dire que ça n&#39;a aucun sens d&#39;écrire <code>a = hello(...)</code> (vous pouvez essayer de faire <code>print(a)</code> après avoir fait <code>a = hello(&#39;LUR&#39;)</code>). Il est cependant possible pour une fonction de <strong>renvoyer</strong> une valeur en utilisant le mot-clé <code>return</code>. Voici un exemple avec la fonction valeur absolue&nbsp;:</p>
+<pre><code class="language-python">def abs(x):
+  if x &lt; 0:
+    res = −x
+  else :
+    res = x
+  return res
+</code></pre>
+<p>Cette fonction renvoie la valeur absolue du paramètre. On peut donc écrire&nbsp;:</p>
+<pre><code class="language-python">a = abs(-2)
+print(a)    # affichera 2
+</code></pre>
+<p>Ici, la valeur absolue de -2 est mise dans <code>a</code> puis on affiche la valeur de <code>a</code>.</p>
+<p>Il est important ici de constater qu&#39;une fonction qui renvoie une valeur peut être utilisée partout où une valeur peut être utilisée. En particulier, elle peut être utilisée à l&#39;intérieur d&#39;une expression ou comme paramètre d&#39;une autre fonction :</p>
+<pre><code class="language-python">print(3 ∗ abs(−2) − 1)   # affichera 5
+</code></pre>
+<h2>Utilité des fonctions</h2>
+<h3>Éviter les répétitions</h3>
+<p>La première utilité des fonctions est bien évidemment d&#39;<strong>éviter de devoir écrire plusieurs fois une même portion de code</strong>. On conçoit aisément que si, à chaque fois qu&#39;on veut calculer une valeur absolue, il faut réécrire le code de la fonction <code>abs()</code>, cela va vite devenir lourd.</p>
+<p>Outre le fait de gagner du temps et de la place (moins de lignes de code), le fait de ne pas devoir répéter du code a plusieurs avantages :</p>
+<ul>
+<li>lorsqu&#39;on doit écrire plusieurs fois la même chose, on a toutes les chances de se tromper à un moment ou à un autre (même en faisant des « copier/coller »).</li>
+<li>il est particulièrement pénible, lorsqu&#39;une modification doit être apportée, de <strong>devoir répéter cette modification</strong> à plusieurs endroits du programme. De plus, on risque là aussi de se tromper ou d&#39;oublier une des répétitions.</li>
+</ul>
+<h3>Structurer le programme</h3>
+<p>Les fonctions peuvent, cependant, être utiles même si on ne les appelle qu&#39;une seule fois. Observons le programme suivant&nbsp;:</p>
+<pre><code class="language-python">n=1
+nb = 10
+while nb &gt; 0:
+  divisors = 0
+  d=1
+  while d &lt;= n:
+    if n % d == 0:
+      divisors += 1
+    d += 1
+  if divisors == 2:
+    print(n)
+    nb -= 1
+  n += 1 
+</code></pre>
+<p>Ce programme ne comporte aucune fonction. Il sert à afficher les 10 premiers nombres premiers. Si on examine le code, on se rend compte qu&#39;il contient deux boucles imbriquées, ce qui fait de lui un programme plutôt <strong>complexe</strong>. Lorsqu&#39;on écrit un programme de ce genre, il est très facile de faire une erreur quelque part et il est, en général, assez pénible de la retrouver.</p>
+<p>Examinons maintenant le même programme <strong>découpé en fonctions</strong>&nbsp;:</p>
+<pre><code class="language-python">def isDivisor(d, n):
+  return n % d == 0
+
+# n strictement supérieur à 1 (1 n&#39;est jamais premier)
+def isPrime(n):
+  d=2
+  while not isDivisor(d, n):
+    d += 1
+  return d == n
+
+def printPrimes(nb):
+  n=2
+  while nb &gt; 0:
+    if isPrime(n):
+      print(n)
+      nb -= 1
+    n += 1
+
+nb_prime = 10
+printPrimes(nb_prime)
+</code></pre>
+<p>Chaque fonction n&#39;est appelée qu&#39;une seule fois. L&#39;intérêt n&#39;est donc pas d&#39;éviter des répétitions de code. Même si le programme global semble plus long, chaque fonction individuelle est <strong>courte et simple</strong>, ce qui en facilite l&#39;écriture et la compréhension. De plus, chaque fonction peut être testée individuellement, ce qui simplifiera la recherche d&#39;erreur. Ceci nous amène au plus important conseil de ce cours :</p>
+<p class="big">Il vaut mieux beaucoup de petites fonctions que peu de grandes fonctions !</p>
+
+<h2>Variables locales et globales</h2>
+<p>Dès qu&#39;on commence à utiliser des fonctions, la notion de variables <strong>locales</strong> et <strong>globales</strong> entre en jeu.</p>
+<p>Une variable globale est une variable définie pour l&#39;ensemble du programme tandis qu&#39;une variable locale est définie pour une fonction particulière. Dans notre programme d&#39;affichage de nombres premiers dans sa version « découpée en fonctions », il y a une variable globale : <code>nb_prime</code>. On reconnait qu&#39;elle est globale car elle est définie <strong>en dehors de toute fonction</strong>. Elle est définie pour l&#39;ensemble du programme et est donc accessible même à l&#39;intérieur des fonctions.</p>
+<p>Les variables locales, quant à elles, sont définies <strong>à l&#39;intérieur d&#39;une fonction</strong> : par exemple, la variable <code>d</code> de la fonction <code>isPrime()</code>. Ce type de variables n&#39;est accessible <strong>qu&#39;à l&#39;intérieur</strong> de la fonction où elle est définie. L&#39;avantage de ce cloisonnement de variables est que l&#39;on peut <strong>réutiliser</strong> le même nom de variable dans plusieurs fonctions : par exemple on peut voir qu&#39;il y a une variable locale nommée <code>d</code> dans la fonction <code>isDivisor()</code>. La variable <code>d</code> de la fonction <code>isPrime()</code> et la variable <code>d</code> de la fonction <code>isDivisor()</code> sont deux variables complètement indépendantes. Si les variables locales n&#39;étaient pas cloisonnées à l&#39;intérieur de leurs fonctions, il faudrait, à chaque fois qu&#39;on veut utiliser une nouvelle variable, trouver un nom qui n&#39;a pas encore été utilisé. Cela peut très vite devenir un problème lorsque le programme devient un peu long. Le cloisonnement nous permet donc d&#39;écrire les fonctions sans se soucier de ce qui est fait dans les autres.</p>
+<pre><code class="language-python">def fct():
+  a = 20
+
+fct()
+print(a)
+</code></pre>
+<p>Le programme ci-dessus vous affichera&nbsp;:</p>
+<div class="terminal">
+NameError: name 'a' is not defined
+</div>
+
+<p>Par contre une variable globale est accessible dans les fonctions&nbsp;:</p>
+<pre><code class="language-python">a = 20
+
+def fct():
+  print(a)
+
+fct()
+</code></pre>
+<p>Ce programme affichera bien 20.</p>
+<p>Que se passe-t-il lorsqu&#39;une variable locale a le même nom qu&#39;une variable globale ?</p>
+<pre><code class="language-python">a=20
+
+def fct():
+  a = 30
+  print(&#39;dans fct:&#39;, a)
+
+fct()
+print(&#39;hors fct:&#39;, a)
+</code></pre>
+<p>Le programme ci-dessus affichera&nbsp;:</p>
+<div class="terminal">
+30
+20
+</div>
+
+<p>Au début, nous définissons une variable globale <code>a</code>. Ensuite, dans la fonction, nous donnons une nouvelle valeur à <code>a</code> mais, en faisant cela, nous ne modifions pas la variable globale. En effet, c&#39;est une variable locale nommée <code>a</code> qui est créée et qui prend la valeur <code>30</code>. Le <code>print()</code> de la fonction affiche donc la valeur de la variable locale. Cette variable locale masque la variable globale portant le même nom. Pour finir, le deuxième <code>print()</code> affiche la valeur de la variable globale qui est bien restée à <code>20</code>.</p>
+<p>On remarque donc qu&#39;il n&#39;est pas possible de modifier une variable globale de l&#39;intérieur d&#39;une fonction. En fait, il s&#39;agit ici du comportement par défaut des variables globales. Il est possible de modifier ce comportement en utilisant l&#39;instruction <code>global</code>&nbsp;:</p>
+<pre><code class="language-python">a = 20
+
+def fct():
+  global a
+  a = 30
+
+fct()
+print(a)
+</code></pre>
+<p>Le programme ci-dessus affichera <code>30</code>. Le fait d&#39;avoir déclaré <code>a</code> comme globale dans la fonction permet d&#39;écrire dans la variable globale sans créer de variable locale.</p>
+<p class="big">Il est important de préciser ici que l'usage de l'instruction <code>global</code> est considéré comme une mauvaise pratique et qu'il faut absolument éviter de l'utiliser.</p>
+
+<p><strong>Petite remarque supplémentaire</strong>, si vous définissez une variable locale dans un fonction, elle est définie dans toute la fonction, <strong>même avant sa définition</strong>. Le code suivant donne donc une erreur&nbsp;</p>
+<pre><code class="language-python">a=20
+
+def fct():
+  print(&#39;avant la définition de a:&#39;, a)
+  a = 30
+
+fct()
+print(&#39;hors fct:&#39;, a)
+</code></pre>
+<div class="terminal">
+UnboundLocalError: cannot access local variable 'a' where it is
+ not associated with a value
+</div>
+
+<p>Comme une variable <code>a</code> est définie dans la fonction, le <code>print()</code> à la première ligne de la fonction <code>fct()</code> tante d&#39;en utiliser la valeur. Mais à ce moment là de la fonction, la variable <code>a</code> n&#39;a pas encore reçu de valeur. On obtient donc le message d&#39;erreur <code>UnboundLocalError</code>.</p>
+<h2>Les fonctions récursives</h2>
+<p>En programmation, rien n&#39;interdit à une fonction de <strong>s&#39;appeler elle-même</strong>. Les fonctions qui s&#39;appellent elles-mêmes sont appelées des <strong>fonctions récursives</strong>.</p>
+<p>Voici un exemple avec la fonction factorielle&nbsp;:</p>
+<pre><code class="language-python">def fact(n):
+  if n &gt; 1:
+    return n ∗ fact(n−1)
+  else:
+    return 1
+</code></pre>
+<p>On voit ici qu&#39;il y a un appel récursif dans la fonction. Il est bien sûr extrêmement important qu&#39;une fonction récursive ne se rappelle pas <strong>éternellement</strong>. Pour cela, une fonction récursive comporte toujours un <strong>cas de base</strong>, c&#39;est-à-dire, un cas où la valeur de fonction peut être déterminée sans appel récursif. Dans le cas de la fonction factorielle, il s&#39;agit du cas <code>n &lt;= 1</code>. Il faut également que la suite d&#39;appels récursifs finisse toujours par attendre le cas de base.</p>
+<h2>Les modules</h2>
+<p>Lorsqu&#39;on crée des fonctions qui peuvent être utiles dans plusieurs programmes ou que le fichier du programme devient très long, il est intéressant de créer des modules.</p>
+<p>Ces modules sont semblables au module <code>math</code> que nous avons déjà utilisé auparavant. Ils contiennent des définitions de fonctions et peuvent être importés (<code>from ... import ...</code>) dans un programme qui pourra alors utiliser ces fonctions.</p>
+<h3>Le module <code>turtle</code></h3>
+<p>Avant de créer nos propres modules, nous allons examiner un des modules <strong>prédéfinis</strong> du Python qui nous servira par la suite.</p>
+<p>Le module <code>turtle</code> sert à réaliser des dessins en faisant se déplacer une « tortue ». Voici un exemple :</p>
+<pre><code class="language-python">from turtle import *
+
+for i in range(4):
+  forward(100)
+  left(90)
+
+done()
+</code></pre>
+<p>La première ligne sert bien sûr à importer toutes les fonctions du module <code>turtle</code>.</p>
+<p>Vient ensuite une boucle qui effectue 4 tours. A chacun d&#39;entre eux, la « tortue » avancera de 100 pixels et tournera de 90◦ vers la gauche. Durant tous ces déplacements, la « tortue » trace une ligne derrière elle, ce qui aboutit au dessin suivant :</p>
+<figure><img src="./turtle.png" alt=""></figure>
+
+<p>Dans l&#39;image ci-dessus, la flèche représente la « tortue ».</p>
+<p>Voici quelques fonctions utiles pour manipuler la « tortue » :</p>
+<table>
+  <thead>
+    <tr>
+      <th>Fonctions</th>
+      <th>Descriptions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>forward(distance)</code></td>
+      <td>Avancer d'une distance donnée</td>
+    </tr>
+    <tr>
+      <td><code>backward(distance)</code></td>
+      <td>Reculer d'une distance donnée</td>
+    </tr>
+    <tr>
+      <td><code>up()</code></td>
+      <td>Relever le crayon (pour pouvoir avancer sans dessiner)</td>
+    </tr>
+    <tr>
+      <td><code>down()</code></td>
+      <td>Abaisser le crayon</td>
+    </tr>
+    <tr>
+      <td><code>color(couleur)</code></td>
+      <td>Changer la couleur du crayon. <code>couleur</code> peut être un nom de couleur en anglais (<code>'red'</code>, <code>'blue'</code>, ...)</td>
+    </tr>
+    <tr>
+      <td><code>left(angle)</code></td>
+      <td>Tourner à gauche d'un angle donné (en degrés).</td>
+    </tr>
+    <tr>
+      <td><code>right(angle)</code></td>
+      <td>Tourner à droite d'un angle donné (en degrés).</td>
+    </tr>
+    <tr>
+      <td><code>width(épaisseur)</code></td>
+      <td>Changer l'épaisseur du crayon.</td>
+    </tr>
+    <tr>
+      <td><code>goto(x, y)</code></td>
+      <td>Aller à l'endroit de coordonnées x, y</td>
+    </tr>
+    <tr>
+      <td><code>reset()</code></td>
+      <td>Effacer tout</td>
+    </tr>
+    <tr>
+      <td><code>done()</code></td>
+      <td>Permet que la fenêtre de résultat reste ouverte une fois le dessin terminé.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>Notre propre module</h3>
+<p>Pour écrire un module, il suffit de créer un script contenant des définitions de fonctions. Comme exemple, nous allons créer un module nommé <code>shape</code> qui contiendra des fonctions permettant de dessiner des formes avec la « tortue ».</p>
+<p>Nous créons donc un fichier nommé <code>shape.py</code> contenant le code suivant&nbsp;:</p>
+<pre><code class="language-python">from turtle import ∗
+
+def square(cote, couleur):
+  color(couleur)
+  for i in range(4):
+    forward(cote)
+    right(90)
+</code></pre>
+<p>On peut ensuite créer un programme qui utilise notre module&nbsp;:</p>
+<pre><code class="language-python">from shape import ∗
+
+up()
+goto(−150, 50)
+
+for i in range(10):
+  down()
+  square(25, &#39;red&#39;) 
+  up()
+  forward(30)
+
+done()
+</code></pre>
+<p>Pour que le programme puisse trouver le module <code>shape</code>, il faut que les deux fichiers soient <strong>dans le même répertoire</strong>.</p>
+<figure><img src="./squares.png" alt=""></figure>
+
+<h3>La variable <code>__name__</code></h3>
+<p>La variable globale <code>__name__</code> est définie dans chaque fichier Python. Elle contient un string égal au nom du module. Dans le programme principal (le fichier lancé avec la commande <code>python</code>), elle vaut <code>&quot;__main__&quot;</code>.</p>
+<p>Pour avoir une partie d&#39;un module qui ne s&#39;exécute que quand on le lance comme un programme (quand on le lance directement avec la commande <code>python</code>), on teste souvent la variable <code>__name__</code>&nbsp;:</p>
+<pre><code class="language-python"># à la fin du fichier shape.py
+if __name__ == &quot;__main__&quot;:
+    square(10, &#39;blue&#39;)
+    done()
+</code></pre>
+<p>Le code ci-dessus permet de tester la fonction <code>square</code> en lançant le fichier shape.py&nbsp;:</p>
+<div class="terminal">
+> python shape.py
+</div>
+
+<p>Et cela affichera le carré bleu de côté 10.</p>
+<p>Mais lorsqu&#39;on lancera le fichier qui importe <code>shape</code> et qui dessine 10 carrés rouges, le contenu du <code>if __name__ == &quot;__main__&quot;:</code> ne serra pas exécuté et le carré bleu ne sera pas affiché.</p>
+<h2>Exercices</h2>
+<ol>
+<li><p>Écrire une fonction nommée <code>unique()</code> qui reçoit une liste en paramètre et qui renvoie une nouvelle liste contenant une fois chaque élément de la liste d&#39;entrée, dans l&#39;ordre d&#39;apparition de la 1ère occurrence.</p>
+</li>
+<li><p>Écrire une fonction nommée <code>zipper()</code> qui reçoit 2 listes en paramètres et qui renvoie une liste contenant les éléments des deux listes alternés. Attention, Les deux listes peuvent être de tailles différentes.</p>
+</li>
+<li><p>Écrire une fonction nommée <code>fibo()</code> qui prend un entier <code>n</code> en paramètre et qui renvoie le <code>n</code><sup>ième</sup> terme de la suite de Fibonacci. La suite de Fibonacci est une suite où chaque terme est égal à la somme des deux termes précédents. Les deux premiers termes sont égaux à 1. Les termes sont numérotés à partir de 1.</p>
+</li>
+<li><p>Écrire une fonction nommée <code>pgcd()</code> qui prend deux entiers en paramètres et renvoie le &quot;Plus Grand Commun Diviseur&quot;. Le PGCD peut être calculé en utilisant les relations suivante: <img class="typst-formula-display" style="display: block; margin: 1em auto;" src="data:image/svg+xml;base64,PHN2ZyBjbGFzcz0idHlwc3QtZG9jIiB2aWV3Qm94PSIwIDAgMjQ3LjU3NTExMTExMTExMTA4IDM4LjM4NCIgd2lkdGg9IjI0Ny41NzUxMTExMTExMTEwOCIgaGVpZ2h0PSIzOC4zODQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zOmg1PSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hodG1sIj4KICAgIDxnPgogICAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAgMCkiLz4KICAgICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwIDApIi8+CiAgICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAxMi4wODgwMDAwMDAwMDAwMDEpIi8+CiAgICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAxMi4wODgwMDAwMDAwMDAwMDEpIi8+CiAgICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAyMy4xOTIpIj4KICAgICAgICAgICAgPGcgY2xhc3M9InR5cHN0LXRleHQiIHRyYW5zZm9ybT0ic2NhbGUoMC4wMTYgLTAuMDE2KSI+CiAgICAgICAgICAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNnMCIgeD0iMCIgZmlsbD0iIzAwMDAwMCIvPgogICAgICAgICAgICAgICAgPHVzZSB4bGluazpocmVmPSIjZzEiIHg9IjU1NiIgZmlsbD0iIzAwMDAwMCIvPgogICAgICAgICAgICAgICAgPHVzZSB4bGluazpocmVmPSIjZzIiIHg9IjEwNTYiIGZpbGw9IiMwMDAwMDAiLz4KICAgICAgICAgICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI2czIiB4PSIxNTAwIiBmaWxsPSIjMDAwMDAwIi8+CiAgICAgICAgICAgIDwvZz4KICAgICAgICA8L2c+CiAgICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMzIuODk2IDExLjIyNCkiLz4KICAgICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgzMi44OTYgMjMuMTkyKSI+CiAgICAgICAgICAgIDxnIGNsYXNzPSJ0eXBzdC10ZXh0IiB0cmFuc2Zvcm09InNjYWxlKDAuMDE2IC0wLjAxNikiPgogICAgICAgICAgICAgICAgPHVzZSB4bGluazpocmVmPSIjZzQiIHg9IjAiIGZpbGw9IiMwMDAwMDAiLz4KICAgICAgICAgICAgPC9nPgogICAgICAgIDwvZz4KICAgICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgzOS4xMjAwMDAwMDAwMDAwMDUgMTYuMTIpIi8+CiAgICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMzkuMTIwMDAwMDAwMDAwMDA1IDIzLjE5MikiPgogICAgICAgICAgICA8ZyBjbGFzcz0idHlwc3QtdGV4dCIgdHJhbnNmb3JtPSJzY2FsZSgwLjAxNiAtMC4wMTYpIj4KICAgICAgICAgICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI2c1IiB4PSIwIiBmaWxsPSIjMDAwMDAwIi8+CiAgICAgICAgICAgIDwvZz4KICAgICAgICA8L2c+CiAgICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNDcuNTg0IDIxLjQ5NikiLz4KICAgICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg0Ny41ODQgMjMuMTkyKSI+CiAgICAgICAgICAgIDxnIGNsYXNzPSJ0eXBzdC10ZXh0IiB0cmFuc2Zvcm09InNjYWxlKDAuMDE2IC0wLjAxNikiPgogICAgICAgICAgICAgICAgPHVzZSB4bGluazpocmVmPSIjZzYiIHg9IjAiIGZpbGw9IiMwMDAwMDAiLz4KICAgICAgICAgICAgPC9nPgogICAgICAgIDwvZz4KICAgICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg1NC42OTg2NjY2NjY2NjY2NyAxMi4wODgwMDAwMDAwMDAwMDEpIi8+CiAgICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNTQuNjk4NjY2NjY2NjY2NjcgMjMuMTkyKSI+CiAgICAgICAgICAgIDxnIGNsYXNzPSJ0eXBzdC10ZXh0IiB0cmFuc2Zvcm09InNjYWxlKDAuMDE2IC0wLjAxNikiPgogICAgICAgICAgICAgICAgPHVzZSB4bGluazpocmVmPSIjZzciIHg9IjAiIGZpbGw9IiMwMDAwMDAiLz4KICAgICAgICAgICAgPC9nPgogICAgICAgIDwvZz4KICAgICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg2MS43ODY2NjY2NjY2NjY2NyAxMS4yMjQpIi8+CiAgICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNjEuNzg2NjY2NjY2NjY2NjcgMjMuMTkyKSI+CiAgICAgICAgICAgIDxnIGNsYXNzPSJ0eXBzdC10ZXh0IiB0cmFuc2Zvcm09InNjYWxlKDAuMDE2IC0wLjAxNikiPgogICAgICAgICAgICAgICAgPHVzZSB4bGluazpocmVmPSIjZzgiIHg9IjAiIGZpbGw9IiMwMDAwMDAiLz4KICAgICAgICAgICAgPC9nPgogICAgICAgIDwvZz4KICAgICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg3Mi40NTUxMTExMTExMTExMSAxNy4zMikiLz4KICAgICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg3Mi40NTUxMTExMTExMTExMSAyMy4xOTIpIj4KICAgICAgICAgICAgPGcgY2xhc3M9InR5cHN0LXRleHQiIHRyYW5zZm9ybT0ic2NhbGUoMC4wMTYgLTAuMDE2KSI+CiAgICAgICAgICAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNnOSIgeD0iMCIgZmlsbD0iIzAwMDAwMCIvPgogICAgICAgICAgICA8L2c+CiAgICAgICAgPC9nPgogICAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDg5LjM0NzU1NTU1NTU1NTU2IDApIi8+CiAgICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoODkuMzQ3NTU1NTU1NTU1NTYgMjMuMikiPgogICAgICAgICAgICA8ZyBjbGFzcz0idHlwc3QtdGV4dCIgdHJhbnNmb3JtPSJzY2FsZSgwLjAxNiAtMC4wMTYpIj4KICAgICAgICAgICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI2cxMCIgeD0iMCIgZmlsbD0iIzAwMDAwMCIvPgogICAgICAgICAgICA8L2c+CiAgICAgICAgPC9nPgogICAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDEwMS4zNDc1NTU1NTU1NTU1NiAxLjQ4MDAwMDAwMDAwMDAwMDQpIj4KICAgICAgICAgICAgPGcgY2xhc3M9InR5cHN0LWdyb3VwIj4KICAgICAgICAgICAgICAgIDxnPgogICAgICAgICAgICAgICAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAgMCkiLz4KICAgICAgICAgICAgICAgICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwIDQuMDMxOTk5OTk5OTk5OTk5KSIvPgogICAgICAgICAgICAgICAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAgMTEuMTA0KSI+CiAgICAgICAgICAgICAgICAgICAgICAgIDxnIGNsYXNzPSJ0eXBzdC10ZXh0IiB0cmFuc2Zvcm09InNjYWxlKDAuMDE2IC0wLjAxNikiPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgPHVzZSB4bGluazpocmVmPSIjZzUiIHg9IjAiIGZpbGw9IiMwMDAwMDAiLz4KICAgICAgICAgICAgICAgICAgICAgICAgPC9nPgogICAgICAgICAgICAgICAgICAgIDwvZz4KICAgICAgICAgICAgICAgICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg5My43Mzg2NjY2NjY2NjY2NiAwLjU5MTk5OTk5OTk5OTk5ODcpIi8+CiAgICAgICAgICAgICAgICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoOTMuNzM4NjY2NjY2NjY2NjYgMC41OTE5OTk5OTk5OTk5OTg3KSIvPgogICAgICAgICAgICAgICAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDkzLjczODY2NjY2NjY2NjY2IDExLjEwNCkiPgogICAgICAgICAgICAgICAgICAgICAgICA8ZyBjbGFzcz0idHlwc3QtdGV4dCIgdHJhbnNmb3JtPSJzY2FsZSgwLjAxNiAtMC4wMTYpIj4KICAgICAgICAgICAgICAgICAgICAgICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI2cxMSIgeD0iMCIgZmlsbD0iIzAwMDAwMCIvPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgPHVzZSB4bGluazpocmVmPSIjZzEyIiB4PSIzOTQiIGZpbGw9IiMwMDAwMDAiLz4KICAgICAgICAgICAgICAgICAgICAgICAgPC9nPgogICAgICAgICAgICAgICAgICAgIDwvZz4KICAgICAgICAgICAgICAgICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxMDkuODAyNjY2NjY2NjY2NjUgMCkiLz4KICAgICAgICAgICAgICAgICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxMDkuODAyNjY2NjY2NjY2NjUgMTEuMTA0KSI+CiAgICAgICAgICAgICAgICAgICAgICAgIDxnIGNsYXNzPSJ0eXBzdC10ZXh0IiB0cmFuc2Zvcm09InNjYWxlKDAuMDE2IC0wLjAxNikiPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgPHVzZSB4bGluazpocmVmPSIjZzciIHg9IjAiIGZpbGw9IiMwMDAwMDAiLz4KICAgICAgICAgICAgICAgICAgICAgICAgPC9nPgogICAgICAgICAgICAgICAgICAgIDwvZz4KICAgICAgICAgICAgICAgICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxMjEuMzM1MTExMTExMTExMDkgNS4yMzE5OTk5OTk5OTk5OTkpIi8+CiAgICAgICAgICAgICAgICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTIxLjMzNTExMTExMTExMTA5IDExLjEwNCkiPgogICAgICAgICAgICAgICAgICAgICAgICA8ZyBjbGFzcz0idHlwc3QtdGV4dCIgdHJhbnNmb3JtPSJzY2FsZSgwLjAxNiAtMC4wMTYpIj4KICAgICAgICAgICAgICAgICAgICAgICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI2c5IiB4PSIwIiBmaWxsPSIjMDAwMDAwIi8+CiAgICAgICAgICAgICAgICAgICAgICAgIDwvZz4KICAgICAgICAgICAgICAgICAgICA8L2c+CiAgICAgICAgICAgICAgICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTM4LjIyNzU1NTU1NTU1NTU0IDAuNDQ3OTk5OTk5OTk5OTk4NikiLz4KICAgICAgICAgICAgICAgICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxMzguMjI3NTU1NTU1NTU1NTQgMTEuMTA0KSI+CiAgICAgICAgICAgICAgICAgICAgICAgIDxnIGNsYXNzPSJ0eXBzdC10ZXh0IiB0cmFuc2Zvcm09InNjYWxlKDAuMDE2IC0wLjAxNikiPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgPHVzZSB4bGluazpocmVmPSIjZzEzIiB4PSIwIiBmaWxsPSIjMDAwMDAwIi8+CiAgICAgICAgICAgICAgICAgICAgICAgIDwvZz4KICAgICAgICAgICAgICAgICAgICA8L2c+CiAgICAgICAgICAgICAgICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAxOS40NTYpIj4KICAgICAgICAgICAgICAgICAgICAgICAgPGcgY2xhc3M9InR5cHN0LWdyb3VwIj4KICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxnPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAgMC44OTYwMDAwMDAwMDAwMDA4KSIvPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAgMC44OTYwMDAwMDAwMDAwMDA4KSIvPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAgMTIpIj4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPGcgY2xhc3M9InR5cHN0LXRleHQiIHRyYW5zZm9ybT0ic2NhbGUoMC4wMTYgLTAuMDE2KSI+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNnMCIgeD0iMCIgZmlsbD0iIzAwMDAwMCIvPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPHVzZSB4bGluazpocmVmPSIjZzEiIHg9IjU1NiIgZmlsbD0iIzAwMDAwMCIvPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPHVzZSB4bGluazpocmVmPSIjZzIiIHg9IjEwNTYiIGZpbGw9IiMwMDAwMDAiLz4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI2czIiB4PSIxNTAwIiBmaWxsPSIjMDAwMDAwIi8+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDwvZz4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8L2c+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMzIuODk2IDAuMDMyMDAwMDAwMDAwMDAwMDMpIi8+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMzIuODk2IDEyKSI+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxnIGNsYXNzPSJ0eXBzdC10ZXh0IiB0cmFuc2Zvcm09InNjYWxlKDAuMDE2IC0wLjAxNikiPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPHVzZSB4bGluazpocmVmPSIjZzQiIHg9IjAiIGZpbGw9IiMwMDAwMDAiLz4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPC9nPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDwvZz4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgzOS4xMjAwMDAwMDAwMDAwMDUgMC44OTYwMDAwMDAwMDAwMDA4KSIvPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDM5LjEyMDAwMDAwMDAwMDAwNSAxMikiPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8ZyBjbGFzcz0idHlwc3QtdGV4dCIgdHJhbnNmb3JtPSJzY2FsZSgwLjAxNiAtMC4wMTYpIj4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI2c3IiB4PSIwIiBmaWxsPSIjMDAwMDAwIi8+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDwvZz4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8L2c+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNDYuMjA4MDAwMDAwMDAwMDA2IDEwLjMwNCkiLz4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg0Ni4yMDgwMDAwMDAwMDAwMDYgMTIpIj4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPGcgY2xhc3M9InR5cHN0LXRleHQiIHRyYW5zZm9ybT0ic2NhbGUoMC4wMTYgLTAuMDE2KSI+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNnNiIgeD0iMCIgZmlsbD0iIzAwMDAwMCIvPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8L2c+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPC9nPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDUzLjMyMjY2NjY2NjY2NjY3IDQuOTI4KSIvPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDUzLjMyMjY2NjY2NjY2NjY3IDEyKSI+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxnIGNsYXNzPSJ0eXBzdC10ZXh0IiB0cmFuc2Zvcm09InNjYWxlKDAuMDE2IC0wLjAxNikiPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPHVzZSB4bGluazpocmVmPSIjZzUiIHg9IjAiIGZpbGw9IiMwMDAwMDAiLz4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPC9nPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDwvZz4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg2MS43ODY2NjY2NjY2NjY2NyAwKSIvPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDYxLjc4NjY2NjY2NjY2NjY3IDEyKSI+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxnIGNsYXNzPSJ0eXBzdC10ZXh0IiB0cmFuc2Zvcm09InNjYWxlKDAuMDE2IC0wLjAxNikiPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPHVzZSB4bGluazpocmVmPSIjZzE0IiB4PSIwIiBmaWxsPSIjMDAwMDAwIi8+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDwvZz4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8L2c+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNzUuMTE0NjY2NjY2NjY2NjYgMC44OTYwMDAwMDAwMDAwMDA4KSIvPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDc1LjExNDY2NjY2NjY2NjY2IDEyKSI+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxnIGNsYXNzPSJ0eXBzdC10ZXh0IiB0cmFuc2Zvcm09InNjYWxlKDAuMDE2IC0wLjAxNikiPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPHVzZSB4bGluazpocmVmPSIjZzciIHg9IjAiIGZpbGw9IiMwMDAwMDAiLz4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPC9nPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDwvZz4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg4Mi4yMDI2NjY2NjY2NjY2NiAwLjAzMjAwMDAwMDAwMDAwMDAzKSIvPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDgyLjIwMjY2NjY2NjY2NjY2IDEyKSI+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxnIGNsYXNzPSJ0eXBzdC10ZXh0IiB0cmFuc2Zvcm09InNjYWxlKDAuMDE2IC0wLjAxNikiPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPHVzZSB4bGluazpocmVmPSIjZzgiIHg9IjAiIGZpbGw9IiMwMDAwMDAiLz4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPC9nPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDwvZz4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg5My43Mzg2NjY2NjY2NjY2NiAxLjQ4Nzk5OTk5OTk5OTk5OTUpIi8+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoOTMuNzM4NjY2NjY2NjY2NjYgMS40ODc5OTk5OTk5OTk5OTk1KSIvPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDkzLjczODY2NjY2NjY2NjY2IDEyKSI+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxnIGNsYXNzPSJ0eXBzdC10ZXh0IiB0cmFuc2Zvcm09InNjYWxlKDAuMDE2IC0wLjAxNikiPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPHVzZSB4bGluazpocmVmPSIjZzExIiB4PSIwIiBmaWxsPSIjMDAwMDAwIi8+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNnMTIiIHg9IjM5NCIgZmlsbD0iIzAwMDAwMCIvPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPHVzZSB4bGluazpocmVmPSIjZzE1IiB4PSI2NzIiIGZpbGw9IiMwMDAwMDAiLz4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI2cxNiIgeD0iMTIyOC4wMDAwMDAwMDAwMDAyIiBmaWxsPSIjMDAwMDAwIi8+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNnMTUiIHg9IjE3MjguMDAwMDAwMDAwMDAwMiIgZmlsbD0iIzAwMDAwMCIvPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8L2c+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPC9nPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgPC9nPgogICAgICAgICAgICAgICAgICAgICAgICA8L2c+CiAgICAgICAgICAgICAgICAgICAgPC9nPgogICAgICAgICAgICAgICAgPC9nPgogICAgICAgICAgICA8L2c+CiAgICAgICAgPC9nPgogICAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAgMzguMzg0KSIvPgogICAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAgMCkiLz4KICAgIDwvZz4KICAgIDxkZWZzIGlkPSJnbHlwaCI+CiAgICAgICAgPHN5bWJvbCBpZD0iZzAiIG92ZXJmbG93PSJ2aXNpYmxlIj4KICAgICAgICAgICAgPHBhdGggZD0iTSAyOTggLTEzIEMgMzYwIC0xMyA0MTIuNjY2NyA5LjMzMzMyOCA0NTYgNTQgQyA0OTkuMzMzMyA5OC42NjY2NyA1MjEgMTUyLjMzMzMzIDUyMSAyMTUgQyA1MjEgMjc1LjY2NjcgNTAxLjMzMzMgMzI4IDQ2MiAzNzIgQyA0MjEuMzMzMyA0MTguNjY2NyAzNzEgNDQyIDMxMSA0NDIgQyAyNjAuMzMzMyA0NDIgMjE1Ljk5OTk4IDQyMi4zMzMzIDE3Ny45OTk5OCAzODMgTCAxNzcuOTk5OTggNDQyIEwgMjcuOTk5OTg1IDQzMSBMIDI3Ljk5OTk4NSAzOTMgQyA2NC42NjY2NiAzOTMgODYuNjY2NjYgMzkwLjUgOTMuOTk5OTg1IDM4NS41IEMgMTAxLjMzMzMxIDM4MC41IDEwNC45OTk5ODUgMzY3LjY2NjcgMTA0Ljk5OTk4NSAzNDcgTCAxMDQuOTk5OTg1IC0xMTUgQyAxMDQuOTk5OTg1IC0xMzQuMzMzMzMgMTAxLjMzMzMxIC0xNDUuODMzMzMgOTMuOTk5OTg1IC0xNDkuNSBDIDg2LjY2NjY2IC0xNTMuMTY2NjcgNjQuNjY2NjYgLTE1NSAyNy45OTk5ODUgLTE1NSBMIDI3Ljk5OTk4NSAtMTk0IEwgMTQxLjk5OTk4IC0xOTEgTCAyNTcgLTE5NCBMIDI1NyAtMTU1IEMgMjIwLjMzMzMzIC0xNTUgMTk4LjUgLTE1My4xNjY2NyAxOTEuNSAtMTQ5LjUgQyAxODQuNSAtMTQ1LjgzMzMzIDE4MSAtMTM0LjMzMzMzIDE4MSAtMTE1IEwgMTgxIDQ0IEMgMjAyLjk3NDQ3IDEzLjIzNTc0OCAyNDUuODI2MDMgLTEzIDI5OCAtMTMgWiBNIDMwNCA0MDkgQyAzNDQuNjY2NyA0MDkgMzc3LjMzMzM0IDM4NiA0MDIgMzQwIEMgNDIxLjMzMzMgMzAxLjMzMzMgNDMxIDI1OS42NjY2NiA0MzEgMjE0Ljk5OTk4IEMgNDMxIDE2OC4zMzMzMSA0MjAgMTI1LjMzMzMxIDM5OCA4NS45OTk5ODUgQyAzNzIgMzkuMzMzMzEzIDMzNy4zMzMzIDE1Ljk5OTk4NSAyOTQgMTUuOTk5OTg1IEMgMjUyIDE1Ljk5OTk4NSAyMTguNjY2NjcgMzUuNjY2NjU2IDE5NCA3NC45OTk5ODUgQyAxODUuMzMzMzMgODguMzMzMzEgMTgxIDEwMS4zMzMzMSAxODEgMTEzLjk5OTk4NSBMIDE4MSAzMzMgQyAyMTAuMzMzMzMgMzgzLjY2NjcgMjUxLjMzMzMzIDQwOSAzMDQgNDA5IFogIi8+CiAgICAgICAgPC9zeW1ib2w+CiAgICAgICAgPHN5bWJvbCBpZD0iZzEiIG92ZXJmbG93PSJ2aXNpYmxlIj4KICAgICAgICAgICAgPHBhdGggZD0iTSA0MzEgNDUzIEMgMzkzIDQ1MyAzNTggNDM4IDMyNiA0MDggQyAyOTYgNDMwLjY2NjcgMjYxLjY2NjcgNDQyIDIyMy4wMDAwMiA0NDIgQyAxMzYuOTU4NTcgNDQyIDU5LjAwMDAxNSAzNzguMTMyNDIgNTkuMDAwMDE1IDI5NCBDIDU5LjAwMDAxNSAyNTIgNzQuMDAwMDE1IDIxOCAxMDQuMDAwMDE1IDE5MiBDIDg0LjY2NjY5IDE2OCA3NS4wMDAwMTUgMTQwLjY2NjY3IDc1LjAwMDAxNSAxMTAgQyA3NS4wMDAwMTUgNzIgODcuNjY2NjkgNDMuMzMzMzMgMTEzLjAwMDAxNSAyNCBDIDcxLjIwMTMxIDkuNjY5MDA2IDI4LjAwMDAxNSAtMjUuODcxNjg5IDI4LjAwMDAxNSAtNzcgQyAyOC4wMDAwMTUgLTEyMC4zMzMzMyA1NS42NjY2ODcgLTE1NCAxMTEuMDAwMDE1IC0xNzggQyAxNTMuMDAwMDIgLTE5Ni42NjY2NyAxOTkuMDAwMDIgLTIwNiAyNDkuMDAwMDIgLTIwNiBDIDMwMC4zMzMzNCAtMjA2IDM0NyAtMTk2LjY2NjY3IDM4OSAtMTc4IEMgNDQzLjY2NjcgLTE1NCA0NzEgLTExOS42NjY2NyA0NzEgLTc1IEMgNDcxIC0yMS42NjY2NzIgNDQ5IDE3LjMzMzMyOCA0MDUgNDIgQyAzNTkuMjU4MiA2Ni45NTAwNyAzMDcuODc5NjQgNzAgMjM0LjAwMDAyIDcwIEMgMTkwLjAwMDAyIDcwIDE2NS42NjY2OSA3MC4zMzMzMyAxNjEuMDAwMDIgNzEgQyAxMzIuNzU0MDYgNzQuODUxNzE1IDExMy4wMDAwMTUgMTAxLjUzMDUyIDExMy4wMDAwMTUgMTMzIEMgMTEzLjAwMDAxNSAxNDguMzMzMzMgMTE3LjMzMzM0IDE2MiAxMjYuMDAwMDE1IDE3NCBDIDE1NC4wMDAwMiAxNTQuNjY2NjcgMTg2LjMzMzM0IDE0NSAyMjMuMDAwMDIgMTQ1IEMgMzA4Ljk1NTMyIDE0NSAzODYgMjA5LjM3NDY1IDM4NiAyOTMgQyAzODYgMzMxLjY2NjcgMzczIDM2My42NjY3IDM0NyAzODkgQyAzNzEuNjY2NyA0MTEuNjY2NyAzOTguNjY2NyA0MjMgNDI4IDQyMyBDIDQyMi42NjY3IDQxNy42NjY3IDQyMCA0MTAgNDIwIDQwMCBDIDQyMCAzNzggNDMxIDM2NyA0NTMgMzY3IEMgNDc0LjMzMzMgMzY3IDQ4NSAzNzguMzMzMyA0ODUgNDAxIEMgNDg1IDQzMS41MDk4IDQ2MS40NTgyNSA0NTMgNDMxIDQ1MyBaIE0gMjIzIDQxMSBDIDI3NyA0MTEgMzA0IDM3MiAzMDQgMjk0IEMgMzA0IDIxNC42NjY2NyAyNzcgMTc1IDIyMyAxNzUgQyAxNjguMzMzMzMgMTc1IDE0MSAyMTQuMzMzMzMgMTQxIDI5MyBDIDE0MSAzNzEuNjY2NyAxNjguMzMzMzMgNDExIDIyMyA0MTEgWiBNIDE2NCA0IEwgMjIyIDQgQyAyNzQgNCAzMTYgMC42NjY2NzE3NSAzNDggLTYgQyAzOTAuNjY2NyAtMTUuMzMzMzI4IDQxMiAtMzkgNDEyIC03NyBDIDQxMiAtMTA5IDM5MiAtMTM0LjMzMzMzIDM1MiAtMTUzIEMgMzIwLjY2NjcgLTE2Ny42NjY2NyAyODYuNjY2NyAtMTc1IDI1MC4wMDAwMiAtMTc1IEMgMjE0LjAwMDAyIC0xNzUgMTgwLjAwMDAyIC0xNjcuNjY2NjcgMTQ4LjAwMDAyIC0xNTMgQyAxMDcuMzMzMzQgLTEzNC4zMzMzMyA4Ny4wMDAwMTUgLTEwOSA4Ny4wMDAwMTUgLTc3IEMgODcuMDAwMDE1IC0zNS4zMjk3MjcgMTIyLjUzNjUxNCA0IDE2NC4wMDAwMiA0IFogIi8+CiAgICAgICAgPC9zeW1ib2w+CiAgICAgICAgPHN5bWJvbCBpZD0iZzIiIG92ZXJmbG93PSJ2aXNpYmxlIj4KICAgICAgICAgICAgPHBhdGggZD0iTSAyNTEgNDE2IEMgMjkzIDQxNiAzMjUgNDA2IDM0NyAzODYgQyAzMjIuODQ2NjIgMzgyLjU0OTUgMzA2IDM2MC44MDIyOCAzMDYgMzM4IEMgMzA2IDMwNS4zMzMzIDMyMi4zMzMzIDI4OSAzNTUgMjg5IEMgMzg3LjY2NjcgMjg5IDQwNCAzMDUuNjY2NyA0MDQgMzM5IEMgNDA0IDQwOS43MzYzNiAzMjYuNzU1MyA0NDggMjUwIDQ0OCBDIDE4OCA0NDggMTM2LjUgNDI1LjE2NjcgOTUuNSAzNzkuNSBDIDU0LjUgMzMzLjgzMzMgMzQgMjc5LjMzMzMgMzQgMjE1Ljk5OTk4IEMgMzQgMTU0LjY2NjY2IDU0LjUgMTAxLjQ5OTk4NSA5NS41IDU2LjQ5OTk4NSBDIDEzNi41IDExLjQ5OTk4NSAxODcuMzMzMzMgLTExLjAwMDAxNSAyNDggLTExLjAwMDAxNSBDIDI5OCAtMTEuMDAwMDE1IDMzNyAzLjMzMzMxMyAzNjUgMzEuOTk5OTg1IEMgMzg3LjY2NjcgNTQuNjY2NjU2IDQwMyA3Ny45OTk5ODUgNDExIDEwMS45OTk5ODUgQyA0MTMuNjY2NyAxMTAuNjY2NjYgNDE1IDExNi45OTk5ODUgNDE1IDEyMC45OTk5ODUgQyA0MTUgMTI5LjY2NjY2IDQwOS4zMzMzIDEzMy45OTk5OCAzOTggMTMzLjk5OTk4IEMgMzkwIDEzMy45OTk5OCAzODQuNjY2NyAxMjkuOTk5OTggMzgyIDEyMS45OTk5ODUgQyAzNjEuMzMzMyA1NC42NjY2NTYgMzE5LjY2NjY2IDIwLjk5OTk4NSAyNTcgMjAuOTk5OTg1IEMgMjI4LjMzMzMzIDIwLjk5OTk4NSAyMDAgMzQuMzMzMzEzIDE3MiA2MC45OTk5ODUgQyAxMzkuMzMzMzMgOTEuNjY2NjYgMTIzIDE0My45OTk5OCAxMjMgMjE3Ljk5OTk4IEMgMTIzIDMxNy45ODAxIDE2MS4xNjkwOCA0MTUuOTk5OTcgMjUxIDQxNS45OTk5NyBaICIvPgogICAgICAgIDwvc3ltYm9sPgogICAgICAgIDxzeW1ib2wgaWQ9ImczIiBvdmVyZmxvdz0idmlzaWJsZSI+CiAgICAgICAgICAgIDxwYXRoIGQ9Ik0gMzc0IC0xMSBMIDUyNyAwIEwgNTI3IDM4IEMgNDkxIDM4IDQ2OS4xNjY3IDQwLjgzMzMzIDQ2MS41IDQ2LjUgQyA0NTMuODMzMyA1Mi4xNjY2NyA0NTAgNjYuNjY2NjcgNDUwIDkwIEwgNDUwIDY5NCBMIDMwMSA2ODMgTCAzMDEgNjQ1IEMgMzM2LjMzMzMgNjQ1IDM1Ny44MzMzIDY0Mi4xNjY3IDM2NS41IDYzNi41IEMgMzczLjE2NjcgNjMwLjgzMzMgMzc3IDYxNi4zMzMzIDM3NyA1OTMgTCAzNzcgMzkwIEMgMzQ1IDQyNi42NjY3IDMwNSA0NDUgMjU3IDQ0NSBDIDE5NSA0NDUgMTQyLjMzMzMzIDQyMi41IDk5IDM3Ny41IEMgNTUuNjY2NjcgMzMyLjUgMzQgMjc4LjY2NjcgMzQgMjE2LjAwMDAyIEMgMzQgMTU1LjMzMzM0IDU0LjMzMzMzIDEwMi4zMzMzNCA5NSA1Ny4wMDAwMTUgQyAxMzUuNjY2NjcgMTEuNjY2Njg3IDE4Ni4zMzMzMyAtMTAuOTk5OTg1IDI0NyAtMTAuOTk5OTg1IEMgMjk4LjMzMzMgLTEwLjk5OTk4NSAzNDAuNjY2NjYgOC4zMzMzNDM1IDM3NCA0Ny4wMDAwMTUgWiBNIDI2MSA0MTUgQyAzMDQuMzMzMyA0MTUgMzM4LjY2NjY2IDM5NiAzNjQgMzU4IEMgMzcwLjY2NjcgMzQ3LjMzMzMgMzc0IDMzNS42NjY2NiAzNzQgMzIzIEwgMzc0IDEyMSBDIDM3NCAxMDguMzMzMzMgMzcwLjY2NjcgOTYuNjY2NjcgMzY0IDg2IEMgMzM2IDQxLjMzMzMzIDI5OC4zMzMzIDE5IDI1MC45OTk5OCAxOSBDIDIxMC4zMzMzMSAxOSAxNzYuOTk5OTggMzkuMzMzMzMgMTUwLjk5OTk4IDgwIEMgMTMyLjk5OTk4IDExMCAxMjMuOTk5OTg1IDE1NSAxMjMuOTk5OTg1IDIxNSBDIDEyMy45OTk5ODUgMzIzLjU4NDIzIDE2MS40NzQxIDQxNSAyNjEgNDE1IFogIi8+CiAgICAgICAgPC9zeW1ib2w+CiAgICAgICAgPHN5bWJvbCBpZD0iZzQiIG92ZXJmbG93PSJ2aXNpYmxlIj4KICAgICAgICAgICAgPHBhdGggZD0iTSAzMTggLTI0OCBDIDMyNy4zMzMzIC0yNDggMzMyIC0yNDMuMzMzMzMgMzMyIC0yMzQgQyAzMzIgLTIzMC42NjY2NyAzMzAuMzMzMyAtMjI3IDMyNyAtMjIzIEMgMjc1IC0xODMgMjMzLjMzMzMzIC0xMTcuMzMzMzMgMjAyIC0yNiBDIDE3NC42NjY2NyA1My4zMzMzMyAxNjEgMTMxLjMzMzMzIDE2MSAyMDggTCAxNjEgMjkyIEMgMTYxIDM2OC42NjY3IDE3NC42NjY2NyA0NDYuNjY2NyAyMDIgNTI2IEMgMjMzLjMzMzMzIDYxNy4zMzMzIDI3NSA2ODMgMzI3IDcyMyBDIDMzMC4zMzMzIDcyNi4zMzMzIDMzMiA3MzAgMzMyIDczNCBDIDMzMiA3NDMuMzMzMyAzMjcuMzMzMyA3NDggMzE4IDc0OCBDIDMxNi42NjY3IDc0OCAzMTQuMzMzMzQgNzQ3IDMxMSA3NDUgQyAyNTEgNjk5IDIwMC42NjY2NyA2MzAuNjY2NyAxNjAgNTQwIEMgMTIwLjY2NjY3IDQ1My4zMzMzIDEwMSAzNzAuNjY2NjYgMTAxIDI5MiBMIDEwMSAyMDggQyAxMDEgMTI5LjMzMzMzIDEyMC42NjY2NyA0Ni42NjY2NyAxNjAgLTQwIEMgMjAwLjY2NjY3IC0xMzAuNjY2NjcgMjUxIC0xOTkgMzExIC0yNDUgQyAzMTQuMzMzMyAtMjQ3IDMxNi42NjY2NiAtMjQ4IDMxOCAtMjQ4IFogIi8+CiAgICAgICAgPC9zeW1ib2w+CiAgICAgICAgPHN5bWJvbCBpZD0iZzUiIG92ZXJmbG93PSJ2aXNpYmxlIj4KICAgICAgICAgICAgPHBhdGggZD0iTSA0OTggMTQ0IEMgNDk4IDE1My4zMzMzMyA0OTIuNjY2NyAxNTggNDgyIDE1OCBDIDQ3NCAxNTggNDY4LjMzMzMgMTUxIDQ2NSAxMzcgQyA0NDUgNTcuNjY2NjcgNDIxLjMzMzMgMTggMzk0IDE4IEMgMzc2LjY2NjcgMTggMzY4IDMyIDM2OCA2MCBDIDM2OCA3My4zMzMzMyAzNzIuMzMzMyA5Ny4zMzMzMyAzODEgMTMyIEwgNDM4IDM1NyBDIDQ0Mi42NjY3IDM3NS42NjY3IDQ0NSAzODcuMzMzMzQgNDQ1IDM5MiBDIDQ0NSA0MTIgNDM0IDQyMiA0MTIgNDIyIEMgMzkwLjY2NjcgNDIyIDM3Ni42NjY3IDQxMC4zMzMzIDM3MCAzODcgQyAzNDguNjY2NyA0MjMuNjY2NyAzMTkgNDQyIDI4MSA0NDIgQyAyMTYuMzMzMzMgNDQyIDE1OSA0MDkgMTA5IDM0MyBDIDYzIDI4MSA0MCAyMTYuNjY2NjcgNDAgMTUwIEMgNDAgNjIuNTk5NTk0IDkwLjY5ODk2IC0xMSAxNzUgLTExIEMgMjE4LjMzMzMzIC0xMSAyNjAgMTIgMzAwIDU4IEMgMzExLjAwMDg1IDIwLjEwODE3IDM0NC45MjQ1IC0xMSAzOTIgLTExIEMgNDYxLjA4ODg3IC0xMSA0ODIuMjc0MjYgNjkuODY0NDI2IDQ5OCAxNDQgWiBNIDM0MSAzNzQgQyAzNTAuMzMzMyAzNTMuMzMzMyAzNTUgMzM4LjY2NjY2IDM1NSAzMzAgQyAzNTUgMzI2IDM1NC4zMzMzIDMyMC42NjY3IDM1MyAzMTQgTCAzMDQgMTIyIEMgMzAwLjY2NjcgMTEwLjY2NjY3IDI5NC4zMzMzNCA5OSAyODUgODcgQyAyNDcuNjY2NjcgNDEgMjExLjY2NjY3IDE4IDE3NyAxOCBDIDEzNy42NjY2NyAxOCAxMTggNDcuNjY2NjcgMTE4IDEwNyBDIDExOCAxMzEgMTI0IDE2NyAxMzYgMjE1IEMgMTU3LjMzMzMzIDI5OS42NjY3IDE4Ni42NjY2NyAzNTcuMzMzMzQgMjI0IDM4OCBDIDI0NCA0MDQuNjY2NyAyNjMuMzMzMyA0MTMgMjgyIDQxMyBDIDMwOS4zMzMzIDQxMyAzMjkgNDAwIDM0MSAzNzQgWiAiLz4KICAgICAgICA8L3N5bWJvbD4KICAgICAgICA8c3ltYm9sIGlkPSJnNiIgb3ZlcmZsb3c9InZpc2libGUiPgogICAgICAgICAgICA8cGF0aCBkPSJNIDEzOSAxMDYgQyAxMDcuNDg1MzIgMTA2IDg2IDgyLjEwMjY5IDg2IDUwIEMgODYgMTkuNTY4NjM0IDEwOC41MTU3IC01IDEzOSAtNSBDIDE1MyAtNSAxNjQuNjY2NjcgLTAuNjY2NjcxNzUgMTc0IDggTCAxNzUgMCBDIDE3NSAtNjMuMzMzMzMgMTU0IC0xMTYuNjY2NjcgMTEyIC0xNjAgQyAxMDQuNjY2NjcgLTE2OCAxMDEgLTE3NCAxMDEgLTE3OCBDIDEwMSAtMTg4IDEwNS4zMzMzMyAtMTkzIDExNCAtMTkzIEMgMTIyLjY2NjY3IC0xOTMgMTM1LjMzMzMzIC0xODEuMzMzMzMgMTUyIC0xNTggQyAxODYgLTExMCAyMDMgLTU3LjMzMzMzIDIwMyAwIEMgMjAzIDUyLjc3NDk1IDE4NS4yOTkxMiAxMDYgMTM5IDEwNiBaICIvPgogICAgICAgIDwvc3ltYm9sPgogICAgICAgIDxzeW1ib2wgaWQ9Imc3IiBvdmVyZmxvdz0idmlzaWJsZSI+CiAgICAgICAgICAgIDxwYXRoIGQ9Ik0gMjgxIDQ0NSBDIDI0NSA0NDUgMjA5LjMzMzMzIDQyOCAxNzQgMzk0IEwgMjQzIDY3OSBDIDI0MC42NTAyNCA2ODguMzk5MDUgMjM4LjIzMjgzIDY5NCAyMjYgNjk0IEMgMTkyLjg2NTg0IDY5NCAxMjAuMTc1OSA2ODUuOTMyMSAxMDcgNjg0LjUgQyA5MS42NjY2NyA2ODIuODMzMyA4NCA2NzQuNjY2NiA4NCA2NTkuOTk5OTQgQyA4NCA2NDkuOTk5OTQgOTMuMzMzMzMgNjQ0Ljk5OTk0IDExMiA2NDQuOTk5OTQgQyAxMzAuNjU1MiA2NDQuOTk5OTQgMTU3IDY0NS44MjYyMyAxNTcgNjMxLjk5OTk0IEMgMTU3IDYyNy45OTk5NCAxNTIuMzMzMzMgNjA3LjY2NjYgMTQzIDU3MC45OTk5NCBMIDYzIDI0OC45OTk5NCBDIDUyLjMzMzMzIDIwNi45OTk5NCA0NyAxNzMuMzMzMjcgNDcgMTQ3Ljk5OTk0IEMgNDcgNjEuOTM5OTEgOTMuMDExNjQgLTExLjAwMDA2MSAxNzUgLTExLjAwMDA2MSBDIDIzOS42NjY2NyAtMTEuMDAwMDYxIDI5NyAyMi4zMzMyNjcgMzQ3IDg4Ljk5OTk0IEMgMzkyLjMzMzMgMTUwLjk5OTk0IDQxNSAyMTUuNjY2NjEgNDE1IDI4Mi45OTk5NCBDIDQxNSAzNzAuMjAyNzYgMzY0LjMzNzk1IDQ0NC45OTk5NCAyODEgNDQ0Ljk5OTk0IFogTSAyNzkgNDE0Ljk5OTk0IEMgMzE3LjY2NjcgNDE0Ljk5OTk0IDMzNyAzODUuMzMzMjUgMzM3IDMyNS45OTk5NCBDIDMzNyAyOTkuMzMzMjUgMzMxIDI2My4zMzMyNSAzMTkgMjE3Ljk5OTkyIEMgMjk3IDEzMi42NjY2IDI2OC4zMzMzIDc0LjY2NjU5NSAyMzIuOTk5OTggNDMuOTk5OTI0IEMgMjEyLjk5OTk4IDI3LjMzMzI1MiAxOTMuNjY2NjYgMTguOTk5OTI0IDE3NC45OTk5OCAxOC45OTk5MjQgQyAxMzQuMzMzMzEgMTguOTk5OTI0IDExMy45OTk5ODUgNTAuOTk5OTI0IDExMy45OTk5ODUgMTE0Ljk5OTkyIEMgMTEzLjk5OTk4NSAxMzYuOTk5OTIgMTE4Ljk5OTk4NSAxNjkuOTk5OTIgMTI4Ljk5OTk4IDIxMy45OTk5MiBMIDE1MC45OTk5OCAzMDMuOTk5OTQgQyAxNTQuMzMzMzEgMzE4LjY2NjYzIDE1OC45OTk5OCAzMjkuOTk5OTQgMTY0Ljk5OTk4IDMzNy45OTk5NCBDIDIwMy42NjY2NiAzODkuMzMzMjUgMjQxLjY2NjY2IDQxNC45OTk5NCAyNzkgNDE0Ljk5OTk0IFogIi8+CiAgICAgICAgPC9zeW1ib2w+CiAgICAgICAgPHN5bWJvbCBpZD0iZzgiIG92ZXJmbG93PSJ2aXNpYmxlIj4KICAgICAgICAgICAgPHBhdGggZD0iTSA3OCAtMjQ1IEMgMTM4IC0xOTkgMTg4LjMzMzMzIC0xMzAuNjY2NjcgMjI5IC00MCBDIDI2OC4zMzMzIDQ2LjY2NjY3IDI4OCAxMjkuMzMzMzMgMjg4IDIwOCBMIDI4OCAyOTIgQyAyODggMzcwLjY2NjcgMjY4LjMzMzMgNDUzLjMzMzM0IDIyOC45OTk5OCA1NDAgQyAxODguMzMzMzEgNjMwLjY2NjcgMTM3Ljk5OTk4IDY5OSA3Ny45OTk5ODUgNzQ1IEMgNzQuNjY2NjYgNzQ3IDcyLjMzMzMxIDc0OCA3MC45OTk5ODUgNzQ4IEMgNjEuNjY2NjU2IDc0OCA1Ni45OTk5ODUgNzQzLjMzMzMgNTYuOTk5OTg1IDczNCBDIDU2Ljk5OTk4NSA3MzAgNTguNjY2NjU2IDcyNi4zMzMzIDYxLjk5OTk4NSA3MjMgQyAxMTMuOTk5OTg1IDY4MyAxNTUuNjY2NjYgNjE3LjMzMzMgMTg2Ljk5OTk4IDUyNiBDIDIxNC4zMzMzMSA0NDYuNjY2NyAyMjcuOTk5OTggMzY4LjY2NjcgMjI3Ljk5OTk4IDI5MiBMIDIyNy45OTk5OCAyMDggQyAyMjcuOTk5OTggMTMxLjMzMzMzIDIxNC4zMzMzMSA1My4zMzMzMyAxODYuOTk5OTggLTI2IEMgMTU1LjY2NjY2IC0xMTcuMzMzMzMgMTEzLjk5OTk4NSAtMTgzIDYxLjk5OTk4NSAtMjIzIEMgNTguNjY2NjU2IC0yMjcgNTYuOTk5OTg1IC0yMzAuNjY2NjcgNTYuOTk5OTg1IC0yMzQgQyA1Ni45OTk5ODUgLTI0My4zMzMzMyA2MS42NjY2NTYgLTI0OCA3MC45OTk5ODUgLTI0OCBDIDcyLjMzMzMxIC0yNDggNzQuNjY2NjYgLTI0NyA3Ny45OTk5ODUgLTI0NSBaICIvPgogICAgICAgIDwvc3ltYm9sPgogICAgICAgIDxzeW1ib2wgaWQ9Imc5IiBvdmVyZmxvdz0idmlzaWJsZSI+CiAgICAgICAgICAgIDxwYXRoIGQ9Ik0gNjk4IDM2NyBMIDgwIDM2NyBDIDY0IDM2NyA1NiAzNTkuMzMzMyA1NiAzNDQgQyA1NiAzMjguNjY2NyA2NCAzMjEgODAgMzIxIEwgNjk4IDMyMSBDIDcxNCAzMjEgNzIyIDMyOC42NjY3IDcyMiAzNDQgQyA3MjIgMzU2LjM5ODMgNzEwLjY4ODIzIDM2NyA2OTggMzY3IFogTSA2OTggMTc5IEwgODAgMTc5IEMgNjQgMTc5IDU2IDE3MS4zMzMzMyA1NiAxNTYgQyA1NiAxNDAuNjY2NjcgNjQgMTMzIDgwIDEzMyBMIDY5OCAxMzMgQyA3MTQgMTMzIDcyMiAxNDAuNjY2NjcgNzIyIDE1NiBDIDcyMiAxNjkuMjU0OSA3MTEuMjI5MSAxNzkgNjk4IDE3OSBaICIvPgogICAgICAgIDwvc3ltYm9sPgogICAgICAgIDxzeW1ib2wgaWQ9ImcxMCIgb3ZlcmZsb3c9InZpc2libGUiPgogICAgICAgICAgICA8cGF0aCBkPSJNIDE5NyAyNTAgQyAyOTkuOTg5MzIgMzAwLjM3NTIgNDI1IDQxMy40ODYwMiA0MjUgNTQ5IEwgNDI1IDExNDcgQyA0MjUgMTIwMSA0NDYuMzMzMyAxMjUzIDQ4OSAxMzAzIEMgNTI5IDEzNTAuMzMzNCA1NzUuNjY2NyAxMzgyLjMzMzQgNjI5IDEzOTkgQyA2NDEuNjY2NyAxNDAzIDY0OCAxNDExLjMzMzQgNjQ4IDE0MjQgQyA2NDggMTQ0MS4zMzM0IDYzOS4zMzMzIDE0NTAgNjIyIDE0NTAgQyA2MTkuMzMzMyAxNDUwIDYxNyAxNDQ5LjY2NjYgNjE1IDE0NDkgQyA1NDMgMTQyNi4zMzM0IDQ3OSAxMzg5LjMzMzQgNDIzIDEzMzggQyAzNTcuNjY2NyAxMjc3LjMzMzQgMzI1IDEyMTMuNjY2NyAzMjUgMTE0Ny4wMDAxIEwgMzI1IDU0OS4wMDAxIEMgMzI1IDQ5MC4zMzM0NCAzMDUgNDM0LjMzMzQ0IDI2NSAzODEuMDAwMTIgQyAyMjUgMzI3LjY2NjggMTc3IDI5Mi4zMzM0NyAxMjEgMjc1LjAwMDEyIEMgMTA4LjMzMzMzIDI3MS4wMDAxMiAxMDIgMjYyLjY2NjggMTAyIDI1MC4wMDAxNCBDIDEwMiAyMzcuMzMzNDcgMTA4LjMzMzMzIDIyOS4wMDAxNCAxMjEgMjI1LjAwMDE0IEMgMTc3IDIwNy42NjY4MSAyMjUgMTcyLjMzMzQ3IDI2NSAxMTkuMDAwMTQgQyAzMDUgNjUuNjY2ODEgMzI1IDkuNjY2ODA5IDMyNSAtNDguOTk5ODYzIEwgMzI1IC02NDYuOTk5OSBDIDMyNSAtNzEzLjY2NjU2IDM1Ny42NjY3IC03NzcuMzMzMjUgNDIzIC04MzcuOTk5OTQgQyA0NzkgLTg4OS4zMzMyNSA1NDMgLTkyNi4zMzMyNSA2MTUgLTk0OC45OTk5NCBDIDYxNyAtOTQ5LjY2NjYgNjE5LjMzMzMgLTk0OS45OTk5NCA2MjIgLTk0OS45OTk5NCBDIDYzOS4zMzMzIC05NDkuOTk5OTQgNjQ4IC05NDEuMzMzMjUgNjQ4IC05MjMuOTk5OTQgQyA2NDggLTkxMS4zMzMyNSA2NDEuNjY2NyAtOTAyLjk5OTk0IDYyOSAtODk4Ljk5OTk0IEMgNTc1LjY2NjcgLTg4Mi4zMzMyNSA1MjkgLTg1MC4zMzMyNSA0ODkgLTgwMi45OTk5NCBDIDQ0Ni4zMzMzIC03NTIuOTk5OTQgNDI1IC03MDAuOTk5OTQgNDI1IC02NDYuOTk5OTQgTCA0MjUgLTQ4Ljk5OTk0IEMgNDI1IDg2LjY0MjE4IDMwMC4xNzY4OCAxOTkuNTMzMTEgMTk3LjAwMDAyIDI1MC4wMDAwNiBaICIvPgogICAgICAgIDwvc3ltYm9sPgogICAgICAgIDxzeW1ib2wgaWQ9ImcxMSIgb3ZlcmZsb3c9InZpc2libGUiPgogICAgICAgICAgICA8cGF0aCBkPSJNIDM2MCAxMzAgQyAzNjAgMjA2IDMwOC4zMzMzIDI1NCAyMDQuOTk5OTggMjc0IEMgMTU4LjMzMzMxIDI4My4zMzMzIDEyNy4xNjY2NiAyOTMuNjY2NjYgMTExLjQ5OTk4NSAzMDUgQyA5NS44MzMzMSAzMTYuMzMzMyA4Ny45OTk5ODUgMzMxLjY2NjY2IDg3Ljk5OTk4NSAzNTEgQyA4Ny45OTk5ODUgMzk3LjY2NjcgMTIyLjk5OTk4NSA0MjEgMTkyLjk5OTk4IDQyMSBDIDI2MSA0MjEgMjk3LjY2NjcgMzgyLjY2NjcgMzAzIDMwNiBDIDMwMy42NjY3IDI5OCAzMDkgMjk0IDMxOSAyOTQgQyAzMzAuMzMzMyAyOTQgMzM2IDMwMyAzMzYgMzIxIEwgMzM2IDQyMCBDIDMzNiA0MzguNjY2NyAzMzEgNDQ4IDMyMSA0NDggQyAzMTAuMTEyMiA0NDggMjk1LjQzNDUgNDMwLjExNTcyIDI4NSA0MjIgQyAyNTkuNjY2NyA0MzkuMzMzMyAyMjkuMDAwMDIgNDQ4IDE5My4wMDAwMiA0NDggQyAxMDMuNjI2MyA0NDggMzMuMDAwMDE1IDQwNy43MDAxMyAzMy4wMDAwMTUgMzIzIEMgMzMuMDAwMDE1IDI4OSA0Ny4zMzMzNDQgMjYwLjMzMzMgNzYuMDAwMDE1IDIzNi45OTk5OCBDIDExMS4yMzczNSAyMDcuNjM1NTQgMTQ0LjA3MDI0IDIwMi4zMjczNSAyMDcuMDAwMDIgMTkwLjk5OTk4IEMgMjcyLjMzMzM0IDE3OC4zMzMzMSAzMDUgMTQ5LjMzMzMxIDMwNSAxMDMuOTk5OTg1IEMgMzA1IDQ2LjY2NjY1NiAyNjkuNjY2NyAxNy45OTk5ODUgMTk5LjAwMDAyIDE3Ljk5OTk4NSBDIDEzMC4zMzMzNCAxNy45OTk5ODUgODYuMzMzMzQgNjMuNjY2NjU2IDY3LjAwMDAxNSAxNTQuOTk5OTggQyA2NC4zMzMzNCAxNjguMzMzMzEgNTguNjY2Njg3IDE3NC45OTk5OCA1MC4wMDAwMTUgMTc0Ljk5OTk4IEMgMzguNjY2Njg3IDE3NC45OTk5OCAzMy4wMDAwMTUgMTY1LjMzMzMxIDMzLjAwMDAxNSAxNDUuOTk5OTggTCAzMy4wMDAwMTUgMTYuOTk5OTg1IEMgMzMuMDAwMDE1IC0xLjY2NjY4NyAzOC4wMDAwMTUgLTExLjAwMDAxNSA0OC4wMDAwMTUgLTExLjAwMDAxNSBDIDUwLjY2NjY4NyAtMTEuMDAwMDE1IDU1LjgzMzM0NCAtNy42NjY2ODcgNjMuNTAwMDE1IC0xLjAwMDAxNTMgQyA4MS42NTU2MjQgMTQuNzg3NDYgNzMuNzQ2NiAxMS43NDY1NjcgOTIuMDAwMDE1IDI5Ljk5OTk4NSBDIDEyMS4zMzMzNCAyLjY2NjY1NjUgMTU3LjAwMDAyIC0xMS4wMDAwMTUgMTk5LjAwMDAyIC0xMS4wMDAwMTUgQyAyOTMuODc5MiAtMTEuMDAwMDE1IDM2MCAzOC4zMTY0OTggMzYwIDEyOS45OTk5OCBaICIvPgogICAgICAgIDwvc3ltYm9sPgogICAgICAgIDxzeW1ib2wgaWQ9ImcxMiIgb3ZlcmZsb3c9InZpc2libGUiPgogICAgICAgICAgICA8cGF0aCBkPSJNIDE5NCA2MDEgQyAxOTQgNjMxLjQwNTIgMTY5LjQzMjE5IDY1NyAxMzkgNjU3IEMgMTA4LjU5NDc3IDY1NyA4MyA2MzEuNDA2MSA4MyA2MDEgQyA4MyA1NzEuMTY2NiAxMDguNDI3NTggNTQ0IDEzOCA1NDQgQyAxNjguOTM1NzEgNTQ0IDE5NCA1NjkuNzY4NDMgMTk0IDYwMSBaIE0gMTQzIDMgTCAyNDcgMCBMIDI0NyAzOSBDIDIxMy42NjY2NyAzOSAxOTQuMTY2NjcgNDEgMTg4LjUgNDUgQyAxODIuODMzMzMgNDkgMTgwIDYwIDE4MCA3OCBMIDE4MCA0NDUgTCAzNyA0MzMgTCAzNyAzOTUgQyA3MC4zMzMzMyAzOTUgOTAuNSAzOTIuMzMzMyA5Ny41IDM4NyBDIDEwNC41IDM4MS42NjY3IDEwOCAzNjcuNjY2NyAxMDggMzQ1IEwgMTA4IDc5IEMgMTA4IDU5LjY2NjY3IDEwNC41IDQ4LjE2NjY3IDk3LjUgNDQuNSBDIDkwLjUgNDAuODMzMzMgNjkgMzkgMzMgMzkgTCAzMyAwIFogIi8+CiAgICAgICAgPC9zeW1ib2w+CiAgICAgICAgPHN5bWJvbCBpZD0iZzEzIiBvdmVyZmxvdz0idmlzaWJsZSI+CiAgICAgICAgICAgIDxwYXRoIGQ9Ik0gMjQ5IC0yMiBDIDM4OS42NjY3IC0yMiA0NjAgOTIgNDYwIDMyMCBDIDQ2MCA0NzMuMzMzMyA0MjguMzMzMyA1NzUgMzY1IDYyNSBDIDMyOS42NjY3IDY1Mi4zMzMzIDI5MS4zMzMzNCA2NjYgMjUwLjAwMDAyIDY2NiBDIDEwOS4zMzMzNCA2NjYgMzkuMDAwMDE1IDU1MC42NjY3IDM5LjAwMDAxNSAzMjAgQyAzOS4wMDAwMTUgMTM2LjM4ODI0IDg3Ljc4MDEwNiAtMjIgMjQ5LjAwMDAyIC0yMiBaIE0gMzYxIDUyNCBDIDM2Ny42NjY3IDQ4OS4zMzMzIDM3MSA0MjUuMzMzMyAzNzEgMzMyIEMgMzcxIDI0MCAzNjcuMzMzMyAxNzIgMzYwIDEyOCBDIDM0Ny4zMzMzIDQ4IDMxMC4zMzMzIDggMjQ4Ljk5OTk4IDggQyAyMjUuNjY2NjYgOCAyMDMuMzMzMzEgMTYuNjY2NjcyIDE4MS45OTk5OCAzNCBDIDE1NS4zMzMzMSA1Ni42NjY2NyAxMzguNjY2NjYgMTA0IDEzMS45OTk5OCAxNzYgQyAxMjkuMzMzMzEgMjAwLjY2NjY3IDEyNy45OTk5ODUgMjUyLjY2NjY3IDEyNy45OTk5ODUgMzMyIEMgMTI3Ljk5OTk4NSA0MTkuMzMzMyAxMzAuNjY2NjYgNDc5LjY2NjY2IDEzNS45OTk5OCA1MTMgQyAxNDQuNjY2NjYgNTY3LjY2NjcgMTYyLjk5OTk4IDYwMi42NjY3IDE5MC45OTk5OCA2MTggQyAyMTIuOTk5OTggNjMwIDIzMi4zMzMzMSA2MzYgMjQ4Ljk5OTk4IDYzNiBDIDMxMy41NDYwMiA2MzYgMzQ5Ljk3ODMgNTgyLjc4MjM1IDM2MSA1MjQgWiAiLz4KICAgICAgICA8L3N5bWJvbD4KICAgICAgICA8c3ltYm9sIGlkPSJnMTQiIG92ZXJmbG93PSJ2aXNpYmxlIj4KICAgICAgICAgICAgPHBhdGggZD0iTSA2NDMgLTU2IEMgNjg3IC01NiA3MjEuMzMzMyAtMzEuNjY2NjcyIDc0NiAxNyBDIDc2NiA1NS42NjY2NyA3NzYgOTkgNzc2IDE0NyBDIDc3NiAxOTQuMzMzMzMgNzY2IDIzOCA3NDYgMjc4IEMgNzIwLjY2NjcgMzI2LjY2NjcgNjg2LjMzMzQgMzUxIDY0My4wMDAwNiAzNTEgQyA1OTcuMDAwMDYgMzUxIDU1OS42NjY3NSAzMjggNTMxLjAwMDA2IDI4MiBDIDUwNi4zMzMzNyAyNDIgNDk0LjAwMDA2IDE5Ny4zMzMzMyA0OTQuMDAwMDYgMTQ4IEMgNDk0LjAwMDA2IDk4IDUwNi4wMDAwNiA1My4zMzMzMyA1MzAuMDAwMDYgMTQgQyA1NTguNjY2NzUgLTMyLjY2NjY3IDU5Ni4zMzM0IC01NiA2NDMuMDAwMDYgLTU2IFogTSA1ODMuMDAwMDYgNjQwIEwgMTQ4LjAwMDA2IC0xMCBDIDE0MS4zMzMzOSAtMjAgMTM4LjAwMDA2IC0yNy4zMzMzMjggMTM4LjAwMDA2IC0zMiBDIDEzOC4wMDAwNiAtNDggMTQ2LjAwMDA2IC01NiAxNjIuMDAwMDYgLTU2IEMgMTcwLjAwMDA2IC01NiAxNzcuNjY2NzMgLTUwLjMzMzMzIDE4NS4wMDAwNiAtMzkgTCA2ODUuMDAwMDYgNzA2IEMgNjkxLjAwMDA2IDcxNC42NjY3IDY5NC4wMDAwNiA3MjEuMzMzNCA2OTQuMDAwMDYgNzI2LjAwMDA2IEMgNjk0LjAwMDA2IDc0Mi4wMDAwNiA2ODYuMDAwMDYgNzUwLjAwMDA2IDY3MC4wMDAwNiA3NTAuMDAwMDYgQyA2NjIuMDAwMDYgNzUwLjAwMDA2IDY1NC4wMDAwNiA3NDUuMDAwMDYgNjQ2LjAwMDA2IDczNS4wMDAwNiBDIDYwMC4wMDAwNiA2NzMuMDAwMDYgNTM4LjMzMzQgNjQyLjAwMDA2IDQ2MS4wMDAwNiA2NDIuMDAwMDYgQyAzOTMuNjY2NzUgNjQyLjAwMDA2IDMzMy4wMDAwNiA2NjcuMDAwMDYgMjc5LjAwMDA2IDcxNy4wMDAwNiBDIDI1NS42NjY3MyA3MzkuMDAwMDYgMjMxLjAwMDA2IDc1MC4wMDAwNiAyMDUuMDAwMDYgNzUwLjAwMDA2IEMgMTU4LjMzMzM5IDc1MC4wMDAwNiAxMjEuMDAwMDYgNzI3LjAwMDA2IDkzLjAwMDA2IDY4MS4wMDAwNiBDIDY4LjMzMzM5IDY0MS4wMDAwNiA1Ni4wMDAwNiA1OTYuMzMzNCA1Ni4wMDAwNiA1NDcuMDAwMDYgQyA1Ni4wMDAwNiA0OTcuMDAwMDYgNjguMDAwMDYgNDUyLjMzMzM3IDkyLjAwMDA2IDQxMy4wMDAwNiBDIDEyMC42NjY3MyAzNjYuMzMzMzcgMTU4LjMzMzM5IDM0My4wMDAwNiAyMDUuMDAwMDYgMzQzLjAwMDA2IEMgMjQ5LjAwMDA2IDM0My4wMDAwNiAyODMuMzMzMzcgMzY3LjMzMzM3IDMwOC4wMDAwNiA0MTYuMDAwMDYgQyAzMjguMDAwMDYgNDU0LjY2Njc1IDMzOC4wMDAwNiA0OTguMDAwMDYgMzM4LjAwMDA2IDU0Ni4wMDAwNiBDIDMzOC4wMDAwNiA1ODIuNjY2NzUgMzMyLjMzMzM3IDYxNy4wMDAwNiAzMjEuMDAwMDYgNjQ5LjAwMDA2IEMgMzY3LjAwMDA2IDYyNC4zMzM0IDQxNC4wMDAwNiA2MTIuMDAwMDYgNDYyLjAwMDA2IDYxMi4wMDAwNiBDIDUxMC4wMDAwNiA2MTIuMDAwMDYgNTUwLjMzMzQgNjIxLjMzMzQgNTgzLjAwMDA2IDY0MC4wMDAwNiBaIE0gNjQ0LjAwMDA2IDMyMS4wMDAwNiBDIDY3Ni42NjY3NSAzMjEuMDAwMDYgNzAyLjMzMzQgMjk5LjAwMDA2IDcyMS4wMDAwNiAyNTUuMDAwMDYgQyA3MzUuNjY2NzUgMjIxLjAwMDA2IDc0My4wMDAwNiAxODUuMzMzMzkgNzQzLjAwMDA2IDE0OC4wMDAwNiBDIDc0My4wMDAwNiAxMTAuMDAwMDYgNzM2LjAwMDA2IDc0LjAwMDA2IDcyMi4wMDAwNiA0MC4wMDAwNiBDIDcwMy4zMzM0IC0zLjk5OTkzOSA2NzcuMzMzNCAtMjUuOTk5OTM5IDY0NC4wMDAwNiAtMjUuOTk5OTM5IEMgNjE5LjMzNTQgLTI1Ljk5OTkzOSA1OTcuNDEwMSAtNC42NjMzMTUgNTg3LjAwMDA2IDE1LjAwMDA2MSBDIDU3MS4wMDAwNiA0My4wMDAwNiA1NjMuMDAwMDYgODcuMDAwMDYgNTYzLjAwMDA2IDE0Ny4wMDAwNiBDIDU2My4wMDAwNiAyMTMuNjUxMzQgNTc1LjYxMTYgMjgwLjYwOTQ0IDYwOC4wMDAwNiAzMDcuMDAwMDYgQyA2MjAuMDAwMDYgMzE2LjMzMzM3IDYzMi4wMDAwNiAzMjEuMDAwMDYgNjQ0LjAwMDA2IDMyMS4wMDAwNiBaIE0gMjA2LjAwMDA2IDcyMC4wMDAwNiBDIDIzOC42NjY3MyA3MjAuMDAwMDYgMjY0LjMzMzM3IDY5OC4wMDAwNiAyODMuMDAwMDYgNjU0LjAwMDA2IEMgMjk3LjY2Njc1IDYyMC4wMDAwNiAzMDUuMDAwMDYgNTg0LjMzMzQgMzA1LjAwMDA2IDU0Ny4wMDAwNiBDIDMwNS4wMDAwNiA1MDkuMDAwMDYgMjk4LjAwMDA2IDQ3My4wMDAwNiAyODQuMDAwMDYgNDM5LjAwMDA2IEMgMjY1LjMzMzM3IDM5NS4wMDAwNiAyMzkuMzMzMzcgMzczLjAwMDA2IDIwNi4wMDAwNSAzNzMuMDAwMDYgQyAxOTQuNjY2NzIgMzczLjAwMDA2IDE4My4wMDAwNSAzNzcuNjY2NzUgMTcxLjAwMDA1IDM4Ny4wMDAwNiBDIDEzMy45NjM1NiA0MTUuNDg5NjUgMTI1LjAwMDA0NiA0NjcuOTEzMjQgMTI1LjAwMDA0NiA1NDYuMDAwMDYgQyAxMjUuMDAwMDQ2IDYxMi42NTEzNyAxMzcuNjExNTcgNjc5LjYwOTUgMTcwLjAwMDA1IDcwNi4wMDAxIEMgMTgyLjAwMDA1IDcxNS4zMzM0NCAxOTQuMDAwMDUgNzIwLjAwMDEgMjA2LjAwMDA1IDcyMC4wMDAxIFogIi8+CiAgICAgICAgPC9zeW1ib2w+CiAgICAgICAgPHN5bWJvbCBpZD0iZzE1IiBvdmVyZmxvdz0idmlzaWJsZSI+CiAgICAgICAgICAgIDxwYXRoIGQ9Ik0gMzE0IDQxMyBDIDM1OS4zMzMzIDQxMyAzODIgMzc3LjY2NjcgMzgyIDMwNyBMIDM4MiA3OSBDIDM4MiA1OS42NjY2NyAzNzguNSA0OCAzNzEuNSA0NCBDIDM2NC41IDQwIDM0Mi42NjY3IDM4IDMwNiAzOCBMIDMwNiAwIEwgNDIxIDMgTCA1MzUgMCBMIDUzNSAzOCBDIDUwMyAzOCA0ODIuMTY2NyAzOS4zMzMzMyA0NzIuNSA0MiBDIDQ2Mi44MzMzIDQ0LjY2NjY3IDQ1OCA1MiA0NTggNjQgTCA0NTggMjUxIEMgNDU4IDI5OC4zMzMzIDQ1Ni42NjY3IDMzMS4zMzMzIDQ1NCAzNTAgQyA0NDQgNDExLjMzMzMgMzk5LjMzMzMgNDQyIDMyMCA0NDIgQyAyNTcuMzMzMyA0NDIgMjEwLjMzMzMxIDQxMiAxNzguOTk5OTggMzUyIEwgMTc4Ljk5OTk4IDQ0MiBMIDMxLjk5OTk4NSA0MzEgTCAzMS45OTk5ODUgMzkzIEMgNjcuOTk5OTg1IDM5MyA4OS44MzMzMSAzOTAuMTY2NyA5Ny40OTk5ODUgMzg0LjUgQyAxMDUuMTY2NjYgMzc4LjgzMzMgMTA4Ljk5OTk4NSAzNjQuNjY2NjYgMTA4Ljk5OTk4NSAzNDIgTCAxMDguOTk5OTg1IDc5IEMgMTA4Ljk5OTk4NSA1OS42NjY2NyAxMDUuMzMzMzEgNDggOTcuOTk5OTg1IDQ0IEMgOTAuNjY2NjYgNDAgNjguNjY2NjYgMzggMzEuOTk5OTg1IDM4IEwgMzEuOTk5OTg1IDAgTCAxNDYuOTk5OTggMyBMIDI2MSAwIEwgMjYxIDM4IEMgMjI0LjMzMzMzIDM4IDIwMi41IDQwIDE5NS41IDQ0IEMgMTg4LjUgNDggMTg1IDU5LjY2NjY3IDE4NSA3OSBMIDE4NSAyNTkgQyAxODUgMzM5LjU2MDI0IDIzNi4zMDU1NyA0MTMgMzE0IDQxMyBaICIvPgogICAgICAgIDwvc3ltYm9sPgogICAgICAgIDxzeW1ib2wgaWQ9ImcxNiIgb3ZlcmZsb3c9InZpc2libGUiPgogICAgICAgICAgICA8cGF0aCBkPSJNIDI0OSAtMTEgQyAzMTEgLTExIDM2My41IDExIDQwNi41IDU1IEMgNDQ5LjUgOTkgNDcxIDE1MiA0NzEgMjE0IEMgNDcxIDI3Ny4zMzMzIDQ0OS44MzMzIDMzMi4xNjY2NiA0MDcuNSAzNzguNSBDIDM2NS4xNjY3IDQyNC44MzMzIDMxMi42NjY3IDQ0OCAyNTAuMDAwMDIgNDQ4IEMgMTg3LjMzMzM0IDQ0OCAxMzQuNjY2NjkgNDI0LjgzMzMgOTIuMDAwMDE1IDM3OC41IEMgNDkuMzMzMzQ0IDMzMi4xNjY3IDI4LjAwMDAxNSAyNzcuMzMzMzQgMjguMDAwMDE1IDIxNC4wMDAwMiBDIDI4LjAwMDAxNSAxNTIuMDAwMDIgNDkuNTAwMDE1IDk5LjAwMDAxNSA5Mi41MDAwMTUgNTUuMDAwMDE1IEMgMTM1LjUwMDAyIDExLjAwMDAxNSAxODcuNjY2NjkgLTEwLjk5OTk4NSAyNDkuMDAwMDIgLTEwLjk5OTk4NSBaIE0gMjUwLjAwMDAyIDIxLjAwMDAxNSBDIDIwMi4wMDAwMiAyMS4wMDAwMTUgMTY1LjY2NjY5IDQyLjMzMzM0NCAxNDEuMDAwMDIgODUuMDAwMDE1IEMgMTI1LjAwMDAxNSAxMTMuMDAwMDE1IDExNy4wMDAwMTUgMTU4LjY2NjY5IDExNy4wMDAwMTUgMjIyLjAwMDAyIEMgMTE3LjAwMDAxNSAyODIuNjY2NyAxMjQuNjY2NjkgMzI3IDE0MC4wMDAwMiAzNTUgQyAxNjQuMDAwMDIgMzk3LjY2NjcgMjAwLjMzMzM0IDQxOSAyNDkuMDAwMDIgNDE5IEMgMjk1LjY2NjcgNDE5IDMzMS42NjY3IDM5OC4zMzMzIDM1NyAzNTcgQyAzNzMuNjY2NyAzMjkgMzgyIDI4NCAzODIgMjIyIEMgMzgyIDEwNi40ODc2MSAzNDcuNTQ0OCAyMSAyNDkuOTk5OTggMjEgWiAiLz4KICAgICAgICA8L3N5bWJvbD4KICAgIDwvZGVmcz4KICAgIDxkZWZzIGlkPSJjbGlwLXBhdGgiLz4KPC9zdmc+Cg=="></p>
+</li>
+<li><p>Écrire un programme qui affiche la figure suivante&nbsp;:</p>
+<figure><img src="./vonkock.png" alt=""></figure>
+Cette figure est composée de trois courbes construites selon le principe suivant&nbsp;:
+<figure><img src="./vonkock_build.png" alt=""></figure>
+Vous pouvez utiliser <code>turtle</code> ou <code>pygame</code>.
+</li>
+<li><p>Écrire un programme qui résout le problème des Tours de Hanoï.</p>
+ <figure><img src="./hanoi.jpeg" alt=""></figure>
+
+<p> Le problème consiste en trois poteaux (A, B et C) et un certain nombre de disques de différentes tailles, empilés par ordre décroissant de taille sur le poteau A. L&#39;objectif est de déplacer tous les disques du poteau A vers le poteau C, en suivant les règles suivantes :</p>
+<ul>
+<li>Vous ne pouvez déplacer qu&#39;un disque à la fois.</li>
+<li>Un disque ne peut être placé que sur un autre disque plus grand ou sur un poteau vide.</li>
+</ul>
+<p> Votre programme doit demander le nombre de disques à déplacer <code>n</code> et afficher la séquence de mouvements nécessaire pour résoudre le problème, en respectant les règles ci-dessus.</p>
+<p> Votre programme doit afficher chaque mouvement sous la forme &quot;Déplacez un disque de A vers C&quot;.</p>
+<p> Exemple de sortie pour <code>n = 3</code>&nbsp;:</p>
+ <div class="terminal">
+ Déplacez un disque de A vers C
+ Déplacez un disque de A vers B
+ Déplacez un disque de C vers B
+ Déplacez un disque de A vers C
+ Déplacez un disque de B vers A
+ Déplacez un disque de B vers C
+ Déplacez un disque de A vers C
+ </div>
+
+<p> Ce qui correspond aux étapes suivantes&nbsp;:</p>
+ <figure><img src="./hanoi_steps.png" alt=""></figure></li>
+</ol>
+
+</body>
+</html>
