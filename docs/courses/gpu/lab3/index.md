@@ -828,6 +828,8 @@ If we run the program now, we should a big red rectangle.
 - [WebGPU — All of the cores, none of the canvas](https://surma.dev/things/webgpu/)
 
 <script>
+    let show = true
+
     function init() {
         document.body.style.backgroundSize = "100%"
         document.body.style.imageRendering = "pixelated"
@@ -862,6 +864,7 @@ If we run the program now, we should a big red rectangle.
 
     function drawWorld(world, ctx) {
         ctx.canvas.width = ctx.canvas.width
+        if(!show) return
         for(let x=0; x<ctx.width; x++) {
             for(let y=0; y<ctx.height; y++) {
                 setPixel(x, y, world[x][y], ctx)
@@ -921,6 +924,11 @@ If we run the program now, we should a big red rectangle.
     function main() {
         const ctx = init()
         next(createGrid(ctx), createGrid(ctx), ctx)
+        window.addEventListener('keypress', event => {
+          if(event.key === 'h') {
+            show = !show
+          }
+        })
     }
 
     main()

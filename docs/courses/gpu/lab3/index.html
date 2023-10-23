@@ -674,6 +674,8 @@ impl App {
 <li><a href="https://surma.dev/things/webgpu/">WebGPU — All of the cores, none of the canvas</a></li>
 </ul>
 <script>
+    let show = true
+
     function init() {
         document.body.style.backgroundSize = "100%"
         document.body.style.imageRendering = "pixelated"
@@ -708,6 +710,7 @@ impl App {
 
     function drawWorld(world, ctx) {
         ctx.canvas.width = ctx.canvas.width
+        if(!show) return
         for(let x=0; x<ctx.width; x++) {
             for(let y=0; y<ctx.height; y++) {
                 setPixel(x, y, world[x][y], ctx)
@@ -767,6 +770,11 @@ impl App {
     function main() {
         const ctx = init()
         next(createGrid(ctx), createGrid(ctx), ctx)
+        window.addEventListener('keypress', event => {
+          if(event.key === 'h') {
+            show = !show
+          }
+        })
     }
 
     main()
