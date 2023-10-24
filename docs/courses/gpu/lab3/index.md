@@ -348,7 +348,7 @@ impl App {
     return false;  // means that the event must be handeld in the start() function
   }
 
-  fn update(&mut self) {
+  fn update(&mut self, context: &mut Context) {
 
   }
 
@@ -388,7 +388,7 @@ pub async fn start() {
       },
       // ...
       Event::RedrawRequested(_) => {
-        app.update();
+        app.update(&mut context);
         match app.render(&mut context) {
           Ok(_) => {}
           // Reconfigure the surface if lost
@@ -1331,7 +1331,7 @@ impl App {
 
   // ...
 
-  pub fn update(&mut self) {
+  pub fn update(&mut self, context: &mut Context) {
     if self.last_generation + self.generation_duration < Instant::now() {
       self.step += 1;
       self.last_generation = Instant::now();
@@ -1361,6 +1361,540 @@ You've learned abstractly about compute shaders throughout this codelab, but wha
 A compute shader is similar to vertex and fragment shaders in that they are designed to run with extreme parallelism on the GPU, but unlike the other two shader stages, they don't have a specific set of inputs and outputs. You are reading and writing data exclusively from sources you choose, like storage buffers. This means that instead of executing once for each vertex, instance, or pixel, you have to tell it how many invocations of the shader function you want. Then, when you run the shader, you are told which invocation is being processed, and you can decide what data you are going to access and which operations you are going to perform from there.
 
 Compute shaders must be created in a shader module, just like vertex and fragment shaders, so add that to your code to get started. As you might guess, given the structure of the other shaders that you've implemented, the main function for your compute shader needs to be marked with the `@compute` attribute.
+
+```rust
+let compute_shader = context
+  .device()
+  .create_shader_module(wgpu::ShaderModuleDescriptor {
+    label: Some("Compute Shader"),
+    source: wgpu::ShaderSource::Wgsl(include_str!("compute.wgsl").into()),
+  });
+```
+
+with `compute.wgsl` containing:
+
+```rust
+@compute
+fn computeMain() {
+
+}
+```
+
+Because GPUs are used frequently for 3D graphics, compute shaders are structured such that you can request that the shader be invoked a specific number of times along an X, Y, and Z axis. This lets you very easily dispatch work that conforms to a 2D or 3D grid, which is great for your use case! You want to call this shader GRID_SIZE times GRID_SIZE times, once for each cell of your simulation.
+
+Due to the nature of GPU hardware architecture, this grid is divided into workgroups. A workgroup has an X, Y, and Z size, and although the sizes can be 1 each, there are often performance benefits to making your workgroups a bit bigger. For your shader, choose a somewhat arbitrary workgroup size of 8 times 8. This is useful to keep track of in your Rust code.
+
+```rust
+const WORKGROUP_SIZE: u32 = 8;
+```
+
+You also need to add the workgroup size to the shader function itself, which you do using the `string.replace()` method so that you can easily use the constant you just defined:
+
+```rust
+// compute.wgsl
+@compute
+@workgroup_size(WORKGROUP_SIZE, WORKGROUP_SIZE)
+fn computeMain() {
+
+}
+```
+
+```rust
+let compute_shader = context
+  .device()
+  .create_shader_module(wgpu::ShaderModuleDescriptor {
+    label: Some("Compute Shader"),
+    source: wgpu::ShaderSource::Wgsl(
+      include_str!("compute.wgsl")
+        .replace("WORKGROUP_SIZE", format!("{}", WORKGROUP_SIZE))
+        .into()
+    ),
+  });
+```
+
+As with the other shader stages, there's a variety of @builtin values that you can accept as input into your compute shader function in order to tell you which invocation you're on and decide what work you need to do.
+
+```rust
+// compute.wgsl
+@compute
+@workgroup_size(WORKGROUP_SIZE, WORKGROUP_SIZE)
+fn computeMain(@builtin(global_invocation_id) cell: vec3u) {
+
+}
+```
+
+You pass in the `global_invocation_id` builtin, which is a three-dimensional vector of unsigned integers that tells you where in the grid of shader invocations you are. You run this shader once for each cell in your grid. You get numbers like `(0, 0, 0)`, `(1, 0, 0)`, `(1, 1, 0)`... all the way to `(31, 31, 0)`, which means that you can treat it as the cell index you're going to operate on!
+
+Compute shaders can also use uniforms, which you use just like in the vertex and fragment shaders.
+
+```rust
+// compute.wgsl
+@group(0) @binding(0) var<uniform> grid: vec2f;
+
+@compute
+@workgroup_size(WORKGROUP_SIZE, WORKGROUP_SIZE)
+fn computeMain(@builtin(global_invocation_id) cell: vec3u) {
+
+}
+```
+
+Just like in the vertex shader, you also expose the cell state as a storage buffer. But in this case, you need two of them! Because compute shaders don't have a required output, like a vertex position or fragment color, writing values to a storage buffer or texture is the only way to get results out of a compute shader. Use the ping-pong method that you learned earlier; you have one storage buffer that feeds in the current state of the grid and one that you write out the new state of the grid to.
+
+```rust
+// compute.wgsl
+@group(0) @binding(0) var<uniform> grid: vec2f;
+
+@group(0) @binding(1) var<storage> cellStateIn: array<u32>;
+@group(0) @binding(2) var<storage, read_write> cellStateOut: array<u32>;
+
+@compute
+@workgroup_size(WORKGROUP_SIZE, WORKGROUP_SIZE)
+fn computeMain(@builtin(global_invocation_id) cell: vec3u) {
+
+}
+```
+
+Note that the first storage buffer is declared with `var<storage>`, which makes it read-only, but the second storage buffer is declared with `var<storage, read_write>`. This allows you to both read and write to the buffer, using that buffer as the output for your compute shader. (There is no write-only storage mode in WebGPU).
+
+Next, you need to have a way to map your cell index into the linear storage array. This is basically the opposite of what you did in the vertex shader, where you took the linear `instance_index` and mapped it to a 2D grid cell. (As a reminder, your algorithm for that was `vec2f(i % grid.x, floor(i / grid.x))`.)
+
+```rust
+// compute.wgsl
+@group(0) @binding(0) var<uniform> grid: vec2f;
+
+@group(0) @binding(1) var<storage> cellStateIn: array<u32>;
+@group(0) @binding(2) var<storage, read_write> cellStateOut: array<u32>;
+
+fn cellIndex(cell: vec2u) -> u32 {
+  return cell.y * u32(grid.x) + cell.x;
+}
+
+@compute
+@workgroup_size(WORKGROUP_SIZE, WORKGROUP_SIZE)
+fn computeMain(@builtin(global_invocation_id) cell: vec3u) {
+
+}
+```
+
+And, finally, to see that it's working, implement a really simple algorithm: if a cell is currently on, it turns off, and vice versa. It's not the Game of Life yet, but it's enough to show that the compute shader is working.
+
+```rust
+// compute.wgsl
+@group(0) @binding(0) var<uniform> grid: vec2f;
+
+@group(0) @binding(1) var<storage> cellStateIn: array<u32>;
+@group(0) @binding(2) var<storage, read_write> cellStateOut: array<u32>;
+
+fn cellIndex(cell: vec2u) -> u32 {
+  return cell.y * u32(grid.x) + cell.x;
+}
+
+@compute
+@workgroup_size(WORKGROUP_SIZE, WORKGROUP_SIZE)
+fn computeMain(@builtin(global_invocation_id) cell: vec3u) {
+  if (cellStateIn[cellIndex(cell.xy)] == 1u) {
+    cellStateOut[cellIndex(cell.xy)] = 0u;
+  } else {
+    cellStateOut[cellIndex(cell.xy)] = 1u;
+  }
+}
+```
+
+The `cell.xy` syntax here is a shorthand known as swizzling. It's equivalent to saying `vec2(cell.x, cell.y)` and is an easy way to get the components you need out of a vector in a different configuration. Swizzling is very flexible! You can put the components of the vector (up to four of them) in any order and repeat them as needed to do things like `cell.zyx` or `cell.yyyy`.
+
+And that's it for your compute shader, for now! But before you can see the results, there are a few more changes that you need to make.
+
+## Use Bind Group and Pipeline Layouts
+
+One thing that you might notice from the above shader is that it largely uses the same inputs (uniforms and storage buffers) as your render pipeline. So you might think that you can simply use the same bind groups and be done with it, right? The good news is that you can! It just takes a bit more manual setup to be able to do that.
+
+Any time that you create a bind group, you need to provide a `BindGroupLayout.` Previously, you got that layout by calling `get_bind_group_layout()` on the render pipeline, which in turn created it automatically because you supplied `layout: None` when you created it. That approach works well when you only use a single pipeline, but if you have multiple pipelines that want to share resources, you need to create the layout explicitly, and then provide it to both the bind group and pipelines.
+
+To help understand why, consider this: in your render pipelines you use a single uniform buffer and a single storage buffer, but in the compute shader you just wrote, you need a second storage buffer. Because the two shaders use the same `@binding` values for the uniform and first storage buffer, you can share those between pipelines, and the render pipeline ignores the second storage buffer, which it doesn't use. You want to create a layout that describes all of the resources that are present in the bind group, not just the ones used by a specific pipeline.
+
+Create that layout before the `render_pipeline`, call device.createBindGroupLayout():
+
+```rust
+let bind_group_layout =
+  context
+    .device()
+    .create_bind_group_layout(&wgpu::BindGroupLayoutDescriptor {
+      label: Some("Bind Group Layout"),
+      entries: &[
+        wgpu::BindGroupLayoutEntry {
+          binding: 0,
+          visibility: wgpu::ShaderStages::VERTEX | wgpu::ShaderStages::COMPUTE,
+          ty: wgpu::BindingType::Buffer {
+            ty: wgpu::BufferBindingType::Uniform,
+            has_dynamic_offset: false,
+            min_binding_size: None,
+          },
+          count: None,
+        },
+        wgpu::BindGroupLayoutEntry {
+          binding: 1,
+          visibility: wgpu::ShaderStages::VERTEX | wgpu::ShaderStages::COMPUTE,
+          ty: wgpu::BindingType::Buffer {
+            ty: wgpu::BufferBindingType::Storage { read_only: true },
+            has_dynamic_offset: false,
+            min_binding_size: None,
+          },
+          count: None,
+        },
+        wgpu::BindGroupLayoutEntry {
+          binding: 2,
+          visibility: wgpu::ShaderStages::COMPUTE,
+          ty: wgpu::BindingType::Buffer {
+            ty: wgpu::BufferBindingType::Storage { read_only: false },
+            has_dynamic_offset: false,
+            min_binding_size: None,
+          },
+          count: None,
+        },
+      ],
+    });
+```
+
+This is similar in structure to creating the bind group itself, in that you describe a list of entries. The difference is that you describe what type of resource the entry must be and how it's used rather than providing the resource itself.
+
+In each entry, you give the `binding` number for the resource, which (as you learned when you created the bind group) matches the `@binding` value in the shaders. You also provide the `visibility`, which are `ShaderStage` flags that indicate which shader stages can use the resource. You want both the uniform and first storage buffer to be accessible in the vertex and compute shaders, but the second storage buffer only needs to be accessible in compute shaders.
+
+Once the bindGroupLayout is created, you can pass it in when creating your bind groups rather than querying the bind group from the pipeline. Doing so means that you need to add a new storage buffer entry to each bind group in order to match the layout you just defined.
+
+```rust
+let bind_group = [
+  context
+    .device()
+    .create_bind_group(&wgpu::BindGroupDescriptor {
+      label: Some("Bind Group Ping"),
+      layout: &bind_group_layout,
+      entries: &[
+        wgpu::BindGroupEntry {
+          binding: 0,
+          resource: uniform_buffer.as_entire_binding(),
+        },
+        wgpu::BindGroupEntry {
+          binding: 1,
+          resource: cell_state_storage[0].as_entire_binding(),
+        },
+        wgpu::BindGroupEntry {
+          binding: 2,
+          resource: cell_state_storage[1].as_entire_binding(),
+        },
+      ],
+    }),
+  context
+    .device()
+    .create_bind_group(&wgpu::BindGroupDescriptor {
+      label: Some("Bind Group Pong"),
+      layout: &bind_group_layout,
+      entries: &[
+        wgpu::BindGroupEntry {
+          binding: 0,
+          resource: uniform_buffer.as_entire_binding(),
+        },
+        wgpu::BindGroupEntry {
+          binding: 1,
+          resource: cell_state_storage[1].as_entire_binding(),
+        },
+        wgpu::BindGroupEntry {
+          binding: 2,
+          resource: cell_state_storage[0].as_entire_binding(),
+        },
+      ],
+    }),
+];
+```
+
+And now that the bind group has been updated to use this explicit bind group layout, you need to update the render pipeline to use the same thing.
+
+```rust
+let pipeline_layout =
+  context
+    .device()
+    .create_pipeline_layout(&wgpu::PipelineLayoutDescriptor {
+      label: Some("Render Pipeline Layout"),
+      bind_group_layouts: &[&bind_group_layout],
+      push_constant_ranges: &[],
+    });
+```
+
+A pipeline layout is a list of bind group layouts (in this case, you have one) that one or more pipelines use. The order of the bind group layouts in the array needs to correspond with the `@group` attributes in the shaders. (This means that bindGroupLayout is associated with `@group(0)`.)
+
+Once you have the pipeline layout, update the render pipeline to use it instead of `None`.
+
+```rust
+let render_pipeline =
+  context
+    .device()
+    .create_render_pipeline(&wgpu::RenderPipelineDescriptor {
+      label: Some("Render Pipeline"),
+      layout: Some(&pipeline_layout),
+      // ...
+    })
+
+```
+
+## Create the compute pipeline
+
+Just like you need a render pipeline to use your vertex and fragment shaders, you need a compute pipeline to use your compute shader. Fortunately, compute pipelines are far less complicated than render pipelines, as they don't have any state to set, only the shader and layout.
+
+Create a compute pipeline with the following code:
+
+```rust
+let compute_pipeline =
+  context
+    .device()
+    .create_compute_pipeline(&wgpu::ComputePipelineDescriptor {
+      label: Some("Compute Pipeline"),
+      layout: Some(&pipeline_layout),
+      module: &compute_shader,
+      entry_point: "computeMain",
+    });
+```
+
+Notice that you pass in the new `pipeline_layout` instead of `None`, just like in the updated render pipeline, which ensures that both your render pipeline and your compute pipeline can use the same bind groups.
+
+We must add this `compute_pipeline` to our `App` struct to use is in the `update()` method.
+
+```rust
+pub struct App {
+    vertex_buffer: wgpu::Buffer,
+    render_pipeline: wgpu::RenderPipeline,
+    num_vertices: u32,
+    bind_group: [wgpu::BindGroup; 2],
+    compute_pipeline: wgpu::ComputePipeline,
+    step: u32,
+    generation_duration: Duration,
+    last_generation: Instant,
+}
+
+impl App {
+  pub fn new(context: &mut Context) -> Self {
+    // ...
+
+    Self {
+      vertex_buffer,
+      render_pipeline,
+      num_vertices,
+      bind_group,
+      compute_pipeline,
+      step: 0,
+      generation_duration: Duration::new(0, 500_000_000),
+      last_generation: Instant::now(),
+    }
+  }
+}
+
+
+```
+
+
+## Compute passes
+
+This brings you to the point of actually making use of the compute pipeline! Given that you do your rendering in a render pass, you can probably guess that you need to do compute work in a compute pass.
+
+```rust
+pub fn update(&mut self, context: &mut Context) {
+  if self.last_generation + self.generation_duration < Instant::now() {
+    let mut encoder =
+      context
+        .device()
+        .create_command_encoder(&wgpu::CommandEncoderDescriptor {
+          label: Some("Compute Encoder"),
+        });
+
+    {
+      let mut compute_pass = encoder.begin_compute_pass(&wgpu::ComputePassDescriptor {
+        label: Some("Compute Pass"),
+      });
+    }
+
+    context.queue().submit(std::iter::once(encoder.finish()));
+
+    self.step += 1;
+    self.last_generation = Instant::now();
+  }
+}
+```
+
+Just like compute pipelines, compute passes are much simpler to kick off than their rendering counterparts because you don't need to worry about any attachments.
+
+You want to do the compute pass before the render pass because it allows the render pass to immediately use the latest results from the compute pass. That's also the reason that you increment the `step` count between the passes, so that the output buffer of the compute pipeline becomes the input buffer for the render pipeline.
+
+Next, set the pipeline and bind group inside the compute pass, using the same pattern for switching between bind groups as you do for the rendering pass.
+
+```rust
+pub fn update(&mut self, context: &mut Context) {
+  if self.last_generation + self.generation_duration < Instant::now() {
+    let mut encoder =
+      context
+        .device()
+        .create_command_encoder(&wgpu::CommandEncoderDescriptor {
+          label: Some("Compute Encoder"),
+        });
+
+    {
+      let mut compute_pass = encoder.begin_compute_pass(&wgpu::ComputePassDescriptor {
+        label: Some("Compute Pass"),
+      });
+
+      compute_pass.set_pipeline(&self.compute_pipeline);
+      compute_pass.set_bind_group(0, &self.bind_group[(self.step % 2) as usize], &[])
+    }
+
+    context.queue().submit(std::iter::once(encoder.finish()));
+
+    self.step += 1;
+    self.last_generation = Instant::now();
+  }
+}
+```
+
+Finally, instead of drawing like in a render pass, you dispatch the work to the compute shader, telling it how many workgroups you want to execute on each axis.
+
+```rust
+pub fn update(&mut self, context: &mut Context) {
+  if self.last_generation + self.generation_duration < Instant::now() {
+    let mut encoder =
+      context
+        .device()
+        .create_command_encoder(&wgpu::CommandEncoderDescriptor {
+          label: Some("Compute Encoder"),
+        });
+
+    {
+      let mut compute_pass = encoder.begin_compute_pass(&wgpu::ComputePassDescriptor {
+        label: Some("Compute Pass"),
+      });
+
+      compute_pass.set_pipeline(&self.compute_pipeline);
+      compute_pass.set_bind_group(0, &self.bind_group[(self.step % 2) as usize], &[])
+
+      let workgroup_count = (GRID_SIZE as f32 / WORKGROUP_SIZE as f32).ceil() as u32;
+      compute_pass.dispatch_workgroups(workgroup_count, workgroup_count, 1);
+    }
+
+    context.queue().submit(std::iter::once(encoder.finish()));
+
+    self.step += 1;
+    self.last_generation = Instant::now();
+  }
+}
+```
+
+Something very important to note here is that the number you pass into `dispatch_workgroups()` is not the number of invocations! Instead, it's the number of workgroups to execute, as defined by the` @workgroup_size` in your shader.
+
+If you want the shader to execute 32x32 times in order to cover your entire grid, and your workgroup size is 8x8, you need to dispatch 4x4 workgroups (4 * 8 = 32). That's why you divide the grid size by the workgroup size and pass that value into `dispatch_workgroups()`.
+
+Compute work can only be dispatched by workgroup, so if you have a workload that's not an even divisor of the workgroup size, you have two options. You can either change the workgroup size (which has to be done at shader module creation time, and has relatively high overhead), or you can round up the number of workgroups you dispatch, and then, in the shader, check to see if you're over the desired global_invocation_id and need to return early.
+
+Now you can refresh the page again, and you should see that the grid inverts itself with each update. To do that we will initialize our both ping ping storage buffer with 0:
+
+```rust
+let cell_state_array = [
+  [0u32; (GRID_SIZE * GRID_SIZE) as usize],
+  [0u32; (GRID_SIZE * GRID_SIZE) as usize],
+];
+```
+
+Like this if we see the cells blinking, it means that our compute shader works !
+
+## Implement the algorithm for the Game of Life
+
+efore you update the compute shader to implement the final algorithm, you want to go back to the code that's initializing the storage buffer content and update it to produce a random buffer on each page load. (Regular patterns don't make for very interesting Game of Life starting points.) You can randomize the values however you want, but there's an easy way to start that gives reasonable results.
+
+To start each cell in a random state, update the cellStateArray initialization to the following code:
+
+```rust
+let mut cell_state_array = [
+  [0u32; (GRID_SIZE * GRID_SIZE) as usize],
+  [0u32; (GRID_SIZE * GRID_SIZE) as usize],
+];
+
+for i in 0..cell_state_array[0].len() {
+  if rand::random() {
+    cell_state_array[0][i] = 1u32;
+  } else {
+    cell_state_array[0][i] = 0u32;
+  }
+}
+```
+
+Now you can finally implement the logic for the Game of Life simulation. After everything it took to get here, the shader code may be disappointingly simple!
+
+First, you need to know for any given cell how many of its neighbors are active. You don't care about which ones are active, only the count.
+
+To make getting neighboring cell data easier, add a `cellActive` function that returns the `cellStateIn` value of the given coordinate.
+
+```rust
+// in compute.wgls
+fn cellActive(x: u32, y: u32) -> u32 {
+  return cellStateIn[cellIndex(vec2(x, y))];
+}
+```
+
+The `cellActive` function returns one if the cell is active, so adding the return value of calling `cellActive` for all eight surrounding cells gives you how many neighboring cells are active.
+
+Find the number of active neighbors, like this:
+
+```rust
+fn computeMain(@builtin(global_invocation_id) cell: vec3u) {
+  // Determine how many active neighbors this cell has.
+  let activeNeighbors = cellActive(cell.x + 1u, cell.y + 1u) +
+                        cellActive(cell.x + 1u, cell.y) +
+                        cellActive(cell.x + 1u, cell.y - 1u) +
+                        cellActive(cell.x, cell.y - 1u) +
+                        cellActive(cell.x - 1u, cell.y - 1u) +
+                        cellActive(cell.x - 1u, cell.y) +
+                        cellActive(cell.x - 1u, cell.y + 1u) +
+                        cellActive(cell.x, cell.y + 1u);
+```
+
+This leads to a minor problem, though: what happens when the cell you're checking is off the edge of the board? According to your `cellIndex()` logic right now, it either overflows to the next or previous row, or runs off the edge of the buffer!
+
+Unlike some languages, indexing outside the bounds of a buffer in WGSL isn't unsafe, but it is unpredictable. The language makes sure you still get some value from the buffer, so you can't accidentally end up reading data from another process or anything like that, but it's almost certain to not give you the results you want. And the behavior may be different, depending on the platform and browser you use, so you should never depend on out-of-bounds accesses.
+
+For the Game of Life, a common and easy way to resolve this is to have cells on the edge of the grid treat cells on the opposite edge of the grid as their neighbors, creating a kind of wrap-around effect.
+
+Support grid wrap-around with a minor change to the `cellIndex()` function.
+
+```rust
+fn cellIndex(cell: vec2u) -> u32 {
+  return (cell.y % u32(grid.y)) * u32(grid.x) +
+         (cell.x % u32(grid.x));
+}
+```
+
+By using the % operator to wrap the cell X and Y when it extends past the grid size, you ensure that you never access outside the storage buffer bounds. With that, you can rest assured that the `activeNeighbors` count is predictable.
+
+Then you apply one of four rules:
+
+- Any cell with fewer than two neighbors becomes inactive.
+- Any active cell with two or three neighbors stays active.
+- Any inactive cell with exactly three neighbors becomes active.
+- Any cell with more than three neighbors becomes inactive.
+
+You can do this with a series of if statements, but WGSL also supports `switch` statements, which are a good fit for this logic.
+
+```rust
+let i = cellIndex(cell.xy);
+
+// Conway's game of life rules:
+switch activeNeighbors {
+  case 2u: { // Active cells with 2 neighbors stay active.
+    cellStateOut[i] = cellStateIn[i];
+  }
+  case 3u: { // Cells with 3 neighbors become or stay active.
+    cellStateOut[i] = 1u;
+  }
+  default: { // Cells with < 2 or > 3 neighbors become inactive.
+    cellStateOut[i] = 0u;
+  }
+}
+```
+
+And... that's it! You're done! Refresh your page and watch your newly built cellular automaton grow!
 
 
 ## Credits
