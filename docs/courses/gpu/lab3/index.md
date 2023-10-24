@@ -815,11 +815,553 @@ Next, we call `set_vertex_buffer()` with the buffer containing the vertices for 
 
 And last, you make the `draw()` call, which seems strangely simple after all the setup that's come before. The only things you need to pass in is a range of vertices that it should render. The second parameter is a range of instance, we only draw one instance.
 
-If we run the program now, we should a big red rectangle.
+If we run the program now, we should see a big red rectangle.
 
 <figure><img src="./red_rectangle.png" alt=""></figure>
 
-<div class="big center">To be continued !</div>
+First, take a moment to congratulate yourself! Getting the first bits of geometry on screen is often one of the hardest steps with most GPU APIs. Everything you do from here can be done in smaller steps, making it easier to verify your progress as you go.
+
+## Define the grid
+
+In order to render a grid, you need to know a very fundamental piece of information about it. How many cells does it contain, both in width and height? This is up to you as the developer, but to keep things a bit easier, treat the grid as a square (same width and height) and use a size that's a power of two. (That makes some of the math easier later.) You want to make it bigger eventually, but for the rest of this section, set your grid size to 4x4 because it makes it easier to demonstrate some of the math used in this section. Scale it up after!
+
+```rust
+// in app.rs
+const GRID_SIZE: u32 = 4;
+```
+
+Next, you need to update how you render your square so that you can fit `GRID_SIZE` times `GRID_SIZE` of them on the canvas. That means the square needs to be a lot smaller, and there needs to be a lot of them.
+
+Now, one way you could approach this is by making your vertex buffer significantly bigger and defining `GRID_SIZE` times `GRID_SIZE` worth of squares inside it at the right size and position. The code for that wouldn't be too bad, in fact! Just a couple of for loops and a bit of math. But that's also not making the best use of the GPU and using more memory than necessary to achieve the effect. This section looks at a more GPU-friendly approach.
+
+## Create a uniform buffer
+
+First, you need to communicate the grid size you've chosen to the shader, since it uses that to change how things display. You could just hard-code the size into the shader, but then that means that any time you want to change the grid size you have to re-create the shader and render pipeline, which is expensive. A better way is to provide the grid size to the shader as uniforms.
+
+You learned earlier that a different value from the vertex buffer is passed to every invocation of a vertex shader. A uniform is a value from a buffer that is the same for every invocation. They're useful for communicating values that are common for a piece of geometry (like its position), a full frame of animation (like the current time), or even the entire lifespan of the app (like a user preference).
+
+```rust
+// in App.new()
+let uniform_array = [GRID_SIZE, GRID_SIZE];
+let uniform_buffer =
+  context
+    .device()
+    .create_buffer_init(&wgpu::util::BufferInitDescriptor {
+      label: Some("Uniform Buffer"),
+      contents: bytemuck::cast_slice(&uniform_array),
+      usage: wgpu::BufferUsages::UNIFORM,
+    });
+```
+
+## Access uniforms in a shader
+
+```rust
+// At the top of shader.wgsl
+@group(0) @binding(0) var<uniform> grid: vec2f;
+
+@vertex
+fn vertexMain(@location(0) pos: vec2f) ->
+  @builtin(position) vec4f {
+  return vec4f(pos / grid, 0.0, 1.0);
+}
+
+// ...fragmentMain is unchanged
+```
+
+This defines a uniform in your shader called `grid`, which is a 2D float vector that matches the array that you just copied into the uniform buffer. It also specifies that the uniform is bound at `@group(0)` and `@binding(0)`. You'll learn what those values mean in a moment.
+
+Then, elsewhere in the shader code, you can use the grid vector however you need. In this code you divide the vertex position by the grid vector. Since `pos` is a 2D vector and `grid` is a 2D vector, WGSL performs a component-wise division. In other words, the result is the same as saying `vec2f(pos.x / grid.x, pos.y / grid.y)`.
+
+These types of vector operations are very common in GPU shaders since many rendering and compute techniques rely on them!
+
+What this means in your case is that (if you used a grid size of 4) the square that you render would be one-fourth of its original size. That's perfect if you want to fit four of them to a row or column!
+
+## Create a Bind Group
+
+Declaring the uniform in the shader doesn't connect it with the buffer that you created, though. In order to do that, you need to create and set a bind group.
+
+A bind group is a collection of resources that you want to make accessible to your shader at the same time. It can include several types of buffers, like your uniform buffer, and other resources like textures and samplers that are not covered here but are common parts of WebGPU rendering techniques.
+
+```rust
+// in App.new()
+let bind_group = context
+  .device()
+  .create_bind_group(&wgpu::BindGroupDescriptor {
+    label: Some("Bind Group"),
+    layout: &render_pipeline.get_bind_group_layout(0),
+    entries: &[wgpu::BindGroupEntry {
+      binding: 0,
+      resource: uniform_buffer.as_entire_binding(),
+    }],
+  });
+```
+
+In addition to your now-standard `label`, you also need a `layout` that describes which types of resources this bind group contains. This is something that you dig into further in a future step, but for the moment you can happily ask your pipeline for the bind group layout because you created the pipeline with `layout: None`. That causes the pipeline to create bind group layouts automatically from the bindings that you declared in the shader code itself. In this case, you ask it to `get_bind_group_layout(0)`, where the `0` corresponds to the `@group(0)` that you typed in the shader.
+
+After specifying the layout, you provide an array of `entries`. Each entry is a dictionary with at least the following values:
+
+- `binding`, which corresponds with the `@binding()` value you entered in the shader. In this case, `0`.
+
+- `resource`, which is the actual resource that you want to expose to the variable at the specified binding index. In this case, your uniform buffer.
+
+The function returns a `BindGroup`, which is an opaque, immutable handle. You can't change the resources that a bind group points to after it's been created, though you can change the contents of those resources. For example, if you change the uniform buffer to contain a new grid size, that is reflected by future draw calls using this bind group.
+
+## Bind the bind group
+
+Now that the bind group is created, you still need to tell WebGPU to use it when drawing. To do that you need to access it in the `render()` method. So you must add it to our `App` struct.
+
+```rust
+pub struct App {
+    vertex_buffer: wgpu::Buffer,
+    render_pipeline: wgpu::RenderPipeline,
+    num_vertices: u32,
+    bind_group: wgpu::BindGroup,   // new
+}
+
+impl App {
+  pub fn new(context: &mut Context) -> Self {
+    // ...
+    
+    Self {
+      vertex_buffer,
+      render_pipeline,
+      num_vertices,
+      bind_group,       // new
+    }
+  }
+  // ...
+  pub fn render(&mut self, context: &mut Context) -> Result<(), wgpu::SurfaceError> {
+    // ...
+    {
+      // ...
+      render_pass.set_pipeline(&self.render_pipeline);
+      render_pass.set_vertex_buffer(0, self.vertex_buffer.slice(..));
+      render_pass.set_bind_group(0, &self.bind_group, &[]);   // new
+      render_pass.draw(0..self.num_vertices, 0..1);
+    }
+    // ...
+  }
+}
+```
+
+The `0` passed as the first argument corresponds to the` @group(0)` in the shader code. You're saying that each `@binding` that's part of `@group(0)` uses the resources in this bind group.
+
+And now the uniform buffer is exposed to your shader!
+
+<figure><img src="./small_red_rect.png" alt=""></figure>
+
+Hooray! Your square is now one-fourth the size it was before! That's not much, but it shows that your uniform is actually applied and that the shader can now access the size of your grid.
+
+## Manipulate geometry in the shader
+
+So now that you can reference the grid size in the shader, you can start doing some work to manipulate the geometry you're rendering to fit your desired grid pattern. To do that, consider exactly what you want to achieve.
+
+You need to conceptually divide up your canvas into individual cells. In order to keep the convention that the X axis increases as you move right and the Y axis increases as you move up, say that the first cell is in the bottom left corner of the canvas. That gives you a layout that looks like this, with your current square geometry in the middle:
+
+<figure><img src="./grid.png" alt=""></figure>
+
+Your challenge is to find a method in the shader that lets you position the square geometry in any of those cells given the cell coordinates.
+
+First, you can see that your square isn't nicely aligned with any of the cells because it was defined to surround the center of the canvas. You'd want to have the square shifted by half a cell so that it would line up nicely inside them.
+
+One way you could fix this is to update the square's vertex buffer. By shifting the vertices so that the bottom-right corner is at, for example, (0.1, 0.1) instead of (-0.8, -0.8), you'd move this square to line up with the cell boundaries more nicely. But, since you have full control over how the vertices are processed in your shader, it's just as easy to simply nudge them into place using the shader code!
+
+```rust
+@group(0) @binding(0) var<uniform> grid: vec2f;
+
+@vertex
+fn vertexMain(@location(0) pos: vec2f) ->
+  @builtin(position) vec4f {
+
+  // Add 1 to the position before dividing by the grid size.
+  let gridPos = (pos + 1.0) / grid;
+
+  return vec4f(gridPos, 0.0, 1.0);
+}
+// ...
+```
+
+Since `pos` is a `vec2f` here, adding 1 does a component-wise addition. It's the same as saying `pos + vec2f(1, 1)`. The same works for subtraction, multiplication, and division!
+
+This moves every vertex up and to the right by one (which, remember, is half of the clip space) before dividing it by the grid size. The result is a nicely grid-aligned square just off of the origin.
+
+<figure><img src="./grid1.png" alt=""></figure>
+
+Next, because your canvas's coordinate system places (0, 0) in the center and (-1, -1) in the lower left, and you want (0, 0) to be in the lower left, you need to translate your geometry's position by (-1, -1) after dividing by the grid size in order to move it into that corner.
+
+```rust
+@group(0) @binding(0) var<uniform> grid: vec2f;
+
+@vertex
+fn vertexMain(@location(0) pos: vec2f) ->
+  @builtin(position) vec4f {
+
+  // Subtract 1 after dividing by the grid size.
+  let gridPos = (pos + 1.0) / grid - 1.0;
+
+  return vec4f(gridPos, 0.0, 1.0); 
+}
+// ...
+```
+
+And now your square is nicely positioned in cell (0, 0)!
+
+<figure><img src="./grid2.png" alt=""></figure>
+
+What if you want to place it in a different cell? Figure that out by declaring a `cell` vector in your shader and populating it with a static value like `let cell = vec2f(1, 1)`.
+
+And modify the shader to take `cell` into account:
+
+```rust
+@group(0) @binding(0) var<uniform> grid: vec2f;
+
+@vertex
+fn vertexMain(@location(0) pos: vec2<f32>) -> @builtin(position) vec4<f32> {
+  let cell = vec2f(1.0, 1.0);
+  let cellOffset = cell / grid * 2.0;
+  let gridPos = (pos + 1.0) / grid - 1.0 + cellOffset;
+  return vec4f(gridPos, 0.0, 1.0); 
+}
+```
+
+And this gives you exactly what you want.
+
+<figure><img src="./grid3.png" alt=""></figure>
+
+Furthermore, you can now set cell to any value within the grid bounds, and then refresh to see the square render in the desired location.
+
+## Draw instances
+
+Now that you can place the square where you want it with a bit of math, the next step is to render one square in each cell of the grid.
+
+One way you could approach it is to write cell coordinates to a uniform buffer, then call draw once for each square in the grid, updating the uniform every time. That would be very slow, however, since the GPU has to wait for the new coordinate to be written by JavaScript every time. One of the keys to getting good performance out of the GPU is to minimize the time it spends waiting on other parts of the system!
+
+Instead, you can use a technique called instancing. Instancing is a way to tell the GPU to draw multiple copies of the same geometry with a single call to `draw`, which is much faster than calling `draw` once for every copy. Each copy of the geometry is referred to as an instance.
+
+```rust
+// update the draw call
+render_pass.draw(0..self.num_vertices, 0..GRID_SIZE*GRID_SIZE);
+```
+
+This tells the system that you want it to draw the six (`0..self.num_vertices`) vertices of your square 16 (`0..GRID_SIZE * GRID_SIZE`) times. But if you refresh the page, you still see the following:
+
+<figure><img src="./red_rect_1_1.png" alt=""></figure>
+
+Why? Well, it's because you draw all 16 of those squares in the same spot. Your need to have some additional logic in the shader that repositions the geometry on a per-instance basis.
+
+In the shader, in addition to the vertex attributes like `pos` that come from your vertex buffer, you can also access what are known as WGSL's built-in values. These are values that are calculated by WebGPU, and one such value is the `instance_index`. The `instance_index` is an unsigned 32-bit number from `0` to number of `instances - 1` that you can use as part of your shader logic. Its value is the same for every vertex processed that's part of the same instance. That means your vertex shader gets called six times with an `instance_index` of `0`, once for each position in your vertex buffer. Then six more times with an `instance_index` of `1`, then six more with `instance_index` of `2`, and so on.
+
+To see this in action, you have to add the `instance_index` built-in to your shader inputs. Do this in the same way as the position, but instead of tagging it with a `@location` attribute, use `@builtin(instance_index)`, and then name the argument whatever you want. (You can call it `instance` to match the example code.) Then use it as part of the shader logic!
+
+```rust
+@group(0) @binding(0) var<uniform> grid: vec2f;
+
+@vertex
+fn vertexMain(
+  @location(0) pos: vec2<f32>,
+  @builtin(instance_index) instance: u32
+) -> @builtin(position) vec4<f32> {
+  let i = f32(instance);
+  let cell = vec2f(i % grid.x, floor(i / grid.x));
+  let cellOffset = cell / grid * 2.0;
+  let gridPos = (pos + 1.0) / grid - 1.0 + cellOffset;
+  return vec4f(gridPos, 0.0, 1.0); 
+}
+// ...
+```
+
+After making that update to the code you have the long-awaited grid of squares at last!
+
+<figure><img src="./red_squares.png" alt=""></figure>
+
+```rust
+const GRID_SIZE: u32 = 32;
+```
+
+<figure><img src="./many_red_rect.png" alt=""></figure>
+
+Tada! You can actually make this grid really, really big now and your average GPU handles it just fine. You'll stop seeing the individual squares long before you run into any GPU performance bottlenecks.
+
+To make our window square we can add this at the beginning of our `App.new()`.
+
+```rust
+context
+  .window()
+  .set_inner_size(PhysicalSize::new(1200, 1200));
+```
+
+## Manage cell state
+
+Next, you need to control which cells on the grid render, based on some state that's stored on the GPU. This is important for the final simulation!
+
+All you need is an on-off signal for each cell, so any options that allow you to store a large array of nearly any value type works. You might think that this is another use case for uniform buffers! While you *could* make that work, it's more difficult because uniform buffers are limited in size, can't support dynamically sized arrays (you have to specify the array size in the shader), and can't be written to by compute shaders. That last item is the most problematic, since you want to do the Game of Life simulation on the GPU in a compute shader.
+
+Fortunately, there's another buffer option that avoids all of those limitations.
+
+## Create a storage buffer
+
+Storage buffers are general-use buffers that can be read and written to in compute shaders, and read in vertex shaders. They can be very large, and they don't need a specific declared size in a shader, which makes them much more like general memory. That's what you use to store the cell state.
+
+*If storage buffers are so much more flexible, why bother with uniform buffers at all? It actually depends on your GPU hardware! There's a good chance that uniform buffers are given special treatment by your GPU in order to allow them to update and be read faster than a storage buffer, so for smaller amounts of data that have the potential to update frequently (like model, view, and projection matrices in 3D applications), uniforms are typically the safer choice for better performance.*
+
+To create a storage buffer for your cell state, use what—by now—is probably starting to be a familiar-looking snippet of buffer creation code:
+
+```rust
+let cell_state_array = [0u32; (GRID_SIZE * GRID_SIZE) as usize];
+  let cell_state_storage =
+    context
+      .device()
+      .create_buffer_init(&wgpu::util::BufferInitDescriptor {
+        label: Some("Storage Buffer"),
+        contents: bytemuck::cast_slice(&cell_state_array),
+        usage: wgpu::BufferUsages::STORAGE,
+      });
+```
+
+## Read the storage buffer in the shader
+
+Next, update your shader to look at the contents of the storage buffer before you render the grid. This looks very similar to how uniforms were added previously.
+
+```rust
+@group(0) @binding(0) var<uniform> grid: vec2f;
+@group(0) @binding(1) var<storage> cellState: array<u32>; // New!
+```
+
+First, you add the binding point, which tucks right underneath the grid uniform. You want to keep the same `@group` as the `grid` uniform, but the` @binding` number needs to be different. The `var` type is `storage`, in order to reflect the different type of buffer, and rather than a single vector, the type that you give for the cellState is an array of `u32` values, in order to match the `u32` in Rust.
+
+Why 32 bit ints? Doesn't that seem wasteful if all you need are booleans? Well, yeah! It is! But also, the GPU only cleanly exposes data of a few types because it can work with them fast. You can't specify that you're exposing an array of bytes, for example, because it wouldn't work well with certain assumptions GPUs make about data alignment.
+
+Now you could save space and use bitmasking tricks such as storing the active state for 32 different cells in each value of that array. There's actually a long history of developers finding clever ways to pack the data they need into GPU-approved types like that! But that would make the example code far more complex. And the truth is that for a use case as relatively simple as this one, you don't need to worry about the memory impact too much.
+
+Next, in the body of your `@vertex` function, query the cell's state. Because the state is stored in a flat array in the storage buffer, you can use the `instance_index` in order to look up the value for the current cell!
+
+How do you turn off a cell if the state says that it's inactive? Well, since the active and inactive states that you get from the array are 1 or 0, you can scale the geometry by the active state! Scaling it by 1 leaves the geometry alone, and scaling it by 0 makes the geometry collapse into a single point, which the GPU then discards.
+
+```rust
+@vertex
+fn vertexMain(
+  @location(0) pos: vec2<f32>,
+  @builtin(instance_index) instance: u32
+) -> @builtin(position) vec4<f32> {
+  let i = f32(instance);
+  let cell = vec2f(i % grid.x, floor(i / grid.x));
+  let state = f32(cellState[instance]);
+  let cellOffset = cell / grid * 2.0;
+  let gridPos = (pos*state + 1.0) / grid - 1.0 + cellOffset;
+  return vec4f(gridPos, 0.0, 1.0); 
+}
+```
+
+## Add the storage buffer to the bind group
+
+Before you can see the cell state take effect, add the storage buffer to a bind group. Because it's part of the same `@group` as the uniform buffer, add it to the same bind group in the JavaScript code, as well.
+
+```rust
+let bind_group = context
+  .device()
+  .create_bind_group(&wgpu::BindGroupDescriptor {
+    label: Some("Bind Group"),
+    layout: &render_pipeline.get_bind_group_layout(0),
+    entries: &[
+      wgpu::BindGroupEntry {
+        binding: 0,
+        resource: uniform_buffer.as_entire_binding(),
+      },
+      wgpu::BindGroupEntry {
+        binding: 1,
+        resource: cell_state_storage.as_entire_binding(),
+      },
+    ],
+  });
+```
+
+Make sure that the binding of the new entry matches the `@binding()` of the corresponding value in the shader!
+
+If you run it now, you will see no cell because we initialized all cell state to 0.
+
+## Use the ping-pong buffer pattern
+
+Most simulations like the one you're building typically use at least two copies of their state. On each step of the simulation, they read from one copy of the state and write to the other. Then, on the next step, flip it and read from the state they wrote to previously. This is commonly referred to as a ping pong pattern because the most up-to-date version of the state bounces back and forth between state copies each step.
+
+Why is that necessary? Look at a simplified example: imagine that you're writing a very simple simulation in which you move any active blocks right by one cell each step. To keep things easy to understand, you define your data and simulation in JavaScript:
+
+```javascript
+// Example simulation. Don't copy into the project!
+const state = [1, 0, 0, 0, 0, 0, 0, 0];
+
+function simulate() {
+  for (let i = 0; i < state.length-1; ++i) {
+    if (state[i] == 1) {
+      state[i] = 0;
+      state[i+1] = 1;
+    }
+  }
+}
+
+simulate(); // Run the simulation for one step.
+```
+
+But if you run that code, the active cell moves all the way to the end of the array in one step! Why? Because you keep updating the state in-place, so you move the active cell right, and then you look at the next cell and... hey! It's active! Better move it to the right again. The fact that you change the data at the same time that you observe it corrupts the results.
+
+By using the ping pong pattern, you ensure that you always perform the next step of the simulation using only the results of the last step.
+
+```javascript
+// Example simulation. Don't copy into the project!
+const stateA = [1, 0, 0, 0, 0, 0, 0, 0];
+const stateB = [0, 0, 0, 0, 0, 0, 0, 0];
+
+function simulate(in, out) {
+  out[0] = 0;
+  for (let i = 1; i < in.length; ++i) {
+     out[i] = in[i-1];
+  }
+}
+
+// Run the simulation for two step.
+simulate(stateA, stateB);
+simulate(stateB, stateA);
+```
+
+Use this pattern in your own code by updating your storage buffer allocation in order to create two identical buffers. To help visualize the difference between the two buffers, fill them with different data:
+
+```rust
+let cell_state_array = [
+  [0u32; (GRID_SIZE * GRID_SIZE) as usize],
+  [1u32; (GRID_SIZE * GRID_SIZE) as usize],
+];
+let cell_state_storage = [
+  context
+    .device()
+    .create_buffer_init(&wgpu::util::BufferInitDescriptor {
+      label: Some("Storage Buffer Ping"),
+      contents: bytemuck::cast_slice(&cell_state_array[0]),
+      usage: wgpu::BufferUsages::STORAGE,
+    }),
+  context
+    .device()
+    .create_buffer_init(&wgpu::util::BufferInitDescriptor {
+      label: Some("Storage Buffer Pong"),
+      contents: bytemuck::cast_slice(&cell_state_array[1]),
+      usage: wgpu::BufferUsages::STORAGE,
+    }),
+];
+```
+
+To show the different storage buffers in your rendering, update your bind groups to have two different variants, as well:
+
+```rust
+let bind_group = [
+  context
+    .device()
+    .create_bind_group(&wgpu::BindGroupDescriptor {
+        label: Some("Bind Group Ping"),
+        layout: &render_pipeline.get_bind_group_layout(0),
+        entries: &[
+          wgpu::BindGroupEntry {
+            binding: 0,
+            resource: uniform_buffer.as_entire_binding(),
+          },
+          wgpu::BindGroupEntry {
+            binding: 1,
+            resource: cell_state_storage[0].as_entire_binding(),
+          },
+        ],
+    }),
+  context
+    .device()
+    .create_bind_group(&wgpu::BindGroupDescriptor {
+      label: Some("Bind Group Pong"),
+      layout: &render_pipeline.get_bind_group_layout(0),
+      entries: &[
+        wgpu::BindGroupEntry {
+          binding: 0,
+          resource: uniform_buffer.as_entire_binding(),
+        },
+        wgpu::BindGroupEntry {
+          binding: 1,
+          resource: cell_state_storage[1].as_entire_binding(),
+        },
+      ],
+    }),
+];
+```
+
+You also need to update the definition of the struct:
+
+```rust
+pub struct App {
+  vertex_buffer: wgpu::Buffer,
+  render_pipeline: wgpu::RenderPipeline,
+  num_vertices: u32,
+  bind_group: [wgpu::BindGroup; 2],
+}
+```
+
+## Set up a timer
+
+We must now make our app change bind group every half second for example:
+
+```rust
+use std::time::{Duration, Instant};
+// ...
+
+pub struct App {
+  vertex_buffer: wgpu::Buffer,
+  render_pipeline: wgpu::RenderPipeline,
+  num_vertices: u32,
+  bind_group: [wgpu::BindGroup; 2],
+  step: u32,
+  generation_duration: Duration,
+  last_generation: Instant,
+}
+
+impl App {
+  pub fn new(context: &mut Context) -> Self {
+    // ...
+    Self {
+        vertex_buffer,
+        render_pipeline,
+        num_vertices,
+        bind_group,
+        step: 0,
+        generation_duration: Duration::new(0, 500_000_000),
+        last_generation: Instant::now(),
+    }
+  }
+
+  // ...
+
+  pub fn update(&mut self) {
+    if self.last_generation + self.generation_duration < Instant::now() {
+      self.step += 1;
+      self.last_generation = Instant::now();
+    }
+  }
+
+  pub fn render(&mut self, context: &mut Context) -> Result<(), wgpu::SurfaceError> {
+    // ...
+    render_pass.set_bind_group(0, &self.bind_group[(self.step % 2) as usize], &[]);
+    // ...
+  }
+}
+```
+
+And now when you run the app you see that the canvas flips back and forth between showing the two state buffers you created.
+
+With that, you're pretty much done with the rendering side of things! You're all set to display the output of the Game of Life simulation you build in the next step, where you finally start using compute shaders.
+
+Obviously there is so much more to WebGPU's rendering capabilities than the tiny slice that you explored here, but the rest is beyond the scope of this lab. Hopefully, it gives you enough of a taste of how WebGPU's rendering works, though, that it helps make exploring more advanced techniques like 3D rendering easier to grasp.
+
+## Use compute shaders, at last!
+
+Now, for the last major piece of the puzzle: performing the Game of Life simulation in a compute shader!
+
+You've learned abstractly about compute shaders throughout this codelab, but what exactly are they?
+
+A compute shader is similar to vertex and fragment shaders in that they are designed to run with extreme parallelism on the GPU, but unlike the other two shader stages, they don't have a specific set of inputs and outputs. You are reading and writing data exclusively from sources you choose, like storage buffers. This means that instead of executing once for each vertex, instance, or pixel, you have to tell it how many invocations of the shader function you want. Then, when you run the shader, you are told which invocation is being processed, and you can decide what data you are going to access and which operations you are going to perform from there.
+
+Compute shaders must be created in a shader module, just like vertex and fragment shaders, so add that to your code to get started. As you might guess, given the structure of the other shaders that you've implemented, the main function for your compute shader needs to be marked with the `@compute` attribute.
+
 
 ## Credits
 
