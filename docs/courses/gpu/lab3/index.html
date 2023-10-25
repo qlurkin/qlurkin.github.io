@@ -1451,6 +1451,11 @@ for i in 0..cell_state_array[0].len() {
   }
 }
 </code></pre>
+<p>You must add <code>rand</code> to your dependencies:</p>
+<pre><code class="language-toml">[dependencies]
+# other dependencies
+rand = &quot;0.8.5&quot;
+</code></pre>
 <p>Now you can finally implement the logic for the Game of Life simulation. After everything it took to get here, the shader code may be disappointingly simple!</p>
 <p>First, you need to know for any given cell how many of its neighbors are active. You don&#39;t care about which ones are active, only the count.</p>
 <p>To make getting neighboring cell data easier, add a <code>cellActive</code> function that returns the <code>cellStateIn</code> value of the given coordinate.</p>
