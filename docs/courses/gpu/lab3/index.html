@@ -677,7 +677,7 @@ const GRID_SIZE: u32 = 4;
 <p>First, you need to communicate the grid size you&#39;ve chosen to the shader, since it uses that to change how things display. You could just hard-code the size into the shader, but then that means that any time you want to change the grid size you have to re-create the shader and render pipeline, which is expensive. A better way is to provide the grid size to the shader as uniforms.</p>
 <p>You learned earlier that a different value from the vertex buffer is passed to every invocation of a vertex shader. A uniform is a value from a buffer that is the same for every invocation. They&#39;re useful for communicating values that are common for a piece of geometry (like its position), a full frame of animation (like the current time), or even the entire lifespan of the app (like a user preference).</p>
 <pre><code class="language-rust">// in App.new()
-let uniform_array = [GRID_SIZE, GRID_SIZE];
+let uniform_array = [GRID_SIZE as f32, GRID_SIZE as f32];
 let uniform_buffer =
   context
     .device()

@@ -842,7 +842,7 @@ You learned earlier that a different value from the vertex buffer is passed to e
 
 ```rust
 // in App.new()
-let uniform_array = [GRID_SIZE, GRID_SIZE];
+let uniform_array = [GRID_SIZE as f32, GRID_SIZE as f32];
 let uniform_buffer =
   context
     .device()
