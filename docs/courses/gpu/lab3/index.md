@@ -344,15 +344,15 @@ impl App {
     }
   }
 
-  fn input(&mut self, event: &WindowEvent) -> bool {
+  pub fn input(&mut self, event: &WindowEvent) -> bool {
     return false;  // means that the event must be handeld in the start() function
   }
 
-  fn update(&mut self, context: &mut Context) {
+  pub fn update(&mut self, context: &mut Context) {
 
   }
 
-  fn render(&mut self, context: &mut Context) -> Result<(), wgpu::SurfaceError> {
+  pub fn render(&mut self, context: &mut Context) -> Result<(), wgpu::SurfaceError> {
 
   }
 }
