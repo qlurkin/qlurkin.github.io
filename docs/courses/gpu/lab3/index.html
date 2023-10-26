@@ -1111,7 +1111,7 @@ fn computeMain() {
     label: Some(&quot;Compute Shader&quot;),
     source: wgpu::ShaderSource::Wgsl(
       include_str!(&quot;compute.wgsl&quot;)
-        .replace(&quot;WORKGROUP_SIZE&quot;, format!(&quot;{}&quot;, WORKGROUP_SIZE))
+        .replace(&quot;WORKGROUP_SIZE&quot;, &amp;format!(&quot;{}&quot;, WORKGROUP_SIZE))
         .into()
     ),
   });

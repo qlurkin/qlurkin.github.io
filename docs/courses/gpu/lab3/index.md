@@ -1406,7 +1406,7 @@ let compute_shader = context
     label: Some("Compute Shader"),
     source: wgpu::ShaderSource::Wgsl(
       include_str!("compute.wgsl")
-        .replace("WORKGROUP_SIZE", format!("{}", WORKGROUP_SIZE))
+        .replace("WORKGROUP_SIZE", &format!("{}", WORKGROUP_SIZE))
         .into()
     ),
   });
