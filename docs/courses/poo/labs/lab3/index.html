@@ -14,12 +14,12 @@
     <h2>Installation</h2>
 <p>Pour effectuer le labo, vous aurez besoin du <strong>Workload .Net MAUI</strong>.</p>
 <p>Si vous utilisez Visual Studio 2022 Preview et que vous n&#39;avez pas déjà installé ce Workload, vous pouvez l&#39;ajouter en relançant l&#39;installateur de Visual Studio.</p>
-<p>Si vous utilisez la commande <code>dotnet</code>, vous pouvez ajouter le Workload avec la commande :</p>
+<p>Si vous utilisez VSCode et la commande <code>dotnet</code>, vous pouvez ajouter le Workload avec la commande :</p>
 <pre class="terminal">
-> sudo dotnet workload install maui
+> dotnet workload install maui
 </pre>
 
-<p>Essayez de créer un nouveau projet MAUI. Dans Visual Studio 2022 Preview, il y a un template <strong>&quot;Application .NET MAUI&quot;</strong>. Avec la ligne de commande, vous pouvez utiliser la commande :</p>
+<p>Essayez de créer un nouveau projet MAUI. Il y a un template <strong>&quot;Application .NET MAUI&quot;</strong>. Avec la ligne de commande, vous pouvez utiliser la commande :</p>
 <pre class="terminal">
 > dotnet new maui -n "Labo2"
 </pre>
@@ -31,8 +31,15 @@
 
 <h2>Enoncé</h2>
 <p>Suivez le tutoriel suivant pour créer une application de notes :</p>
-<p><a href="https://learn.microsoft.com/fr-be/dotnet/maui/tutorials/notes-app/">https://learn.microsoft.com/fr-be/dotnet/maui/tutorials/notes-app/</a></p>
-<p>Pas besoin de compiler pour Android ni de lancer sur l&#39;émulateur Android.</p>
+<p><a href="https://learn.microsoft.com/fr-be/dotnet/maui/tutorials/notes-app/">https://learn.microsoft.com/fr-fr/dotnet/maui/tutorials/notes-app/</a></p>
+<p>Poursuivez avec la suite sur les concepts <em>MVVM</em> : </p>
+<p><a href="https://learn.microsoft.com/fr-fr/dotnet/maui/tutorials/notes-mvvm/">https://learn.microsoft.com/fr-fr/dotnet/maui/tutorials/notes-mvvm/</a></p>
+<p>Si vous avez des problèmes pour demarrer l&#39;application avec VSCode ou avec <code>dotnet run</code>, essayer de forcer le framework cible avec la commande :</p>
+<div class="terminal">
+> dotnet build -t:Run -f nom_du_framework_cible
+</div>
+
+<p>Ou vous remplacez le <code>nom_du_framework_cible</code> par un des frameworks cibles listés dans les balises <code>&lt;TargetFrameworks&gt;</code> du fichier <code>.csproj</code>.</p>
 <p><strong>N&#39;hésitez surtout pas à poser vos questions !</strong></p>
 <!-- ## Les fichiers
 
@@ -172,7 +179,19 @@ Coming Soon
 
 ## Crédits
 
-- [https://learn.microsoft.com/en-us/dotnet/maui/tutorials/notes-app](https://learn.microsoft.com/en-us/dotnet/maui/tutorials/notes-app) -->
+- [https://learn.microsoft.com/en-us/dotnet/maui/tutorials/notes-app](https://learn.microsoft.com/en-us/dotnet/maui/tutorials/notes-app)
+
+dotnet build -t:Run -f net7.0-maccatalyst
+
+
+-->
+
+
+
+
+
+
+
 
 
 </body>

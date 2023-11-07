@@ -8,13 +8,13 @@ Pour effectuer le labo, vous aurez besoin du **Workload .Net MAUI**.
 
 Si vous utilisez Visual Studio 2022 Preview et que vous n'avez pas déjà installé ce Workload, vous pouvez l'ajouter en relançant l'installateur de Visual Studio.
 
-Si vous utilisez la commande `dotnet`, vous pouvez ajouter le Workload avec la commande :
+Si vous utilisez VSCode et la commande `dotnet`, vous pouvez ajouter le Workload avec la commande :
 
 <pre class="terminal">
-> sudo dotnet workload install maui
+> dotnet workload install maui
 </pre>
 
-Essayez de créer un nouveau projet MAUI. Dans Visual Studio 2022 Preview, il y a un template **"Application .NET MAUI"**. Avec la ligne de commande, vous pouvez utiliser la commande :
+Essayez de créer un nouveau projet MAUI. Il y a un template **"Application .NET MAUI"**. Avec la ligne de commande, vous pouvez utiliser la commande :
 
 <pre class="terminal">
 > dotnet new maui -n "Labo2"
@@ -30,9 +30,19 @@ L'application par défaut ressemble à ceci:
 
 Suivez le tutoriel suivant pour créer une application de notes :
 
-[https://learn.microsoft.com/fr-be/dotnet/maui/tutorials/notes-app/](https://learn.microsoft.com/fr-be/dotnet/maui/tutorials/notes-app/)
+[https://learn.microsoft.com/fr-fr/dotnet/maui/tutorials/notes-app/](https://learn.microsoft.com/fr-be/dotnet/maui/tutorials/notes-app/)
 
-Pas besoin de compiler pour Android ni de lancer sur l'émulateur Android.
+Poursuivez avec la suite sur les concepts *MVVM* : 
+
+[https://learn.microsoft.com/fr-fr/dotnet/maui/tutorials/notes-mvvm/](https://learn.microsoft.com/fr-fr/dotnet/maui/tutorials/notes-mvvm/)
+
+Si vous avez des problèmes pour demarrer l'application avec VSCode ou avec `dotnet run`, essayer de forcer le framework cible avec la commande :
+
+<div class="terminal">
+> dotnet build -t:Run -f nom_du_framework_cible
+</div>
+
+Ou vous remplacez le `nom_du_framework_cible` par un des frameworks cibles listés dans les balises `<TargetFrameworks>` du fichier `.csproj`.
 
 **N'hésitez surtout pas à poser vos questions !**
 
@@ -174,5 +184,17 @@ Coming Soon
 
 ## Crédits
 
-- [https://learn.microsoft.com/en-us/dotnet/maui/tutorials/notes-app](https://learn.microsoft.com/en-us/dotnet/maui/tutorials/notes-app) -->
+- [https://learn.microsoft.com/en-us/dotnet/maui/tutorials/notes-app](https://learn.microsoft.com/en-us/dotnet/maui/tutorials/notes-app)
+
+dotnet build -t:Run -f net7.0-maccatalyst
+
+
+-->
+
+
+
+
+
+
+
 
