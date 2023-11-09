@@ -6,7 +6,7 @@ typst: true
 
 ## Introduction
 
-<iframe width="560" height="315" style="margin: 1rem auto; display: block" src="https://www.youtube.com/embed/ODLJqtMrhAs?si=A5eqtGl-rXKdIqus" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<iframe width="600" height="450" style="margin: 1rem auto; display: block" src="https://www.youtube.com/embed/ODLJqtMrhAs?si=A5eqtGl-rXKdIqus" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 Le jeu *Asteroïd* vous met au commande d'un vaisseau dans l'espace au milieu d'un champ d'astéroïdes. Vous devez détruire les astéroïdes avec votre canon. Le canon a une cadence de tir limitée.
 
@@ -26,7 +26,7 @@ implémente le jeu *Asteroïd*.
 Votre programme devra:
 
 - Afficher et commander le vaisseau. *(3 points)*
-- Afficher les astéroïdes en mouvement et les placer aléatoirement. *(2 points)*
+- Afficher les astéroïdes en mouvement et les leur donner des positions et des vitesses initiales aléatoires. *(2 points)*
 - Faire tirer le vaisseau en respectant une cadence maximale. *(3 points)*
 - Diviser les astéroïdes qui sont touchés par un obus de canon. *(3 points)*
 - Tenir compte du score. On gagne 50 points à chaque fois qu'on touche un astéroïde et on perd un point à chaque obus tiré. *(2 points)*
