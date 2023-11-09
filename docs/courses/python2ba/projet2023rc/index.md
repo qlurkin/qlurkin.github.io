@@ -26,7 +26,7 @@ implémente le jeu *Asteroïd*.
 Votre programme devra:
 
 - Afficher et commander le vaisseau. *(3 points)*
-- Afficher les astéroïdes en mouvement et les leur donner des positions et des vitesses initiales aléatoires. *(2 points)*
+- Afficher les astéroïdes en mouvement et leur donner des positions et des vitesses initiales aléatoires. *(2 points)*
 - Faire tirer le vaisseau en respectant une cadence maximale. *(3 points)*
 - Diviser les astéroïdes qui sont touchés par un obus de canon. *(3 points)*
 - Tenir compte du score. On gagne 50 points à chaque fois qu'on touche un astéroïde et on perd un point à chaque obus tiré. *(2 points)*
