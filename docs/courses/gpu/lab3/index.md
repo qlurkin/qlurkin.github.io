@@ -1,5 +1,5 @@
 ---
-title: "WebGPU in Rust"
+title: "Lab 3 & 4"
 subtitle: "Game Of Life"
 ---
 

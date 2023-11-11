@@ -6,7 +6,7 @@ build_and_index(
     //  'introgpu',
     'labo1',
     'lab3',
-    //  'labo4',
+    'labo5',
     //  'cloth'
   ],
   { title: 'GPU Computing' },
