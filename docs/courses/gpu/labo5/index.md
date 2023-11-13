@@ -6,6 +6,8 @@ typst: true
 
 In this session we will start simulating some particles. We will start by doing it on the CPU to understand how these simulations work. At the end you will try to do it on the GPU.
 
+To help us, we will use the [`wgpu-bootstrap`](https://github.com/qlurkin/wgpu-bootstrap) library.
+
 ## Animate a particle
 
 A particle is simply a point which has a position $$(x, y, z)$$ and a velocity $$(v_x, v_y, v_z)$$. To animate it, you just have to update its position at each *frame*.
