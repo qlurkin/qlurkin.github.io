@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapitre 6 - Calcul numérique et symbolique</title>
+    <script src="/document.js" defer></script>
+    
+</head>
+<body>
+    <h1>Chapitre 6 <small>Calcul numérique et symbolique</small></h1>
+    
+    <p>Vous l&#39;avez sûrement déjà remarqué, les mathématiques sont essentielles aux sciences de l&#39;ingénieur. Durant toutes vos études et votre carrière, vous serez souvent amené à effectuer des calculs. C&#39;est d&#39;ailleurs quelque chose que vous faites régulièrement aux séances d&#39;exercices de math. Cependant, les exercices auxquels vous êtes habituellement confrontés sont soigneusement conçus pour pouvoir se résoudre par les méthodes analytiques que l&#39;on vous enseigne. Malheureusement, dans la pratique, il existe beaucoup de problèmes pour lesquels il n&#39;existe pas de description analytique ou pour lesquels on ne peut pas trouver de solution analytique. Il est donc souvent nécessaire de faire appel à des méthodes numériques.</p>
+<p>Pour bien comprendre la différence entre une expression analytique et une expression numérique, nous allons donner un petit exemple. Pour décrire un cercle de rayon <img class="typst-formula-inline" style="display: inline-block; margin: -8px 0;" src="data:image/svg+xml;base64,PHN2ZyBjbGFzcz0idHlwc3QtZG9jIiB2aWV3Qm94PSIwIDAgOCAyNi45MjgiIHdpZHRoPSI4IiBoZWlnaHQ9IjI2LjkyOCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeG1sbnM6aDU9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGh0bWwiPgogICAgPGc+CiAgICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCA4KSIvPgogICAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAgOC4yNzIpIi8+CiAgICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAxOC45MjgpIj4KICAgICAgICAgICAgPGcgY2xhc3M9InR5cHN0LXRleHQiIHRyYW5zZm9ybT0ic2NhbGUoMC4wMTYgLTAuMDE2KSI+CiAgICAgICAgICAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNnMCIgeD0iMCIgZmlsbD0iIzAwMDAwMCIvPgogICAgICAgICAgICA8L2c+CiAgICAgICAgPC9nPgogICAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDggMTguOTI4KSIvPgogICAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAgMCkiLz4KICAgIDwvZz4KICAgIDxkZWZzIGlkPSJnbHlwaCI+CiAgICAgICAgPHN5bWJvbCBpZD0iZzAiIG92ZXJmbG93PSJ2aXNpYmxlIj4KICAgICAgICAgICAgPHBhdGggZD0iTSAyNjkgNjY2IEMgMjI4LjMzMzMzIDYyNCAxNjguMzMzMzMgNjAzIDg5IDYwMyBMIDg5IDU2NCBDIDE0MSA1NjQgMTgzLjY2NjY3IDU3MiAyMTcgNTg4IEwgMjE3IDgyIEMgMjE3IDY0IDIxMi41IDUyLjMzMzMzIDIwMy41IDQ3IEMgMTk0LjUgNDEuNjY2NjcgMTcwIDM5IDEzMCAzOSBMIDk1IDM5IEwgOTUgMCBDIDEyMC4zMzMzMyAyIDE3NC4zMzMzMyAzIDI1NyAzIEMgMzM5LjY2NjcgMyAzOTMuNjY2NyAyIDQxOSAwIEwgNDE5IDM5IEwgMzg0IDM5IEMgMzQyLjY2NjcgMzkgMzE3LjgzMzM0IDQxLjY2NjY3IDMwOS41IDQ3IEMgMzAxLjE2NjcgNTIuMzMzMzMgMjk3IDY0IDI5NyA4MiBMIDI5NyA2MzYgQyAyOTcgNjU5LjU2NjA0IDI5NS4xNjQ0MyA2NjYgMjY5IDY2NiBaICIvPgogICAgICAgIDwvc3ltYm9sPgogICAgPC9kZWZzPgogICAgPGRlZnMgaWQ9ImNsaXAtcGF0aCIvPgo8L3N2Zz4K"> centré en <img class="typst-formula-inline" style="display: inline-block; margin: -8px 0;" src="data:image/svg+xml;base64,PHN2ZyBjbGFzcz0idHlwc3QtZG9jIiB2aWV3Qm94PSIwIDAgMzUuNTYyNjY2NjY2NjY2NjcgMjYuOTI4IiB3aWR0aD0iMzUuNTYyNjY2NjY2NjY2NjciIGhlaWdodD0iMjYuOTI4IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4bWxuczpoNT0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94aHRtbCI+CiAgICA8Zz4KICAgICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwIDgpIi8+CiAgICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCA2Ljk2MDAwMDAwMDAwMDAwMSkiLz4KICAgICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwIDYuOTYwMDAwMDAwMDAwMDAxKSIvPgogICAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAgMTguOTI4KSI+CiAgICAgICAgICAgIDxnIGNsYXNzPSJ0eXBzdC10ZXh0IiB0cmFuc2Zvcm09InNjYWxlKDAuMDE2IC0wLjAxNikiPgogICAgICAgICAgICAgICAgPHVzZSB4bGluazpocmVmPSIjZzAiIHg9IjAiIGZpbGw9IiMwMDAwMDAiLz4KICAgICAgICAgICAgPC9nPgogICAgICAgIDwvZz4KICAgICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg2LjIyNCA4LjI3MikiLz4KICAgICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg2LjIyNCAxOC45MjgpIj4KICAgICAgICAgICAgPGcgY2xhc3M9InR5cHN0LXRleHQiIHRyYW5zZm9ybT0ic2NhbGUoMC4wMTYgLTAuMDE2KSI+CiAgICAgICAgICAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNnMSIgeD0iMCIgZmlsbD0iIzAwMDAwMCIvPgogICAgICAgICAgICA8L2c+CiAgICAgICAgPC9nPgogICAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE0LjIyNCAxNy4yMzIpIi8+CiAgICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTQuMjI0IDE4LjkyOCkiPgogICAgICAgICAgICA8ZyBjbGFzcz0idHlwc3QtdGV4dCIgdHJhbnNmb3JtPSJzY2FsZSgwLjAxNiAtMC4wMTYpIj4KICAgICAgICAgICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI2cyIiB4PSIwIiBmaWxsPSIjMDAwMDAwIi8+CiAgICAgICAgICAgIDwvZz4KICAgICAgICA8L2c+CiAgICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjEuMzM4NjY2NjY2NjY2NjcgOC4yNzIpIi8+CiAgICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjEuMzM4NjY2NjY2NjY2NjcgMTguOTI4KSI+CiAgICAgICAgICAgIDxnIGNsYXNzPSJ0eXBzdC10ZXh0IiB0cmFuc2Zvcm09InNjYWxlKDAuMDE2IC0wLjAxNikiPgogICAgICAgICAgICAgICAgPHVzZSB4bGluazpocmVmPSIjZzEiIHg9IjAiIGZpbGw9IiMwMDAwMDAiLz4KICAgICAgICAgICAgPC9nPgogICAgICAgIDwvZz4KICAgICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgyOS4zMzg2NjY2NjY2NjY2NyA2Ljk2MDAwMDAwMDAwMDAwMSkiLz4KICAgICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgyOS4zMzg2NjY2NjY2NjY2NyAxOC45MjgpIj4KICAgICAgICAgICAgPGcgY2xhc3M9InR5cHN0LXRleHQiIHRyYW5zZm9ybT0ic2NhbGUoMC4wMTYgLTAuMDE2KSI+CiAgICAgICAgICAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNnMyIgeD0iMCIgZmlsbD0iIzAwMDAwMCIvPgogICAgICAgICAgICA8L2c+CiAgICAgICAgPC9nPgogICAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDM1LjU2MjY2NjY2NjY2NjY3IDE4LjkyOCkiLz4KICAgICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwIDApIi8+CiAgICA8L2c+CiAgICA8ZGVmcyBpZD0iZ2x5cGgiPgogICAgICAgIDxzeW1ib2wgaWQ9ImcwIiBvdmVyZmxvdz0idmlzaWJsZSI+CiAgICAgICAgICAgIDxwYXRoIGQ9Ik0gMzE4IC0yNDggQyAzMjcuMzMzMyAtMjQ4IDMzMiAtMjQzLjMzMzMzIDMzMiAtMjM0IEMgMzMyIC0yMzAuNjY2NjcgMzMwLjMzMzMgLTIyNyAzMjcgLTIyMyBDIDI3NSAtMTgzIDIzMy4zMzMzMyAtMTE3LjMzMzMzIDIwMiAtMjYgQyAxNzQuNjY2NjcgNTMuMzMzMzMgMTYxIDEzMS4zMzMzMyAxNjEgMjA4IEwgMTYxIDI5MiBDIDE2MSAzNjguNjY2NyAxNzQuNjY2NjcgNDQ2LjY2NjcgMjAyIDUyNiBDIDIzMy4zMzMzMyA2MTcuMzMzMyAyNzUgNjgzIDMyNyA3MjMgQyAzMzAuMzMzMyA3MjYuMzMzMyAzMzIgNzMwIDMzMiA3MzQgQyAzMzIgNzQzLjMzMzMgMzI3LjMzMzMgNzQ4IDMxOCA3NDggQyAzMTYuNjY2NyA3NDggMzE0LjMzMzM0IDc0NyAzMTEgNzQ1IEMgMjUxIDY5OSAyMDAuNjY2NjcgNjMwLjY2NjcgMTYwIDU0MCBDIDEyMC42NjY2NyA0NTMuMzMzMyAxMDEgMzcwLjY2NjY2IDEwMSAyOTIgTCAxMDEgMjA4IEMgMTAxIDEyOS4zMzMzMyAxMjAuNjY2NjcgNDYuNjY2NjcgMTYwIC00MCBDIDIwMC42NjY2NyAtMTMwLjY2NjY3IDI1MSAtMTk5IDMxMSAtMjQ1IEMgMzE0LjMzMzMgLTI0NyAzMTYuNjY2NjYgLTI0OCAzMTggLTI0OCBaICIvPgogICAgICAgIDwvc3ltYm9sPgogICAgICAgIDxzeW1ib2wgaWQ9ImcxIiBvdmVyZmxvdz0idmlzaWJsZSI+CiAgICAgICAgICAgIDxwYXRoIGQ9Ik0gMjQ5IC0yMiBDIDM4OS42NjY3IC0yMiA0NjAgOTIgNDYwIDMyMCBDIDQ2MCA0NzMuMzMzMyA0MjguMzMzMyA1NzUgMzY1IDYyNSBDIDMyOS42NjY3IDY1Mi4zMzMzIDI5MS4zMzMzNCA2NjYgMjUwLjAwMDAyIDY2NiBDIDEwOS4zMzMzNCA2NjYgMzkuMDAwMDE1IDU1MC42NjY3IDM5LjAwMDAxNSAzMjAgQyAzOS4wMDAwMTUgMTM2LjM4ODI0IDg3Ljc4MDEwNiAtMjIgMjQ5LjAwMDAyIC0yMiBaIE0gMzYxIDUyNCBDIDM2Ny42NjY3IDQ4OS4zMzMzIDM3MSA0MjUuMzMzMyAzNzEgMzMyIEMgMzcxIDI0MCAzNjcuMzMzMyAxNzIgMzYwIDEyOCBDIDM0Ny4zMzMzIDQ4IDMxMC4zMzMzIDggMjQ4Ljk5OTk4IDggQyAyMjUuNjY2NjYgOCAyMDMuMzMzMzEgMTYuNjY2NjcyIDE4MS45OTk5OCAzNCBDIDE1NS4zMzMzMSA1Ni42NjY2NyAxMzguNjY2NjYgMTA0IDEzMS45OTk5OCAxNzYgQyAxMjkuMzMzMzEgMjAwLjY2NjY3IDEyNy45OTk5ODUgMjUyLjY2NjY3IDEyNy45OTk5ODUgMzMyIEMgMTI3Ljk5OTk4NSA0MTkuMzMzMyAxMzAuNjY2NjYgNDc5LjY2NjY2IDEzNS45OTk5OCA1MTMgQyAxNDQuNjY2NjYgNTY3LjY2NjcgMTYyLjk5OTk4IDYwMi42NjY3IDE5MC45OTk5OCA2MTggQyAyMTIuOTk5OTggNjMwIDIzMi4zMzMzMSA2MzYgMjQ4Ljk5OTk4IDYzNiBDIDMxMy41NDYwMiA2MzYgMzQ5Ljk3ODMgNTgyLjc4MjM1IDM2MSA1MjQgWiAiLz4KICAgICAgICA8L3N5bWJvbD4KICAgICAgICA8c3ltYm9sIGlkPSJnMiIgb3ZlcmZsb3c9InZpc2libGUiPgogICAgICAgICAgICA8cGF0aCBkPSJNIDEzOSAxMDYgQyAxMDcuNDg1MzIgMTA2IDg2IDgyLjEwMjY5IDg2IDUwIEMgODYgMTkuNTY4NjM0IDEwOC41MTU3IC01IDEzOSAtNSBDIDE1MyAtNSAxNjQuNjY2NjcgLTAuNjY2NjcxNzUgMTc0IDggTCAxNzUgMCBDIDE3NSAtNjMuMzMzMzMgMTU0IC0xMTYuNjY2NjcgMTEyIC0xNjAgQyAxMDQuNjY2NjcgLTE2OCAxMDEgLTE3NCAxMDEgLTE3OCBDIDEwMSAtMTg4IDEwNS4zMzMzMyAtMTkzIDExNCAtMTkzIEMgMTIyLjY2NjY3IC0xOTMgMTM1LjMzMzMzIC0xODEuMzMzMzMgMTUyIC0xNTggQyAxODYgLTExMCAyMDMgLTU3LjMzMzMzIDIwMyAwIEMgMjAzIDUyLjc3NDk1IDE4NS4yOTkxMiAxMDYgMTM5IDEwNiBaICIvPgogICAgICAgIDwvc3ltYm9sPgogICAgICAgIDxzeW1ib2wgaWQ9ImczIiBvdmVyZmxvdz0idmlzaWJsZSI+CiAgICAgICAgICAgIDxwYXRoIGQ9Ik0gNzggLTI0NSBDIDEzOCAtMTk5IDE4OC4zMzMzMyAtMTMwLjY2NjY3IDIyOSAtNDAgQyAyNjguMzMzMyA0Ni42NjY2NyAyODggMTI5LjMzMzMzIDI4OCAyMDggTCAyODggMjkyIEMgMjg4IDM3MC42NjY3IDI2OC4zMzMzIDQ1My4zMzMzNCAyMjguOTk5OTggNTQwIEMgMTg4LjMzMzMxIDYzMC42NjY3IDEzNy45OTk5OCA2OTkgNzcuOTk5OTg1IDc0NSBDIDc0LjY2NjY2IDc0NyA3Mi4zMzMzMSA3NDggNzAuOTk5OTg1IDc0OCBDIDYxLjY2NjY1NiA3NDggNTYuOTk5OTg1IDc0My4zMzMzIDU2Ljk5OTk4NSA3MzQgQyA1Ni45OTk5ODUgNzMwIDU4LjY2NjY1NiA3MjYuMzMzMyA2MS45OTk5ODUgNzIzIEMgMTEzLjk5OTk4NSA2ODMgMTU1LjY2NjY2IDYxNy4zMzMzIDE4Ni45OTk5OCA1MjYgQyAyMTQuMzMzMzEgNDQ2LjY2NjcgMjI3Ljk5OTk4IDM2OC42NjY3IDIyNy45OTk5OCAyOTIgTCAyMjcuOTk5OTggMjA4IEMgMjI3Ljk5OTk4IDEzMS4zMzMzMyAyMTQuMzMzMzEgNTMuMzMzMzMgMTg2Ljk5OTk4IC0yNiBDIDE1NS42NjY2NiAtMTE3LjMzMzMzIDExMy45OTk5ODUgLTE4MyA2MS45OTk5ODUgLTIyMyBDIDU4LjY2NjY1NiAtMjI3IDU2Ljk5OTk4NSAtMjMwLjY2NjY3IDU2Ljk5OTk4NSAtMjM0IEMgNTYuOTk5OTg1IC0yNDMuMzMzMzMgNjEuNjY2NjU2IC0yNDggNzAuOTk5OTg1IC0yNDggQyA3Mi4zMzMzMSAtMjQ4IDc0LjY2NjY2IC0yNDcgNzcuOTk5OTg1IC0yNDUgWiAiLz4KICAgICAgICA8L3N5bWJvbD4KICAgIDwvZGVmcz4KICAgIDxkZWZzIGlkPSJjbGlwLXBhdGgiLz4KPC9zdmc+Cg=="> analytiquement, on pourrait utiliser l&#39;équation suivante : <img class="typst-formula-display" style="display: block; margin: 1em auto;" src="data:image/svg+xml;base64,PHN2ZyBjbGFzcz0idHlwc3QtZG9jIiB2aWV3Qm94PSIwIDAgODAuODczNiAxNi41MjQ4IiB3aWR0aD0iODAuODczNiIgaGVpZ2h0PSIxNi41MjQ4IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4bWxuczpoNT0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94aHRtbCI+CiAgICA8Zz4KICAgICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwIDApIi8+CiAgICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAwKSIvPgogICAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAgMCkiLz4KICAgICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwIDYuMTcyOCkiLz4KICAgICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwIDEzLjI0NDgpIj4KICAgICAgICAgICAgPGcgY2xhc3M9InR5cHN0LXRleHQiIHRyYW5zZm9ybT0ic2NhbGUoMC4wMTYgLTAuMDE2KSI+CiAgICAgICAgICAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNnMCIgeD0iMCIgZmlsbD0iIzAwMDAwMCIvPgogICAgICAgICAgICA8L2c+CiAgICAgICAgPC9nPgogICAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDkuMTUyIDApIi8+CiAgICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoOS4xNTIgNy40MzY4KSI+CiAgICAgICAgICAgIDxnIGNsYXNzPSJ0eXBzdC10ZXh0IiB0cmFuc2Zvcm09InNjYWxlKDAuMDExMiAtMC4wMTEyKSI+CiAgICAgICAgICAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNnMSIgeD0iMCIgZmlsbD0iIzAwMDAwMCIvPgogICAgICAgICAgICA8L2c+CiAgICAgICAgPC9nPgogICAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE5Ljk3NjM1NTU1NTU1NTU1NyAzLjkxNjgwMDAwMDAwMDAwMDMpIi8+CiAgICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTkuOTc2MzU1NTU1NTU1NTU3IDEzLjI0NDgpIj4KICAgICAgICAgICAgPGcgY2xhc3M9InR5cHN0LXRleHQiIHRyYW5zZm9ybT0ic2NhbGUoMC4wMTYgLTAuMDE2KSI+CiAgICAgICAgICAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNnMiIgeD0iMCIgZmlsbD0iIzAwMDAwMCIvPgogICAgICAgICAgICA8L2c+CiAgICAgICAgPC9nPgogICAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDM1Ljk3OTkxMTExMTExMTExNSAwKSIvPgogICAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDM1Ljk3OTkxMTExMTExMTExNSA2LjE3MjgpIi8+CiAgICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMzUuOTc5OTExMTExMTExMTE1IDEzLjI0NDgpIj4KICAgICAgICAgICAgPGcgY2xhc3M9InR5cHN0LXRleHQiIHRyYW5zZm9ybT0ic2NhbGUoMC4wMTYgLTAuMDE2KSI+CiAgICAgICAgICAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNnMyIgeD0iMCIgZmlsbD0iIzAwMDAwMCIvPgogICAgICAgICAgICA8L2c+CiAgICAgICAgPC9nPgogICAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDQ0LjI2NzkxMTExMTExMTEyIDApIi8+CiAgICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNDQuMjY3OTExMTExMTExMTIgNy40MzY4KSI+CiAgICAgICAgICAgIDxnIGNsYXNzPSJ0eXBzdC10ZXh0IiB0cmFuc2Zvcm09InNjYWxlKDAuMDExMiAtMC4wMTEyKSI+CiAgICAgICAgICAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNnMSIgeD0iMCIgZmlsbD0iIzAwMDAwMCIvPgogICAgICAgICAgICA8L2c+CiAgICAgICAgPC9nPgogICAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDU1Ljk4MTE1NTU1NTU1NTU2IDcuMzcyOCkiLz4KICAgICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg1NS45ODExNTU1NTU1NTU1NiAxMy4yNDQ4KSI+CiAgICAgICAgICAgIDxnIGNsYXNzPSJ0eXBzdC10ZXh0IiB0cmFuc2Zvcm09InNjYWxlKDAuMDE2IC0wLjAxNikiPgogICAgICAgICAgICAgICAgPHVzZSB4bGluazpocmVmPSIjZzQiIHg9IjAiIGZpbGw9IiMwMDAwMDAiLz4KICAgICAgICAgICAgPC9nPgogICAgICAgIDwvZz4KICAgICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg3Mi44NzM2IDIuNTg4Nzk5OTk5OTk5OTk5KSIvPgogICAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDcyLjg3MzYgMTMuMjQ0OCkiPgogICAgICAgICAgICA8ZyBjbGFzcz0idHlwc3QtdGV4dCIgdHJhbnNmb3JtPSJzY2FsZSgwLjAxNiAtMC4wMTYpIj4KICAgICAgICAgICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI2c1IiB4PSIwIiBmaWxsPSIjMDAwMDAwIi8+CiAgICAgICAgICAgIDwvZz4KICAgICAgICA8L2c+CiAgICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAxNi41MjQ4KSIvPgogICAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAgMCkiLz4KICAgIDwvZz4KICAgIDxkZWZzIGlkPSJnbHlwaCI+CiAgICAgICAgPHN5bWJvbCBpZD0iZzAiIG92ZXJmbG93PSJ2aXNpYmxlIj4KICAgICAgICAgICAgPHBhdGggZD0iTSA1MjcgMzczIEMgNTI3IDQxOC45MjM0NiA0ODEuODA3OTIgNDQyIDQzMiA0NDIgQyAzODkuMzMzMyA0NDIgMzU1IDQxOSAzMjkgMzczIEMgMzA4LjMzMzMgNDE5IDI3Mi42NjY2NiA0NDIgMjIxLjk5OTk4IDQ0MiBDIDE3My4zMzMzMSA0NDIgMTMyLjk5OTk4IDQxOS4zMzMzIDEwMC45OTk5ODUgMzc0IEMgNzMuNjY2NjYgMzM0LjY2NjcgNTkuOTk5OTg1IDMwNS42NjY3IDU5Ljk5OTk4NSAyODcgQyA1OS45OTk5ODUgMjc3LjY2NjcgNjQuOTk5OTg1IDI3MyA3NC45OTk5ODUgMjczIEMgODQuMzMzMzEgMjczIDg5Ljk5OTk4NSAyNzcuNjY2NyA5MS45OTk5ODUgMjg3IEMgMTEwLjY2OTIwNSAzNDUuMzQxMyAxNTMuNDkyNzQgNDEzIDIxOS45OTk5OCA0MTMgQyAyNTIuNjY2NjYgNDEzIDI2OSAzOTIuMzMzMyAyNjkgMzUxIEMgMjY5IDMyOS42NjY3IDI1MS4zMzMzMyAyNTIuMDAwMDIgMjE2IDExOC4wMDAwMTUgQyAxOTguNjY2NjcgNTEuMzMzMzQ0IDE2OC42NjY2NyAxOC4wMDAwMTUgMTI2IDE4LjAwMDAxNSBDIDExMiAxOC4wMDAwMTUgOTkuMzMzMzMgMjAuNjY2Njg3IDg4IDI2LjAwMDAxNSBDIDExNCAzNi4wMDAwMTUgMTI3IDU0LjAwMDAxNSAxMjcgODAuMDAwMDE1IEMgMTI3IDEwNi4wMDAwMTUgMTEzLjY2NjY3IDExOS4wMDAwMTUgODcgMTE5LjAwMDAxNSBDIDUzLjg3NTgyNCAxMTkuMDAwMDE1IDI5IDkxLjA0Njc3IDI5IDU4LjAwMDAxNSBDIDI5IDEyLjEwODUyMDUgNzYuNDEwNzcgLTEwLjk5OTk4NSAxMjUgLTEwLjk5OTk4NSBDIDE2NyAtMTAuOTk5OTg1IDIwMS4zMzMzMyAxMi4wMDAwMTUgMjI4IDU4LjAwMDAxNSBDIDI0Ny4zMzMzMyAxMi4wMDAwMTUgMjgzIC0xMC45OTk5ODUgMzM1IC0xMC45OTk5ODUgQyAzODMgLTEwLjk5OTk4NSA0MjMgMTEuNjY2Njg3IDQ1NSA1Ny4wMDAwMTUgQyA0ODIuMzMzMyA5Ni4zMzMzNCA0OTYgMTI1LjMzMzM0IDQ5NiAxNDQuMDAwMDIgQyA0OTYgMTUzLjMzMzM0IDQ5MSAxNTguMDAwMDIgNDgxIDE1OC4wMDAwMiBDIDQ3Mi4zMzMzIDE1OC4wMDAwMiA0NjYuNjY2NjYgMTUzLjMzMzM0IDQ2NCAxNDQuMDAwMDIgQyA0NDYuNTc5MTYgODcuMDkxOTUgNDAxLjcyNTIyIDE4LjAwMDAxNSAzMzcgMTguMDAwMDE1IEMgMzAzLjY2NjcgMTguMDAwMDE1IDI4NyAzOC4zMzMzNDQgMjg3IDc5LjAwMDAxNSBDIDI4NyA5MS42NjY2OSAyOTIuMzMzMyAxMjAuMzMzMzQgMzAzIDE2NS4wMDAwMiBMIDMzNyAzMDAgQyAzNTUuNjY2NyAzNzUuMzMzMyAzODcgNDEzIDQzMSA0MTMgQyA0NDUgNDEzIDQ1Ny42NjY3IDQxMC4zMzMzIDQ2OSA0MDUgQyA0NDIuMzMzMyAzOTUuNjY2NyA0MjkgMzc3LjY2NjcgNDI5IDM1MSBDIDQyOSAzMjUgNDQyLjY2NjcgMzEyIDQ3MCAzMTIgQyA1MDEuNzY0NyAzMTIgNTI3IDM0MS4zMzg2OCA1MjcgMzczIFogIi8+CiAgICAgICAgPC9zeW1ib2w+CiAgICAgICAgPHN5bWJvbCBpZD0iZzEiIG92ZXJmbG93PSJ2aXNpYmxlIj4KICAgICAgICAgICAgPHBhdGggZD0iTSAxMTkgNDI0IEMgMTUwLjc5MDg1IDQyNCAxNzUgNDQ4LjIwODQ0IDE3NSA0ODAgQyAxNzUgNTE2IDE1Ni4zMzMzMyA1MzQuNjY2NyAxMTkgNTM2IEMgMTQxLjM2NjYgNTgzLjA4NzYgMTkwLjU0NCA2MjEgMjU2IDYyMSBDIDM0NC4xNDQ5IDYyMSA0MDIgNTU1LjI3MTkgNDAyIDQ2NyBDIDQwMiA0MTkgMzg0LjY2NjcgMzcyLjY2NjcgMzUwIDMyOCBDIDMzMi42NjY3IDMwNS4zMzMzIDMxOS42NjY3IDI4OS4zMzMzIDMxMSAyODAgTCA3NCA0NSBDIDYwLjY5NDY0IDMzLjM1NzgwMyA2MyAyOS45NjA5MDcgNjMgMCBMIDQ3NSAwIEwgNTA2IDE4OCBMIDQ2NCAxODggQyA0NTYuNjY2NyAxMzQuNjY2NjcgNDQ4LjY2NjcgMTA0LjMzMzMzIDQ0MCA5NyBDIDQzNS4zMzMzIDkzLjY2NjY3IDQwMy42NjY2NiA5MiAzNDUgOTIgTCAxNzUgOTIgQyAyNDEuNjY2NjcgMTUxLjMzMzMzIDMwNC4zMzMzIDIwNC4zMzMzMyAzNjMgMjUxIEMgNDA3LjY2NjcgMjg2LjMzMzMgNDQwIDMxNy4zMzMzIDQ2MCAzNDQgQyA0OTAgMzgyLjY2NjcgNTA1IDQyMy42NjY3IDUwNSA0NjcgQyA1MDUgNTI5IDQ4MC42NjY3IDU3OCA0MzIgNjE0IEMgMzg4LjY2NjcgNjQ3LjMzMzMgMzM1IDY2NCAyNzEgNjY0IEMgMjE2LjMzMzMzIDY2NCAxNjguNjY2NjcgNjQ4IDEyOCA2MTYgQyA4NC42NjY2NyA1ODEuMzMzMyA2MyA1MzcgNjMgNDgzIEMgNjMgNDQ4LjUzMTMgODguMjA0OTQgNDI0IDExOSA0MjQgWiAiLz4KICAgICAgICA8L3N5bWJvbD4KICAgICAgICA8c3ltYm9sIGlkPSJnMiIgb3ZlcmZsb3c9InZpc2libGUiPgogICAgICAgICAgICA8cGF0aCBkPSJNIDY5OCAyNzQgTCA0MTMgMjc0IEwgNDEzIDU1OSBDIDQxMyA1NzUgNDA1IDU4MyAzODkgNTgzIEMgMzczIDU4MyAzNjUgNTc1IDM2NSA1NTkgTCAzNjUgMjc0IEwgODAgMjc0IEMgNjQgMjc0IDU2IDI2NiA1NiAyNTAgQyA1NiAyMzQgNjQgMjI2IDgwIDIyNiBMIDM2NSAyMjYgTCAzNjUgLTU5IEMgMzY1IC03NSAzNzMgLTgzIDM4OSAtODMgQyA0MDUgLTgzIDQxMyAtNzUgNDEzIC01OSBMIDQxMyAyMjYgTCA2OTggMjI2IEMgNzE0IDIyNiA3MjIgMjM0IDcyMiAyNTAgQyA3MjIgMjYzLjIyODc2IDcxMS4yMjkxIDI3NCA2OTggMjc0IFogIi8+CiAgICAgICAgPC9zeW1ib2w+CiAgICAgICAgPHN5bWJvbCBpZD0iZzMiIG92ZXJmbG93PSJ2aXNpYmxlIj4KICAgICAgICAgICAgPHBhdGggZD0iTSAxNjMgNDQyIEMgMTE4LjMzMzMzIDQ0MiA4My4zMzMzMyA0MTcgNTggMzY3IEMgMzguNjY2NjcgMzI3LjY2NjcgMjkgMzAwLjY2NjcgMjkgMjg2IEMgMjkgMjc2LjY2NjcgMzQuMzMzMzMgMjcyIDQ1IDI3MiBDIDU4LjY5MDE4NiAyNzIgNjAuMDEwNjggMjc4LjA0MDA3IDY0IDI5MyBDIDg3LjMzMzMzIDM3Mi4zMzMzIDExOS4zMzMzMyA0MTIgMTYwIDQxMiBDIDE3My4zMzMzMyA0MTIgMTgwIDQwMyAxODAgMzg1IEMgMTgwIDM2OSAxNzQuNjY2NjcgMzQ2LjMzMzMgMTY0IDMxNyBDIDEyNiAyMTQuMzMzMzMgMTA3IDE0NC42NjY2NyAxMDcgMTA4IEMgMTA3IDMxLjY2OTAzNyAxNTQuNDAwMDUgLTEzIDIzMSAtMTMgQyAyNjQuMzMzMyAtMTMgMjk1IC0xIDMyMyAyMyBDIDI4Ny42NjY3IC0xMDkgMjMyLjY2NjY5IC0xNzUgMTU4LjAwMDAyIC0xNzUgQyAxMjQuMDAwMDE1IC0xNzUgMTAxLjAwMDAxNSAtMTY0IDg5LjAwMDAxNSAtMTQyIEMgMTI5LjAwMDAyIC0xNDAgMTQ5LjAwMDAyIC0xMjEgMTQ5LjAwMDAyIC04NSBDIDE0OS4wMDAwMiAtNTkuNjY2NjcgMTM1LjY2NjY5IC00NyAxMDkuMDAwMDE1IC00NyBDIDcxLjc0NTEyIC00NyA1MC4wMDAwMTUgLTc3Ljk3OTI5NCA1MC4wMDAwMTUgLTExNSBDIDUwLjAwMDAxNSAtMTcwLjI4MjYgMTAwLjE2OTY1IC0yMDUgMTU4LjAwMDAyIC0yMDUgQyAyNzMuNDIyODUgLTIwNSAzNjYuODI4NTggLTk5LjI4ODQ4IDM5Mi4wMDAwMyAtMSBMIDQ4Ni4wMDAwMyAzNzcgQyA0ODguNjY2NyAzODcuNjY2NyA0OTAgMzk1LjY2NjcgNDkwIDQwMSBDIDQ5MCA0MjEgNDc5LjMzMzMgNDMxIDQ1OCA0MzEgQyA0NDIgNDMxIDQyOS4zMzMzIDQyMy4zMzMzIDQyMCA0MDggQyA0MTQgMzg3LjMzMzMgNDA5LjMzMzMgMzY5LjMzMzMgNDA2IDM1NCBMIDM0MiA5NyBDIDMzMi4zMjM3IDYwLjcxMzg2NyAyNzguODE4MjcgMTYgMjM0IDE2IEMgMTk2IDE2IDE3NyA0MS4zMzMzMyAxNzcgOTIgQyAxNzcgMTM0IDE5My42NjY2NyAxOTggMjI3IDI4NCBDIDI0MC4zMzMzMyAzMTguNjY2NyAyNDcgMzQzIDI0NyAzNTcgQyAyNDcgNDA2LjA0NTc1IDIxMi4wNzI4MSA0NDIgMTYzIDQ0MiBaICIvPgogICAgICAgIDwvc3ltYm9sPgogICAgICAgIDxzeW1ib2wgaWQ9Imc0IiBvdmVyZmxvdz0idmlzaWJsZSI+CiAgICAgICAgICAgIDxwYXRoIGQ9Ik0gNjk4IDM2NyBMIDgwIDM2NyBDIDY0IDM2NyA1NiAzNTkuMzMzMyA1NiAzNDQgQyA1NiAzMjguNjY2NyA2NCAzMjEgODAgMzIxIEwgNjk4IDMyMSBDIDcxNCAzMjEgNzIyIDMyOC42NjY3IDcyMiAzNDQgQyA3MjIgMzU2LjM5ODMgNzEwLjY4ODIzIDM2NyA2OTggMzY3IFogTSA2OTggMTc5IEwgODAgMTc5IEMgNjQgMTc5IDU2IDE3MS4zMzMzMyA1NiAxNTYgQyA1NiAxNDAuNjY2NjcgNjQgMTMzIDgwIDEzMyBMIDY5OCAxMzMgQyA3MTQgMTMzIDcyMiAxNDAuNjY2NjcgNzIyIDE1NiBDIDcyMiAxNjkuMjU0OSA3MTEuMjI5MSAxNzkgNjk4IDE3OSBaICIvPgogICAgICAgIDwvc3ltYm9sPgogICAgICAgIDxzeW1ib2wgaWQ9Imc1IiBvdmVyZmxvdz0idmlzaWJsZSI+CiAgICAgICAgICAgIDxwYXRoIGQ9Ik0gMjY5IDY2NiBDIDIyOC4zMzMzMyA2MjQgMTY4LjMzMzMzIDYwMyA4OSA2MDMgTCA4OSA1NjQgQyAxNDEgNTY0IDE4My42NjY2NyA1NzIgMjE3IDU4OCBMIDIxNyA4MiBDIDIxNyA2NCAyMTIuNSA1Mi4zMzMzMyAyMDMuNSA0NyBDIDE5NC41IDQxLjY2NjY3IDE3MCAzOSAxMzAgMzkgTCA5NSAzOSBMIDk1IDAgQyAxMjAuMzMzMzMgMiAxNzQuMzMzMzMgMyAyNTcgMyBDIDMzOS42NjY3IDMgMzkzLjY2NjcgMiA0MTkgMCBMIDQxOSAzOSBMIDM4NCAzOSBDIDM0Mi42NjY3IDM5IDMxNy44MzMzNCA0MS42NjY2NyAzMDkuNSA0NyBDIDMwMS4xNjY3IDUyLjMzMzMzIDI5NyA2NCAyOTcgODIgTCAyOTcgNjM2IEMgMjk3IDY1OS41NjYwNCAyOTUuMTY0NDMgNjY2IDI2OSA2NjYgWiAiLz4KICAgICAgICA8L3N5bWJvbD4KICAgIDwvZGVmcz4KICAgIDxkZWZzIGlkPSJjbGlwLXBhdGgiLz4KPC9zdmc+Cg=="></p>
+<p>Cette équation décrit parfaitement l&#39;infinité des points du cercle et ce avec une précision infinie.</p>
+<p>Une description numérique du même cercle pourrait être la suivantes :</p>
+<pre><code class="lang_python" style="font-size: 90%">points = [
+  (1.0, 0.0), (0.9800665778412416, 0.19866933079506122),
+  (0.9210609940028851, 0.3894183423086505), (0.8253356149096782, 0.5646424733950355),
+  (0.6967067093471654, 0.7173560908995228), (0.5403023058681398, 0.8414709848078965),
+  (0.3623577544766736, 0.9320390859672263), (0.16996714290024104, 0.9854497299884601),
+  (-0.029199522301288593, 0.9995736030415052), (-0.2272020946930869, 0.9738476308781953),
+  (-0.4161468365471422, 0.9092974268256818), (-0.5885011172553455, 0.8084964038195903),
+  (-0.7373937155412454, 0.6754631805511511), (-0.8568887533689473, 0.5155013718214642),
+  (-0.9422223406686583, 0.33498815015590466), (-0.9899924966004455, 0.14112000805986677),
+  (-0.998294775794753, -0.05837414342758053), (-0.9667981925794608, -0.2555411020268321),
+  (-0.8967584163341465, -0.44252044329485324), (-0.790967711914416, -0.61185789094272),
+  (-0.6536436208636113, -0.7568024953079289), (-0.49026082134069865, -0.8715757724135886),
+  (-0.3073328699784185, -0.9516020738895163), (-0.1121525269350531, -0.9936910036334646),
+  (0.08749898343944816, -0.9961646088358406), (0.28366218546322797, -0.958924274663138),
+  (0.46851667130037866, -0.8834546557201524), (0.634692875942636, -0.772764487555986),
+  (0.7755658785102513, -0.6312666378723195), (0.8855195169413201, -0.46460217941375503),
+  (0.9601702866503667, -0.2794154981989233), (0.9965420970232177, -0.08308940281749375)
+]</code></pre>
+
+<p>Cette description n&#39;est qu&#39;une liste finie de points ayant une précision finie. Bien que la description analytique soit meilleure à tous points de vues, la description numérique suffit dans la plupart des cas.</p>
+<figure>
+  <img src="./circle.png" alt="">
+  <figcaption>Dessin des <code>points</code> avec <code>turtle</code></figcaption>
+</figure>
+
+<p>De plus, il est généralement possible de rendre la description numériques aussi précise que l&#39;on souhaite. On pourrait ici augmenter le nombre de points pour améliorer la description du cercle.</p>
+<p>Un autre avantage de la description numérique est qu&#39;elle est bien plus pratique pour un ordinateur. En effet, un ordinateur peut gérer très facilement un grand nombre de valeurs numériques d&#39;une précision finie. Il lui est beaucoup moins simple de manipuler des concepts mathématiques abstraits.</p>
+<p>Un ordinateur n&#39;est au final qu&#39;une grosse calculatrice avec plusieurs avantages :</p>
+<ul>
+<li>Meilleur clavier</li>
+<li>Meilleur écran</li>
+<li>Plus de puissance</li>
+</ul>
+<p>Il est extrêmement commun pour un ingénieur d&#39;utiliser un <strong>ordinateur</strong> pour effectuer des <strong>calculs</strong>. L&#39;utilisation de Python dans ce domaine est très <strong>répandue</strong> dans le monde professionnel.</p>
+<h2>Math en Python</h2>
+<p>Avant d&#39;entrer dans les détails des méthodes numériques de résolution de problèmes mathématiques, voyons ce que Python a à offrir. En effet, Python est déjà capable d&#39;évaluer beaucoup d&#39;expressions mathématiques.</p>
+<h3>Trigonométrie</h3>
+<p>Le module <code>math</code> de Python contient toutes les fonctions trigonométriques usuelles :</p>
+<pre><code class="language-python">import math
+
+print(math.cos(math.pi))
+print(math.sin(math.pi/2))
+print(math.tan(math.pi/4))
+print(math.acos(0))         # arc cosinus
+print(math.asin(1))         # arc sinus
+print(math.atan(1))         # arc tangente
+</code></pre>
+<p>Le module math contient bien d&#39;autres fonctions mathématiques</p>
+<h3>Nombre complexes</h3>
+<p>Le type <code>complex</code> existe par défaut en Python et il n&#39;y a besoin d&#39;importer aucun module pour créer des valeurs complexes :</p>
+<pre><code class="language-python"># définir un nombre complex
+x = 1+2j
+x = complex(1, 2)
+print(x)
+
+# parties réelles et imaginaires
+print(x.real)
+print(x.imag)
+
+print(x+x)
+print(x*x)
+</code></pre>
+<p>Les fonctions mathématiques supportant les nombres complexes se trouve dans le module <code>cmath</code>.</p>
+<pre><code class="language-python">import cmath
+
+# racine carrée de nombres négatifs
+print(cmath.sqrt(-1))
+
+# modules et arguments
+print(cmath.phase(x))           # argument
+print(abs(x))                   # module
+print(cmath.polar(x))           # module et argument
+
+# définition d&#39;1 nb complex à partir du module et argument
+print(cmath.rect(1, cmath.pi))  
+
+# fonction
+print(cmath.exp(x))             # exponentielle
+</code></pre>
+<h2>Calculs vectoriels</h2>
+<p>Manipuler des nombres scalaires est déjà bien mais il arrive souvent en mathématiques qu&#39;il faille travailler avec des vecteurs. Il est bien évidemment possible de représenter les vecteurs avec des listes ou des tuples :</p>
+<pre><code class="language-python">v1 = (1, 2)
+v2 = (3, 4)
+</code></pre>
+<p>Le problème est que les opérations de base ne sont pas disponibles nativement en Python. Il est bien sûr possible de les créer avec des fonctions :</p>
+<pre><code class="language-python">def add(a, b):
+  return (a[0]+b[0], a[1]+b[1])
+
+print(add(v1, v2))  # affiche (4, 6)
+</code></pre>
+<p>Ce serait par contre très long de créer toutes les fonctions permettant de faire toutes les opérations sur les vecteurs. De plus, la notation <code>add(v1, v2)</code> est quand même moins pratique que <code>v1 + v2</code>. </p>
+<h3>Numpy</h3>
+<p>Pour pouvoir faire des calculs vectoriels plus facilement, nous allons utiliser le module <code>numpy</code>.</p>
+<p>Ce module permet de faire bien d&#39;autres chose que du simple calcul vectoriel. Il est extrêmement utile pour les calculs scientifiques et le traitement de grandes quantités de données. Il est très couramment utilisé par les ingénieurs et vous le rencontrerez en beaucoup d&#39;occasions durant vos études.</p>
+<h3>Installation</h3>
+<p>On installe le module <code>numpy</code> en tapant la commande suivante dans le terminal : </p>
+<pre class="terminal">
+> python -m pip install numpy
+</pre>
+
+<h3>Importation</h3>
+<p>Une fois installé, il est maintenant possible d&#39;importer <code>numpy</code> dans nos programmes pour utiliser ses fonctions :</p>
+<pre><code class="language-python">import numpy
+</code></pre>
+<p>Une fois importé, nous pouvons appeler les fonctions de <code>numpy</code>. Nous pouvons par exemple créer un vecteur avec la fonction <code>numpy.array()</code> :</p>
+<pre><code class="language-python">v = numpy.array([1, 2])
+</code></pre>
+<p>Comme on doit souvent écrire le nom du module lorsqu&#39;on utilise <code>numpy</code>, il est courent de lui donner un alias plus court comme ceci :</p>
+<pre><code class="language-python">import numpy as np
+</code></pre>
+<p>Ce qui nous permet d&#39;utiliser ses fonction de la manière suivante :</p>
+<pre><code class="language-python">v = np.array([1, 2])
+</code></pre>
+<h3>Vecteurs</h3>
+<p>Plusieurs manières de créer des vecteurs de valeurs. Depuis une structure Python, ou par des fonctions de Numpy.</p>
+<pre><code class="language-python">np.array([1, 2, 3])
+np.zeros(5)
+np.ones(10)
+np.random.random(10)
+np.random.randn(10)
+np.linspace(0, 10, 5)
+np.arange(0, 10, 0.2)
+</code></pre>
+<h3>Opérations avec scalaire</h3>
+<pre><code class="language-python">a = np.array([1, 2, 3, 4])
+a + 1       # [2, 3, 4, 5]
+2 * a       # [2, 4, 6, 8]
+a ** 2      # [1, 4, 9, 16]
+1 / a       # [1.0, 0.5, 0.3333, 0.25]
+a &lt; 3       # [True, True, False, False]
+</code></pre>
+<h3>Opérations entre vecteurs</h3>
+<p>Vecteurs de mêmes tailles. Élément par élément.</p>
+<pre><code class="language-python">a = np.array([1, 2, 3, 4])
+b = np.array([5, 6, 7, 8])
+a + b    # [6, 8, 10, 12]
+a * b    # [5, 12, 21, 32]
+</code></pre>
+<pre><code class="language-python">print(np.linalg.norm(v))     # Norme
+</code></pre>
+<h3>Fonctions vectorisées</h3>
+<p>Fonctions qui s&#39;appliquent sur tous les éléments d&#39;un vecteur</p>
+<pre><code class="language-python">x = np.array([1, 2, 3])
+
+# Fonction standard ne marche pas
+y = math.sin(x) # Error
+
+# Fonction vectorisée existe dans numpy
+y = np.sin(x)
+</code></pre>
+<p>Créer une fonction vectorisée</p>
+<p>La plupart des opérations de base sont déjà supportées par numpy.</p>
+<p>Mais il est facile de créer des fonctions vectorisées :</p>
+<pre><code class="language-python">@np.vectorize
+def fun(a, b):
+  if a &gt; b:
+    return 1
+  return -1
+
+x = np.array([1, 2, 3])
+y = np.array([3, 2, 1])
+
+print(fun(x, y))
+</code></pre>
+<h2>Graphiques de fonctions</h2>
+<p>Utilisation du module <code>matplotlib</code></p>
+<pre class="terminal">
+> python -m pip install matplotlib
+</pre>
+
+<p>Fonctionne très bien avec <code>numpy</code></p>
+<h3>Créer un graphique</h3>
+<p>Importer <code>matplotlib</code></p>
+<pre><code class="language-python">from matplotlib import pyplot as plt
+</code></pre>
+<p>Importer <code>numpy</code></p>
+<pre><code class="language-python">import numpy as np
+</code></pre>
+<p>Créer les abscisses des échantillons</p>
+<pre><code class="language-python"># 100 valeurs entre -2 et 2
+x = np.linspace(-5, 5, 100)
+</code></pre>
+<p>Calculer les ordonnées</p>
+<pre><code class="language-python"># np.sin est la version vectorisée de sin
+y = np.sin(x)
+</code></pre>
+<p>Dessiner le graphique</p>
+<pre><code class="language-python">plt.plot(x, y)
+plt.show()
+</code></pre>
+<figure>
+<img src="./sin.png" alt="">
+</figure>
+
+<h3>Style</h3>
+<pre><code class="language-python">from matplotlib import pyplot as plt
+import numpy as np
+
+x = np.linspace(-5, 5, 100)
+y = np.sin(x)
+plt.title(&quot;Sinus&quot;)
+plt.xlabel(&quot;x&quot;)
+plt.ylabel(&quot;sin(x)&quot;)
+plt.grid()
+plt.xticks([-3*np.pi/2, -np.pi, -np.pi/2, 0, np.pi/2, np.pi, 3*np.pi/2],
+  labels=[&quot;-3pi/2&quot;, &quot;-pi&quot;, &quot;-pi/2&quot;, &quot;0&quot;, &quot;pi/2&quot;, &quot;pi&quot;, &quot;3pi/2&quot;])
+plt.plot(x, y)
+plt.show()
+</code></pre>
+<figure>
+<img src="./sin_style.png" alt="">
+</figure>
+
+<h3>Plusieurs courbes</h3>
+<pre><code class="language-python">from matplotlib import pyplot as plt
+import numpy as np
+
+x = np.linspace(-5, 5, 100)
+ysin = np.sin(x)
+ycos = np.cos(x)
+plt.title(&quot;Trigono&quot;)
+plt.xlabel(&quot;x&quot;)
+plt.ylabel(&quot;sin(x)&quot;)
+plt.grid()
+plt.xticks([-3*np.pi/2, -np.pi, -np.pi/2, 0, np.pi/2, np.pi, 3*np.pi/2],
+  labels=[&quot;-3pi/2&quot;, &quot;-pi&quot;, &quot;-pi/2&quot;, &quot;0&quot;, &quot;pi/2&quot;, &quot;pi&quot;, &quot;3pi/2&quot;])
+plt.plot(x, ysin, label=&quot;sin(x)&quot;)
+plt.plot(x, ycos, label=&quot;cos(x)&quot;)
+plt.legend()
+plt.show()
+</code></pre>
+<figure>
+<img src="./sin_cos.png" alt="">
+</figure>
+
+<p>Documentation <a href="https://matplotlib.org/stable/index.html">matplotlib.org/stable</a></p>
+<h2>Analyse de fonction</h2>
+<p>Analyse de fonction avec <code>scipy</code></p>
+<pre class="terminal">
+> python -m pip install scipy
+</pre>
+
+<h3>Recherche de racine</h3>
+<p>Avec la méthode Newton</p>
+<pre><code class="language-python">from scipy import optimize
+
+def fun(x):
+  return np.cos(x)+np.cos(3*x+1)/2+np.cos(5*x-1)/3
+
+root = optimize.newton(fun, -1)
+print(root)  # -1.2646564339411952
+
+x = np.linspace(-5, 5, 1000)
+
+plt.plot(x, fun(x))
+plt.plot(root, 0, &quot;o&quot;)
+plt.grid()
+plt.show()
+</code></pre>
+<figure>
+<img src="./root.png" alt="">
+</figure>
+
+<h3>Intégrale définie</h3>
+<p>Intégration numérique avec <code>integrate.quad</code></p>
+<pre><code class="language-python">from scipy import integrate
+
+def fun(x):
+  return np.sqrt(1 - x**2)
+
+result = integrate.quad(fun, -1, 1)
+print(result)   # (pi/2, erreur)
+
+x = np.linspace(-1, 1, 100)
+y = fun(x)
+
+plt.fill_between(x, y, alpha=0.5)
+plt.plot(x, y)
+plt.grid()
+plt.xlim(-1.5, 1.5)
+plt.annotate(str(result[0]), xy=(0, 0.4), ha=&quot;center&quot;)
+plt.show()
+</code></pre>
+<figure>
+<img src="./integrate.png" alt="">
+</figure>
+
+
+<h2>Calcul symbolique</h2>
+<p><code>sympy</code></p>
+
+</body>
+</html>
