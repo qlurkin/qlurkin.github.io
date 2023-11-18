@@ -157,7 +157,7 @@ Une fois importé, nous pouvons appeler les fonctions de `numpy`. Nous pouvons p
 v = numpy.array([1, 2])
 ```
 
-Comme on doit souvent écrire le nom du module lorsqu'on utilise `numpy`, il est courent de lui donner un alias plus court comme ceci :
+Comme on doit souvent écrire le nom du module lorsqu'on utilise `numpy`, il est courant de lui donner un alias plus court comme ceci :
 
 ```python
 import numpy as np
@@ -171,19 +171,45 @@ v = np.array([1, 2])
 
 ### Vecteurs
 
-Plusieurs manières de créer des vecteurs de valeurs. Depuis une structure Python, ou par des fonctions de Numpy.
+Il y a plusieurs manières de créer des vecteurs de valeurs. On peut convertir une liste ou un tuple Python :
 
 ```python
 np.array([1, 2, 3])
-np.zeros(5)
-np.ones(10)
-np.random.random(10)
-np.random.randn(10)
-np.linspace(0, 10, 5)
-np.arange(0, 10, 0.2)
+np.array((1, 2, 3))
 ```
 
+Ou utiliser des fonctions de `numpy` pour créer des vecteurs particuliers :
+
+```python
+np.zeros(5)            # vecteur de 5 zéros
+np.ones(10)            # vecteur de 10 uns
+np.linspace(0, 10, 5)  # vecteur de 5 valeurs allant uniformément de 0 à 10.
+np.arange(0, 10, 0.2)  # correspond à np.array(range(0, 10, 0.2))
+```
+
+Il y a aussi plusieurs façons de créer des vecteurs des vecteurs de valeurs aléatoires : 
+
+```python
+np.random.random(10)  # valeurs choisies entre 0 et 1 avec une 
+                      # distribution uniforme
+
+np.random.randn(10)   # valeurs choisies avec une distribution normale
+                      # de moyenne 0 et d'écart type 1.
+```
+
+<figure>
+  <img src="./uniform.svg" alt="">
+  <figcaption>Distribution uniforme entre 0 et 1</figcaption>
+</figure>
+
+<figure>
+  <img src="./normal.svg" alt="">
+  <figcaption>Distribution normale de moyenne 0 et d'écart type 1</figcaption>
+</figure>
+
 ### Opérations avec scalaire
+
+Les opérations effectuées entre un vecteur `numpy` et un scalaire sont effectuées sur toutes les composantes du vecteur :
 
 ```python
 a = np.array([1, 2, 3, 4])
@@ -196,7 +222,7 @@ a < 3       # [True, True, False, False]
 
 ### Opérations entre vecteurs
 
-Vecteurs de mêmes tailles. Élément par élément.
+Les opérations de base sont définies entre vecteurs de mêmes tailles. Elles s'éffectue alors entre composantes de même position :
 
 ```python
 a = np.array([1, 2, 3, 4])
@@ -205,13 +231,15 @@ a + b    # [6, 8, 10, 12]
 a * b    # [5, 12, 21, 32]
 ```
 
+Une autre opération courante est le calcul de la norme d'un vecteur : 
+
 ```python
 print(np.linalg.norm(v))     # Norme
 ```
 
 ### Fonctions vectorisées
 
-Fonctions qui s'appliquent sur tous les éléments d'un vecteur
+Les fonctions vectorisées s'appliquent sur tous les éléments d'un vecteur. Le résultat est le vecteur des valeurs de retour. Si on les utilise sur un scalaire elles se comportent normalement. Et si on les appelle sur une liste ou un tuple, il sera automatiquement converti en vecteur `numpy`.
 
 ```python
 x = np.array([1, 2, 3])
@@ -223,11 +251,9 @@ y = math.sin(x) # Error
 y = np.sin(x)
 ```
 
-Créer une fonction vectorisée
-
 La plupart des opérations de base sont déjà supportées par numpy.
 
-Mais il est facile de créer des fonctions vectorisées :
+Il est aussi possible de créer une fonction vectorisée facilement avec le décorateur `@np.vectorize`. Il s'utilise sur une fonction prenant des valeurs scalaire en paramètre. Ce décorateur transforme la fonction pour qu'elle puisse recevoir des scalaires, des vecteurs ou une combinaison des deux en paramètres :
 
 ```python
 @np.vectorize
@@ -239,7 +265,9 @@ def fun(a, b):
 x = np.array([1, 2, 3])
 y = np.array([3, 2, 1])
 
-print(fun(x, y))
+print(fun(x, y))  # affiche [-1 -1 1]
+print(fun(x, 1))  # affiche [-1 1 1]
+print(fun(0, y))  # affiche [1 1 1]
 ```
 
 ## Graphiques de fonctions
