@@ -1,6 +1,6 @@
 ---
 title: "Chapitre 6"
-subtitle: "Calcul numérique et symbolique"
+subtitle: "Calcul numérique"
 typst: true
 ---
 
@@ -31,14 +31,14 @@ Une description numérique du même cercle pourrait être la suivantes :
   (0.9601702866503667, -0.2794154981989233), (0.9965420970232177, -0.08308940281749375)
 ]</code></pre>
 
-Cette description n'est qu'une liste finie de points ayant une précision finie. Bien que la description analytique soit meilleure à tous points de vues, la description numérique suffit dans la plupart des cas.
+Cette description n'est qu'une liste finie de points ayant une précision finie. Bien que la description analytique soit meilleure à tous points de vue, la description numérique suffit dans la plupart des cas.
 
 <figure>
   <img src="./circle.png" alt="">
   <figcaption>Dessin des <code>points</code> avec <code>turtle</code></figcaption>
 </figure>
 
-De plus, il est généralement possible de rendre la description numériques aussi précise que l'on souhaite. On pourrait ici augmenter le nombre de points pour améliorer la description du cercle.
+De plus, il est généralement possible de rendre la description numérique aussi précise que l'on souhaite. On pourrait ici augmenter le nombre de points pour améliorer la description du cercle.
 
 Un autre avantage de la description numérique est qu'elle est bien plus pratique pour un ordinateur. En effet, un ordinateur peut gérer très facilement un grand nombre de valeurs numériques d'une précision finie. Il lui est beaucoup moins simple de manipuler des concepts mathématiques abstraits.
 
@@ -89,7 +89,7 @@ print(x+x)
 print(x*x)
 ```
 
-Les fonctions mathématiques supportant les nombres complexes se trouve dans le module `cmath`.
+Les fonctions mathématiques supportant les nombres complexes se trouvent dans le module `cmath`.
 
 ```python
 import cmath
@@ -133,7 +133,7 @@ Ce serait par contre très long de créer toutes les fonctions permettant de fai
 
 Pour pouvoir faire des calculs vectoriels plus facilement, nous allons utiliser le module `numpy`.
 
-Ce module permet de faire bien d'autres chose que du simple calcul vectoriel. Il est extrêmement utile pour les calculs scientifiques et le traitement de grandes quantités de données. Il est très couramment utilisé par les ingénieurs et vous le rencontrerez en beaucoup d'occasions durant vos études.
+Ce module permet de faire bien d'autres choses que du simple calcul vectoriel. Il est extrêmement utile pour les calculs scientifiques et le traitement de grandes quantités de données. Il est très couramment utilisé par les ingénieurs et vous le rencontrerez en beaucoup d'occasions durant vos études.
 
 ### Installation
 
@@ -222,7 +222,7 @@ a < 3       # [True, True, False, False]
 
 ### Opérations entre vecteurs
 
-Les opérations de base sont définies entre vecteurs de mêmes tailles. Elles s'éffectue alors entre composantes de même position :
+Les opérations de base sont définies entre vecteurs de mêmes tailles. Elles s'effectuent alors entre composantes de même position :
 
 ```python
 a = np.array([1, 2, 3, 4])
@@ -239,7 +239,7 @@ print(np.linalg.norm(v))     # Norme
 
 ### Fonctions vectorisées
 
-Les fonctions vectorisées s'appliquent sur tous les éléments d'un vecteur. Le résultat est le vecteur des valeurs de retour. Si on les utilise sur un scalaire elles se comportent normalement. Et si on les appelle sur une liste ou un tuple, il sera automatiquement converti en vecteur `numpy`.
+Les fonctions vectorisées s'appliquent sur tous les éléments d'un vecteur. Le résultat est le vecteur des valeurs de retour. Si on les utilise sur un scalaire, elles se comportent normalement. Et si on les appelle sur une liste ou un tuple, il sera automatiquement converti en vecteur `numpy`.
 
 ```python
 x = np.array([1, 2, 3])
@@ -253,7 +253,7 @@ y = np.sin(x)
 
 La plupart des opérations de base sont déjà supportées par numpy.
 
-Il est aussi possible de créer une fonction vectorisée facilement avec le décorateur `@np.vectorize`. Il s'utilise sur une fonction prenant des valeurs scalaire en paramètre. Ce décorateur transforme la fonction pour qu'elle puisse recevoir des scalaires, des vecteurs ou une combinaison des deux en paramètres :
+Il est aussi possible de créer une fonction vectorisée facilement avec le décorateur `@np.vectorize`. Il s'utilise sur une fonction prenant des valeurs scalaires en paramètres. Ce décorateur transforme la fonction pour qu'elle puisse recevoir des scalaires, des vecteurs ou une combinaison des deux en paramètres :
 
 ```python
 @np.vectorize
@@ -270,56 +270,74 @@ print(fun(x, 1))  # affiche [-1 1 1]
 print(fun(0, y))  # affiche [1 1 1]
 ```
 
+### Documentation
+
+La documentation de `numpy` se trouve sur :
+
+[https://numpy.org/doc/stable/](https://numpy.org/doc/stable/)
+
+
 ## Graphiques de fonctions
 
-Utilisation du module `matplotlib`
+Pour étudier un problème, il peut être très utile d'afficher des graphiques de fonctions. Pour cela, on peut utiliser `matplotlib`. Cette bibliothèque doit d'abord être installée :
 
 <pre class="terminal">
 > python -m pip install matplotlib
 </pre>
 
-Fonctionne très bien avec `numpy`
+Elle généralement utilisée en conjonction avec `numpy`
 
 ### Créer un graphique
 
-Importer `matplotlib`
+Le module de `matplotlib` qui nous intéresse s'appelle `pyplot`. Il est généralement importé avec l'alias `plt` :
 
 ```python
 from matplotlib import pyplot as plt
 ```
 
-Importer `numpy`
+Pour afficher une courbe, il faut fournir une liste de points de la courbe. Pour nous aider à la générer, nous allons utiliser `numpy` :
 
 ```python
 import numpy as np
 ```
 
-Créer les abscisses des échantillons
+Commençons par créer les abscisses des points :
 
 ```python
 # 100 valeurs entre -2 et 2
 x = np.linspace(-5, 5, 100)
 ```
 
-Calculer les ordonnées
+Calculons ensuite leurs ordonnées :
 
 ```python
 # np.sin est la version vectorisée de sin
 y = np.sin(x)
 ```
 
-Dessiner le graphique
+Pour afficher la courbe, il suffit d'utiliser les fonctions `figure`, `plot` et `show` :
 
 ```python
-plt.plot(x, y)
-plt.show()
+plt.figure()    # commence une nouvelle figure
+plt.plot(x, y)  # dessine la courbe
+plt.show()      # affiche la figure
 ```
 
 <figure>
-<img src="./sin.png" alt="">
+<img src="./sin.svg" alt="">
 </figure>
 
-### Style
+Il est aussi possible de sauver le graphique dans un fichier image en utilisant le fonction `savefig()` :
+
+```python
+plt.figure()
+plt.plot(x, y)
+plt.savefig("sin.png")
+```
+
+### Configurer la figure
+
+Tous les aspect de la mise en page de la figure peuvent être configuré :
 
 ```python
 from matplotlib import pyplot as plt
@@ -327,21 +345,31 @@ import numpy as np
 
 x = np.linspace(-5, 5, 100)
 y = np.sin(x)
-plt.title("Sinus")
-plt.xlabel("x")
-plt.ylabel("sin(x)")
-plt.grid()
-plt.xticks([-3*np.pi/2, -np.pi, -np.pi/2, 0, np.pi/2, np.pi, 3*np.pi/2],
-  labels=["-3pi/2", "-pi", "-pi/2", "0", "pi/2", "pi", "3pi/2"])
+plt.figure()
+plt.title("Sinus")              # Donne un titre à la figure
+plt.xlabel("x")                 # Affiche un nom sur l'axe des x
+plt.ylabel("sin(x)")            # Affiche un nom sur l'axe des y
+plt.grid()                      # Affiche une grille
+
+# Configure les graduations de l'axe des x
+plt.xticks(
+  [-3*np.pi/2, -np.pi, -np.pi/2, 0, np.pi/2, np.pi, 3*np.pi/2], # positions
+  labels=["-3pi/2", "-pi", "-pi/2", "0", "pi/2", "pi", "3pi/2"] # étiquettes
+)
+
+plt.axhline(color="k")          # Affiche une ligne noire pour l'axe des x
+plt.axvline(color="k")          # Affiche une ligne noire pour l'axe des y
 plt.plot(x, y)
 plt.show()
 ```
 
 <figure>
-<img src="./sin_style.png" alt="">
+<img src="./sin_style.svg" alt="">
 </figure>
 
 ### Plusieurs courbes
+
+On peut évidemment dessiner plusieurs courbes sur la même figure :
 
 ```python
 from matplotlib import pyplot as plt
@@ -350,27 +378,105 @@ import numpy as np
 x = np.linspace(-5, 5, 100)
 ysin = np.sin(x)
 ycos = np.cos(x)
+plt.figure()
 plt.title("Trigono")
 plt.xlabel("x")
-plt.ylabel("sin(x)")
+plt.ylabel("y")
 plt.grid()
-plt.xticks([-3*np.pi/2, -np.pi, -np.pi/2, 0, np.pi/2, np.pi, 3*np.pi/2],
-  labels=["-3pi/2", "-pi", "-pi/2", "0", "pi/2", "pi", "3pi/2"])
-plt.plot(x, ysin, label="sin(x)")
-plt.plot(x, ycos, label="cos(x)")
-plt.legend()
+plt.xticks(
+  [-3*np.pi/2, -np.pi, -np.pi/2, 0, np.pi/2, np.pi, 3*np.pi/2],
+  labels=["-3pi/2", "-pi", "-pi/2", "0", "pi/2", "pi", "3pi/2"]
+)
+plt.axhline(color="k")
+plt.axvline(color="k")
+plt.plot(x, ysin, label="sin(x)")     # on donne une étiquette à la courbe
+plt.plot(x, ycos, label="cos(x)")     # on donne une étiquette à la courbe
+plt.legend()                          # on demande d'afficher la légende
 plt.show()
 ```
 
 <figure>
-<img src="./sin_cos.png" alt="">
+<img src="./sin_cos.svg" alt="">
 </figure>
 
-Documentation [matplotlib.org/stable](https://matplotlib.org/stable/index.html)
+### Documentation
+
+La documentation de `matplotlib` se trouve sur :
+
+[matplotlib.org/stable](https://matplotlib.org/stable/index.html)
 
 ## Analyse de fonction
 
-Analyse de fonction avec `scipy`
+C'est ici que nous allons commencer à entrer dans le vif du sujet des méthodes numériques de résolution de problème.
+
+Pour bien comprendre comment ces méthodes fonctionnent, nous allons essayer de résoudre un problème simple : trouver une racine de la fonction $$ cos(x) + cos(3x+1)/2 + cos(5x-1)/3 $$
+
+Commençons par afficher le graphique de cette fonction pour voir à quoi elle ressemble :
+
+```python
+def fun(x):
+    return np.cos(x) + np.cos(3 * x + 1) / 2 + np.cos(5 * x - 1) / 3
+
+x = np.linspace(-5, 5, 1000)
+
+plt.figure()
+plt.axhline(color="k")
+plt.axvline(color="k")
+plt.plot(x, fun(x))
+plt.grid()
+plt.show()
+```
+
+<figure>
+<img src="./fun_to_root.svg" alt="">
+</figure>
+
+Nous allons essayer de trouver précisément la racine qui se trouve entre $$x=-2$$ et $$x=0$$. Pour cela, nous n'allons pas utiliser de méthodes analytiques. Nous allons plutôt utiliser la puissance de l'ordinateur.
+
+Nous pouvons constater que le signe de la fonction est opposé en $$x=-2$$ et en $$x=0$$. Cela nous garanti qu'il y a au moins une racine dans cet intervalle puisque notre fonction est continue :
+
+<figure>
+<img src="./fun_to_root_1.svg" alt="">
+<figcaption>L'intervalle $$[-2, 0]$$</figcaption>
+</figure>
+
+Nous allons diviser notre intervalle en deux :
+
+<figure>
+<img src="./fun_to_root_2.svg" alt="">
+<figcaption>Divisons l'intervalle en deux</figcaption>
+</figure>
+
+Et nous allons continuer avec le demi-intervalle pour lequel la fonction a des signes opposés au deux extrémités. De cette façon, on garde un intervalle qui contient une racine.
+
+Il suffit maintenant de répéter cette procédure jusqu'à ce que l'intervalle soit si fin qu'on pourra considérer qu'on a trouvé la solution.
+
+<figure>
+<img src="./fun_to_root_3.svg" alt="">
+</figure>
+
+Bien sûr, nous n'allons pas faire ces calculs à la main. Nous allons écrire un programme pour les faire :
+
+```python
+def dichotomie(f, min, max, err):
+    mid = (min + max) / 2
+
+    if max - mid < err:
+        return mid
+
+    if f(min) * f(mid) < 0:
+        return dichotomie(f, min, mid, err)
+    else:
+        return dichotomie(f, mid, max, err)
+
+
+print(dichotomie(fun, -2, 0, 0.00001)) # affiche -1.2646560668945312
+```
+
+Comme dans notre exemple, les méthodes numériques sont souvent itératives. Si elles se rapprochent de la solution à chaque itération, on dit qu'elles convergent. Elles ont généralement besoin d'un critère d'arrêt qui est souvent lié à la précision souhaitée.
+
+Bien entendu, il existe des modules qui implémentent déjà des méthodes numériques pour la plupart des problèmes courants. Nous allons utiliser `scipy`. Il faut bien entendu l'installer :
+
 
 <pre class="terminal">
 > python -m pip install scipy
@@ -378,7 +484,31 @@ Analyse de fonction avec `scipy`
 
 ### Recherche de racine
 
-Avec la méthode Newton
+`scipy` implémente la méthode que nous avons vue plus haut :
+
+```python
+from scipy import optimize
+
+def fun(x):
+  return np.cos(x)+np.cos(3*x+1)/2+np.cos(5*x-1)/3
+
+root = optimize.bisect(fun, -2, 0, xtol=0.00001)  # xtol = 2e-12 par défaut
+
+print(root)   # affiche -1.2646560668945312
+
+x = np.linspace(-5, 5, 1000)
+plt.figure()
+plt.plot(x, fun(x))
+plt.plot(root, 0, "o")  # affiche un point sur la figure
+plt.grid()
+plt.show()
+```
+
+<figure>
+<img src="./bisect.svg" alt="">
+</figure>
+
+Une autre méthode de recherche de racine couramment utilisée est la méthode de Newton. Cette méthode n'a besoin que d'une valeur de départ et converge plus vite. Elle a aussi plus de chance de ne pas converger du tout :
 
 ```python
 from scipy import optimize
@@ -388,50 +518,42 @@ def fun(x):
 
 root = optimize.newton(fun, -1)
 print(root)  # -1.2646564339411952
-
-x = np.linspace(-5, 5, 1000)
-
-plt.plot(x, fun(x))
-plt.plot(root, 0, "o")
-plt.grid()
-plt.show()
 ```
-
-<figure>
-<img src="./root.png" alt="">
-</figure>
 
 ### Intégrale définie
 
-Intégration numérique avec `integrate.quad`
+Un autre problème que l'on peut résoudre avec des méthodes numériques est le calcul d'intégrales définies $$ integral_(-1)^1 sqrt(1 - x^2) dif x $$
 
 ```python
 from scipy import integrate
 
 def fun(x):
-  return np.sqrt(1 - x**2)
+    return np.sqrt(1 - x**2)
 
 result = integrate.quad(fun, -1, 1)
-print(result)   # (pi/2, erreur)
+print(result)  # (pi/2, erreur)
 
 x = np.linspace(-1, 1, 100)
 y = fun(x)
 
-plt.fill_between(x, y, alpha=0.5)
+plt.figure()
+plt.fill_between(x, y, alpha=0.5) # colorie l'aire sous la courbe
 plt.plot(x, y)
 plt.grid()
-plt.xlim(-1.5, 1.5)
-plt.annotate(str(result[0]), xy=(0, 0.4), ha="center")
+plt.axis("equal")                 # même échelle sur les 2 axes
+plt.xlim(-1.5, 1.5)               # limites de l'axe x
+plt.axhline(color="k")
+plt.axvline(color="k")
+plt.annotate(str(result[0]), xy=(0, 0.4), ha="center") # ajoute un texte
 plt.show()
 ```
 
 <figure>
-<img src="./integrate.png" alt="">
+<img src="./integrate.svg" alt="">
 </figure>
 
+### Documentation
 
-## Calcul symbolique
+La documentation de `scipy` se trouve sur :
 
-`sympy`
-
-
+[https://docs.scipy.org/doc/scipy/index.html](https://docs.scipy.org/doc/scipy/index.html)
