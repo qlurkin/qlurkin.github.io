@@ -10,7 +10,7 @@ Pour bien comprendre la différence entre une expression analytique et une expre
 
 Cette équation décrit parfaitement l'infinité des points du cercle et ce avec une précision infinie.
 
-Une description numérique du même cercle pourrait être la suivantes :
+Une description numérique du même cercle pourrait être la suivante :
 
 <pre><code class="lang_python" style="font-size: 90%">points = [
   (1.0, 0.0), (0.9800665778412416, 0.19866933079506122),
@@ -433,7 +433,7 @@ plt.show()
 
 Nous allons essayer de trouver précisément la racine qui se trouve entre $$x=-2$$ et $$x=0$$. Pour cela, nous n'allons pas utiliser de méthodes analytiques. Nous allons plutôt utiliser la puissance de l'ordinateur.
 
-Nous pouvons constater que le signe de la fonction est opposé en $$x=-2$$ et en $$x=0$$. Cela nous garanti qu'il y a au moins une racine dans cet intervalle puisque notre fonction est continue :
+Nous pouvons constater que le signe de la fonction est opposé en $$x=-2$$ et en $$x=0$$. Cela nous garantit qu'il y a au moins une racine dans cet intervalle puisque notre fonction est continue :
 
 <figure>
 <img src="./fun_to_root_1.svg" alt="">
@@ -447,7 +447,7 @@ Nous allons diviser notre intervalle en deux :
 <figcaption>Divisons l'intervalle en deux</figcaption>
 </figure>
 
-Et nous allons continuer avec le demi-intervalle pour lequel la fonction a des signes opposés au deux extrémités. De cette façon, on garde un intervalle qui contient une racine.
+Et nous allons continuer avec le demi-intervalle pour lequel la fonction a des signes opposés aux deux extrémités. De cette façon, on garde un intervalle qui contient une racine.
 
 Il suffit maintenant de répéter cette procédure jusqu'à ce que l'intervalle soit si fin qu'on pourra considérer qu'on a trouvé la solution.
 
