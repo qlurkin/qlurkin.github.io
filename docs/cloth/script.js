@@ -1,9 +1,10 @@
-import load_file from "../gameoflife/load_file.js"
-import interpolate from "../gameoflife/interpolate.js"
+import load_file from '../gameoflife/load_file.js'
+import interpolate from '../gameoflife/interpolate.js'
 
 if (!navigator.gpu) {
-    document.querySelector('.alert').innerHTML = "WebGPU not supported on this browser."
-    throw new Error("WebGPU not supported on this browser.")
+  document.querySelector('.alert').innerHTML =
+    'WebGPU not supported on this browser.'
+  throw new Error('WebGPU not supported on this browser.')
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -16,22 +17,21 @@ const SUB_STEP = 100
 ///////////////////////////////////////////////////////////////////////////////////////////
 // Device Configuration
 ///////////////////////////////////////////////////////////////////////////////////////////
-const canvas = document.querySelector("canvas")
+const canvas = document.querySelector('canvas')
 
 const adapter = await navigator.gpu.requestAdapter()
 if (!adapter) {
-    throw new Error("No appropriate GPUAdapter found.")
+  throw new Error('No appropriate GPUAdapter found.')
 }
 
 const device = await adapter.requestDevice()
-const context = canvas.getContext("webgpu")
+const context = canvas.getContext('webgpu')
 const canvasFormat = navigator.gpu.getPreferredCanvasFormat()
 context.configure({
-    device: device,
-    format: canvasFormat,
+  device: device,
+  format: canvasFormat,
 })
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 // Buffers
 ///////////////////////////////////////////////////////////////////////////////////////////
-
