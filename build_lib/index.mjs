@@ -8,6 +8,9 @@ import puppeteer from 'puppeteer'
 import express from 'express'
 import { PDFDocument } from 'pdf-lib'
 import compile from './typst.mjs'
+import { exec as exec_legacy } from 'node:child_process'
+import util from 'node:util'
+export const exec = util.promisify(exec_legacy)
 
 const build_script = 'build.js'
 
@@ -131,12 +134,12 @@ function runScript(scriptPath, args, options) {
   return new Promise((resolve, reject) => {
     const process = child_process.fork(scriptPath, args, options)
 
-    process.on('error', function(error) {
+    process.on('error', function (error) {
       const err = new Error(`Error in '${scriptPath}': ${error}`)
       reject(err)
     })
 
-    process.on('exit', function(code) {
+    process.on('exit', function (code) {
       resolve(code)
     })
   })
