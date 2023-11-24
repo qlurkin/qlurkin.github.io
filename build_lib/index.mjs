@@ -8,9 +8,9 @@ import puppeteer from 'puppeteer'
 import express from 'express'
 import { PDFDocument } from 'pdf-lib'
 import compile from './typst.mjs'
-import { exec as exec_legacy } from 'node:child_process'
+import { exec } from 'node:child_process'
 import util from 'node:util'
-export const exec = util.promisify(exec_legacy)
+export const cmd = util.promisify(exec)
 
 const build_script = 'build.js'
 

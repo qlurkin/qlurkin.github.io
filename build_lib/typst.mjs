@@ -1,7 +1,7 @@
 import { unlink, readFile, writeFile } from 'node:fs/promises'
 import util from 'node:util'
-import { exec as exec_legacy } from 'node:child_process'
-const exec = util.promisify(exec_legacy)
+import { exec } from 'node:child_process'
+const cmd = util.promisify(exec)
 
 async function base64_encode(file) {
   var bitmap = await readFile(file)
@@ -9,8 +9,9 @@ async function base64_encode(file) {
 }
 
 function img_inline(src, font_size) {
-  return `<img class="typst-formula-inline" style="display: inline-block; margin: -${font_size / 2
-    }px 0;" src="${src}">`
+  return `<img class="typst-formula-inline" style="display: inline-block; margin: -${
+    font_size / 2
+  }px 0;" src="${src}">`
 }
 
 function img_display(src, font_size) {
@@ -54,7 +55,7 @@ export async function compile_inline(src, font_size) {
   // const proc = Bun.spawn(['typst', 'compile', 'tmp.typ', 'tmp.svg'], {
   //   cwd: '.', // specify a working directory
   // })
-  await exec('typst compile tmp.typ tmp.svg')
+  await cmd('typst compile tmp.typ tmp.svg')
   const img_src = await base64_encode('tmp.svg')
   const img = img_inline(img_src, font_size)
   await unlink('tmp.typ')
@@ -68,7 +69,7 @@ export async function compile_display(src, font_size) {
   //   cwd: '.', // specify a working directory
   // })
   // await proc.exited
-  await exec('typst compile tmp.typ tmp.svg')
+  await cmd('typst compile tmp.typ tmp.svg')
   const img_src = await base64_encode('tmp.svg')
   const img = img_display(img_src, font_size)
   await unlink('tmp.typ')
