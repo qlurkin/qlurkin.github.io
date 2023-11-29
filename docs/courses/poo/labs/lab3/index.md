@@ -30,11 +30,11 @@ L'application par défaut ressemble à ceci:
 
 Suivez le tutoriel suivant pour créer une application de notes :
 
-[https://learn.microsoft.com/fr-fr/dotnet/maui/tutorials/notes-app/](https://learn.microsoft.com/fr-be/dotnet/maui/tutorials/notes-app/)
+[https://learn.microsoft.com/en-us/dotnet/maui/tutorials/notes-app/](https://learn.microsoft.com/en-us/dotnet/maui/tutorials/notes-app/)
 
 Poursuivez avec la suite sur les concepts *MVVM* : 
 
-[https://learn.microsoft.com/fr-fr/dotnet/maui/tutorials/notes-mvvm/](https://learn.microsoft.com/fr-fr/dotnet/maui/tutorials/notes-mvvm/)
+[https://learn.microsoft.com/en-us/dotnet/maui/tutorials/notes-mvvm/](https://learn.microsoft.com/en-us/dotnet/maui/tutorials/notes-mvvm/)
 
 Si vous avez des problèmes pour demarrer l'application avec VSCode ou avec `dotnet run`, essayer de forcer le framework cible avec la commande :
 
