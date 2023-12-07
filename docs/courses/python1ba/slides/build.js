@@ -7,6 +7,7 @@ build_and_index(
     'slides2',
     'slides3',
     'slides4',
+    'exam',
     //  'slides5',
   ],
   { title: 'Python Part 1' },
