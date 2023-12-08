@@ -98,14 +98,14 @@ Avec cette définition, il est possible d'appeler la fonction des deux façons&n
 ```python
 hello('Quentin', 17)        # affichera Bonsoir Quentin!
 hello('Lurkin')             # affichera Bonjour Lurkin!
-hello(hour=15, name='ECAM') # affichera Bonjour Lurkin!
+hello(hour=15, name='ECAM') # affichera Bon après-midi ECAM!
 ```
 
 Comme on le voit dans le troisième appel, il est possible de **nommer explicitement** les paramètres auxquels on veut donner une valeur et donc de les mentionner dans un autre ordre si on le souhaite.
 
 ## Fonctions avec valeur de retour
 
-Les fonctions que nous avons écrites jusqu'à présent ne renvoient pas de valeur. C'est-à- dire que ça n'a aucun sens d'écrire `a = hello(...)` (vous pouvez essayer de faire `print(a)` après avoir fait `a = hello('LUR')`). Il est cependant possible pour une fonction de **renvoyer** une valeur en utilisant le mot-clé `return`. Voici un exemple avec la fonction valeur absolue&nbsp;:
+Les fonctions que nous avons écrites jusqu'à présent ne renvoient pas de valeur. C'est-à-dire que ça n'a aucun sens d'écrire `a = hello(...)` (vous pouvez essayer de faire `print(a)` après avoir fait `a = hello('LUR')`). Il est cependant possible pour une fonction de **renvoyer** une valeur en utilisant le mot-clé `return`. Voici un exemple avec la fonction valeur absolue&nbsp;:
 
 ```python
 def abs(x):
@@ -199,7 +199,7 @@ Dès qu'on commence à utiliser des fonctions, la notion de variables **locales*
 
 Une variable globale est une variable définie pour l'ensemble du programme tandis qu'une variable locale est définie pour une fonction particulière. Dans notre programme d'affichage de nombres premiers dans sa version « découpée en fonctions », il y a une variable globale : `nb_prime`. On reconnait qu'elle est globale car elle est définie **en dehors de toute fonction**. Elle est définie pour l'ensemble du programme et est donc accessible même à l'intérieur des fonctions.
 
-Les variables locales, quant à elles, sont définies **à l'intérieur d'une fonction** : par exemple, la variable `d` de la fonction `isPrime()`. Ce type de variables n'est accessible **qu'à l'intérieur** de la fonction où elle est définie. L'avantage de ce cloisonnement de variables est que l'on peut **réutiliser** le même nom de variable dans plusieurs fonctions : par exemple on peut voir qu'il y a une variable locale nommée `d` dans la fonction `isDivisor()`. La variable `d` de la fonction `isPrime()` et la variable `d` de la fonction `isDivisor()` sont deux variables complètement indépendantes. Si les variables locales n'étaient pas cloisonnées à l'intérieur de leurs fonctions, il faudrait, à chaque fois qu'on veut utiliser une nouvelle variable, trouver un nom qui n'a pas encore été utilisé. Cela peut très vite devenir un problème lorsque le programme devient un peu long. Le cloisonnement nous permet donc d'écrire les fonctions sans se soucier de ce qui est fait dans les autres.
+Les variables locales, quant à elles, sont définies **à l'intérieur d'une fonction** : par exemple, la variable `d` de la fonction `isPrime()`. Ce type de variable n'est accessible **qu'à l'intérieur** de la fonction où elle est définie. L'avantage de ce cloisonnement de variables est que l'on peut **réutiliser** le même nom de variable dans plusieurs fonctions : par exemple on peut voir qu'il y a une variable locale nommée `d` dans la fonction `isDivisor()`. La variable `d` de la fonction `isPrime()` et la variable `d` de la fonction `isDivisor()` sont deux variables complètement indépendantes. Si les variables locales n'étaient pas cloisonnées à l'intérieur de leurs fonctions, il faudrait, à chaque fois qu'on veut utiliser une nouvelle variable, trouver un nom qui n'a pas encore été utilisé. Cela peut très vite devenir un problème lorsque le programme devient un peu long. Le cloisonnement nous permet donc d'écrire les fonctions sans se soucier de ce qui est fait dans les autres.
 
 ```python
 def fct():
@@ -267,7 +267,7 @@ Le programme ci-dessus affichera `30`. Le fait d'avoir déclaré `a` comme globa
 
 <p class="big">Il est important de préciser ici que l'usage de l'instruction <code>global</code> est considéré comme une mauvaise pratique et qu'il faut absolument éviter de l'utiliser.</p>
 
-**Petite remarque supplémentaire**, si vous définissez une variable locale dans un fonction, elle est définie dans toute la fonction, **même avant sa définition**. Le code suivant donne donc une erreur&nbsp;
+**Petite remarque supplémentaire** : si vous définissez une variable locale dans une fonction, elle est définie dans toute la fonction, **même avant sa définition**. Le code suivant donne donc une erreur&nbsp;
 
 ```python
 a=20
@@ -284,7 +284,7 @@ UnboundLocalError: cannot access local variable 'a' where it is
  not associated with a value
 </div>
 
-Comme une variable `a` est définie dans la fonction, le `print()` à la première ligne de la fonction `fct()` tante d'en utiliser la valeur. Mais à ce moment là de la fonction, la variable `a` n'a pas encore reçu de valeur. On obtient donc le message d'erreur `UnboundLocalError`.
+Comme une variable `a` est définie dans la fonction, le `print()` à la première ligne de la fonction `fct()` tente d'en utiliser la valeur. Mais à ce moment-là de la fonction, la variable `a` n'a pas encore reçu de valeur. On obtient donc le message d'erreur `UnboundLocalError`.
 
 ## Les fonctions récursives
 
@@ -326,7 +326,7 @@ done()
 
 La première ligne sert bien sûr à importer toutes les fonctions du module `turtle`.
 
-Vient ensuite une boucle qui effectue 4 tours. A chacun d'entre eux, la « tortue » avancera de 100 pixels et tournera de 90◦ vers la gauche. Durant tous ces déplacements, la « tortue » trace une ligne derrière elle, ce qui aboutit au dessin suivant :
+Vient ensuite une boucle qui effectue 4 tours. A chacun d'entre eux, la « tortue » avancera de 100 pixels et tournera de 90° vers la gauche. Durant tous ces déplacements, la « tortue » trace une ligne derrière elle, ce qui aboutit au dessin suivant :
 
 <figure><img src="./turtle.png" alt=""></figure>
 
@@ -447,22 +447,22 @@ Le code ci-dessus permet de tester la fonction `square` en lançant le fichier s
 
 Et cela affichera le carré bleu de côté 10.
 
-Mais lorsqu'on lancera le fichier qui importe `shape` et qui dessine 10 carrés rouges, le contenu du `if __name__ == "__main__":` ne serra pas exécuté et le carré bleu ne sera pas affiché.
+Mais lorsqu'on lancera le fichier qui importe `shape` et qui dessine 10 carrés rouges, le contenu du `if __name__ == "__main__":` ne sera pas exécuté et le carré bleu ne sera pas affiché.
 
 ## Exercices
 
 1. Écrire une fonction nommée `unique()` qui reçoit une liste en paramètre et qui renvoie une nouvelle liste contenant une fois chaque élément de la liste d'entrée, dans l'ordre d'apparition de la 1ère occurrence.
 
-1. Écrire une fonction nommée `zipper()` qui reçoit 2 listes en paramètres et qui renvoie une liste contenant les éléments des deux listes alternés. Attention, Les deux listes peuvent être de tailles différentes.
+1. Écrire une fonction nommée `zipper()` qui reçoit 2 listes en paramètres et qui renvoie une liste contenant les éléments des deux listes alternés. Attention, les deux listes peuvent être de tailles différentes.
 
 1. Écrire une fonction nommée `fibo()` qui prend un entier `n` en paramètre et qui renvoie le `n`<sup>ième</sup> terme de la suite de Fibonacci. La suite de Fibonacci est une suite où chaque terme est égal à la somme des deux termes précédents. Les deux premiers termes sont égaux à 1. Les termes sont numérotés à partir de 1.
 
-1. Écrire une fonction nommée `pgcd()` qui prend deux entiers en paramètres et renvoie le "Plus Grand Commun Diviseur". Le PGCD peut être calculé en utilisant les relations suivante: $$ "pgcd"(a, b) = cases( a &"si" b = 0, "pgcd"(b, a % b) &"sinon") $$
+1. Écrire une fonction nommée `pgcd()` qui prend deux entiers en paramètres et renvoie le "Plus Grand Commun Diviseur". Le PGCD peut être calculé en utilisant les relations suivantes: $$ "pgcd"(a, b) = cases( a &"si" b = 0, "pgcd"(b, a % b) &"sinon") $$
 
 1. Écrire un programme qui affiche la figure suivante&nbsp;:
-<figure><img src="./vonkock.png" alt=""></figure>
+<figure><img src="./vonkoch.jpg" alt=""></figure>
 Cette figure est composée de trois courbes construites selon le principe suivant&nbsp;:
-<figure><img src="./vonkock_build.png" alt=""></figure>
+<figure><img src="./segment_vonkoch.png" alt=""></figure>
 Vous pouvez utiliser <code>turtle</code> ou <code>pygame</code>.
 
 1. Écrire un programme qui résout le problème des Tours de Hanoï.
@@ -474,7 +474,7 @@ Vous pouvez utiliser <code>turtle</code> ou <code>pygame</code>.
     - Vous ne pouvez déplacer qu'un disque à la fois.
     - Un disque ne peut être placé que sur un autre disque plus grand ou sur un poteau vide.
 
-    Votre programme doit demander le nombre de disques à déplacer `n` et afficher la séquence de mouvements nécessaire pour résoudre le problème, en respectant les règles ci-dessus.
+    Votre programme doit demander le nombre de disques à déplacer `n` et afficher la séquence de mouvements nécessaires pour résoudre le problème, en respectant les règles ci-dessus.
 
     Votre programme doit afficher chaque mouvement sous la forme "Déplacez un disque de A vers C".
 
