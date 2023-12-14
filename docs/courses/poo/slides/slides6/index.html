@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cours 6 - Principes SOLID (1)</title>
+    <title>Cours 6 - Principes SOLID</title>
     <script src="https://quentin.lurkin.xyz/deck.js" defer></script>
     <style>
         .letter {
@@ -19,7 +19,7 @@
 </head>
 <body>
    <section>
-      <h1>PO3T - programmation Orientée Objets <small>Cours 6 - Principes SOLID (1)</small></h1>
+      <h1>PO3T - programmation Orientée Objets <small>Cours 6 - Principes SOLID</small></h1>
       <p>Quentin Lurkin</p>
    </section> 
    <section>
@@ -521,6 +521,566 @@
         Paid
     </pre>
    </section>
+
+    <section>
+        <h1>Interface Segregation Principle</h1>
+    </section>
+
+    <section>
+        <h2>Application Exemple</h2>
+        <ul>
+            <li>Ajout: authentification à 2 facteurs</li>
+            <li>Ajout de la méthode nécessaire à <code>PaymentProcessor</code>
+                <pre><code class="lang-csharp">
+                    namespace solid {
+                        interface PaymentProcessor {
+                            void Auth_sms(string code);   // Nouvelle méthode
+                            void Pay(Order order);
+                        }
+                    }
+                </code></pre>
+            </li>
+            <li>Besoin de modifier les sous-classes</li>
+        </ul>
+    </section>
+
+    <section class="code">
+        <h2>PaypalPaymentProcessor</h2>
+        <pre><code class="lang-csharp">
+            namespace solid {
+                class PaypalPaymentProcessor : PaymentProcessor {
+                    private String email;
+                    private bool verified;
+            
+                    public PaypalPaymentProcessor(String email) {
+                        this.email = email;
+                        verified = false;
+                    }
+            
+                    public void Auth_sms(string code) {
+                        Console.WriteLine("Verifying SMS code: {0}", code);
+                        verified = true;
+                    }
+            
+                    public void Pay(Order order) {
+                        if(!verified) {
+                            throw new System.Exception("Not authorized");
+                        }
+                        Console.WriteLine("Processing Paypal Payment");
+                        Console.WriteLine("Verifying Email Address: {0}", email);
+                        order.Status = Order.OrderStatus.Paid;
+                    }
+                }
+            }
+        </code></pre>
+    </section>
+
+    <section class="code">
+        <h2>DebitPaymentProcessor</h2>
+        <pre><code class="lang-csharp">
+            namespace solid {
+                class DebitPaymentProcessor : PaymentProcessor {
+                    private String security_code;
+                    private bool verified;
+            
+                    public DebitPaymentProcessor(string security_code) {
+                        this.security_code = security_code;
+                        verified = false;
+                    }
+            
+                    public void Auth_sms(string code) {
+                        Console.WriteLine("Verifying SMS code: {0}", code);
+                        verified = true;
+                    }
+                    
+                    public void Pay(Order order) {
+                        if(!verified) {
+                            throw new System.Exception("Not authorized");
+                        }
+                        Console.WriteLine("Processing Debit Payment");
+                        Console.WriteLine("Verifying Security Code: {0}", security_code);
+                        order.Status = Order.OrderStatus.Paid;
+                    }
+                }
+            }
+        </code></pre>
+    </section>
+
+    <section class="code">
+        <h2>CreditPaymentProcessor</h2>
+        <pre><code class="lang-csharp">
+            namespace solid {
+                class CreditPaymentProcessor : PaymentProcessor {
+                    private String security_code;
+            
+                    public CreditPaymentProcessor(string security_code) {
+                        this.security_code = security_code;
+                    }
+            
+                    // Ce type de paiements ne supporte pas l'autorisation par SMS 
+                    public void Auth_sms(string code) {
+                        throw new System.Exception("Credit card payments don't support SMS code authorization");
+                    }
+            
+                    public void Pay(Order order) {
+                        Console.WriteLine("Processing Credit Payment");
+                        Console.WriteLine("Verifying Security Code: {0}", security_code);
+                        order.Status = Order.OrderStatus.Paid;
+                    }
+                }
+            }
+        </code></pre>
+    </section>
+
+    <section>
+        <h2>Le problème</h2>
+        <ul>
+            <li>L'interface <code>PaymentProcessor</code> nous oblige à implémenter une méthode <code>Auth_sms</code> dans <code>CreditPaymentProcessor.</code></li>
+            <li>Cette méthode n'a pas de raison d'exister. Il faut donc inventer quelque chose.</li>
+            <li>Il y a ici une violation du LSP.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Interface Segregation Principle</h2>
+        <ul>
+            <li>Éviter les grosses interfaces généralistes</li>
+            <li>Ne pas forcer à implémenter des méthode inutile.</li>
+            <li>On evite comme ça d'introduire du couplage inutile.</li>
+            <li>Le respect du SCP aide à naturellement à valider l'ISP</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Solution</h2>
+        <ul>
+            <li>Creation d'une classe <code>SMSAuthorizer</code></li>
+            <li>Ajout d'un <code>SMSAuthorizer</code> aux classes <strong>qui en ont besoin</strong></li>
+        </ul>
+    </section>
+
+    <section class="code">
+        <h2>SMSAuthorizer</h2>
+        <pre><code class="lang-csharp">
+            namespace solid {
+                class SMSAuthorizer {
+                    private bool authorized;
+            
+                    public SMSAuthorizer() {
+                        authorized = false;
+                    }
+            
+                    public void Verify(string code) {
+                        Console.WriteLine("Verifying SMS code: {0}", code);
+                        authorized = true;
+                    }
+            
+                    public bool Authorized {
+                        get { return authorized; }
+                    }
+                }
+            }
+        </code></pre>
+    </section>
+
+    <section class="code">
+        <h2>PaymentProcessor</h2>
+        <pre><code class="lang-csharp">
+            namespace solid {
+                // Disparition de la méthode d’autorisation
+                interface PaymentProcessor {
+                    void Pay(Order order);
+                }
+            }
+        </code></pre>
+    </section>
+
+    <section class="code">
+        <h2>PaypalPaymentProcessor</h2>
+        <pre><code class="lang-csharp">
+            namespace solid {
+                class PaypalPaymentProcessor : PaymentProcessor {
+                    private String email;
+                    private SMSAuthorizer authorizer;
+            
+                    public PaypalPaymentProcessor(String email, SMSAuthorizer authorizer) {
+                        this.authorizer = authorizer;
+                        this.email = email;
+                    }
+            
+                    public void Pay(Order order) {
+                        if(!authorizer.Authorized) {
+                            throw new System.Exception("Not authorized");
+                        }
+                        Console.WriteLine("Processing Paypal Payment");
+                        Console.WriteLine("Verifying Email Address: {0}", email);
+                        order.Status = Order.OrderStatus.Paid;
+                    }
+                }
+            }
+        </code></pre>
+    </section>
+
+    <section class="code">
+        <h2>DebitPaymentProcessor</h2>
+        <pre><code class="lang-csharp">
+            namespace solid {
+                class DebitPaymentProcessor : PaymentProcessor {
+                    private String security_code;
+                    private SMSAuthorizer authorizer;
+            
+                    public DebitPaymentProcessor(string security_code, SMSAuthorizer authorizer) {
+                        this.authorizer = authorizer;
+                        this.security_code = security_code;
+                    }
+                    
+                    public void Pay(Order order) {
+                        if(!authorizer.Authorized) {
+                            throw new System.Exception("Not authorized");
+                        }
+                        Console.WriteLine("Processing Debit Payment");
+                        Console.WriteLine("Verifying Security Code: {0}", security_code);
+                        order.Status = Order.OrderStatus.Paid;
+                    }
+                }
+            }
+        </code></pre>
+    </section>
+
+    <section class="code">
+        <h2>CreditPaymentProcessor</h2>
+        <pre><code class="lang-csharp">
+            namespace solid {
+                // Pas d'authorizer ici :-)
+                class CreditPaymentProcessor : PaymentProcessor {
+                    private String security_code;
+            
+                    public CreditPaymentProcessor(string security_code) {
+                        this.security_code = security_code;
+                    }
+            
+                    public void Pay(Order order) {
+                        Console.WriteLine("Processing Credit Payment");
+                        Console.WriteLine("Verifying Security Code: {0}", security_code);
+                        order.Status = Order.OrderStatus.Paid;
+                    }
+                }
+            }
+        </code></pre>
+    </section>
+
+    <section>
+        <h2>Utilisation</h2>
+        <pre><code class="lang-csharp">
+            namespace solid {
+                class Program {
+                    public static void Main() {
+                        Order order = new Order();
+            
+                        order.Add_item(new Item("Keyboard", 50), 1);
+                        order.Add_item(new Item("SSD", 150), 1);
+                        order.Add_item(new Item("USB Cable", 2), 5);
+            
+                        Console.WriteLine(order.Total_price());
+            
+                        SMSAuthorizer authorizer = new SMSAuthorizer();
+                        PaymentProcessor processor =  new PaypalPaymentProcessor("lur@ecam.be", authorizer);
+                        authorizer.Verify("4269");
+                        processor.Pay(order);
+                        Console.WriteLine(order.Status);
+                    }
+                }
+            }
+        </code></pre>
+        <pre class="terminal">
+            <strong>$> dotnet run</strong>
+            210
+            Verifying SMS code: 4269
+            Processing Paypal Payment
+            Verifying Email Address: lur@ecam.be
+            Paid
+        </pre>
+    </section>
+
+    <section>
+        <h1>Dependency Inversion Principle</h1>
+    </section>
+
+    <section>
+        <h2>Dependency Inversion Principle</h2>
+        <ul>
+            <li>On en devrait dépendre que de classe abstraite</li>
+            <li>Cela aide à maintenir l'OCP</li>
+            <li>Problème dans l'application exemple: <code>DebitPaymentProcessor</code> et <code>PaypalPaymentProcessor</code> dépendent de la classe concrète <code>SMSAuthorizer</code></li>
+            <li>Solution: création d'une interface <code>Authorizer</code>
+                <pre><code class="lang-csharp">
+                    namespace solid {
+                        interface Authorizer {
+                            bool Authorized { get; }
+                        }
+                    }
+                </code></pre>
+            </li>
+        </ul>
+    </section>
+
+    <section class="code">
+        <h2>SMSAuthorizer</h2>
+        <pre><code class="lang-csharp">
+            namespace solid {
+                class SMSAuthorizer : Authorizer {
+                    private bool authorized;
+            
+                    public SMSAuthorizer() {
+                        authorized = false;
+                    }
+            
+                    public void Verify(string code) {
+                        Console.WriteLine("Verifying SMS code: {0}", code);
+                        authorized = true;
+                    }
+            
+                    public bool Authorized {
+                        get { return authorized; }
+                    }
+                }
+            }
+        </code></pre>
+    </section>
+
+    <section class="code">
+        <h2>PaypalPaymentProcessor</h2>
+        <pre><code class="lang-csharp">
+            namespace solid {
+                class PaypalPaymentProcessor : PaymentProcessor {
+                    private String email;
+                    private Authorizer authorizer;
+            
+                    public PaypalPaymentProcessor(String email, Authorizer authorizer) {
+                        this.authorizer = authorizer;
+                        this.email = email;
+                    }
+            
+                    public void Pay(Order order) {
+                        if(!authorizer.Authorized) {
+                            throw new System.Exception("Not authorized");
+                        }
+                        Console.WriteLine("Processing Paypal Payment");
+                        Console.WriteLine("Verifying Email Address: {0}", email);
+                        order.Status = Order.OrderStatus.Paid;
+                    }
+                }
+            }
+        </code></pre>
+    </section>
+
+    <section class="code">
+        <h2>DebitPaymentProcessor</h2>
+        <pre><code class="lang-csharp">
+            namespace solid {
+                class DebitPaymentProcessor : PaymentProcessor {
+                    private String security_code;
+                    private Authorizer authorizer;
+            
+                    public DebitPaymentProcessor(string security_code, Authorizer authorizer) {
+                        this.authorizer = authorizer;
+                        this.security_code = security_code;
+                    }
+                    
+                    public void Pay(Order order) {
+                        if(!authorizer.Authorized) {
+                            throw new System.Exception("Not authorized");
+                        }
+                        Console.WriteLine("Processing Debit Payment");
+                        Console.WriteLine("Verifying Security Code: {0}", security_code);
+                        order.Status = Order.OrderStatus.Paid;
+                    }
+                }
+            }
+        </code></pre>
+    </section>
+
+    <section class="code">
+        <h2>NotRobotAuthorizer</h2>
+        <ul>
+            <li>On peut créer d'autres <code>Authorizer</code></li>
+        </ul>
+        <pre><code class="lang-csharp">
+            namespace solid {
+                class NotRobotAuthorizer : Authorizer {
+                    private bool authorized;
+            
+                    public NotRobotAuthorizer() {
+                        authorized = false;
+                    }
+            
+                    public void Turing_test() {
+                        Console.WriteLine("Are you a Robot ? Naaaa...");
+                        authorized = true;
+                    }
+            
+                    public bool Authorized {
+                        get { return authorized; }
+                    }
+                }
+            }
+        </code></pre>
+    </section>
+
+    <section>
+        <h2>Utilisation</h2>
+        <pre><code class="lang-csharp">
+            namespace solid {
+                class Program {
+                    public static void Main() {
+                        Order order = new Order();
+            
+                        order.Add_item(new Item("Keyboard", 50), 1);
+                        order.Add_item(new Item("SSD", 150), 1);
+                        order.Add_item(new Item("USB Cable", 2), 5);
+            
+                        Console.WriteLine(order.Total_price());
+            
+                        NotRobotAuthorizer authorizer = new NotRobotAuthorizer();
+                        PaymentProcessor processor =  new PaypalPaymentProcessor("lur@ecam.be", authorizer);
+                        authorizer.Turing_test();
+                        processor.Pay(order);
+                        Console.WriteLine(order.Status);
+                    }
+                }
+            }
+        </code></pre>
+        <pre class="terminal">
+            <strong>$> dotnet run</strong>
+            210
+            Are you a Robot ? Naaaa...
+            Processing Paypal Payment
+            Verifying Email Address: lur@ecam.be
+            Paid
+        </pre>
+    </section>
+
+    <section>
+        <h1>Principes STUPID</h1>
+    </section>
+
+    <section>
+        <h2>STUPID</h2>
+        <ul>
+            <li>Les six principes à retenir avec l’acronyme <strong>STUPID</strong>
+                <ul>
+                    <li><span class='letter'>S</span>ingleton</li>
+                    <li><span class='letter'>T</span>ight Coupling</li>
+                    <li><span class='letter'>U</span>ntestability</li>
+                    <li><span class='letter'>P</span>remature Optimization</li>
+                    <li><span class='letter'>I</span>ndescriptive Naming</li>
+                    <li><span class='letter'>D</span>uplication</li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+
+    <section>
+        <h1>Singleton</h1>
+    </section>
+
+    <section>
+        <h2>Singleton</h2>
+        <ul>
+            <li>Singleton parfois considéré comme un anti-pattern
+                <small>Pas un problème en soi, mais symptôme d’éventuels problèmes</small>
+            </li>
+            <li>Deux majeures difficultés avec le singleton
+                <ul>
+                    <li>Difficulté à tester un programme avec un état global</li>
+                    <li>Dépendances cachées</li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+
+    <section>
+        <h1>Tight Coupling</h1>
+    </section>
+
+    <section>
+        <h2>Tight Coupling</h2>
+        <ul>
+            <li>Le couplage fort est à éviter</li>
+            <li>On le dit depuis le premier cours</li>
+            <li>Très difficile à réutiliser, et aussi à tester</li>
+            <li>Changer un module ne doit pas nécessiter d’en changer d’autres</li>
+        </ul>
+    </section>
+
+    <section>
+        <h1>Untestability</h1>
+    </section>
+
+    <section>
+        <h2>Untestability</h2>
+        <ul>
+            <li>Tester un programme ne doit pas être difficile</li>
+            <li>Code fortement couplé très difficile à tester</li>
+        </ul>
+    </section>
+
+    <section>
+        <h1>Premature Optimization</h1>
+    </section>
+
+    <section>
+        <h2>Premature Optimization</h2>
+        <p style="font-style: italic;" class="center">« Premature optimization is the root of all evil. » — Sir Tony Hoare</p>
+        <ul>
+            <li>Optimiser à l’avance n’aura que des coûts, aucun bénéfice
+                <ul>
+                    <li>Plus complexe</li>
+                    <li>Plus lent à développer</li>
+                    <li>Plus de chance de faire des erreurs</li>
+                    <li>Keep It Simple, Stupid (KISS)</li>
+                </ul>
+            </li>
+            <li>Deux règles de l’optimisation d’un programme :
+                <ol>
+                    <li>Don’t do it</li>
+                    <li>(for experts only !) Don’t do it yet.</li>
+                </ol>
+            </li>
+        </ul>
+    </section>
+
+    <section>
+        <h1>Indescriptive Naming</h1>
+    </section>
+
+    <section>
+        <h2>Indescriptive Naming</h2>
+        <ul>
+            <li>Noms appropriés pour classes, méthodes, attributs, variables...
+                <small>Et ne pas faire d’abréviations !</small>
+            </li>
+            <li>Les langages de programmation sont pour les humains
+                <small>On ne code pas pour l’ordinateur, il ne comprend que les 0 et 1...</small>
+            </li>
+        </ul>
+    </section>
+
+    <section>
+        <h1>Duplication</h1>
+    </section>
+
+    <section>
+        <h2>Duplication</h2>
+        <ul>
+            <li>Be lazy the right way - write code only once !
+                <small>Don’t Repeat Yourself (DRY)</small>
+            </li>
+            <li>Attention à tous les types de duplications
+                <small>De code, de données, de logique, de design...</small>
+            </li>
+        </ul>
+    </section>
 
    <section>
     <h2>Crédit</h2>
