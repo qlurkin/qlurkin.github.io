@@ -41,8 +41,9 @@ Le projet est à faire en **binôme**.
 - Sauvegarde d'étudiants: 1 points
 - Sauvegarde d'enseignants: 1 points
 - Sauvegarde d'activités: 1 points
-- Sauvegarde d'évaluations: 2 points
-- Bulletin: 2 points
+- Sauvegarde d'évaluations: 1 points
+- Bulletin: 1 points
+- fonctionnalité supplémentaire: 2 points
 - Défaut d'encapsulation: jusqu'à -4 points
 - Défaut de factorisation: jusqu'à -4 points
 - Diagramme UML: 4 points
