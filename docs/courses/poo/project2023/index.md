@@ -34,15 +34,15 @@ Le projet est à faire en **binôme**.
 
 ## Grille d'évaluation
 
-- Création d'étudiants: 1 points
-- Création d'enseignants: 1 points
-- Création d'activités: 1 points
+- Création d'étudiants: 1 point
+- Création d'enseignants: 1 point
+- Création d'activités: 1 point
 - Création d'évaluations: 2 points
-- Sauvegarde d'étudiants: 1 points
-- Sauvegarde d'enseignants: 1 points
-- Sauvegarde d'activités: 1 points
-- Sauvegarde d'évaluations: 1 points
-- Bulletin: 1 points
+- Sauvegarde d'étudiants: 1 point
+- Sauvegarde d'enseignants: 1 point
+- Sauvegarde d'activités: 1 point
+- Sauvegarde d'évaluations: 1 point
+- Bulletin: 1 point
 - fonctionnalité supplémentaire: 2 points
 - Défaut d'encapsulation: jusqu'à -4 points
 - Défaut de factorisation: jusqu'à -4 points
