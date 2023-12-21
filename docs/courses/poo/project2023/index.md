@@ -28,7 +28,7 @@ On vous demande également d'ajouter une autre fonctionnalité au choix et de fa
 
     Le rapport sera inclus dans le dépôt Github au format **Markdown**.
 
-Les liens de vos dépôts sont à remettre sur **[Teams](https://ecambxl.sharepoint.com/:x:/s/PO3TL-ProgrammationOrienteObjets2022-2023/EXChVSvyxUJLjsuHbt4w9U0BQBeN8MsOzuW4Npoogayb2g?e=4CouW3)** pour le **8 janvier 2024 à 23h59**. Tous les commits ultérieurs seront ignorés.
+Les liens de vos dépôts sont à remettre sur **[Teams](https://ecambxl.sharepoint.com/:x:/s/PO3TL-ProgrammationOrienteObjets2022-2023/EXChVSvyxUJLjsuHbt4w9U0BQBeN8MsOzuW4Npoogayb2g?e=4CouW3)** pour le **26 janvier 2024**.
 
 Le projet est à faire en **binôme**.
 
