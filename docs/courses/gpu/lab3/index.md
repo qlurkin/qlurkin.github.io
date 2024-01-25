@@ -1,6 +1,7 @@
 ---
 title: "Lab 3 & 4"
 subtitle: "Game Of Life"
+css: "style.css"
 ---
 
 ## Introduction
@@ -1913,6 +1914,25 @@ And... that's it! You're done! Refresh your page and watch your newly built cell
 
 <script>
     let show = true
+
+    // Grab the prefers reduced media query.
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    // Check if the media query matches or is not available.
+    if (!mediaQuery || mediaQuery.matches) {
+      show = false;
+    } else {
+      show = true;
+    }
+
+    // Ads an event listener to check for changes in the media query's value.
+    mediaQuery.addEventListener("change", () => {
+      if (mediaQuery.matches) {
+        show = false;
+      } else {
+        show = true;
+      }
+    });
 
     function init() {
         document.body.style.backgroundSize = "100%"

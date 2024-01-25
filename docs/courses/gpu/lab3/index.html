@@ -7,6 +7,8 @@
     <title>Lab 3 &amp; 4 - Game Of Life</title>
     <script src="/document.js" defer></script>
     
+        <link rel="stylesheet" href="style.css">
+    
 </head>
 <body>
     <h1>Lab 3 &amp; 4 <small>Game Of Life</small></h1>
@@ -1519,6 +1521,25 @@ switch activeNeighbors {
 </ul>
 <script>
     let show = true
+
+    // Grab the prefers reduced media query.
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    // Check if the media query matches or is not available.
+    if (!mediaQuery || mediaQuery.matches) {
+      show = false;
+    } else {
+      show = true;
+    }
+
+    // Ads an event listener to check for changes in the media query's value.
+    mediaQuery.addEventListener("change", () => {
+      if (mediaQuery.matches) {
+        show = false;
+      } else {
+        show = true;
+      }
+    });
 
     function init() {
         document.body.style.backgroundSize = "100%"

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <style>
+        body {
+            padding-top: 200px;
+            padding-left: 200px;
+            width: 900px;
+            margin: 0 auto;
+            position: relative;
+            font-family: sans-serif;
+        }
+
+        header {
+            height: 200px;
+            line-height: 200px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #005C97;
+            background: linear-gradient(to right, #363795, #005C97);
+            color: white;
+        }
+
+        img {
+            width: 900px;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 0;
+        }
+
+        .row {
+            text-align: center;
+        }
+
+        .row * {
+            vertical-align: middle;
+        }
+
+        .span4, .span8 {
+            display: inline-block;
+            margin: 0 10px;
+        }
+
+        .span4 {
+            width: 30%;
+        }
+
+        .span8 {
+            width: 60%;
+        }
+
+        p {
+            text-align: justify;
+        }
+
+        nav {
+            position: absolute;
+            top: 200px;
+            left: 0;
+            width: 200px;
+            background: #fe8c00;
+            background: linear-gradient(to right, #f83600, #fe8c00);
+            height: calc(100% - 200px);
+        }
+
+        .card {
+            box-sizing: border-box;
+            border-radius: 4px;
+            padding: 1rem;
+            box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 20%), 0 1px 5px 0 rgb(0 0 0 / 12%);
+        }
+
+        nav ul {
+            padding: 0;
+            margin: 0;
+        }
+
+        nav ul li {
+            list-style: none;
+            padding: 1rem;
+            border-bottom: 1px solid #fff;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        footer {
+            background: #0F2027;
+            background: linear-gradient(to right, #2C5364, #203A43, #0F2027);
+            clear: both;
+        }
+
+        footer ul {
+            padding: 0;
+            text-align: center;
+        }
+
+        footer ul li {
+            list-style: none;
+            display: inline-block;
+            padding: 1rem;
+        }
+
+        footer ul li a {
+            color: white;
+            text-decoration: none;
+        }
+
+        iframe {
+            width: 100%;
+        }
+
+        h2 {
+            margin-left: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Making This Website Responsive</h1>
+    </header>
+    <main>
+        <img src="https://quentin.lurkin.xyz/courses/ergonomy/lab1/responsive.jpeg">
+        <div class="row">
+            <div class="span4 card">
+                <h2>Title</h2>
+                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nam cumque accusamus autem voluptatibus quam dolorem ullam doloremque vel fugiat aperiam explicabo iusto cupiditate reiciendis similique omnis, porro natus illum consectetur.</p>
+                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nam cumque accusamus autem voluptatibus quam dolorem ullam doloremque vel fugiat aperiam explicabo iusto cupiditate reiciendis similique omnis, porro natus illum consectetur.</p>
+            </div>
+            <div class="span4 card">
+                <h2>Other title</h2>
+                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nam cumque accusamus autem voluptatibus quam dolorem ullam doloremque vel fugiat aperiam explicabo iusto cupiditate reiciendis similique omnis, porro natus illum consectetur.</p>
+                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nam cumque accusamus autem voluptatibus quam dolorem ullam doloremque vel fugiat aperiam explicabo iusto cupiditate reiciendis similique omnis, porro natus illum consectetur.</p>
+            </div>
+            <div class="span4 card">
+                <h2>One more title</h2>
+                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nam cumque accusamus autem voluptatibus quam dolorem ullam doloremque vel fugiat aperiam explicabo iusto cupiditate reiciendis similique omnis, porro natus illum consectetur.</p>
+                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nam cumque accusamus autem voluptatibus quam dolorem ullam doloremque vel fugiat aperiam explicabo iusto cupiditate reiciendis similique omnis, porro natus illum consectetur.</p>
+            </div>
+        </div>
+
+
+        <h2>Layouts</h2>
+        <div class="row">
+            <div class="span4">
+                <iframe width="280" height="158" src="https://www.youtube.com/embed/K1POS8yPqa8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
+            <div class="span8">
+                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nam cumque accusamus autem voluptatibus quam dolorem ullam doloremque vel fugiat aperiam explicabo iusto cupiditate reiciendis similique omnis, porro natus illum consectetur.</p>
+                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nam cumque accusamus autem voluptatibus quam dolorem ullam doloremque vel fugiat aperiam explicabo iusto cupiditate reiciendis similique omnis, porro natus illum consectetur.</p>
+            </div>
+        </div>
+
+        <h2>Dark Mode</h2>
+        <div class="row">
+            <div class="span8">
+                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nam cumque accusamus autem voluptatibus quam dolorem ullam doloremque vel fugiat aperiam explicabo iusto cupiditate reiciendis similique omnis, porro natus illum consectetur.</p>
+                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nam cumque accusamus autem voluptatibus quam dolorem ullam doloremque vel fugiat aperiam explicabo iusto cupiditate reiciendis similique omnis, porro natus illum consectetur.</p>
+            </div>
+            <div class="span4">
+                <iframe width="280" height="158" src="https://www.youtube.com/embed/xococe8wq_g" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
+        </div>
+    </main>
+    <nav>
+        <ul>
+            <li><a href="https://www.google.com">Google</a></li>
+            <li><a href="https://developer.mozilla.org">MDN</a></li>
+            <li><a href="https://web.dev/">web.dev</a></li>
+            <li><a href="https://css-tricks.com/">CSS-tricks</a></li>
+        </ul>
+    </nav>
+    <footer>
+        <ul>
+            <li><a href="https://www.twitter.com"><i data-feather="twitter"></i></a></li>
+            <li><a href="https://www.facebook.com"><i data-feather="facebook"></i></a></li>
+            <li><a href="https://www.youtube.com"><i data-feather="youtube"></i></a></li>
+            <li><a href="https://www.twitch.com"><i data-feather="twitch"></i></a></li>
+            <li><a href="https://www.linkedin.com"><i data-feather="linkedin"></i></a></li>
+        </ul>
+    </footer>
+    <script>
+        feather.replace()
+    </script>
+</body>
+</html>
