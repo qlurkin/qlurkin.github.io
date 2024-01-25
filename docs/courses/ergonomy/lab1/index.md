@@ -10,24 +10,24 @@ css: "./style.css"
 
 De nos jours, la plupart des contacts entre une société et ses clients se font via un téléphone portable. Il est donc très important de soigner l'expérience utilisateur sur les écrans de petites tailles.
 
-Il est cependant toujours nécessaire de supporter les utilisateurs sur ordinateurs de bureau. Et comme il est plus facile d'utiliser plus d'espace que d'en utiliser moins, il est généralement recommandé de commencer la conception d'une interface par sa version mobile. C'est dans un second temps que l'on adapte l'interface pour les écrans plus grand.
+Il est cependant toujours nécessaire de supporter les utilisateurs sur ordinateurs de bureau. Et comme il est plus facile d'utiliser plus d'espace que d'en utiliser moins, il est généralement recommandé de commencer la conception d'une interface par sa version mobile. C'est dans un second temps que l'on adapte l'interface pour les écrans plus grands.
 
-## Le Responsive Web Design
+## Le *Responsive Web Design*
 
-Lorsqu'on souhaite supporter une large gamme d'écrans, plusieurs approches sont possible :
+Lorsqu'on souhaite supporter une large gamme d'écrans, plusieurs approches sont possibles :
 
-- créer des versions complètement différente du site pour chaque type d'appareil,
+- créer des versions complètement différentes du site pour chaque type d'appareil,
 - créer une seule interface capable de s'adapter à toutes les tailles d'écrans.
 
-Avoir plusieurs version d'un site pose généralement plus de problème qu'autre chose : Cela multiplie le temps de développement et les différentes version finissent souvent par diverger dans les fonctionnalités accessibles aux utilisateurs.
+Avoir plusieurs versions d'un site pose généralement plus de problèmes qu'autre chose : Cela multiplie le temps de développement et les différentes versions finissent souvent par diverger dans les fonctionnalités accessibles aux utilisateurs.
 
-La conception d'interface s'adaptant à l'écran de l'utilisateurs et généralement appelé "Responsive Design" mais ce terme a évolué avec le temps et englobe aujourd'hui aussi le fait que l'interface doit aussi s'adapter à ses préférences.
+La conception d'interfaces s'adaptant à l'écran de l'utilisateur et généralement appelée *Responsive Design* mais ce terme a évolué avec le temps et englobe aujourd'hui le respect de certaines préférences utilisateur.
 
-En pratique, on a un seul site (même HTML) et on utilise le CSS pour rendre le site Responsive.
+En pratique, on a un seul site (un *markup* HTML) et on utilise le CSS pour rendre le site *Responsive*.
 
 ## Viewport
 
-Le première chose à faire pour avoir un site qui s'affiche correctement sur téléphones portables est de définir le *viewport* dans le `<head>` de l'HTML. En effet les sites qui ne le font pas sont considérer comme des sites datant d'avant l'apparition des navigateurs mobiles et son redimensionné pour s'afficher comme s'ils étaient sur un écran d'ordinateur plus grand. Cela conduit souvent à du texte très petit et des éléments cliquables très difficile à viser avec le doigt.
+Le première chose à faire pour avoir un site qui s'affiche correctement sur téléphones portables est de définir le *viewport* dans le `<head>` de l'HTML. En effet les sites qui ne le font pas sont considérés comme des sites datant d'avant l'apparition des navigateurs mobiles et son redimensionnés pour s'afficher comme s'ils étaient sur un écran d'ordinateur plus grand. Cela conduit souvent à du texte très petit et des éléments cliquables très difficiles à viser avec le doigt.
 
 Essayez d'accéder [à la page suivante](./no_viewport.html) avec votre téléphone mobile.
 
@@ -52,7 +52,7 @@ selector {
 }
 ```
 
-Le sélecteur sert a spécifier quelle balises seront affectées par la règle. La propriété sert à définir quel attribut de la balise est modifié.
+Le sélecteur sert a spécifier quelles balises seront affectées par la règle. La propriété sert à définir quel attribut de la balise est modifié.
 
 Il existe une large gamme de sélecteurs. Imaginons la balise générique suivante :
 
@@ -73,11 +73,11 @@ Vous trouverez plus d'informations sur les sélecteurs sur [MDN](https://develop
 
 ## Exercice
 
-Dans <a href="./title_strong_red.html" download>cette page</a>, ajouter une règle CSS pour que toutes les balises `<strong>` se trouvant dans des balises `<h1>` ou `<h2>` aient leur texte en rouge.
+Dans <a href="./title_strong_red.html" download>cette page</a>, ajoutez une règle CSS pour que toutes les balises `<strong>` se trouvant dans des balises `<h1>` ou `<h2>` aient leur texte en rouge.
 
 ## La propriété `display`
 
-Cette propriété CSS contrôle la position d'un élément par rapport aux autres. Nous allons voir quelques-unes de ses valeurs possible.
+Cette propriété CSS contrôle la position d'un élément par rapport aux autres. Nous allons voir quelques-unes de ses valeurs possibles.
 
 ### `display: inline`
 
@@ -115,11 +115,11 @@ s'affiche :
 
 ### Exercice
 
-Par défaut la balise image `<img>` s'affiche en mode `inline`. Dans <a href="./pokemon.html" download>cette page</a> les images s'affichent l'une à côté de l'autre. Modifiez le CSS pour qu'elle s'affichent les unes en dessous des autres.
+Par défaut la balise image `<img>` s'affiche en mode `inline`. Dans <a href="./pokemon.html" download>cette page</a> les images s'affichent les unes à côté des autres. Modifiez le CSS pour qu'elle s'affichent les unes en dessous des autres.
 
 ### `display: flex`
 
-Les éléments `flex` organisent leur contenu horizontalement ou verticalement. Il y a beaucoup de propriétés associée au mode d'affichage `flex`. Pour plus de détails vous pouvez consulter [ce site](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
+Les éléments `flex` organisent leur contenu horizontalement ou verticalement. Il y a beaucoup de propriétés associées au mode d'affichage `flex`. Pour plus de détails vous pouvez consulter [ce site](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
 
 A titre d'exemple, voici comment réaliser une présentation en trois colonnes en utilisant `display: flex`. Les colonnes droite et gauche ont une largeur fixe et la colonne centrale s'adapte à l'espace restant :
 
@@ -140,7 +140,7 @@ A titre d'exemple, voici comment réaliser une présentation en trois colonnes e
 .left, .right {
 	flex-grow: 0;
 	flex-shrink: 0;
-	width: 200px;
+	width: 100px;
 	background-color: green;
 }
 
@@ -155,9 +155,9 @@ résultat :
 
 <div style="padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; margin-bottom: 1rem;">
 <div class="row" style="display: flex; justify-content: space-between; column-gap: 0">
-	<nav class="left" style="flex-grow: 0; flex-shrink: 0; width: 200px; background-color: green; height: 100px; "></nav>
+	<nav class="left" style="flex-grow: 0; flex-shrink: 0; width: 100px; background-color: green; height: 100px; "></nav>
 	<div style="flex-grow: 1; flex-shrink: 0; background-color: red;"></div>
-	<nav class="right" style="flex-grow: 0; flex-shrink: 0; width: 200px; background-color: green;"></nav> 
+	<nav class="right" style="flex-grow: 0; flex-shrink: 0; width: 100px; background-color: green;"></nav> 
 </div>
 </div>
 
@@ -279,11 +279,11 @@ Le mode d'affichage `grid` est supporté par la plupart des navigateurs modernes
 
 <a href="./tictactoe.html" download>Cette page</a> contient un `<div class="board">` contenant 9 `<div class="cell">` qui représentent les cases d'une grille de OXO. Utilisez l'affichage `grid` pour afficher la grille correctement.
 
-## Les règles "Media"
+## Les règles *Media*
 
-Les règles média permettent de spécifier des règles CSS qui ne doivent s'appliquer que pour certaines tailles d'écran. C'est l'outil indispensable du Responsive Design !
+Les règles média permettent de spécifier des règles CSS qui ne doivent s'appliquer que pour certaines tailles d'écran. C'est l'outil indispensable du *Responsive Design* !
 
-Les règles CSS contenue dans la règle média suivante : ne s'appliqueront que si la largeur de la page est inférieure à 800 pixels : 
+Les règles CSS contenue dans la règle média suivante ne s'appliqueront que si la largeur de la page est inférieure à 800 pixels : 
 
 ```css
 @media (max-width:800px) {
@@ -308,7 +308,7 @@ La plupart des systèmes d'exploitation permettent de choisir entre un thème cl
 ```
 ### Le préférences pour une réduction des animations
 
-Certain utilisateurs sont dérangés par le présence d'un trop grand nombre d'animations. Il est possible dans le plupart des systèmes d'exploitation de demander de diminuer les animations.
+Certains utilisateurs sont dérangés par le présence d'un trop grand nombre d'animations. Il est possible dans le plupart des systèmes d'exploitation de demander de diminuer les animations.
 
 <figure>
   <img src="./reduce_motion.png" alt="">
@@ -321,7 +321,7 @@ Certain utilisateurs sont dérangés par le présence d'un trop grand nombre d'a
 }
 ```
 
-Si vous avez cette préférence d'activée sur votre OS, la boite ci-dessous ne bougera pas :
+Si vous avez cette préférence activée sur votre OS, la boîte ci-dessous ne bougera pas :
 
 <div style="margin-bottom: 1rem;"><div class="animation">boîte animée</div></div>
 
@@ -330,4 +330,8 @@ Si vous avez cette préférence d'activée sur votre OS, la boite ci-dessous ne 
 
 ## Exercice
 
-Transformez <a href="./no_responsive.html" download>cette page</a> pour la rendre Responsive.
+Transformez <a href="./no_responsive.html" download>cette page</a> pour la rendre *Responsive*.
+
+<script>
+
+</script>
