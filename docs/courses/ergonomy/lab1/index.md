@@ -6,7 +6,7 @@ css: "./style.css"
 
 <script src="https://cdn.jsdelivr.net/gh/ireade/caniuse-embed/public/caniuse-embed.min.js"></script>
 
-## Mobile First
+## *Mobile First*
 
 De nos jours, la plupart des contacts entre une société et ses clients se font via un téléphone portable. Il est donc très important de soigner l'expérience utilisateur sur les écrans de petites tailles.
 
