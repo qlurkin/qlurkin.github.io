@@ -1,7 +1,15 @@
 import { unlink, readFile, writeFile } from 'node:fs/promises'
 import util from 'node:util'
 import { exec } from 'node:child_process'
+import path from 'node:path'
 const cmd = util.promisify(exec)
+
+function getRandomFileName() {
+  var timestamp = new Date().toISOString().replace(/[-:.]/g, '')
+  var random = ('' + Math.random()).substring(2, 8)
+  var random_number = timestamp + random
+  return random_number
+}
 
 async function base64_encode(file) {
   var bitmap = await readFile(file)
@@ -51,29 +59,36 @@ async function get_svg(filename) {
 }
 
 export async function compile_inline(src, font_size) {
-  await create_document_inline('tmp.typ', src, font_size)
+  const name = getRandomFileName()
+  const svgpath = path.resolve(`${name}.svg`)
+  const typpath = path.resolve(`${name}.typ`)
+  await create_document_inline(typpath, src, font_size)
   // const proc = Bun.spawn(['typst', 'compile', 'tmp.typ', 'tmp.svg'], {
   //   cwd: '.', // specify a working directory
   // })
-  await cmd('typst compile tmp.typ tmp.svg')
-  const img_src = await base64_encode('tmp.svg')
+  await cmd(`typst compile ${typpath} ${svgpath}`)
+  const img_src = await base64_encode(svgpath)
   const img = img_inline(img_src, font_size)
-  await unlink('tmp.typ')
-  await unlink('tmp.svg')
+  await unlink(typpath)
+  await unlink(svgpath)
   return img
 }
 
 export async function compile_display(src, font_size) {
-  await create_document_display('tmp.typ', src, font_size)
+  const name = getRandomFileName()
+  const svgpath = path.resolve(`${name}.svg`)
+  const typpath = path.resolve(`${name}.typ`)
+  await create_document_display(typpath, src, font_size)
   // const proc = Bun.spawn(['typst', 'compile', 'tmp.typ', 'tmp.svg'], {
   //   cwd: '.', // specify a working directory
   // })
   // await proc.exited
-  await cmd('typst compile tmp.typ tmp.svg')
-  const img_src = await base64_encode('tmp.svg')
+  await cmd(`typst compile ${typpath} ${svgpath}`)
+  const img_src = await base64_encode(svgpath)
   const img = img_display(img_src, font_size)
-  await unlink('tmp.typ')
-  await unlink('tmp.svg')
+  await unlink(typpath)
+  await unlink(svgpath)
+
   return img
 }
 
