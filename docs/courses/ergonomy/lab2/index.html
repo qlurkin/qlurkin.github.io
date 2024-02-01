@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=1024, user-scalable=no">
+    <title>ER4C - Labo 2 - Design efficace</title>
+    <script src="https://quentin.lurkin.xyz/document.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/gh/ireade/caniuse-embed/public/caniuse-embed.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab|Yellowtail&display=swap" rel="stylesheet">
+    <style>
+      pre code {
+        font-size: 75% !important;
+      }
+    </style>
+    <style>
+      .widget {
+          width: 60%;
+          background-color: rgb(124, 170, 170);
+          margin: 1rem auto;
+          padding: 0.6em 0;
+      }
+      
+      .widget h3 {
+          font-family: 'Yellowtail', cursive;
+          margin: 1.2em;
+          margin-top: 0;
+      }
+      
+      .widget p {
+          margin: 2.5em;
+          margin-top: 0;
+          margin-bottom: 1em;
+          text-align: left;
+      }
+      
+      .widget input {
+          display: block;
+          width: 80%;
+          margin: 0.5em auto;
+          margin-top: 0;
+          line-height: 2;
+          padding: 0.5em;
+      }
+      
+      .widget button {
+          display: block;
+          width: 70%;
+          margin: 0 auto;
+          line-height: 2;
+          padding: 0.5em;
+          border: 1px solid rgb(56, 126, 97);
+          border-radius: 5px;
+          background-color: rgb(71, 156, 121);
+      }
+    </style>
+    <style>
+      .widget2 {
+          width: 60%;
+          background-color: rgb(124, 170, 170);
+          margin: 1rem auto;
+          padding: 0.6em;
+      }
+      
+      .widget2 h3 {
+          font-family: 'Yellowtail', cursive;
+          margin: 0;
+          margin-bottom: 1.2em;
+          text-align: justify;
+      }
+      
+      .widget2 p {
+          margin: 0;
+          margin-bottom: 1em;
+      }
+      
+      .widget2 input {
+          display: block;
+          width: 100%;
+          margin: 0;
+          margin-bottom: 0.5em;
+          line-height: 2;
+          padding: 0.5em;
+      }
+      
+      .widget2 button {
+          display: block;
+          width: 100%;
+          margin: 0;
+          line-height: 2;
+          padding: 0.5em;
+          border: 1px solid rgb(56, 126, 97);
+          border-radius: 5px;
+          background-color: rgb(71, 156, 121);
+      }
+    </style>
+    <style>
+      .widget3 {
+          width: 60%;
+          background-color: rgb(224,228,204);
+          margin: 1rem auto;
+          padding: 0.6em;
+      }
+      
+      .widget3 h3 {
+          font-family: 'Yellowtail', cursive;
+          margin: 0;
+          margin-bottom: 1.2em;
+          text-align: justify;
+          color: rgb(109,143,141)
+      }
+      
+      .widget3 p {
+          margin: 0;
+          margin-bottom: 1em;
+      }
+      
+      .widget3 input {
+          display: block;
+          width: 100%;
+          margin: 0;
+          margin-bottom: 0.5em;
+          line-height: 2;
+          padding: 0.5em;
+      }
+      
+      .widget3 button {
+          display: block;
+          width: 100%;
+          margin: 0;
+          line-height: 2;
+          padding: 0.5em;
+          border: 1px solid rgb(250,105,0);
+          border-radius: 5px;
+          background-color: rgb(243,134,48);
+      }
+  </style>
+  <style>
+    .widget4 {
+        width: 60%;
+        background-color: rgb(224,228,204);
+        margin: 1rem auto;
+        padding: 0.6em;
+    }
+    
+    .widget4 h3 {
+        font-family: "Roboto Slab", serif;
+        margin: 0;
+        margin-bottom: 1.2em;
+        text-align: justify;
+        color: rgb(109,143,141)
+    }
+    
+    .widget4 p {
+        margin: 0;
+        margin-bottom: 1em;
+    }
+    
+    .widget4 input {
+        display: block;
+        width: 100%;
+        margin: 0;
+        margin-bottom: 0.5em;
+        line-height: 2;
+        padding: 0.5em;
+        
+    }
+    
+    .widget4 input:placeholder-shown {
+        font-style: italic;
+    }
+    
+    .widget4 button {
+        display: block;
+        width: 100%;
+        margin: 0;
+        line-height: 2;
+        padding: 0.5em;
+        border: 1px solid rgb(250,105,0);
+        border-radius: 5px;
+        background-color: rgb(243,134,48);
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+  </style>
+  <style>
+    .widget5 {
+        width: 60%;
+        background-color: rgb(224,228,204);
+        margin: 1rem auto;
+        padding: 4rem;
+        line-height: 1.5;
+        box-sizing: content-box;
+    }
+    
+    .mode-document .widget5 {
+        top: 0;
+    }
+    
+    .mode-document section {
+        margin-bottom: 1em;
+    }
+    
+    .widget5 h3 {
+        font-family: "Roboto Slab", serif;
+        margin: 0;
+        margin-bottom: 2rem;
+        text-align: justify;
+        color: rgb(109,143,141)
+    }
+    
+    .widget5 p {
+        margin: 0;
+        margin-bottom: 2rem;
+    }
+    
+    .widget5 input {
+        display: block;
+        width: 100%;
+        margin: 0;
+        margin-bottom: 2rem;
+        line-height: 2;
+        padding: 0.5em;
+        
+    }
+    
+    .widget5 input:placeholder-shown {
+        font-style: italic;
+    }
+    
+    .widget5 button {
+        display: block;
+        width: 100%;
+        margin: 0;
+        line-height: 2;
+        padding: 0.5em;
+        border: 1px solid rgb(250,105,0);
+        border-radius: 5px;
+        background-color: rgb(243,134,48);
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+    </style>
+    <style>
+      .spacebar {
+      	font-size: 0.8em;
+      	text-align: center;
+      	display: inline-block;
+      	width: 1em;
+      	background-color: gray;
+      	vertical-align: bottom;
+      	border-radius: 5px;
+      	color: white;
+      }
+      
+      .colourbar {
+      	position: relative;
+      	font-size: 0.6em;
+      }
+      
+      .colourbar .label {
+      	position: absolute;
+      	top: 0.5em;
+      	left: 0.5em;
+      }
+      
+      .colourbar .code {
+      	position: absolute;
+      	top: 0.5em;
+      	right: 0.5em;
+      }
+      
+    </style>
+    <style>
+      .custom-css {
+          --base-color-h: 14;
+          --base-color-s: 100%;
+          --base-color-l: 57%;
+          --base-color: hsl(var(--base-color-h),
+                            var(--base-color-s),
+                            var(--base-color-l));
+          --base-color-darken-20: hsl(var(--base-color-h),
+                                      var(--base-color-s),
+                                      calc(var(--base-color-l) - 20%));
+          --length-M: 1rem;
+          --length-L: calc(var(--length-M) * 2);
+          --length-S: calc(var(--length-M) / 2);
+      }
+
+      .custom-css .base {
+          background-color: var(--base-color);
+          height: var(--length-M);
+          margin-bottom: 1rem;
+      }
+
+      .custom-css .darken {
+          background-color: var(--base-color-darken-20);
+          height: var(--length-L);
+          margin-bottom: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <section>
+      <h1>ER4C - Labo 2 <small>Design efficace</small></h1>
+    </section>
+    <section>
+      <p>Comment créer des designs efficaces?</p>
+    </section>
+    <section class="full">
+      <h2>La Surcharge</h2>
+      <figure>
+      <img style="width: 100%" src="./surcharge.jpeg">
+      </figure>
+    </section>
+    <section>
+      <p>Le meilleur moyen d'avoir un bon design est d'éviter de surcharger la page</p>
+    </section>
+    <section>
+      <figure>
+      <div class="widget">
+        <h3>Inscrivez-vous à la newsletter sur le développement orienté objects efficace en Python</h3>
+        <p>Des informations hebdomadaires à propos du Python, de la programmation orienté objets et des bonnes pratiques permettant la création de réelles applications.</p>
+        <form>
+          <input placeholder="e-mail">
+          <button>Inscription</button>
+        </form>
+      </div>
+      <figcaption>Nous allons améliorer ce widget</figcaption>
+      </figure>
+    </section>
+    <section>
+      <h2>Alignement</h2>
+      <p>Même des différences d'un pixel sont inconsciement détectées.</p>
+    </section>
+    <section>
+      <figure>
+      <div class="widget">
+        <h3>Inscrivez-vous à la newsletter sur le développement orienté objects efficace en Python</h3>
+        <p>Des informations hebdomadaires à propos du Python, de la programmation orienté objets et des bonnes pratiques permettant la création de réelles applications.</p>
+        <form>
+          <input placeholder="e-mail">
+          <button>Inscription</button>
+        </form>
+      </div>
+      <figcaption>Avant</figcaption>
+      </figure>
+    </section>
+    <section>
+      <figure>
+      <div class="widget2">
+        <h3>Inscrivez-vous à la newsletter sur le développement orienté objects efficace en Python</h3>
+        <p>Des informations hebdomadaires à propos du Python, de la programmation orienté objets et des bonnes pratiques permettant la création de réelles applications.</p>
+        <form>
+          <input placeholder="e-mail">
+          <button>Inscription</button>
+        </form>
+      </div>
+      <figcaption>Après</figcaption>
+      </figure>
+    </section>
+    <section>
+      <h2>Les couleurs</h2>
+      <ul>
+        <li>Des couleurs complémentaires</li>
+        <li>Des couleurs principalement neutre</li>
+        <li>Une couleur vive pour les choses importantes</li>
+        <li>Couleurs normalisées, consistantes</li>
+        <li>http://www.colourlovers.com/</li>
+      </ul>
+        <figure>
+          <div class="colourbar" style="background-color: #FF6C3D; height: 2em;">
+            <div class="label">Lighten 5%</div>
+            <div class="code">#FF6C3D</div>
+          </div>
+          <div class="colourbar" style="background-color: #FF5722; height: 10em; color: white;">
+            <div class="label">Base</div>
+            <div class="code">#FF5722</div>
+          </div>
+          <div class="colourbar" style="background-color: #EB3800; height: 2em; color: white;">
+            <div class="label">Darken 10%</div>
+            <div class="code">#EB3800</div>
+          </div>
+          <div class="colourbar" style="background-color: #B82C00; height: 2em; color: white;">
+            <div class="label">Darken 20%</div>
+            <div class="code">#B82C00</div>
+          </div>
+          <figcaption class="center">Couleur vive (+ variations)</figcaption>
+        </figure>
+        <figure>
+          <div class="colourbar" style="background-color: hsl(0, 0%, 95%); height: 2.2857em;">
+            <div class="label">Lightness 95</div>
+            <div class="code">hsl(0, 0%, 95%)	</div>
+          </div>
+          <div class="colourbar" style="background-color: hsl(0, 0%, 90%); height: 2.2857em;">
+            <div class="label">Lightness 90</div>
+            <div class="code">hsl(0, 0%, 90%)</div>
+          </div>
+          <div class="colourbar" style="background-color: hsl(0, 0%, 80%); height: 2.2857em;">
+            <div class="label">Lightness 80</div>
+            <div class="code">hsl(0, 0%, 80%)</div>
+          </div>
+          <div class="colourbar" style="background-color: hsl(0, 0%, 70%); height: 2.2857em;">
+            <div class="label">Lightness 70</div>
+            <div class="code">hsl(0, 0%, 70%)</div>
+          </div>
+          <div class="colourbar" style="background-color: hsl(0, 0%, 30%); height: 2.2857em; color: white;">
+            <div class="label">Lightness 30</div>
+            <div class="code">hsl(0, 0%, 30%)</div>
+          </div>
+          <div class="colourbar" style="background-color: hsl(0, 0%, 20%); height: 2.2857em; color: white;">
+            <div class="label">Lightness 20</div>
+            <div class="code">hsl(0, 0%, 20%)</div>
+          </div>
+          <div class="colourbar" style="background-color: hsl(0, 0%, 10%); height: 2.2857em; color: white;">
+            <div class="label">Lightness 10</div>
+            <div class="code">hsl(0, 0%, 10%)</div>
+          </div>
+          <figcaption class="center">Couleurs neutres</figcaption>
+        </figure>
+    </section>
+    <section>
+      <figure>
+      <div class="widget2">
+        <h3>Inscrivez-vous à la newsletter sur le développement orienté objects efficace en Python</h3>
+        <p>Des informations hebdomadaires à propos du Python, de la programmation orienté objets et des bonnes pratiques permettant la création de réelles applications.</p>
+        <form>
+          <input placeholder="e-mail">
+          <button>Inscription</button>
+        </form>
+      </div>
+      <figcaption>Avant</figcaption>
+      </figure>
+    </section>
+    <section>
+      <figure>
+      <div class="widget3">
+        <h3>Inscrivez-vous à la newsletter sur le développement orienté objects efficace en Python</h3>
+        <p>Des informations hebdomadaires à propos du Python, de la programmation orienté objets et des bonnes pratiques permettant la création de réelles applications.</p>
+        <form>
+          <input placeholder="e-mail">
+          <button>Inscription</button>
+        </form>
+      </div>
+      <figcaption>Après</figcaption>
+      </figure>
+    </section>
+    <section>
+      <h2>Polices</h2>
+      <ul>
+        <li>Peu de polices différentes (2)</li>
+        <li>Limiter l'usage des polices extravagantes</li>
+        <li>Utiliser le gras, l'italique, les majuscules pour différencier le texte.</li>
+      </ul>
+    </section>
+    <section>
+      <figure>
+      <div class="widget3">
+        <h3>Inscrivez-vous à la newsletter sur le développement orienté objects efficace en Python</h3>
+        <p>Des informations hebdomadaires à propos du Python, de la programmation orienté objets et des bonnes pratiques permettant la création de réelles applications.</p>
+        <form>
+          <input placeholder="e-mail">
+          <button>Inscription</button>
+        </form>
+      </div>
+      <figcaption>Avant</figcaption>
+      </figure>
+    </section>
+    <section>
+      <figure>
+      <div class="widget4">
+        <h3>Inscrivez-vous à la newsletter sur le développement orienté objects efficace en Python</h3>
+        <p>Des informations hebdomadaires à propos du Python, de la programmation orienté objets et des bonnes pratiques permettant la création de réelles applications.</p>
+        <form>
+          <input placeholder="e-mail">
+          <button>Inscription</button>
+        </form>
+      </div>
+      <figcaption>Après</figcaption>
+      </figure>
+    </section>
+    <section>
+      <h2>Espaces blancs</h2>
+      <ul>
+        <li>Arme ultime contre la surcharge.</li>
+        <li>Normaliser les espaces (<code class="lang-css">rem</code>)</li>
+      </ul>
+      <div class="columns">
+        <div class="left">
+          <div class="center" style="margin-bottom: 1em;">
+            <div class="spacebar" style="height: 1rem;"></div>
+            <div class="spacebar" style="height: 2rem;">2</div>
+            <div class="spacebar" style="height: 3rem;">3</div>
+            <div class="spacebar" style="height: 4rem;">4</div>
+            <div class="spacebar" style="height: 5rem;">5</div>
+            <div class="spacebar" style="width: 0; height: 8rem;"></div>
+          </div>
+          <p class="center">Progression linéaire</p>
+          <figure><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pg0KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE5LjAuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPg0KPHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCINCgkgdmlld0JveD0iMCAwIDQyNi42NjcgNDI2LjY2NyIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNDI2LjY2NyA0MjYuNjY3OyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+DQo8cGF0aCBzdHlsZT0iZmlsbDojRjA1MjI4OyIgZD0iTTIxMy4zMzMsMEM5NS41MTQsMCwwLDk1LjUxNCwwLDIxMy4zMzNzOTUuNTE0LDIxMy4zMzMsMjEzLjMzMywyMTMuMzMzDQoJczIxMy4zMzMtOTUuNTE0LDIxMy4zMzMtMjEzLjMzM1MzMzEuMTUzLDAsMjEzLjMzMywweiBNMzMwLjk5NSwyNzYuNjg5bC01NC4zMDIsNTQuMzA2bC02My4zNi02My4zNTZsLTYzLjM2LDYzLjM2bC01NC4zMDItNTQuMzENCglsNjMuMzU2LTYzLjM1NmwtNjMuMzU2LTYzLjM2bDU0LjMwMi01NC4zMDJsNjMuMzYsNjMuMzU2bDYzLjM2LTYzLjM1Nmw1NC4zMDIsNTQuMzAybC02My4zNTYsNjMuMzZMMzMwLjk5NSwyNzYuNjg5eiIvPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPC9zdmc+DQo=" style="width: 5em;"></figure>
+        </div>
+        <div class="right">
+          <div class="center" style="margin-bottom: 1em;">
+            <div class="spacebar" style="height: 0.5rem;"></div>
+            <div class="spacebar" style="height: 1rem;"> </div>
+            <div class="spacebar" style="height: 2rem;">2</div>
+            <div class="spacebar" style="height: 4rem;">4</div>
+            <div class="spacebar" style="height: 8rem;">8</div>
+          </div>
+          <p class="center">Progression géométrique</p>
+          <figure><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pg0KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE5LjAuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPg0KPHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCINCgkgdmlld0JveD0iMCAwIDQyNi42NjcgNDI2LjY2NyIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNDI2LjY2NyA0MjYuNjY3OyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+DQo8cGF0aCBzdHlsZT0iZmlsbDojNkFDMjU5OyIgZD0iTTIxMy4zMzMsMEM5NS41MTgsMCwwLDk1LjUxNCwwLDIxMy4zMzNzOTUuNTE4LDIxMy4zMzMsMjEzLjMzMywyMTMuMzMzDQoJYzExNy44MjgsMCwyMTMuMzMzLTk1LjUxNCwyMTMuMzMzLTIxMy4zMzNTMzMxLjE1NywwLDIxMy4zMzMsMHogTTE3NC4xOTksMzIyLjkxOGwtOTMuOTM1LTkzLjkzMWwzMS4zMDktMzEuMzA5bDYyLjYyNiw2Mi42MjINCglsMTQwLjg5NC0xNDAuODk4bDMxLjMwOSwzMS4zMDlMMTc0LjE5OSwzMjIuOTE4eiIvPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPC9zdmc+DQo=" style="width: 5em;"></figure>
+        </div>
+      </div>
+    </section>
+    <section>
+      <h3>Utilisations des Espaces blancs</h3>
+      <figure><img src="./space_system.png"><figcaption>Système d'espaces</figcaption></figure>
+    </section>
+    <section>
+      <figure><img src="./space_example.png"><figcaption>Application du système</figcaption></figure>
+    </section>
+    <section>
+      <figure>
+      <div class="widget4">
+        <h3>Inscrivez-vous à la newsletter sur le développement orienté objects efficace en Python</h3>
+        <p>Des informations hebdomadaires à propos du Python, de la programmation orienté objets et des bonnes pratiques permettant la création de réelles applications.</p>
+        <form>
+          <input placeholder="e-mail">
+          <button>Inscription</button>
+        </form>
+      </div>
+      <figcaption>Avant</figcaption>
+      </figure>
+      <figure>
+      <div class="widget5">
+        <h3>Inscrivez-vous à la newsletter sur le développement orienté objects efficace en Python</h3>
+        <p>Des informations hebdomadaires à propos du Python, de la programmation orienté objets et des bonnes pratiques permettant la création de réelles applications.</p>
+        <form>
+          <input placeholder="e-mail">
+          <button>Inscription</button>
+        </form>
+      </div>
+      <figcaption>Après</figcaption>
+      </figure>
+    </section>
+    <section class="custom-css">
+      <h2>Propiétés CSS personalisées <em>(Custom CSS Property)</em></h2>
+      <ul>
+        <li>Evite de répéter une même valeur dans toute la feuille de style.</li>
+        <li>Permet de changer et expérimenter facilement.</li>
+      </ul>
+      <pre>
+        <code class="lang-css">
+          :root {
+            --base-color-h: 14;
+            --base-color-s: 100%;
+            --base-color-l: 57%;
+            --base-color: hsl(var(--base-color-h),
+                              var(--base-color-s),
+                              var(--base-color-l));
+            --base-color-darken-20: hsl(var(--base-color-h),
+                                        var(--base-color-s),
+                                        calc(var(--base-color-l) - 20%));
+            --length-M: 1rem;
+            --length-L: calc(var(--length-M) * 2);
+            --length-S: calc(var(--length-M) / 2);
+          }
+
+          div {
+            margin-bottom: 1rem;
+          }
+
+          .base {
+            background-color: var(--base-color);
+            height: var(--length-M);
+          }
+
+          .darken {
+            background-color: var(--base-color-darken-20);
+            height: var(--length-L);
+          }
+        </code>
+      </pre>
+      <pre><code class="lang-html">
+        &lt;div class="base">&lt;/div>
+        &lt;div class="darken">&lt;/div>
+      </code></pre>
+      <div class="base"></div>
+      <div class="darken"></div>
+    </section>
+    <section>
+      <h2>Propiétés CSS personalisées <em>(Custom CSS Properties)</em></h2>
+      <p class="ciu_embed" data-feature="css-variables" data-periods="future_1,current,past_1,past_2" data-accessible-colours="false">
+        <a href="http://caniuse.com/#feat=css-variables">
+        <picture>
+        <source type="image/webp" srcset="https://caniuse.bitsofco.de/image/css-variables.webp">
+        <img src="https://caniuse.bitsofco.de/image/css-variables.png" alt="Data on support for the css-variables feature across the major browsers from caniuse.com">
+        </picture>
+        </a>
+      </p>
+      <p class="ciu_embed" data-feature="calc" data-periods="future_1,current,past_1,past_2" data-accessible-colours="false">
+        <a href="http://caniuse.com/#feat=calc">
+        <picture>
+        <source type="image/webp" srcset="https://caniuse.bitsofco.de/image/calc.webp">
+        <img src="https://caniuse.bitsofco.de/image/calc.png" alt="Data on support for the calc feature across the major browsers from caniuse.com">
+        </picture>
+        </a>
+      </p>
+    </section>
+    <section>
+      <h2>But de la page</h2>
+      <p class="big center">Le but de la page doit être facile à trouver</p>
+      <figure>
+      <div class="widget5">
+        <h3>Inscrivez-vous à la newsletter sur le développement orienté objects efficace en Python</h3>
+        <p>Des informations hebdomadaires à propos du Python, de la programmation orienté objets et des bonnes pratiques permettant la création de réelles applications.</p>
+        <form>
+          <input placeholder="e-mail">
+          <button>Inscription</button>
+        </form>
+      </div>
+      <figcaption>Bouton principal dans une couleur vive</figcaption>
+      </figure>
+    </section>
+    <section>
+      <h2>Contenu</h2>
+      <p>Les utilisateurs survolent plus souvent le texte qu'ils ne le lisent</p>
+      <ul>
+        <li>Eviter les grands pavés de texte</li>
+        <li>Utiliser les listes à puces</li>
+        <li>Marquer les mots importants (gras, ...)</li>
+        <li>Droit au but</li>
+        <li>Utiliser un language humain / familier</li>
+      </ul>
+    </section>
+    <section>
+      <figure>
+      <div class="widget5">
+        <h3>Inscrivez-vous à la newsletter sur le développement orienté objects efficace en Python</h3>
+        <p>Des informations hebdomadaires à propos du Python, de la programmation orienté objets et des bonnes pratiques permettant la création de réelles applications.</p>
+        <form>
+          <input placeholder="e-mail">
+          <button>Inscription</button>
+        </form>
+      </div>
+      <figcaption>Avant</figcaption>
+      </figure>
+    </section>
+    <section>
+      <figure>
+      <div class="widget5">
+        <h3>Améliorez votre Python</h3>
+        <p>Recevez des <b>informations</b> régulières pour devenir un <b>meilleur développeur</b></p>
+        <form>
+          <input placeholder="Insérez votre e-mail">
+          <button>Inscrivez-vous</button>
+        </form>
+      </div>
+      <figcaption>Après</figcaption>
+      </figure>
+    </section>
+    <section>
+      <h2>Au final !</h2>
+      <figure>
+      <div class="widget">
+        <h3>Inscrivez-vous à la newsletter sur le développement orienté objects efficace en Python</h3>
+        <p>Des informations hebdomadaires à propos du Python, de la programmation orienté objets et des bonnes pratiques permettant la création de réelles applications.</p>
+        <form>
+          <input placeholder="e-mail">
+          <button>Inscription</button>
+        </form>
+      </div>
+        <figcaption>Avant</figcaption>
+      </figure>
+    </section>
+    <section>
+      <figure>
+      <div class="widget5">
+        <h3>Améliorez votre Python</h3>
+        <p>Recevez des <b>informations</b> régulières pour devenir un <b>meilleur développeur</b></p>
+        <form>
+          <input placeholder="Insérez votre e-mail">
+          <button>Inscrivez-vous</button>
+        </form>
+      </div>
+        <figcaption>Après</figcaption>
+      </figure>
+    </section>
+    <section>
+      <h2>Exercice</h2>
+      <p>En partant de <a href="./exercice/index.html" download>cette page</a>, écrivez une <strong>synthèse</strong> du cours d'aujourd'hui en lui donnant un style qui respecte les principes d'un <strong>design efficace</strong>.</p>
+    </section>
+    <section>
+      <h2>Crédit</h2>
+      <ul>
+        <li>Présentation <em lang="en">Design Concepts For Non-Designers</em> de Tracy Osborn du DjangoCon 2016</li>
+        <li>https://medium.com/eightshapes-llc/space-in-design-systems-188bcbae0d62</li>
+      </ul>
+    </section>
+  </body>
+</html>

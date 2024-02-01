@@ -1,5 +1,5 @@
 ---
-title: "AB4C - Labo 1"
+title: "ER4C - Labo 1"
 subtitle: "Responsive Design"
 css: "./style.css"
 ---
