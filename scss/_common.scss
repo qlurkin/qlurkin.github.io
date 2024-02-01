@@ -1,6 +1,8 @@
 @use 'default';
 @use 'grid';
 
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Display:ital,wght@0,100..900;1,100..900&family=Noto+Sans+Mono:wght@100..900&display=swap');
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -8,6 +10,7 @@
 }
 
 body {
+    
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
@@ -18,11 +21,11 @@ code {
     font-size: .875em;
     color: #AA0000;
     white-space: pre;
-    font-family: 'Source Code Pro', monospace;
+    font-family: 'Noto Sans Mono', monospace;
 }
 
 pre {
-    font-family: 'Source Code Pro', monospace;
+    font-family: 'Noto Sans Mono', monospace;
     overflow-x: auto;
     padding: 1em 0.8em;
     background: #F0F0F0;
