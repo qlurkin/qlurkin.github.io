@@ -1,14 +1,14 @@
 @use 'common';
 @use 'chapter';
 
-@import url('https://fonts.googleapis.com/css?family=Lora|Source+Code+Pro&display=swap');
-
 @page {
 	margin: 2cm;
 }
 
 body {
 	font-family:  'Noto Sans', sans-serif;
+  font-optical-sizing: auto;
+  font-variation-settings: "wdth" 100;
 	counter-reset: section;
 	max-width: 40rem;
 	margin: auto;

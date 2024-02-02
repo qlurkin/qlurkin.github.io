@@ -1,7 +1,5 @@
 @use 'common';
 
-@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
-
 @page {
     margin: 1cm;
 }
@@ -12,6 +10,8 @@ html {
 
 body {
     font-family: 'Noto Sans', sans-serif;
+    font-optical-sizing: auto;
+    font-variation-settings: "wdth" 100;
 }
 
 h3 {
