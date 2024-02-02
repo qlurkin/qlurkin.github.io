@@ -1,6 +1,5 @@
 @use 'common';
 
-@import url('https://fonts.googleapis.com/css2?family=Roboto&family=Roboto+Slab&family=Source+Code+Pro&display=swap');
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 
 @page {
@@ -12,7 +11,7 @@ html {
 }
 
 body {
-    font-family: 'Noto Sans Display', sans-serif;
+    font-family: 'Noto Sans', sans-serif;
 }
 
 h3 {
