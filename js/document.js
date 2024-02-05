@@ -6,11 +6,12 @@ import { Draw } from './draw'
 import { renderRefs, setChapterNb } from './refs'
 
 function initDocument() {
-    renderMath()
-    renderCode()
-    renderRefs()
+  renderMath()
+  renderCode()
+  renderRefs()
 }
 
 initDocument()
 
 export { ready, Draw, setChapterNb }
+

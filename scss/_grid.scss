@@ -23,6 +23,9 @@
             justify-self: center;
             align-self: center;
             padding: 0 0.4rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
 
             .content {
                 position: relative;
@@ -46,9 +49,12 @@
                 transform: rotate(-45deg) translate(-1.5px, -1.5px);
                 width: 28px;
                 height: 28px;
-                top: -5px;
-                left: -5px;
             }
+        }
+
+        .node.ellipse {
+          border-radius: 50%;
+          border: 1px solid black;
         }
 
         .node.start {
