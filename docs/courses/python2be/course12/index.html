@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cours 1 & 2: Gestion de projet, versioning, package et intégration continue</title>
-    <script src="https://quentin.lurkin.xyz/deck.js" defer></script>
+    <script src="/deck.js" defer></script>
     <style>
         .terminal, .file-title, figure {
             margin-top: 1rem;
@@ -21,6 +21,20 @@
 
         .green {
             color:rgb(0, 255, 110);
+        }
+
+        .commit {
+          background-color: rgba(255, 0, 0, 0.3);
+        }
+
+        .branch {
+          background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .head {
+          background-color: black;
+          color: white;
+          font-weight: 700;
         }
     </style>
 </head>
@@ -144,15 +158,52 @@
             <li>À chaque nouveau commit, le pointeur de branche avance</li>
             <li>Un commit pointe vers le commit parent</li>
         </ul>
-        <figure>
-            <img src="./branche1.png" alt="">
+        <div class="terminal">
+          > git commit ...
+        </div>
+        <figure id='merge1' data-ref='figure'>
+          <div></div>
         </figure>
-        <figure>
-            <img src="./branche2.png" alt="">
+        <script type="module" defer>
+          const draw = await Deck.Draw('#merge1 > div', 800, 200)
+          const c_82ea19 = draw.ellipse('82ea19').width(80).height(80).classes('commit').move(3, 1)
+          const b_master = draw.round('master').classes('branch').aboveOf(c_82ea19)
+
+
+          draw.polyline([c_82ea19, '<--', b_master])
+          draw.done()
+        </script>
+        <div class="terminal">
+          > git commit ...
+        </div>
+        <figure id='merge2' data-ref='figure'>
+          <div></div>
         </figure>
-        <figure>
-            <img src="./branche3.png" alt="">
+        <script type="module" defer>
+          const draw = await Deck.Draw('#merge2 > div', 800, 200)
+          const c_82ea19 = draw.ellipse('82ea19').width(80).height(80).classes('commit').move(3, 1)
+          const c_cd27e1 = draw.ellipse('cd27e1').width(80).height(80).classes('commit').rightOf(c_82ea19)
+          const b_master = draw.round('master').classes('branch').aboveOf(c_cd27e1)
+
+          draw.polyline([c_82ea19, '<--', c_cd27e1, '<--', b_master])
+          draw.done()
+        </script>
+        <div class="terminal">
+          > git commit ...
+        </div>
+        <figure id='merge3' data-ref='figure'>
+          <div></div>
         </figure>
+        <script type="module" defer>
+          const draw = await Deck.Draw('#merge3 > div', 800, 200)
+          const c_82ea19 = draw.ellipse('82ea19').width(80).height(80).classes('commit').move(3, 1)
+          const c_cd27e1 = draw.ellipse('cd27e1').width(80).height(80).classes('commit').rightOf(c_82ea19)
+          const c_98173c = draw.ellipse('98173c').width(80).height(80).classes('commit').rightOf(c_cd27e1)
+          const b_master = draw.round('master').classes('branch').aboveOf(c_98173c)
+
+          draw.polyline([c_82ea19, '<--', c_cd27e1, '<--', c_98173c, '<--', b_master])
+          draw.done()
+        </script>
     </section>
     <section>
         <h2>Création d’une nouvelle branche</h2>
@@ -162,9 +213,22 @@
         <div class="terminal">
             > git branch test
         </div>
-        <figure>
-            <img src="./branche4.png" alt="">
+        <figure id='merge4' data-ref='figure'>
+          <div></div>
         </figure>
+        <script type="module" defer>
+          const draw = await Deck.Draw('#merge4 > div', 800, 300)
+          const c_82ea19 = draw.ellipse('82ea19').width(80).height(80).classes('commit').move(3, 1)
+          const c_cd27e1 = draw.ellipse('cd27e1').width(80).height(80).classes('commit').rightOf(c_82ea19)
+          const c_98173c = draw.ellipse('98173c').width(80).height(80).classes('commit').rightOf(c_cd27e1)
+          const b_master = draw.round('master').classes('branch').aboveOf(c_98173c)
+          const b_test = draw.round('test').classes('branch').belowOf(c_98173c)
+
+
+          draw.polyline([c_82ea19, '<--', c_cd27e1, '<--', c_98173c, '<--', b_master])
+          draw.polyline([c_98173c, '<--', b_test])
+          draw.done()
+        </script>
     </section>
     <section>
         <h2>Branche courante</h2>
@@ -177,9 +241,23 @@
                 </div>
             </li>
             <li>La branche courante est identifiée par <code>HEAD</code>
-                <figure>
-                    <img src="./branche5.png" alt="">
+                <figure id='merge5' data-ref='figure'>
+                  <div></div>
                 </figure>
+                <script type="module" defer>
+                  const draw = await Deck.Draw('#merge5 > div', 800, 300)
+                  const c_82ea19 = draw.ellipse('82ea19').width(80).height(80).classes('commit').move(3, 1)
+                  const c_cd27e1 = draw.ellipse('cd27e1').width(80).height(80).classes('commit').rightOf(c_82ea19)
+                  const c_98173c = draw.ellipse('98173c').width(80).height(80).classes('commit').rightOf(c_cd27e1)
+                  const b_master = draw.round('master').classes('branch').aboveOf(c_98173c)
+                  const head = draw.round('HEAD').classes('head').leftOf(b_master)
+                  const b_test = draw.round('test').classes('branch').belowOf(c_98173c)
+
+
+                  draw.polyline([c_82ea19, '<--', c_cd27e1, '<--', c_98173c, '<--', b_master, '<--', head])
+                  draw.polyline([c_98173c, '<--', b_test])
+                  draw.done()
+                </script>
             </li>
         </ul>
     </section>
@@ -193,9 +271,23 @@
                 </div>
             </li>
             <li>La branche courante est identifiée par <code>HEAD</code>
-                <figure>
-                    <img src="./branche6.png" alt="">
+                <figure id='merge6' data-ref='figure'>
+                  <div></div>
                 </figure>
+                <script type="module" defer>
+                  const draw = await Deck.Draw('#merge6 > div', 800, 300)
+                  const c_82ea19 = draw.ellipse('82ea19').width(80).height(80).classes('commit').move(3, 1)
+                  const c_cd27e1 = draw.ellipse('cd27e1').width(80).height(80).classes('commit').rightOf(c_82ea19)
+                  const c_98173c = draw.ellipse('98173c').width(80).height(80).classes('commit').rightOf(c_cd27e1)
+                  const b_master = draw.round('master').classes('branch').aboveOf(c_98173c)
+                  const b_test = draw.round('test').classes('branch').belowOf(c_98173c)
+                  const head = draw.round('HEAD').classes('head').leftOf(b_test)
+
+
+                  draw.polyline([c_82ea19, '<--', c_cd27e1, '<--', c_98173c, '<--', b_master])
+                  draw.polyline([c_98173c, '<--', b_test, '<--', head])
+                  draw.done()
+                </script>
             </li>
         </ul>
     </section>
@@ -203,35 +295,415 @@
         <h2>Commit sur une branche</h2>
         <ul>
             <li>Un commit va toujours se faire sur la branche courante
-                <figure>
-                    <img src="./branche7.png" alt="">
+                <figure id='merge7' data-ref='figure'>
+                  <div></div>
                 </figure>
+                <script type="module" defer>
+                  const draw = await Deck.Draw('#merge7 > div', 800, 300)
+                  const c_82ea19 = draw.ellipse('82ea19').width(80).height(80).classes('commit').move(3, 1)
+                  const c_cd27e1 = draw.ellipse('cd27e1').width(80).height(80).classes('commit').rightOf(c_82ea19)
+                  const c_98173c = draw.ellipse('98173c').width(80).height(80).classes('commit').rightOf(c_cd27e1)
+                  const b_master = draw.round('master').classes('branch').aboveOf(c_98173c)
+                  const b_test = draw.round('test').classes('branch').belowOf(c_98173c)
+                  const head = draw.round('HEAD').classes('head').leftOf(b_test)
+
+
+                  draw.polyline([c_82ea19, '<--', c_cd27e1, '<--', c_98173c, '<--', b_master])
+                  draw.polyline([c_98173c, '<--', b_test, '<--', head])
+                  draw.done()
+                </script>
             </li>
         </ul>
         <div class="terminal">
             > git commit ...
         </div>
-        <figure>
-            <img src="./branche8.png" alt="">
+        <figure id='merge8' data-ref='figure'>
+          <div></div>
         </figure>
+        <script type="module" defer>
+          const draw = await Deck.Draw('#merge8 > div', 800, 350)
+          const c_82ea19 = draw.ellipse('82ea19').width(80).height(80).classes('commit').move(3, 1)
+          const c_cd27e1 = draw.ellipse('cd27e1').width(80).height(80).classes('commit').rightOf(c_82ea19)
+          const c_98173c = draw.ellipse('98173c').width(80).height(80).classes('commit').rightOf(c_cd27e1)
+          const c_ab716e = draw.ellipse('ab716e').width(80).height(80).classes('commit').move(4, 4)
+          const b_master = draw.round('master').classes('branch').aboveOf(c_98173c)
+          const b_test = draw.round('test').classes('branch').belowOf(c_ab716e)
+          const head = draw.round('HEAD').classes('head').leftOf(b_test)
+
+
+          draw.polyline([c_82ea19, '<--', c_cd27e1, '<--', c_98173c, '<--', b_master])
+          draw.polyline([c_98173c, '<--', c_ab716e, '<--', b_test, '<--', head])
+          draw.done()
+        </script>
         <div class="terminal">
             > git commit ...
         </div>
-        <figure>
-            <img src="./branche9.png" alt="">
+        <figure id='merge9' data-ref='figure'>
+          <div></div>
         </figure>
+        <script type="module" defer>
+          const draw = await Deck.Draw('#merge9 > div', 800, 350)
+          const c_82ea19 = draw.ellipse('82ea19').width(80).height(80).classes('commit').move(3, 1)
+          const c_cd27e1 = draw.ellipse('cd27e1').width(80).height(80).classes('commit').rightOf(c_82ea19)
+          const c_98173c = draw.ellipse('98173c').width(80).height(80).classes('commit').rightOf(c_cd27e1)
+          const c_ab716e = draw.ellipse('ab716e').width(80).height(80).classes('commit').move(4, 4)
+          const c_716ea4 = draw.ellipse('716ea4').width(80).height(80).classes('commit').rightOf(c_ab716e)
+          const b_master = draw.round('master').classes('branch').aboveOf(c_98173c)
+          const b_test = draw.round('test').classes('branch').belowOf(c_716ea4)
+          const head = draw.round('HEAD').classes('head').leftOf(b_test)
+
+
+          draw.polyline([c_82ea19, '<--', c_cd27e1, '<--', c_98173c, '<--', b_master])
+          draw.polyline([c_98173c, '<--', c_ab716e, '<--', c_716ea4, '<--', b_test, '<--', head])
+          draw.done()
+        </script>
         <div class="terminal">
             > git checkout master
         </div>
-        <figure>
-            <img src="./branche10.png" alt="">
+        <figure id='merge10' data-ref='figure'>
+          <div></div>
         </figure>
+        <script type="module" defer>
+          const draw = await Deck.Draw('#merge10 > div', 800, 350)
+          const c_82ea19 = draw.ellipse('82ea19').width(80).height(80).classes('commit').move(3, 1)
+          const c_cd27e1 = draw.ellipse('cd27e1').width(80).height(80).classes('commit').rightOf(c_82ea19)
+          const c_98173c = draw.ellipse('98173c').width(80).height(80).classes('commit').rightOf(c_cd27e1)
+          const c_ab716e = draw.ellipse('ab716e').width(80).height(80).classes('commit').move(4, 4)
+          const c_716ea4 = draw.ellipse('716ea4').width(80).height(80).classes('commit').rightOf(c_ab716e)
+          const b_master = draw.round('master').classes('branch').aboveOf(c_98173c)
+          const b_test = draw.round('test').classes('branch').belowOf(c_716ea4)
+          const head = draw.round('HEAD').classes('head').leftOf(b_master)
+
+
+          draw.polyline([c_82ea19, '<--', c_cd27e1, '<--', c_98173c, '<--', b_master, '<--', head])
+          draw.polyline([c_98173c, '<--', c_ab716e, '<--', c_716ea4, '<--', b_test])
+          draw.done()
+        </script>
         <div class="terminal">
             > git commit ...
         </div>
-        <figure>
-            <img src="./branche11.png" alt="">
+        <figure id='merge11' data-ref='figure'>
+          <div></div>
         </figure>
+        <script type="module" defer>
+          const draw = await Deck.Draw('#merge11 > div', 800, 450)
+          const c_82ea19 = draw.ellipse('82ea19').width(80).height(80).classes('commit').move(3, 1)
+          const c_cd27e1 = draw.ellipse('cd27e1').width(80).height(80).classes('commit').rightOf(c_82ea19)
+          const c_98173c = draw.ellipse('98173c').width(80).height(80).classes('commit').rightOf(c_cd27e1)
+          const c_62eac3 = draw.ellipse('62eac3').width(80).height(80).classes('commit').move(2, 4)
+          const c_ab716e = draw.ellipse('ab716e').width(80).height(80).classes('commit').move(4, 4)
+          const c_716ea4 = draw.ellipse('716ea4').width(80).height(80).classes('commit').rightOf(c_ab716e)
+          const b_master = draw.round('master').classes('branch').aboveOf(c_62eac3)
+          const head = draw.round('HEAD').classes('head').leftOf(b_master)
+          const b_test = draw.round('test').classes('branch').belowOf(c_716ea4)
+
+
+          draw.polyline([c_82ea19, '<--', c_cd27e1, '<--', c_98173c, '<--', c_62eac3, '<--', b_master, '<--', head])
+          draw.polyline([c_98173c, '<--', c_ab716e, '<--', c_716ea4, '<--', b_test])
+          draw.done()
+        </script>
+    </section>
+    <section>
+      <h2>Merge (Fast-Forward)</h2>
+      <p>Contexte :</p>
+      <ul>
+        <li>test d'une nouvelle fonctionnalité sur la branche test</li>
+        <li>Mais il y a une correction urgente à faire sur <code>master</code></li>
+      </ul>
+      <figure id='merge12' data-ref='figure'>
+        <div></div>
+      </figure>
+      <script type="module" defer>
+        const draw = await Deck.Draw('#merge12 > div', 800, 450)
+        const c_82ea19 = draw.ellipse('82ea19').width(80).height(80).classes('commit').move(3, 1)
+        const c_cd27e1 = draw.ellipse('cd27e1').width(80).height(80).classes('commit').rightOf(c_82ea19)
+        const c_98173c = draw.ellipse('98173c').width(80).height(80).classes('commit').rightOf(c_cd27e1)
+        const c_ab716e = draw.ellipse('ab716e').width(80).height(80).classes('commit').move(4, 4)
+        const c_716ea4 = draw.ellipse('716ea4').width(80).height(80).classes('commit').rightOf(c_ab716e)
+        const b_master = draw.round('master').classes('branch').aboveOf(c_98173c)
+        const head = draw.round('HEAD').classes('head').leftOf(b_master)
+        const b_test = draw.round('test').classes('branch').belowOf(c_716ea4)
+
+
+        draw.polyline([c_82ea19, '<--', c_cd27e1, '<--', c_98173c, '<--', b_master, '<--', head])
+        draw.polyline([c_98173c, '<--', c_ab716e, '<--', c_716ea4, '<--', b_test])
+        draw.done()
+      </script>
+
+      <ul>
+        <li>Creation d'une nouvelle branche <code>hotfix</code></li>
+        <li>Correction du problème</li>
+      </ul>
+
+      <div class="terminal">
+        > git checkout -b hotfix
+        Switched to a new branch 'hotfix'
+        > vim index.html
+        > git commit -a -m 'Fix broken email address'
+        [hotfix 62aec3] Fix broken email address
+         1 file changed, 2 insertions(+)
+      </div>
+
+      <figure id='merge13' data-ref='figure'>
+        <div></div>
+      </figure>
+      <script type="module" defer>
+        const draw = await Deck.Draw('#merge13 > div', 800, 450)
+        const c_82ea19 = draw.ellipse('82ea19').width(80).height(80).classes('commit').move(3, 1)
+        const c_cd27e1 = draw.ellipse('cd27e1').width(80).height(80).classes('commit').rightOf(c_82ea19)
+        const c_98173c = draw.ellipse('98173c').width(80).height(80).classes('commit').rightOf(c_cd27e1)
+        const c_62eac3 = draw.ellipse('62eac3').width(80).height(80).classes('commit').move(2, 4)
+        const c_ab716e = draw.ellipse('ab716e').width(80).height(80).classes('commit').move(4, 4)
+        const c_716ea4 = draw.ellipse('716ea4').width(80).height(80).classes('commit').rightOf(c_ab716e)
+        const b_master = draw.round('master').classes('branch').aboveOf(c_98173c)
+        const b_test = draw.round('test').classes('branch').belowOf(c_716ea4)
+        const b_hotfix = draw.round('hotfix').classes('branch').aboveOf(c_62eac3)
+        const head = draw.round('HEAD').classes('head').leftOf(b_hotfix)
+
+
+        draw.polyline([c_82ea19, '<--', c_cd27e1, '<--', c_98173c, '<--', c_62eac3, '<--', b_hotfix, '<--', head])
+        draw.polyline([c_98173c, '<--', c_ab716e, '<--', c_716ea4, '<--', b_test])
+        draw.polyline([c_98173c, '<--', b_master])
+        draw.done()
+      </script>
+
+      <ul>
+        <li>Nous voulons maintenant intégrer la correction de <code>hotfix</code> dans <code>master</code></li>
+        <li>On repasse d'abord sur <code>master</code></li>
+      </ul>
+
+      <div class="terminal">
+       > git checkout master
+      </div>
+
+      <figure id='merge14' data-ref='figure'>
+        <div></div>
+      </figure>
+      <script type="module" defer>
+        const draw = await Deck.Draw('#merge14 > div', 800, 450)
+        const c_82ea19 = draw.ellipse('82ea19').width(80).height(80).classes('commit').move(3, 1)
+        const c_cd27e1 = draw.ellipse('cd27e1').width(80).height(80).classes('commit').rightOf(c_82ea19)
+        const c_98173c = draw.ellipse('98173c').width(80).height(80).classes('commit').rightOf(c_cd27e1)
+        const c_62eac3 = draw.ellipse('62eac3').width(80).height(80).classes('commit').move(2, 4)
+        const c_ab716e = draw.ellipse('ab716e').width(80).height(80).classes('commit').move(4, 4)
+        const c_716ea4 = draw.ellipse('716ea4').width(80).height(80).classes('commit').rightOf(c_ab716e)
+        const b_master = draw.round('master').classes('branch').aboveOf(c_98173c)
+        const b_test = draw.round('test').classes('branch').belowOf(c_716ea4)
+        const b_hotfix = draw.round('hotfix').classes('branch').aboveOf(c_62eac3)
+        const head = draw.round('HEAD').classes('head').leftOf(b_master)
+
+
+        draw.polyline([c_82ea19, '<--', c_cd27e1, '<--', c_98173c, '<--', c_62eac3, '<--', b_hotfix])
+        draw.polyline([c_98173c, '<--', c_ab716e, '<--', c_716ea4, '<--', b_test])
+        draw.polyline([c_98173c, '<--', b_master, '<--', head])
+        draw.done()
+      </script>
+
+      <ul>
+        <li>Puis on intégre <code>hotfix</code></li>
+        <li>Comme <code>hotfix</code> est un descendant de <code>master</code>, ce <em>merge</em> est un <em>fast-forward</em>.</li>
+        <li>La branche <code>master</code> avance simplement jusqu'à <code>hotfix</code>.</li>
+      </ul>
+
+      <div class="terminal">
+        > git merge hotfix
+        Updating 98173c..62eac3
+        Fast-forward
+         index.html | 2 ++
+         1 file changed, 2 insertions(+)
+      </div>
+
+      <figure id='merge15' data-ref='figure'>
+        <div></div>
+      </figure>
+      <script type="module" defer>
+        const draw = await Deck.Draw('#merge15 > div', 800, 450)
+        const c_82ea19 = draw.ellipse('82ea19').width(80).height(80).classes('commit').move(3, 1)
+        const c_cd27e1 = draw.ellipse('cd27e1').width(80).height(80).classes('commit').rightOf(c_82ea19)
+        const c_98173c = draw.ellipse('98173c').width(80).height(80).classes('commit').rightOf(c_cd27e1)
+        const c_62eac3 = draw.ellipse('62eac3').width(80).height(80).classes('commit').move(2, 4)
+        const c_ab716e = draw.ellipse('ab716e').width(80).height(80).classes('commit').move(4, 4)
+        const c_716ea4 = draw.ellipse('716ea4').width(80).height(80).classes('commit').rightOf(c_ab716e)
+        const b_master = draw.round('master').classes('branch').aboveOf(c_98173c)
+        const b_test = draw.round('test').classes('branch').belowOf(c_716ea4)
+        const b_hotfix = draw.round('hotfix').classes('branch').aboveOf(c_62eac3)
+        const head = draw.round('HEAD').classes('head').leftOf(b_master)
+
+
+        draw.polyline([c_82ea19, '<--', c_cd27e1, '<--', c_98173c, '<--', c_62eac3, '<--', b_hotfix])
+        draw.polyline([c_98173c, '<--', c_ab716e, '<--', c_716ea4, '<--', b_test])
+        draw.polyline([c_62eac3, '<--', b_master, '<--', head])
+        draw.done()
+      </script>
+
+      <ul><li>La branche <code>hotfix</code> n'est plus nécessaire, on peut la supprimer.</li></ul>
+
+      <div class="terminal">
+        > git branch -d hotfix
+        Deleted branch hotfix (62eac3).
+      </div>
+
+      <figure id='merge16' data-ref='figure'>
+        <div></div>
+      </figure>
+      <script type="module" defer>
+        const draw = await Deck.Draw('#merge16 > div', 800, 450)
+        const c_82ea19 = draw.ellipse('82ea19').width(80).height(80).classes('commit').move(3, 1)
+        const c_cd27e1 = draw.ellipse('cd27e1').width(80).height(80).classes('commit').rightOf(c_82ea19)
+        const c_98173c = draw.ellipse('98173c').width(80).height(80).classes('commit').rightOf(c_cd27e1)
+        const c_62eac3 = draw.ellipse('62eac3').width(80).height(80).classes('commit').move(2, 4)
+        const c_ab716e = draw.ellipse('ab716e').width(80).height(80).classes('commit').move(4, 4)
+        const c_716ea4 = draw.ellipse('716ea4').width(80).height(80).classes('commit').rightOf(c_ab716e)
+        const b_master = draw.round('master').classes('branch').aboveOf(c_62eac3)
+        const b_test = draw.round('test').classes('branch').belowOf(c_716ea4)
+        const head = draw.round('HEAD').classes('head').leftOf(b_master)
+
+
+        draw.polyline([c_82ea19, '<--', c_cd27e1, '<--', c_98173c, '<--', c_62eac3])
+        draw.polyline([c_98173c, '<--', c_ab716e, '<--', c_716ea4, '<--', b_test])
+        draw.polyline([c_62eac3, '<--', b_master, '<--', head])
+        draw.done()
+      </script>
+    </section>
+    <section>
+      <h2>Merge</h2>
+      <ul>
+        <li>Lorsque le <em>merge</em> concerne deux branches divergentes.</li>
+      </ul>
+      <figure id='merge17' data-ref='figure'>
+        <div></div>
+      </figure>
+      <script type="module" defer>
+        const draw = await Deck.Draw('#merge17 > div', 800, 450)
+        const c_82ea19 = draw.ellipse('82ea19').width(80).height(80).classes('commit').move(3, 1)
+        const c_cd27e1 = draw.ellipse('cd27e1').width(80).height(80).classes('commit').rightOf(c_82ea19)
+        const c_98173c = draw.ellipse('98173c').width(80).height(80).classes('commit').rightOf(c_cd27e1)
+        const c_62eac3 = draw.ellipse('62eac3').width(80).height(80).classes('commit').move(2, 4)
+        const c_ab716e = draw.ellipse('ab716e').width(80).height(80).classes('commit').move(4, 4)
+        const c_716ea4 = draw.ellipse('716ea4').width(80).height(80).classes('commit').rightOf(c_ab716e)
+        const b_master = draw.round('master').classes('branch').aboveOf(c_62eac3)
+        const b_test = draw.round('test').classes('branch').belowOf(c_716ea4)
+        const head = draw.round('HEAD').classes('head').leftOf(b_master)
+
+
+        draw.polyline([c_82ea19, '<--', c_cd27e1, '<--', c_98173c, '<--', c_62eac3])
+        draw.polyline([c_98173c, '<--', c_ab716e, '<--', c_716ea4, '<--', b_test])
+        draw.polyline([c_62eac3, '<--', b_master, '<--', head])
+        draw.done()
+      </script>
+
+      <ul>
+        <li>Un nouveau <em>commit</em> est créé sur base des deux branches et de leur plus proche ancêtre commun.</li>
+      </ul>
+
+      <div class="terminal">
+        > git merge test
+        Merge made by the 'recursive' strategy.
+        index.html |    1 +
+        1 file changed, 1 insertion(+)
+      </div>
+
+      <figure id='merge18' data-ref='figure'>
+        <div></div>
+      </figure>
+      <script type="module" defer>
+        const draw = await Deck.Draw('#merge18 > div', 800, 450)
+        const c_82ea19 = draw.ellipse('82ea19').width(80).height(80).classes('commit').move(3, 1)
+        const c_cd27e1 = draw.ellipse('cd27e1').width(80).height(80).classes('commit').rightOf(c_82ea19)
+        const c_98173c = draw.ellipse('98173c').width(80).height(80).classes('commit').rightOf(c_cd27e1)
+        const c_62eac3 = draw.ellipse('62eac3').width(80).height(80).classes('commit').move(2, 4)
+        const c_ab716e = draw.ellipse('ab716e').width(80).height(80).classes('commit').move(4, 4)
+        const c_716ea4 = draw.ellipse('716ea4').width(80).height(80).classes('commit').rightOf(c_ab716e)
+        const c_81ef67 = draw.ellipse('81ef67').width(80).height(80).classes('commit').move(2, 6)
+        const b_master = draw.round('master').classes('branch').aboveOf(c_81ef67)
+        const b_test = draw.round('test').classes('branch').belowOf(c_716ea4)
+        const head = draw.round('HEAD').classes('head').leftOf(b_master)
+
+
+        draw.polyline([c_82ea19, '<--', c_cd27e1, '<--', c_98173c, '<--', c_62eac3, '<--', c_81ef67])
+        draw.polyline([c_98173c, '<--', c_ab716e, '<--', c_716ea4, '<--', b_test])
+        draw.polyline([c_81ef67, '<--', b_master, '<--', head])
+        draw.polyline([c_716ea4, '<--', c_81ef67, '<--'])
+        draw.done()
+      </script>
+      
+      <ul>
+        <li>Ce <em>commit</em> de <em>merge</em> est spécial car il a deux parents.</li>
+        <li>Pour qu'il soit créer automatiquement, il faut qu'il n'y ai pas de conflit !</li>
+      </ul>
+
+    </section>
+    <section>
+      <h2>Conflits</h2>
+      <ul>
+        <li>Si les deux branches ont modifié la même partie de l'ancêtre commun.</li>
+        <li>Le <em>merge commit</em> n'est pas créé automatiquement</li>
+        <li>Les fichiers en conflits sont marqués comme <em>unmerged</em></li>
+      </ul>
+
+      <div class="terminal">
+        > git status
+        On branch master
+        You have unmerged paths.
+          (fix conflicts and run "git commit")
+
+        Unmerged paths:
+          (use "git add &lt;file>..." to mark resolution)
+
+            both modified:      index.html
+
+        no changes added to commit (use "git add" and/or "git commit -a")
+      </div>
+
+      <ul>
+        <li>Les parties de code en conflits sont indiquées dans les fichiers</li>
+      </ul>
+
+      <p class="file-title">index.html</p>
+      <pre><code class="lang-html">
+        &lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD:index.html
+        &lt;div id="footer">contact : email.support@github.com&lt;/div>
+        =======
+        &lt;div id="footer">
+        please contact us at support@github.com
+        &lt;/div>
+        >>>>>>> test:index.html
+      </code></pre>
+
+      <p>Cela signifie :</p>
+      <ul>
+        <li>La version de HEAD est la partie supérieure</li>
+        <li>La version de test est la partie inférieure</li>
+        <li>Vous devez remplacer le bloc par l'une ou l'autre version manuellement</li>
+        <li>Ajouter les fichiers à la zone de transit pour les marquer comme résolus</li>
+      </ul>
+
+      <div class="terminal">
+        > git add index.html
+      </div>
+
+      <ul>
+        <li>Vous pouvez vérifier que tous les conflits sont résolus avec la commande <code>git status</code></li>
+      </ul>
+
+      <div class="terminal">
+        > git status
+        On branch master
+        All conflicts fixed but you are still merging.
+          (use "git commit" to conclude merge)
+
+        Changes to be committed:
+
+            modified:   index.html
+      </div>
+
+      <ul>
+        <li>Quand tous les conflits sont résolus, on peut créer le <em>commit</em>.</li>
+      </ul>
+
+      <div class="terminal">
+        > git commit
+      </div>
     </section>
     <section>
         <h2>Opérations de base sur une branche</h2>
