@@ -1,8 +1,8 @@
 @use 'default';
 @use 'grid';
 
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Noto+Color+Emoji&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
+// @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Noto+Color+Emoji&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap');
+// @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
 
 * {
     box-sizing: border-box;
@@ -12,25 +12,35 @@
 
 body {
     
+    font-family: system-ui, sans-serif;
+    font-weight: normal;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
     background-color: white;
 }
 
+h1, h2, h3, h4 {
+  font-family: 'Iowan Old Style', 'Palatino Linotype', 'URW Palladio L', P052, serif;
+}
+
 code {
     font-size: .875em;
     color: #AA0000;
     white-space: pre;
-    font-family: 'Fira Code', monospace;
-    font-optical-sizing: auto;
-    font-variant-ligatures: none;
+    // font-family: 'Fira Code', monospace;
+    font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
+    font-weight: normal;
+    // font-optical-sizing: auto;
+    // font-variant-ligatures: none;
 }
 
 pre {
-    font-family: 'Fira Code', monospace;
-    font-optical-sizing: auto;
-    font-variant-ligatures: none;
+    // font-family: 'Fira Code', monospace;
+    font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
+    font-weight: normal;
+    // font-optical-sizing: auto;
+    // font-variant-ligatures: none;
     overflow-x: auto;
     padding: 1em 0.8em;
     background: #F0F0F0;
