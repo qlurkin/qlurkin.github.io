@@ -1,15 +1,14 @@
-import { watch, existsSync } from 'fs'
+import { watch, existsSync, lstatSync } from 'node:fs'
 import { dirname, join } from 'path'
 import { build } from 'build_lib'
-import express from 'express'
-// import { Router } from '@stricjs/router'
-// import { dir } from '@stricjs/utils'
+import { Hono } from 'hono'
+import { serveStatic } from 'hono/bun'
 
-const server_config = await Bun.file("server.json").json()
+const server_config = await Bun.file('server.json').json()
 
 function find_buildable_dir(filename) {
   const dir = dirname(filename)
-  if(existsSync(join(dir, 'build.js'))) {
+  if (existsSync(join(dir, 'build.js'))) {
     return dir
   }
   return find_buildable_dir(dir)
@@ -20,128 +19,83 @@ let to_build = null
 let building = false
 let websockets = []
 
-const watcher = watch(server_config.root, { recursive: true }, (_, filename) => {
-  if(building) return
+const watcher = watch(
+  server_config.root,
+  { recursive: true },
+  (_, filename) => {
+    if (building) return
 
-  const dir = find_buildable_dir(join(server_config.root, filename))
-  
-  if(!to_build) {
-    to_build = dir
-  }
+    const dir = find_buildable_dir(join(server_config.root, filename))
 
-  if(dir.length < to_build.length) {
-    to_build = dir
-  }
-
-  clearTimeout(timeout_handle)
-  timeout_handle = setTimeout(async () => {
-    building = true
-    process.stdout.write(`Building ${dir}...`)
-    await build(dir)
-    setTimeout(() => {
-      to_build = null
-      building = false
-      for(const ws of websockets) {
-        ws.send('Reload!!')
-      }
-      process.stdout.write(` Done\n`)
-    }, 100)
-  }, 0)
-})
-
-
-// const appp = new Router()
-// appp.port = 4000
-// appp.get('/reload.js', async () => {
-//   const js = await Bun.file('reload.js').text()
-//   return new Response(js.replace('PORT', String(4000)), {
-//     headers: {'content-type': 'application/javascript; charset=utf-8'}
-//   })
-// })
-// appp.get('/*', async ctx => {
-//   let url = ctx.params['*']
-//   if(url.endsWith('/')) {
-//     url = join(url, 'index.html')
-//   }
-//
-//   if(url.endsWith('.html')) {
-//     const file = join(server_config.root, url) 
-//     if(existsSync(file)) {
-//       let html = await Bun.file(file).text()
-//       html = html.replace('</body>', '<script src="/reload.js"></script></body>')
-//       return new Response(html, {
-//         headers: { 'content-type': 'text/html; charset=utf-8' }
-//       })
-//     }
-//   }
-//
-//   return dir('docs')(ctx)
-// })
-// appp.ws('/ws', {
-//   open(ws) {
-//     websockets.push(ws)
-//     console.log(`Connection to WebSocket: ${websockets.length}`)
-//   },
-//   close(ws) {
-//     const index = websockets.indexOf(ws)
-//     websockets.splice(index, 1)
-//     console.log(`Connection to WebSocket: ${websockets.length}`)
-//   },
-//   // this is called when a message is received
-//   message() {
-//     console.log(`Received ${message}`)
-//   },
-// })
-//
-// Bun.serve(appp)
-
-
-const app = express()
-const port = 3000
-const ws_port = 3003
-
-app.get('/reload.js', async (_, res) => {
-  const js = await Bun.file('reload.js').text()
-  res.setHeader('content-type', 'application/javascript');
-  res.send(js.replace('PORT', String(ws_port)))
-})
-
-app.use(async (req, res, next) => {
-  let url = req.url
-  if(url.endsWith('/')) {
-    url = join(url, 'index.html')
-  }
-
-  if(req.method === 'GET' && url.endsWith('.html')) {
-    const file = join(server_config.root, url) 
-    if(existsSync(file)) {
-      let html = await Bun.file(file).text()
-      html = html.replace('</body>', '<script src="/reload.js"></script></body>')
-      res.send(html)
-      return
+    if (!to_build) {
+      to_build = dir
     }
-  }
 
-  next()
-});
-
-app.use(express.static(server_config.root))
-
-
-const server = app.listen(port, () => {
-  console.log(`Web server listening on port ${port}`)
-})
-
-
-const ws_server = Bun.serve({
-  port: ws_port,
-  fetch(req, server) {
-    // upgrade the request to a WebSocket
-    if (server.upgrade(req)) {
-      return // do not return a Response
+    if (dir.length < to_build.length) {
+      to_build = dir
     }
-    return new Response("Upgrade failed :(", { status: 500 })
+
+    clearTimeout(timeout_handle)
+    timeout_handle = setTimeout(async () => {
+      building = true
+      process.stdout.write(`Building ${dir}...`)
+      await build(dir)
+      setTimeout(() => {
+        to_build = null
+        building = false
+        for (const ws of websockets) {
+          ws.send('Reload!!')
+        }
+        process.stdout.write(` Done\n`)
+      }, 100)
+    }, 0)
   },
+)
+
+const app = new Hono()
+const port = 3000
+
+app.get('/', (c) => c.redirect('/courses'))
+
+app.get('/reload.js', async (c) => {
+  const js = await Bun.file('reload.js').text()
+  c.header('Content-Type', 'application/javascript')
+  c.status(200)
+  return c.body(js.replace('PORT', String(port)))
+})
+
+app.get('/ws', (c) => {
+  const success = c.env.upgrade(c.req.raw)
+  return true
+})
+
+app.use(async (c, next) => {
+  const path = c.req.path
+  const local_path = join(server_config.root, path)
+  let file = local_path
+  if (lstatSync(local_path).isDirectory()) {
+    file = join(local_path, 'index.html')
+  }
+
+  if (c.req.method === 'GET' && file.endsWith('.html')) {
+    if (existsSync(file)) {
+      let html = await Bun.file(file).text()
+      html = html.replace(
+        '</body>',
+        '<script src="/reload.js"></script></body>',
+      )
+      return c.html(html)
+    }
+  }
+
+  await next()
+})
+
+app.use(serveStatic({ root: server_config.root }))
+
+const server = Bun.serve({
+  port: port,
+  fetch: app.fetch,
   websocket: {
     open(ws) {
       websockets.push(ws)
@@ -159,17 +113,14 @@ const ws_server = Bun.serve({
   }, // handlers
 })
 
-console.log(`WebSocket on localhost:${ws_server.port}`)
+console.log(`Listen on localhost:${port}`)
 
 process.on('SIGINT', () => {
   console.log('\nClosing watcher...')
   watcher.close()
   console.log('Closing server...')
-  server.close()
-  console.log('Closing WebSocket...')
-  ws_server.stop()
+  server.stop()
 
   console.log('Bye')
   process.exit(0)
-});
-
+})
