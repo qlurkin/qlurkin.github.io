@@ -74,7 +74,7 @@ In this section you will continue to explore Android Studio by becoming familiar
 1. If necessary, select **Android** from the drop-down menu in the **Project** tab.
 
     <figure>
-      <img src="./project_explorer.png">
+      <img src="./project_explorer.png" class="half">
     </figure>
 
     This is the standard view and organization of files that you use. It's useful when you write code for your project because you can easily access the files you will be working on in your app. However, if you look at the files in a file browser, such as Finder or Windows Explorer, the file hierarchy is organized very differently.
@@ -82,7 +82,7 @@ In this section you will continue to explore Android Studio by becoming familiar
 1. Select **Project Source Files** from the drop-down menu. You can now browse the files in the same way as in any file browser.
 
     <figure>
-      <img src="./project_file.png">
+      <img src="./project_file.png" class="half">
     </figure>
 
 1. Select **Android** again to switch back to the previous view. You use the **Android** view for this course. If your file structure ever looks strange, check to make sure you're still in **Android** view.
@@ -187,7 +187,7 @@ fun GreetingPreview() {
 ```
 
 <figure>
-  <img src="./preview_ui.png">
+  <img src="./preview_ui.png" class="half">
 </figure>
 
 ## Change the background color
@@ -233,7 +233,7 @@ To set a different background color for your introduction, you'll need to surrou
 1. Notice the updated preview.
 
     <figure>
-    <img src="./greeting_background.png">
+    <img src="./greeting_background.png" class="half">
     </figure>
 
 ## Use Modifiers
@@ -272,7 +272,7 @@ Every composable should have an optional parameter of the type `Modifier`. This 
 1. Notice the updated preview.
 
     <figure>
-    <img src="./greeting_padding.png" alt="">
+    <img src="./greeting_padding.png" class="half">
     </figure>
 
 ## Run your App
@@ -311,7 +311,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 ```
 
 <figure>
-  <img src="./greetings_fill.png">
+  <img src="./greetings_fill.png" class="half">
 </figure>
 
 ## Change font size
@@ -421,7 +421,7 @@ Let's create a Student Card App!
 1. Notice the preview.
 
     <figure>
-    <img src="./card_no_column.png">
+    <img src="./card_no_column.png" class="half">
     </figure>
 
 A composable function might describe several UI elements. However, if you don't provide guidance on how to arrange them, Compose might arrange the elements in a way that you don't like. For example, the previous code generates two text elements that overlap each other because there's no guidance on how to arrange the two composables.
@@ -499,5 +499,5 @@ Let's arrange the text elements in your app in a column to avoid overlap.
 
 <!-- 1. To further beautify your app, align the greeting text to the center using `textAlign`. -->
 
-
+## Add an image
 
