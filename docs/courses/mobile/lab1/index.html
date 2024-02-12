@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 1</title>
+    <script src="/document.js" defer></script>
+    
+</head>
+<body>
+    <h1>Lab 1</h1>
+    
+    <h2>Create a new project</h2>
+<ol>
+<li><p>Launch Android Studio.</p>
+</li>
+<li><p>In the <strong>Welcome to Android</strong> Studio dialog, click <strong>New Project</strong>.</p>
+ <figure>
+ <img src="./new_project.png">
+ </figure>
+
+<p> The <strong>New Project window</strong> opens with a list of templates provided by Android Studio.</p>
+ <figure>
+ <img src="./empty_activity.png">
+ </figure></li>
+<li><p>Make sure the <strong>Phone and Tablet</strong> tab is selected.</p>
+</li>
+<li><p>Click the <strong>Empty Activity</strong> template to select it as the template for your project.</p>
+</li>
+<li><p>Click <strong>Next</strong>. The <strong>New Project</strong> dialog opens.</p>
+ <figure>
+ <img src="./project_config.png">
+ </figure>
+</li>
+<li><p>Configure your project as follows:</p>
+<p> The Name field is used to enter the name of your project, for this codelab type &quot;Lab 1&quot;.</p>
+<p> Leave the <strong>Package name</strong> field as is. This is how your files will be organized in the file structure. In this case, the package name will be <code>com.example.lab1</code>. You can also use a domain name that your own in reverse order instead of <code>com.example</code>.</p>
+<p> Leave the <strong>Save location</strong> field as is. It contains the location where all the files related to your project are saved. Take a note of where that is on your computer so that you can find your files.</p>
+<p> Select <strong>API 24: Android 7.0 (Nougat)</strong> from the menu in the <strong>Minimum SDK</strong> field. Minimum SDK indicates the minimum version of Android that your app can run on.</p>
+</li>
+<li><p>Click <strong>Finish</strong>. This may take a while - this is a great time to get a cup of tea! While Android Studio is setting up, a progress bar and message indicates whether Android Studio is still setting up your project. It may look like this: <img src="./process_running.png" style="height: 1.3em; vertical-align: middle"></p>
+<p> A message that looks similar to this informs you when the project set up is created: <img src="./gradle_sync.png" style="height: 1.3em; vertical-align: middle"></p>
+</li>
+<li><p>You may see a <strong>What&#39;s New</strong> pane which contains updates on new features in Android Studio. Close it for now.</p>
+</li>
+<li><p>Click <strong>Split</strong> on the top right of Android Studio <img src="./split.png" style="height: 1.3em; vertical-align: middle"> , this allows you to view both code and design. You can also click <strong>Code</strong> to view code only or click <strong>Design</strong> to view design only.</p>
+<p> After pressing Split you should see three areas:</p>
+ <figure>
+ <img src="./three_panes.png">
+ </figure>
+
+<ul>
+<li>The <strong>Project</strong> view (1) shows the files and folders of your project</li>
+<li>The <strong>Code</strong> view (2) is where you edit code</li>
+<li>The <strong>Design</strong> view (3) is where you preview what your app looks like</li>
+</ul>
+<p> In the <strong>Design</strong> view, you will see a blank pane with this text:</p>
+ <figure>
+ <img src="./build_to_design.png">
+ </figure>
+</li>
+<li><p>Click <strong>Build &amp; Refresh</strong>. It may take a while to build but when it is done the preview shows a text box that says &quot;<strong>Hello Android!</strong>&quot;. Empty Compose activity contains all the code necessary to create this app.</p>
+ <figure>
+ <img src="./preview.png">
+ </figure></li>
+</ol>
+<h2>Find project files</h2>
+<p>In this section you will continue to explore Android Studio by becoming familiar with the file structure.</p>
+<ol>
+<li><p>In Android Studio, take a look at the <strong>Project</strong> tab. The <strong>Project</strong> tab shows the files and folders of your project. When you were setting up your project the package name was <strong>com.example.lab1</strong>. You can see that package right here in the <strong>Project</strong> tab. A package is basically a folder where code is located. Android Studio organizes the project in a directory structure made up of set of packages.</p>
+</li>
+<li><p>If necessary, select <strong>Android</strong> from the drop-down menu in the <strong>Project</strong> tab.</p>
+ <figure>
+   <img src="./project_explorer.png">
+ </figure>
+
+<p> This is the standard view and organization of files that you use. It&#39;s useful when you write code for your project because you can easily access the files you will be working on in your app. However, if you look at the files in a file browser, such as Finder or Windows Explorer, the file hierarchy is organized very differently.</p>
+</li>
+<li><p>Select <strong>Project Source Files</strong> from the drop-down menu. You can now browse the files in the same way as in any file browser.</p>
+ <figure>
+   <img src="./project_file.png">
+ </figure>
+</li>
+<li><p>Select <strong>Android</strong> again to switch back to the previous view. You use the <strong>Android</strong> view for this course. If your file structure ever looks strange, check to make sure you&#39;re still in <strong>Android</strong> view.</p>
+</li>
+</ol>
+<h2>Update the text</h2>
+<p>Now that you have gotten to know Android Studio, it&#39;s time to start making some modifications!</p>
+<p>Look at the <strong>Code</strong> view of the <code>MainActivity.kt</code> file. Notice there are some automatically generated functions in this code, specifically the <code>onCreate()</code> and the <code>setContent()</code> functions.</p>
+<pre><code class="language-kotlin">class MainActivity : ComponentActivity() {
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    setContent {
+      Lab1Theme {
+        // A surface container using the &#39;background&#39; color from the theme
+        Surface(
+          modifier = Modifier.fillMaxSize(),
+          color = MaterialTheme.colorScheme.background
+        ) {
+          Greeting(&quot;Android&quot;)
+        }
+      }
+    }
+  }
+}
+</code></pre>
+<p>The <code>onCreate()</code> function is the entry point to this Android app and calls other functions to build the user interface. In Kotlin programs, the <code>main()</code> function is the entry point/starting point of execution. In Android apps, the <code>onCreate()</code> function fills that role.</p>
+<p>The <code>setContent()</code> function within the <code>onCreate()</code> function is used to define your layout through composable functions. All functions marked with the <code>@Composable</code> annotation can be called from the <code>setContent()</code> function or from other Composable functions. The annotation tells the Kotlin compiler that this function is used by Jetpack Compose to generate the UI.</p>
+<p>Next, look at the <code>Greeting()</code> function. The <code>Greeting()</code> function is a Composable function, notice the <code>@Composable</code> annotation above it. This Composable function takes some input and generates what&#39;s shown on the screen.</p>
+<pre><code class="language-kotlin">@Composable
+fun Greeting(name: String, modifier: Modifier = Modifier) {
+  Text(
+    text = &quot;Hello $name!&quot;,
+    modifier = modifier
+  )
+}
+</code></pre>
+<p>You&#39;ve learned about functions before, but there are a few differences with composable functions:</p>
+<ul>
+<li>You add the <code>@Composable</code> annotation before the function. </li>
+<li><code>@Composable</code> function names are capitalized.</li>
+<li><code>@Composable</code> functions can&#39;t return anything.</li>
+</ul>
+<p>Right now the <code>Greeting()</code> function takes in a name and displays Hello to that person.</p>
+<ol>
+<li><p>Update the <code>Greeting()</code> function to introduce yourself instead of saying &quot;Hello&quot;:</p>
+<pre><code class="language-kotlin">@Composable
+fun Greeting(name: String, modifier: Modifier = Modifier) {
+  Text(
+    text = &quot;Hi, my name is $name!&quot;,
+    modifier = modifier
+  )
+}
+</code></pre>
+</li>
+<li><p>Android Studio should automatically update the preview.</p>
+</li>
+</ol>
+<p>Great! You changed the text, but it introduces you as Android, which is probably not your name. Next, you will personalize it to introduce you with your name!</p>
+<p>The <code>GreetingPreview()</code> function is a cool feature that lets you see what your composable looks like without having to build your entire app. To enable a preview of a composable, annotate it with <code>@Composable</code> and <code>@Preview</code>. The <code>@Preview</code> annotation tells Android Studio that this composable should be shown in the design view of this file.</p>
+<p>As you can see, the <code>@Preview</code> annotation takes in a parameter called <code>showBackground</code>. If <code>showBackground</code> is set to <code>true</code>, it will add a background to your composable preview.</p>
+<p>Since Android Studio by default uses a light theme for the editor, it can be hard to see the difference between <code>showBackground = true</code> and <code>showBackground = false</code>.</p>
+<p>Update the <code>GreetingPreview()</code> function with your name. Then rebuild and check out your personalized App!</p>
+<pre><code class="language-kotlin">@Preview(showBackground = true)
+@Composable
+fun GreetingPreview() {
+    Lab1Theme {
+        Greeting(&quot;LUR&quot;)
+    }
+}
+</code></pre>
+<p>You can pass multiple arguments to the annotation, as shown here.</p>
+<pre><code class="language-kotlin">@Preview(
+    showBackground = true,
+    showSystemUi = true,
+    name = &quot;My Preview&quot;
+)
+@Composable
+fun GreetingPreview() {
+    Lab1Theme {
+        Greeting(&quot;LUR&quot;)
+    }
+}
+</code></pre>
+<figure>
+  <img src="./preview_ui.png">
+</figure>
+
+<h2>Change the background color</h2>
+<p>Now you have the introduction text, but it&#39;s a little boring! In this section, you learn to change the background color.</p>
+<p>To set a different background color for your introduction, you&#39;ll need to surround your text with a <a href="https://developer.android.com/reference/kotlin/androidx/compose/material/package-summary#Surface(androidx.compose.ui.Modifier,androidx.compose.ui.graphics.Shape,androidx.compose.ui.graphics.Color,androidx.compose.ui.graphics.Color,androidx.compose.foundation.BorderStroke,androidx.compose.ui.unit.Dp,kotlin.Function0)"><code>Surface</code></a>. A <code>Surface</code> is a container that represents a section of UI where you can alter the appearance, such as the background color or border.</p>
+<ol>
+<li><p>To surround the text with a Surface, highlight the line of text, press (<code>Alt+Enter</code> for Windows or <code>Option+Enter</code> on Mac), and then select <strong>Surround with widget</strong>.</p>
+</li>
+<li><p>Choose <strong>Surround with Container</strong>.</p>
+<p> The default container it will give you is <code>Box</code>, but you can change this to another container type. You will learn about <code>Box</code> layout later.</p>
+</li>
+<li><p>Delete <code>Box</code> and type <code>Surface()</code> instead.</p>
+</li>
+<li><p>To the Surface container add a color parameter, set it to <code>Color.Cyan</code>.</p>
+<pre><code class="language-kotlin">@Composable
+fun Greeting(name: String, modifier: Modifier = Modifier) {
+  Surface(color = Color.Cyan) {
+    Text(
+      text = &quot;Hi, my name is $name!&quot;,
+      modifier = modifier
+    )
+  }
+}
+</code></pre>
+</li>
+<li><p>You need to import the <code>Color</code> type.</p>
+<pre><code class="language-kotlin">import androidx.compose.ui.graphics.Color
+</code></pre>
+</li>
+<li><p>In your code, the best practice is to keep your imports listed alphabetically and remove unused imports. To do this press <strong>Help</strong> on the top toolbar, type in <strong>optimize imports</strong>, and click on <strong>Optimize Imports</strong>.</p>
+</li>
+<li><p>Notice the updated preview.</p>
+</li>
+</ol>
+<h2>Use Modifiers</h2>
+<p>Now your text has a background color, next you will add some space (padding) around the text.</p>
+<p>A <a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/Modifier"><code>Modifier</code></a> is used to augment or decorate a composable. One modifier you can use is the <code>padding</code> modifier, which adds space around the element (in this case, adding space around the text). This is accomplished by using the <a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/Modifier#(androidx.compose.ui.Modifier).padding(androidx.compose.ui.unit.Dp)"><code>Modifier.padding()</code></a> function.</p>
+<p>Every composable should have an optional parameter of the type <code>Modifier</code>. This should be the first optional parameter.</p>
+<ol>
+<li><p>Add a padding to the <code>modifier</code> with a size of <code>24.dp</code>.</p>
+<pre><code class="language-kotlin">@Composable
+fun Greeting(name: String, modifier: Modifier = Modifier) {
+  Surface(color = Color.Cyan) {
+    Text(
+      text = &quot;Hi, my name is $name!&quot;,
+      modifier = modifier.padding(24.dp)
+    )
+  }
+}
+</code></pre>
+</li>
+<li><p>Add these imports to the import statement section.</p>
+<pre><code class="language-kotlin">import androidx.compose.ui.unit.dp
+import androidx.compose.foundation.layout.padding
+</code></pre>
+<p> Make sure to use <strong>Optimize Imports</strong> to alphabetize the new imports.</p>
+</li>
+</ol>
+<h2>Run your App</h2>
+<p>You can:</p>
+<ul>
+<li><a href="https://developer.android.com/codelabs/basic-android-kotlin-compose-emulator?continue=https%3A%2F%2Fdeveloper.android.com%2Fcourses%2Fpathways%2Fandroid-basics-compose-unit-1-pathway-2%23codelab-https%3A%2F%2Fdeveloper.android.com%2Fcodelabs%2Fbasic-android-kotlin-compose-emulator">Run your App on the emulator</a></li>
+<li><a href="https://developer.android.com/codelabs/basic-android-kotlin-compose-connect-device?continue=https%3A%2F%2Fdeveloper.android.com%2Fcourses%2Fpathways%2Fandroid-basics-compose-unit-1-pathway-2%23codelab-https%3A%2F%2Fdeveloper.android.com%2Fcodelabs%2Fbasic-android-kotlin-compose-connect-device">Run your App on an actual Android device</a></li>
+</ul>
+<h2>Change font size</h2>
+<p>You added text to your user interface. In this section, you learn how to change the size, text color, and other attributes that affect the appearance of the text element. You can also experiment with different font sizes and colors.</p>
+<h3>Scalable pixels</h3>
+<p>The <a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/unit/package-summary#(kotlin.Float).sp()">scalable pixels (SP)</a> is a unit of measure for the font size. UI elements in Android apps use two different units of measurement: <a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/unit/package-summary#(kotlin.Int).dp()">density-independent pixels (DP)</a>, which you use later for the layout, and scalable pixels (SP). By default, the SP unit is the same size as the DP unit, but it resizes based on the user&#39;s preferred text size under phone settings.</p>
+<ol>
+<li><p>In the <code>MainActivity.kt</code> file, scroll to the <code>Text()</code> composable in the <code>Greeting()</code> function.</p>
+</li>
+<li><p>Pass the <code>Text()</code> function a <code>fontSize</code> argument as a second named argument and set it to a value of <code>100.sp</code>.</p>
+<pre><code class="language-kotlin">@Composable
+fun Greeting(name: String, modifier: Modifier = Modifier) {
+  Surface(color = Color.Cyan) {
+    Text(
+      text = &quot;Hi, my name is $name!&quot;,
+      fontSize = 100.sp,
+      modifier = modifier.padding(20.dp)
+    )
+  }
+}
+</code></pre>
+</li>
+<li><p>You need this import:</p>
+<pre><code class="language-kotlin">androidx.compose.ui.unit.sp
+</code></pre>
+</li>
+<li><p>Notice the updated preview of the font size. The reason for overlapping message is you need to specify the line height.</p>
+</li>
+<li><p>Update the <code>Text</code> composable to include the line height.</p>
+<pre><code class="language-kotlin">@Composable
+fun Greeting(name: String, modifier: Modifier = Modifier) {
+  Surface(color = Color.Cyan) {
+    Text(
+      text = &quot;Hi, my name is $name!&quot;,
+      fontSize = 100.sp,
+      lineHeight = 116.sp,
+      modifier = modifier.padding(20.dp)
+    )
+  }
+}
+</code></pre>
+</li>
+</ol>
+<h2>Student Card</h2>
+<p>Let&#39;s create a Student Card App!</p>
+<ol>
+<li><p>Rename the <code>Greeting()</code> function by right click its name and select <strong>Refactor</strong> and then <strong>Rename...</strong></p>
+</li>
+<li><p>Just pass the value of the <code>name</code> parameter to the <code>Text</code> composable.</p>
+</li>
+<li><p>Pass the function a <code>matricule</code> parameter of type <code>String</code> for your signature.</p>
+</li>
+<li><p>After the name <code>Text</code> composable, add another <code>Text</code> composable that accepts a text argument set to the <code>matricule</code> value.</p>
+</li>
+<li><p>Add a <code>fontSize</code> named argument set to a value of <code>36.sp</code>.</p>
+<pre><code class="language-kotlin">@Composable
+fun StudentCard(name: String, matricule: String, modifier: Modifier = Modifier) {
+  Surface(color = Color.Cyan) {
+    Text(
+      text = name,
+      fontSize = 100.sp,
+      lineHeight = 116.sp,
+      modifier = modifier.padding(20.dp)
+    )
+    Text(
+      text = matricule,
+      fontSize = 36.sp,
+    )
+  }
+}
+</code></pre>
+</li>
+<li><p>Add the <code>matricule</code> parameter to the two calls to the <code>StudentCard()</code> function in <code>GreetingPreview()</code> and in <code>onCreate()</code>.</p>
+<pre><code class="language-kotlin">@Preview(
+  showBackground = true,
+  showSystemUi = true,
+  name = &quot;My Preview&quot;
+)
+@Composable
+fun GreetingPreview() {
+  Lab1Theme {
+    StudentCard(&quot;Quentin Lurkin&quot;, &quot;LUR&quot;)
+  }
+}
+</code></pre>
+</li>
+<li><p>Notice the preview.</p>
+ <figure>
+ <img src="./card_no_column.png">
+ </figure></li>
+</ol>
+<p>A composable function might describe several UI elements. However, if you don&#39;t provide guidance on how to arrange them, Compose might arrange the elements in a way that you don&#39;t like. For example, the previous code generates two text elements that overlap each other because there&#39;s no guidance on how to arrange the two composables.</p>
+<h2>Arrange the text elements in a row and column</h2>
+<h3>UI Hierarchy</h3>
+<p>The UI hierarchy is based on containment, meaning one component can contain one or more components, and the terms parent and child are sometimes used. The context here is that the parent UI elements contain children UI elements, which in turn can contain children UI elements. In this section, you will learn about <code>Column</code>, <code>Row</code>, and <code>Box</code> composables, which can act as parent UI elements.</p>
+<figure>
+  <img src="./column_row.png">
+</figure>
+
+
+
+</body>
+</html>
