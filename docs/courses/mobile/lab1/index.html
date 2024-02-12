@@ -178,13 +178,17 @@ fun GreetingPreview() {
 </li>
 <li><p>Delete <code>Box</code> and type <code>Surface()</code> instead.</p>
 </li>
+<li><p>It&#39;s a best practice to have your Composable accept a <code>Modifier</code> parameter, and pass that <code>modifier</code> to its first child.</p>
+</li>
 <li><p>To the Surface container add a color parameter, set it to <code>Color.Cyan</code>.</p>
 <pre><code class="language-kotlin">@Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-  Surface(color = Color.Cyan) {
+  Surface(
+    color = Color.Cyan,
+    modifier = modifier
+  ) {
     Text(
       text = &quot;Hi, my name is $name!&quot;,
-      modifier = modifier
     )
   }
 }
@@ -197,7 +201,9 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 <li><p>In your code, the best practice is to keep your imports listed alphabetically and remove unused imports. To do this press <strong>Help</strong> on the top toolbar, type in <strong>optimize imports</strong>, and click on <strong>Optimize Imports</strong>.</p>
 </li>
 <li><p>Notice the updated preview.</p>
-</li>
+ <figure>
+ <img src="./greeting_background.png">
+ </figure></li>
 </ol>
 <h2>Use Modifiers</h2>
 <p>Now your text has a background color, next you will add some space (padding) around the text.</p>
@@ -207,7 +213,10 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 <li><p>Add a padding to the <code>modifier</code> with a size of <code>24.dp</code>.</p>
 <pre><code class="language-kotlin">@Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-  Surface(color = Color.Cyan) {
+  Surface(
+    color = Color.Cyan,
+    modifier = modifier
+  ) {
     Text(
       text = &quot;Hi, my name is $name!&quot;,
       modifier = modifier.padding(24.dp)
@@ -222,6 +231,10 @@ import androidx.compose.foundation.layout.padding
 </code></pre>
 <p> Make sure to use <strong>Optimize Imports</strong> to alphabetize the new imports.</p>
 </li>
+<li><p>Notice the updated preview.</p>
+ <figure>
+ <img src="./greeting_padding.png" alt="">
+ </figure></li>
 </ol>
 <h2>Run your App</h2>
 <p>You can:</p>
@@ -229,6 +242,35 @@ import androidx.compose.foundation.layout.padding
 <li><a href="https://developer.android.com/codelabs/basic-android-kotlin-compose-emulator?continue=https%3A%2F%2Fdeveloper.android.com%2Fcourses%2Fpathways%2Fandroid-basics-compose-unit-1-pathway-2%23codelab-https%3A%2F%2Fdeveloper.android.com%2Fcodelabs%2Fbasic-android-kotlin-compose-emulator">Run your App on the emulator</a></li>
 <li><a href="https://developer.android.com/codelabs/basic-android-kotlin-compose-connect-device?continue=https%3A%2F%2Fdeveloper.android.com%2Fcourses%2Fpathways%2Fandroid-basics-compose-unit-1-pathway-2%23codelab-https%3A%2F%2Fdeveloper.android.com%2Fcodelabs%2Fbasic-android-kotlin-compose-connect-device">Run your App on an actual Android device</a></li>
 </ul>
+<p>The App don&#39;t look the same than the preview. It&#39;s because we have an extra <code>Surface</code> with parameters in the <code>onCreate()</code> method. We can remove this Surface and use its parameters in our <code>Greeting()</code> Composable.</p>
+<pre><code class="language-kotlin">class MainActivity : ComponentActivity() {
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    setContent {
+      Lab1Theme {
+        Greeting(&quot;Android&quot;)
+      }
+    }
+  }
+}
+
+@Composable
+fun Greeting(name: String, modifier: Modifier = Modifier) {
+  Surface(
+    color = Color.Cyan,
+    modifier = modifier.fillMaxSize()
+  ) {
+    Text(
+      text = &quot;Hi, my name is $name!&quot;,
+      modifier = modifier.padding(24.dp)
+    )
+  }
+}
+</code></pre>
+<figure>
+  <img src="./greetings_fill.png">
+</figure>
+
 <h2>Change font size</h2>
 <p>You added text to your user interface. In this section, you learn how to change the size, text color, and other attributes that affect the appearance of the text element. You can also experiment with different font sizes and colors.</p>
 <h3>Scalable pixels</h3>
@@ -239,7 +281,10 @@ import androidx.compose.foundation.layout.padding
 <li><p>Pass the <code>Text()</code> function a <code>fontSize</code> argument as a second named argument and set it to a value of <code>100.sp</code>.</p>
 <pre><code class="language-kotlin">@Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-  Surface(color = Color.Cyan) {
+  Surface(
+    color = Color.Cyan,
+    modifier = modifier.fillMaxSize()
+  ) {
     Text(
       text = &quot;Hi, my name is $name!&quot;,
       fontSize = 100.sp,
@@ -284,7 +329,10 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 <li><p>Add a <code>fontSize</code> named argument set to a value of <code>36.sp</code>.</p>
 <pre><code class="language-kotlin">@Composable
 fun StudentCard(name: String, matricule: String, modifier: Modifier = Modifier) {
-  Surface(color = Color.Cyan) {
+  Surface(
+    color = Color.Cyan,
+    modifier = modifier
+  ) {
     Text(
       text = name,
       fontSize = 100.sp,
@@ -319,12 +367,72 @@ fun GreetingPreview() {
  </figure></li>
 </ol>
 <p>A composable function might describe several UI elements. However, if you don&#39;t provide guidance on how to arrange them, Compose might arrange the elements in a way that you don&#39;t like. For example, the previous code generates two text elements that overlap each other because there&#39;s no guidance on how to arrange the two composables.</p>
-<h2>Arrange the text elements in a row and column</h2>
-<h3>UI Hierarchy</h3>
+<h2>UI Hierarchy</h2>
 <p>The UI hierarchy is based on containment, meaning one component can contain one or more components, and the terms parent and child are sometimes used. The context here is that the parent UI elements contain children UI elements, which in turn can contain children UI elements. In this section, you will learn about <code>Column</code>, <code>Row</code>, and <code>Box</code> composables, which can act as parent UI elements.</p>
 <figure>
   <img src="./column_row.png">
 </figure>
+
+<p><code>Column</code>, <code>Row</code>, and <code>Box</code> are composable functions that take composable content as arguments, so you can place items inside these layout elements. For example, each child element inside a <code>Row</code> composable is placed horizontally next to each other in a row.</p>
+<p>Let&#39;s arrange the text elements in your app in a column to avoid overlap.</p>
+<ol>
+<li><p>In the <code>MainActivity.kt</code> file, scroll to the <code>StudentCard()</code> function.</p>
+</li>
+<li><p>Add the <code>Column</code> composable around the text elements so that it shows a column with two text elements. Select the two <code>Text</code> composables, click on the light bulb. Select <code>Surround with widget</code> &gt; <code>Surround with Column</code>.</p>
+</li>
+<li><p>Android Studio auto imports <code>Column</code> function for you. Scroll to the top and notice the import section. The import <code>androidx.compose.foundation.layout.Column</code> should have been added.</p>
+</li>
+<li><p>Move the padding <code>Modifier</code> at the <code>Column</code> level.</p>
+<pre><code class="language-kotlin">@Composable
+fun StudentCard(name: String, matricule: String, modifier: Modifier = Modifier) {
+  Surface(
+    color = Color.Cyan,
+    modifier = modifier.fillMaxSize()
+  ) {
+    Column(modifier = modifier.padding(20.dp)) {
+      Text(
+        text = name,
+        fontSize = 100.sp,
+        lineHeight = 116.sp
+      )
+      Text(
+        text = matricule,
+        fontSize = 36.sp
+      )
+    }
+  }
+}
+</code></pre>
+<p> The preview looks much better now that there&#39;s no overlap. But we can improve it even more.</p>
+</li>
+<li><p>To align the greeting in the center of the screen add a parameter called <code>verticalArrangement</code> set it to <code>Arrangement.Center</code>.</p>
+<pre><code class="language-kotlin">@Composable
+fun StudentCard(name: String, matricule: String, modifier: Modifier = Modifier) {
+  Surface(
+    color = Color.Cyan,
+    modifier = modifier.fillMaxSize()
+  ) {
+    Column (
+      verticalArrangement = Arrangement.Center,
+      modifier = modifier.padding(20.dp)
+    ) {
+      Text(
+        text = name,
+        fontSize = 100.sp,
+        lineHeight = 116.sp,
+      )
+      Text(
+        text = matricule,
+        fontSize = 36.sp
+      )
+    }
+  }
+}
+</code></pre>
+</li>
+</ol>
+<!-- 1. To further beautify your app, align the greeting text to the center using `textAlign`. -->
+
 
 
 

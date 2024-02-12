@@ -204,15 +204,19 @@ To set a different background color for your introduction, you'll need to surrou
 
 1. Delete `Box` and type `Surface()` instead.
 
+1. It's a best practice to have your Composable accept a `Modifier` parameter, and pass that `modifier` to its first child.
+
 1. To the Surface container add a color parameter, set it to `Color.Cyan`.
 
     ```kotlin
     @Composable
     fun Greeting(name: String, modifier: Modifier = Modifier) {
-      Surface(color = Color.Cyan) {
+      Surface(
+        color = Color.Cyan,
+        modifier = modifier
+      ) {
         Text(
           text = "Hi, my name is $name!",
-          modifier = modifier
         )
       }
     }
@@ -228,6 +232,10 @@ To set a different background color for your introduction, you'll need to surrou
 
 1. Notice the updated preview.
 
+    <figure>
+    <img src="./greeting_background.png">
+    </figure>
+
 ## Use Modifiers
 
 Now your text has a background color, next you will add some space (padding) around the text.
@@ -241,7 +249,10 @@ Every composable should have an optional parameter of the type `Modifier`. This 
     ```kotlin
     @Composable
     fun Greeting(name: String, modifier: Modifier = Modifier) {
-      Surface(color = Color.Cyan) {
+      Surface(
+        color = Color.Cyan,
+        modifier = modifier
+      ) {
         Text(
           text = "Hi, my name is $name!",
           modifier = modifier.padding(24.dp)
@@ -258,12 +269,50 @@ Every composable should have an optional parameter of the type `Modifier`. This 
 
     Make sure to use **Optimize Imports** to alphabetize the new imports.
 
+1. Notice the updated preview.
+
+    <figure>
+    <img src="./greeting_padding.png" alt="">
+    </figure>
+
 ## Run your App
 
 You can:
 
 - [Run your App on the emulator](https://developer.android.com/codelabs/basic-android-kotlin-compose-emulator?continue=https%3A%2F%2Fdeveloper.android.com%2Fcourses%2Fpathways%2Fandroid-basics-compose-unit-1-pathway-2%23codelab-https%3A%2F%2Fdeveloper.android.com%2Fcodelabs%2Fbasic-android-kotlin-compose-emulator)
 - [Run your App on an actual Android device](https://developer.android.com/codelabs/basic-android-kotlin-compose-connect-device?continue=https%3A%2F%2Fdeveloper.android.com%2Fcourses%2Fpathways%2Fandroid-basics-compose-unit-1-pathway-2%23codelab-https%3A%2F%2Fdeveloper.android.com%2Fcodelabs%2Fbasic-android-kotlin-compose-connect-device)
+
+The App don't look the same than the preview. It's because we have an extra `Surface` with parameters in the `onCreate()` method. We can remove this Surface and use its parameters in our `Greeting()` Composable.
+
+```kotlin
+class MainActivity : ComponentActivity() {
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    setContent {
+      Lab1Theme {
+        Greeting("Android")
+      }
+    }
+  }
+}
+
+@Composable
+fun Greeting(name: String, modifier: Modifier = Modifier) {
+  Surface(
+    color = Color.Cyan,
+    modifier = modifier.fillMaxSize()
+  ) {
+    Text(
+      text = "Hi, my name is $name!",
+      modifier = modifier.padding(24.dp)
+    )
+  }
+}
+```
+
+<figure>
+  <img src="./greetings_fill.png">
+</figure>
 
 ## Change font size
 
@@ -280,7 +329,10 @@ The [scalable pixels (SP)](https://developer.android.com/reference/kotlin/androi
     ```kotlin
     @Composable
     fun Greeting(name: String, modifier: Modifier = Modifier) {
-      Surface(color = Color.Cyan) {
+      Surface(
+        color = Color.Cyan,
+        modifier = modifier.fillMaxSize()
+      ) {
         Text(
           text = "Hi, my name is $name!",
           fontSize = 100.sp,
@@ -328,10 +380,14 @@ Let's create a Student Card App!
 
 1. Add a `fontSize` named argument set to a value of `36.sp`.
 
+
     ```kotlin
     @Composable
     fun StudentCard(name: String, matricule: String, modifier: Modifier = Modifier) {
-      Surface(color = Color.Cyan) {
+      Surface(
+        color = Color.Cyan,
+        modifier = modifier
+      ) {
         Text(
           text = name,
           fontSize = 100.sp,
@@ -370,14 +426,78 @@ Let's create a Student Card App!
 
 A composable function might describe several UI elements. However, if you don't provide guidance on how to arrange them, Compose might arrange the elements in a way that you don't like. For example, the previous code generates two text elements that overlap each other because there's no guidance on how to arrange the two composables.
 
-## Arrange the text elements in a row and column
-
-### UI Hierarchy
+## UI Hierarchy
 
 The UI hierarchy is based on containment, meaning one component can contain one or more components, and the terms parent and child are sometimes used. The context here is that the parent UI elements contain children UI elements, which in turn can contain children UI elements. In this section, you will learn about `Column`, `Row`, and `Box` composables, which can act as parent UI elements.
 
 <figure>
   <img src="./column_row.png">
 </figure>
+
+`Column`, `Row`, and `Box` are composable functions that take composable content as arguments, so you can place items inside these layout elements. For example, each child element inside a `Row` composable is placed horizontally next to each other in a row.
+
+Let's arrange the text elements in your app in a column to avoid overlap.
+
+1. In the `MainActivity.kt` file, scroll to the `StudentCard()` function.
+
+1. Add the `Column` composable around the text elements so that it shows a column with two text elements. Select the two `Text` composables, click on the light bulb. Select `Surround with widget` > `Surround with Column`.
+
+1. Android Studio auto imports `Column` function for you. Scroll to the top and notice the import section. The import `androidx.compose.foundation.layout.Column` should have been added.
+
+1. Move the padding `Modifier` at the `Column` level.
+
+    ```kotlin
+    @Composable
+    fun StudentCard(name: String, matricule: String, modifier: Modifier = Modifier) {
+      Surface(
+        color = Color.Cyan,
+        modifier = modifier.fillMaxSize()
+      ) {
+        Column(modifier = modifier.padding(20.dp)) {
+          Text(
+            text = name,
+            fontSize = 100.sp,
+            lineHeight = 116.sp
+          )
+          Text(
+            text = matricule,
+            fontSize = 36.sp
+          )
+        }
+      }
+    }
+    ```
+
+    The preview looks much better now that there's no overlap. But we can improve it even more.
+
+1. To align the greeting in the center of the screen add a parameter called `verticalArrangement` set it to `Arrangement.Center`.
+
+    ```kotlin
+    @Composable
+    fun StudentCard(name: String, matricule: String, modifier: Modifier = Modifier) {
+      Surface(
+        color = Color.Cyan,
+        modifier = modifier.fillMaxSize()
+      ) {
+        Column (
+          verticalArrangement = Arrangement.Center,
+          modifier = modifier.padding(20.dp)
+        ) {
+          Text(
+            text = name,
+            fontSize = 100.sp,
+            lineHeight = 116.sp,
+          )
+          Text(
+            text = matricule,
+            fontSize = 36.sp
+          )
+        }
+      }
+    }
+    ```
+
+<!-- 1. To further beautify your app, align the greeting text to the center using `textAlign`. -->
+
 
 
