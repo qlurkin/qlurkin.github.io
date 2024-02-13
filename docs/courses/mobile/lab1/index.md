@@ -190,55 +190,90 @@ fun GreetingPreview() {
   <img src="./preview_ui.png" class="half">
 </figure>
 
+## Run your App
+
+You can:
+
+- [Run your App on the emulator](https://developer.android.com/codelabs/basic-android-kotlin-compose-emulator?continue=https%3A%2F%2Fdeveloper.android.com%2Fcourses%2Fpathways%2Fandroid-basics-compose-unit-1-pathway-2%23codelab-https%3A%2F%2Fdeveloper.android.com%2Fcodelabs%2Fbasic-android-kotlin-compose-emulator)
+- [Run your App on an actual Android device](https://developer.android.com/codelabs/basic-android-kotlin-compose-connect-device?continue=https%3A%2F%2Fdeveloper.android.com%2Fcourses%2Fpathways%2Fandroid-basics-compose-unit-1-pathway-2%23codelab-https%3A%2F%2Fdeveloper.android.com%2Fcodelabs%2Fbasic-android-kotlin-compose-connect-device)
+
+<!-- The App don't look the same than the preview. It's because we have an extra `Surface` with parameters in the `onCreate()` method. We can remove this Surface and use its parameters in our `Greeting()` Composable. -->
+<!---->
+<!-- ```kotlin -->
+<!-- class MainActivity : ComponentActivity() { -->
+<!--   override fun onCreate(savedInstanceState: Bundle?) { -->
+<!--     super.onCreate(savedInstanceState) -->
+<!--     setContent { -->
+<!--       Lab1Theme { -->
+<!--         Greeting("Android") -->
+<!--       } -->
+<!--     } -->
+<!--   } -->
+<!-- } -->
+<!---->
+<!-- @Composable -->
+<!-- fun Greeting(name: String, modifier: Modifier = Modifier) { -->
+<!--   Surface( -->
+<!--     color = Color.Cyan, -->
+<!--     modifier = modifier.fillMaxSize() -->
+<!--   ) { -->
+<!--     Text( -->
+<!--       text = "Hi, my name is $name!", -->
+<!--       modifier = modifier.padding(24.dp) -->
+<!--     ) -->
+<!--   } -->
+<!-- } -->
+<!-- ``` -->
+<!---->
+<!-- <figure> -->
+<!--   <img src="./greetings_fill.png" class="half"> -->
+<!-- </figure> -->
+
 ## Change the background color
 
 Now you have the introduction text, but it's a little boring! In this section, you learn to change the background color.
 
 To set a different background color for your introduction, you'll need to surround your text with a [`Surface`](https://developer.android.com/reference/kotlin/androidx/compose/material/package-summary#Surface(androidx.compose.ui.Modifier,androidx.compose.ui.graphics.Shape,androidx.compose.ui.graphics.Color,androidx.compose.ui.graphics.Color,androidx.compose.foundation.BorderStroke,androidx.compose.ui.unit.Dp,kotlin.Function0)). A `Surface` is a container that represents a section of UI where you can alter the appearance, such as the background color or border.
 
-1. To surround the text with a Surface, highlight the line of text, press (`Alt+Enter` for Windows or `Option+Enter` on Mac), and then select **Surround with widget**.
+We can of course add a `Surface` Composable to our app but we already have one in the `onCreate()` method. We can just change its `color` parameter.
 
-1. Choose **Surround with Container**.
-
-    The default container it will give you is `Box`, but you can change this to another container type. You will learn about `Box` layout later.
-
-1. Delete `Box` and type `Surface()` instead.
-
-1. It's a best practice to have your Composable accept a `Modifier` parameter, and pass that `modifier` to its first child.
-
-1. To the Surface container add a color parameter, set it to `Color.Cyan`.
-
-    ```kotlin
-    @Composable
-    fun Greeting(name: String, modifier: Modifier = Modifier) {
-      Surface(
-        color = Color.Cyan,
-        modifier = modifier
-      ) {
-        Text(
-          text = "Hi, my name is $name!",
-        )
-      }
-    }
-    ```
+1. Set the `color` parameter of the `Surface` to `Color.Cyan`.
 
 1. You need to import the `Color` type.
 
     ```kotlin
     import androidx.compose.ui.graphics.Color
     ```
-
 1. In your code, the best practice is to keep your imports listed alphabetically and remove unused imports. To do this press **Help** on the top toolbar, type in **optimize imports**, and click on **Optimize Imports**.
 
-1. Notice the updated preview.
+1. If you run the app now, you will see the new background color. But the preview do not show it. It's because the `GreetingPreview()` function do not apply the same Surface. So let's add it:
 
-    <figure>
-    <img src="./greeting_background.png" class="half">
-    </figure>
+    ```kotlin
+    @Preview(
+      showBackground = true,
+      showSystemUi = true,
+      name = "My Preview"
+    )
+    @Composable
+    fun GreetingPreview() {
+      Lab1Theme {
+        Surface(
+          color = Color.Cyan,
+          modifier = Modifier.fillMaxSize()
+        ) {
+          Greeting(name = "LUR")
+        }
+      }
+    }
+    ```
+
+1. Notice the updated preview:
+
+    <figure><img src="./greeting_background.png" class="half"></figure>
 
 ## Use Modifiers
 
-Now your text has a background color, next you will add some space (padding) around the text.
+Now your app has a background color, next you will add some space (padding) around the text.
 
 A [`Modifier`](https://developer.android.com/reference/kotlin/androidx/compose/ui/Modifier) is used to augment or decorate a composable. One modifier you can use is the `padding` modifier, which adds space around the element (in this case, adding space around the text). This is accomplished by using the [`Modifier.padding()`](https://developer.android.com/reference/kotlin/androidx/compose/ui/Modifier#(androidx.compose.ui.Modifier).padding(androidx.compose.ui.unit.Dp)) function.
 
@@ -249,15 +284,10 @@ Every composable should have an optional parameter of the type `Modifier`. This 
     ```kotlin
     @Composable
     fun Greeting(name: String, modifier: Modifier = Modifier) {
-      Surface(
-        color = Color.Cyan,
-        modifier = modifier
-      ) {
-        Text(
-          text = "Hi, my name is $name!",
-          modifier = modifier.padding(24.dp)
-        )
-      }
+      Text(
+        text = "Hi, my name is $name!",
+        modifier = modifier.padding(24.dp)
+      )
     }
     ```
 
@@ -275,44 +305,6 @@ Every composable should have an optional parameter of the type `Modifier`. This 
     <img src="./greeting_padding.png" class="half">
     </figure>
 
-## Run your App
-
-You can:
-
-- [Run your App on the emulator](https://developer.android.com/codelabs/basic-android-kotlin-compose-emulator?continue=https%3A%2F%2Fdeveloper.android.com%2Fcourses%2Fpathways%2Fandroid-basics-compose-unit-1-pathway-2%23codelab-https%3A%2F%2Fdeveloper.android.com%2Fcodelabs%2Fbasic-android-kotlin-compose-emulator)
-- [Run your App on an actual Android device](https://developer.android.com/codelabs/basic-android-kotlin-compose-connect-device?continue=https%3A%2F%2Fdeveloper.android.com%2Fcourses%2Fpathways%2Fandroid-basics-compose-unit-1-pathway-2%23codelab-https%3A%2F%2Fdeveloper.android.com%2Fcodelabs%2Fbasic-android-kotlin-compose-connect-device)
-
-The App don't look the same than the preview. It's because we have an extra `Surface` with parameters in the `onCreate()` method. We can remove this Surface and use its parameters in our `Greeting()` Composable.
-
-```kotlin
-class MainActivity : ComponentActivity() {
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    setContent {
-      Lab1Theme {
-        Greeting("Android")
-      }
-    }
-  }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-  Surface(
-    color = Color.Cyan,
-    modifier = modifier.fillMaxSize()
-  ) {
-    Text(
-      text = "Hi, my name is $name!",
-      modifier = modifier.padding(24.dp)
-    )
-  }
-}
-```
-
-<figure>
-  <img src="./greetings_fill.png" class="half">
-</figure>
 
 ## Change font size
 
@@ -329,16 +321,11 @@ The [scalable pixels (SP)](https://developer.android.com/reference/kotlin/androi
     ```kotlin
     @Composable
     fun Greeting(name: String, modifier: Modifier = Modifier) {
-      Surface(
-        color = Color.Cyan,
-        modifier = modifier.fillMaxSize()
-      ) {
-        Text(
-          text = "Hi, my name is $name!",
-          fontSize = 100.sp,
-          modifier = modifier.padding(20.dp)
-        )
-      }
+      Text(
+        text = "Hi, my name is $name!",
+        fontSize = 100.sp,
+        modifier = modifier.padding(20.dp)
+      )
     }
     ```
 
@@ -355,78 +342,143 @@ The [scalable pixels (SP)](https://developer.android.com/reference/kotlin/androi
     ```kotlin
     @Composable
     fun Greeting(name: String, modifier: Modifier = Modifier) {
-      Surface(color = Color.Cyan) {
-        Text(
-          text = "Hi, my name is $name!",
-          fontSize = 100.sp,
-          lineHeight = 116.sp,
-          modifier = modifier.padding(20.dp)
-        )
-      }
+      Text(
+        text = "Hi, my name is $name!",
+        fontSize = 100.sp,
+        lineHeight = 116.sp,
+        modifier = modifier.padding(20.dp)
+      )
     }
     ```
 
-## Student Card
+    <figure><img src="./big_font.png" class="half"></figure>
 
-Let's create a Student Card App!
+## Tip Time
 
-1. Rename the `Greeting()` function by right click its name and select **Refactor** and then **Rename...**
+Let's build an interactive tip calculator that automatically calculates the tip amount when you enter the service amount. 
 
-1. Just pass the value of the `name` parameter to the `Text` composable.
+1. Rename the `Greeting()` function by right click its name and select **Refactor** and then **Rename...**. Type **TipTimeLayout** as the new name.
 
-1. Pass the function a `matricule` parameter of type `String` for your signature.
+1. We can remove the `fontSize` and `lineHeight` parameters because we will not use this giant text size anymore.
 
-1. After the name `Text` composable, add another `Text` composable that accepts a text argument set to the `matricule` value.
-
-1. Add a `fontSize` named argument set to a value of `36.sp`.
-
+1. Remove the `name` parameter as we don't need it anymore. The `Text` will now display the string **Calculate Tip**.
 
     ```kotlin
     @Composable
-    fun StudentCard(name: String, matricule: String, modifier: Modifier = Modifier) {
-      Surface(
-        color = Color.Cyan,
-        modifier = modifier
-      ) {
-        Text(
-          text = name,
-          fontSize = 100.sp,
-          lineHeight = 116.sp,
-          modifier = modifier.padding(20.dp)
-        )
-        Text(
-          text = matricule,
-          fontSize = 36.sp,
-        )
-      }
+    fun TipTimeLayout(modifier: Modifier = Modifier) {
+      Text(
+        text = "Calculate Tip",
+        modifier = modifier.padding(24.dp)
+      )
     }
     ```
 
-1. Add the `matricule` parameter to the two calls to the `StudentCard()` function in `GreetingPreview()` and in `onCreate()`.
+1. Update the calls to `TipTimeLayout()` to remove the string parameter.
+
+## String resources
+
+It is not a good practice to hardcode UI strings in our code. It make the app hard to translate in other languages. Instead, we can use a string resource.
+
+Resources are the additional files and static content that your code uses, such as bitmaps, user-interface strings, animation instructions, and more. For more information about resources in Android, see [App resources overview](https://developer.android.com/guide/topics/resources/providing-resources).
+
+You should always separate app resources, such as images and strings, from your code so that you can maintain them independently. At runtime, Android uses the appropriate resource based on the current configuration. For example, you might want to provide a different UI layout based on the screen size or different strings based on the language setting.
+
+### Grouping resources
+
+You should always place each type of resource in a specific subdirectory of your project's res/ directory. For example, here's the file hierarchy for a simple project:
+
+```
+MyProject/
+    src/
+        MyActivity.kt
+    res/
+        drawable/
+            graphic.png
+        mipmap/
+            icon.png
+        values/
+            strings.xml
+```
+
+As you can see in this example, the `res/` directory contains all the resources in subdirectories, which includes a `drawable/` directory for an image resource, a `mipmap/` directory for launcher icons, and a `values/` directory for string resources. To learn more about the usage, format, and syntax for app resources, see [Resource types overview](https://developer.android.com/guide/topics/resources/available-resources).
+
+### Accessing resources
+
+Jetpack Compose can access the resources defined in your Android project. Resources can be accessed with resource IDs that are generated in your project's `R` class.
+
+An `R` class is an automatically generated class by Android that contains the IDs of all resources in the project. In most cases, the resource ID is the same as the filename. For example, the image in the previous file hierarchy can be accessed with this code:
+
+```kotlin
+R.drawable.graphic
+```
+
+<figure><img src="./r_class.png" class="half"></figure>
+
+### `strings.xml`
+
+The file `strings.xml` located in the `values/` directory contains the string resources. Here is the content of that file:
+
+```xml
+<resources>
+  <string name="app_name">lab1</string>
+</resources>
+```
+
+Let's add a entry for our "Calculate Tip" string:
+
+```xml
+<resources>
+  <string name="app_name">lab1</string>
+  <string name="calculate_tip">Calculate Tip</string>
+</resources>
+```
+
+We can now use that resource in our code:
+
+```kotlin
+@Composable
+fun TipTimeLayout(modifier: Modifier = Modifier) {
+  Text(
+    text = stringResource(R.string.calculate_tip),
+    modifier = modifier.padding(24.dp)
+  )
+}
+```
+
+## UI Hierarchy
+
+Let's add another `Text` to display the amout.
+
+1. After the name `Text` composable, add another `Text` composable that accepts a text argument set to a string resource named `tip_amount`.
+
+1. Add the `tip_amount` string resource. But with a placeholder for another string.
+
+    ```xml
+    <resources>
+      <string name="app_name">lab1</string>
+      <string name="calculate_tip">Calculate Tip</string>
+      <string name="tip_amount">Tip Amount: %s</string>
+    </resources>
+    ```
+
+1.  We can set the values for placeholders with additional arguments in the `stringResource()` function.
 
     ```kotlin
-    @Preview(
-      showBackground = true,
-      showSystemUi = true,
-      name = "My Preview"
-    )
     @Composable
-    fun GreetingPreview() {
-      Lab1Theme {
-        StudentCard("Quentin Lurkin", "LUR")
-      }
+    fun TipTimeLayout(modifier: Modifier = Modifier) {
+      Text(
+        text = stringResource(R.string.calculate_tip),
+        modifier = modifier.padding(24.dp)
+      )
+      Text(
+        text = stringResource(R.string.tip_amount, "$0.00")
+      )
     }
     ```
 
 1. Notice the preview.
 
-    <figure>
-    <img src="./card_no_column.png" class="half">
-    </figure>
-
 A composable function might describe several UI elements. However, if you don't provide guidance on how to arrange them, Compose might arrange the elements in a way that you don't like. For example, the previous code generates two text elements that overlap each other because there's no guidance on how to arrange the two composables.
-
-## UI Hierarchy
 
 The UI hierarchy is based on containment, meaning one component can contain one or more components, and the terms parent and child are sometimes used. The context here is that the parent UI elements contain children UI elements, which in turn can contain children UI elements. In this section, you will learn about `Column`, `Row`, and `Box` composables, which can act as parent UI elements.
 
@@ -434,11 +486,13 @@ The UI hierarchy is based on containment, meaning one component can contain one 
   <img src="./column_row.png">
 </figure>
 
+Use `Box` layout to stack elements on top of one another. `Box` layout also lets you configure the specific alignment of the elements that it contains.
+
 `Column`, `Row`, and `Box` are composable functions that take composable content as arguments, so you can place items inside these layout elements. For example, each child element inside a `Row` composable is placed horizontally next to each other in a row.
 
 Let's arrange the text elements in your app in a column to avoid overlap.
 
-1. In the `MainActivity.kt` file, scroll to the `StudentCard()` function.
+1. In the `MainActivity.kt` file, scroll to the `TipTimeLayout()` function.
 
 1. Add the `Column` composable around the text elements so that it shows a column with two text elements. Select the two `Text` composables, click on the light bulb. Select `Surround with widget` > `Surround with Column`.
 
@@ -448,56 +502,711 @@ Let's arrange the text elements in your app in a column to avoid overlap.
 
     ```kotlin
     @Composable
-    fun StudentCard(name: String, matricule: String, modifier: Modifier = Modifier) {
-      Surface(
-        color = Color.Cyan,
-        modifier = modifier.fillMaxSize()
+    fun TipTimeLayout(modifier: Modifier = Modifier) {
+      Column (
+        modifier = modifier.padding(24.dp)
       ) {
-        Column(modifier = modifier.padding(20.dp)) {
-          Text(
-            text = name,
-            fontSize = 100.sp,
-            lineHeight = 116.sp
-          )
-          Text(
-            text = matricule,
-            fontSize = 36.sp
-          )
-        }
+        Text(
+          text = stringResource(R.string.calculate_tip)
+        )
+        Text(
+          text = stringResource(R.string.tip_amount, "$0.00")
+        )
       }
     }
     ```
 
     The preview looks much better now that there's no overlap. But we can improve it even more.
 
-1. To align the greeting in the center of the screen add a parameter called `verticalArrangement` set it to `Arrangement.Center`.
+1. To set children's position within a `Row`, set the `horizontalArrangement` and `verticalAlignment` arguments. For a `Column`, set the `verticalArrangement` and `horizontalAlignment` arguments.
+
+    The arrangement property is used to arrange the child elements when the size of the layout is larger than the sum of its children.
+
+    For example: when the size of the `Column` is larger than the sum of its children sizes, a `verticalArrangement` can be specified to define the positioning of the children inside the `Column`. Below is an illustration of different vertical arrangements:
+
+    <figure>
+      <img src="./vertical_arrangement.gif" class="third2">
+    </figure>
+
+    Similarly, when the size of the `Row` is larger than the sum of its children sizes, a `horizontalArrangement` can be specified to define the positioning of the children inside the `Row`. Below is an illustration of different horizontal arrangements:
+
+    <figure>
+    <img src="./horizontal_arrangement.gif">
+    </figure>
+
+    To align the texts in the center of the screen add a parameter called `verticalArrangement` set it to `Arrangement.Center`.
 
     ```kotlin
     @Composable
-    fun StudentCard(name: String, matricule: String, modifier: Modifier = Modifier) {
-      Surface(
-        color = Color.Cyan,
-        modifier = modifier.fillMaxSize()
+    fun TipTimeLayout(modifier: Modifier = Modifier) {
+      Column (
+        modifier = modifier.padding(24.dp),
+        verticalArrangement = Arrangement.Center
       ) {
-        Column (
-          verticalArrangement = Arrangement.Center,
-          modifier = modifier.padding(20.dp)
-        ) {
-          Text(
-            text = name,
-            fontSize = 100.sp,
-            lineHeight = 116.sp,
-          )
-          Text(
-            text = matricule,
-            fontSize = 36.sp
-          )
-        }
+        Text(
+          text = stringResource(R.string.calculate_tip)
+        )
+        Text(
+          text = stringResource(R.string.tip_amount, "$0.00")
+        )
       }
     }
     ```
 
+1. We can also change the alignement in the cross axis with Alignments parameters. To center the childrens of our `Column` horizontally, add an `horizontalAlignment` parameter set to  `Alignment.CenterHorizontally`
+
+    ```kotlin
+    @Composable
+    fun TipTimeLayout(modifier: Modifier = Modifier) {
+      Column (
+        modifier = modifier.padding(24.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+      ) {
+        Text(
+          text = stringResource(R.string.calculate_tip)
+        )
+        Text(
+          text = stringResource(R.string.tip_amount, "$0.00")
+        )
+      }
+    }
+    ```
+
+1. Let's add more modifiers to this app to make it pretty and make it behave nicelly in most situations.
+
+    ```kotlin
+    @Composable
+    fun TipTimeLayout() {
+      Column(
+        modifier = Modifier
+          .statusBarsPadding()
+          .padding(horizontal = 40.dp)
+          .safeDrawingPadding(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+      ) {
+        Text(
+          text = stringResource(R.string.calculate_tip),
+          modifier = Modifier
+            .padding(bottom = 16.dp, top = 40.dp)
+            .align(alignment = Alignment.Start)
+        )
+        Text(
+          text = stringResource(R.string.tip_amount, "$0.00"),
+          style = MaterialTheme.typography.displaySmall
+        )
+        Spacer(modifier = Modifier.height(150.dp))
+      }
+    }
+    ```
+
+    <figure><img src="./ready_to_tip.png" class="half"></figure>
+
+
+## Take input from the user
+
+In this section, you add the UI element that lets the user enter the bill amount in the app.
+
+The `TextField` composable function lets the user enter text in an app.
+
+Add the `TextField` composable to the app:
+
+1. In the `MainActivity.kt` file, add an `EditNumberField()` composable function, that takes a `Modifier` parameter.
+
+1. In the body of the `EditNumberField()` function below `TipTimeLayout()`, add a `TextField` that accepts a `value` named parameter set to an empty string and an `onValueChange` named parameter set to an empty lambda expression:
+
+    ```kotlin
+    @Composable
+    fun EditNumberField(modifier: Modifier = Modifier) {
+      TextField(
+        value = "",
+        onValueChange = {},
+        modifier = modifier
+      )
+    }
+    ```
+
+1. Notice the parameters that you passed:
+    
+    - The `value` parameter is a text box that displays the string value you pass here.
+    - The `onValueChange` parameter is the lambda callback that's triggered when the user enters text in the text box.
+
+1. Import this function:
+
+    ```kotlin
+    import androidx.compose.material3.TextField
+    ```
+
+1. In the `TipTimeLayout()` composable, on the line after the first text composable function, call the `EditNumberField()` function, passing the following modifier.
+
+    ```kotlin
+    import androidx.compose.foundation.layout.fillMaxWidth
+
+    @Composable
+    fun TipTimeLayout() {
+      Column(
+        modifier = Modifier
+          .statusBarsPadding()
+          .padding(horizontal = 40.dp)
+          .verticalScroll(rememberScrollState())
+          .safeDrawingPadding(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+      ) {
+        Text(
+          ...
+        )
+        EditNumberField(modifier = Modifier.padding(bottom = 32.dp).fillMaxWidth())
+        Text(
+          ...
+        )
+        ...
+      }
+    }
+    ```
+
+1. In the **Design** pane, you should see the `Calculate Tip` text, an empty text box and the `Tip Amount` text composable.
+
+
+## Use state in Compose
+
+State in an app is any value that can change over time. In this app, the state is the bill amount.
+
+Add a variable to store state:
+
+1. At the beginning of the `EditNumberField()` function, use the `val` keyword to add an `amountInput` variable set it to `"0"` value:
+
+    ```kotlin
+    val amountInput = "0"
+    ```
+
+    This is the state of the app for the bill amount.
+
+1. Set the `value` named parameter to an `amountInput` value:
+
+    ```kotlin
+    TextField(
+      value = amountInput,
+      onValueChange = {},
+      modifier = modifier
+    )
+    ```
+
+3. Check the preview. The text box displays the value set to the state variable as you can see in this image:
+
+    <figure><img src="./textfield.png" class="half"></figure>
+
+1. Run the app in the emulator, try to enter a different value. The hardcoded state remains unchanged because the `TextField` composable doesn't update itself. It updates when its `value` parameter changes, which is set to the `amountInput` property.
+
+The `amountInput` variable represents the state of the text box. Having a hardcoded state isn't useful because it can't be modified and it doesn't reflect user input. You need to update the state of the app when the user updates the bill amount.
+
+## The Composition
+
+The composables in your app describe a UI that shows a column with some text, a spacer, and a text box. The text shows a `Calculate Tip` text, and the text box shows a `0` value or whatever the default value is.
+
+Compose is a declarative UI framework, meaning that you declare how the UI should look in your code. If you wanted your text box to show a `100` value initially, you'd set the initial value in the code for the composables to a `100` value.
+
+What happens if you want your UI to change while the app is running or as the user interacts with the app? For example, what if you wanted to update the `amountInput` variable with the value entered by the user and display it in the text box? That's when you rely on a process called recomposition to update the Composition of the app.
+
+The Composition is a description of the UI built by Compose when it executes composables. Compose apps call composable functions to transform data into UI. If a state change happens, Compose re-executes the affected composable functions with the new state, which creates an updated UI—this is called recomposition. Compose schedules a recomposition for you.
+
+When Compose runs your composables for the first time during initial composition, it keeps track of the composables that you call to describe your UI in a Composition. Recomposition is when Compose re-executes the composables that may have changed in response to data changes and then updates the Composition to reflect any changes.
+
+The Composition can only be produced by an initial composition and updated by recomposition. The only way to modify the Composition is through recomposition. To do this, Compose needs to know what state to track so that it can schedule the recomposition when it receives an update. In your case, it's the `amountInput` variable, so whenever its value changes, Compose schedules a recomposition.
+
+You use the `State` and `MutableState` types in Compose to make state in your app observable, or tracked, by Compose. The `State` type is immutable, so you can only read the value in it, while the `MutableState` type is mutable. You can use the `mutableStateOf()` function to create an observable `MutableState`. It receives an initial value as a parameter that is wrapped in a `State` object, which then makes its `value` observable.
+
+The value returned by the `mutableStateOf()` function:
+
+- Holds state, which is the bill amount.
+- Is mutable, so the value can be changed.
+- Is observable, so Compose observes any changes to the value and triggers a recomposition to update the UI.
+
+Add a cost-of-service state:
+
+1. In the `EditNumberField()` function, change the `val` keyword before the `amountInput` state variable to the `var` keyword:
+
+    ```kotlin
+    var amountInput = "0"
+    ```
+
+    This makes amountInput mutable.
+
+1. Use the `MutableState<String>` type instead of the hardcoded `String` variable so that Compose knows to track the `amountInput` state and then pass in a `"0"` string, which is the initial default value for the `amountInput` state variable:
+
+    ```kotlin
+    import androidx.compose.runtime.MutableState
+    import androidx.compose.runtime.mutableStateOf
+
+    var amountInput: MutableState<String> = mutableStateOf("0")
+    ```
+
+    The `amountInput` initialization can also be written like this with type inference:
+
+    ```kotlin
+    var amountInput = mutableStateOf("0")
+    ```
+
+    The `mutableStateOf()` function receives an initial `"0"` value as an argument, which then makes `amountInput` observable. This results in this compilation warning in Android Studio, but you fix it soon:
+
+    ```
+    Creating a state object during composition without using remember.
+    ```
+
+1. In the `TextField` composable function, use the `amountInput.value` property:
+
+    ```kotlin
+    TextField(
+      value = amountInput.value,
+      onValueChange = {},
+      modifier = modifier
+    )
+    ```
+
+    Compose keeps track of each composable that reads state `value` properties and triggers a recomposition when its `value` changes.
+
+1. In the `onValueChange` named parameter's lambda expression, set the `amountInput.value` property to the `it` variable:
+
+    ```kotlin
+    @Composable
+    fun EditNumberField(modifier: Modifier = Modifier) {
+      var amountInput = mutableStateOf("0")
+      TextField(
+        value = amountInput.value,
+        onValueChange = { amountInput.value = it },
+        modifier = modifier
+      )
+    }
+    ```
+
+    The `onValueChange` callback is triggered when the text box's input changes. In the lambda expression, the `it` variable contains the new value.
+
+    You are updating the state of the `TextField` (that is the `amountInput` variable), when the `TextField` notifies you that there is a change in the text through `onValueChange` callback function.
+
+1. Run the app and enter text in the text box. The text box still shows a `0`.
+
+When the user enters text in the text box, the `onValueChange` callback is called and the `amountInput` variable is updated with the new value. The `amountInput` state is tracked by Compose, so the moment that its value changes, recomposition is scheduled and the `EditNumberField()` composable function is executed again. In that composable function, the `amountInput` variable is reset to its initial `0` value. Thus, the text box shows a `0` value.
+
+With the code you added, state changes cause recompositions to be scheduled.
+
+However, you need a way to preserve the value of the `amountInput` variable across recompositions so that it's not reset to a `0` value each time that the `EditNumberField()` function recomposes.
+
+## Use remember function to save state
+
+Composable methods can be called many times because of recomposition. The composable resets its state during recomposition if it's not saved.
+
+Composable functions can store an object across recompositions with the `remember`. A value computed by the `remember` function is stored in the Composition during initial composition and the stored value is returned during recomposition. Usually `remember` and `mutableStateOf` functions are used together in composable functions to have the state and its updates be reflected properly in the UI.
+
+Use the `remember` function in `EditNumberField()` function:
+
+1. In the `EditNumberField()` function, initialize the `amountInput` variable with the `by remember` Kotlin property delegate, by surrounding the call to `mutableStateOf()` function with `remember`.
+
+1. In the `mutableStateOf()` function, pass in an empty string instead of a static `"0"` string:
+
+    ```kotlin
+    var amountInput by remember { mutableStateOf("") }
+    ```
+
+    Now the empty string is the initial default value for the amountInput variable. `by` is a [Kotlin property delegation](https://kotlinlang.org/docs/delegated-properties.html). The default getter and setter functions for the `amountInput` property are delegated to the `remember` class's getter and setter functions, respectively.
+
+1. You need these imports:
+
+    ```kotlin
+    import androidx.compose.runtime.remember
+    import androidx.compose.runtime.getValue
+    import androidx.compose.runtime.setValue
+    ```
+
+    Adding the delegate's getter and setter imports lets you read and set amountInput without referring to the MutableState's value property.
+
+    Updated `EditNumberField()` function should look like this:
+
+    ```kotlin
+    @Composable
+    fun EditNumberField(modifier: Modifier = Modifier) {
+      var amountInput by remember { mutableStateOf("") }
+      TextField(
+        value = amountInput,
+        onValueChange = { amountInput = it },
+        modifier = modifier
+      )
+    }
+    ```
+1. Run the app and enter some text in the text box. You should see the text you typed now.
+
+## Add a label to the text box
+
+Every text box should have a label that lets users know what information they can enter.
+
+Modify the `EditNumberField()` function to add a label to the text field:
+
+1. In the `EditNumberField()` function's `TextField()` composable function , add a `label` named parameter set to an empty lambda expression:
+
+    ```kotlin
+    TextField(
+    //...
+      label = { }
+    )
+    ```
+
+1. In the lambda expression, call the `Text()` function that accepts a `stringResource(R.string.bill_amount)`:
+
+    ```kotlin
+    label = { Text(stringResource(R.string.bill_amount)) },
+    ```
+
+1. Add the string resource in the `strings.xml` file:
+
+    ```xml
+    <resources>
+      <string name="app_name">lab1</string>
+      <string name="calculate_tip">Calculate Tip</string>
+      <string name="tip_amount">Tip Amount: %s</string>
+      <string name="bill_amount">Bill Amount</string>
+    </resources>
+    ```
+
+1. In the `TextField()` composable function, add `singleLine` named parameter set to a `true` value:
+
+    ```kotlin
+    TextField(
+      // ...
+      singleLine = true,
+    )
+    ```
+
+    This condenses the text box to a single, horizontally scrollable line from multiple lines.
+
+1. Add the `keyboardOptions` parameter set to a `KeyboardOptions()`:
+
+    ```kotlin
+    import androidx.compose.foundation.text.KeyboardOptions
+
+    TextField(
+      // ...
+      keyboardOptions = KeyboardOptions(),
+    )
+    ```
+
+    Android provides an option to configure the keyboard displayed on the screen to enter digits, email addresses, URLs, and passwords, to name a few. To learn more about other keyboard types, see KeyboardType.
+
+1. Set the keyboard type to number keyboard to input digits. Pass the `KeyboardOptions` function a `keyboardType` named parameter set to a `KeyboardType.Number`:
+
+    ```kotlin
+    import androidx.compose.ui.text.input.KeyboardType
+
+    TextField(
+      // ...
+      keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+    )
+    ```
+
+    The completed `EditNumberField()` function should look like this code snippet:
+
+    ```kotlin
+    @Composable
+    fun EditNumberField(modifier: Modifier = Modifier) {
+      var amountInput by remember { mutableStateOf("") }
+      TextField(
+        value = amountInput,
+        onValueChange = { amountInput = it },
+        singleLine = true,
+        label = { Text(stringResource(R.string.bill_amount)) },
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+        modifier = modifier
+      )
+    }
+    ```
+
+1. Run the app.
+
+## Display the tip amount
+
+In this section, you implement the main functionality of the app, which is the ability to calculate and display the tip amount.
+
+In the `MainActivity.kt` file, add a private calculateTip() function. You will use this function to calculate the tip amount:
+
+```kotlin
+private fun calculateTip(amount: Double, tipPercent: Double = 15.0): String {
+  val tip = tipPercent / 100 * amount
+  return NumberFormat.getCurrencyInstance().format(tip)
+}
+```
+
+In the above method you are using `NumberFormat` to display the format of the tip as currency.
+
+Now your app can calculate the tip, but you still need to format and display it with the class.
+
+The text entered by the user in the text field composable is returned to the `onValueChange` callback function as a `String` even though the user entered a number. To fix this, you need to convert the `amountInput` value, which contains the amount entered by the user.
+
+1. In `EditNumberField()` composable function, create a new variable called `amount` after the `amountInput` definition. Call the `toDoubleOrNull` function on the `amountInput` variable, to convert the `String` to a `Double`:
+
+    ```kotlin
+    val amount = amountInput.toDoubleOrNull()
+    ```
+
+    The `toDoubleOrNull()` function is a predefined Kotlin function that parses a string as a `Double` number and returns the result or `null` if the string isn't a valid representation of a number.
+
+1. At the end of the statement, add an `?:` [Elvis operator](https://kotlinlang.org/docs/reference/null-safety.html#elvis-operator) that returns a `0.0` value when amountInput is `null`:
+
+    ```kotlin
+    val amount = amountInput.toDoubleOrNull() ?: 0.0
+    ```
+
+1. After the `amount` variable, create another `val` variable called `tip`. Initialize it with the `calculateTip()`, passing the `amount` parameter.
+
+    ```kotlin
+    val tip = calculateTip(amount)
+    ```
+
+    The `EditNumberField()` function should look like this code snippet:
+
+    ```kotlin
+    @Composable
+    fun EditNumberField(modifier: Modifier = Modifier) {
+      var amountInput by remember { mutableStateOf("") }
+
+      val amount = amountInput.toDoubleOrNull() ?: 0.0
+      val tip = calculateTip(amount)
+
+      TextField(
+          value = amountInput,
+          onValueChange = { amountInput = it },
+          label = { Text(stringResource(R.string.bill_amount)) },
+          modifier = Modifier.fillMaxWidth(),
+          singleLine = true,
+          keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+      )
+    }
+    ```
+
+## Show the calculated tip amount
+
+You have written the function to calculate the tip amount, the next step is to display the calculated tip amount:
+
+1. In the `TipTimeLayout()` function at the end of the `Column()` block, notice the text composable that displays `$0.00`. You will update this value to the calculated tip amount.
+
+    You need to access the `amountInput` variable in the `TipTimeLayout()` function to calculate and display the tip amount, but the `amountInput` variable is the state of the text field defined in the `EditNumberField()` composable function, so you can't call it from the `TipTimeLayout()` function yet. This image illustrates the structure of the code:
+
+    <figure><img src="./tip_hierarchy.png" class="third2"></figure>
+
+    This structure won't let you display the tip amount in the new `Text` composable because the `Text` composable needs to access the `amount` variable calculated from the `amountInput` variable. You need to expose the amount variable to the `TipTimeLayout()` function. This image illustrates the desired code structure, which makes the `EditNumberField()` composable stateless:
+
+    <figure><img src="./tip_hierarchy_2.png" class="third2"></figure>
+
+    This pattern is called state hoisting. In the next section, you hoist, or lift, the state from a composable to make it stateless.
+
+## State hoisting
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!-- 1. To further beautify your app, align the greeting text to the center using `textAlign`. -->
 
-## Add an image
+<!-- ## Add an image -->
+<!---->
+<!-- We will now add an image to our student card. You can use any image. In this document, we well use this one: -->
+<!---->
+<!-- <figure> -->
+<!-- <img src="/img/me2.jpg" class="half"> -->
+<!-- </figure> -->
+<!---->
+<!-- To use it in our app, we must add it in Android Studio as a resourse. -->
+<!---->
+<!-- 1. In Android Studio, click **View** > **Tool Windows** > **Resource Manager** or click the **Resource Manager** tab next to the **Project** window. -->
+<!---->
+<!--     <figure> -->
+<!--     <img src="./resource_manager.png" class="half"> -->
+<!--     </figure> -->
+<!---->
+<!-- 1. Click **+ (Add resources to the module)** > **Import Drawables**. -->
+<!---->
+<!-- 1. In the file browser, select the image file that you downloaded and then click **Open**. This action opens the Import drawables dialog. -->
+<!---->
+<!-- 1. Android Studio shows you a preview of the image. Select **Density** from the **QUALIFIER TYPE** drop-down list. You'll learn why you're doing this, in a later section. -->
+<!---->
+<!-- 1. Select **No Density** from the **VALUE** list. -->
+<!---->
+<!--     Android devices come in different screen sizes (phones, tablets, and TVs to name a few), and their screens also have different pixel sizes. That is, while one device has 160 pixels per square inch, another device fits 480 pixels in the same space. If you don't consider these variations in pixel density, the system might scale your images, which could result in blurry images, or large images that consume too much memory, or images that are sized improperly. -->
+<!---->
+<!--     When you resize images that are larger than the Android system can handle, an out-of-memory error is thrown. For photographs and background images, such as the current image, you should place them in the `drawable-nodpi` folder, which stops the resizing behavior. -->
+<!---->
+<!--     For more information about pixel densities, see [Support different pixel densities](https://developer.android.com/training/multiscreen/screendensities). -->
+<!---->
+<!-- 1. Click **Next**. -->
+<!---->
+<!-- 1. Android Studio shows you the folder structure in which your image will be placed. Notice the `drawable-nodpi` folder. -->
+<!---->
+<!-- 1. Click **Import**. -->
+<!---->
+<!-- 1. Android Studio creates a `drawable-nodpi` folder and places your image in it. In the Android Studio project view, the resource name is displayed as `filename.jpg (nodpi)`. In the computer file system, Android Studio would have created a folder called `drawable-nodpi`. -->
+<!---->
+<!-- 1. If the image is imported successfully, Android Studio adds the image to the list under the **Drawable** tab. This list includes all your images and icons for the app. You can now use this image in your app. -->
+<!---->
+<!-- 1. Switch back to the **Project** view, click **View** > **Tool Windows** > **Project** or click the **Project** tab on the far left. -->
+<!---->
+<!-- 1. Click **app** > **res** > **drawable** to confirm that the image is in the `drawable` folder. -->
+<!---->
+<!-- To display an image in your app, it needs a place to be displayed. Just like you use a `Text` composable to display text, you can use an `Image` composable to display an image. -->
+<!---->
+<!-- ## Resources in Jetpack Compose -->
+<!---->
+<!---->
+<!-- To add your image to your `StudentCard()` Composable: -->
+<!---->
+<!-- 1. In the `StudentCard()` function, declare a `val` property and name it `image`. -->
+<!---->
+<!-- 1. Make a call to `painterResource()` function by passing in the image resource. Assign the returned value to the `image` variable. -->
+<!---->
+<!--     ```kotlin -->
+<!--     val image = painterResource(R.drawable.me) -->
+<!--     ``` -->
+<!---->
+<!-- 1. The `painterResource()` function need the import `androidx.compose.ui.res.painterResource`. -->
+<!---->
+<!-- 1. After the call to the `painterResource()` function, add an `Image` composable to the `Column` and then pass in the `image` as a named argument for the `painter`. For accessibility reason, an image must also have a description. So we need to add a `contentDescription`. -->
+<!---->
+<!--     ```kotlin -->
+<!--     @Composable -->
+<!--     fun StudentCard(name: String, matricule: String, modifier: Modifier = Modifier) { -->
+<!--       val image = painterResource(id = R.drawable.me) -->
+<!---->
+<!--       Surface( -->
+<!--         color = Color.Cyan, -->
+<!--         modifier = modifier.fillMaxSize() -->
+<!--       ) { -->
+<!--         Column ( -->
+<!--           verticalArrangement = Arrangement.Center, -->
+<!--           modifier = modifier.padding(20.dp) -->
+<!--         ) { -->
+<!--           Image( -->
+<!--             painter = image, -->
+<!--             contentDescription = null -->
+<!--           ) -->
+<!--           Text( -->
+<!--             text = name, -->
+<!--             fontSize = 100.sp, -->
+<!--             lineHeight = 116.sp, -->
+<!--           ) -->
+<!--           Text( -->
+<!--             text = matricule, -->
+<!--             fontSize = 36.sp -->
+<!--           ) -->
+<!--         } -->
+<!--       } -->
+<!--     } -->
+<!--     ``` -->
+<!---->
+<!-- 1. The `Image` Composable need the import `androidx.compose.foundation.Image`. -->
+<!---->
+<!-- 1. We should center the image. Let's do this with the `modifier`. -->
+<!---->
+<!--     ```kotlin -->
+<!--     Image( -->
+<!--       painter = image, -->
+<!--       contentDescription = null, -->
+<!--       modifier = modifier.align(Alignment.CenterHorizontally) -->
+<!--     ) -->
+<!--     ``` -->
+<!---->
+<!--     This is Nice but we can do better with a `Box` -->
+<!---->
+<!--     ```kotlin -->
+<!--     @Composable -->
+<!--     fun StudentCard(name: String, matricule: String, modifier: Modifier = Modifier) { -->
+<!--       val image = painterResource(id = R.drawable.me) -->
+<!---->
+<!--       Surface( -->
+<!--         color = Color.Cyan, -->
+<!--         modifier = modifier.fillMaxSize() -->
+<!--       ) { -->
+<!--         Column ( -->
+<!--           verticalArrangement = Arrangement.Center, -->
+<!--           modifier = modifier.padding(20.dp) -->
+<!--         ) { -->
+<!--           Box( -->
+<!--             contentAlignment = Alignment.Center, -->
+<!--             modifier = modifier -->
+<!--               .fillMaxWidth() -->
+<!--               .aspectRatio(1.0F) -->
+<!--           ) { -->
+<!--             Image( -->
+<!--               painter = image, -->
+<!--               contentDescription = null, -->
+<!--             ) -->
+<!--           } -->
+<!---->
+<!--           Text( -->
+<!--             text = name, -->
+<!--             fontSize = 100.sp, -->
+<!--             lineHeight = 116.sp, -->
+<!--           ) -->
+<!--           Text( -->
+<!--             text = matricule, -->
+<!--             fontSize = 36.sp -->
+<!--           ) -->
+<!--         } -->
+<!--       } -->
+<!--     } -->
+<!--     ``` -->
+<!---->
+<!--     <figure><img src="./final_student_card.png" class="half"></figure> -->
+
+
+
+
+
+
+
+
+
+
+<!-- 1. To surround the text with a Surface, highlight the line of text, press (`Alt+Enter` for Windows or `Option+Enter` on Mac), and then select **Surround with widget**. -->
+<!---->
+<!-- 1. Choose **Surround with Container**. -->
+<!---->
+<!--     The default container it will give you is `Box`, but you can change this to another container type. You will learn about `Box` layout later. -->
+<!---->
+<!-- 1. Delete `Box` and type `Surface()` instead. -->
+<!---->
+<!-- 1. It's a best practice to have your Composable accept a `Modifier` parameter, and pass that `modifier` to its first child. -->
+<!---->
+<!-- 1. To the Surface container add a color parameter, set it to `Color.Cyan`. -->
+<!---->
+<!--     ```kotlin -->
+<!--     @Composable -->
+<!--     fun Greeting(name: String, modifier: Modifier = Modifier) { -->
+<!--       Surface( -->
+<!--         color = Color.Cyan, -->
+<!--         modifier = modifier -->
+<!--       ) { -->
+<!--         Text( -->
+<!--           text = "Hi, my name is $name!", -->
+<!--         ) -->
+<!--       } -->
+<!--     } -->
+<!--     ``` -->
+<!---->
+<!---->
+<!---->
+<!-- 1. Notice the updated preview. -->
+<!---->
+<!--     <figure> -->
+<!--     <img src="./greeting_background.png" class="half"> -->
+<!--     </figure> -->
+<!---->
 
