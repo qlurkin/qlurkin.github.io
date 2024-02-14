@@ -4,7 +4,7 @@ build_and_index(
   [
     'course1',
     'lab1',
-    // 'course3',
+    'course2',
     // 'course4',
     // 'course5',
     // 'lab3',

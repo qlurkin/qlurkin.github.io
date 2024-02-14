@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Course 3 - Activity Lifecycle</title>
+    <title>Course 2 - Activity Lifecycle</title>
     <script src="https://quentin.lurkin.xyz/deck.js" defer></script>
 </head>
 
@@ -28,7 +28,7 @@
         </ul>
     </section>
     <section>
-        <h2>Activity Lifecycle</h2>
+        <h2>Activity State</h2>
         <div class="row">
             <div class="span8">
                 <ul>
@@ -86,7 +86,7 @@
                 <small>onCreate, onStart, onResume, ...</small>
             </li>
             <li>These methods will be called many times during the typical usage of your app.<small> Rotating the device
-                    trigger a complete recreation of the Activity</small></li>
+                    trigger a complete recreation of the Activity (configuration change)</small></li>
         </ul>
     </section>
     <section>
@@ -149,13 +149,33 @@
         </figure>
     </section>
     <section>
-        <h2>ViewModel</h2>
-        <ul>
-            <li>Add dependency to your build.gradle(Module)</li>
-        </ul>
-        <pre><code class="lang-kotlin">
-            implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1"
-        </code></pre>
+      <h2>Unidirectional Data Flow</h2>
+      <figure>
+        <img src="./udf.png" class="half">
+      </figure>
+      <ul>
+        <li>Better data consistency guarantee</li>
+        <li>Easier to debug</li>
+      </ul>
+    </section>
+    <!-- <section> -->
+    <!--     <h2>ViewModel</h2> -->
+    <!--     <ul> -->
+    <!--         <li>Add dependency to your build.gradle(Module)</li> -->
+    <!--     </ul> -->
+    <!--     <pre><code class="lang-kotlin"> -->
+    <!--         implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1" -->
+    <!--     </code></pre> -->
+    <!-- </section> -->
+    <section>
+      <h2>Data Layer</h2>
+      <ul>
+        <li>Should be independent of the Android System</li>
+        <li>Easier to test</li>
+      </ul>
+    </section>
+    <section>
+      <h1>In practice</h1>
     </section>
     <section>
         <h2>UI State</h2>
@@ -168,7 +188,7 @@
                     )
                 </code></pre>
             </li>
-            <li>Based on a model
+            <li>Based on a model (<strong>Data Layer</strong>)
                 <pre><code class="lang-kotlin">
                     data class Quote(
                         val content: String,
@@ -244,6 +264,7 @@
             }
         </code></pre>
     </section>
+    
     <!--<section>
         <h2>Problem when recreating an Activity</h2>
         <ul>
