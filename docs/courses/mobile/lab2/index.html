@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 2 - Architecture and Navigation</title>
+    <script src="/document.js" defer></script>
+    
+</head>
+<body>
+    <h1>Lab 2 <small>Architecture and Navigation</small></h1>
+    
+    <h2>Download starter code</h2>
+<p>To get started, download the starter code:</p>
+<p><a href="https://github.com/google-developer-training/basic-android-kotlin-compose-training-cupcake/archive/refs/heads/starter.zip">Download zip</a></p>
+<h2>Learn about app architecture</h2>
+<p>An app&#39;s architecture provides guidelines to help you allocate the app responsibilities between the classes. A well-designed app architecture helps you scale your app and extend it with additional features. Architecture can also simplify team collaboration.</p>
+<p>The most common <a href="https://developer.android.com/jetpack/guide#common-principles">architectural principles</a> are <strong>separation of concerns</strong> and <strong>driving UI from a model</strong>.</p>
+<ul>
+<li><strong>Separation of concerns</strong>: The separation of concerns design principle states that the app is divided into classes of functions, each with separate responsibilities.</li>
+<li><strong>Drive UI from a model</strong>: The drive UI from a model principle states that you should drive your UI from a model, preferably a persistent model. Models are components responsible for handling the data for an app. They&#39;re independent from the UI elements and app components in your app, so they&#39;re unaffected by the app&#39;s lifecycle and associated concerns.</li>
+</ul>
+<h3>Recommended app architecture</h3>
+<p>Considering the common architectural principles mentioned in the previous section, each app should have at least two layers:</p>
+<ul>
+<li><strong>UI layer:</strong> a layer that displays the app data on the screen but is independent of the data.</li>
+<li><strong>Data layer:</strong> a layer that stores, retrieves, and exposes the app data.</li>
+</ul>
+<p>You can add another layer, called the domain layer, to simplify and reuse the interactions between the UI and data layers. This layer is optional and beyond the scope of this course.</p>
+<figure><img src="./layers.png" class="half"></figure>
+
+<h4>UI layer</h4>
+<p>The role of the UI layer, or presentation layer, is to display the application data on the screen. Whenever the data changes due to a user interaction, such as pressing a button, the UI should update to reflect the changes.</p>
+<p>The UI layer is made up of the following components:</p>
+<ul>
+<li><strong>UI elements:</strong> components that render the data on the screen. You build these elements using <a href="https://developer.android.com/jetpack/compose">Jetpack Compose.</a></li>
+<li><strong>State holders:</strong> components that hold the data, expose it to the UI, and handle the app logic. An example state holder is <a href="https://developer.android.com/topic/libraries/architecture/viewmodel">ViewModel</a>.</li>
+</ul>
+<figure><img src="./ui_layer.png" class="half"></figure>
+
+<h4>ViewModel</h4>
+<p>The <code>ViewModel</code> component holds and exposes the state the UI consumes. The UI state is application data transformed by <code>ViewModel</code>. <code>ViewModel</code> lets your app follow the architecture principle of driving the UI from the model.</p>
+<p><code>ViewModel</code> stores the app-related data that isn&#39;t destroyed when the activity is destroyed and recreated by the Android framework. Unlike the activity instance, <code>ViewModel</code> objects are not destroyed. The app automatically retains <code>ViewModel</code> objects during configuration changes so that the data they hold is immediately available after the recomposition.</p>
+<p>To implement <code>ViewModel</code> in your app, extend the <code>ViewModel</code> class, which comes from the architecture components library and stores app data within that class.</p>
+<h4>UI State</h4>
+<p>The UI is what the user sees, and the UI state is what the app says they should see. The UI is the visual representation of the UI state. Any changes to the UI state immediately are reflected in the UI.</p>
+<figure><img src="./ui_state.png" class="third2"></figure>
+
+<p><em>UI is a result of binding UI elements on the screen with the UI state.</em></p>
+<pre><code class="language-kotlin">// Example of UI state definition, do not copy over
+
+data class NewsItemUiState(
+  val title: String,
+  val body: String,
+  val bookmarked: Boolean = false,
+  ...
+)
+</code></pre>
+<h4>Immutability</h4>
+<p>The UI state definition in the example above is immutable. Immutable objects provide guarantees that multiple sources do not alter the state of the app at an instant in time. This protection frees the UI to focus on a single role: reading state and updating UI elements accordingly. Therefore, you should never modify the UI state in the UI directly, unless the UI itself is the sole source of its data. Violating this principle results in multiple sources of truth for the same piece of information, leading to data inconsistencies and subtle bugs.</p>
+<h2>In the starter code</h2>
+<ol>
+<li><p>In the <code>build.gradle.kts (Module :app)</code> file, in the section <code>dependencies</code>, you should should see some <code>ViewModel</code> dependencies.</p>
+</li>
+<li><p>In the <code>ui</code> package, you should see the <code>OrderViewModel</code> class that extend <code>ViewModel</code>.</p>
+</li>
+<li><p>In the <code>data</code> package, you should see the <code>OrderUIState</code> class. It is a data class.</p>
+</li>
+</ol>
+<h3>StateFlow</h3>
+<p><code>StateFlow</code> is a data holder observable flow that emits the current and new state updates. Its <code>value</code> property reflects the current state value. To update state and send it to the flow, assign a new value to the value property of the <code>MutableStateFlow</code> class.</p>
+<p>In Android, <code>StateFlow</code> works well with classes that must maintain an observable immutable state.</p>
+<p>A <code>StateFlow</code> is exposed from the <code>OrderUiState</code> so that the composables can listen for UI state updates and make the screen state survive configuration changes.</p>
+<h3>Backing property</h3>
+<p>A backing property lets you return something from a getter other than the exact object.</p>
+<p>For <code>var</code> property, the Kotlin framework generates getters and setters.</p>
+<p>For getter and setter methods, you can override one or both of these methods and provide your own custom behavior. To implement a backing property, you override the getter method to return a read-only version of your data. The following example shows a backing property:</p>
+<pre><code class="language-kotlin">//Example code, no need to copy over
+
+// Declare private mutable variable that can only be modified
+// within the class it is declared.
+private var _count = 0 
+
+// Declare another public immutable field and override its getter method. 
+// Return the private property&#39;s value in the getter method.
+// When count is accessed, the get() function is called and
+// the value of _count is returned. 
+val count: Int
+  get() = _count
+</code></pre>
+<p>As another example, say that you want the app data to be private to the <code>ViewModel</code>:</p>
+<p>Inside the <code>ViewModel</code> class:</p>
+<ul>
+<li>The property <code>_count</code> is <code>private</code> and mutable. Hence, it is only accessible and editable within the <code>ViewModel</code> class.</li>
+</ul>
+<p>Outside the <code>ViewModel</code> class:</p>
+<ul>
+<li>The default visibility modifier in Kotlin is <code>public</code>, so <code>count</code> is <code>public</code> and accessible from other classes like UI controllers. A <code>val</code> type cannot have a setter. It is immutable and read-only so you can only override the <code>get()</code> method. When an outside class accesses this property, it returns the value of <code>_count</code> and its value can&#39;t be modified. This backing property protects the app data inside the <code>ViewModel</code> from unwanted and unsafe changes by external classes, but it lets external callers safely access its value.</li>
+</ul>
+<p>In the <code>OrderViewModel</code> class, you should see a backing property named <code>_uiState</code> and a property named <code>uiState</code> of the type <code>StateFlow&lt;OrderUiState&gt;</code>. The <code>asStateFlow()</code> makes this mutable state flow a read-only state flow.</p>
+<p>With this setup, <code>_uiState</code> is accessible and editable only within the <code>OrderViewModel</code>. The UI can read its value using the read-only property, <code>uiState</code>.</p>
+<h2>Architecting your Compose UI</h2>
+<p>In Compose, the only way to update the UI is by changing the state of the app. What you can control is your UI state. Every time the state of the UI changes, Compose recreates the parts of the UI tree that changed. Composables can accept state and expose events. For example, a <code>TextField</code>/<code>OutlinedTextField</code> accepts a value and exposes a callback <code>onValueChange</code> that requests the callback handler to change the value.</p>
+<pre><code class="language-kotlin">//Example code no need to copy over
+
+var name by remember { mutableStateOf(&quot;&quot;) }
+OutlinedTextField(
+  value = name,
+  onValueChange = { name = it },
+  label = { Text(&quot;Name&quot;) }
+)
+</code></pre>
+<p>Because composables accept state and expose events, the unidirectional data flow pattern fits well with Jetpack Compose. This section focuses on how to implement the unidirectional data flow pattern in Compose, how to implement events and state holders, and how to work with <code>ViewModels</code> in Compose.</p>
+<h3>Unidirectional data flow</h3>
+<p>A <em>unidirectional data flow</em> (UDF) is a design pattern in which state flows down and events flow up. By following unidirectional data flow, you can decouple composables that display state in the UI from the parts of your app that store and change state.</p>
+<p>The UI update loop for an app using unidirectional data flow looks like the following:</p>
+<ul>
+<li><strong>Event:</strong> Part of the UI generates an event and passes it upward—such as a button click passed to the ViewModel to handle—or an event that is passed from other layers of your app, such as an indication that the user session has expired.</li>
+<li><strong>Update state:</strong> An event handler might change the state.</li>
+<li><strong>Display state:</strong> The state holder passes down the state, and the UI displays it.</li>
+</ul>
+<figure><img src="./udf.png" class="half"></figure>
+
+<p>The use of the UDF pattern for app architecture has the following implications:</p>
+<ul>
+<li>The <code>ViewModel</code> holds and exposes the state the UI consumes.</li>
+<li>The UI state is application data transformed by the <code>ViewModel</code>.</li>
+<li>The UI notifies the <code>ViewModel</code> of user events.</li>
+<li>The <code>ViewModel</code> handles the user actions and updates the state.</li>
+<li>The updated state is fed back to the UI to render.</li>
+<li>This process repeats for any event that causes a mutation of state.</li>
+</ul>
+<h3>Pass the data</h3>
+<p>In the <code>CupcakeScreen()</code>, The <code>ViewModel</code> instance is used to access the <code>uiState</code> using <code>collectAsState()</code>.</p>
+<p>The <code>collectAsState()</code> function collects values from this <a href="https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-state-flow/index.html"><code>StateFlow</code></a> and represents its latest value via <a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/State"><code>State</code></a>. The <a href="https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-state-flow/value.html"><code>StateFlow.value</code></a> is used as an initial value. Every time there would be a new value posted into the <code>StateFlow</code>, the returned <code>State</code> updates, causing recomposition of every <a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/State#value()"><code>State.value</code></a> usage.</p>
+<p>In the <code>CupcakeScreen</code> function, notice the first argument of the type <code>OrderViewModel</code> with a default value of <code>viewModel()</code>.</p>
+<p>In the <code>CupcakeScreen</code> function, notice the variable called <code>uiState</code>. It use the <code>by</code> delegate and call <code>collectAsState()</code> on <code>viewModel.uiState</code>.</p>
+<p>This approach ensures that whenever there is a change in the <code>viewModel.uiState</code> value, recomposition occurs for the composables using the <code>uiState</code> value.</p>
+<h2>Continue the app</h2>
+<p>Continue this app on <a href="https://developer.android.com/codelabs/basic-android-kotlin-compose-navigation"><strong>Navigate between screens with Compose</strong></a></p>
+<h2>Credits</h2>
+<ul>
+<li><a href="https://developer.android.com/codelabs/basic-android-kotlin-compose-viewmodel-and-state">ViewModel and State in Compose</a></li>
+</ul>
+
+</body>
+</html>
