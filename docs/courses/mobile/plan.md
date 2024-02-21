@@ -22,9 +22,11 @@
 
 ## Cours 3
 
-- connect to internet
+- Security Model
 
 ## Lab 3
+
+- connect to internet
 
 ## Cours 4
 

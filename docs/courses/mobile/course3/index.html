@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course 3 - Security Model</title>
+    <script src="/deck.js" defer></script>
+    
+    
+</head>
+<body>
+<section>
+    <h1>Course 3 <small>Security Model</small></h1>
+    
+</section>
+
+<section>
+
+<h2>The beginning of computing</h2>
+<ul>
+<li>Computers used by professionals and enthusiast</li>
+<li>Limited mass distribution of softwares</li>
+<li>Built-in development tools</li>
+</ul>
+<p><strong>Most users run their own code!</strong></p>
+<p><strong>No need for security</strong></p>
+</section>
+
+<section>
+
+<h2>Security on computers</h2>
+<ul>
+<li>Needed whith multi-user OS</li>
+<li>Limit interactions between users</li>
+<li>No security with respect to the code</li>
+</ul>
+<p>  <strong>Code runs with logged-in user&#39;s permissions!</strong></p>
+<p>  You must trust the code will do things you would </p>
+</section>
+
+<section>
+
+<h2>Computers today</h2>
+<ul>
+<li>Security model mostly unchanged</li>
+<li>Softwares with closed source</li>
+<li>Most users can&#39;t read or write code</li>
+<li>Download any software from Internet</li>
+</ul>
+<p>  <strong>A lot of security issues</strong></p>
+</section>
+
+<section>
+
+<h2>Some security measures</h2>
+<ul>
+<li>Separated admin privileges (popups, sudo)</li>
+<li>Signed application executables</li>
+<li>Personal files access popups</li>
+</ul>
+</section>
+
+<section>
+
+<h2>Application sandboxing</h2>
+<ul>
+<li>Treat code as an untrustworthy stranger</li>
+<li>Apps can&#39;t do anything by default</li>
+<li>Must use OS APIs that will inform the user</li>
+</ul>
+<p>  <strong>This is the model used on the web (js) and on Mobile OS</strong></p>
+</section>
+
+<section>
+
+<h2>Android Sandbox</h2>
+  <figure><img src="./security.svg"></figure> 
+
+</section>
+
+<section>
+
+<h2>Android Sandbox</h2>
+<p>  By default, no acces to:</p>
+<ul>
+<li>Other app files</li>
+<li>Content providers (contacts, photos, calendars, ...)</li>
+<li>Sensors (microphone, camera, localisation, inertial, ...)</li>
+<li>Network</li>
+</ul>
+</section>
+
+<section>
+
+<h2>Types of permissions</h2>
+<ul>
+<li><strong>Install-time</strong> permissions</li>
+<li><strong>Runtime</strong> permissions <small>require your app to go a step further and request the permission at runtime</small></li>
+</ul>
+</section>
+
+<section>
+
+<h2>Install-time permissions</h2>
+<ul>
+<li><strong>Automatically granted</strong> when your app is installed <small>If the user accept it</small></li>
+<li>Data or action that present very <strong>little risk</strong> to the user&#39;s privacy and the operation of other apps.</li>
+</ul>
+</section>
+
+<section>
+
+<h2>Runtime permissions</h2>
+<ul>
+<li>Don&#39;t assume that these permissions have been previously granted</li>
+<li>Need to <strong>request</strong> runtime permissions in your app <small>just before the actual access</small></li>
+<li>The system presents a runtime <strong>permission prompt</strong> to the user</li>
+<li>Need to <strong>explain</strong> why your app accesses this information <small>The user may deny</small></li>
+</ul>
+</section>
+
+<section>
+
+<h2>Android permissions</h2>
+  <figure><img src="./permissions.svg"></figure>
+
+</section>
+
+<section>
+
+<h2>No permissions needed</h2>
+<ul>
+<li><strong>Delegate</strong> the access to sensitive data to an other app that have the permission.</li>
+<li>Examples:<ul>
+<li>The camera app for taking a picture</li>
+<li>The Contact app for picking a contact</li>
+<li>...</li>
+</ul>
+</li>
+<li>Use the <code>Intent</code> mecanism</li>
+</ul>
+</section>
+
+<section>
+
+<h2>Goals</h2>
+<ul>
+<li><strong>Control:</strong> The user has control over the data that they share with apps.</li>
+<li><strong>Transparency:</strong> The user understands what data an app uses and why the app accesses this data.</li>
+<li><strong>Data minimization:</strong> An app accesses and uses only the data that&#39;s required for a specific task or action that the user invokes.</li>
+</ul>
+</section>
+
+<section>
+
+<h2>Best practices</h2>
+<ul>
+<li>Request a <strong>minimal</strong> number of permissions <small>only the permissions that it needs to complete that action</small></li>
+<li>Associate runtime permissions with <strong>specific</strong> actions <small>Request permissions as late as possible</small></li>
+<li>Consider your app&#39;s <strong>dependencies</strong> <small>you inherit its permission requirements</small></li>
+<li>Be <strong>transparent</strong> <small>Explain what is accessed and why</small></li>
+<li>Make system accesses <strong>explicit</strong> <small>Use a mic indicator when recording audio</small></li>
+</ul>
+</section>
+
+
+
+</body>
+</html>
