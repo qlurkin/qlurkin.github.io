@@ -8,7 +8,7 @@ build_and_index(
     'lab2',
     'course3',
     'lab3',
-    // 'course4',
+    'course4',
     // 'lab4',
     // 'course4',
     // 'course5',

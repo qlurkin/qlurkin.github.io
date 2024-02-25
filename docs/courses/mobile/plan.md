@@ -30,13 +30,13 @@
 
 ## Cours 4
 
-- Persistance
+- long task
 
 ## Lab 4
 
 ## Cours 5
 
-- long task
+- Design
 
 ## Lab 5
 
