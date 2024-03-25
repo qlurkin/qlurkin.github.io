@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Exercice 1</title>
+    <style>
+      body {
+        font-family: system-ui;
+      }
+
+      section {
+        max-width: 600px;
+        margin: 1rem auto;
+        padding: 1rem;
+        border: 1px solid gray;
+        border-radius: 4px;
+      }
+
+      img {
+        width: 100%;
+      }
+
+
+      header {
+        text-align: center;
+      }
+
+      header img {
+        max-width: 600px;
+      }
+
+      footer ul {
+        list-style-type: none;
+        text-align: center;
+      }
+
+      footer ul li {
+        display: inline-block;
+        margin: 1rem 4rem;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <img src="https://quentin.lurkin.xyz/courses/ergonomy/lab3/exercices/ex1/titre.png">
+    </header>
+    <main>
+      <section>
+        <h1>Post du <span id="date"></span></h1>
+        <p>Lol XD</p>
+        <img src="https://quentin.lurkin.xyz/courses/ergonomy/lab3/exercices/ex1/funny.webp">
+      </section>
+    </main>
+    <footer>
+      <ul>
+        <li><a href="https://x.com"><img src="https://quentin.lurkin.xyz/courses/ergonomy/lab3/exercices/ex1/social-icon-twitter.svg"></a></li>
+        <li><a href="https://facebook.com"><img src="https://quentin.lurkin.xyz/courses/ergonomy/lab3/exercices/ex1/social-icon-facebook.svg"></a></li>
+        <li><a href="https://linkedin.com"><img src="https://quentin.lurkin.xyz/courses/ergonomy/lab3/exercices/ex1/social-icon-linkedin.svg"></a></li>
+        <li><a href="https://instagram.com"><img src="https://quentin.lurkin.xyz/courses/ergonomy/lab3/exercices/ex1/social-icon-instagram.svg"></a></li>
+      </ul>
+    </footer>
+    <script>
+      document.querySelector('#date').innerHTML = new Date().toLocaleDateString()
+    </script>
+  </body>
+</html>
