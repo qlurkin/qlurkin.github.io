@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="S_Twitter_24_N" width="24" height="24" version="1.1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+ <defs>
+  <style>.fill {
+        fill: #707070;
+      }</style>
+ </defs>
+ <rect id="Canvas" width="24" height="24" fill="#ff13dc" opacity="0"/>
+ <path d="m13.862 10.469 7.2855-8.4687h-1.7264l-6.326 7.3533-5.0526-7.3533h-5.8275l7.6404 11.119-7.6404 8.8808h1.7265l6.6804-7.7653 5.3359 7.7653h5.8275l-7.9237-11.531zm-2.3647 2.7487-0.77413-1.1072-6.1595-8.8105h2.6518l4.9708 7.1104 0.77413 1.1072 6.4614 9.2424h-2.6518l-5.2728-7.5418z" fill="#707070" stroke-width=".016308"/>
+</svg>
