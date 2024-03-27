@@ -1,10 +1,29 @@
 {
-	"name": "Quentin Lurkin",
-	"birthDate": "august 24, 1982",
-	"country": "Belgium",
-	"formations": [
-		"Master's Degree, Computer Sciences Engineering",
-		"Certificate, Higher Education Teaching"
-	],
-	"job": "lecturer at ECAM, www.ecam.be"
-} 
+  "name": "Quentin Lurkin",
+  "birthDate": "august 24, 1982",
+  "country": "Belgium",
+  "formations": [
+    "Master's Degree, Computer Sciences Engineering",
+    "Certificate, Higher Education Teaching"
+  ],
+  "job": "lecturer at ECAM, www.ecam.be",
+  "publications": [
+    {
+      "title": "Stimulating student engagement with an AI board game tournament",
+      "authors": [
+        "Ken Hasselmann",
+        "Quentin Lurkin"
+      ],
+      "booktitle": "Proceedings of the Third Teaching Machine Learning and Artificial Intelligence Workshop",
+      "pages": "22-26",
+      "year": 2023,
+      "editor": "Kinnaird, Katherine M. and Steinbach, Peter and Guhr, Oliver",
+      "volume": 207,
+      "series": "Proceedings of Machine Learning Research",
+      "publisher": "PMLR",
+      "url": "https://proceedings.mlr.press/v207/hasselmann23a.html",
+      "pdf": "https://proceedings.mlr.press/v207/hasselmann23a/hasselmann23a.pdf",
+      "abstract": "Strong foundations in basic AI techniques are key to understanding more advanced concepts. We believe that introducing AI techniques, such as search methods, early in higher education helps create a deeper understanding of the concepts seen later in more advanced AI and algorithms courses. We present a project-based and competition-based bachelor course that gives second-year students an introduction to search methods applied to board games. In groups of two, students have to use network programming and AI methods to build an AI agent to compete in a board game tournament—othello was this year’s game. Students are evaluated based on the quality of their projects and on their performance during the final tournament. We believe that the introduction of gamification, in the form of competition-based learning, allows for a better learning experience for the students"
+    }
+  ]
+}
