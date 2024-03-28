@@ -16,6 +16,7 @@ build_and_index(
     // 'lab3',
     // 'lab4',
     // 'project2023',
+    'project24',
   ],
   { title: 'Mobile Development' },
 )
