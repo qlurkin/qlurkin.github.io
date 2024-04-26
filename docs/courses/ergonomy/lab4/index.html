@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=1024, user-scalable=no">
+        <title>ER4C - Labo 4 - Mesures</title>
+        <script src="/document.js" defer></script>
+    <link rel="stylesheet" href="./style.css">
+    </head>
+    <body>
+        <section>
+            <h1>ER4C - Labo 4<small>Mesures</small></h1>
+        </section>
+        <section>
+            <h2>Performance</h2>
+            <p>Ce n'est pas juste le temps de chargement !</p>
+      <p>Ce dernier peut être perçu de façon très différente d'un utilisateur à l'autre.</p>
+            <figure><img src="./histogram.png"></figure>
+      <p>Il est important d'optimiser les performance pour permettre aux utilisateurs dans les conditions les plus difficiles d'avoir une bonne expérience.</p>
+
+      <h3>Exercice</h3>
+      <p>Dans l'onglet <em>Network</em> des outils de développement, simulez des réseaux plus lents pour voir comment cela affecte le chargement de cette page.</p>
+        </section>
+        <section>
+            <h2>Perception</h2>
+            <p>Comment la rapidité est perçue ?</p>
+            <ul>
+                <li><strong>16 millisecondes:</strong> animations fluides (60fps).</li>
+                <li><strong>0.1 seconde:</strong> instantané, sensation de réactivité.</li>
+                <li><strong>1 seconde:</strong> garde l'attention de l'utilisateur.</li>
+                <li><strong>10 secondes:</strong> l'utilisateur est passé à autre chose.</li>
+            </ul>
+            <figure><img class="zoom" src="./temps.svg"></figure>
+        </section>
+        <section>
+            <h2>Feedback</h2>
+            <p>Il faut réagir aux inputs de l'utilisateur en moins de 0.1 seconde</p>
+            <ul>
+                <li>Feedback visuel pour chaque action</li>
+                <li>Indicateur de chargement pour ce qui dure plus longtemps</li>
+                <li>Limiter les <em>long Tasks</em></li>
+            </ul>
+
+      <h3>Exercice</h3>
+      <p>Les deux boutons suivants ont des problèmes, lesquels ?</p>
+      <div class="button">OK</div>
+      <div id="laggy" class="button">OK</div>
+      <script>
+      document.getElementById("laggy").addEventListener('mousedown', event => {
+        setTimeout(() => {
+          event.target.classList.add('down')
+        }, 500)
+      })
+      document.getElementById("laggy").addEventListener('mouseup', event => {
+        setTimeout(() => {
+          event.target.classList.remove('down')
+        }, 500)
+      })
+      </script>
+        </section>
+        <section>
+            <h2>Long Tasks</h2>
+            <p>Les <em>long tasks</em> monopolisent le <em>thread</em> principal et retarde les autres tâches. </p>
+            <figure><img src="./long_task.png"></figure>
+        </section>
+        <section>
+            <h2>Temps de chargement</h2>
+            <p>Un chargement ne devrait pas prendre plus d'une seconde</p>
+        </section>
+        <section>
+            <h2>Premier chargement</h2>
+            <figure><img src="./largest-contentful-paint.png"></figure>
+            <ul>
+                <li>First Contentfull Paint (FCP): Premier rendu avec du contenu</li>
+                <li>Largest Contentfull Paint (LCP): permet de mesurer la vitesse de chargement perçue</li>
+            </ul>
+        </section>
+        <section>
+            <h2>Temps de chargement</h2>
+            <ul>
+                <li>Limiter la taille des ressources à charger: Moins de code, uglify-js, uglifycss, ...</li>
+                <li>Limiter le nombre de ressources à charger: Bundle, inline, ...</li>
+            </ul>
+
+      <h3>Exercice</h3>
+      <p>Pourquoi <a href="./long.html" target="_blank">cette page</a> prend elle autant de temps à charger ?</p>
+        </section>
+        <section>
+            <h2>Animations</h2>
+            <p>Les animations devraient avoir un framerate constant (et de 60fps si possible)</p>
+            <ul>
+                <li>Animations qui utilisent le GPU: CSS, WebGL</li>
+                <li>Animations qui demandent moins de calculs: CSS transform</li>
+                <li>Éviter les <em>long tasks</em></li>
+            </ul>
+
+            <h3>Exercices</h3>
+            <p>Est-ce que cette animation vus semble fluide ? Pourquoi ?</p>
+            <button id="toggle">Toggle</button>
+            <div id="div-toggle" style="height: 0; overflow: hidden;">
+                <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil, reprehenderit. Repellat sit vel minima id facere? Reiciendis earum, minima debitis, nam numquam accusantium deserunt quae repudiandae, quibusdam quo nobis accusamus?</div>
+                <div>Similique rem nihil, error officiis aperiam molestiae perferendis voluptatum officia? Quis facere sint corrupti vel debitis a, atque tempore dolor accusamus sequi voluptates dolores adipisci doloremque facilis distinctio ipsa voluptate.</div>
+                <div>Expedita illo fugiat quos rerum voluptates perspiciatis explicabo, molestiae dicta nam nihil magni harum quaerat reiciendis quis saepe ipsam ullam voluptatem facere quisquam aliquam! Ea recusandae explicabo eveniet sint hic.</div>
+            </div>
+            <script>
+                let height = 0
+                const div = document.getElementById('div-toggle')
+                console.log(div)
+
+                function open() {
+                    if(height < 200) {
+                        setTimeout(() => {
+                            height = height + 5
+                            console.log(height)
+                            div.style.height = `${height}px`
+                            console.log(div.style.height)
+                            open()
+                        }, 16)
+                    }
+                }
+
+                function close() {
+                    if(height > 0) {
+                        setTimeout(() => {
+                            height = height - 5
+                            div.style.height = `${height}px`
+                            console.log(height)
+                            close()
+                        }, 16)
+                    }
+                }
+
+                document.getElementById('toggle').addEventListener('click', () => {
+                    console.log("Toggle")
+                    if(height == 0) {
+                        open()
+                    }
+                    else {
+                        close()
+                    }
+                })
+            </script>
+        </section>
+        <section>
+            <h2><em>Real User Measurments (RUM)</em></h2>
+            <p>Les mesures durant le développement ne suffissent pas</p>
+            <figure><img src="./rum.png"></figure>
+        </section>
+        <section>
+            <h2>Core Web Vitals</h2>
+            <div class="row">
+              <div class="span4">
+                <img src="./largest-contentful-paint-logo.svg" alt="">
+              </div>
+              <div class="span4">
+                <img src="./inp-thresholds.svg" alt="">
+              </div>
+              <div class="span4">
+                <img src="./cumulative-layout-shift-t.svg" alt="">
+              </div>
+            </div>
+            <ul>
+                <li><a href="https://web.dev/articles/vitals?hl=fr">https://web.dev/articles/vitals</a></li>
+                <li>Ensemble de métriques permettant d'évaluer un site</li>
+                <li>Largest Contentful Paint (LCP): mesure les performances de chargement. Pour offrir une bonne expérience utilisateur, le LCP doit se produire dans les 2,5 secondes suivant le début du chargement de la page.</li>
+                <li>Interaction to Next Paint (INP): mesure l'interactivité. Pour offrir une bonne expérience utilisateur, l'INP des pages doit être inférieur ou égal à 200 millisecondes.</li>
+                <li>Cumulative Layout Shift (CLS): mesure la stabilité visuelle. Pour offrir une bonne expérience utilisateur, vous devez conserver un CLS de 0.1. ou moins.</li>        
+            </ul>
+        </section>
+        <section>
+            <h2>Mesures</h2>
+            <pre><code class="lang-plain">
+              npm install web-vitals
+            </code></pre>
+            <ul>
+                <li><a href="https://www.npmjs.com/package/web-vitals">web-vitals</a></li>
+              <li>Se mesure chez le client avec <code>web-vitals</code></li>
+            </ul>
+            <h3>Exercice</h3>
+            <p>Dans un projet svelte, utilisez <code>web-vitals</code> pour mesurer les performances chez le client et renvoyez ces mesures au serveur pour les enregistrer dans une DB</p>
+        </section>
+        <section>
+            <h1>Outils</h1>
+        </section>
+        <section>
+            <h2>Lighthouse</h2>
+            <ul>
+                <li><a href="https://pagespeed.web.dev">pagespeed.web.dev</a></li>
+                <li>Onglet "Lighthouse" dans l'inspecteur de Chrome</li>
+            </ul>
+        </section>
+        <section>
+            <h2>Chrome User Experience Report (CrUX)</h2>
+            <p><a href="https://developers.google.com/web/tools/chrome-user-experience-report/">https://developers.google.com/web/tools/chrome-user-experience-report/</a></p>
+            <ul>
+                <li>Données collectées chez les utilisateurs de Chrome ayant donnés leurs accords</li>
+                <li>Publiquement accessibles</li>
+                <li>Utilisées par "pagespeed.web.dev"</li>
+            </ul>
+        </section>
+        <section>
+            <h2>Analytics</h2>
+            <ul>
+                <li>Connaître l'audience du site</li>
+                <li>Connaître l'efficacité du site et son évolution dans le temps</li>
+                <li>Collecter des données de performance</li>
+            </ul>
+            <p>Session d'un utilisateur divisée en 3 parties:</p>
+            <ul>
+                <li>Acquisition: Comment l'utilisateur est arrivé sur la page</li>
+                <li>Comportement: Comment l'utilisateur interagit avec le site</li>
+                <li>Conversion: La visite se convertit-elle en vente, ...</li>
+            </ul>
+            <p>Avec une <em>Single Page App</em>, il faut envoyer manuellement les changements de page.</p>
+            <p>On peut envoyer des evenements</p>
+            <ul>
+                <li>Metriques de performances: LCP, INP, CLS, ...</li>
+                <li>Convertions</li>
+                <li>...</li>
+            </ul>
+        </section>
+        <section>
+      <h2>Exercices</h2>
+      <h3>Google Analytics</h3>
+            <ul>
+                <li><a href="https://skillshop.exceedlms.com/student/catalog/list?category_ids=6431-google-analytics-4">Cours en ligne</a></li>
+            </ul>
+        </section>
+        <section>
+            <h2>Crédits</h2>
+            <ul>
+                <li><a href="https://www.youtube.com/watch?v=uJMA2n4RL6s">Présentation "Performance on RAILs" de Paul Lewis au Nordic.js 2015</a></li>
+                <li><a href="https://developers.google.com/web/fundamentals/performance/user-centric-performance-metrics">https://developers.google.com/web/fundamentals/performance/user-centric-performance-metrics</a></li>
+            </ul>
+        </section>
+    </body>
+</html>
