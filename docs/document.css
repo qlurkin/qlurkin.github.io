@@ -545,26 +545,18 @@ body.chapter h4:before {
 .pygments td.linenos .normal {
   color: inherit;
   background-color: transparent;
-  padding-left: 5px;
-  padding-right: 5px;
 }
 .pygments span.linenos {
   color: inherit;
   background-color: transparent;
-  padding-left: 5px;
-  padding-right: 5px;
 }
 .pygments td.linenos .special {
   color: #000000;
   background-color: #ffffc0;
-  padding-left: 5px;
-  padding-right: 5px;
 }
 .pygments span.linenos.special {
   color: #000000;
   background-color: #ffffc0;
-  padding-left: 5px;
-  padding-right: 5px;
 }
 .pygments .hll {
   background-color: #ffffcc;
