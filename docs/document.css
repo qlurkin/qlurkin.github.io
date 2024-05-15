@@ -539,7 +539,6 @@ body.chapter h4:before {
 }
 .pygments pre {
   line-height: 125%;
-  padding: 0;
   margin: 0;
 }
 .pygments td.linenos .normal {
