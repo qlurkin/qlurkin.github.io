@@ -20,7 +20,7 @@ $endif$
   <style>
     $styles.html()$
   </style>
-  <link rel="stylesheet" href="https://quentin.lurkin.xyz/document.css">
+  <link rel="stylesheet" href="/document.css">
 $for(css)$
   <link rel="stylesheet" href="$css$" />
 $endfor$
@@ -40,10 +40,11 @@ $include-before$
 $endfor$
 $if(title)$
 <header id="title-block-header">
-<h1 class="title">$title$</h1>
+<h1 class="title">$title$
 $if(subtitle)$
-<p class="subtitle">$subtitle$</p>
+<small>$subtitle$</small>
 $endif$
+</h1>
 $for(author)$
 <p class="author">$author$</p>
 $endfor$

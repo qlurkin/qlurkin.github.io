@@ -160,8 +160,13 @@ export async function pandoc(path) {
     let props = await read(path)
     props = update(props, 'layout', 'document')
     props = update(props, 'dest', `${props.name}.html`)
+    const filters_dir = join(root, 'pandoc', 'filters')
+    const filters = await readdir(filters_dir)
+    const filter_args = filters
+      .map((file) => `--filter ${join(root, 'pandoc', 'filters', file)}`)
+      .join(' ')
     const child = exec(
-      `pandoc -f markdown -t html -s --template ${join(root, 'build_lib', 'pandoc', 'template.html')} -M document-css=false --filter ${join(root, 'build_lib', 'pandoc', 'code_highlight_filter.py')} --filter ${join(root, 'build_lib', 'pandoc', 'math_filter.py')} --mathjax`,
+      `pandoc -f markdown -t html -s --template ${join(root, 'pandoc', 'template.html')} -M document-css=false ${filter_args}  --mathjax`,
       (error, stdout, stderr) => {
         if (stderr.length > 0) {
           console.log(`stderr while building "${path}": ${stderr}`)
