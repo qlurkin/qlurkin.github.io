@@ -155,6 +155,28 @@ export async function dir(path) {
   }
 }
 
+export async function pandoc(path) {
+  return new Promise(async (resolve, reject) => {
+    let props = await read(path)
+    props = update(props, 'layout', 'document')
+    props = update(props, 'dest', `${props.name}.html`)
+    const child = exec(
+      `pandoc -f markdown -t html -s --template ${join(root, 'build_lib', 'pandoc', 'template.html')} -M document-css=false --filter ${join(root, 'build_lib', 'pandoc', 'code_highlight_filter.py')} --filter ${join(root, 'build_lib', 'pandoc', 'math_filter.py')} --mathjax`,
+      (error, stdout, stderr) => {
+        if (stderr.length > 0) {
+          console.log(`stderr while building "${path}": ${stderr}`)
+        }
+        if (error) reject(error)
+        props.content = stdout
+        write(props)
+        resolve()
+      },
+    )
+    child.stdin.write(props.content)
+    child.stdin.end()
+  })
+}
+
 export async function build_md(path) {
   let props = await read(path)
   props = update(props, 'layout', 'document')

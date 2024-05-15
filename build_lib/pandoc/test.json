@@ -1,0 +1,229 @@
+{
+  "pandoc-api-version": [
+    1,
+    23,
+    1
+  ],
+  "meta": {
+    "title": {
+      "t": "MetaInlines",
+      "c": [
+        {
+          "t": "Str",
+          "c": "Hello"
+        },
+        {
+          "t": "Space"
+        },
+        {
+          "t": "Str",
+          "c": "Pandoc"
+        }
+      ]
+    },
+    "typst": {
+      "t": "MetaBool",
+      "c": true
+    }
+  },
+  "blocks": [
+    {
+      "t": "Para",
+      "c": [
+        {
+          "t": "Str",
+          "c": "Ceci"
+        },
+        {
+          "t": "Space"
+        },
+        {
+          "t": "Str",
+          "c": "est"
+        },
+        {
+          "t": "Space"
+        },
+        {
+          "t": "Str",
+          "c": "un"
+        },
+        {
+          "t": "Space"
+        },
+        {
+          "t": "Str",
+          "c": "document"
+        },
+        {
+          "t": "Space"
+        },
+        {
+          "t": "Str",
+          "c": "de"
+        },
+        {
+          "t": "Space"
+        },
+        {
+          "t": "Str",
+          "c": "test"
+        }
+      ]
+    },
+    {
+      "t": "CodeBlock",
+      "c": [
+        [
+          "",
+          [
+            "python"
+          ],
+          []
+        ],
+        "def hello():\n  print('hello')\n\ndef draw_sierpinski():\n  import turtle\n  from math import cos, pi, sin\n\n  def mid(p1, p2):\n    x = (p1[0] + p2[0]) / 2\n    y = (p1[1] + p2[1]) / 2\n    return (x, y)\n\n  def triangle(p1, p2, p3):\n    turtle.up()\n    turtle.goto(p1)\n    turtle.down()\n    turtle.goto(p2)\n    turtle.goto(p3)\n    turtle.goto(p1)\n\n  def sierpinski(p1, p2, p3, depth):\n    if depth == 0:\n      triangle(p1, p2, p3)\n    else:\n      sierpinski(p1, mid(p1, p2), mid(p3, p1), depth - 1)\n      sierpinski(mid(p1, p2), p2, mid(p2, p3), depth - 1)\n      sierpinski(mid(p3, p1), mid(p2, p3), p3, depth - 1)\n\n  def polar(radius, angle):\n    x = radius * cos(angle)\n    y = radius * sin(angle)\n    return (x, y)\n\n  depth = 5\n  radius = 300\n  sierpinski(\n    polar(radius, pi / 2),\n    polar(radius, pi / 2 + 2 * pi / 3),\n    polar(radius, pi / 2 - 2 * pi / 3),\n    depth,\n  )\n  turtle.done()"
+      ]
+    },
+    {
+      "t": "BulletList",
+      "c": [
+        [
+          {
+            "t": "Plain",
+            "c": [
+              {
+                "t": "Str",
+                "c": "Cool"
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "t": "Plain",
+            "c": [
+              {
+                "t": "Str",
+                "c": "Super"
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "t": "Plain",
+            "c": [
+              {
+                "t": "Str",
+                "c": "Sympa"
+              }
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "t": "Para",
+      "c": [
+        {
+          "t": "Str",
+          "c": "Hello"
+        },
+        {
+          "t": "Space"
+        },
+        {
+          "t": "Str",
+          "c": "ceci"
+        },
+        {
+          "t": "Space"
+        },
+        {
+          "t": "Code",
+          "c": [
+            [
+              "",
+              [
+                "typst",
+                "run"
+              ],
+              []
+            ],
+            "cal(A) := { x in RR | x \"is natural\" }"
+          ]
+        },
+        {
+          "t": "Space"
+        },
+        {
+          "t": "Str",
+          "c": "est"
+        },
+        {
+          "t": "Space"
+        },
+        {
+          "t": "Str",
+          "c": "une"
+        },
+        {
+          "t": "Space"
+        },
+        {
+          "t": "Str",
+          "c": "formule"
+        }
+      ]
+    },
+    {
+      "t": "CodeBlock",
+      "c": [
+        [
+          "",
+          [
+            "typst",
+            "run"
+          ],
+          []
+        ],
+        "cal(A) := { x in RR | x \"is natural\" }"
+      ]
+    },
+    {
+      "t": "Para",
+      "c": [
+        {
+          "t": "Str",
+          "c": "Voici"
+        },
+        {
+          "t": "Space"
+        },
+        {
+          "t": "Str",
+          "c": "des"
+        },
+        {
+          "t": "Space"
+        },
+        {
+          "t": "Str",
+          "c": "math"
+        },
+        {
+          "t": "Space"
+        },
+        {
+          "t": "Math",
+          "c": [
+            {
+              "t": "InlineMath"
+            },
+            "x^2 = 4"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -6,6 +6,5 @@ node_modules
 .coverage
 htmlcov
 .pytest_cache
-*.py
 *-old.zip
 *.dSYM
