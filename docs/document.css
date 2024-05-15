@@ -535,7 +535,7 @@ body.chapter h4:before {
 .pygments td {
   border: none;
   text-align: left;
-  padding: 0.5rem;
+  padding: 0;
 }
 .pygments pre {
   line-height: 125%;
