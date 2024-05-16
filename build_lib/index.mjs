@@ -161,7 +161,7 @@ export async function pandoc(path) {
     props = update(props, 'layout', 'document')
     props = update(props, 'dest', `${props.name}.html`)
     const filters_dir = join(root, 'pandoc', 'filters')
-    const filters = await readdir(filters_dir)
+    const filters = (await readdir(filters_dir)).sort()
     const filter_args = filters
       .map((file) => `--filter ${join(root, 'pandoc', 'filters', file)}`)
       .join(' ')

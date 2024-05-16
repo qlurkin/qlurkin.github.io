@@ -54,14 +54,33 @@ def draw_sierpinski():
 - Super
 - Sympa
 
-Hello ceci `cal(A) := { x in RR | x "is natural" }`{.typst .run} est une formule
-
-```typst {.run}
-cal(A) := { x in RR | x "is natural" }
-```
-
 Voici des math $cal(A) := { x in RR | x "is natural" }$ super $x^2 = 4$ cool $sum_(k=0)^n k = 1 + ... + n$
 
 Voici des math $$cal(A) := { x in RR | x "is natural" }$$ en display
 
 ## truc $x^2 = 4$
+
+![Lapin avec texture](./texeledBunny.png)
+
+```javascript {.script}
+const div = document.getElementById(id)
+div.innerHTML = 'Hello JS'
+```
+
+```plantuml {.build}
+@startuml
+
+title flowchart
+
+start
+
+while (data available?)
+  :read data;
+  :generate diagrams;
+endwhile
+
+stop
+
+@enduml
+```
+
