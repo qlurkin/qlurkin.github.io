@@ -166,7 +166,7 @@ export async function pandoc(path) {
       .map((file) => `--filter ${join(root, 'pandoc', 'filters', file)}`)
       .join(' ')
     const child = exec(
-      `pandoc -f markdown -t html -s --template ${join(root, 'pandoc', 'template.html')} -M document-css=false ${filter_args}  --mathjax`,
+      `pandoc -f markdown -t html -s --template ${join(root, 'pandoc', 'template.html')}  --section-divs -M document-css=false ${filter_args}  --mathjax`,
       (error, stdout, stderr) => {
         if (stderr.length > 0) {
           console.log(`stderr while building "${path}": ${stderr}`)
