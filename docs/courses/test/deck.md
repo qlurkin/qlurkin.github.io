@@ -1,5 +1,6 @@
 ---
 title: "Test Deck"
+subtitle: "Truc"
 type: "deck"
 typst: true
 ---
