@@ -11,11 +11,12 @@ from pygments.util import ClassNotFound
 def action(elem, doc):
     if isinstance(elem, pf.CodeBlock):
         lang = elem.classes[0]
+        linenos = "linenos" in elem.classes
         try:
             lexer = get_lexer_by_name(lang, stripall=True)
         except ClassNotFound:
             lexer = TextLexer()
-        formatter = HtmlFormatter(cssclass="pygments")
+        formatter = HtmlFormatter(linenos=linenos, cssclass="pygments")
         result = highlight(elem.text, lexer, formatter)
         return pf.RawBlock(result, format="html")
 

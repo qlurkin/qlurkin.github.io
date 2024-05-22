@@ -5,7 +5,7 @@ typst: true
 
 Ceci est un document de test
 
-```python
+```python {.linenos}
 def hello():
   print('hello')
 
