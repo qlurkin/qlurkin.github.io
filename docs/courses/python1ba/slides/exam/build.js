@@ -1,3 +1,3 @@
-import { redirect } from 'build_lib'
+import { build_and_index } from 'build_lib'
 
-redirect('index.pdf', { title: "Exemple d'examen" })
+build_and_index(['example', 'janv24', 'mai24'], { title: 'Examens précédents' })
