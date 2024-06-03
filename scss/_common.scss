@@ -5,268 +5,279 @@
 // @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
 
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-    
-    font-family: system-ui, sans-serif;
-    font-weight: normal;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
-    background-color: white;
+
+  font-family: system-ui, sans-serif;
+  font-weight: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  background-color: white;
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   font-family: 'Iowan Old Style', 'Palatino Linotype', 'URW Palladio L', P052, serif;
 }
 
 code {
-    font-size: .875em;
-    color: #AA0000;
-    white-space: pre;
-    // font-family: 'Fira Code', monospace;
-    font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
-    font-weight: normal;
-    // font-optical-sizing: auto;
-    // font-variant-ligatures: none;
+  font-size: .875em;
+  color: #AA0000;
+  white-space: pre;
+  // font-family: 'Fira Code', monospace;
+  font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
+  font-weight: normal;
+  // font-optical-sizing: auto;
+  // font-variant-ligatures: none;
 }
 
 pre {
-    // font-family: 'Fira Code', monospace;
-    font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
-    font-weight: normal;
-    // font-optical-sizing: auto;
-    // font-variant-ligatures: none;
-    overflow-x: auto;
-    padding: 1em 0.8em;
-    background: #F0F0F0;
-    border-radius: 4px;
-    font-size: 75%;
+  // font-family: 'Fira Code', monospace;
+  font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
+  font-weight: normal;
+  // font-optical-sizing: auto;
+  // font-variant-ligatures: none;
+  overflow-x: auto;
+  padding: 1em 0.8em;
+  background: #F0F0F0;
+  border-radius: 4px;
+  font-size: 75%;
 }
 
-pre > code {
-    font-size: 100%;
+pre>code {
+  font-size: 100%;
 }
 
-p, li, pre, figure, h1, h2, h3, h4 {
-    margin-bottom: 1rem;
+p,
+li,
+pre,
+figure,
+h1,
+h2,
+h3,
+h4 {
+  margin-bottom: 1rem;
 }
 
-h1, h2, h3, h4, pre, table, img {
-    break-inside: avoid;
+
+h1,
+h2,
+h3,
+h4 {
+  margin-top: 2rem;
 }
 
-h1, h2, h3, h4 {
-    margin-top: 2rem;
-}
-
-ul, ol, figure, pre, .file-title, .terminal {
-    margin-top: 1rem;
+ul,
+ol,
+figure,
+pre,
+.file-title,
+.terminal {
+  margin-top: 1rem;
 }
 
 /* hack that avoid page break after h2 et h3 */
-h2::after, h3::after, h4::after {
-    content: "";
-    display: block;
-    height: 100px;
-    margin-bottom: -100px;
-}
+// h2::after, h3::after, h4::after {
+//     content: "";
+//     display: block;
+//     height: 100px;
+//     margin-bottom: -100px;
+// }
 
-p, li {
-    text-align: justify;
+p,
+li {
+  text-align: justify;
 }
 
 li {
-    margin-left: 30px;
+  margin-left: 30px;
 }
 
 figure {
+  text-align: center;
+  break-inside: avoid;
+
+  figcaption {
     text-align: center;
-    break-inside: avoid;
+    font-style: italic;
+    font-size: 0.8em;
+  }
 
-    figcaption {
-        text-align: center;
-        font-style: italic;
-        font-size: 0.8em;
+  pre {
+    text-align: left;
+  }
+
+  table {
+    margin: 1rem auto;
+  }
+
+  img,
+  canvas {
+    max-width: 100%;
+
+    &.half {
+      width: 50%;
     }
 
-    pre {
-        text-align: left;
+    &.third {
+      width: 33%;
     }
 
-    table {
-      margin: 1rem auto;
+    &.third2 {
+      width: 66%;
     }
 
-    img, canvas {
-        max-width: 100%;
-
-        &.half {
-            width: 50%;
-        }
-        
-        &.third {
-            width: 33%;
-        }
-        
-        &.third2 {
-            width: 66%;
-        }
-        
-        &.fourth {
-            width: 25%;
-        }
-        
-        &.fourth3 {
-            width: 75%;
-        }
-        
-        &.zoom {
-            width: 75%;
-        }
-        
-        &.max {
-            width: 100%;
-        }
+    &.fourth {
+      width: 25%;
     }
+
+    &.fourth3 {
+      width: 75%;
+    }
+
+    &.zoom {
+      width: 75%;
+    }
+
+    &.max {
+      width: 100%;
+    }
+  }
 }
 
-h1 > small {
-    display: block;
-    font-size: 0.6em;
-    font-weight: normal;
-    color: gray;
-    margin: 1rem 0;
+h1>small {
+  display: block;
+  font-size: 0.6em;
+  font-weight: normal;
+  color: gray;
+  margin: 1rem 0;
 }
 
 .row {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    column-gap: 10px;
-    justify-items: stretch;
-    align-items: stretch;
-    justify-content: stretch;
-    align-content: stretch;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: 10px;
+  justify-items: stretch;
+  align-items: stretch;
+  justify-content: stretch;
+  align-content: stretch;
 
-    .span2 {
-        grid-column-end: span 2;
-    }
+  .span2 {
+    grid-column-end: span 2;
+  }
 
-    .span3 {
-        grid-column-end: span 3;
-    }
+  .span3 {
+    grid-column-end: span 3;
+  }
 
-    .span4 {
-        grid-column-end: span 4;
-    }
+  .span4 {
+    grid-column-end: span 4;
+  }
 
-    .span5 {
-        grid-column-end: span 5;
-    }
+  .span5 {
+    grid-column-end: span 5;
+  }
 
-    .span6 {
-        grid-column-end: span 6;
-    }
+  .span6 {
+    grid-column-end: span 6;
+  }
 
-    .span7 {
-        grid-column-end: span 7;
-    }
+  .span7 {
+    grid-column-end: span 7;
+  }
 
-    .span8 {
-        grid-column-end: span 8;
-    }
+  .span8 {
+    grid-column-end: span 8;
+  }
 
-    .span9 {
-        grid-column-end: span 9;
-    }
+  .span9 {
+    grid-column-end: span 9;
+  }
 
-    .span10 {
-        grid-column-end: span 10;
-    }
+  .span10 {
+    grid-column-end: span 10;
+  }
 
-    .span11 {
-        grid-column-end: span 11;
-    }
+  .span11 {
+    grid-column-end: span 11;
+  }
 }
 
 .indent {
-    padding-left: 3ex;
+  padding-left: 3ex;
 }
 
 .center {
-    text-align: center;
+  text-align: center;
 }
 
 .big {
-    font-size: 1.5em;
+  font-size: 1.5em;
 }
 
 .right {
-	text-align: right;
+  text-align: right;
 }
 
-.break-before {
-	page-break-before: always;
-}
-
-.break-after {
-	page-break-after: always;
-}
 
 code.wrap {
-	white-space: pre-wrap !important;
+  white-space: pre-wrap !important;
 }
 
 .terminal {
-    background-color: darkslategray;
-    color: white;
-    font-family: consolas, monospace;
-    white-space: pre;
-    padding: 1rem;
-    font-size: 0.9em;
-    margin-bottom: 1rem;
+  background-color: darkslategray;
+  color: white;
+  font-family: consolas, monospace;
+  white-space: pre;
+  padding: 1rem;
+  font-size: 0.9em;
+  margin-bottom: 1rem;
 
-    &::before {
-        content: "Terminal";
-        display: block;
-        background-color: black;
-        text-align: center;
-        margin: -1rem;
-        padding: 0.5rem;
-        margin-bottom: 1rem;
-    }
+  &::before {
+    content: "Terminal";
+    display: block;
+    background-color: black;
+    text-align: center;
+    margin: -1rem;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+  }
 }
 
 .file-title {
-    margin-bottom: -1rem !important;
-    font-family: consolas, monospace;
-    font-size: 0.9em;
-    color: white;
-    padding: 0.5rem;
-    text-align: center;
-    background-color: #686868;
+  margin-bottom: -1rem !important;
+  font-family: consolas, monospace;
+  font-size: 0.9em;
+  color: white;
+  padding: 0.5rem;
+  text-align: center;
+  background-color: #686868;
 }
 
 table {
-    border-collapse: collapse;
+  border-collapse: collapse;
+  border: 2px solid black;
+
+  td {
+    border: 1px solid black;
+  }
+
+  th {
     border: 2px solid black;
+  }
 
-    td {
-        border: 1px solid black;
-    }
-
-    th {
-        border: 2px solid black;
-    }
-
-    td, th {
-        padding: 0.5em;
-        text-align: center;
-    }
+  td,
+  th {
+    padding: 0.5em;
+    text-align: center;
+  }
 }
 
 .middle {
@@ -283,4 +294,38 @@ table {
 .wrap {
   white-space: normal;
   overflow-wrap: break-word;
+}
+
+@media print {
+
+  p,
+  h2,
+  h3 {
+    orphans: 3;
+    widows: 3;
+  }
+
+  h2,
+  h3,
+  h4 {
+    page-break-after: avoid;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  pre,
+  table,
+  img {
+    break-inside: avoid;
+  }
+
+  .break-before {
+    page-break-before: always;
+  }
+
+  .break-after {
+    page-break-after: always;
+  }
 }

@@ -191,7 +191,10 @@ body {
   background-color: white;
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   font-family: "Iowan Old Style", "Palatino Linotype", "URW Palladio L", P052, serif;
 }
 
@@ -217,31 +220,36 @@ pre > code {
   font-size: 100%;
 }
 
-p, li, pre, figure, h1, h2, h3, h4 {
+p,
+li,
+pre,
+figure,
+h1,
+h2,
+h3,
+h4 {
   margin-bottom: 1rem;
 }
 
-h1, h2, h3, h4, pre, table, img {
-  break-inside: avoid;
-}
-
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   margin-top: 2rem;
 }
 
-ul, ol, figure, pre, .file-title, .terminal {
+ul,
+ol,
+figure,
+pre,
+.file-title,
+.terminal {
   margin-top: 1rem;
 }
 
 /* hack that avoid page break after h2 et h3 */
-h2::after, h3::after, h4::after {
-  content: "";
-  display: block;
-  height: 100px;
-  margin-bottom: -100px;
-}
-
-p, li {
+p,
+li {
   text-align: justify;
 }
 
@@ -264,28 +272,36 @@ figure pre {
 figure table {
   margin: 1rem auto;
 }
-figure img, figure canvas {
+figure img,
+figure canvas {
   max-width: 100%;
 }
-figure img.half, figure canvas.half {
+figure img.half,
+figure canvas.half {
   width: 50%;
 }
-figure img.third, figure canvas.third {
+figure img.third,
+figure canvas.third {
   width: 33%;
 }
-figure img.third2, figure canvas.third2 {
+figure img.third2,
+figure canvas.third2 {
   width: 66%;
 }
-figure img.fourth, figure canvas.fourth {
+figure img.fourth,
+figure canvas.fourth {
   width: 25%;
 }
-figure img.fourth3, figure canvas.fourth3 {
+figure img.fourth3,
+figure canvas.fourth3 {
   width: 75%;
 }
-figure img.zoom, figure canvas.zoom {
+figure img.zoom,
+figure canvas.zoom {
   width: 75%;
 }
-figure img.max, figure canvas.max {
+figure img.max,
+figure canvas.max {
   width: 100%;
 }
 
@@ -353,14 +369,6 @@ h1 > small {
   text-align: right;
 }
 
-.break-before {
-  page-break-before: always;
-}
-
-.break-after {
-  page-break-after: always;
-}
-
 code.wrap {
   white-space: pre-wrap !important;
 }
@@ -404,7 +412,8 @@ table td {
 table th {
   border: 2px solid black;
 }
-table td, table th {
+table td,
+table th {
   padding: 0.5em;
   text-align: center;
 }
@@ -425,6 +434,34 @@ table td, table th {
   overflow-wrap: break-word;
 }
 
+@media print {
+  p,
+  h2,
+  h3 {
+    orphans: 3;
+    widows: 3;
+  }
+  h2,
+  h3,
+  h4 {
+    page-break-after: avoid;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  pre,
+  table,
+  img {
+    break-inside: avoid;
+  }
+  .break-before {
+    page-break-before: always;
+  }
+  .break-after {
+    page-break-after: always;
+  }
+}
 @page {
   margin: 1cm;
 }
@@ -455,16 +492,33 @@ h1 {
   cursor: pointer;
 }
 
-.mode-deck p, .mode-deck li, .mode-deck pre, .mode-deck figure, .mode-deck h1, .mode-deck h2, .mode-deck h3, .mode-deck h4 {
+.mode-deck p,
+.mode-deck li,
+.mode-deck pre,
+.mode-deck figure,
+.mode-deck h1,
+.mode-deck h2,
+.mode-deck h3,
+.mode-deck h4 {
   margin-bottom: 2rem;
 }
-.mode-deck li p, .mode-deck li li, .mode-deck li pre, .mode-deck li figure, .mode-deck li h1, .mode-deck li h2, .mode-deck li h3, .mode-deck li h4 {
+.mode-deck li p,
+.mode-deck li li,
+.mode-deck li pre,
+.mode-deck li figure,
+.mode-deck li h1,
+.mode-deck li h2,
+.mode-deck li h3,
+.mode-deck li h4 {
   margin-bottom: 1rem;
 }
 .mode-deck .document-only {
   display: none;
 }
-.mode-deck .deck-before, .mode-deck .deck-previous, .mode-deck .deck-next, .mode-deck .deck-after {
+.mode-deck .deck-before,
+.mode-deck .deck-previous,
+.mode-deck .deck-next,
+.mode-deck .deck-after {
   position: absolute;
   left: -1000vw;
 }

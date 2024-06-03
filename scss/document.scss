@@ -3,80 +3,82 @@
 @use 'pygments';
 
 @page {
-	margin: 2cm;
+  margin: 2cm;
 }
 
 body {
-	counter-reset: section;
-	max-width: 40rem;
-	margin: auto;
-	font-size: 12pt;
-	padding: 1rem;
-	position: relative;
+  counter-reset: section;
+  max-width: 40rem;
+  margin: auto;
+  font-size: 12pt;
+  padding: 1rem;
+  position: relative;
 }
 
 h1 {
-	font-weight: normal;
-	font-size: 2.5rem;
-	text-align: center;
-	margin: 3.236rem 0 2rem 0;
+  font-weight: normal;
+  font-size: 2.5rem;
+  text-align: center;
+  margin: 3.236rem 0 2rem 0;
 }
 
 h2 {
-	font-size: 1.5rem;
-	counter-reset: subsection;
+  font-size: 1.5rem;
+  counter-reset: subsection;
 
-	&:before {
-		content: counter(section) "\0000a0\0000a0";
-		counter-increment: section;
-	}
-	&.nocount:before {
-		content: none;
-		counter-increment: none;
-	}
+  &:before {
+    content: counter(section) "\0000a0\0000a0";
+    counter-increment: section;
+  }
+
+  &.nocount:before {
+    content: none;
+    counter-increment: none;
+  }
 }
 
 
 h3 {
-	counter-reset: subsubsection;
+  counter-reset: subsubsection;
 
-	&:before {
-		content: counter(section) "." counter(subsection) "\0000a0\0000a0";
-		counter-increment: subsection;
-	}
-	&.nocount:before {
-		content: none;
-		counter-increment: none;
-	}
+  &:before {
+    content: counter(section) "." counter(subsection) "\0000a0\0000a0";
+    counter-increment: subsection;
+  }
+
+  &.nocount:before {
+    content: none;
+    counter-increment: none;
+  }
 }
 
 
 h4:before {
-	content: counter(section) "." counter(subsection) "." counter(subsubsection) "\0000a0\0000a0";
-	counter-increment: subsubsection;
+  content: counter(section) "." counter(subsection) "." counter(subsubsection) "\0000a0\0000a0";
+  counter-increment: subsubsection;
 
-	&.nocount:before {
-		content: none;
-		counter-increment: none;
-	}
+  &.nocount:before {
+    content: none;
+    counter-increment: none;
+  }
 }
 
 ul {
-	list-style-type: none;
+  list-style-type: none;
 
-	& > li {
-		position: relative;
+  &>li {
+    position: relative;
 
-		&::before {
-			content: "\2014\a0";
-			position: absolute;
-			left: -1.5em;
-		}
-	}
+    &::before {
+      content: "\2014\a0";
+      position: absolute;
+      left: -1.5em;
+    }
+  }
 }
 
 figure {
-	max-width: 100%;
-	margin: 1rem auto 1rem auto;
-	text-align: center;
+  max-width: 100%;
+  margin: 1rem auto 1rem auto;
+  text-align: center;
 }
