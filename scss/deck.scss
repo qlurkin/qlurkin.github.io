@@ -1,4 +1,5 @@
 @use 'common';
+@use 'pygments';
 
 @page {
   margin: 1cm;
@@ -19,7 +20,8 @@ strong {
   color: #AA0000;
 }
 
-li small {
+li small,
+li span.small {
   display: block;
   padding-left: 3ex;
   margin-top: 0.5em;

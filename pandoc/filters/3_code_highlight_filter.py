@@ -11,14 +11,20 @@ from pygments.util import ClassNotFound
 def action(elem, doc):
     if isinstance(elem, pf.CodeBlock):
         lang = elem.classes[0]
-        linenos = "linenos" in elem.classes
-        try:
-            lexer = get_lexer_by_name(lang, stripall=True)
-        except ClassNotFound:
+        if lang == "terminal":
             lexer = TextLexer()
-        formatter = HtmlFormatter(linenos=linenos, cssclass="pygments")
-        result = highlight(elem.text, lexer, formatter)
-        return pf.RawBlock(result, format="html")
+            formatter = HtmlFormatter(nowrap=True)
+            result = highlight(elem.text, lexer, formatter)
+            return pf.RawBlock(f'<div class="terminal">{result}</div>', format="html")
+        else:
+            linenos = "linenos" in elem.classes
+            try:
+                lexer = get_lexer_by_name(lang, stripall=True)
+            except ClassNotFound:
+                lexer = TextLexer()
+            formatter = HtmlFormatter(linenos=linenos, cssclass="pygments")
+            result = highlight(elem.text, lexer, formatter)
+            return pf.RawBlock(result, format="html")
 
 
 def main(doc=None):

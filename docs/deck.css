@@ -462,6 +462,343 @@ table th {
     page-break-after: always;
   }
 }
+.mode-deck .pygments pre {
+  margin-bottom: 0;
+}
+
+.pygments {
+  background: #f0f0f0;
+  border-radius: 4px;
+  margin: 1rem 0;
+  /* Comment */
+  /* Error */
+  /* Keyword */
+  /* Operator */
+  /* Comment.Hashbang */
+  /* Comment.Multiline */
+  /* Comment.Preproc */
+  /* Comment.PreprocFile */
+  /* Comment.Single */
+  /* Comment.Special */
+  /* Generic.Deleted */
+  /* Generic.Emph */
+  /* Generic.EmphStrong */
+  /* Generic.Error */
+  /* Generic.Heading */
+  /* Generic.Inserted */
+  /* Generic.Output */
+  /* Generic.Prompt */
+  /* Generic.Strong */
+  /* Generic.Subheading */
+  /* Generic.Traceback */
+  /* Keyword.Constant */
+  /* Keyword.Declaration */
+  /* Keyword.Namespace */
+  /* Keyword.Pseudo */
+  /* Keyword.Reserved */
+  /* Keyword.Type */
+  /* Literal.Number */
+  /* Literal.String */
+  /* Name.Attribute */
+  /* Name.Builtin */
+  /* Name.Class */
+  /* Name.Constant */
+  /* Name.Decorator */
+  /* Name.Entity */
+  /* Name.Exception */
+  /* Name.Function */
+  /* Name.Label */
+  /* Name.Namespace */
+  /* Name.Tag */
+  /* Name.Variable */
+  /* Operator.Word */
+  /* Text.Whitespace */
+  /* Literal.Number.Bin */
+  /* Literal.Number.Float */
+  /* Literal.Number.Hex */
+  /* Literal.Number.Integer */
+  /* Literal.Number.Oct */
+  /* Literal.String.Affix */
+  /* Literal.String.Backtick */
+  /* Literal.String.Char */
+  /* Literal.String.Delimiter */
+  /* Literal.String.Doc */
+  /* Literal.String.Double */
+  /* Literal.String.Escape */
+  /* Literal.String.Heredoc */
+  /* Literal.String.Interpol */
+  /* Literal.String.Other */
+  /* Literal.String.Regex */
+  /* Literal.String.Single */
+  /* Literal.String.Symbol */
+  /* Name.Builtin.Pseudo */
+  /* Name.Function.Magic */
+  /* Name.Variable.Class */
+  /* Name.Variable.Global */
+  /* Name.Variable.Instance */
+  /* Name.Variable.Magic */
+  /* Literal.Number.Integer.Long */
+}
+.pygments table {
+  border: none;
+}
+.pygments td {
+  border: none;
+  text-align: left;
+  padding: 0;
+}
+.pygments pre {
+  line-height: 125%;
+  margin: 0;
+}
+.pygments td.linenos .normal {
+  color: inherit;
+  background-color: transparent;
+}
+.pygments span.linenos {
+  color: inherit;
+  background-color: transparent;
+}
+.pygments td.linenos .special {
+  color: #000000;
+  background-color: #ffffc0;
+}
+.pygments span.linenos.special {
+  color: #000000;
+  background-color: #ffffc0;
+}
+.pygments .hll {
+  background-color: #ffffcc;
+}
+.pygments .c {
+  color: #3D7B7B;
+  font-style: italic;
+}
+.pygments .err {
+  border: 1px solid #FF0000;
+}
+.pygments .k {
+  color: #008000;
+  font-weight: bold;
+}
+.pygments .o {
+  color: #666666;
+}
+.pygments .ch {
+  color: #3D7B7B;
+  font-style: italic;
+}
+.pygments .cm {
+  color: #3D7B7B;
+  font-style: italic;
+}
+.pygments .cp {
+  color: #9C6500;
+}
+.pygments .cpf {
+  color: #3D7B7B;
+  font-style: italic;
+}
+.pygments .c1 {
+  color: #3D7B7B;
+  font-style: italic;
+}
+.pygments .cs {
+  color: #3D7B7B;
+  font-style: italic;
+}
+.pygments .gd {
+  color: #A00000;
+}
+.pygments .ge {
+  font-style: italic;
+}
+.pygments .ges {
+  font-weight: bold;
+  font-style: italic;
+}
+.pygments .gr {
+  color: #E40000;
+}
+.pygments .gh {
+  color: #000080;
+  font-weight: bold;
+}
+.pygments .gi {
+  color: #008400;
+}
+.pygments .go {
+  color: #717171;
+}
+.pygments .gp {
+  color: #000080;
+  font-weight: bold;
+}
+.pygments .gs {
+  font-weight: bold;
+}
+.pygments .gu {
+  color: #800080;
+  font-weight: bold;
+}
+.pygments .gt {
+  color: #0044DD;
+}
+.pygments .kc {
+  color: #008000;
+  font-weight: bold;
+}
+.pygments .kd {
+  color: #008000;
+  font-weight: bold;
+}
+.pygments .kn {
+  color: #008000;
+  font-weight: bold;
+}
+.pygments .kp {
+  color: #008000;
+}
+.pygments .kr {
+  color: #008000;
+  font-weight: bold;
+}
+.pygments .kt {
+  color: #B00040;
+}
+.pygments .m {
+  color: #666666;
+}
+.pygments .s {
+  color: #BA2121;
+}
+.pygments .na {
+  color: #687822;
+}
+.pygments .nb {
+  color: #008000;
+}
+.pygments .nc {
+  color: #0000FF;
+  font-weight: bold;
+}
+.pygments .no {
+  color: #880000;
+}
+.pygments .nd {
+  color: #AA22FF;
+}
+.pygments .ni {
+  color: #717171;
+  font-weight: bold;
+}
+.pygments .ne {
+  color: #CB3F38;
+  font-weight: bold;
+}
+.pygments .nf {
+  color: #0000FF;
+}
+.pygments .nl {
+  color: #767600;
+}
+.pygments .nn {
+  color: #0000FF;
+  font-weight: bold;
+}
+.pygments .nt {
+  color: #008000;
+  font-weight: bold;
+}
+.pygments .nv {
+  color: #19177C;
+}
+.pygments .ow {
+  color: #AA22FF;
+  font-weight: bold;
+}
+.pygments .w {
+  color: #bbbbbb;
+}
+.pygments .mb {
+  color: #666666;
+}
+.pygments .mf {
+  color: #666666;
+}
+.pygments .mh {
+  color: #666666;
+}
+.pygments .mi {
+  color: #666666;
+}
+.pygments .mo {
+  color: #666666;
+}
+.pygments .sa {
+  color: #BA2121;
+}
+.pygments .sb {
+  color: #BA2121;
+}
+.pygments .sc {
+  color: #BA2121;
+}
+.pygments .dl {
+  color: #BA2121;
+}
+.pygments .sd {
+  color: #BA2121;
+  font-style: italic;
+}
+.pygments .s2 {
+  color: #BA2121;
+}
+.pygments .se {
+  color: #AA5D1F;
+  font-weight: bold;
+}
+.pygments .sh {
+  color: #BA2121;
+}
+.pygments .si {
+  color: #A45A77;
+  font-weight: bold;
+}
+.pygments .sx {
+  color: #008000;
+}
+.pygments .sr {
+  color: #A45A77;
+}
+.pygments .s1 {
+  color: #BA2121;
+}
+.pygments .ss {
+  color: #19177C;
+}
+.pygments .bp {
+  color: #008000;
+}
+.pygments .fm {
+  color: #0000FF;
+}
+.pygments .vc {
+  color: #19177C;
+}
+.pygments .vg {
+  color: #19177C;
+}
+.pygments .vi {
+  color: #19177C;
+}
+.pygments .vm {
+  color: #19177C;
+}
+.pygments .il {
+  color: #666666;
+}
+
 @page {
   margin: 1cm;
 }
@@ -480,7 +817,8 @@ strong {
   color: #AA0000;
 }
 
-li small {
+li small,
+li span.small {
   display: block;
   padding-left: 3ex;
   margin-top: 0.5em;

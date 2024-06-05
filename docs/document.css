@@ -493,6 +493,10 @@ body.chapter h4:before {
   counter-increment: subsubsection;
 }
 
+.mode-deck .pygments pre {
+  margin-bottom: 0;
+}
+
 .pygments {
   background: #f0f0f0;
   border-radius: 4px;
