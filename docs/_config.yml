@@ -1,2 +1,2 @@
 exclude:
-  - 'courses/**'
+  - 'courses/python2ba/new/**'
