@@ -1,5 +1,5 @@
 ---
-title: IN2T - Cours 1
+title: Cours 1
 subtitle: Ensembles, dictionnaires et annotations
 type: deck
 author: Quentin Lurkin
@@ -18,7 +18,7 @@ print(numbers)            # {0, 42, 11, -2, 7}
 print(len(numbers))       # 5
 print(60 in numbers)      # False
 print(type(numbers))      # <class 'set'>
-	
+
 for element in numbers:
 	print(element)
 ```
@@ -170,8 +170,8 @@ mapping = {chr(i): i for i in range(65, 71)}
 - **Accès à une valeur** à l'aide de la clé entre crochets <small>Permet également la modification d'une valeur</small>
 - **Suppression** paire clé-valeur avec la fonction `del`
 - Deux situations si la **clé n'existe pas**
-    - À droite de `=` : provoque une erreur *(accès)*
-    - À gauche de `=` : ajoute une paire clé-valeur au dictionnaire *(assignation)*
+  - À droite de `=` : provoque une erreur _(accès)_
+  - À gauche de `=` : ajoute une paire clé-valeur au dictionnaire _(assignation)_
 
 ```python
 price = {"lemon": 0.85, "pear": 1}
@@ -213,25 +213,24 @@ for value in price.values():
 - Une collection est une **structure de données** permettant de **stocker** et d'**organiser** des **valeurs** <small>Liste, Tuples, Ensembles, Dictionnaires</small>
 - La **recherche** d'un élément se fait avec l'opérateur `in`
 - Chaque type de collection est **optimisé différemment** vis-à-vis des recherches :
-    - Liste et tuple : complexité $O(n)$
-    - Ensembles et dictionnaires : complexité $O(1)$
+  - Liste et tuple : complexité $O(n)$
+  - Ensembles et dictionnaires : complexité $O(1)$
 
 ## Complexité
 
 - La complexité caractérise le temps d'exécution ou la quantité de mémoire utilisée d'un algorithme **par rapport à la taille du problème** ($n$) à résoudre.
 - Exemples:
-    - taille du problème double $=>$ temps d'exécution double : **complexité temporelle linéaire** (notation : **"grand O de n"**, $O(n)$) 
-    - taille du problème double $=>$ utilisation mémoire quadruple : **complexité spatiale quadratique** ($O(n^2)$)
-    - temps d'exécution indépendant de la taille du problème : **complexité temporelle constante** ($O(1)$)
-
+  - taille du problème double $=>$ temps d'exécution double : **complexité temporelle linéaire** (notation : **"grand O de n"**, $O(n)$)
+  - taille du problème double $=>$ utilisation mémoire quadruple : **complexité spatiale quadratique** ($O(n^2)$)
+  - temps d'exécution indépendant de la taille du problème : **complexité temporelle constante** ($O(1)$)
 
 ## À chaque collection son usage
 
 - Choix de la structure de données utilisée **en fonction des besoins** :
-    - Listes: Ordonnée, modifiable
-    - Tuples: Ordonné, immuable
-    - Ensemble: Recherche en temps constant
-    - Dictionnaire: Recherche par clé en temps constant
+  - Listes: Ordonnée, modifiable
+  - Tuples: Ordonné, immuable
+  - Ensemble: Recherche en temps constant
+  - Dictionnaire: Recherche par clé en temps constant
 
 ## Exemple {.code}
 
@@ -251,7 +250,7 @@ students = [
 
 ## Annotations de type: problème
 
-- L'éditeur *(VSCode)* nous aide mais pas tout le temps
+- L'éditeur _(VSCode)_ nous aide mais pas tout le temps
 
 :::row
 :::span6
@@ -313,6 +312,7 @@ def sum(T: tuple[int, ...]):
 ## Unions
 
 - Si plusieurs types doivent être acceptés
+
 ```python
 def sum(x: str | bool):
   ...
@@ -329,7 +329,8 @@ def sum(x: Optional[int]):
   ...
 ```
 
-- Équivalent à 
+- Équivalent à
+
 ```python
 def sum(x: int | None):
   ...
@@ -350,6 +351,20 @@ def sum(L: list[int]) -> int:
 
 ## Vérification de type
 
+- L'éditeur peut aussi vérifier qu'on respecte bien les types
+
+![](./typecheck.png)
+
 ## Documentation
 
+- Les fonctions prédéfinies ont une documentation intégrée que l'éditeur peut afficher
 
+![](./docstring.png)
+
+- Ce texte de documentation s'appelle le `docstring`
+
+## Docstring
+
+- Dans vos fonctions, vous pouvez définir le `docstring` en début de fonction avec des triples `'` ou `"`
+
+![](./docstring2.png)
