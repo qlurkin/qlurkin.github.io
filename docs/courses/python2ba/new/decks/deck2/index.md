@@ -169,27 +169,21 @@ print(L)                                # [1, 2, 3, 4, 5]
 
 ![l'assignation ne crée pas de copie](alias.svg){style="width: 25em"}
 
-::: section
-
 ## Copie de structures imbriquées
 
 - Pas de soucis de copies pour les **collections non modifiables**
 - La copie ne se fait **pas en profondeur** [Seuls les éléments de
   \"premier niveau\" sont copiés]{.small}
 
-```lang-python
-            L = [[1, 2], [3, 4, 5]]
-            A = list(L)
+```python
+L = [[1, 2], [3, 4, 5]]
+A = list(L)
 
-            A[1][0] = 42
-            print(L)                           # [[1, 2], [42, 4, 5]]
-
+A[1][0] = 42
+print(L)                 # [[1, 2], [42, 4, 5]]
 ```
 
-![image](images/shallow.svg){style="width: 20em"}
-:::
-
-::: section
+![Shallow copy](shallow.svg){style="width: 20em"}
 
 ## Module `copy`
 
@@ -199,243 +193,220 @@ print(L)                                # [1, 2, 3, 4, 5]
 - Une **copie en profondeur** peut prendre du temps [Et aussi
   consommer beaucoup d\'espace mémoire]{.small}
 
-```lang-python
-            import copy
+```python
+import copy
 
-            L = [[1], [2, 3], [4, 5, 6]]
-            A = copy.copy(L)                   # A est une copie shallow de L
-            B = copy.deepcopy(L)               # A est une copie deep de L
+L = [[1], [2, 3], [4, 5, 6]]
+A = copy.copy(L)                   # A est une copie shallow de L
+B = copy.deepcopy(L)               # A est une copie deep de L
+```
+
+## Classes et objets
+
+- problèmes avec l'utilisation de **dictionnaires** pour représenter des **objets complexes**.
+
+```python
+address = {'street': "Promenade de l'Alma", 'number': 50,
+  'zip': 1200, 'city': "Woluwé-Saint-Lambert"}
+marchand = {'firstname': "Cédric", 'lastname': "Marchand",
+  'address': address}
+
+print(type(address))      # <class dict>
+print(type(marchand))     # <class dict>
+```
+
+- Le **type** d'un dictionnaire est `dict` [Impossible de différencier les types d'objects]{.small}
+
+## Classes et objects
+
+- Même problème avec les **annotations de types**
+
+```python
+from typing import Any
+
+def fullname(person: dict[str, Any]) -> str:
+  return f"{person['firstname']} {person['lastname']}"
+
+def display_address(address: dict[str, Any]) -> str:
+  return f"{address['street']}, {address['number']}\n{address['zip']} {address['city']}"
+
+print(display_address(marchand))  # KeyError
+```
+
+- Ces annotations trop **vagues** ne permettent **pas** de détecter l'erreur
+- Aucune aide pour **l'auto-completion** des **clés** d'un dictionnaire.
+
+## Classes et objets
+
+- L'idéal serait de pourvoir **créer les types** `Address` et `Person`
+- `marchand` référencera alors une valeur du type `Person`
+- `address` référencera une valeur du type `Address`
+- Ces types s'appellent **classes**
+- Les valeurs d'une classe s'appellent **objets** ou **instances**
+- En réalité, tous les types que nous avons vu (`int`, `float`, `str`, `list`, ...) sont des classes. [Et les valeurs des objets]{.small}
+
+## Création d'une classe
+
+```python
+class Address:
+  def __init__(self, street: str, number: int, zip: int, city: str):
+    self.street = street
+    self.number = number
+    self.zip = zip
+    self.city = city
+
+
+address = Address("Promenade de l'Alma", 50, 1200, "Woluwé-Saint-Lambert")
+print(address.zip)        # 1200
+```
+
+- La classe `Address` contient une **méthode** nommée `__init__` qui sert à initialiser **un nouvel objet** de la classe. [Cette méthode est aussi appelée **le constructeur** de la classe]{.small}
+- Le nouvel objet est dans la variable `self`.
+- La méthode `__init__` peut recevoir autant de paramètres supplémentaires que l'on veut.
+- Elle sert à initialiser les **attributs** de l'objet [`street`, `number`, `zip` et `city`]{.small}
+
+## Fonctionnalités d'une classe
+
+```python
+class Address:
+  def __init__(self, street: str, number: int, zip: int, city: str):
+    self.street = street
+    self.number = number
+    self.zip = zip
+    self.city = city
+
+  def display(self):
+    return f"{self.street}, {self.number}\n{self.zip} {self.city}"
+
+address = Address("Promenade de l'Alma", 50, 1200, "Woluwé-Saint-Lambert")
+print(address.display())        # Promenade de l'Alma, 50
+                                # 1200 Woluwé-Saint-Lambert
+```
+
+- Comme nous l'avons vu avec la classe `list`, une classe peut avoir des fonctionnalités. [La fonctionnalité `append()` pour la classe `list` par exemple]{.small}
+
+- Ces fonctionnalités sont appelées **méthodes** et sont des fonctions créées dans la classe et prenant l'objet à traiter en paramètre (`self`).
+
+## Objet et classe
+
+- Un objet est une **instance** d\'une classe [Une classe est un
+  modèle à partir duquel on construit des objets]{.small}
+- La classe définit **deux éléments** constitutifs des objets [Les
+  attributs et les fonctionnalités de l\'objet]{.small}
+
+## Attribut et fonctionnalité
+
+- Un attribut est une **donnée** stockée dans un objet [Les valeurs
+  des attributs définissent l\'état de l\'objet]{.small}
+- Une **fonctionnalité** permet d\'effectuer une action [Obtenir une
+  information sur l\'objet ou donner un ordre]{.small}
+
+## Utilisation d\'un objet
+
+- Pour pouvoir créer des objets, il faut une **classe** [Une
+  définition unique permet de créer plusieurs objets]{.small}
+- Une fois créée, interaction avec **attribut et fonctionnalité**
+  [Utilisation de l\'opérateur d\'accès/appel sur l\'objet]{.small}
+
+```python
+# Construction d'un objet
+address = Address("Promenade de l'Alma", 50, 1200, "Woluwé-Saint-Lambert")
+
+# Accès à un attribut
+print(address.zip)              # 1200
+
+# Appel d'une méthode
+print(address.display())        # Promenade de l'Alma, 50
+                                # 1200 Woluwé-Saint-Lambert
+```
+
+## Définir une classe
+
+- **Définition** d\'une classe avec le mot réservé `class`
+  - Corps de la classe est un bloc de code indenté
+  - Le corps de la classe peut contenir des définitions de méthodes
+- Classe minimale grâce à l\'**instruction `pass`** [Aussi appelée
+  instruction vide car ne fait rien]{.small}
+
+```python
+class Person:
+    pass
+```
+
+## Créer une instance
+
+- Un objet est une **instance** d\'une classe [À partir d\'une classe,
+  on crée autant d\'objets que l\'on veut]{.small}
+
+```python
+a = Person()
+b = Person()
 
 ```
 
-:::
+![Construction d'objets](./objects.svg){.half}
 
-::: {.section .full}
+## Définir un constructeur
 
-## Objets
+- **Initialisation** d\'un objet par la méthode spéciale `__init__`
+  [Admet au moins un paramètre qui est `self`]{.small}
+- Le paramètre `self` référence l\'**objet à construire** [Permet
+  d\'accéder aux attributs et fonctionnalités de l\'objet]{.small}
 
-![](images/2828893154_94b10b0822_o.jpg)
-:::
-
-::: section
-
-## Objet (1)
-
-- Un **objet** combine des données et des fonctions [Les fonctions ont
-  accès complet aux données de l\'objet]{.small}
-- Permet de définir des **types de données** complexes [On a déjà
-  renconté les listes, chaines de caractères, ensembles\...]{.small}
-
-```lang-python
-            dice = {1, 2, 3, 4, 5, 6}            # Initialisation des données
-            face = dice.pop()                    # Appel d'une fonction
-
-            print("La face visible du dé est :", face)
-
+```python
+class Person:
+  def __init__(self, firstname: str, lastname: str, address: Address):
+    self.firstname = firstname
+    self.lastname = lastname
+    self.address = address
 ```
 
-```lang-plaintext
-            La face visible du dé est : 1
+## Appeler un constructeur
 
+- Méthode appelée au moment de la **création d\'un objet** [Initialise
+  l\'objet, en donnant une valeur à ses variables]{.small}
+
+```python
+address = Address("Promenade de l'Alma", 50, 1200, "Woluwé-Saint-Lambert")
+marchand = Person("Cédric", "Marchand", address)
+flemal = Person("Clémence", "Flemal", address)
 ```
 
-:::
+![Construction d'objets](./person_address.svg)
 
-::: section
+## Objet et référence
 
-## Objet (2)
+- Un objet est une **instance** d\'une classe [L\'instanciation d\'une
+  classe produit un objet]{.small}
+- Stockage d\'une **référence** vers l\'objet dans une variable
+  [L\'adresse où l\'objet se situe en mémoire]{.small}
 
-- **Trois éléments** existent lorsqu\'on crée un objet
-  - L\'**objet**, avec ses attributs, se trouve en mémoire
-  - Une **variable** du même type que l\'objet est déclarée
-  - Une **référence** vers l\'objet est stockée dans la variable
-
-```lang-python
-            dice = {1, 2, 3, 4, 5, 6}
-
+```python
+print(marchand)
+print(flemal)
 ```
 
-![image](images/dice.svg){.third}
-:::
-
-::: section
-
-## Création
-
-- Création d\'un objet en exécutant un **constructeur** [Permet
-  d\'initialiser les attributs de l\'objet]{.small}
-
-```lang-python
-            from datetime import time
-
-            start = time(14, 45, 21)
-            end = time(16, 15, 56)
-
+```terminal
+<__main__.Person object at 0x109678748>
+<__main__.Person object at 0x109678780>
 ```
 
-![image](images/time.svg){.third2}
-:::
+## Variable d\'instance
 
-::: section
+- **Variables d\'instance** attachées à un objet définissent son état
+  [Chaque objet possède ses propres copies de ces variables]{.small}
+- Accès aux variables d\'instance avec l\'**objet cible** [Ou `self` à
+  l\'intérieur du code de la classe]{.small}
 
-## Accès aux attributs
-
-- **Accès aux attributs** d\'un objet avec l\'opérateur d\'accès (`.`)
-- L\'accès peut se faire en **lecture et/ou écriture** [Certains
-  attributs sont protégés et en lecture seule]{.small}
-
-```lang-python
-            startseconds = 3600 * start.hour + 60 * start.minute + start.second
-            endseconds = 3600 * end.hour + 60 * end.minute + end.second
-
-            difference = endseconds - startseconds
-            print("Le cours va durer :", difference, "secondes")
-
+```python
+print(marchand.firstname)
+print(flemal.address.number)
 ```
 
-:::
-
-::: section
-
-## Attribut en lecture seule
-
-- Erreur d\'exécution si **modification attribut lecture seule**
-  [Modification d\'un attribut faite par affectation]{.small}
-
-```lang-python
-        from datetime import time
-
-        start = time(14, 45, 21)
-        start.minute = 15
-
+```terminal
+Cédric
+50
 ```
-
-```lang-plaintext
-        Traceback (most recent call last):
-            File "program.py", line 4, in
-                start.minute = 15
-        AttributeError: attribute 'minute' of 'datetime.time' objects is
-        not writable
-
-```
-
-:::
-
-::: section
-
-## Paramètre de type objet
-
-- Une fonction peut recevoir des **paramètres de type objet** [Le
-  paramètre reçoit une copie de la référence vers l\'objet]{.small}
-
-```lang-python
-            from datetime import time
-
-            def toseconds(t):
-                return 3600 * t.hour + 60 * t.minute + t.second
-
-
-            start = time(14, 45, 21)
-            end = time(16, 15, 56)
-
-            difference = toseconds(end) - toseconds(start)
-            print("Le cours va durer :", difference, "secondes")
-
-```
-
-```lang-plaintext
-            Le cours va durer : 5435 secondes
-
-```
-
-:::
-
-::: section
-
-## Valeur de retour de type objet
-
-- Une fonction peut **renvoyer un objet** [La fonction crée l\'objet
-  et renvoie une référence vers ce dernier]{.small}
-
-```lang-python
-            from datetime import time
-
-            def theoreticalend(start, duration):
-                minute = start.minute + (duration % 60)
-                hour = start.hour + (duration // 60) + (minute // 60)
-                return time(hour, minute % 60, start.second)
-
-
-            start = time(14, 45, 21)
-            print("Le cours devrait finir à :", theoreticalend(start, 90))
-
-```
-
-```lang-plaintext
-            Le cours devrait finir à : 16:15:21
-
-```
-
-:::
-
-::: section
-
-## Appel de méthode (1)
-
-- Une fonction associée à un objet est appelée une **méthode** [Une
-  méthode est appelée sur un objet cible]{.small}
-
-```lang-python
-            from calendar import TextCalendar
-
-            cal = TextCalendar()
-            cal.prmonth(2015, 9)      # Affiche le calendrier de septembre 2015
-
-```
-
-```lang-plaintext
-            September 2015
-            Mo Tu We Th Fr Sa Su
-                1  2  3  4  5  6
-             7  8  9 10 11 12 13
-            14 15 16 17 18 19 20
-            21 22 23 24 25 26 27
-            28 29 30
-
-```
-
-:::
-
-::: section
-
-## Appel de méthode (2)
-
-- Méthode appelée avec l\'**opérateur d\'appel de méthode** (`.`)
-  [L\'objet cible est précisé avant le point]{.small}
-
-```lang-python
-            from calendar import TextCalendar
-
-            cal = TextCalendar()
-            cal.setfirstweekday(6)    # Change le premier jour de la semaine
-            cal.prmonth(2015, 9)
-
-```
-
-```lang-plaintext
-            September 2015
-            Su Mo Tu We Th Fr Sa
-                   1  2  3  4  5
-             6  7  8  9 10 11 12
-            13 14 15 16 17 18 19
-            20 21 22 23 24 25 26
-            27 28 29 30
-
-```
-
-:::
-
-::: section
 
 ## Programmation orientée objet
 
@@ -446,18 +417,12 @@ print(L)                                # [1, 2, 3, 4, 5]
   liste\...]{.small}
 - Création de **nouveaux types de données** [Permet une programmation
   de plus haut niveau]{.small}
-  :::
-
-::: section
 
 ## État d\'un objet
 
 - Chaque objet est unique et possède son propre **état** [Identité
   propre à chaque objet, avec ses propres attributs]{.small}
 - L\'état d\'un objet est **modifiable ou non** - Objet immuable aura toujours le même état - État d\'un objet non modifiable ne peut être changé
-  :::
-
-::: section
 
 ## Identité d\'un objet
 
@@ -465,155 +430,314 @@ print(L)                                # [1, 2, 3, 4, 5]
   par son emplacement en mémoire]{.small}
 - Fonction prédéfinie **`id`** renvoie l\'identité
 
-```lang-python
-            numbers = {8, 3, 1, -2, 0}
-            letters = {'A', 'P', 'Q'}
+```python
+prof = flemal
+print(id(marchand))
+print(id(flemal))
+print(id(prof))
+```
 
-            print(id(numbers))
-            print(id(letters))
+```terminal
+4302577224
+4329799752
+4329799752
+```
+
+## Définir un vecteur dans le plan
+
+- Deux variables d\'instance pour représenter les **coordonnées** [Les
+  deux variables `self.x` et `self.y` représentent $(x, y)$]{.small}
+- Une méthode `norm` pour calculer la **longueur du vecteur** [La
+  norme vaut $sqrt(x^2 + y^2)$]{.small}
+
+```python
+class Vector:
+  def __init__(self, x: float, y: float):
+    self.x = x
+    self.y = y
+
+  def norm(self):
+    return sqrt(self.x ** 2 + self.y ** 2)
+
+u = Vector(1, -1)
+print(u.norm())
+```
+
+```terminal
+1.4142135623730951
+```
+
+## `self`
+
+- La **variable d\'instance** est accessible dans toute la classe
+  [Existe en mémoire pendant toute la durée de vie de
+  l\'objet]{.small}
+- Opposée à la **variable locale** qui n\'existe que dans la méthode
+
+```python
+class Vector:
+  def __init__(self, x: float, y: float):
+    pass
+
+  def norm(self):
+    return sqrt(x ** 2 + y ** 2)
+
+u = Vector(1, -1)
+print(u.norm())
+```
+
+```terminal
+Traceback (most recent call last):
+File "program.py", line 38, in
+    print(u.norm())
+File "program.py", line 35, in norm
+    return sqrt(x ** 2 + y ** 2)
+NameError: name 'x' is not defined
+```
+
+## Représentation d'un objet
+
+- La méthode `__str__` construit une **représentation `str` de l'objet**
+  [Renvoie une chaine de caractères lisible de l'objet]{.small}
+
+```python
+class Vector:
+  def __init__(self, x: float, y: float):
+    self.x = x
+    self.y = y
+
+  def __str__(self):
+    return '(' + str(self.x) + ', ' + str(self.y) + ')'
+
+u = Vector(1, -1)
+print(u)
+```
+
+```terminal
+(1, -1)
+```
+
+## Égalité
+
+- L\'opérateur d\'égalité **compare les références** des variables [Le
+  contenu des objets n\'est pas comparé]{.small}
+
+```python
+u = Vector(1, -1)
+v = Vector(1, -1)
+print(u == v)                  # False
+```
+
+## Alias
+
+- Un **alias** est une copie de la référence vers un objet [Il n\'y a
+  qu\'une seule copie de l\'objet en mémoire]{.small}
+
+```python
+u = Vector(1, -1)
+v = u
+print(u == v)                  # True
+```
+
+## Attention aux références
+
+- **Qu\'affiche le code suivant** après exécution ?
+  - `magic1` appelle une méthode sur `data`
+  - `magic2` modifie la variable locale `data`
+
+```python
+def magic1(data: list[int]):
+    data.append(4)
+
+def magic2(data: list[int]):
+    data = []
+
+a = [0, 1, 2, 3]
+print(a)
+
+magic1(a)
+print(a)
+
+magic2(a)
+print(a)
+```
+
+## Surcharge d'opérateur
+
+- On peut **redéfinir** les opérateurs arithmétiques [`__add__` pour
+  `+`, `__sub__` pour `-`, `__mul__` pour `*`\...]{.small}
+
+```python
+from typing import Self
+
+class Vector:
+  def __init__(self, x: float, y: float):
+    self.x = x
+    self.y = y
+
+  def __add__(self, other: Self):
+    return Vector(self.x + other.x, self.y + other.y)
+
+  # ...
+
+u = Vector(1, -1)
+v = Vector(2, 1)
+print(u + v)
 
 ```
 
-```lang-plaintext
-            4302577224
-            4329799752
-
+```terminal
+(3, 0)
 ```
 
-:::
+## Surcharge d'opérateur
 
-::: section
+- On peut **redéfinir** les opérateurs de comparaison [`__lt__` pour
+  `<`, `__le__` pour `<=`, `__eq__` pour `==`\...]{.small}
 
-## Tout est objet (1)
+```python
+from typing import Self
 
-- En Python, toute donnée est un **objet** [Même tout ce qu\'on a déjà
-  vu comme les nombres, booléens\...]{.small}
-- Fonction prédéfinie **`dir`** donne la liste des méthodes
+class Vector:
+  def __init__(self, x: float, y: float):
+      self.x = x
+      self.y = y
 
-```lang-python
-            temperature = 19
-            print(dir(temperature))
+  def __eq__(self, other: Self):
+      return self.x == other.x and self.y == other.y
 
+  # ...
+
+u = Vector(1, -1)
+v = Vector(1, -1)
+print(u == v)                  # True
+print(u is v)                  # False
 ```
 
-```lang-plaintext
-            ['__abs__', '__add__', '__and__', '__bool__', '__ceil__',
-            '__class__', '__delattr__', '__dir__', '__divmod__', '__doc__',
-            '__eq__', '__float__', '__floor__', '__floordiv__', '__format__',
-            '__ge__', '__getattribute__', '__getnewargs__', '__gt__',
-            '__hash__', '__index__', '__init__', '__int__', '__invert__',
-            '__le__', '__lshift__', '__lt__', '__mod__', '__mul__', '__ne__',
-            '__neg__', '__new__', '__or__', '__pos__', '__pow__', '__radd__',
-            '__rand__', '__rdivmod__', '__reduce__', '__reduce_ex__',
-            '__repr__', '__rfloordiv__', '__rlshift__', '__rmod__',
-            '__rmul__', '__ror__', '__round__', '__rpow__', '__rrshift__',
-            '__rshift__', '__rsub__', '__rtruediv__', '__rxor__',
-            '__setattr__', '__sizeof__', '__str__', '__sub__',
-            '__subclasshook__', '__truediv__', '__trunc__', '__xor__',
-            'bit_length', 'conjugate', 'denominator', 'from_bytes', 'imag',
-            'numerator', 'real', 'to_bytes']
+- Surcharge de l\'opérateur d\'égalité pour **comparer les objets**
+  [Le contenu des objets sera comparé, et non plus les
+  références]{.small}
+- **Comparaison des identités** avec l\'opérateur `is` [Comparaison
+  des références des objets]{.small}
 
+## Composition d'objets
+
+- On peut **composer** plusieurs objets ensemble [En utilisant des
+  variables d\'instance de type objet]{.small}
+
+```python
+class Rectangle:
+  def __init__(self, lowerleft: Vector, width: float, height: float, angle: float = 0):
+    self.lowerleft = lowerleft
+    self.width = width
+    self.height = height
+    self.angle = angle
+
+p = Vector(1, -1)
+r = Rectangle(p, 100, 50)
+print(r.lowerleft)             # (1, -1)
 ```
 
-:::
+## Réutilisation de code
 
-::: section
+- On peut **réutiliser le code** définit pour les objets composés [Il
+  suffit d\'appeler les méthodes des variables objet]{.small}
 
-## Tout est objet (2)
+```python
+class Rectangle:
+  # ...
 
-- Les nombres entiers ont une **méthode `__add__`** [Permet de faire
-  la somme de deux entiers]{.small}
-- Appel à la méthode `__add__` simplifié par l\'**opérateur `+`**
-  [Redéfinition d\'un opérateur rend le code plus lisible]{.small}
+  def __str__(self):
+    return f"Rectangle en {self.lowerleft} + de longueur {self.width}" \
+           f"et de hauteur {self.height} incliné de {self.angle} degrés"
 
-```lang-python
-            print(temperature + 11)
-            print(temperature.__add__(11))
-
+r = Rectangle(Vector(1, -1), 100, 50)
+print(r)
 ```
 
-```lang-plaintext
-            30
-            30
-
+```terminal
+Rectangle en (1, -1) de longueur 100 et de hauteur 50 incliné
+de 0 degrés
 ```
 
-:::
+- Ici l'affichage en `str` de `self.lowerleft` fait appel à la méthode `__str__` de la classe `Vector`
 
-::: section
+## Simplification
 
-## Exemple : les complexes
+- Reprenons la classe `Address`
 
-- **Nombre complexe** représenté par des objets de type `complex`
-  [Deux façons de les créer puis on peut utiliser plusieurs
-  méthodes]{.small}
+```python
+class Address:
+  def __init__(self, street: str, number: int, zip: int, city: str):
+    self.street = street
+    self.number = number
+    self.zip = zip
+    self.city = city
 
-```lang-python
-            a = 2 + 3j
-            b = complex(-1, 4)
-
-            print(type(a))
-            print(a.imag)
-            print(b.conjugate())
-
+  def display(self):
+    return f"{self.street}, {self.number}\n{self.zip} {self.city}"
 ```
 
-```lang-plaintext
-            <class 'complex'>
-            3.0
-            (-1-4j)
+- L'écriture du constructeur semble très répétitive. [C'est très souvent le cas]{.small}
+- Si on voulait lui ajouter une méthode `__eq__` elle serait aussi fort peu intéressante à écrire.
+- Comme ce genre de classe est très courante, il existe une moyen plus court de les définir
 
+## `dataclass`
+
+```python
+from dataclasses import dataclass
+
+@dataclass
+class Address:
+  street: str
+  number: int
+  zip: int
+  city: str
+
+address = Address("Promenade de l'Alma", 50, 1200, "Woluwé-Saint-Lambert")
+print(address.zip) # 1200
+print(address)     # Address(street="Promenade de l'Alma", number=50,
+                   #         zip=1200, city='Woluwé-Saint-Lambert')
+
+address2 = Address("Promenade de l'Alma", 50, 1200, "Woluwé-Saint-Lambert")
+print(address == address2) # True
 ```
 
-:::
+- Une `dataclass` a automatiquement un constructeur, une méthode `__eq__`, une méthode `__str__` [Et d'autres choses qui dépassent le cadre de ce cours]{.small}
 
-::: section
+## `dataclass`
 
-## Exemple : les chaines de caractères
+- On peut bien entendu ajouter d'autres méthodes
 
-- **Chaine de caractères** représenté par des objets de type `str`
-  [Myriade de méthodes permettant de les manipuler]{.small}
+```python
+from dataclasses import dataclass
 
-```lang-python
-                s = "heLLo"
+@dataclass
+class Address:
+  street: str
+  number: int
+  zip: int
+  city: str
 
-                print(s.upper())
-                print(s.capitalize())
-                print(s.startswith("H"))
-
+  def display(self):
+    return f"{self.street}, {self.number}\n{self.zip} {self.city}"
 ```
 
-```lang-plaintext
-                HELLO
-                Hello
-                False
+- et définir notre propre `__str__`
 
+```python
+from dataclasses import dataclass
+
+@dataclass
+class Address:
+  street: str
+  number: int
+  zip: int
+  city: str
+
+  def display(self):
+    return f"{self.street}, {self.number}\n{self.zip} {self.city}"
+
+  def __str__(self):
+    return self.display()
 ```
-
-:::
-
-::: section
-
-## Exemple : le navigateur web
-
-- Module `webbrowser` permet de manipuler le **navigateur web**
-  [Récupération du navigateur puis ouverture de pages avec
-  `open`]{.small}
-
-```lang-python
-                import webbrowser
-
-                chrome = webbrowser.get()
-                chrome.open("http://www.perdu.com")
-
-```
-
-:::
-
-::: section
-
-## Crédits
-
-- https://www.flickr.com/photos/madalena_pestana/2828893154
-- https://www.flickr.com/photos/ken-ichi/4577032677
-  :::

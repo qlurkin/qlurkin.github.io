@@ -242,16 +242,16 @@ modifiables</strong></li>
 class="small">Seuls les éléments de "premier niveau" sont
 copiés</span></li>
 </ul>
-<div class="pygments"><pre><span></span>            L = [[1, 2], [3, 4, 5]]
-            A = list(L)
+<div class="pygments"><pre><span></span><span class="n">L</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]]</span>
+<span class="n">A</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
 
-            A[1][0] = 42
-            print(L)                           # [[1, 2], [42, 4, 5]]
+<span class="n">A</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">42</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>                 <span class="c1"># [[1, 2], [42, 4, 5]]</span>
 </pre></div>
 
 <figure>
-<img src="images/shallow.svg" style="width: 20em" alt="image" />
-<figcaption aria-hidden="true">image</figcaption>
+<img src="shallow.svg" style="width: 20em" alt="Shallow copy" />
+<figcaption aria-hidden="true">Shallow copy</figcaption>
 </figure>
 </section>
 <section id="module-copy" class="level2">
@@ -266,210 +266,277 @@ copiés</span></li>
 <li>Une <strong>copie en profondeur</strong> peut prendre du temps <span
 class="small">Et aussi consommer beaucoup d'espace mémoire</span></li>
 </ul>
-<div class="pygments"><pre><span></span>            import copy
+<div class="pygments"><pre><span></span><span class="kn">import</span> <span class="nn">copy</span>
 
-            L = [[1], [2, 3], [4, 5, 6]]
-            A = copy.copy(L)                   # A est une copie shallow de L
-            B = copy.deepcopy(L)               # A est une copie deep de L
+<span class="n">L</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]]</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>                   <span class="c1"># A est une copie shallow de L</span>
+<span class="n">B</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>               <span class="c1"># A est une copie deep de L</span>
 </pre></div>
 
 </section>
-<section id="objets" class="level2 full">
-<h2>Objets</h2>
-<p><img src="images/2828893154_94b10b0822_o.jpg" /></p>
-</section>
-<section id="objet-1" class="level2">
-<h2>Objet (1)</h2>
+<section id="classes-et-objets" class="level2">
+<h2>Classes et objets</h2>
 <ul>
-<li>Un <strong>objet</strong> combine des données et des fonctions <span
-class="small">Les fonctions ont accès complet aux données de
-l'objet</span></li>
-<li>Permet de définir des <strong>types de données</strong> complexes
-<span class="small">On a déjà renconté les listes, chaines de
-caractères, ensembles...</span></li>
+<li>problèmes avec l’utilisation de <strong>dictionnaires</strong> pour
+représenter des <strong>objets complexes</strong>.</li>
 </ul>
-<div class="pygments"><pre><span></span>            dice = {1, 2, 3, 4, 5, 6}            # Initialisation des données
-            face = dice.pop()                    # Appel d&#39;une fonction
+<div class="pygments"><pre><span></span><span class="n">address</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;street&#39;</span><span class="p">:</span> <span class="s2">&quot;Promenade de l&#39;Alma&quot;</span><span class="p">,</span> <span class="s1">&#39;number&#39;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>
+  <span class="s1">&#39;zip&#39;</span><span class="p">:</span> <span class="mi">1200</span><span class="p">,</span> <span class="s1">&#39;city&#39;</span><span class="p">:</span> <span class="s2">&quot;Woluwé-Saint-Lambert&quot;</span><span class="p">}</span>
+<span class="n">marchand</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;firstname&#39;</span><span class="p">:</span> <span class="s2">&quot;Cédric&quot;</span><span class="p">,</span> <span class="s1">&#39;lastname&#39;</span><span class="p">:</span> <span class="s2">&quot;Marchand&quot;</span><span class="p">,</span>
+  <span class="s1">&#39;address&#39;</span><span class="p">:</span> <span class="n">address</span><span class="p">}</span>
 
-            print(&quot;La face visible du dé est :&quot;, face)
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">address</span><span class="p">))</span>      <span class="c1"># &lt;class dict&gt;</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">marchand</span><span class="p">))</span>     <span class="c1"># &lt;class dict&gt;</span>
 </pre></div>
 
-<div class="pygments"><pre><span></span>            La face visible du dé est : 1
+<ul>
+<li>Le <strong>type</strong> d’un dictionnaire est <code>dict</code>
+<span class="small">Impossible de différencier les types
+d’objects</span></li>
+</ul>
+</section>
+<section id="classes-et-objects" class="level2">
+<h2>Classes et objects</h2>
+<ul>
+<li>Même problème avec les <strong>annotations de types</strong></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
+
+<span class="k">def</span> <span class="nf">fullname</span><span class="p">(</span><span class="n">person</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+  <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">person</span><span class="p">[</span><span class="s1">&#39;firstname&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">person</span><span class="p">[</span><span class="s1">&#39;lastname&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+
+<span class="k">def</span> <span class="nf">display_address</span><span class="p">(</span><span class="n">address</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+  <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">address</span><span class="p">[</span><span class="s1">&#39;street&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">address</span><span class="p">[</span><span class="s1">&#39;number&#39;</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="n">address</span><span class="p">[</span><span class="s1">&#39;zip&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">address</span><span class="p">[</span><span class="s1">&#39;city&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">display_address</span><span class="p">(</span><span class="n">marchand</span><span class="p">))</span>  <span class="c1"># KeyError</span>
+</pre></div>
+
+<ul>
+<li>Ces annotations trop <strong>vagues</strong> ne permettent
+<strong>pas</strong> de détecter l’erreur</li>
+<li>Aucune aide pour <strong>l’auto-completion</strong> des
+<strong>clés</strong> d’un dictionnaire.</li>
+</ul>
+</section>
+<section id="classes-et-objets-1" class="level2">
+<h2>Classes et objets</h2>
+<ul>
+<li>L’idéal serait de pourvoir <strong>créer les types</strong>
+<code>Address</code> et <code>Person</code></li>
+<li><code>marchand</code> référencera alors une valeur du type
+<code>Person</code></li>
+<li><code>address</code> référencera une valeur du type
+<code>Address</code></li>
+<li>Ces types s’appellent <strong>classes</strong></li>
+<li>Les valeurs d’une classe s’appellent <strong>objets</strong> ou
+<strong>instances</strong></li>
+<li>En réalité, tous les types que nous avons vu (<code>int</code>,
+<code>float</code>, <code>str</code>, <code>list</code>, …) sont des
+classes. <span class="small">Et les valeurs des objets</span></li>
+</ul>
+</section>
+<section id="création-dune-classe" class="level2">
+<h2>Création d’une classe</h2>
+<div class="pygments"><pre><span></span><span class="k">class</span> <span class="nc">Address</span><span class="p">:</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">street</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">number</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">zip</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">city</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">street</span> <span class="o">=</span> <span class="n">street</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">number</span> <span class="o">=</span> <span class="n">number</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">zip</span> <span class="o">=</span> <span class="nb">zip</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">city</span> <span class="o">=</span> <span class="n">city</span>
+
+
+<span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="s2">&quot;Promenade de l&#39;Alma&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">1200</span><span class="p">,</span> <span class="s2">&quot;Woluwé-Saint-Lambert&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">address</span><span class="o">.</span><span class="n">zip</span><span class="p">)</span>        <span class="c1"># 1200</span>
+</pre></div>
+
+<ul>
+<li>La classe <code>Address</code> contient une <strong>méthode</strong>
+nommée <code>__init__</code> qui sert à initialiser <strong>un nouvel
+objet</strong> de la classe. <span class="small">Cette méthode est aussi
+appelée <strong>le constructeur</strong> de la classe</span></li>
+<li>Le nouvel objet est dans la variable <code>self</code>.</li>
+<li>La méthode <code>__init__</code> peut recevoir autant de paramètres
+supplémentaires que l’on veut.</li>
+<li>Elle sert à initialiser les <strong>attributs</strong> de l’objet
+<span class="small"><code>street</code>, <code>number</code>,
+<code>zip</code> et <code>city</code></span></li>
+</ul>
+</section>
+<section id="fonctionnalités-dune-classe" class="level2">
+<h2>Fonctionnalités d’une classe</h2>
+<div class="pygments"><pre><span></span><span class="k">class</span> <span class="nc">Address</span><span class="p">:</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">street</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">number</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">zip</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">city</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">street</span> <span class="o">=</span> <span class="n">street</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">number</span> <span class="o">=</span> <span class="n">number</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">zip</span> <span class="o">=</span> <span class="nb">zip</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">city</span> <span class="o">=</span> <span class="n">city</span>
+
+  <span class="k">def</span> <span class="nf">display</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">street</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">number</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">zip</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">city</span><span class="si">}</span><span class="s2">&quot;</span>
+
+<span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="s2">&quot;Promenade de l&#39;Alma&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">1200</span><span class="p">,</span> <span class="s2">&quot;Woluwé-Saint-Lambert&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">address</span><span class="o">.</span><span class="n">display</span><span class="p">())</span>        <span class="c1"># Promenade de l&#39;Alma, 50</span>
+                                <span class="c1"># 1200 Woluwé-Saint-Lambert</span>
+</pre></div>
+
+<ul>
+<li><p>Comme nous l’avons vu avec la classe <code>list</code>, une
+classe peut avoir des fonctionnalités. <span class="small">La
+fonctionnalité <code>append()</code> pour la classe <code>list</code>
+par exemple</span></p></li>
+<li><p>Ces fonctionnalités sont appelées <strong>méthodes</strong> et
+sont des fonctions créées dans la classe et prenant l’objet à traiter en
+paramètre (<code>self</code>).</p></li>
+</ul>
+</section>
+<section id="objet-et-classe" class="level2">
+<h2>Objet et classe</h2>
+<ul>
+<li>Un objet est une <strong>instance</strong> d'une classe <span
+class="small">Une classe est un modèle à partir duquel on construit des
+objets</span></li>
+<li>La classe définit <strong>deux éléments</strong> constitutifs des
+objets <span class="small">Les attributs et les fonctionnalités de
+l'objet</span></li>
+</ul>
+</section>
+<section id="attribut-et-fonctionnalité" class="level2">
+<h2>Attribut et fonctionnalité</h2>
+<ul>
+<li>Un attribut est une <strong>donnée</strong> stockée dans un objet
+<span class="small">Les valeurs des attributs définissent l'état de
+l'objet</span></li>
+<li>Une <strong>fonctionnalité</strong> permet d'effectuer une action
+<span class="small">Obtenir une information sur l'objet ou donner un
+ordre</span></li>
+</ul>
+</section>
+<section id="utilisation-dun-objet" class="level2">
+<h2>Utilisation d'un objet</h2>
+<ul>
+<li>Pour pouvoir créer des objets, il faut une <strong>classe</strong>
+<span class="small">Une définition unique permet de créer plusieurs
+objets</span></li>
+<li>Une fois créée, interaction avec <strong>attribut et
+fonctionnalité</strong> <span class="small">Utilisation de l'opérateur
+d'accès/appel sur l'objet</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="c1"># Construction d&#39;un objet</span>
+<span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="s2">&quot;Promenade de l&#39;Alma&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">1200</span><span class="p">,</span> <span class="s2">&quot;Woluwé-Saint-Lambert&quot;</span><span class="p">)</span>
+
+<span class="c1"># Accès à un attribut</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">address</span><span class="o">.</span><span class="n">zip</span><span class="p">)</span>              <span class="c1"># 1200</span>
+
+<span class="c1"># Appel d&#39;une méthode</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">address</span><span class="o">.</span><span class="n">display</span><span class="p">())</span>        <span class="c1"># Promenade de l&#39;Alma, 50</span>
+                                <span class="c1"># 1200 Woluwé-Saint-Lambert</span>
 </pre></div>
 
 </section>
-<section id="objet-2" class="level2">
-<h2>Objet (2)</h2>
+<section id="définir-une-classe" class="level2">
+<h2>Définir une classe</h2>
 <ul>
-<li><strong>Trois éléments</strong> existent lorsqu'on crée un objet
+<li><strong>Définition</strong> d'une classe avec le mot réservé
+<code>class</code>
 <ul>
-<li>L'<strong>objet</strong>, avec ses attributs, se trouve en
-mémoire</li>
-<li>Une <strong>variable</strong> du même type que l'objet est
-déclarée</li>
-<li>Une <strong>référence</strong> vers l'objet est stockée dans la
-variable</li>
+<li>Corps de la classe est un bloc de code indenté</li>
+<li>Le corps de la classe peut contenir des définitions de méthodes</li>
 </ul></li>
+<li>Classe minimale grâce à l'<strong>instruction
+<code>pass</code></strong> <span class="small">Aussi appelée instruction
+vide car ne fait rien</span></li>
 </ul>
-<div class="pygments"><pre><span></span>            dice = {1, 2, 3, 4, 5, 6}
+<div class="pygments"><pre><span></span><span class="k">class</span> <span class="nc">Person</span><span class="p">:</span>
+    <span class="k">pass</span>
+</pre></div>
+
+</section>
+<section id="créer-une-instance" class="level2">
+<h2>Créer une instance</h2>
+<ul>
+<li>Un objet est une <strong>instance</strong> d'une classe <span
+class="small">À partir d'une classe, on crée autant d'objets que l'on
+veut</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">Person</span><span class="p">()</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">Person</span><span class="p">()</span>
 </pre></div>
 
 <figure>
-<img src="images/dice.svg" class="third" alt="image" />
-<figcaption aria-hidden="true">image</figcaption>
+<img src="./objects.svg" class="half" alt="Construction d’objets" />
+<figcaption aria-hidden="true">Construction d’objets</figcaption>
 </figure>
 </section>
-<section id="création" class="level2">
-<h2>Création</h2>
+<section id="définir-un-constructeur" class="level2">
+<h2>Définir un constructeur</h2>
 <ul>
-<li>Création d'un objet en exécutant un <strong>constructeur</strong>
-<span class="small">Permet d'initialiser les attributs de
-l'objet</span></li>
+<li><strong>Initialisation</strong> d'un objet par la méthode spéciale
+<code>__init__</code> <span class="small">Admet au moins un paramètre
+qui est <code>self</code></span></li>
+<li>Le paramètre <code>self</code> référence l'<strong>objet à
+construire</strong> <span class="small">Permet d'accéder aux attributs
+et fonctionnalités de l'objet</span></li>
 </ul>
-<div class="pygments"><pre><span></span>            from datetime import time
+<div class="pygments"><pre><span></span><span class="k">class</span> <span class="nc">Person</span><span class="p">:</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">firstname</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">lastname</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">address</span><span class="p">:</span> <span class="n">Address</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">firstname</span> <span class="o">=</span> <span class="n">firstname</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">lastname</span> <span class="o">=</span> <span class="n">lastname</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">address</span>
+</pre></div>
 
-            start = time(14, 45, 21)
-            end = time(16, 15, 56)
+</section>
+<section id="appeler-un-constructeur" class="level2">
+<h2>Appeler un constructeur</h2>
+<ul>
+<li>Méthode appelée au moment de la <strong>création d'un objet</strong>
+<span class="small">Initialise l'objet, en donnant une valeur à ses
+variables</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="s2">&quot;Promenade de l&#39;Alma&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">1200</span><span class="p">,</span> <span class="s2">&quot;Woluwé-Saint-Lambert&quot;</span><span class="p">)</span>
+<span class="n">marchand</span> <span class="o">=</span> <span class="n">Person</span><span class="p">(</span><span class="s2">&quot;Cédric&quot;</span><span class="p">,</span> <span class="s2">&quot;Marchand&quot;</span><span class="p">,</span> <span class="n">address</span><span class="p">)</span>
+<span class="n">flemal</span> <span class="o">=</span> <span class="n">Person</span><span class="p">(</span><span class="s2">&quot;Clémence&quot;</span><span class="p">,</span> <span class="s2">&quot;Flemal&quot;</span><span class="p">,</span> <span class="n">address</span><span class="p">)</span>
 </pre></div>
 
 <figure>
-<img src="images/time.svg" class="third2" alt="image" />
-<figcaption aria-hidden="true">image</figcaption>
+<img src="./person_address.svg" alt="Construction d’objets" />
+<figcaption aria-hidden="true">Construction d’objets</figcaption>
 </figure>
 </section>
-<section id="accès-aux-attributs" class="level2">
-<h2>Accès aux attributs</h2>
+<section id="objet-et-référence" class="level2">
+<h2>Objet et référence</h2>
 <ul>
-<li><strong>Accès aux attributs</strong> d'un objet avec l'opérateur
-d'accès (<code>.</code>)</li>
-<li>L'accès peut se faire en <strong>lecture et/ou écriture</strong>
-<span class="small">Certains attributs sont protégés et en lecture
-seule</span></li>
+<li>Un objet est une <strong>instance</strong> d'une classe <span
+class="small">L'instanciation d'une classe produit un objet</span></li>
+<li>Stockage d'une <strong>référence</strong> vers l'objet dans une
+variable <span class="small">L'adresse où l'objet se situe en
+mémoire</span></li>
 </ul>
-<div class="pygments"><pre><span></span>            startseconds = 3600 * start.hour + 60 * start.minute + start.second
-            endseconds = 3600 * end.hour + 60 * end.minute + end.second
-
-            difference = endseconds - startseconds
-            print(&quot;Le cours va durer :&quot;, difference, &quot;secondes&quot;)
+<div class="pygments"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">marchand</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">flemal</span><span class="p">)</span>
 </pre></div>
 
+<div class="terminal">&lt;__main__.Person object at 0x109678748&gt;
+&lt;__main__.Person object at 0x109678780&gt;
+</div>
 </section>
-<section id="attribut-en-lecture-seule" class="level2">
-<h2>Attribut en lecture seule</h2>
+<section id="variable-dinstance" class="level2">
+<h2>Variable d'instance</h2>
 <ul>
-<li>Erreur d'exécution si <strong>modification attribut lecture
-seule</strong> <span class="small">Modification d'un attribut faite par
-affectation</span></li>
+<li><strong>Variables d'instance</strong> attachées à un objet
+définissent son état <span class="small">Chaque objet possède ses
+propres copies de ces variables</span></li>
+<li>Accès aux variables d'instance avec l'<strong>objet cible</strong>
+<span class="small">Ou <code>self</code> à l'intérieur du code de la
+classe</span></li>
 </ul>
-<div class="pygments"><pre><span></span>        from datetime import time
-
-        start = time(14, 45, 21)
-        start.minute = 15
+<div class="pygments"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">marchand</span><span class="o">.</span><span class="n">firstname</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">flemal</span><span class="o">.</span><span class="n">address</span><span class="o">.</span><span class="n">number</span><span class="p">)</span>
 </pre></div>
 
-<div class="pygments"><pre><span></span>        Traceback (most recent call last):
-            File &quot;program.py&quot;, line 4, in
-                start.minute = 15
-        AttributeError: attribute &#39;minute&#39; of &#39;datetime.time&#39; objects is
-        not writable
-</pre></div>
-
+<div class="terminal">Cédric
+50
+</div>
 </section>
-<section id="paramètre-de-type-objet" class="level2">
-<h2>Paramètre de type objet</h2>
-<ul>
-<li>Une fonction peut recevoir des <strong>paramètres de type
-objet</strong> <span class="small">Le paramètre reçoit une copie de la
-référence vers l'objet</span></li>
-</ul>
-<div class="pygments"><pre><span></span>            from datetime import time
-
-            def toseconds(t):
-                return 3600 * t.hour + 60 * t.minute + t.second
-
-
-            start = time(14, 45, 21)
-            end = time(16, 15, 56)
-
-            difference = toseconds(end) - toseconds(start)
-            print(&quot;Le cours va durer :&quot;, difference, &quot;secondes&quot;)
-</pre></div>
-
-<div class="pygments"><pre><span></span>            Le cours va durer : 5435 secondes
-</pre></div>
-
-</section>
-<section id="valeur-de-retour-de-type-objet" class="level2">
-<h2>Valeur de retour de type objet</h2>
-<ul>
-<li>Une fonction peut <strong>renvoyer un objet</strong> <span
-class="small">La fonction crée l'objet et renvoie une référence vers ce
-dernier</span></li>
-</ul>
-<div class="pygments"><pre><span></span>            from datetime import time
-
-            def theoreticalend(start, duration):
-                minute = start.minute + (duration % 60)
-                hour = start.hour + (duration // 60) + (minute // 60)
-                return time(hour, minute % 60, start.second)
-
-
-            start = time(14, 45, 21)
-            print(&quot;Le cours devrait finir à :&quot;, theoreticalend(start, 90))
-</pre></div>
-
-<div class="pygments"><pre><span></span>            Le cours devrait finir à : 16:15:21
-</pre></div>
-
-</section>
-<section id="appel-de-méthode-1" class="level2">
-<h2>Appel de méthode (1)</h2>
-<ul>
-<li>Une fonction associée à un objet est appelée une
-<strong>méthode</strong> <span class="small">Une méthode est appelée sur
-un objet cible</span></li>
-</ul>
-<div class="pygments"><pre><span></span>            from calendar import TextCalendar
-
-            cal = TextCalendar()
-            cal.prmonth(2015, 9)      # Affiche le calendrier de septembre 2015
-</pre></div>
-
-<div class="pygments"><pre><span></span>            September 2015
-            Mo Tu We Th Fr Sa Su
-                1  2  3  4  5  6
-             7  8  9 10 11 12 13
-            14 15 16 17 18 19 20
-            21 22 23 24 25 26 27
-            28 29 30
-</pre></div>
-
-</section>
-<section id="appel-de-méthode-2" class="level2">
-<h2>Appel de méthode (2)</h2>
-<ul>
-<li>Méthode appelée avec l'<strong>opérateur d'appel de méthode</strong>
-(<code>.</code>) <span class="small">L'objet cible est précisé avant le
-point</span></li>
-</ul>
-<div class="pygments"><pre><span></span>            from calendar import TextCalendar
-
-            cal = TextCalendar()
-            cal.setfirstweekday(6)    # Change le premier jour de la semaine
-            cal.prmonth(2015, 9)
-</pre></div>
-
-<div class="pygments"><pre><span></span>            September 2015
-            Su Mo Tu We Th Fr Sa
-                   1  2  3  4  5
-             6  7  8  9 10 11 12
-            13 14 15 16 17 18 19
-            20 21 22 23 24 25 26
-            27 28 29 30
-</pre></div>
-
-</section>
-<p>::: section</p>
 <section id="programmation-orientée-objet" class="level2">
 <h2>Programmation orientée objet</h2>
 <ul>
@@ -480,10 +547,8 @@ objets</span></li>
 monde réel <span class="small">Une personne, un moyen de transport, une
 date, une liste...</span></li>
 <li>Création de <strong>nouveaux types de données</strong> <span
-class="small">Permet une programmation de plus haut niveau</span>
-:::</li>
+class="small">Permet une programmation de plus haut niveau</span></li>
 </ul>
-<p>::: section</p>
 </section>
 <section id="état-dun-objet" class="level2">
 <h2>État d'un objet</h2>
@@ -493,7 +558,7 @@ class="small">Permet une programmation de plus haut niveau</span>
 attributs</span></li>
 <li>L'état d'un objet est <strong>modifiable ou non</strong> - Objet
 immuable aura toujours le même état - État d'un objet non modifiable ne
-peut être changé :::</li>
+peut être changé</li>
 </ul>
 </section>
 <section id="identité-dun-objet" class="level2">
@@ -505,131 +570,345 @@ mémoire</span></li>
 <li>Fonction prédéfinie <strong><code>id</code></strong> renvoie
 l'identité</li>
 </ul>
-<div class="pygments"><pre><span></span>            numbers = {8, 3, 1, -2, 0}
-            letters = {&#39;A&#39;, &#39;P&#39;, &#39;Q&#39;}
-
-            print(id(numbers))
-            print(id(letters))
+<div class="pygments"><pre><span></span><span class="n">prof</span> <span class="o">=</span> <span class="n">flemal</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">marchand</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">flemal</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">prof</span><span class="p">))</span>
 </pre></div>
 
-<div class="pygments"><pre><span></span>            4302577224
-            4329799752
+<div class="terminal">4302577224
+4329799752
+4329799752
+</div>
+</section>
+<section id="définir-un-vecteur-dans-le-plan" class="level2">
+<h2>Définir un vecteur dans le plan</h2>
+<ul>
+<li>Deux variables d'instance pour représenter les
+<strong>coordonnées</strong> <span class="small">Les deux variables
+<code>self.x</code> et <code>self.y</code> représentent
+<img class="typst-formula-inline" style="display: inline-block; height: 1.7952000000000001em; margin: -0.5333333333333333em 0;" src="data:image/svg+xml;base64,PHN2ZyBjbGFzcz0idHlwc3QtZG9jIiB2aWV3Qm94PSIwIDAgMzcuMDAyNjY2NjY2NjY2NjcgMjYuOTI4IiB3aWR0aD0iMzcuMDAyNjY2NjY2NjY2NjdwdCIgaGVpZ2h0PSIyNi45MjhwdCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeG1sbnM6aDU9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGh0bWwiPgogICAgPGc+CiAgICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAxOC45MjgpIj4KICAgICAgICAgICAgPGcgY2xhc3M9InR5cHN0LXRleHQiIHRyYW5zZm9ybT0ic2NhbGUoMSwgLTEpIj4KICAgICAgICAgICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI2cyNkI5ODUyQTgyMkY0MzQwRDNCQkZGMzdERTA4N0UyIiB4PSIwIiBmaWxsPSIjMDAwMDAwIi8+CiAgICAgICAgICAgIDwvZz4KICAgICAgICA8L2c+CiAgICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNi4yMjQgMTguOTI4KSI+CiAgICAgICAgICAgIDxnIGNsYXNzPSJ0eXBzdC10ZXh0IiB0cmFuc2Zvcm09InNjYWxlKDEsIC0xKSI+CiAgICAgICAgICAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNnNzk5MTMyNkNEMUM3QzYzMTYzREQxQ0E1MUQ2MTBCREQiIHg9IjAiIGZpbGw9IiMwMDAwMDAiLz4KICAgICAgICAgICAgPC9nPgogICAgICAgIDwvZz4KICAgICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxNS4zNzYgMTguOTI4KSI+CiAgICAgICAgICAgIDxnIGNsYXNzPSJ0eXBzdC10ZXh0IiB0cmFuc2Zvcm09InNjYWxlKDEsIC0xKSI+CiAgICAgICAgICAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNnQTNEMUJGQ0I2NjMyOUYxMjExNzc3QkY4OTUyNEQwRDEiIHg9IjAiIGZpbGw9IiMwMDAwMDAiLz4KICAgICAgICAgICAgPC9nPgogICAgICAgIDwvZz4KICAgICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgyMi40OTA2NjY2NjY2NjY2NjYgMTguOTI4KSI+CiAgICAgICAgICAgIDxnIGNsYXNzPSJ0eXBzdC10ZXh0IiB0cmFuc2Zvcm09InNjYWxlKDEsIC0xKSI+CiAgICAgICAgICAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNnNkQ5QkFEMEU0MkExODg0MEU0Nzk2RTFGOTMzMDc4QyIgeD0iMCIgZmlsbD0iIzAwMDAwMCIvPgogICAgICAgICAgICA8L2c+CiAgICAgICAgPC9nPgogICAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDMwLjc3ODY2NjY2NjY2NjY2NiAxOC45MjgpIj4KICAgICAgICAgICAgPGcgY2xhc3M9InR5cHN0LXRleHQiIHRyYW5zZm9ybT0ic2NhbGUoMSwgLTEpIj4KICAgICAgICAgICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI2c2QUQ0RTFDNEIxMjQzNDJENEYyRkQxQTAzRDM4MzRDOSIgeD0iMCIgZmlsbD0iIzAwMDAwMCIvPgogICAgICAgICAgICA8L2c+CiAgICAgICAgPC9nPgogICAgPC9nPgogICAgPGRlZnMgaWQ9ImdseXBoIj4KICAgICAgICA8c3ltYm9sIGlkPSJnMjZCOTg1MkE4MjJGNDM0MEQzQkJGRjM3REUwODdFMiIgb3ZlcmZsb3c9InZpc2libGUiPgogICAgICAgICAgICA8cGF0aCBkPSJNIDUuMDg4MDAwMyAtMy45NjgwMDAyIEMgNS4yMzIwMDA0IC0zLjk2ODAwMDIgNS4zMTIwMDAzIC0zLjg4ODAwMDIgNS4zMTIwMDAzIC0zLjc0NDAwMDIgQyA1LjMxMjAwMDMgLTMuNjk2IDUuMjggLTMuNjMyMDAwMiA1LjIzMjAwMDQgLTMuNTY4IEMgNC40IC0yLjkyODAwMDIgMy43MjgwMDAyIC0xLjg3MjAwMDEgMy4yMzIgLTAuNDE2IEMgMi44MDAwMDAyIDAuODQ4MDAwMDUgMi41NzYwMDAyIDIuMDk2MDAwMiAyLjU3NjAwMDIgMy4zMjggTCAyLjU3NjAwMDIgNC42NzIwMDA0IEMgMi41NzYwMDAyIDUuOTA0MDAwMyAyLjgwMDAwMDIgNy4xNTIwMDA0IDMuMjMyIDguNDE2IEMgMy43MjgwMDAyIDkuODcyMDAxIDQuNCAxMC45MjggNS4yMzIwMDA0IDExLjU2ODAwMSBDIDUuMjggMTEuNjE2IDUuMzEyMDAwMyAxMS42OCA1LjMxMjAwMDMgMTEuNzQ0IEMgNS4zMTIwMDAzIDExLjg4ODAwMDUgNS4yMzIwMDA0IDExLjk2OCA1LjA4ODAwMDMgMTEuOTY4IEMgNS4wNzIgMTEuOTY4IDUuMDI0IDExLjk1MjAwMSA0Ljk3NjAwMDMgMTEuOTIwMDAxIEMgNC4wMTYwMDAzIDExLjE4NDAwMSAzLjIxNiAxMC4wOTYwMDEgMi41NjAwMDAyIDguNjQgQyAxLjkzNjAwMDEgNy4yNDggMS42MTYgNS45MzYwMDAzIDEuNjE2IDQuNjcyMDAwNCBMIDEuNjE2IDMuMzI4IEMgMS42MTYgMi4wNjQwMDAxIDEuOTM2MDAwMSAwLjc1MjAwMDAzIDIuNTYwMDAwMiAtMC42NDAwMDAwNSBDIDMuMjE2IC0yLjA5NjAwMDIgNC4wMTYwMDAzIC0zLjE4NDAwMDMgNC45NzYwMDAzIC0zLjkyIEMgNS4wMjQgLTMuOTUyMDAwMSA1LjA3MiAtMy45NjgwMDAyIDUuMDg4MDAwMyAtMy45NjgwMDAyIFogIi8+CiAgICAgICAgPC9zeW1ib2w+CiAgICAgICAgPHN5bWJvbCBpZD0iZzc5OTEzMjZDRDFDN0M2MzE2M0REMUNBNTFENjEwQkREIiBvdmVyZmxvdz0idmlzaWJsZSI+CiAgICAgICAgICAgIDxwYXRoIGQ9Ik0gOC40MzIgNS45NjgwMDA0IEMgOC40MzIgNi43MDQwMDA1IDcuNzEyMDAwNCA3LjA3MjAwMDUgNi45MTIgNy4wNzIwMDA1IEMgNi4yMjQwMDA1IDcuMDcyMDAwNSA1LjY4MDAwMDMgNi43MDQwMDA1IDUuMjY0MDAwNCA1Ljk2ODAwMDQgQyA0LjkyODAwMDUgNi43MDQwMDA1IDQuMzY4IDcuMDcyMDAwNSAzLjU1MjAwMDMgNy4wNzIwMDA1IEMgMi43NjgwMDAxIDcuMDcyMDAwNSAyLjEyOCA2LjcwNDAwMDUgMS42MTYgNS45ODQgQyAxLjE4NCA1LjM2IDAuOTYwMDAwMDQgNC44OTYwMDA0IDAuOTYwMDAwMDQgNC41OTIgQyAwLjk2MDAwMDA0IDQuNDQ4MDAwNCAxLjA0MDAwMDEgNC4zNjggMS4yIDQuMzY4IEMgMS4zNDQwMDAxIDQuMzY4IDEuNDQgNC40NDgwMDA0IDEuNDcyMDAwMSA0LjU5MiBDIDEuNzc2MDAwMSA1LjUyMDAwMDUgMi40NDgwMDAyIDYuNjA4MDAwMyAzLjUyMDAwMDIgNi42MDgwMDAzIEMgNC4wNDgwMDAzIDYuNjA4MDAwMyA0LjMwNDAwMDQgNi4yNzIwMDAzIDQuMzA0MDAwNCA1LjYxNiBDIDQuMzA0MDAwNCA1LjI4IDQuMDE2MDAwMyA0LjAzMiAzLjQ1NiAxLjg4ODAwMDEgQyAzLjE4NDAwMDMgMC44MTYwMDAwNCAyLjcwNDAwMDIgMC4yODgwMDAwMiAyLjAxNiAwLjI4ODAwMDAyIEMgMS43OTIgMC4yODgwMDAwMiAxLjU4NDAwMDEgMC4zMzYwMDAwMyAxLjQwODAwMDEgMC40MTYgQyAxLjgyNDAwMDEgMC41NzYwMDAwMyAyLjAzMiAwLjg2NCAyLjAzMiAxLjI4MDAwMDEgQyAyLjAzMiAxLjY5NjAwMDEgMS44MjQwMDAxIDEuOTA0IDEuMzkyMDAwMSAxLjkwNCBDIDAuODY0IDEuOTA0IDAuNDY0MDAwMDIgMS40NTYwMDAxIDAuNDY0MDAwMDIgMC45MjgwMDAwMyBDIDAuNDY0MDAwMDIgMC4xOTIgMS4yMTYwMDAxIC0wLjE3NjAwMDAxIDIgLTAuMTc2MDAwMDEgQyAyLjY3MjAwMDIgLTAuMTc2MDAwMDEgMy4yMTYgMC4xOTIgMy42NDgwMDAyIDAuOTI4MDAwMDMgQyAzLjk1MjAwMDEgMC4xOTIgNC41MjgwMDA0IC0wLjE3NjAwMDAxIDUuMzYgLTAuMTc2MDAwMDEgQyA2LjEyODAwMDMgLTAuMTc2MDAwMDEgNi43NjggMC4xOTIgNy4yOCAwLjkxMjAwMDA2IEMgNy43MTIwMDA0IDEuNTM2IDcuOTM2MDAwMyAyIDcuOTM2MDAwMyAyLjMwNDAwMDEgQyA3LjkzNjAwMDMgMi40NDgwMDAyIDcuODU2MDAwNCAyLjUyOCA3LjY5NjAwMDYgMi41MjggQyA3LjU1MjAwMDUgMi41MjggNy40NzIgMi40NDgwMDAyIDcuNDI0MDAwMyAyLjMwNDAwMDEgQyA3LjE1MjAwMDQgMS4zOTIwMDAxIDYuNDMyIDAuMjg4MDAwMDIgNS4zOTIgMC4yODgwMDAwMiBDIDQuODY0MDAwMyAwLjI4ODAwMDAyIDQuNTkyIDAuNjA4MDAwMDQgNC41OTIgMS4yNjQgQyA0LjU5MiAxLjQ3MjAwMDEgNC42NzIwMDA0IDEuOTIwMDAwMSA0Ljg0OCAyLjY0IEwgNS4zOTIgNC44IEMgNS42OTYgNi4wMDAwMDA1IDYuMTkyMDAwNCA2LjYwODAwMDMgNi44OTYwMDA0IDYuNjA4MDAwMyBDIDcuMTIwMDAwNCA2LjYwODAwMDMgNy4zMjgwMDA1IDYuNTYwMDAwNCA3LjUwNCA2LjQ4MDAwMDUgQyA3LjA3MjAwMDUgNi4zMzYwMDA0IDYuODY0MDAwMyA2LjA0ODAwMDMgNi44NjQwMDAzIDUuNjE2IEMgNi44NjQwMDAzIDUuMjAwMDAwMyA3LjA4ODAwMDMgNC45OTIgNy41MjAwMDA1IDQuOTkyIEMgOC4wMzIwMDEgNC45OTIgOC40MzIgNS40NTYwMDAzIDguNDMyIDUuOTY4MDAwNCBaICIvPgogICAgICAgIDwvc3ltYm9sPgogICAgICAgIDxzeW1ib2wgaWQ9ImdBM0QxQkZDQjY2MzI5RjEyMTE3NzdCRjg5NTI0RDBEMSIgb3ZlcmZsb3c9InZpc2libGUiPgogICAgICAgICAgICA8cGF0aCBkPSJNIDIuMjI0MDAwMiAxLjY5NjAwMDEgQyAxLjcxMjAwMDEgMS42OTYwMDAxIDEuMzc2IDEuMzEyIDEuMzc2IDAuOCBDIDEuMzc2IDAuMzIwMDAwMDIgMS43NDQwMDAxIC0wLjA4MDAwMDAwNiAyLjIyNDAwMDIgLTAuMDgwMDAwMDA2IEMgMi40NDgwMDAyIC0wLjA4MDAwMDAwNiAyLjY0IC0wLjAxNiAyLjc4NDAwMDIgMC4xMjggTCAyLjgwMDAwMDIgMCBDIDIuODAwMDAwMiAtMS4wMDggMi40NjQwMDAyIC0xLjg3MjAwMDEgMS43OTIgLTIuNTYwMDAwMiBDIDEuNjgwMDAwMSAtMi42ODgwMDAyIDEuNjE2IC0yLjc4NDAwMDIgMS42MTYgLTIuODQ4IEMgMS42MTYgLTMuMDA4MDAwMSAxLjY4MDAwMDEgLTMuMDg4IDEuODI0MDAwMSAtMy4wODggQyAxLjk2OCAtMy4wODggMi4xNiAtMi44OTYwMDAxIDIuNDMyMDAwMiAtMi41MjggQyAyLjk3NiAtMS43NjAwMDAxIDMuMjQ4MDAwMSAtMC45MTIwMDAwNiAzLjI0ODAwMDEgMCBDIDMuMjQ4MDAwMSAwLjg0ODAwMDA1IDIuOTYgMS42OTYwMDAxIDIuMjI0MDAwMiAxLjY5NjAwMDEgWiAiLz4KICAgICAgICA8L3N5bWJvbD4KICAgICAgICA8c3ltYm9sIGlkPSJnNkQ5QkFEMEU0MkExODg0MEU0Nzk2RTFGOTMzMDc4QyIgb3ZlcmZsb3c9InZpc2libGUiPgogICAgICAgICAgICA8cGF0aCBkPSJNIDIuNjA4IDcuMDcyMDAwNSBDIDEuODg4MDAwMSA3LjA3MjAwMDUgMS4zMjgwMDAxIDYuNjcyMDAwNCAwLjkyODAwMDAzIDUuODcyIEMgMC42MjQgNS4yNDggMC40NjQwMDAwMiA0LjgxNjAwMDUgMC40NjQwMDAwMiA0LjU3NiBDIDAuNDY0MDAwMDIgNC40MzIgMC41NDQgNC4zNTIgMC43MiA0LjM1MiBDIDAuOTQ0MDAwMDcgNC4zNTIgMC45NjAwMDAwNCA0LjQ0ODAwMDQgMS4wMjQgNC42ODggQyAxLjM5MjAwMDEgNS45NTIgMS45MDQgNi41OTIwMDA1IDIuNTYwMDAwMiA2LjU5MjAwMDUgQyAyLjc2ODAwMDEgNi41OTIwMDA1IDIuODggNi40NDgwMDA0IDIuODggNi4xNjAwMDAzIEMgMi44OCA1LjkwNDAwMDMgMi44MDAwMDAyIDUuNTM2MDAwMyAyLjYyNCA1LjA3MiBDIDIuMDE2IDMuNDI0MDAwMyAxLjcxMjAwMDEgMi4zMjAwMDAyIDEuNzEyMDAwMSAxLjcyOCBDIDEuNzEyMDAwMSAwLjUxMiAyLjQ2NDAwMDIgLTAuMjA4IDMuNjk2IC0wLjIwOCBDIDQuMjI0IC0wLjIwOCA0LjcyMDAwMDMgLTAuMDE2IDUuMTY4IDAuMzY4MDAwMDMgQyA0LjYwODAwMDMgLTEuNzQ0MDAwMSAzLjcyODAwMDIgLTIuODAwMDAwMiAyLjUyOCAtMi44MDAwMDAyIEMgMS45ODQwMDAxIC0yLjgwMDAwMDIgMS42MTYgLTIuNjI0IDEuNDI0IC0yLjI3MiBDIDIuMDY0MDAwMSAtMi4yNCAyLjM4NCAtMS45MzYwMDAxIDIuMzg0IC0xLjM2IEMgMi4zODQgLTAuOTYwMDAwMDQgMi4xNzYgLTAuNzUyMDAwMDMgMS43NDQwMDAxIC0wLjc1MjAwMDAzIEMgMS4xNTIwMDAxIC0wLjc1MjAwMDAzIDAuOCAtMS4yNDggMC44IC0xLjg0IEMgMC44IC0yLjcyIDEuNiAtMy4yODAwMDAyIDIuNTI4IC0zLjI4MDAwMDIgQyA0LjM2OCAtMy4yODAwMDAyIDUuODcyIC0xLjU4NDAwMDEgNi4yNzIwMDAzIC0wLjAxNiBMIDcuNzc2MDAwNSA2LjAzMiBDIDcuODI0MDAwNCA2LjIwOCA3Ljg0IDYuMzM2MDAwNCA3Ljg0IDYuNDE2MDAwNCBDIDcuODQgNi43MzYwMDA1IDcuNjY0MDAwNSA2Ljg5NjAwMDQgNy4zMjgwMDA1IDYuODk2MDAwNCBDIDcuMDcyMDAwNSA2Ljg5NjAwMDQgNi44NjQwMDAzIDYuNzY4IDYuNzIwMDAwMyA2LjUyODAwMDQgQyA2LjYyNDAwMDUgNi4xOTIwMDA0IDYuNTQ0IDUuOTA0MDAwMyA2LjQ5NjAwMDMgNS42NjQgTCA1LjQ3MiAxLjU1MiBDIDUuMzEyMDAwMyAwLjk3NjAwMDEgNC40NjQgMC4yNTYgMy43NDQwMDAyIDAuMjU2IEMgMy4xMzYwMDAyIDAuMjU2IDIuODMyIDAuNjU2IDIuODMyIDEuNDcyMDAwMSBDIDIuODMyIDIuMTQ0IDMuMTA0IDMuMTY4MDAwMiAzLjYzMjAwMDIgNC41NDQgQyAzLjg0MDAwMDIgNS4xMDQgMy45NTIwMDAxIDUuNDg4MDAwNCAzLjk1MjAwMDEgNS43MTIwMDA0IEMgMy45NTIwMDAxIDYuNDk2MDAwMyAzLjM5MjAwMDIgNy4wNzIwMDA1IDIuNjA4IDcuMDcyMDAwNSBaICIvPgogICAgICAgIDwvc3ltYm9sPgogICAgICAgIDxzeW1ib2wgaWQ9Imc2QUQ0RTFDNEIxMjQzNDJENEYyRkQxQTAzRDM4MzRDOSIgb3ZlcmZsb3c9InZpc2libGUiPgogICAgICAgICAgICA8cGF0aCBkPSJNIDEuMjQ4IC0zLjkyIEMgMi4yMDgwMDAyIC0zLjE4NDAwMDMgMy4wMDgwMDAxIC0yLjA5NjAwMDIgMy42NjQwMDAzIC0wLjY0MDAwMDA1IEMgNC4yODggMC43NTIwMDAwMyA0LjYwODAwMDMgMi4wNjQwMDAxIDQuNjA4MDAwMyAzLjMyOCBMIDQuNjA4MDAwMyA0LjY3MjAwMDQgQyA0LjYwODAwMDMgNS45MzYwMDAzIDQuMjg4IDcuMjQ4IDMuNjY0MDAwMyA4LjY0IEMgMy4wMDgwMDAxIDEwLjA5NjAwMSAyLjIwODAwMDIgMTEuMTg0MDAxIDEuMjQ4IDExLjkyMDAwMSBDIDEuMiAxMS45NTIwMDEgMS4xNTIwMDAxIDExLjk2OCAxLjEzNiAxMS45NjggQyAwLjk5MjAwMDA0IDExLjk2OCAwLjkxMjAwMDA2IDExLjg4ODAwMDUgMC45MTIwMDAwNiAxMS43NDQgQyAwLjkxMjAwMDA2IDExLjY4IDAuOTQ0MDAwMDcgMTEuNjE2IDAuOTkyMDAwMDQgMTEuNTY4MDAxIEMgMS44MjQwMDAxIDEwLjkyOCAyLjQ5NiA5Ljg3MjAwMSAyLjk5MiA4LjQxNiBDIDMuNDI0MDAwMyA3LjE1MjAwMDQgMy42NDgwMDAyIDUuOTA0MDAwMyAzLjY0ODAwMDIgNC42NzIwMDA0IEwgMy42NDgwMDAyIDMuMzI4IEMgMy42NDgwMDAyIDIuMDk2MDAwMiAzLjQyNDAwMDMgMC44NDgwMDAwNSAyLjk5MiAtMC40MTYgQyAyLjQ5NiAtMS44NzIwMDAxIDEuODI0MDAwMSAtMi45MjgwMDAyIDAuOTkyMDAwMDQgLTMuNTY4IEMgMC45NDQwMDAwNyAtMy42MzIwMDAyIDAuOTEyMDAwMDYgLTMuNjk2IDAuOTEyMDAwMDYgLTMuNzQ0MDAwMiBDIDAuOTEyMDAwMDYgLTMuODg4MDAwMiAwLjk5MjAwMDA0IC0zLjk2ODAwMDIgMS4xMzYgLTMuOTY4MDAwMiBDIDEuMTUyMDAwMSAtMy45NjgwMDAyIDEuMiAtMy45NTIwMDAxIDEuMjQ4IC0zLjkyIFogIi8+CiAgICAgICAgPC9zeW1ib2w+CiAgICA8L2RlZnM+Cjwvc3ZnPgo="></span></li>
+<li>Une méthode <code>norm</code> pour calculer la <strong>longueur du
+vecteur</strong> <span class="small">La norme vaut
+<img class="typst-formula-inline" style="display: inline-block; height: 1.7952000000000001em; margin: -0.5333333333333333em 0;" src="data:image/svg+xml;base64,PHN2ZyBjbGFzcz0idHlwc3QtZG9jIiB2aWV3Qm94PSIwIDAgNjcuNTM2NzExMTExMTExMTIgMjYuOTI4IiB3aWR0aD0iNjcuNTM2NzExMTExMTExMTJwdCIgaGVpZ2h0PSIyNi45MjhwdCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeG1sbnM6aDU9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGh0bWwiPgogICAgPGc+CiAgICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAxNy43NTM2MDAwMDAwMDAwMDIpIj4KICAgICAgICAgICAgPGcgY2xhc3M9InR5cHN0LXRleHQiIHRyYW5zZm9ybT0ic2NhbGUoMSwgLTEpIj4KICAgICAgICAgICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI2c2MDI0MzIzMjQ1NTBEODQxNTg4RTU4NDE1ODNDRTgzIiB4PSIwIiBmaWxsPSIjMDAwMDAwIi8+CiAgICAgICAgICAgIDwvZz4KICAgICAgICA8L2c+CiAgICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTYgNC41Mzc2MDAwMDAwMDAwMDEpIj4KICAgICAgICAgICAgPHBhdGggY2xhc3M9InR5cHN0LXNoYXBlIiBmaWxsPSJub25lIiBzdHJva2U9IiMwMDAwMDAiIHN0cm9rZS13aWR0aD0iMC43NjgiIHN0cm9rZS1saW5lY2FwPSJidXR0IiBzdHJva2UtbGluZWpvaW49Im1pdGVyIiBzdHJva2UtbWl0ZXJsaW1pdD0iNCIgZD0iTSAwIDAgTCA1MS41MzY3MTMgMCAiLz4KICAgICAgICA8L2c+CiAgICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTYgNi44NjcyKSI+CiAgICAgICAgICAgIDxnIGNsYXNzPSJ0eXBzdC1ncm91cCI+CiAgICAgICAgICAgICAgICA8Zz4KICAgICAgICAgICAgICAgICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwIDEyLjA2MDgpIj4KICAgICAgICAgICAgICAgICAgICAgICAgPGcgY2xhc3M9InR5cHN0LXRleHQiIHRyYW5zZm9ybT0ic2NhbGUoMSwgLTEpIj4KICAgICAgICAgICAgICAgICAgICAgICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI2c3OTkxMzI2Q0QxQzdDNjMxNjNERDFDQTUxRDYxMEJERCIgeD0iMCIgZmlsbD0iIzAwMDAwMCIvPgogICAgICAgICAgICAgICAgICAgICAgICA8L2c+CiAgICAgICAgICAgICAgICAgICAgPC9nPgogICAgICAgICAgICAgICAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDkuMTUyIDcuNDM2ODAwMDAwMDAwMDAxKSI+CiAgICAgICAgICAgICAgICAgICAgICAgIDxnIGNsYXNzPSJ0eXBzdC10ZXh0IiB0cmFuc2Zvcm09InNjYWxlKDEsIC0xKSI+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNnN0MwNUUxNDFCQUNGQ0NDOTgxMjhEOEE4Rjc3MkJGOTAiIHg9IjAiIGZpbGw9IiMwMDAwMDAiLz4KICAgICAgICAgICAgICAgICAgICAgICAgPC9nPgogICAgICAgICAgICAgICAgICAgIDwvZz4KICAgICAgICAgICAgICAgICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxOS45NzYzNTU1NTU1NTU1NTcgMTIuMDYwOCkiPgogICAgICAgICAgICAgICAgICAgICAgICA8ZyBjbGFzcz0idHlwc3QtdGV4dCIgdHJhbnNmb3JtPSJzY2FsZSgxLCAtMSkiPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgPHVzZSB4bGluazpocmVmPSIjZzkxM0YwMjlFNjJDQjYxRkRDMEU5QTcxRTFBNEJBQ0FDIiB4PSIwIiBmaWxsPSIjMDAwMDAwIi8+CiAgICAgICAgICAgICAgICAgICAgICAgIDwvZz4KICAgICAgICAgICAgICAgICAgICA8L2c+CiAgICAgICAgICAgICAgICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMzUuOTc5OTExMTExMTExMTE1IDEyLjA2MDgpIj4KICAgICAgICAgICAgICAgICAgICAgICAgPGcgY2xhc3M9InR5cHN0LXRleHQiIHRyYW5zZm9ybT0ic2NhbGUoMSwgLTEpIj4KICAgICAgICAgICAgICAgICAgICAgICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI2c2RDlCQUQwRTQyQTE4ODQwRTQ3OTZFMUY5MzMwNzhDIiB4PSIwIiBmaWxsPSIjMDAwMDAwIi8+CiAgICAgICAgICAgICAgICAgICAgICAgIDwvZz4KICAgICAgICAgICAgICAgICAgICA8L2c+CiAgICAgICAgICAgICAgICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNDQuMjY3OTExMTExMTExMTIgNy40MzY4MDAwMDAwMDAwMDEpIj4KICAgICAgICAgICAgICAgICAgICAgICAgPGcgY2xhc3M9InR5cHN0LXRleHQiIHRyYW5zZm9ybT0ic2NhbGUoMSwgLTEpIj4KICAgICAgICAgICAgICAgICAgICAgICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI2c3QzA1RTE0MUJBQ0ZDQ0M5ODEyOEQ4QThGNzcyQkY5MCIgeD0iMCIgZmlsbD0iIzAwMDAwMCIvPgogICAgICAgICAgICAgICAgICAgICAgICA8L2c+CiAgICAgICAgICAgICAgICAgICAgPC9nPgogICAgICAgICAgICAgICAgPC9nPgogICAgICAgICAgICA8L2c+CiAgICAgICAgPC9nPgogICAgPC9nPgogICAgPGRlZnMgaWQ9ImdseXBoIj4KICAgICAgICA8c3ltYm9sIGlkPSJnNjAyNDMyMzI0NTUwRDg0MTU4OEU1ODQxNTgzQ0U4MyIgb3ZlcmZsb3c9InZpc2libGUiPgogICAgICAgICAgICA8cGF0aCBkPSJNIDE2LjIwOCAxMi45MTIwMDEgQyAxNi4yODggMTMuMDcyMDAwNSAxNi4zMjAwMDIgMTMuMTY4IDE2LjMyMDAwMiAxMy4yMTYwMDEgQyAxNi4zMjAwMDIgMTMuNDcyMDAxIDE2LjE5MjAwMSAxMy42IDE1LjkzNjAwMSAxMy42IEMgMTUuNzc2MDAxIDEzLjYgMTUuNjQ4MDAxIDEzLjQ4ODAwMSAxNS41MzYwMDEgMTMuMjQ4MDAxIEwgNy40MDgwMDA1IC0zLjcyODAwMDIgTCA0LjA0ODAwMDMgNC4wOTYgTCAxLjcyOCAyLjMwNDAwMDEgTCAyLjA0OCAxLjk1MjAwMDEgTCAzLjE2ODAwMDIgMi44MDAwMDAyIEwgNi43NjggLTUuNjAwMDAwNCBDIDcuMjY0MDAwNCAtNS42MDAwMDA0IDcuMzc2MDAwNCAtNS41ODQgNy41MjAwMDA1IC01LjI0OCBaICIvPgogICAgICAgIDwvc3ltYm9sPgogICAgICAgIDxzeW1ib2wgaWQ9Imc3OTkxMzI2Q0QxQzdDNjMxNjNERDFDQTUxRDYxMEJERCIgb3ZlcmZsb3c9InZpc2libGUiPgogICAgICAgICAgICA8cGF0aCBkPSJNIDguNDMyIDUuOTY4MDAwNCBDIDguNDMyIDYuNzA0MDAwNSA3LjcxMjAwMDQgNy4wNzIwMDA1IDYuOTEyIDcuMDcyMDAwNSBDIDYuMjI0MDAwNSA3LjA3MjAwMDUgNS42ODAwMDAzIDYuNzA0MDAwNSA1LjI2NDAwMDQgNS45NjgwMDA0IEMgNC45MjgwMDA1IDYuNzA0MDAwNSA0LjM2OCA3LjA3MjAwMDUgMy41NTIwMDAzIDcuMDcyMDAwNSBDIDIuNzY4MDAwMSA3LjA3MjAwMDUgMi4xMjggNi43MDQwMDA1IDEuNjE2IDUuOTg0IEMgMS4xODQgNS4zNiAwLjk2MDAwMDA0IDQuODk2MDAwNCAwLjk2MDAwMDA0IDQuNTkyIEMgMC45NjAwMDAwNCA0LjQ0ODAwMDQgMS4wNDAwMDAxIDQuMzY4IDEuMiA0LjM2OCBDIDEuMzQ0MDAwMSA0LjM2OCAxLjQ0IDQuNDQ4MDAwNCAxLjQ3MjAwMDEgNC41OTIgQyAxLjc3NjAwMDEgNS41MjAwMDA1IDIuNDQ4MDAwMiA2LjYwODAwMDMgMy41MjAwMDAyIDYuNjA4MDAwMyBDIDQuMDQ4MDAwMyA2LjYwODAwMDMgNC4zMDQwMDA0IDYuMjcyMDAwMyA0LjMwNDAwMDQgNS42MTYgQyA0LjMwNDAwMDQgNS4yOCA0LjAxNjAwMDMgNC4wMzIgMy40NTYgMS44ODgwMDAxIEMgMy4xODQwMDAzIDAuODE2MDAwMDQgMi43MDQwMDAyIDAuMjg4MDAwMDIgMi4wMTYgMC4yODgwMDAwMiBDIDEuNzkyIDAuMjg4MDAwMDIgMS41ODQwMDAxIDAuMzM2MDAwMDMgMS40MDgwMDAxIDAuNDE2IEMgMS44MjQwMDAxIDAuNTc2MDAwMDMgMi4wMzIgMC44NjQgMi4wMzIgMS4yODAwMDAxIEMgMi4wMzIgMS42OTYwMDAxIDEuODI0MDAwMSAxLjkwNCAxLjM5MjAwMDEgMS45MDQgQyAwLjg2NCAxLjkwNCAwLjQ2NDAwMDAyIDEuNDU2MDAwMSAwLjQ2NDAwMDAyIDAuOTI4MDAwMDMgQyAwLjQ2NDAwMDAyIDAuMTkyIDEuMjE2MDAwMSAtMC4xNzYwMDAwMSAyIC0wLjE3NjAwMDAxIEMgMi42NzIwMDAyIC0wLjE3NjAwMDAxIDMuMjE2IDAuMTkyIDMuNjQ4MDAwMiAwLjkyODAwMDAzIEMgMy45NTIwMDAxIDAuMTkyIDQuNTI4MDAwNCAtMC4xNzYwMDAwMSA1LjM2IC0wLjE3NjAwMDAxIEMgNi4xMjgwMDAzIC0wLjE3NjAwMDAxIDYuNzY4IDAuMTkyIDcuMjggMC45MTIwMDAwNiBDIDcuNzEyMDAwNCAxLjUzNiA3LjkzNjAwMDMgMiA3LjkzNjAwMDMgMi4zMDQwMDAxIEMgNy45MzYwMDAzIDIuNDQ4MDAwMiA3Ljg1NjAwMDQgMi41MjggNy42OTYwMDA2IDIuNTI4IEMgNy41NTIwMDA1IDIuNTI4IDcuNDcyIDIuNDQ4MDAwMiA3LjQyNDAwMDMgMi4zMDQwMDAxIEMgNy4xNTIwMDA0IDEuMzkyMDAwMSA2LjQzMiAwLjI4ODAwMDAyIDUuMzkyIDAuMjg4MDAwMDIgQyA0Ljg2NDAwMDMgMC4yODgwMDAwMiA0LjU5MiAwLjYwODAwMDA0IDQuNTkyIDEuMjY0IEMgNC41OTIgMS40NzIwMDAxIDQuNjcyMDAwNCAxLjkyMDAwMDEgNC44NDggMi42NCBMIDUuMzkyIDQuOCBDIDUuNjk2IDYuMDAwMDAwNSA2LjE5MjAwMDQgNi42MDgwMDAzIDYuODk2MDAwNCA2LjYwODAwMDMgQyA3LjEyMDAwMDQgNi42MDgwMDAzIDcuMzI4MDAwNSA2LjU2MDAwMDQgNy41MDQgNi40ODAwMDA1IEMgNy4wNzIwMDA1IDYuMzM2MDAwNCA2Ljg2NDAwMDMgNi4wNDgwMDAzIDYuODY0MDAwMyA1LjYxNiBDIDYuODY0MDAwMyA1LjIwMDAwMDMgNy4wODgwMDAzIDQuOTkyIDcuNTIwMDAwNSA0Ljk5MiBDIDguMDMyMDAxIDQuOTkyIDguNDMyIDUuNDU2MDAwMyA4LjQzMiA1Ljk2ODAwMDQgWiAiLz4KICAgICAgICA8L3N5bWJvbD4KICAgICAgICA8c3ltYm9sIGlkPSJnN0MwNUUxNDFCQUNGQ0NDOTgxMjhEOEE4Rjc3MkJGOTAiIG92ZXJmbG93PSJ2aXNpYmxlIj4KICAgICAgICAgICAgPHBhdGggZD0iTSAxLjMzMjc5OTkgNC43NDg4IEMgMS42OTExOTk5IDQuNzQ4OCAxLjk1OTk5OTkgNS4wMTc2IDEuOTU5OTk5OSA1LjM3NiBDIDEuOTU5OTk5OSA1Ljc3OTE5OTYgMS43NDcxOTk5IDUuOTkxOTk5NiAxLjMzMjc5OTkgNi4wMDMxOTk2IEMgMS41NzkxOTk5IDYuNTI5NTk5NyAyLjEzOTIgNi45NTUxOTk3IDIuODY3MiA2Ljk1NTE5OTcgQyAzLjg1MjggNi45NTUxOTk3IDQuNTAyNCA2LjIxNTk5OTYgNC41MDI0IDUuMjMwMzk5NiBDIDQuNTAyNCA0LjY5MjggNC4zMTIgNC4xNzc2IDMuOTE5OTk5OCAzLjY3MzYgQyAzLjcyOTYgMy40MTYgMy41ODM5OTk5IDMuMjM2OCAzLjQ4MzE5OTggMy4xMzYgTCAwLjgyODc5OTk2IDAuNTA0IEMgMC42ODMyIDAuMzY5NiAwLjcwNTU5OTk2IDAuMzM2IDAuNzA1NTk5OTYgMCBMIDUuMzE5OTk5NyAwIEwgNS42NjcxOTk2IDIuMTA1NTk5OSBMIDUuMTk2Nzk5OCAyLjEwNTU5OTkgQyA1LjExODM5OTYgMS41MTIgNS4wMjg4IDEuMTY0Nzk5OSA0LjkyOCAxLjA4NjM5OTkgQyA0Ljg3MTk5OTcgMS4wNTI3OTk5IDQuNTI0OCAxLjAzMDM5OTkgMy44NjM5OTk4IDEuMDMwMzk5OSBMIDEuOTU5OTk5OSAxLjAzMDM5OTkgQyAyLjcxMDM5OTkgMS42OTExOTk5IDMuNDA0OCAyLjI4NDc5OTggNC4wNjU2IDIuODExMiBDIDQuNTY5NTk5NiAzLjIwMzE5OTkgNC45MjggMy41NTAzOTk4IDUuMTUyIDMuODUyOCBDIDUuNDg4IDQuMjg5NiA1LjY1NTk5OTcgNC43NDg4IDUuNjU1OTk5NyA1LjIzMDM5OTYgQyA1LjY1NTk5OTcgNS45MjQ4IDUuMzg3MiA2LjQ3MzYgNC44Mzg0IDYuODc2Nzk5NiBDIDQuMzU2OCA3LjI0NjQgMy43NTE5OTk5IDcuNDM2Nzk5NSAzLjAzNTE5OTkgNy40MzY3OTk1IEMgMi40MTkyIDcuNDM2Nzk5NSAxLjg5MjggNy4yNTc2IDEuNDMzNiA2Ljg5OTIgQyAwLjk1MTk5OTk2IDYuNTA3MiAwLjcwNTU5OTk2IDYuMDE0NCAwLjcwNTU5OTk2IDUuNDA5NiBDIDAuNzA1NTk5OTYgNS4wMjg4IDAuOTg1NiA0Ljc0ODggMS4zMzI3OTk5IDQuNzQ4OCBaICIvPgogICAgICAgIDwvc3ltYm9sPgogICAgICAgIDxzeW1ib2wgaWQ9Imc5MTNGMDI5RTYyQ0I2MUZEQzBFOUE3MUUxQTRCQUNBQyIgb3ZlcmZsb3c9InZpc2libGUiPgogICAgICAgICAgICA8cGF0aCBkPSJNIDExLjE2OCA0LjM4NDAwMDMgTCA2LjYwODAwMDMgNC4zODQwMDAzIEwgNi42MDgwMDAzIDguOTQ0IEMgNi42MDgwMDAzIDkuMjAwMDAxIDYuNDgwMDAwNSA5LjMyOCA2LjIyNDAwMDUgOS4zMjggQyA1Ljk2ODAwMDQgOS4zMjggNS44NCA5LjIwMDAwMSA1Ljg0IDguOTQ0IEwgNS44NCA0LjM4NDAwMDMgTCAxLjI4MDAwMDEgNC4zODQwMDAzIEMgMS4wMjQgNC4zODQwMDAzIDAuODk2IDQuMjU2IDAuODk2IDQgQyAwLjg5NiAzLjc0NDAwMDIgMS4wMjQgMy42MTYwMDAyIDEuMjgwMDAwMSAzLjYxNjAwMDIgTCA1Ljg0IDMuNjE2MDAwMiBMIDUuODQgLTAuOTQ0MDAwMDcgQyA1Ljg0IC0xLjIgNS45NjgwMDA0IC0xLjMyODAwMDEgNi4yMjQwMDA1IC0xLjMyODAwMDEgQyA2LjQ4MDAwMDUgLTEuMzI4MDAwMSA2LjYwODAwMDMgLTEuMiA2LjYwODAwMDMgLTAuOTQ0MDAwMDcgTCA2LjYwODAwMDMgMy42MTYwMDAyIEwgMTEuMTY4IDMuNjE2MDAwMiBDIDExLjQyNDAwMSAzLjYxNjAwMDIgMTEuNTUyMDAxIDMuNzQ0MDAwMiAxMS41NTIwMDEgNCBDIDExLjU1MjAwMSA0LjIwOCAxMS4zNzYgNC4zODQwMDAzIDExLjE2OCA0LjM4NDAwMDMgWiAiLz4KICAgICAgICA8L3N5bWJvbD4KICAgICAgICA8c3ltYm9sIGlkPSJnNkQ5QkFEMEU0MkExODg0MEU0Nzk2RTFGOTMzMDc4QyIgb3ZlcmZsb3c9InZpc2libGUiPgogICAgICAgICAgICA8cGF0aCBkPSJNIDIuNjA4IDcuMDcyMDAwNSBDIDEuODg4MDAwMSA3LjA3MjAwMDUgMS4zMjgwMDAxIDYuNjcyMDAwNCAwLjkyODAwMDAzIDUuODcyIEMgMC42MjQgNS4yNDggMC40NjQwMDAwMiA0LjgxNjAwMDUgMC40NjQwMDAwMiA0LjU3NiBDIDAuNDY0MDAwMDIgNC40MzIgMC41NDQgNC4zNTIgMC43MiA0LjM1MiBDIDAuOTQ0MDAwMDcgNC4zNTIgMC45NjAwMDAwNCA0LjQ0ODAwMDQgMS4wMjQgNC42ODggQyAxLjM5MjAwMDEgNS45NTIgMS45MDQgNi41OTIwMDA1IDIuNTYwMDAwMiA2LjU5MjAwMDUgQyAyLjc2ODAwMDEgNi41OTIwMDA1IDIuODggNi40NDgwMDA0IDIuODggNi4xNjAwMDAzIEMgMi44OCA1LjkwNDAwMDMgMi44MDAwMDAyIDUuNTM2MDAwMyAyLjYyNCA1LjA3MiBDIDIuMDE2IDMuNDI0MDAwMyAxLjcxMjAwMDEgMi4zMjAwMDAyIDEuNzEyMDAwMSAxLjcyOCBDIDEuNzEyMDAwMSAwLjUxMiAyLjQ2NDAwMDIgLTAuMjA4IDMuNjk2IC0wLjIwOCBDIDQuMjI0IC0wLjIwOCA0LjcyMDAwMDMgLTAuMDE2IDUuMTY4IDAuMzY4MDAwMDMgQyA0LjYwODAwMDMgLTEuNzQ0MDAwMSAzLjcyODAwMDIgLTIuODAwMDAwMiAyLjUyOCAtMi44MDAwMDAyIEMgMS45ODQwMDAxIC0yLjgwMDAwMDIgMS42MTYgLTIuNjI0IDEuNDI0IC0yLjI3MiBDIDIuMDY0MDAwMSAtMi4yNCAyLjM4NCAtMS45MzYwMDAxIDIuMzg0IC0xLjM2IEMgMi4zODQgLTAuOTYwMDAwMDQgMi4xNzYgLTAuNzUyMDAwMDMgMS43NDQwMDAxIC0wLjc1MjAwMDAzIEMgMS4xNTIwMDAxIC0wLjc1MjAwMDAzIDAuOCAtMS4yNDggMC44IC0xLjg0IEMgMC44IC0yLjcyIDEuNiAtMy4yODAwMDAyIDIuNTI4IC0zLjI4MDAwMDIgQyA0LjM2OCAtMy4yODAwMDAyIDUuODcyIC0xLjU4NDAwMDEgNi4yNzIwMDAzIC0wLjAxNiBMIDcuNzc2MDAwNSA2LjAzMiBDIDcuODI0MDAwNCA2LjIwOCA3Ljg0IDYuMzM2MDAwNCA3Ljg0IDYuNDE2MDAwNCBDIDcuODQgNi43MzYwMDA1IDcuNjY0MDAwNSA2Ljg5NjAwMDQgNy4zMjgwMDA1IDYuODk2MDAwNCBDIDcuMDcyMDAwNSA2Ljg5NjAwMDQgNi44NjQwMDAzIDYuNzY4IDYuNzIwMDAwMyA2LjUyODAwMDQgQyA2LjYyNDAwMDUgNi4xOTIwMDA0IDYuNTQ0IDUuOTA0MDAwMyA2LjQ5NjAwMDMgNS42NjQgTCA1LjQ3MiAxLjU1MiBDIDUuMzEyMDAwMyAwLjk3NjAwMDEgNC40NjQgMC4yNTYgMy43NDQwMDAyIDAuMjU2IEMgMy4xMzYwMDAyIDAuMjU2IDIuODMyIDAuNjU2IDIuODMyIDEuNDcyMDAwMSBDIDIuODMyIDIuMTQ0IDMuMTA0IDMuMTY4MDAwMiAzLjYzMjAwMDIgNC41NDQgQyAzLjg0MDAwMDIgNS4xMDQgMy45NTIwMDAxIDUuNDg4MDAwNCAzLjk1MjAwMDEgNS43MTIwMDA0IEMgMy45NTIwMDAxIDYuNDk2MDAwMyAzLjM5MjAwMDIgNy4wNzIwMDA1IDIuNjA4IDcuMDcyMDAwNSBaICIvPgogICAgICAgIDwvc3ltYm9sPgogICAgPC9kZWZzPgo8L3N2Zz4K"></span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">class</span> <span class="nc">Vector</span><span class="p">:</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+
+  <span class="k">def</span> <span class="nf">norm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="n">u</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">u</span><span class="o">.</span><span class="n">norm</span><span class="p">())</span>
+</pre></div>
+
+<div class="terminal">1.4142135623730951
+</div>
+</section>
+<section id="self" class="level2">
+<h2><code>self</code></h2>
+<ul>
+<li>La <strong>variable d'instance</strong> est accessible dans toute la
+classe <span class="small">Existe en mémoire pendant toute la durée de
+vie de l'objet</span></li>
+<li>Opposée à la <strong>variable locale</strong> qui n'existe que dans
+la méthode</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">class</span> <span class="nc">Vector</span><span class="p">:</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+  <span class="k">def</span> <span class="nf">norm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">x</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">y</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="n">u</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">u</span><span class="o">.</span><span class="n">norm</span><span class="p">())</span>
+</pre></div>
+
+<div class="terminal">Traceback (most recent call last):
+File &quot;program.py&quot;, line 38, in
+    print(u.norm())
+File &quot;program.py&quot;, line 35, in norm
+    return sqrt(x ** 2 + y ** 2)
+NameError: name &#39;x&#39; is not defined
+</div>
+</section>
+<section id="représentation-dun-objet" class="level2">
+<h2>Représentation d’un objet</h2>
+<ul>
+<li>La méthode <code>__str__</code> construit une <strong>représentation
+<code>str</code> de l’objet</strong> <span class="small">Renvoie une
+chaine de caractères lisible de l’objet</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">class</span> <span class="nc">Vector</span><span class="p">:</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+
+  <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s1">&#39;(&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;)&#39;</span>
+
+<span class="n">u</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+</pre></div>
+
+<div class="terminal">(1, -1)
+</div>
+</section>
+<section id="égalité" class="level2">
+<h2>Égalité</h2>
+<ul>
+<li>L'opérateur d'égalité <strong>compare les références</strong> des
+variables <span class="small">Le contenu des objets n'est pas
+comparé</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="n">u</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">u</span> <span class="o">==</span> <span class="n">v</span><span class="p">)</span>                  <span class="c1"># False</span>
 </pre></div>
 
 </section>
-<section id="tout-est-objet-1" class="level2">
-<h2>Tout est objet (1)</h2>
+<section id="alias" class="level2">
+<h2>Alias</h2>
 <ul>
-<li>En Python, toute donnée est un <strong>objet</strong> <span
-class="small">Même tout ce qu'on a déjà vu comme les nombres,
-booléens...</span></li>
-<li>Fonction prédéfinie <strong><code>dir</code></strong> donne la liste
-des méthodes</li>
+<li>Un <strong>alias</strong> est une copie de la référence vers un
+objet <span class="small">Il n'y a qu'une seule copie de l'objet en
+mémoire</span></li>
 </ul>
-<div class="pygments"><pre><span></span>            temperature = 19
-            print(dir(temperature))
-</pre></div>
-
-<div class="pygments"><pre><span></span>            [&#39;__abs__&#39;, &#39;__add__&#39;, &#39;__and__&#39;, &#39;__bool__&#39;, &#39;__ceil__&#39;,
-            &#39;__class__&#39;, &#39;__delattr__&#39;, &#39;__dir__&#39;, &#39;__divmod__&#39;, &#39;__doc__&#39;,
-            &#39;__eq__&#39;, &#39;__float__&#39;, &#39;__floor__&#39;, &#39;__floordiv__&#39;, &#39;__format__&#39;,
-            &#39;__ge__&#39;, &#39;__getattribute__&#39;, &#39;__getnewargs__&#39;, &#39;__gt__&#39;,
-            &#39;__hash__&#39;, &#39;__index__&#39;, &#39;__init__&#39;, &#39;__int__&#39;, &#39;__invert__&#39;,
-            &#39;__le__&#39;, &#39;__lshift__&#39;, &#39;__lt__&#39;, &#39;__mod__&#39;, &#39;__mul__&#39;, &#39;__ne__&#39;,
-            &#39;__neg__&#39;, &#39;__new__&#39;, &#39;__or__&#39;, &#39;__pos__&#39;, &#39;__pow__&#39;, &#39;__radd__&#39;,
-            &#39;__rand__&#39;, &#39;__rdivmod__&#39;, &#39;__reduce__&#39;, &#39;__reduce_ex__&#39;,
-            &#39;__repr__&#39;, &#39;__rfloordiv__&#39;, &#39;__rlshift__&#39;, &#39;__rmod__&#39;,
-            &#39;__rmul__&#39;, &#39;__ror__&#39;, &#39;__round__&#39;, &#39;__rpow__&#39;, &#39;__rrshift__&#39;,
-            &#39;__rshift__&#39;, &#39;__rsub__&#39;, &#39;__rtruediv__&#39;, &#39;__rxor__&#39;,
-            &#39;__setattr__&#39;, &#39;__sizeof__&#39;, &#39;__str__&#39;, &#39;__sub__&#39;,
-            &#39;__subclasshook__&#39;, &#39;__truediv__&#39;, &#39;__trunc__&#39;, &#39;__xor__&#39;,
-            &#39;bit_length&#39;, &#39;conjugate&#39;, &#39;denominator&#39;, &#39;from_bytes&#39;, &#39;imag&#39;,
-            &#39;numerator&#39;, &#39;real&#39;, &#39;to_bytes&#39;]
+<div class="pygments"><pre><span></span><span class="n">u</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">u</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">u</span> <span class="o">==</span> <span class="n">v</span><span class="p">)</span>                  <span class="c1"># True</span>
 </pre></div>
 
 </section>
-<section id="tout-est-objet-2" class="level2">
-<h2>Tout est objet (2)</h2>
+<section id="attention-aux-références" class="level2">
+<h2>Attention aux références</h2>
 <ul>
-<li>Les nombres entiers ont une <strong>méthode
-<code>__add__</code></strong> <span class="small">Permet de faire la
-somme de deux entiers</span></li>
-<li>Appel à la méthode <code>__add__</code> simplifié par
-l'<strong>opérateur <code>+</code></strong> <span
-class="small">Redéfinition d'un opérateur rend le code plus
-lisible</span></li>
+<li><strong>Qu'affiche le code suivant</strong> après exécution ?
+<ul>
+<li><code>magic1</code> appelle une méthode sur <code>data</code></li>
+<li><code>magic2</code> modifie la variable locale
+<code>data</code></li>
+</ul></li>
 </ul>
-<div class="pygments"><pre><span></span>            print(temperature + 11)
-            print(temperature.__add__(11))
-</pre></div>
+<div class="pygments"><pre><span></span><span class="k">def</span> <span class="nf">magic1</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]):</span>
+    <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
 
-<div class="pygments"><pre><span></span>            30
-            30
+<span class="k">def</span> <span class="nf">magic2</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]):</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+
+<span class="n">magic1</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+
+<span class="n">magic2</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
 </pre></div>
 
 </section>
-<section id="exemple-les-complexes" class="level2">
-<h2>Exemple : les complexes</h2>
+<section id="surcharge-dopérateur" class="level2">
+<h2>Surcharge d’opérateur</h2>
 <ul>
-<li><strong>Nombre complexe</strong> représenté par des objets de type
-<code>complex</code> <span class="small">Deux façons de les créer puis
-on peut utiliser plusieurs méthodes</span></li>
+<li>On peut <strong>redéfinir</strong> les opérateurs arithmétiques
+<span class="small"><code>__add__</code> pour <code>+</code>,
+<code>__sub__</code> pour <code>-</code>, <code>__mul__</code> pour
+<code>*</code>...</span></li>
 </ul>
-<div class="pygments"><pre><span></span>            a = 2 + 3j
-            b = complex(-1, 4)
+<div class="pygments"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Self</span>
 
-            print(type(a))
-            print(a.imag)
-            print(b.conjugate())
+<span class="k">class</span> <span class="nc">Vector</span><span class="p">:</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+
+  <span class="k">def</span> <span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">Vector</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="n">other</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="n">other</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+
+  <span class="c1"># ...</span>
+
+<span class="n">u</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">u</span> <span class="o">+</span> <span class="n">v</span><span class="p">)</span>
 </pre></div>
 
-<div class="pygments"><pre><span></span>            &lt;class &#39;complex&#39;&gt;
-            3.0
-            (-1-4j)
+<div class="terminal">(3, 0)
+</div>
+</section>
+<section id="surcharge-dopérateur-1" class="level2">
+<h2>Surcharge d’opérateur</h2>
+<ul>
+<li>On peut <strong>redéfinir</strong> les opérateurs de comparaison
+<span class="small"><code>__lt__</code> pour <code>&lt;</code>,
+<code>__le__</code> pour <code>&lt;=</code>, <code>__eq__</code> pour
+<code>==</code>...</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Self</span>
+
+<span class="k">class</span> <span class="nc">Vector</span><span class="p">:</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+
+  <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Self</span><span class="p">):</span>
+      <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">x</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">y</span>
+
+  <span class="c1"># ...</span>
+
+<span class="n">u</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">u</span> <span class="o">==</span> <span class="n">v</span><span class="p">)</span>                  <span class="c1"># True</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">u</span> <span class="ow">is</span> <span class="n">v</span><span class="p">)</span>                  <span class="c1"># False</span>
+</pre></div>
+
+<ul>
+<li>Surcharge de l'opérateur d'égalité pour <strong>comparer les
+objets</strong> <span class="small">Le contenu des objets sera comparé,
+et non plus les références</span></li>
+<li><strong>Comparaison des identités</strong> avec l'opérateur
+<code>is</code> <span class="small">Comparaison des références des
+objets</span></li>
+</ul>
+</section>
+<section id="composition-dobjets" class="level2">
+<h2>Composition d’objets</h2>
+<ul>
+<li>On peut <strong>composer</strong> plusieurs objets ensemble <span
+class="small">En utilisant des variables d'instance de type
+objet</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">class</span> <span class="nc">Rectangle</span><span class="p">:</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lowerleft</span><span class="p">:</span> <span class="n">Vector</span><span class="p">,</span> <span class="n">width</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">height</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">angle</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">lowerleft</span> <span class="o">=</span> <span class="n">lowerleft</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">width</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">height</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">angle</span> <span class="o">=</span> <span class="n">angle</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">Rectangle</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">lowerleft</span><span class="p">)</span>             <span class="c1"># (1, -1)</span>
 </pre></div>
 
 </section>
-<section id="exemple-les-chaines-de-caractères" class="level2">
-<h2>Exemple : les chaines de caractères</h2>
+<section id="réutilisation-de-code" class="level2">
+<h2>Réutilisation de code</h2>
 <ul>
-<li><strong>Chaine de caractères</strong> représenté par des objets de
-type <code>str</code> <span class="small">Myriade de méthodes permettant
-de les manipuler</span></li>
+<li>On peut <strong>réutiliser le code</strong> définit pour les objets
+composés <span class="small">Il suffit d'appeler les méthodes des
+variables objet</span></li>
 </ul>
-<div class="pygments"><pre><span></span>                s = &quot;heLLo&quot;
+<div class="pygments"><pre><span></span><span class="k">class</span> <span class="nc">Rectangle</span><span class="p">:</span>
+  <span class="c1"># ...</span>
 
-                print(s.upper())
-                print(s.capitalize())
-                print(s.startswith(&quot;H&quot;))
+  <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Rectangle en </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">lowerleft</span><span class="si">}</span><span class="s2"> + de longueur </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="si">}</span><span class="s2">&quot;</span> \
+           <span class="sa">f</span><span class="s2">&quot;et de hauteur </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">height</span><span class="si">}</span><span class="s2"> incliné de </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">angle</span><span class="si">}</span><span class="s2"> degrés&quot;</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">Rectangle</span><span class="p">(</span><span class="n">Vector</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
 </pre></div>
 
-<div class="pygments"><pre><span></span>                HELLO
-                Hello
-                False
-</pre></div>
-
+<div class="terminal">Rectangle en (1, -1) de longueur 100 et de hauteur 50 incliné
+de 0 degrés
+</div>
+<ul>
+<li>Ici l’affichage en <code>str</code> de <code>self.lowerleft</code>
+fait appel à la méthode <code>__str__</code> de la classe
+<code>Vector</code></li>
+</ul>
 </section>
-<section id="exemple-le-navigateur-web" class="level2">
-<h2>Exemple : le navigateur web</h2>
+<section id="simplification" class="level2">
+<h2>Simplification</h2>
 <ul>
-<li>Module <code>webbrowser</code> permet de manipuler le
-<strong>navigateur web</strong> <span class="small">Récupération du
-navigateur puis ouverture de pages avec <code>open</code></span></li>
+<li>Reprenons la classe <code>Address</code></li>
 </ul>
-<div class="pygments"><pre><span></span>                import webbrowser
+<div class="pygments"><pre><span></span><span class="k">class</span> <span class="nc">Address</span><span class="p">:</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">street</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">number</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">zip</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">city</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">street</span> <span class="o">=</span> <span class="n">street</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">number</span> <span class="o">=</span> <span class="n">number</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">zip</span> <span class="o">=</span> <span class="nb">zip</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">city</span> <span class="o">=</span> <span class="n">city</span>
 
-                chrome = webbrowser.get()
-                chrome.open(&quot;http://www.perdu.com&quot;)
+  <span class="k">def</span> <span class="nf">display</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">street</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">number</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">zip</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">city</span><span class="si">}</span><span class="s2">&quot;</span>
 </pre></div>
 
-</section>
-<p>::: section</p>
-<section id="crédits" class="level2">
-<h2>Crédits</h2>
 <ul>
-<li>https://www.flickr.com/photos/madalena_pestana/2828893154</li>
-<li>https://www.flickr.com/photos/ken-ichi/4577032677 :::</li>
+<li>L’écriture du constructeur semble très répétitive. <span
+class="small">C’est très souvent le cas</span></li>
+<li>Si on voulait lui ajouter une méthode <code>__eq__</code> elle
+serait aussi fort peu intéressante à écrire.</li>
+<li>Comme ce genre de classe est très courante, il existe une moyen plus
+court de les définir</li>
 </ul>
+</section>
+<section id="dataclass" class="level2">
+<h2><code>dataclass</code></h2>
+<div class="pygments"><pre><span></span><span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Address</span><span class="p">:</span>
+  <span class="n">street</span><span class="p">:</span> <span class="nb">str</span>
+  <span class="n">number</span><span class="p">:</span> <span class="nb">int</span>
+  <span class="nb">zip</span><span class="p">:</span> <span class="nb">int</span>
+  <span class="n">city</span><span class="p">:</span> <span class="nb">str</span>
+
+<span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="s2">&quot;Promenade de l&#39;Alma&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">1200</span><span class="p">,</span> <span class="s2">&quot;Woluwé-Saint-Lambert&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">address</span><span class="o">.</span><span class="n">zip</span><span class="p">)</span> <span class="c1"># 1200</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">address</span><span class="p">)</span>     <span class="c1"># Address(street=&quot;Promenade de l&#39;Alma&quot;, number=50,</span>
+                   <span class="c1">#         zip=1200, city=&#39;Woluwé-Saint-Lambert&#39;)</span>
+
+<span class="n">address2</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="s2">&quot;Promenade de l&#39;Alma&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">1200</span><span class="p">,</span> <span class="s2">&quot;Woluwé-Saint-Lambert&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">address</span> <span class="o">==</span> <span class="n">address2</span><span class="p">)</span> <span class="c1"># True</span>
+</pre></div>
+
+<ul>
+<li>Une <code>dataclass</code> a automatiquement un constructeur, une
+méthode <code>__eq__</code>, une méthode <code>__str__</code> <span
+class="small">Et d’autres choses qui dépassent le cadre de ce
+cours</span></li>
+</ul>
+</section>
+<section id="dataclass-1" class="level2">
+<h2><code>dataclass</code></h2>
+<ul>
+<li>On peut bien entendu ajouter d’autres méthodes</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Address</span><span class="p">:</span>
+  <span class="n">street</span><span class="p">:</span> <span class="nb">str</span>
+  <span class="n">number</span><span class="p">:</span> <span class="nb">int</span>
+  <span class="nb">zip</span><span class="p">:</span> <span class="nb">int</span>
+  <span class="n">city</span><span class="p">:</span> <span class="nb">str</span>
+
+  <span class="k">def</span> <span class="nf">display</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">street</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">number</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">zip</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">city</span><span class="si">}</span><span class="s2">&quot;</span>
+</pre></div>
+
+<ul>
+<li>et définir notre propre <code>__str__</code></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Address</span><span class="p">:</span>
+  <span class="n">street</span><span class="p">:</span> <span class="nb">str</span>
+  <span class="n">number</span><span class="p">:</span> <span class="nb">int</span>
+  <span class="nb">zip</span><span class="p">:</span> <span class="nb">int</span>
+  <span class="n">city</span><span class="p">:</span> <span class="nb">str</span>
+
+  <span class="k">def</span> <span class="nf">display</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">street</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">number</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">zip</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">city</span><span class="si">}</span><span class="s2">&quot;</span>
+
+  <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">display</span><span class="p">()</span>
+</pre></div>
+
 </section>
 </body>
 </html>
