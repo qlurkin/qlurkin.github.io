@@ -507,7 +507,7 @@ class Vector:
     self.y = y
 
   def __str__(self):
-    return '(' + str(self.x) + ', ' + str(self.y) + ')'
+    return f'({self.x}, {self.y})'
 
 u = Vector(1, -1)
 print(u)
@@ -680,7 +680,7 @@ class Address:
 
 - L'écriture du constructeur semble très répétitive. [C'est très souvent le cas]{.small}
 - Si on voulait lui ajouter une méthode `__eq__` elle serait aussi fort peu intéressante à écrire.
-- Comme ce genre de classe est très courante, il existe une moyen plus court de les définir
+- Comme ce genre de classes est très courant, il existe une moyen plus court de les définir
 
 ## `dataclass`
 
@@ -740,4 +740,23 @@ class Address:
 
   def __str__(self):
     return self.display()
+```
+
+## `dataclass`
+
+- réécrivons la classe `Vector` sous forme de `dataclass`
+
+```python
+from dataclasses import dataclass
+
+@dataclass
+class Vector:
+  x: float
+  y: float
+
+  def __add__(self, other: Self):
+    return Vector(self.x + other.x, self.y + other.y)
+
+  def __str__(self):
+    return f'({self.x}, {self.y})'
 ```
