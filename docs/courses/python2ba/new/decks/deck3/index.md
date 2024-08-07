@@ -1,856 +1,485 @@
 ---
-lang: en
-title: Chapitre 3 - Classes et objets
-viewport: width=device-width, initial-scale=1.0
+title: Cours 3
+subtitle: Interface graphique
+type: deck
+author: Quentin Lurkin
+typst: true
 ---
 
-::: section
-# IN2T - Informatique [Classes et objets]{.small}
+## Rappel: programmation graphique
 
-Quentin Lurkin
-:::
+- Ouvre une **fenêtre** de l\'OS
+- Tourne **jusqu\'à ce qu\'on quitte** [boucle !]{.small}
+- Permet d\'afficher des formes, images, animation [Une animation est
+  une succession rapide d\'images]{.small}
 
-::: section
-## Objectifs
+## Pygame
 
--   Définition de **classes**
-    -   Définition, constructeur et initialisation
-    -   Variable d\'instance
-    -   Définition et appel de méthode
--   Programmation **orientée objet**
-    -   Méthodes *\"spéciales\"* (égalité et représentation d\'objets)
-    -   Visibilité des attributs, encapsulation
-    -   Conception orientée objet
-:::
+- Permet de créer un programme graphique
+- Non-inclus dans l\'installation de Python [Il faut installer le
+  package]{.small}
 
-::: {.section .full}
-## Classes
+### Installation
 
-![](images/3510951967_e887f41abb_o.jpg)
-:::
+- Python peut **télécharger et installer automatiquement des
+  packages**
+- Pour installer Pygame :
 
-::: section
-## Objet et classe
-
--   Un objet est une **instance** d\'une classe [Une classe est un
-    modèle à partir duquel on construit des objets]{.small}
--   La classe définit **deux éléments** constitutifs des objets [Les
-    attributs et les fonctionnalités de l\'objet]{.small}
-:::
-
-::: section
-## Attribut et fonctionnalité
-
--   Un attribut est une **donnée** stockée dans un objet [Les valeurs
-    des attributs définissent l\'état de l\'objet]{.small}
--   Une **fonctionnalité** permet d\'effectuer une action [Obtenir une
-    information sur l\'objet ou donner un ordre]{.small}
-
-![image](images/class_object.png){.half}
-:::
-
-::: section
-## Utilisation d\'un objet
-
--   Pour pouvoir créer des objets, il faut une **classe** [Une
-    définition unique permet de créer plusieurs objets]{.small}
--   Une fois créée, interaction avec **attribut et fonctionnalité**
-    [Utilisation de l\'opérateur d\'accès/appel sur l\'objet]{.small}
-
-``` lang-python
-            # Construction d'objets
-            maxime = Person("Maxime", "Hockey")
-            elise = Person("Elise", "Space")
-            
-            # Accès à un attribut
-            print(maxime.firstname)              # Affiche 'Hockey'
-            
-            # Appel d'une méthode
-            print(maxime.hasfriend(elise))       # Affiche 'True'
-        
-```
-:::
-
-::: section
-## Définir une classe
-
--   **Définition** d\'une classe avec le mot réservé `class`
-    -   Corps de la classe est un bloc de code indenté
-    -   Le corps de la classe peut contenir des définitions de méthodes
--   Classe minimale grâce à l\'**instruction `pass`** [Aussi appelée
-    instruction vide car ne fait rien]{.small}
-
-``` lang-python
-            class Contact:
-                pass
-        
-```
-:::
-
-::: section
-## Créer une instance
-
--   Un objet est une **instance** d\'une classe [À partir d\'une classe,
-    on crée autant d\'objets que l\'on veut]{.small}
-
-``` lang-python
-            a = Contact()
-            b = Contact()
-        
+```terminal
+&> python -m pip install pygame
 ```
 
-![image](images/instances_references.png){.half}
-:::
+## Premier programme graphique {.code}
 
-::: section
-## Définir un constructeur
+```python
+import pygame
 
--   **Initialisation** d\'un objet par la méthode spéciale `__init__`
-    [Admet au moins un paramètre qui est `self`]{.small}
--   Le paramètre `self` référence l\'**objet à construire** [Permet
-    d\'accéder aux attributs et fonctionnalités de l\'objet]{.small}
+# initialisation de pygame
+pygame.init()
 
-``` lang-python
-            class Contact:
-                def __init__(self, firstname, lastname, phonenumber):
-                    self.firstname = firstname
-                    self.lastname = lastname
-                    self.phonenumber = phonenumber
-        
-```
-:::
+# demande une fenêtre de 800x600 pixels
+screen = pygame.display.set_mode((800, 600))
 
-::: section
-## Appeler un constructeur
+# la clock sert à limiter le nombre d'images par seconde
+clock = pygame.time.Clock()
 
--   Méthode appelée au moment de la **création d\'un objet** [Initialise
-    l\'objet, en donnant une valeur à ses variables]{.small}
+# boucle jusqu'à ce qu'on quitte
+while not pygame.event.peek(pygame.QUIT):
 
-``` lang-python
-            marchand = Contact("Cédric", "Marchand", 2693)
-            flemal = Contact("Clémence", "Flemal", 0)
-        
+  # attends qu'il se soit passé au moins 1/60
+  # de seconde depuis le dernier tick
+  clock.tick(60)
+
+  # dessine un cercle rouge centré en (100, 300) de rayon 20
+  pygame.draw.circle(screen, (255, 0, 0), (100, 300), 20)
+
+  # affiche l'image qui vient d'être dessinée
+  pygame.display.flip()
 ```
 
-![image](images/state.png){.half}
-:::
+## Animation
 
-::: section
-## Objet et référence
+- Pour animer le cercle, il suffit de le dessiner à une **position un peu
+  différente** à chaque image.
 
--   Un objet est une **instance** d\'une classe [L\'instanciation d\'une
-    classe produit un objet]{.small}
--   Stockage d\'une **référence** vers l\'objet dans une variable
-    [L\'adresse où l\'objet se situe en mémoire]{.small}
+```python
+import pygame
 
-``` lang-python
-            print(marchand)
-            print(flemal)
-        
+# initialisation de pygame
+pygame.init()
+
+# demande une fenêtre de 800x600 pixels
+screen = pygame.display.set_mode((800, 600))
+
+clock = pygame.time.Clock()
+
+xCircle = 100
+
+# boucle jusqu'à ce qu'on quitte
+while not pygame.event.peek(pygame.QUIT):
+  clock.tick(60)
+
+  # dessine un rectangle noir pour effacer l'image
+  pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(0, 0, 800, 600))
+
+  # dessine un cercle rouge centré en (xCircle, 300) de rayon 20
+  pygame.draw.circle(screen, (255, 0, 0), (xCircle, 300), 20)
+
+  # déplace le cercle
+  xCircle += 1
+
+  # affiche l'image qui vient d'être dessinée
+  pygame.display.flip()
 ```
 
-``` lang-plaintext
-            <__main__.Contact object at 0x109678748>
-            <__main__.Contact object at 0x109678780>
-        
-```
-:::
+## Événements
 
-::: section
-## Variable d\'instance
+- Gestion des événements lié à la souris et au clavier [Et autres
+  événements comme `pygame.QUIT`]{.small}
 
--   **Variables d\'instance** attachées à un objet définissent son état
-    [Chaque objet possède ses propres copies de ces variables]{.small}
--   Accès aux variables d\'instance avec l\'**objet cible** [Ou `self` à
-    l\'intérieur du code de la classe]{.small}
+- Fonctions dans le module `pygame.event`
 
-``` lang-python
-            print(marchand.firstname)
-            print(flemal.phonenumber)
-        
+- Les événements captés par Pygame sont stocké dans une file
+
+- Le fonction `pygame.event.peek` vérifie si un certain type
+  d\'événement attends dans la file
+
+```python
+# boucle jusqu'à ce qu'on quitte
+while not pygame.event.peek(pygame.QUIT):
+  # ...
 ```
 
-``` lang-plaintext
-            Cédric
-            0
-        
-```
-:::
+## Clavier
 
-::: section
-## Plusieurs constructeurs
+- Pour traiter tous les événements
 
--   Paramètre optionnel pour offrir **plusieurs constructeurs**
-    -   Définit une valeur par défaut pour les variables d\'instance
-    -   D\'abord les obligatoires, puis les optionnelles
-
-``` lang-python
-            class Contact:
-                def __init__(self, firstname, lastname, phonenumber=0):
-                    self.firstname = firstname
-                    self.lastname = lastname
-                    self.phonenumber = phonenumber
-            
-            marchand = Contact("Cédric", "Marchand", 2693)
-            flemal = Contact("Clémence", "Flemal")
-        
-```
-:::
-
-::: section
-## Méthode
-
--   **Méthode** attachée à un objet réalisant une action dessus [La
-    méthode reçoit d\'office un paramètre `self`, l\'objet
-    cible]{.small}
--   **Appel d\'une méthode** sur un objet cible avec le point (`.`)
-
-``` lang-python
-            class Contact:
-                def __init__(self, firstname, lastname):
-                    self.firstname = firstname
-                    self.lastname = lastname
-                    self.phonenumber = 0
-            
-                def setphonenumber(self, number):
-                    self.phonenumber = number
-            
-            marchand = Contact("Cédric", "Marchand")
-            marchand.setphonenumber(2693)
-        
-```
-:::
-
-::: section
-## Plusieurs méthodes
-
--   Comme pour le constructeur pour avoir **plusieurs méthodes**
-    [Utilisation de la valeur spéciale `None` comme valeur par
-    défaut]{.small}
-
-``` lang-python
-            class Contact:
-                # [...]
-                def changename(self, firstname=None, lastname=None):
-                    if firstname is not None:
-                        self.firstname = firstname
-                    if lastname is not None:
-                        self.lastname = lastname
-        
+```python
+# Boucler sur tous les events
+for event in pygame.event.get():
+  # Faire quelque chose avec l'event
 ```
 
-``` lang-python
-            lurkin.changename('John', 'Doe')
-            lurkin.changename('John')
-            lurkin.changename(lastname='Doe')
-        
-```
-:::
+- Tester le type de l\'événement avec l\'attribut `event.type` [Types
+  des événements clavier: `pygame.KEYDOWN` et `pygame.KEYUP`]{.small}
 
-::: section
-## Définir un vecteur dans le plan (1)
+- Les événements clavier ont 4 attributs spécifiques :
 
--   Deux variables d\'instance pour représenter les **coordonnées** [Les
-    deux variables `self.x` et `self.y` représentent \\((x,
-    y)\\)]{.small}
--   Une méthode `norm` pour calculer la **longueur du vecteur** [La
-    norme vaut \\(\\sqrt{x\^2 + y\^2}\\)]{.small}
+  - `key`: un code correspondant à la touche du clavier
+  - `mod`: un code représentant la combinaison de touches de
+    modification enfoncées (SHIFT, ALT, \...)
+  - `unicode`: le caractère tapé
+  - `scancode`: un code indépendant du layout du clavier (AZERTY,
+    QWERTY, \...)
 
-``` lang-python
-            class Vector:
-                def __init__(self, x, y):
-                    self.x = x
-                    self.y = y
-            
-                def norm(self):
-                    return sqrt(self.x ** 2 + self.y ** 2)
-            
-            u = Vector(1, -1)
-            print(u.norm())
-        
-```
+- [Les constantes contenant les `key`
+  code](https://www.pygame.org/docs/ref/key.html#key-constants-label)
 
-``` lang-plaintext
-            1.4142135623730951
-        
-```
-:::
+- [Les constantes contenant les codes des touches de
+  modification](https://www.pygame.org/docs/ref/key.html#key-modifiers-label)
 
-::: section
-## Exemple : Définir une musique
+## Clavier
 
--   Un titre, une liste d\'artistes et une durée
--   Méthode `hasArtist` teste si un artiste a composé la musique
+```python
+import pygame
+import sys
 
-``` lang-python
-            class Music:
-                def __init__(self, title, artists, duration):
-                    self.title = title
-                    self.artists = artists
-                    self.duration = duration
-                
-                def hasAuthor(self, name):
-                    return name in self.artists
-            
-            m1 = Music('Easy Come Easy Go', ['Alice on the roof'], 213)
-            print(m1.hasAuthor('Stromae'))
-        
+pygame.init()
+
+screen = pygame.display.set_mode((800, 600))
+
+clock = pygame.time.Clock()
+
+xCircle = 100
+vxCircle = 1
+
+# boucle infinie !
+while True:
+  clock.tick(60)
+  for event in pygame.event.get():
+    # Quitter si l'event est un QUIT
+    if event.type == pygame.QUIT:
+      sys.exit()
+    # Changer la vitesse de la balle si on appuie sur espace
+    if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+      vxCircle = -vxCircle
+
+  pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(0, 0, 800, 600))
+
+  pygame.draw.circle(screen, (255, 0, 0), (xCircle, 300), 20)
+
+  # déplace le cercle
+  xCircle += vxCircle
+
+  pygame.display.flip()
 ```
 
-``` lang-plaintext
-            False
-        
-```
-:::
+## Touche de modification
 
-::: section
-## Exemple : Définir une personne
+- Pour tester si une touche de modification sont appuyée :
 
--   Deux **éléments particuliers** à relever dans la classe `Person`
-    -   Variables d\'instance pas en paramètre du constructeur
-    -   Une méthode ne renvoie pas forcément quelque chose
-
-``` lang-python
-            class Person:
-                def __init__(self, firstname, lastname):
-                    self.firstname = firstname
-                    self.lastname = lastname
-                    self.friends = []
-                
-                def addfriend(self, p):
-                    self.friends.append(p)
-                
-                def hasfriend(self, p):
-                    return p in self.friends
-        
-```
-:::
-
-::: section
-## Mot réservé `self`
-
--   La **variable d\'instance** est accessible dans toute la classe
-    [Existe en mémoire pendant toute la durée de vie de
-    l\'objet]{.small}
--   Opposée à la **variable locale** qui n\'existe que dans la méthode
-
-``` lang-python
-            class Vector:
-                def __init__(self, x, y):
-                    pass
-                
-                def norm(self):
-                    return sqrt(x ** 2 + y ** 2)
-            
-            u = Vector(1, -1)
-            print(u.norm())
-        
+```python
+if event.mod & pygame.KMOD_SHIFT:
+  # SHIFT était appuyé lors de cet event
 ```
 
-``` lang-plaintext
-            Traceback (most recent call last):
-            File "program.py", line 38, in 
-                print(u.norm())
-            File "program.py", line 35, in norm
-                return sqrt(x ** 2 + y ** 2)
-            NameError: name 'x' is not defined
-        
-```
-:::
+- Ou plusieurs :
 
-::: section
-## Fonction vs méthode (1)
-
--   Une **méthode** est une fonction associée à un objet
-    -   La méthode peut agir sur les variables d\'instance de l\'objet
-    -   La méthode est appelée sur un objet cible
--   Fonction agissant sur un **tuple** [Tuple passé en paramètre de
-    manière explicite]{.small}
-
-``` lang-python
-            def norm(v):
-                x, y = v
-                return sqrt(x ** 2 + y ** 2)
-            
-            u = (1, -1)
-            print(norm(u))
-        
-```
-:::
-
-::: section
-## Fonction vs méthode (2)
-
--   Une **méthode** est une fonction associée à un objet
-    -   La méthode peut agir sur les variables d\'instance de l\'objet
-    -   La méthode est appelée sur un objet cible
--   Méthode agissant sur un **objet cible** [Objet cible passé de
-    manière implicite]{.small}
-
-``` lang-python
-            class Vector:
-                def __init__(self, x, y):
-                    self.x = x
-                    self.y = y
-                
-                def norm(self):
-                    return sqrt(self.x ** 2 + self.y ** 2)
-            
-            u = Vector(1, -1)
-            print(u.norm())
-        
-```
-:::
-
-::: section
-## Résumé : définition d\'une classe
-
--   **Deux éléments** à définir dans le corps d\'une classe
-    -   Le constructeur initialise les variables d\'instance
-    -   Les méthodes interrogent ou agissent sur l\'objet
--   **Plusieurs** constructeurs et versions d\'une méthode [À l\'aide
-    des paramètres optionnels]{.small}
-
-``` lang-python
-            class NomDeLaClasse:
-                def __init__(self, pc1, pc2, ...):
-                    self.varinst1 = pc1
-                    self.varinst2 = pc2
-                    self.autrevarinst = valeur
-                
-                def methode(self, pm1, pm2, ...):
-                    # ... agir sur l'objet ...
-        
-```
-:::
-
-::: section
-## Résumé : utilisation d\'un objet
-
--   **Création d\'un objet** à partir du nom de la classe
-    -   Appel implicite du constructeur `__init__`
-    -   Même nombre de valeurs `vc`\\(\_i\\) que de paramètres
-        `pc`\\(\_i\\)
--   Stockage d\'une **référence vers l\'objet** dans une variable
-    [Utilisation de cette variable pour agir sur l\'objet]{.small}
-
-``` lang-python
-            var = NomDeLaClasse(vc1, vc2, ...)
-            
-            var.methode(vm1, vm2, ...)
-        
-```
-:::
-
-::: {.section .full}
-## Programmation orientée objets
-
-![](images/492906260_efcdafa477_o.jpg)
-:::
-
-::: section
-## Représentation d\'un objet
-
--   La méthode `__str__` construit une **représentation de l\'objet**
-    [Renvoie une chaine de caractères lisible de l\'objet]{.small}
-
-``` lang-python
-            class Vector:
-                def __init__(self, x, y):
-                    self.x = x
-                    self.y = y
-                
-                def __str__(self):
-                    return '(' + str(self.x) + ', ' + str(self.y) + ')'
-            
-            u = Vector(1, -1)
-            print(u)
-        
+```python
+if event.mod & (pygame.KMOD_SHIFT | pygame.KMOD_ALT):
+  # SHIFT et ALT étaient appuyés lors de cet event
 ```
 
-``` lang-plaintext
-            (1, -1)
-        
-```
-:::
+## Souris
 
-::: section
-## Égalité (1)
+- Types des événements souris: `pygame.MOUSEBUTTONDOWN`, `pygame.MOUSEBUTTONUP`, `pygame.MOUSEMOTION`, `pygame.MOUSEWHEEL`
+- Les attributs intéressants des événements `pygame.MOUSEMOTION` sont:
+  - `pos`: les coordonnées de la souris
+  - `rel`: la vitesse de la souris
+- Les attributs intéressants des événements `pygame.MOUSEBUTTONDOWN` et `pygame.MOUSEBUTTONUP` sont:
+  - `button`: 1, 2 ou 3 en fonction du bouton pressé (gauche, milieu ou droit)
+  - `pos`: les coordonnées de la souris
 
--   L\'opérateur d\'égalité **compare les références** des variables [Le
-    contenu des objets n\'est pas comparé]{.small}
+## Souris
 
-``` lang-python
-            u = Vector(1, -1)
-            v = Vector(1, -1)
-            print(u == v)                  # False
-        
-```
+```python
+import pygame
+import sys
 
-![image](images/vector_copy.png){.half}
-:::
+pygame.init()
 
-::: section
-## Alias (1)
+screen = pygame.display.set_mode((800, 600))
 
--   Un **alias** est une copie de la référence vers un objet [Il n\'y a
-    qu\'une seule copie de l\'objet en mémoire]{.small}
+clock = pygame.time.Clock()
 
-``` lang-python
-            u = Vector(1, -1)
-            v = u
-            print(u == v)                  # True
-        
-```
+posCircle = (100, 100)
 
-![image](images/vector_reference.png){.half}
-:::
+# boucle infinie !
+while True:
+  clock.tick(60)
+  for event in pygame.event.get():
+    # Quitter si l'event est un QUIT
+    if event.type == pygame.QUIT:
+      sys.exit()
 
-::: section
-## Alias (2)
+    # Place le cercle là où se trouve la souris
+    if event.type == pygame.MOUSEMOTION:
+      posCircle = event.pos
 
--   **Qu\'affiche le code suivant** après exécution ?
-    -   `magic1` appelle une méthode sur `data`
-    -   `magic2` modifie la variable locale `data`
+  pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(0, 0, 800, 600))
 
-``` lang-python
-            def magic1(data):
-                data.append("Coucou")
-            
-            def magic2(data):
-                data = "Coucou"
-            
-            a = [0, 1, 2, 3]
-            print(a)
-            
-            magic1(a)
-            print(a)
-            
-            magic2(a)
-            print(a)
-        
-```
-:::
+  pygame.draw.circle(screen, (255, 0, 0), posCircle, 20)
 
-::: section
-## Surcharge d\'opérateur (1)
+  pygame.display.flip()
 
--   On peut **redéfinir** les opérateurs arithmétiques [`__add__` pour
-    `+`, `__sub__` pour `-`, `__mul__` pour `*`\...]{.small}
-
-``` lang-python
-            class Vector:
-                def __init__(self, x, y):
-                    self.x = x
-                    self.y = y
-                
-                def __add__(self, other):
-                    return Vector(self.x + other.x, self.y + other.y)
-                
-                # ...
-            
-            u = Vector(1, -1)
-            v = Vector(2, 1)
-            print(u + v)
-        
 ```
 
-``` lang-plaintext
-            (3, 0)
-        
-```
-:::
+## Widget
 
-::: section
-## Surcharge d\'opérateur (2)
+- Bouton, Label, Champ texte, \...
+- Pas inclus dans Pygame
+- Utilisation de la bibliothèque `pygame_gui`
 
--   On peut **redéfinir** les opérateurs de comparaison [`__lt__` pour
-    `<`, `__le__` pour `<=`, `__eq__` pour `==`\...]{.small}
+### Installation
 
-``` lang-python
-            class Vector:
-                def __init__(self, x, y):
-                    self.x = x
-                    self.y = y
-                
-                def __lt__(self, other):
-                    return self.x < other.x or (self.x == other.x and self.y < other.y)
-                
-                # ...
-            
-            u = Vector(1, -1)
-            v = Vector(2, 1)
-            print(u < v)
-        
+```terminal
+&> python -m pip install pygame_gui
 ```
 
-``` lang-plaintext
-            True
-        
-```
-:::
+## Pygame_gui
 
-::: section
-## Égalité (2)
+- Configuration du **manager** de widgets
 
--   Surcharge de l\'opérateur d\'égalité pour **comparer les objets**
-    [Le contenu des objets sera comparé, et non plus les
-    références]{.small}
--   **Comparaison des identités** avec l\'opérateur `is` [Comparaison
-    des références des objets]{.small}
+```python
+import pygame
+import pygame_gui
+import sys
 
-``` lang-python
-            class Vector:
-                # ...
-                
-                def __eq__(self, other):
-                    return self.x == other.x and self.y == other.y
-            
-            u = Vector(1, -1)
-            v = Vector(1, -1)
-            print(u == v)                  # True
-            print(u is v)                  # False
-        
-```
-:::
+pygame.init()
 
-::: section
-## Définir un vecteur dans le plan (2)
+screen = pygame.display.set_mode((800, 600))
 
--   Une seule variable d\'instance pour les **coordonnées** [Stockée
-    dans un tuple par exemple]{.small}
--   **Choix d\'implémentation** complètement libres [Il n\'y a pas
-    qu\'une seule solution unique]{.small}
+clock = pygame.time.Clock()
 
-``` lang-python
-            class Vector:
-                def __init__(self, x, y):
-                    self.coords = (x, y)
-                
-                def norm(self):
-                    return sqrt(self.coords[0] ** 2 + self.coords[1] ** 2)
-            
-            u = Vector(1, -1)
-            print(u.norm())
-        
-```
-:::
+manager = pygame_gui.UIManager((800, 600))
 
-::: section
-## Encapsulation (1)
+while True:
+  # tick renvoie le temps écoulé depuis le dernier tick (en ms)
+  time_delta = clock.tick(60)
+  for event in pygame.event.get():
+    if event.type == pygame.QUIT:
+      sys.exit()
 
--   Les données de l\'objet sont **encapsulées** dans l\'objet [Ne pas
-    dévoiler les détails d\'implémentation en dehors de
-    l\'objet]{.small}
--   **Pas d\'accès direct** aux variables d\'instance [Pas recommandé
-    d\'accéder directement aux variables d\'instance]{.small}
+    # permet à pygame_gui de recevoir les events
+    manager.process_events(event)
 
-``` lang-python
-            u = Vector(1, -1)
-            v = Vector(2, 1)
-            
-            s = Vector(u.x + v.x, u.y + v.y)
-            
-            # ou
-            # s = Vector(u.coords[0] + v.coords[0], u.coords[0] + v.coords[0])
-        
-```
-:::
+  # permet à pygame_gui de mettre à jour les animations (en s)
+  manager.update(time_delta/1000)
 
-::: section
-## Variable privée
+  pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(0, 0, 800, 600))
 
--   **Variable privée** en préfixant son nom avec `__` [Ne pourra pas
-    être accédée en dehors de la classe]{.small}
+  # affiche les widgets
+  manager.draw_ui(screen)
 
-``` lang-python
-            class Vector:
-                def __init__(self, x, y):
-                    self.__x = x
-                    self.__y = y
-            
-            u = Vector(1, -1)
-            print(u.__x)
-        
+  pygame.display.flip()
 ```
 
-``` lang-plaintext
-            Traceback (most recent call last):
-            File "program.py", line 9, in 
-                print(u.__x)
-            AttributeError: 'Vector' object has no attribute '__x'
-        
-```
-:::
+## Ajout d\'un widget
 
-::: section
-## Accesseur
+- Ajout d\'un **bouton**
 
--   Accès à une variable privée à l\'aide d\'un **accesseur** [Méthode
-    qui renvoie une variable d\'instance]{.small}
--   Un accesseur se définit avec la **décoration** `@property` [L\'appel
-    se fait comme si c\'était une variable d\'instance publique]{.small}
+```python
+import pygame
+import pygame_gui
+from pygame_gui.elements import UIButton
+import sys
 
-``` lang-python
-            from math import sqrt
-            
-            class Vector:
-                # ...
-                
-                @property
-                def x(self):
-                    return self.__x
-            
-            u = Vector(1, -1)
-            print(u.x)                     # 1
-        
-```
-:::
+pygame.init()
+screen = pygame.display.set_mode((800, 600))
+clock = pygame.time.Clock()
+manager = pygame_gui.UIManager((800, 600))
 
-::: section
-## Mutateur
+hello_button = UIButton(
+  relative_rect=pygame.Rect(350, 275, 100, 50),
+  text='Hello World',
+  manager=manager
+)
 
--   Modification d\'une variable privée à l\'aide d\'un **mutateur**
-    [Méthode qui change la valeur d\'une variable d\'instance]{.small}
--   Un mutateur se définit avec la **décoration** `@nom.setter` [Où
-    `nom` est celui de la méthode]{.small}
-
-``` lang-python
-            class Vector:
-                # ...
-                
-                @x.setter
-                def x(self, value):
-                    self.__x = value
-            
-            u = Vector(1, -1)
-            u.x = 12
-            print(u.x)                     # 12
-        
-```
-:::
-
-::: section
-## Encapsulation (2)
-
--   Accès à un objet **uniquement via les méthodes** publiques
-    [Utilisateur indépendants de la représentation interne de
-    l\'objet]{.small}
-
-``` lang-python
-            class Vector:
-                def __init__(self, x, y):
-                    self.__coords = (x, y)
-                
-                @property
-                def x(self):
-                    return self.__coords[0]
-                
-                @x.setter
-                def x(self, value):
-                    self.__coords = (value, self.__coords[1])
-            
-            u = Vector(1, -1)
-            u.x = 12
-            print(u.x)                     # 12
-        
-```
-:::
-
-::: section
-## Interface
-
--   L\'**interface publique** d\'un objet expose ses fonctionnalités
-    [Définit ce que l\'utilisateur peut faire avec l\'objet]{.small}
--   Interface publique de la **classe `Vector`**
-    -   Une variable d\'instance `coords` privée
-    -   Un accesseur et un mutateur pour la coordonnée \\(x\\)
-    -   Une méthode `coords` publique
-
-![image](images/vector.png){.fourth}
-:::
-
-::: section
-## Composition d\'objets
-
--   On peut **composer** plusieurs objets ensemble [En utilisant des
-    variables d\'instance de type objet]{.small}
-
-``` lang-python
-            class Rectangle:
-                def __init__(self, lowerleft, width, height, angle=0):
-                    self.__lowerleft = lowerleft
-                    self.__width = width
-                    self.__height = height
-                    self.__angle = angle
-            
-                @property
-                def lowerleft(self):
-                    return self.__lowerleft
-            
-            p = Vector(1, -1)
-            r = Rectangle(p, 100, 50)
-            print(r.lowerleft)             # (1, -1)
-        
-```
-:::
-
-::: section
-## Réutilisation de code
-
--   On peut **réutiliser le code** définit pour les objets composés [Il
-    suffit d\'appeler les méthodes des variables objet]{.small}
-
-``` lang-python
-            class Rectangle:
-                # ...
-                
-                def __str__(self):
-                    return "Rectangle en " + str(self.__lowerleft) +
-                    " de longueur " + str(self.__width) +
-                    " et de hauteur " + str(self.__height) +
-                    " incliné de " + str(self.__angle) + " degrés"
-            
-            r = Rectangle(Vector(1, -1), 100, 50)
-            print(r)
-        
+while True:
+  time_delta = clock.tick(60)
+  for event in pygame.event.get():
+    if event.type == pygame.QUIT:
+      sys.exit()
+    manager.process_events(event)
+  manager.update(time_delta/1000)
+  pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(0, 0, 800, 600))
+  manager.draw_ui(screen)
+  pygame.display.flip()
 ```
 
-``` lang-plaintext
-            Rectangle en (1, -1) de longueur 100 et de hauteur 50 incliné
-            de 0 degrés
-        
+## Pygame_gui events
+
+- Lorsqu\'on appuie sur le bouton cela déclenche un **nouveau type
+  d\'événement**. [`pygame_gui.UI_BUTTON_PRESSED`]{.small}
+- Les événements `pygame_gui` ont un attribut `ui_element` qui contient
+  une référence vers **le widget qui a créé l\'événement**.
+
+## Pygame_gui events {.code}
+
+```python
+import pygame
+import pygame_gui
+from pygame_gui.elements import UIButton
+import sys
+
+pygame.init()
+screen = pygame.display.set_mode((800, 600))
+clock = pygame.time.Clock()
+manager = pygame_gui.UIManager((800, 600))
+
+hello_button = UIButton(
+  relative_rect=pygame.Rect(350, 275, 100, 50),
+  text='Hello World',
+  manager=manager
+)
+
+while True:
+  time_delta = clock.tick(60)
+  for event in pygame.event.get():
+    if event.type == pygame.QUIT:
+      sys.exit()
+
+    if event.type == pygame_gui.UI_BUTTON_PRESSED:
+      if event.ui_element == hello_button:
+        print('Hello World!')
+
+    manager.process_events(event)
+  manager.update(time_delta/1000)
+  pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(0, 0, 800, 600))
+  manager.draw_ui(screen)
+  pygame.display.flip()
 ```
-:::
 
-::: section
-## Chaine de caractères formatée
+## Interaction entre Widget {.code}
 
--   Chaine de caractères **formatée** à partir de valeurs
-    -   Incrustation de valeurs définie avec des balises `{}`
-    -   Valeurs à incruster passées en paramètres de `format`
--   **Même nombre** de balises que de valeurs passées en paramètre
-    [Sinon, l\'interpréteur Python produit une erreur
-    d\'exécution]{.small}
+```python
+import pygame
+import pygame_gui
+from pygame_gui.elements import UIButton, UILabel, UITextEntryLine
+import sys
 
-``` lang-python
-            class Rectangle:
-                # ...
-                
-                def __str__(self):
-                    return "Rectangle en {} de longueur {} et de hauteur {}
-                    incliné de {} degrés".format(self.__lowerleft,
-                    self.__width, self.__height, self.__angle)
-            
-            r = Rectangle(Vector(1, -1), 100, 50)
-            print(r)
-        
+pygame.init()
+screen = pygame.display.set_mode((800, 600))
+clock = pygame.time.Clock()
+manager = pygame_gui.UIManager((800, 600))
+
+hello_button = UIButton(
+  relative_rect=pygame.Rect(350, 275, 100, 50),
+  text='Hello',
+  manager=manager
+)
+
+input = UITextEntryLine(
+  relative_rect=pygame.Rect(350, 220, 100, 50),
+  manager=manager
+)
+
+display = UILabel(
+  relative_rect=pygame.Rect(350, 330, 100, 50),
+  text='',
+  manager=manager
+)
+
+while True:
+  time_delta = clock.tick(60)
+  for event in pygame.event.get():
+    if event.type == pygame.QUIT:
+      sys.exit()
+
+    if event.type == pygame_gui.UI_BUTTON_PRESSED:
+      if event.ui_element == hello_button:
+        display.set_text('Hello {}'.format(input.get_text()))
+
+    manager.process_events(event)
+  manager.update(time_delta/1000)
+  pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(0, 0, 800, 600))
+  manager.draw_ui(screen)
+  pygame.display.flip()
 ```
-:::
 
-::: section
-## Crédits
+## Exemple avec des classes {.code}
 
--   https://www.flickr.com/photos/booleansplit/3510951967
--   https://www.flickr.com/photos/goincase/492906260
-:::
+```python
+from dataclasses import dataclass
+import pygame
+from pygame.event import Event
+import pygame_gui
+from pygame_gui.elements import UIButton, UITextEntryLine
+import sys
+
+
+@dataclass
+class Ball:
+  pos: tuple[float, float]
+  radius: float
+
+  def draw(self, screen: pygame.Surface):
+    pygame.draw.circle(screen, (255, 0, 0), self.pos, self.radius)
+
+class App:
+  def __init__(self):
+    pygame.init()
+
+    self.screen = pygame.display.set_mode((800, 600))
+    self.manager = pygame_gui.UIManager((800, 600))
+
+    self.input = UITextEntryLine(
+      relative_rect=pygame.Rect(10, 10, 100, 50), manager=self.manager
+    )
+    self.input.set_text("20")
+
+    self.ok = UIButton(
+      relative_rect=pygame.Rect(120, 10, 100, 50),
+      text="OK",
+      manager=self.manager,
+    )
+
+    self.ball = Ball((100, 100), 20)
+
+  def process_events(self, event: Event):
+    if event.type == pygame_gui.UI_BUTTON_PRESSED:
+      if event.ui_element == self.ok:
+        self.ball.radius = float(self.input.get_text())
+    if event.type == pygame.MOUSEMOTION:
+      self.ball.pos = event.pos
+
+  def draw(self):
+    self.ball.draw(self.screen)
+
+  def run(self):
+    clock = pygame.time.Clock()
+    while True:
+      time_delta = clock.tick(60) / 1000
+      for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+          sys.exit()
+        self.process_events(event)
+        self.manager.process_events(event)
+      self.manager.update(time_delta)
+      pygame.draw.rect(self.screen, (0, 0, 0), pygame.Rect(0, 0, 800, 600))
+      self.draw()
+      self.manager.draw_ui(self.screen)
+      pygame.display.flip()
+
+App().run()
+```
+
+## Documentation
+
+### Pygame
+
+[www.pygame.org/docs/](https://www.pygame.org/docs/)
+
+### Pygame_gui
+
+[pygame-gui.readthedocs.io/en/latest/](https://pygame-gui.readthedocs.io/en/latest/)
