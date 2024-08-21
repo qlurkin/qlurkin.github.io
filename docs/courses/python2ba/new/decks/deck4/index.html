@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Quentin Lurkin" />
+  <title>Cours 4 - Mécanisme d’exceptions et lecture de fichiers</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="/deck.css" />
+  <script src="/deck_only.js" defer></script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Cours 4
+<small>Mécanisme d’exceptions et lecture de fichiers</small>
+</h1>
+<p class="author">Quentin Lurkin</p>
+</header>
+<section id="trace-derreur" class="level2">
+<h2>Trace d’erreur</h2>
+<ul>
+<li>Une erreur d'exécution imprime une <strong>trace d'erreur</strong>
+<span class="small">Chemin d'exécution complet qui a provoqué
+l'erreur</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">def</span> <span class="nf">percentage</span><span class="p">(</span><span class="n">score</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">total</span><span class="p">:</span><span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+  <span class="k">return</span> <span class="n">score</span> <span class="o">/</span> <span class="n">total</span> <span class="o">*</span> <span class="mi">100</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Alexis a obtenu&#39;</span><span class="p">,</span> <span class="n">percentage</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="s1">&#39;%&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Sébastien a obtenu&#39;</span><span class="p">,</span> <span class="n">percentage</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="s1">&#39;%&#39;</span><span class="p">)</span>
+</pre></div>
+
+<div class="terminal">Alexis a obtenu 90.0 %
+Traceback (most recent call last):
+    File &quot;program.py&quot;, line 5, in &lt;module&gt;
+        print(&#39;Sébastien a obtenu&#39;, percentage(6, 0), &#39;%&#39;)
+    File &quot;program.py&quot;, line 2, in percentage
+        return score / total * 100
+ZeroDivisionError: division by zero
+</div>
+</section>
+<section id="trace-derreur-1" class="level2">
+<h2>Trace d'erreur</h2>
+<ul>
+<li>L'erreur a comme <strong>origine</strong> l'exécution de
+l'instruction en ligne 5</li>
+</ul>
+<div class="terminal">File &quot;program.py&quot;, line 5, in &lt;module&gt;
+    print(&#39;Sébastien a obtenu&#39;, percentage(6, 0), &#39;%&#39;)
+</div>
+<ul>
+<li>L'erreur est dans la <strong>fonction
+<code>percentage()</code></strong></li>
+</ul>
+<div class="terminal">File &quot;program.py&quot;, line 2, in percentage
+    return score / total * 100
+</div>
+<ul>
+<li>L'erreur est de type <strong>division par zéro</strong></li>
+</ul>
+<div class="pygments"><pre><span></span>ZeroDivisionError: division by zero
+</pre></div>
+
+</section>
+<section id="gestion-derreurs" class="level2">
+<h2>Gestion d'erreurs</h2>
+<ul>
+<li>Prendre en compte <strong>tous les cas</strong> possibles
+d'exécution <span class="small">Prévoir une valeur de retour spéciale en
+cas d'erreur</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+
+<span class="k">def</span> <span class="nf">percentage</span><span class="p">(</span><span class="n">score</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">total</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="n">total</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">score</span> <span class="o">/</span> <span class="n">total</span> <span class="o">*</span> <span class="mi">100</span>
+    <span class="k">return</span> <span class="kc">None</span>
+</pre></div>
+
+<div class="terminal">Alexis a obtenu 90.0 %
+Sébastien a obtenu None %
+</div>
+</section>
+<section id="types-derreur" class="level2">
+<h2>Types d'erreur</h2>
+<ul>
+<li>On peut considérer <strong>trois types d'erreur</strong> possibles
+<ul>
+<li><strong>Erreur de syntaxe</strong> <span class="small">Code source
+mal formé</span></li>
+<li><strong>Erreur d'exécution</strong> <span class="small">Exécution
+d'une opération interdite</span></li>
+<li><strong>Erreur logique</strong> <span class="small">Programme ne
+calcule pas ce qu'il faut</span></li>
+</ul></li>
+<li>Le troisième type est le plus <strong>difficile à déceler</strong>
+<span class="small">Il faut pouvoir vérifier que le programme fait ce
+qu'il faut</span></li>
+</ul>
+</section>
+<section id="erreur-de-syntaxe" class="level2">
+<h2>Erreur de syntaxe</h2>
+<ul>
+<li>Erreur détectée <strong>lors de l'exécution</strong> de
+l'instruction <span class="small">Python est en effet un langage
+interprété</span></li>
+<li>Code source du programme contient des <strong>fautes de
+syntaxe</strong> <span class="small">Un peu comme l'orthographe en
+français</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="n">score</span> <span class="o">=</span> <span class="mi">12</span>
+<span class="k">if</span> <span class="n">score</span> <span class="o">&gt;</span> <span class="mi">10</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Vous avez réussi !&#39;</span><span class="p">)</span>
+</pre></div>
+
+<div class="terminal">File &quot;program.py&quot;, line 2
+    if score &gt; 10
+                ^
+SyntaxError: invalid syntax
+</div>
+</section>
+<section id="erreur-dexécution" class="level2">
+<h2>Erreur d'exécution</h2>
+<ul>
+<li>Erreur produite <strong>durant l'exécution</strong> d'une opération
+interdite <span class="small">Division par zéro, indice en dehors d'une
+liste...</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+
+<span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">while</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+  <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+</pre></div>
+
+<div class="terminal">1
+2
+3
+Traceback (most recent call last):
+    File &quot;program.py&quot;, line 5, in &lt;module&gt;
+        print(data[i])
+IndexError: list index out of range
+</div>
+</section>
+<section id="erreur-logique" class="level2">
+<h2>Erreur logique</h2>
+<ul>
+<li>Le programme ne <strong>calcule pas ce qu'il faut</strong> <span
+class="small">Aucune erreur de syntaxe ou d'exécution ne se
+produit</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">def</span> <span class="nf">perimeter</span><span class="p">(</span><span class="n">length</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">width</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">length</span> <span class="o">+</span> <span class="n">width</span> <span class="o">*</span> <span class="mi">2</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">perimeter</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+</pre></div>
+
+<div class="terminal">4
+</div>
+<ul>
+<li>Il peut être utile de décrire clairement ce que la fonction devrait
+faire <span class="small">Pour s'assurer qu'il y a bien une
+erreur</span></li>
+</ul>
+</section>
+<section id="documentation" class="level2">
+<h2>Documentation</h2>
+<ul>
+<li>La <strong>documentation</strong> d'une fonction décrit le résultat
+produit <span class="small">Permet à un utilisateur d'interpréter le
+résultat de l'appel</span></li>
+<li>Description de <strong>conditions</strong> sur les paramètres <span
+class="small">Et de la valeur de retour si elles ne sont pas
+satisfaites</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">def</span> <span class="nf">percentage</span><span class="p">(</span><span class="n">score</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">total</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Returns a grade as a percentage</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    `score`: the obtained grade</span>
+<span class="sd">    `total`: the maximum grade obtainable</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    the computed percentage</span>
+<span class="sd">    if `total &lt;= 0`, `score &lt; 0` or `score &gt; total`, then returns `None`</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="k">if</span> <span class="n">total</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">score</span> <span class="o">&lt;=</span> <span class="n">total</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">score</span> <span class="o">/</span> <span class="n">total</span> <span class="o">*</span> <span class="mi">100</span>
+  <span class="k">return</span> <span class="kc">None</span>
+</pre></div>
+
+</section>
+<section id="instruction-assert" class="level2">
+<h2>Instruction <code>assert</code></h2>
+<ul>
+<li>Vérification de <strong>conditions sensées être vraies</strong> avec
+<code class="lang-python">assert</code> <span class="small">On vérifie
+notamment les conditionssur les paramètres avec cette
+instruction</span></li>
+<li>Un programme <strong>doit fonctionner</strong> si on supprime les
+assertions <span class="small">Elles ne doivent pas faire partie du code
+fonctionnel</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">def</span> <span class="nf">percentage</span><span class="p">(</span><span class="n">score</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">total</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Returns a grade as a percentage</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    `score`: the obtained grade. Must be positive and `&lt;= total`</span>
+<span class="sd">    `total`: the maximum grade obtainable. Must be positive</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    the computed percentage</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+
+  <span class="k">assert</span> <span class="n">total</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;total must be positive&#39;</span>
+  <span class="k">assert</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">score</span><span class="p">,</span> <span class="s1">&#39;score must be positive&#39;</span>
+  <span class="k">assert</span> <span class="n">score</span> <span class="o">&lt;=</span> <span class="n">total</span><span class="p">,</span> <span class="s1">&#39;score must be &lt;= total&#39;</span>
+  <span class="k">return</span> <span class="n">score</span> <span class="o">/</span> <span class="n">total</span> <span class="o">*</span> <span class="mi">100</span>
+</pre></div>
+
+</section>
+<section id="instruction-assert-1" class="level2">
+<h2>Instruction <code>assert</code></h2>
+<ul>
+<li><strong>Arrêt du programme</strong> en cas d'erreur d'assertion
+<span class="small">Avec affichage d'un message
+d'information</span></li>
+<li>Empêche des erreurs qui <strong>ne devraient pas</strong> se
+produire <span class="small">Le programme peut être modifié pour les
+éviter</span></li>
+<li><strong>Augmente nos chances d’avoir une erreur d’exécution au lieu
+d’une erreur de logique</strong> <span class="small">Ce qui est trés
+désirable</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">percentage</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="s1">&#39;%&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">percentage</span><span class="p">(</span><span class="mi">22</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="s1">&#39;%&#39;</span><span class="p">)</span>
+</pre></div>
+
+<div class="terminal">75.0 %
+Traceback (most recent call last):
+    File &quot;program.py&quot;, line 17, in &lt;module&gt;
+        print(percentage(22, 20), &#39;%&#39;)
+    File &quot;program.py&quot;, line 13, in percentage
+        assert score &lt;= total, &#39;score must be &lt;= total&#39;
+AssertionError: score must be &lt;= total
+</div>
+</section>
+<section id="programmation-défensive" class="level2">
+<h2>Programmation défensive</h2>
+<ul>
+<li><strong>Programmation défensive</strong>
+<ul>
+<li>Utilisation de l'instruction <code>assert</code></li>
+<li>On suppose les préconditions remplies</li>
+<li>Peut être pratiquée au sein d'un module <span class="small">Se
+pratique sur du code dont vous avez le contrôle</span></li>
+</ul></li>
+<li><strong>Gestion d'erreur</strong>
+<ul>
+<li>Utilisation de l'instruction <code>if-else</code></li>
+<li>On vérifie les conditions nécessaires sur les données</li>
+<li>Doit être pratiquée pour interface avec l'extérieur <span
+class="small">Vérification de toutes données hors contrôle</span></li>
+</ul></li>
+</ul>
+</section>
+<section id="mecanisme-dexceptions" class="level2">
+<h2>Mecanisme d’exceptions</h2>
+<ul>
+<li><strong>Code risqué</strong> placé dans un bloc <code>try</code>
+<span class="small">N'y placer que le code risqué et tout code qui en
+dépend</span></li>
+<li><strong>Erreurs capturées</strong> dans le bloc <code>except</code>
+<span class="small">Y placer le code à exécuter en cas de capture d'une
+erreur</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">birthyear</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;Année de naissance ? &#39;</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+    <span class="n">age</span> <span class="o">=</span> <span class="n">now</span><span class="o">.</span><span class="n">year</span> <span class="o">-</span> <span class="nb">int</span><span class="p">(</span><span class="n">birthyear</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Tu as&#39;</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="s1">&#39;ans&#39;</span><span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Erreur&#39;</span><span class="p">)</span>
+</pre></div>
+
+</section>
+<section id="instruction-try-except" class="level2">
+<h2>Instruction <code>try-except</code></h2>
+<ul>
+<li>Si l'utilisateur entre un nombre entier, <strong>pas
+d'erreurs</strong></li>
+</ul>
+<div class="pygments"><pre><span></span>                    Année de naissance ? 1982
+                    Tu as 36 ans
+</pre></div>
+
+<ul>
+<li>Si l'utilisateur n'entre pas un nombre entier, <strong>erreur
+capturée</strong></li>
+</ul>
+<div class="pygments"><pre><span></span>                    Année de naissance ? BLA
+                    Erreur
+</pre></div>
+
+</section>
+<section id="validité-dune-donnée" class="level2">
+<h2>Validité d'une donnée</h2>
+<ul>
+<li>Demande d'une valeur à l'utilisateur <strong>en boucle</strong>
+<span class="small">Tant que la valeur demandée n'est pas du bon
+type</span></li>
+</ul>
+<div class="pygments"><pre><span></span>            from datetime import *
+
+            valid = False
+            while not valid:
+                birthyear = input(&#39;Année de naissance ? &#39;)
+                try:
+                    birthyear = int(birthyear)
+                    valid = True
+                except:
+                    print(&#39;Veuillez entrer un nombre entier&#39;)
+
+            now = datetime.now()
+            age = now.year - birthyear
+            print(&#39;Tu as&#39;, age, &#39;ans&#39;)
+</pre></div>
+
+</section>
+<section id="vérifier-le-type-derreur-1" class="level2">
+<h2>Vérifier le type d'erreur (1)</h2>
+<ul>
+<li>Plusieurs <strong>types d'erreur</strong> sont possibles <span
+class="small">Division par zéro, erreur de conversion...</span></li>
+<li>Toutes les erreurs sont capturées par l'<strong>instruction <code
+class="lang-python">except</code></strong> <span
+class="small">Possibilité de capturer les erreurs de manière
+spécifique</span></li>
+</ul>
+<div class="pygments"><pre><span></span>            try:
+                a = int(input(&#39;a ? &#39;))
+                b = int(input(&#39;b ? &#39;))
+                print(a, &#39;/&#39;, b, &#39;=&#39;, a / b)
+            except:
+                print(&#39;Erreur&#39;)
+</pre></div>
+
+</section>
+<section id="vérifier-le-type-derreur-2" class="level2">
+<h2>Vérifier le type d'erreur (2)</h2>
+<ul>
+<li>Une <strong>exception</strong> est un objet qui représente une
+erreur <span class="small">L'objet est généralement de type <code
+class="lang-python">Exception</code></span></li>
+<li>Types spécifiques pour différencier les <strong>types
+d'erreurs</strong> <span class="small">ZeroDivisionError,
+ValueError...</span></li>
+</ul>
+<div class="pygments"><pre><span></span>            import sys
+
+            try:
+                a = int(input(&#39;a ? &#39;))
+                b = int(input(&#39;b ? &#39;))
+                print(a, &#39;/&#39;, b, &#39;=&#39;, a / b)
+            except Exception as e:
+                print(type(e))
+                print(e)
+</pre></div>
+
+</section>
+<section id="vérifier-le-type-derreur-3" class="level2">
+<h2>Vérifier le type d'erreur (3)</h2>
+<ul>
+<li>Division par zéro</li>
+</ul>
+<div class="pygments"><pre><span></span>                    a ? deux
+                    &lt;class &#39;ValueError&#39;&gt;
+                    invalid literal for int() with base 10: &#39;deux&#39;
+</pre></div>
+
+<ul>
+<li>Erreur de conversion</li>
+</ul>
+<div class="pygments"><pre><span></span>                    a ? 2
+                    b ? 0
+                    &lt;class &#39;ZeroDivisionError&#39;&gt;
+                    division by zero
+</pre></div>
+
+</section>
+<section id="capturer-une-erreur-spécifique-1" class="level2">
+<h2>Capturer une erreur spécifique (1)</h2>
+<ul>
+<li><strong>Gestionnaire d'erreurs</strong> différent pour chaque type
+d'erreur <span class="small">Il suffit de déclarer un bloc <code
+class="lang-python">except</code> par erreur à capturer</span></li>
+<li>Attention à l'<strong>ordre de capture</strong> (de haut en bas)
+<span class="small">Il faut classer les erreurs de la plus à la moins
+spécificité</span></li>
+</ul>
+<div class="pygments"><pre><span></span>            import sys
+
+            try:
+                a = int(input(&#39;a ? &#39;))
+                b = int(input(&#39;b ? &#39;))
+                print(a, &#39;/&#39;, b, &#39;=&#39;, a / b)
+            except ValueError:
+                print(&#39;Erreur de conversion&#39;)
+            except ZeroDivisionError:
+                print(&#39;Division par zéro&#39;)
+            except:
+                print(&#39;Autre erreur&#39;)
+</pre></div>
+
+</section>
+<section id="capturer-une-erreur-spécifique-2" class="level2">
+<h2>Capturer une erreur spécifique (2)</h2>
+<div class="pygments"><pre><span></span>            import sys
+
+            try:
+                a = int(input(&#39;a ? &#39;))
+                b = int(input(&#39;b ? &#39;))
+                print(a, &#39;/&#39;, b, &#39;=&#39;, a / b)
+            except Exception:
+                print(&#39;Erreur&#39;)
+            except ValueError:
+                print(&#39;Erreur de conversion&#39;)
+            except ZeroDivisionError:
+                print(&#39;Division par zéro&#39;)
+</pre></div>
+
+<div class="pygments"><pre><span></span>            a ? 2
+            b ? 0
+            Autre erreur
+</pre></div>
+
+</section>
+<section id="information-sur-une-erreur" class="level2">
+<h2>Information sur une erreur</h2>
+<ul>
+<li>L'<strong>objet de l'exception</strong> peut contenir de
+l'information <span class="small">On peut accéder à des propriétés ou à
+des méthodes</span></li>
+</ul>
+<div class="pygments"><pre><span></span>            try:
+                import mymod
+            except SyntaxError as e:
+                print(e)
+                print(&#39;File:&#39;, e.filename)
+                print(&#39;Line:&#39;, e.lineno)
+                print(&#39;Text:&#39;, e.text)
+</pre></div>
+
+<div class="pygments"><pre><span></span>            can&#39;t assign to literal (mymod.py, line 1)
+            File: /Users/combefis/Desktop/mymod.py
+            Line: 1
+            Text: 2 = x
+</pre></div>
+
+</section>
+<section id="gestionnaire-derreurs-partagé" class="level2">
+<h2>Gestionnaire d'erreurs partagé</h2>
+<ul>
+<li><strong>Même gestionnaire d'erreurs</strong> pour différents types
+<span class="small">Tuple d'exception fourni à l'instruction <code
+class="lang-python">except</code></span></li>
+</ul>
+<div class="pygments"><pre><span></span>            try:
+                a = int(input(&#39;a ? &#39;))
+                b = int(input(&#39;b ? &#39;))
+                print(a / b)
+            except (ZeroDivisionError, ValueError):
+                print(&#39;Erreur de calcul&#39;)
+            except:
+                print(&#39;Erreur&#39;)
+</pre></div>
+
+<div class="pygments"><pre><span></span>            a ? 1
+            b ? 0
+            Erreur de calcul
+</pre></div>
+
+</section>
+<section id="propagation-derreur-1" class="level2">
+<h2>Propagation d'erreur (1)</h2>
+<ul>
+<li>Une <strong>erreur non capturée</strong> remonte les appels de
+fonction <span class="small">Jusqu'à être attrapée ou remonté jusqu'au
+bout</span></li>
+<li>La <strong>trace d'erreur</strong> montre le trajet pris par
+l'exception <span class="small">En la lisant à l'envers, on peut suivre
+la propagation</span></li>
+</ul>
+</section>
+<section id="propagation-derreur-2" class="level2">
+<h2>Propagation d'erreur (2)</h2>
+<ul>
+<li><strong>Passage</strong> de <code class="lang-python">fun</code> à
+<code class="lang-python">compute</code> au programme principal</li>
+</ul>
+<div class="pygments"><pre><span></span>            def fun():
+                print(1 / 0)
+
+            def compute():
+                fun()
+
+            compute()
+</pre></div>
+
+<div class="pygments"><pre><span></span>            Traceback (most recent call last):
+                File &quot;program.py&quot;, line 7, in &lt;module&gt;
+                    compute()
+                File &quot;program.py&quot;, line 5, in compute
+                    fun()
+                File &quot;program.py&quot;, line 2, in fun
+                    print(1 / 0)
+            ZeroDivisionError: division by zero
+</pre></div>
+
+</section>
+<section id="propagation-derreur-3" class="level2">
+<h2>Propagation d'erreur (3)</h2>
+<ul>
+<li>Exception <strong>interceptée</strong> dans la fonction <code
+class="lang-python">compute</code></li>
+</ul>
+<div class="pygments"><pre><span></span>                def fun():
+                    print(1 / 0)
+
+                def compute():
+                    try:
+                        fun()
+                    except:
+                        print(&#39;Erreur.&#39;)
+
+                compute()
+</pre></div>
+
+<div class="pygments"><pre><span></span>                Erreur.
+</pre></div>
+
+</section>
+<section id="bloc-finally-1" class="level2">
+<h2>Bloc <code>finally</code> (1)</h2>
+<ul>
+<li>Le bloc <code class="lang-python">finally</code> s'exécute
+<strong>dans tous les cas</strong> <span class="small">Après le bloc
+<code class="lang-python">try</code> ou l'<code
+class="lang-python">except</code> en cas d'erreur</span></li>
+<li>Notamment utilisé pour faire du <strong>nettoyage</strong> <span
+class="small">Par exemple pour libérer des ressources qui ont été
+allouées</span></li>
+</ul>
+</section>
+<section id="bloc-finally-2" class="level2">
+<h2>Bloc <code>finally</code> (2)</h2>
+<ul>
+<li>Bloc <code>finally</code> <strong>exécuté à tous les coups</strong>
+avant la fin du calcul</li>
+</ul>
+<div class="pygments"><pre><span></span>            print(&#39;Début du calcul.&#39;)
+            try:
+                a = int(input(&#39;a ? &#39;))
+                b = int(input(&#39;b ? &#39;))
+                print(&#39;Résultat :&#39;, a / b)
+            except:
+                print(&#39;Erreur.&#39;)
+            finally:
+                print(&#39;Nettoyage de la mémoire.&#39;)
+                print(&#39;Fin du calcul.&#39;)
+</pre></div>
+
+<div class="pygments"><pre><span></span>            Début du calcul.
+            a ? 2
+            b ? 8
+            Résultat : 0.25
+            Nettoyage de la mémoire.
+            Fin du calcul.
+</pre></div>
+
+</section>
+<section id="générer-une-erreur" class="level2">
+<h2>Générer une erreur</h2>
+<ul>
+<li>L'<strong>instruction <code
+class="lang-python">raise</code></strong> permet de générer une erreur
+<span class="small">Création d'un objet du type de
+l'exception</span></li>
+</ul>
+<div class="pygments"><pre><span></span>            def fact(n):
+                if n &lt; 0:
+                    raise ArithmeticError()
+                if n == 0:
+                    return 1
+                return n * fact(n - 1)
+
+            try:
+                n = int(input(&#39;Entrez un nombre : &#39;))
+                print(fact(n))
+            except ArithmeticError:
+                print(&#39;Veuillez entrer un nombre positif.&#39;)
+            except:
+                print(&#39;Veuillez entrer un nombre.&#39;)
+</pre></div>
+
+<div class="pygments"><pre><span></span>            Entrez un nombre : -12
+            Veuillez entrer un nombre positif.
+</pre></div>
+
+</section>
+<section id="définir-une-erreur-1" class="level2">
+<h2>Définir une erreur (1)</h2>
+<ul>
+<li><strong>Définition d'une erreur</strong> en définissant une nouvelle
+classe <span class="small">La classe est créée à partir de la classe
+<code class="lang-python">Exception</code></span></li>
+<li>L'<strong>instruction <code class="lang-python">pass</code></strong>
+ne fait rien</li>
+</ul>
+<div class="pygments"><pre><span></span>            from math import sqrt
+
+            class NoRootException(Exception):
+                pass
+
+            def trinomialroots(a, b, c):
+                delta = b ** 2 - 4 * a * c
+                if delta &lt; 0:
+                    raise NoRootException()
+                if delta == 0:
+                    return (-b / (2 * a),)
+                x1 = (-b + sqrt(delta)) / (2 * a)
+                x2 = (-b - sqrt(delta)) / (2 * a)
+                return (x1, x2)
+</pre></div>
+
+</section>
+<section id="définir-une-erreur-2" class="level2">
+<h2>Définir une erreur (2)</h2>
+<ul>
+<li><strong>Capture de la nouvelle erreur</strong> avec l'instruction
+<code class="lang-python">except</code> <span class="small">Le nouveau
+type d'erreur est maintenant connu par Python</span></li>
+</ul>
+<div class="pygments"><pre><span></span>            try:
+                print(trinomialroots(1, 0, 2))
+            except NoRootException:
+                print(&#39;Pas de racine réelle.&#39;)
+            except:
+                print(&#39;Erreur&#39;)
+</pre></div>
+
+<div class="pygments"><pre><span></span>            Pas de racine réelle.
+</pre></div>
+
+</section>
+<section id="exception-paramétrée" class="level2">
+<h2>Exception paramétrée</h2>
+<ul>
+<li>Stockage d'un <strong>paramètre</strong> dans l'exception</li>
+</ul>
+<div class="pygments"><pre><span></span>            class NoRootException(Exception):
+                def __init__(self, delta):
+                    self.__delta = delta
+
+                @property
+                def delta(self):
+                    return self.__delta
+
+            def trinomialroots(a, b, c):
+                delta = b ** 2 - 4 * a * c
+                if delta &lt; 0:
+                    raise NoRootException(delta)
+                if delta == 0:
+                    return (-b / (2 * a),)
+                x1 = (-b + sqrt(delta)) / (2 * a)
+                x2 = (-b - sqrt(delta)) / (2 * a)
+                return (x1, x2)
+
+            try:
+                print(trinomialroots(1, 0, 2))
+            except NoRootException as e:
+                print(&#39;Pas de racine réelle (delta = {})&#39;.format(e.delta))
+            except:
+                print(&#39;Erreur&#39;)
+</pre></div>
+
+<div class="pygments"><pre><span></span>            Pas de racine réelle (delta = -8)
+</pre></div>
+
+</section>
+<section id="quand-utiliser-les-erreurs" class="level2">
+<h2>Quand utiliser les erreurs ?</h2>
+<ul>
+<li><strong>Toujours</strong> vérifier les données provenant de
+l'<strong>extérieur</strong> <span class="small">Lecture avec <code
+class="lang-python">input</code>, lecture d'un fichier...</span></li>
+<li>Lors d'un <strong>appel à une fonction</strong> d'un module <span
+class="small">Lire la documentation de la fonction, pour les erreurs
+potentielles</span></li>
+<li>Quand on définit une <strong>librairie</strong> <span
+class="small">Pour les fonctions publiques offertes à
+l'extérieur</span></li>
+</ul>
+</section>
+</body>
+</html>
