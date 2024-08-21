@@ -56,7 +56,7 @@ ZeroDivisionError: division by zero
 </div>
 </section>
 <section id="trace-derreur-1" class="level2">
-<h2>Trace d'erreur</h2>
+<h2>Trace d’erreur</h2>
 <ul>
 <li>L'erreur a comme <strong>origine</strong> l'exécution de
 l'instruction en ligne 5</li>
@@ -78,27 +78,8 @@ l'instruction en ligne 5</li>
 </pre></div>
 
 </section>
-<section id="gestion-derreurs" class="level2">
-<h2>Gestion d'erreurs</h2>
-<ul>
-<li>Prendre en compte <strong>tous les cas</strong> possibles
-d'exécution <span class="small">Prévoir une valeur de retour spéciale en
-cas d'erreur</span></li>
-</ul>
-<div class="pygments"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
-
-<span class="k">def</span> <span class="nf">percentage</span><span class="p">(</span><span class="n">score</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">total</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
-    <span class="k">if</span> <span class="n">total</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">score</span> <span class="o">/</span> <span class="n">total</span> <span class="o">*</span> <span class="mi">100</span>
-    <span class="k">return</span> <span class="kc">None</span>
-</pre></div>
-
-<div class="terminal">Alexis a obtenu 90.0 %
-Sébastien a obtenu None %
-</div>
-</section>
 <section id="types-derreur" class="level2">
-<h2>Types d'erreur</h2>
+<h2>Types d’erreur</h2>
 <ul>
 <li>On peut considérer <strong>trois types d'erreur</strong> possibles
 <ul>
@@ -132,7 +113,7 @@ français</span></li>
 <div class="terminal">File &quot;program.py&quot;, line 2
     if score &gt; 10
                 ^
-SyntaxError: invalid syntax
+SyntaxError: expected &#39;:&#39;
 </div>
 </section>
 <section id="erreur-dexécution" class="level2">
@@ -167,7 +148,7 @@ class="small">Aucune erreur de syntaxe ou d'exécution ne se
 produit</span></li>
 </ul>
 <div class="pygments"><pre><span></span><span class="k">def</span> <span class="nf">perimeter</span><span class="p">(</span><span class="n">length</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">width</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-    <span class="k">return</span> <span class="n">length</span> <span class="o">+</span> <span class="n">width</span> <span class="o">*</span> <span class="mi">2</span>
+  <span class="k">return</span> <span class="n">length</span> <span class="o">+</span> <span class="n">width</span> <span class="o">*</span> <span class="mi">2</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">perimeter</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
 </pre></div>
@@ -194,26 +175,40 @@ satisfaites</span></li>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;Returns a grade as a percentage</span>
 
 <span class="sd">  Args:</span>
-<span class="sd">    `score`: the obtained grade</span>
-<span class="sd">    `total`: the maximum grade obtainable</span>
+<span class="sd">    `score`: the obtained grade. Must be positive and `&lt;= total`</span>
+<span class="sd">    `total`: the maximum grade obtainable. Must be positive</span>
 
 <span class="sd">  Returns:</span>
 <span class="sd">    the computed percentage</span>
-<span class="sd">    if `total &lt;= 0`, `score &lt; 0` or `score &gt; total`, then returns `None`</span>
 <span class="sd">  &quot;&quot;&quot;</span>
-  <span class="k">if</span> <span class="n">total</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">score</span> <span class="o">&lt;=</span> <span class="n">total</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">score</span> <span class="o">/</span> <span class="n">total</span> <span class="o">*</span> <span class="mi">100</span>
-  <span class="k">return</span> <span class="kc">None</span>
+  <span class="k">return</span> <span class="n">score</span> <span class="o">/</span> <span class="n">total</span> <span class="o">*</span> <span class="mi">100</span>
 </pre></div>
 
 </section>
-<section id="instruction-assert" class="level2">
-<h2>Instruction <code>assert</code></h2>
+<section id="documentation-1" class="level2">
+<h2>Documentation</h2>
+<ul>
+<li>Conditions de la documentation <strong>non-respectées</strong> <span
+class="small">Le programme continue de fonctionner avec une valeur
+illogique</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">percentage</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="s1">&#39;%&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">percentage</span><span class="p">(</span><span class="mi">22</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="s1">&#39;%&#39;</span><span class="p">)</span>
+</pre></div>
+
+<div class="terminal">75%
+110%
+</div>
+<ul>
+<li>Erreur <strong>de logique</strong></li>
+</ul>
+</section>
+<section id="programmation-défensive" class="level2">
+<h2>Programmation défensive</h2>
 <ul>
 <li>Vérification de <strong>conditions sensées être vraies</strong> avec
-<code class="lang-python">assert</code> <span class="small">On vérifie
-notamment les conditionssur les paramètres avec cette
-instruction</span></li>
+<code>assert</code> <span class="small">On vérifie notamment les
+conditions sur les paramètres avec cette instruction</span></li>
 <li>Un programme <strong>doit fonctionner</strong> si on supprime les
 assertions <span class="small">Elles ne doivent pas faire partie du code
 fonctionnel</span></li>
@@ -228,15 +223,15 @@ fonctionnel</span></li>
 <span class="sd">  Returns:</span>
 <span class="sd">    the computed percentage</span>
 <span class="sd">  &quot;&quot;&quot;</span>
-
   <span class="k">assert</span> <span class="n">total</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;total must be positive&#39;</span>
   <span class="k">assert</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">score</span><span class="p">,</span> <span class="s1">&#39;score must be positive&#39;</span>
   <span class="k">assert</span> <span class="n">score</span> <span class="o">&lt;=</span> <span class="n">total</span><span class="p">,</span> <span class="s1">&#39;score must be &lt;= total&#39;</span>
+
   <span class="k">return</span> <span class="n">score</span> <span class="o">/</span> <span class="n">total</span> <span class="o">*</span> <span class="mi">100</span>
 </pre></div>
 
 </section>
-<section id="instruction-assert-1" class="level2">
+<section id="instruction-assert" class="level2">
 <h2>Instruction <code>assert</code></h2>
 <ul>
 <li><strong>Arrêt du programme</strong> en cas d'erreur d'assertion
@@ -261,29 +256,50 @@ Traceback (most recent call last):
         assert score &lt;= total, &#39;score must be &lt;= total&#39;
 AssertionError: score must be &lt;= total
 </div>
+<ul>
+<li>Se pratique sur du code dont vous avez <strong>le
+contrôle</strong></li>
+</ul>
 </section>
-<section id="programmation-défensive" class="level2">
-<h2>Programmation défensive</h2>
+<section id="gestion-derreurs" class="level2">
+<h2>Gestion d’erreurs</h2>
 <ul>
-<li><strong>Programmation défensive</strong>
+<li>Prendre en compte <strong>tous les cas</strong> possibles
+d'exécution <span class="small">Utilisation de
+<code>if-else</code></span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+
+<span class="k">def</span> <span class="nf">percentage</span><span class="p">(</span><span class="n">score</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">total</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Returns a grade as a percentage</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    `score`: the obtained grade</span>
+<span class="sd">    `total`: the maximum grade obtainable</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    the computed percentage</span>
+<span class="sd">    if `total &lt;= 0`, `score &lt; 0` or `score &gt; total`, then returns `None`</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="k">if</span> <span class="n">total</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">score</span> <span class="o">&lt;=</span> <span class="n">total</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">score</span> <span class="o">/</span> <span class="n">total</span> <span class="o">*</span> <span class="mi">100</span>
+  <span class="k">return</span> <span class="kc">None</span>
+</pre></div>
+
+<div class="terminal">Alexis a obtenu 90.0 %
+Sébastien a obtenu None %
+</div>
 <ul>
-<li>Utilisation de l'instruction <code>assert</code></li>
-<li>On suppose les préconditions remplies</li>
-<li>Peut être pratiquée au sein d'un module <span class="small">Se
-pratique sur du code dont vous avez le contrôle</span></li>
-</ul></li>
-<li><strong>Gestion d'erreur</strong>
-<ul>
-<li>Utilisation de l'instruction <code>if-else</code></li>
-<li>On vérifie les conditions nécessaires sur les données</li>
+<li>Impact sur l’<strong>annotation du type de retour</strong> de la
+fonction</li>
 <li>Doit être pratiquée pour interface avec l'extérieur <span
 class="small">Vérification de toutes données hors contrôle</span></li>
-</ul></li>
 </ul>
 </section>
 <section id="mecanisme-dexceptions" class="level2">
 <h2>Mecanisme d’exceptions</h2>
 <ul>
+<li>Gestion d’un code qui <strong>pourrait planter</strong></li>
 <li><strong>Code risqué</strong> placé dans un bloc <code>try</code>
 <span class="small">N'y placer que le code risqué et tout code qui en
 dépend</span></li>
@@ -296,11 +312,11 @@ erreur</span></li>
 <span class="n">birthyear</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;Année de naissance ? &#39;</span><span class="p">)</span>
 
 <span class="k">try</span><span class="p">:</span>
-    <span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
-    <span class="n">age</span> <span class="o">=</span> <span class="n">now</span><span class="o">.</span><span class="n">year</span> <span class="o">-</span> <span class="nb">int</span><span class="p">(</span><span class="n">birthyear</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Tu as&#39;</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="s1">&#39;ans&#39;</span><span class="p">)</span>
+  <span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+  <span class="n">age</span> <span class="o">=</span> <span class="n">now</span><span class="o">.</span><span class="n">year</span> <span class="o">-</span> <span class="nb">int</span><span class="p">(</span><span class="n">birthyear</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Tu as&#39;</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="s1">&#39;ans&#39;</span><span class="p">)</span>
 <span class="k">except</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Erreur&#39;</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Erreur&#39;</span><span class="p">)</span>
 </pre></div>
 
 </section>
@@ -310,18 +326,16 @@ erreur</span></li>
 <li>Si l'utilisateur entre un nombre entier, <strong>pas
 d'erreurs</strong></li>
 </ul>
-<div class="pygments"><pre><span></span>                    Année de naissance ? 1982
-                    Tu as 36 ans
-</pre></div>
-
+<div class="terminal">Année de naissance ? 1982
+Tu as 36 ans
+</div>
 <ul>
 <li>Si l'utilisateur n'entre pas un nombre entier, <strong>erreur
 capturée</strong></li>
 </ul>
-<div class="pygments"><pre><span></span>                    Année de naissance ? BLA
-                    Erreur
-</pre></div>
-
+<div class="terminal">Année de naissance ? BLA
+Erreur
+</div>
 </section>
 <section id="validité-dune-donnée" class="level2">
 <h2>Validité d'une donnée</h2>
@@ -330,130 +344,126 @@ capturée</strong></li>
 <span class="small">Tant que la valeur demandée n'est pas du bon
 type</span></li>
 </ul>
-<div class="pygments"><pre><span></span>            from datetime import *
+<div class="pygments"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="o">*</span>
 
-            valid = False
-            while not valid:
-                birthyear = input(&#39;Année de naissance ? &#39;)
-                try:
-                    birthyear = int(birthyear)
-                    valid = True
-                except:
-                    print(&#39;Veuillez entrer un nombre entier&#39;)
+<span class="n">valid</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="k">while</span> <span class="ow">not</span> <span class="n">valid</span><span class="p">:</span>
+  <span class="n">birthyear</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;Année de naissance ? &#39;</span><span class="p">)</span>
+  <span class="k">try</span><span class="p">:</span>
+    <span class="n">birthyear</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">birthyear</span><span class="p">)</span>
+    <span class="n">valid</span> <span class="o">=</span> <span class="kc">True</span>
+  <span class="k">except</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Veuillez entrer un nombre entier&#39;</span><span class="p">)</span>
 
-            now = datetime.now()
-            age = now.year - birthyear
-            print(&#39;Tu as&#39;, age, &#39;ans&#39;)
+<span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+<span class="n">age</span> <span class="o">=</span> <span class="n">now</span><span class="o">.</span><span class="n">year</span> <span class="o">-</span> <span class="n">birthyear</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Tu as&#39;</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="s1">&#39;ans&#39;</span><span class="p">)</span>
+</pre></div>
+
+</section>
+<section id="vérifier-le-type-derreur" class="level2">
+<h2>Vérifier le type d'erreur</h2>
+<ul>
+<li>Plusieurs <strong>types d'erreur</strong> sont possibles <span
+class="small">Division par zéro, erreur de conversion...</span></li>
+<li>Toutes les erreurs sont capturées par l'<strong>instruction
+<code>except</code></strong> <span class="small">Possibilité de capturer
+les erreurs de manière spécifique</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">try</span><span class="p">:</span>
+  <span class="n">a</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s1">&#39;a ? &#39;</span><span class="p">))</span>
+  <span class="n">b</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s1">&#39;b ? &#39;</span><span class="p">))</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="s1">&#39;=&#39;</span><span class="p">,</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span><span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Erreur&#39;</span><span class="p">)</span>
 </pre></div>
 
 </section>
 <section id="vérifier-le-type-derreur-1" class="level2">
-<h2>Vérifier le type d'erreur (1)</h2>
-<ul>
-<li>Plusieurs <strong>types d'erreur</strong> sont possibles <span
-class="small">Division par zéro, erreur de conversion...</span></li>
-<li>Toutes les erreurs sont capturées par l'<strong>instruction <code
-class="lang-python">except</code></strong> <span
-class="small">Possibilité de capturer les erreurs de manière
-spécifique</span></li>
-</ul>
-<div class="pygments"><pre><span></span>            try:
-                a = int(input(&#39;a ? &#39;))
-                b = int(input(&#39;b ? &#39;))
-                print(a, &#39;/&#39;, b, &#39;=&#39;, a / b)
-            except:
-                print(&#39;Erreur&#39;)
-</pre></div>
-
-</section>
-<section id="vérifier-le-type-derreur-2" class="level2">
-<h2>Vérifier le type d'erreur (2)</h2>
+<h2>Vérifier le type d'erreur</h2>
 <ul>
 <li>Une <strong>exception</strong> est un objet qui représente une
-erreur <span class="small">L'objet est généralement de type <code
-class="lang-python">Exception</code></span></li>
+erreur <span class="small">L'objet est généralement de type
+<code>Exception</code></span></li>
 <li>Types spécifiques pour différencier les <strong>types
 d'erreurs</strong> <span class="small">ZeroDivisionError,
 ValueError...</span></li>
 </ul>
-<div class="pygments"><pre><span></span>            import sys
+<div class="pygments"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
 
-            try:
-                a = int(input(&#39;a ? &#39;))
-                b = int(input(&#39;b ? &#39;))
-                print(a, &#39;/&#39;, b, &#39;=&#39;, a / b)
-            except Exception as e:
-                print(type(e))
-                print(e)
+<span class="k">try</span><span class="p">:</span>
+  <span class="n">a</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s1">&#39;a ? &#39;</span><span class="p">))</span>
+  <span class="n">b</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s1">&#39;b ? &#39;</span><span class="p">))</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="s1">&#39;=&#39;</span><span class="p">,</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
 </pre></div>
 
 </section>
-<section id="vérifier-le-type-derreur-3" class="level2">
-<h2>Vérifier le type d'erreur (3)</h2>
+<section id="vérifier-le-type-derreur-2" class="level2">
+<h2>Vérifier le type d'erreur</h2>
 <ul>
 <li>Division par zéro</li>
 </ul>
-<div class="pygments"><pre><span></span>                    a ? deux
-                    &lt;class &#39;ValueError&#39;&gt;
-                    invalid literal for int() with base 10: &#39;deux&#39;
-</pre></div>
-
+<div class="terminal">a ? deux
+&lt;class &#39;ValueError&#39;&gt;
+invalid literal for int() with base 10: &#39;deux&#39;
+</div>
 <ul>
 <li>Erreur de conversion</li>
 </ul>
-<div class="pygments"><pre><span></span>                    a ? 2
-                    b ? 0
-                    &lt;class &#39;ZeroDivisionError&#39;&gt;
-                    division by zero
-</pre></div>
-
+<div class="terminal">a ? 2
+b ? 0
+&lt;class &#39;ZeroDivisionError&#39;&gt;
+division by zero
+</div>
 </section>
-<section id="capturer-une-erreur-spécifique-1" class="level2">
-<h2>Capturer une erreur spécifique (1)</h2>
+<section id="capturer-une-erreur-spécifique" class="level2">
+<h2>Capturer une erreur spécifique</h2>
 <ul>
 <li><strong>Gestionnaire d'erreurs</strong> différent pour chaque type
-d'erreur <span class="small">Il suffit de déclarer un bloc <code
-class="lang-python">except</code> par erreur à capturer</span></li>
+d'erreur <span class="small">Il suffit de déclarer un bloc
+<code>except</code> par erreur à capturer</span></li>
 <li>Attention à l'<strong>ordre de capture</strong> (de haut en bas)
 <span class="small">Il faut classer les erreurs de la plus à la moins
 spécificité</span></li>
 </ul>
-<div class="pygments"><pre><span></span>            import sys
+<div class="pygments"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
 
-            try:
-                a = int(input(&#39;a ? &#39;))
-                b = int(input(&#39;b ? &#39;))
-                print(a, &#39;/&#39;, b, &#39;=&#39;, a / b)
-            except ValueError:
-                print(&#39;Erreur de conversion&#39;)
-            except ZeroDivisionError:
-                print(&#39;Division par zéro&#39;)
-            except:
-                print(&#39;Autre erreur&#39;)
+<span class="k">try</span><span class="p">:</span>
+  <span class="n">a</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s1">&#39;a ? &#39;</span><span class="p">))</span>
+  <span class="n">b</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s1">&#39;b ? &#39;</span><span class="p">))</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="s1">&#39;=&#39;</span><span class="p">,</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Erreur de conversion&#39;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">ZeroDivisionError</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Division par zéro&#39;</span><span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Autre erreur&#39;</span><span class="p">)</span>
 </pre></div>
 
 </section>
-<section id="capturer-une-erreur-spécifique-2" class="level2">
-<h2>Capturer une erreur spécifique (2)</h2>
-<div class="pygments"><pre><span></span>            import sys
+<section id="capturer-une-erreur-spécifique-1" class="level2">
+<h2>Capturer une erreur spécifique</h2>
+<div class="pygments"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
 
-            try:
-                a = int(input(&#39;a ? &#39;))
-                b = int(input(&#39;b ? &#39;))
-                print(a, &#39;/&#39;, b, &#39;=&#39;, a / b)
-            except Exception:
-                print(&#39;Erreur&#39;)
-            except ValueError:
-                print(&#39;Erreur de conversion&#39;)
-            except ZeroDivisionError:
-                print(&#39;Division par zéro&#39;)
+<span class="k">try</span><span class="p">:</span>
+  <span class="n">a</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s1">&#39;a ? &#39;</span><span class="p">))</span>
+  <span class="n">b</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s1">&#39;b ? &#39;</span><span class="p">))</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="s1">&#39;=&#39;</span><span class="p">,</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Erreur&#39;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Erreur de conversion&#39;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">ZeroDivisionError</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Division par zéro&#39;</span><span class="p">)</span>
 </pre></div>
 
-<div class="pygments"><pre><span></span>            a ? 2
-            b ? 0
-            Autre erreur
-</pre></div>
-
+<div class="terminal">a ? 2
+b ? 0
+Autre erreur
+</div>
 </section>
 <section id="information-sur-une-erreur" class="level2">
 <h2>Information sur une erreur</h2>
@@ -462,21 +472,20 @@ spécificité</span></li>
 l'information <span class="small">On peut accéder à des propriétés ou à
 des méthodes</span></li>
 </ul>
-<div class="pygments"><pre><span></span>            try:
-                import mymod
-            except SyntaxError as e:
-                print(e)
-                print(&#39;File:&#39;, e.filename)
-                print(&#39;Line:&#39;, e.lineno)
-                print(&#39;Text:&#39;, e.text)
+<div class="pygments"><pre><span></span><span class="k">try</span><span class="p">:</span>
+  <span class="kn">import</span> <span class="nn">mymod</span>
+<span class="k">except</span> <span class="ne">SyntaxError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;File:&#39;</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Line:&#39;</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">lineno</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Text:&#39;</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
 </pre></div>
 
-<div class="pygments"><pre><span></span>            can&#39;t assign to literal (mymod.py, line 1)
-            File: /Users/combefis/Desktop/mymod.py
-            Line: 1
-            Text: 2 = x
-</pre></div>
-
+<div class="terminal">can&#39;t assign to literal (mymod.py, line 1)
+File: /Users/combefis/Desktop/mymod.py
+Line: 1
+Text: 2 = x
+</div>
 </section>
 <section id="gestionnaire-derreurs-partagé" class="level2">
 <h2>Gestionnaire d'erreurs partagé</h2>
@@ -485,24 +494,23 @@ des méthodes</span></li>
 <span class="small">Tuple d'exception fourni à l'instruction <code
 class="lang-python">except</code></span></li>
 </ul>
-<div class="pygments"><pre><span></span>            try:
-                a = int(input(&#39;a ? &#39;))
-                b = int(input(&#39;b ? &#39;))
-                print(a / b)
-            except (ZeroDivisionError, ValueError):
-                print(&#39;Erreur de calcul&#39;)
-            except:
-                print(&#39;Erreur&#39;)
+<div class="pygments"><pre><span></span><span class="k">try</span><span class="p">:</span>
+  <span class="n">a</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s1">&#39;a ? &#39;</span><span class="p">))</span>
+  <span class="n">b</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s1">&#39;b ? &#39;</span><span class="p">))</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">a</span> <span class="o">/</span> <span class="n">b</span><span class="p">)</span>
+<span class="k">except</span> <span class="p">(</span><span class="ne">ZeroDivisionError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">):</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Erreur de calcul&#39;</span><span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Erreur&#39;</span><span class="p">)</span>
 </pre></div>
 
-<div class="pygments"><pre><span></span>            a ? 1
-            b ? 0
-            Erreur de calcul
-</pre></div>
-
+<div class="terminal">a ? 1
+b ? 0
+Erreur de calcul
+</div>
 </section>
-<section id="propagation-derreur-1" class="level2">
-<h2>Propagation d'erreur (1)</h2>
+<section id="propagation-derreur" class="level2">
+<h2>Propagation d'erreur</h2>
 <ul>
 <li>Une <strong>erreur non capturée</strong> remonte les appels de
 fonction <span class="small">Jusqu'à être attrapée ou remonté jusqu'au
@@ -512,92 +520,85 @@ l'exception <span class="small">En la lisant à l'envers, on peut suivre
 la propagation</span></li>
 </ul>
 </section>
-<section id="propagation-derreur-2" class="level2">
-<h2>Propagation d'erreur (2)</h2>
+<section id="propagation-derreur-1" class="level2">
+<h2>Propagation d'erreur</h2>
 <ul>
 <li><strong>Passage</strong> de <code class="lang-python">fun</code> à
 <code class="lang-python">compute</code> au programme principal</li>
 </ul>
-<div class="pygments"><pre><span></span>            def fun():
-                print(1 / 0)
+<div class="pygments"><pre><span></span><span class="k">def</span> <span class="nf">fun</span><span class="p">():</span>
+  <span class="nb">print</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">0</span><span class="p">)</span>
 
-            def compute():
-                fun()
+<span class="k">def</span> <span class="nf">compute</span><span class="p">():</span>
+  <span class="n">fun</span><span class="p">()</span>
 
-            compute()
+<span class="n">compute</span><span class="p">()</span>
 </pre></div>
 
-<div class="pygments"><pre><span></span>            Traceback (most recent call last):
-                File &quot;program.py&quot;, line 7, in &lt;module&gt;
-                    compute()
-                File &quot;program.py&quot;, line 5, in compute
-                    fun()
-                File &quot;program.py&quot;, line 2, in fun
-                    print(1 / 0)
-            ZeroDivisionError: division by zero
-</pre></div>
-
+<div class="terminal">Traceback (most recent call last):
+    File &quot;program.py&quot;, line 7, in &lt;module&gt;
+        compute()
+    File &quot;program.py&quot;, line 5, in compute
+        fun()
+    File &quot;program.py&quot;, line 2, in fun
+        print(1 / 0)
+ZeroDivisionError: division by zero
+</div>
 </section>
-<section id="propagation-derreur-3" class="level2">
-<h2>Propagation d'erreur (3)</h2>
+<section id="propagation-derreur-2" class="level2">
+<h2>Propagation d'erreur</h2>
 <ul>
 <li>Exception <strong>interceptée</strong> dans la fonction <code
 class="lang-python">compute</code></li>
 </ul>
-<div class="pygments"><pre><span></span>                def fun():
-                    print(1 / 0)
+<div class="pygments"><pre><span></span><span class="k">def</span> <span class="nf">fun</span><span class="p">():</span>
+  <span class="nb">print</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">0</span><span class="p">)</span>
 
-                def compute():
-                    try:
-                        fun()
-                    except:
-                        print(&#39;Erreur.&#39;)
+<span class="k">def</span> <span class="nf">compute</span><span class="p">():</span>
+  <span class="k">try</span><span class="p">:</span>
+    <span class="n">fun</span><span class="p">()</span>
+  <span class="k">except</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Erreur.&#39;</span><span class="p">)</span>
 
-                compute()
+<span class="n">compute</span><span class="p">()</span>
 </pre></div>
 
-<div class="pygments"><pre><span></span>                Erreur.
-</pre></div>
-
-</section>
-<section id="bloc-finally-1" class="level2">
-<h2>Bloc <code>finally</code> (1)</h2>
-<ul>
-<li>Le bloc <code class="lang-python">finally</code> s'exécute
-<strong>dans tous les cas</strong> <span class="small">Après le bloc
-<code class="lang-python">try</code> ou l'<code
-class="lang-python">except</code> en cas d'erreur</span></li>
-<li>Notamment utilisé pour faire du <strong>nettoyage</strong> <span
-class="small">Par exemple pour libérer des ressources qui ont été
-allouées</span></li>
-</ul>
-</section>
-<section id="bloc-finally-2" class="level2">
-<h2>Bloc <code>finally</code> (2)</h2>
-<ul>
-<li>Bloc <code>finally</code> <strong>exécuté à tous les coups</strong>
-avant la fin du calcul</li>
-</ul>
-<div class="pygments"><pre><span></span>            print(&#39;Début du calcul.&#39;)
-            try:
-                a = int(input(&#39;a ? &#39;))
-                b = int(input(&#39;b ? &#39;))
-                print(&#39;Résultat :&#39;, a / b)
-            except:
-                print(&#39;Erreur.&#39;)
-            finally:
-                print(&#39;Nettoyage de la mémoire.&#39;)
-                print(&#39;Fin du calcul.&#39;)
-</pre></div>
-
-<div class="pygments"><pre><span></span>            Début du calcul.
-            a ? 2
-            b ? 8
-            Résultat : 0.25
-            Nettoyage de la mémoire.
-            Fin du calcul.
-</pre></div>
-
+<div class="terminal">Erreur.
+</div>
+<!--## Bloc `finally`-->
+<!---->
+<!--- Le bloc `finally`{.lang-python} s\'exécute **dans tous les cas**-->
+<!--  [Après le bloc `try`{.lang-python} ou l\'`except`{.lang-python} en-->
+<!--  cas d\'erreur]{.small}-->
+<!--- Notamment utilisé pour faire du **nettoyage** [Par exemple pour-->
+<!--  libérer des ressources qui ont été allouées]{.small}-->
+<!---->
+<!--## Bloc `finally`-->
+<!---->
+<!--- Bloc `finally` **exécuté à tous les coups** avant la-->
+<!--  fin du calcul-->
+<!---->
+<!--```python-->
+<!--print('Début du calcul.')-->
+<!--try:-->
+<!--  a = int(input('a ? '))-->
+<!--  b = int(input('b ? '))-->
+<!--  print('Résultat :', a / b)-->
+<!--except:-->
+<!--  print('Erreur.')-->
+<!--finally:-->
+<!--  print('Nettoyage de la mémoire.')-->
+<!--  print('Fin du calcul.')-->
+<!--```-->
+<!---->
+<!--```terminal-->
+<!--Début du calcul.-->
+<!--a ? 2-->
+<!--b ? 8-->
+<!--Résultat : 0.25-->
+<!--Nettoyage de la mémoire.-->
+<!--Fin du calcul.-->
+<!--```-->
 </section>
 <section id="générer-une-erreur" class="level2">
 <h2>Générer une erreur</h2>
@@ -607,120 +608,172 @@ class="lang-python">raise</code></strong> permet de générer une erreur
 <span class="small">Création d'un objet du type de
 l'exception</span></li>
 </ul>
-<div class="pygments"><pre><span></span>            def fact(n):
-                if n &lt; 0:
-                    raise ArithmeticError()
-                if n == 0:
-                    return 1
-                return n * fact(n - 1)
+<div class="pygments"><pre><span></span><span class="k">def</span> <span class="nf">fact</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Compute the factorial of `n`</span>
 
-            try:
-                n = int(input(&#39;Entrez un nombre : &#39;))
-                print(fact(n))
-            except ArithmeticError:
-                print(&#39;Veuillez entrer un nombre positif.&#39;)
-            except:
-                print(&#39;Veuillez entrer un nombre.&#39;)
+<span class="sd">  Args:</span>
+<span class="sd">      `n`: a positive integer</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">      The factorial of `n`</span>
+
+<span class="sd">  Raises:</span>
+<span class="sd">      ArithmeticError: if `n` is negative</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">ArithmeticError</span><span class="p">()</span>
+  <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">return</span> <span class="mi">1</span>
+  <span class="k">return</span> <span class="n">n</span> <span class="o">*</span> <span class="n">fact</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+  <span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s1">&#39;Entrez un nombre : &#39;</span><span class="p">))</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">fact</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+<span class="k">except</span> <span class="ne">ArithmeticError</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Veuillez entrer un nombre positif.&#39;</span><span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Veuillez entrer un nombre.&#39;</span><span class="p">)</span>
 </pre></div>
 
-<div class="pygments"><pre><span></span>            Entrez un nombre : -12
-            Veuillez entrer un nombre positif.
+<div class="terminal">Entrez un nombre : -12
+Veuillez entrer un nombre positif.
+</div>
+</section>
+<section id="définir-une-erreur" class="level2">
+<h2>Définir une erreur</h2>
+<ul>
+<li><strong>Définition d'une erreur</strong> en définissant une nouvelle
+classe <span class="small">La classe est créée à partir de la classe
+<code>Exception</code></span></li>
+<li>L'<strong>instruction <code>pass</code></strong> ne fait rien</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">sqrt</span>
+
+<span class="k">class</span> <span class="nc">NoRootException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+  <span class="k">pass</span>
+
+<span class="k">def</span> <span class="nf">trinomialroots</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Compute the real roots of a second-degree equation</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">      `a`, `b` and `c`: The coefficients of the second-degree equation</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">      A tuple with one or two real roots</span>
+
+<span class="sd">  Raises:</span>
+<span class="sd">      NoRootException: if the equation has no real roots</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">delta</span> <span class="o">=</span> <span class="n">b</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">a</span> <span class="o">*</span> <span class="n">c</span>
+  <span class="k">if</span> <span class="n">delta</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="n">NoRootException</span><span class="p">()</span>
+  <span class="k">if</span> <span class="n">delta</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">return</span> <span class="p">(</span><span class="o">-</span><span class="n">b</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">a</span><span class="p">),)</span>
+  <span class="n">x1</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">b</span> <span class="o">+</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">delta</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">a</span><span class="p">)</span>
+  <span class="n">x2</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">b</span> <span class="o">-</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">delta</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">a</span><span class="p">)</span>
+  <span class="k">return</span> <span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">)</span>
 </pre></div>
 
 </section>
 <section id="définir-une-erreur-1" class="level2">
-<h2>Définir une erreur (1)</h2>
-<ul>
-<li><strong>Définition d'une erreur</strong> en définissant une nouvelle
-classe <span class="small">La classe est créée à partir de la classe
-<code class="lang-python">Exception</code></span></li>
-<li>L'<strong>instruction <code class="lang-python">pass</code></strong>
-ne fait rien</li>
-</ul>
-<div class="pygments"><pre><span></span>            from math import sqrt
-
-            class NoRootException(Exception):
-                pass
-
-            def trinomialroots(a, b, c):
-                delta = b ** 2 - 4 * a * c
-                if delta &lt; 0:
-                    raise NoRootException()
-                if delta == 0:
-                    return (-b / (2 * a),)
-                x1 = (-b + sqrt(delta)) / (2 * a)
-                x2 = (-b - sqrt(delta)) / (2 * a)
-                return (x1, x2)
-</pre></div>
-
-</section>
-<section id="définir-une-erreur-2" class="level2">
-<h2>Définir une erreur (2)</h2>
+<h2>Définir une erreur</h2>
 <ul>
 <li><strong>Capture de la nouvelle erreur</strong> avec l'instruction
 <code class="lang-python">except</code> <span class="small">Le nouveau
 type d'erreur est maintenant connu par Python</span></li>
 </ul>
-<div class="pygments"><pre><span></span>            try:
-                print(trinomialroots(1, 0, 2))
-            except NoRootException:
-                print(&#39;Pas de racine réelle.&#39;)
-            except:
-                print(&#39;Erreur&#39;)
+<div class="pygments"><pre><span></span><span class="k">try</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">trinomialroots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="k">except</span> <span class="n">NoRootException</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Pas de racine réelle.&#39;</span><span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Erreur&#39;</span><span class="p">)</span>
 </pre></div>
 
-<div class="pygments"><pre><span></span>            Pas de racine réelle.
-</pre></div>
-
+<div class="terminal">Pas de racine réelle.
+</div>
 </section>
 <section id="exception-paramétrée" class="level2">
 <h2>Exception paramétrée</h2>
 <ul>
 <li>Stockage d'un <strong>paramètre</strong> dans l'exception</li>
 </ul>
-<div class="pygments"><pre><span></span>            class NoRootException(Exception):
-                def __init__(self, delta):
-                    self.__delta = delta
+<div class="pygments"><pre><span></span><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">sqrt</span>
 
-                @property
-                def delta(self):
-                    return self.__delta
+<span class="k">class</span> <span class="nc">NoRootException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delta</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">delta</span> <span class="o">=</span> <span class="n">delta</span>
 
-            def trinomialroots(a, b, c):
-                delta = b ** 2 - 4 * a * c
-                if delta &lt; 0:
-                    raise NoRootException(delta)
-                if delta == 0:
-                    return (-b / (2 * a),)
-                x1 = (-b + sqrt(delta)) / (2 * a)
-                x2 = (-b - sqrt(delta)) / (2 * a)
-                return (x1, x2)
+<span class="k">def</span> <span class="nf">trinomialroots</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Compute the real roots of a second-degree equation</span>
 
-            try:
-                print(trinomialroots(1, 0, 2))
-            except NoRootException as e:
-                print(&#39;Pas de racine réelle (delta = {})&#39;.format(e.delta))
-            except:
-                print(&#39;Erreur&#39;)
+<span class="sd">  Args:</span>
+<span class="sd">      `a`, `b` and `c`: The coefficients of the second-degree equation</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">      A tuple with one or two real roots</span>
+
+<span class="sd">  Raises:</span>
+<span class="sd">      NoRootException: if the equation has no real roots</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">delta</span> <span class="o">=</span> <span class="n">b</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">a</span> <span class="o">*</span> <span class="n">c</span>
+  <span class="k">if</span> <span class="n">delta</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="n">NoRootException</span><span class="p">(</span><span class="n">delta</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">delta</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+      <span class="k">return</span> <span class="p">(</span><span class="o">-</span><span class="n">b</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">a</span><span class="p">),)</span>
+  <span class="n">x1</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">b</span> <span class="o">+</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">delta</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">a</span><span class="p">)</span>
+  <span class="n">x2</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">b</span> <span class="o">-</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">delta</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">a</span><span class="p">)</span>
+  <span class="k">return</span> <span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">trinomialroots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="k">except</span> <span class="n">NoRootException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Pas de racine réelle (delta = </span><span class="si">{</span><span class="n">e</span><span class="o">.</span><span class="n">delta</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Erreur&#39;</span><span class="p">)</span>
 </pre></div>
 
-<div class="pygments"><pre><span></span>            Pas de racine réelle (delta = -8)
-</pre></div>
-
+<div class="terminal">Pas de racine réelle (delta = -8)
+</div>
 </section>
-<section id="quand-utiliser-les-erreurs" class="level2">
-<h2>Quand utiliser les erreurs ?</h2>
-<ul>
-<li><strong>Toujours</strong> vérifier les données provenant de
-l'<strong>extérieur</strong> <span class="small">Lecture avec <code
-class="lang-python">input</code>, lecture d'un fichier...</span></li>
-<li>Lors d'un <strong>appel à une fonction</strong> d'un module <span
-class="small">Lire la documentation de la fonction, pour les erreurs
-potentielles</span></li>
-<li>Quand on définit une <strong>librairie</strong> <span
-class="small">Pour les fonctions publiques offertes à
-l'extérieur</span></li>
-</ul>
+<section id="exception-avec-dataclass" class="level2">
+<h2>Exception avec <code>dataclass</code></h2>
+<div class="pygments"><pre><span></span><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">sqrt</span>
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">NoRootException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+  <span class="n">delta</span><span class="p">:</span> <span class="nb">float</span>
+
+<span class="k">def</span> <span class="nf">trinomialroots</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Compute the real roots of a second-degree equation</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">      `a`, `b` and `c`: The coefficients of the second-degree equation</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">      A tuple with one or two real roots</span>
+
+<span class="sd">  Raises:</span>
+<span class="sd">      NoRootException: if the equation has no real roots</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">delta</span> <span class="o">=</span> <span class="n">b</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">a</span> <span class="o">*</span> <span class="n">c</span>
+  <span class="k">if</span> <span class="n">delta</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="n">NoRootException</span><span class="p">(</span><span class="n">delta</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">delta</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+      <span class="k">return</span> <span class="p">(</span><span class="o">-</span><span class="n">b</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">a</span><span class="p">),)</span>
+  <span class="n">x1</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">b</span> <span class="o">+</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">delta</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">a</span><span class="p">)</span>
+  <span class="n">x2</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">b</span> <span class="o">-</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">delta</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">a</span><span class="p">)</span>
+  <span class="k">return</span> <span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">trinomialroots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="k">except</span> <span class="n">NoRootException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Pas de racine réelle (delta = </span><span class="si">{</span><span class="n">e</span><span class="o">.</span><span class="n">delta</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Erreur&quot;</span><span class="p">)</span>
+</pre></div>
+
 </section>
 </body>
 </html>

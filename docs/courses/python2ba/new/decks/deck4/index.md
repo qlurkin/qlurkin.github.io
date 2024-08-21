@@ -28,7 +28,7 @@ Traceback (most recent call last):
 ZeroDivisionError: division by zero
 ```
 
-## Trace d\'erreur
+## Trace d'erreur
 
 - L\'erreur a comme **origine** l\'exécution de l\'instruction en
   ligne 5
@@ -51,25 +51,7 @@ File "program.py", line 2, in percentage
 ZeroDivisionError: division by zero
 ```
 
-## Gestion d\'erreurs
-
-- Prendre en compte **tous les cas** possibles d\'exécution [Prévoir une valeur de retour spéciale en cas d\'erreur]{.small}
-
-```python
-from typing import Optional
-
-def percentage(score: float, total: int) -> Optional[float]:
-    if total != 0:
-        return score / total * 100
-    return None
-```
-
-```terminal
-Alexis a obtenu 90.0 %
-Sébastien a obtenu None %
-```
-
-## Types d\'erreur
+## Types d'erreur
 
 - On peut considérer **trois types d\'erreur** possibles
   - **Erreur de syntaxe** [Code source mal formé]{.small}
@@ -97,7 +79,7 @@ if score > 10
 File "program.py", line 2
     if score > 10
                 ^
-SyntaxError: invalid syntax
+SyntaxError: expected ':'
 ```
 
 ## Erreur d\'exécution
@@ -131,7 +113,7 @@ IndexError: list index out of range
 
 ```python
 def perimeter(length: float, width: float) -> float:
-    return length + width * 2
+  return length + width * 2
 
 print(perimeter(2, 1))
 ```
@@ -156,22 +138,35 @@ def percentage(score: float, total: int) -> Optional[float]:
   """Returns a grade as a percentage
 
   Args:
-    `score`: the obtained grade
-    `total`: the maximum grade obtainable
+    `score`: the obtained grade. Must be positive and `<= total`
+    `total`: the maximum grade obtainable. Must be positive
 
   Returns:
     the computed percentage
-    if `total <= 0`, `score < 0` or `score > total`, then returns `None`
   """
-  if total > 0 and (0 <= score <= total):
-    return score / total * 100
-  return None
+  return score / total * 100
 ```
 
-## Instruction `assert`
+## Documentation
+
+- Conditions de la documentation **non-respectées** [Le programme continue de fonctionner avec une valeur illogique]{.small}
+
+```python
+print(percentage(15, 20), '%')
+print(percentage(22, 20), '%')
+```
+
+```terminal
+75%
+110%
+```
+
+- Erreur **de logique**
+
+## Programmation défensive
 
 - Vérification de **conditions sensées être vraies** avec
-  `assert`{.lang-python} [On vérifie notamment les conditionssur les
+  `assert` [On vérifie notamment les conditions sur les
   paramètres avec cette instruction]{.small}
 - Un programme **doit fonctionner** si on supprime les assertions
   [Elles ne doivent pas faire partie du code fonctionnel]{.small}
@@ -187,12 +182,11 @@ def percentage(score: float, total: int) -> float:
   Returns:
     the computed percentage
   """
-
   assert total > 0, 'total must be positive'
   assert 0 <= score, 'score must be positive'
   assert score <= total, 'score must be <= total'
-  return score / total * 100
 
+  return score / total * 100
 ```
 
 ## Instruction `assert`
@@ -218,19 +212,42 @@ Traceback (most recent call last):
 AssertionError: score must be <= total
 ```
 
-## Programmation défensive
+- Se pratique sur du code dont vous avez **le contrôle**
 
-- **Programmation défensive**
-  - Utilisation de l\'instruction `assert`
-  - On suppose les préconditions remplies
-  - Peut être pratiquée au sein d\'un module [Se pratique sur du code dont vous avez le contrôle]{.small}
-- **Gestion d\'erreur**
-  - Utilisation de l\'instruction `if-else`
-  - On vérifie les conditions nécessaires sur les données
-  - Doit être pratiquée pour interface avec l\'extérieur [Vérification de toutes données hors contrôle]{.small}
+## Gestion d'erreurs
+
+- Prendre en compte **tous les cas** possibles d\'exécution [Utilisation de `if-else`]{.small}
+
+```python
+from typing import Optional
+
+def percentage(score: float, total: int) -> Optional[float]:
+  """Returns a grade as a percentage
+
+  Args:
+    `score`: the obtained grade
+    `total`: the maximum grade obtainable
+
+  Returns:
+    the computed percentage
+    if `total <= 0`, `score < 0` or `score > total`, then returns `None`
+  """
+  if total > 0 and (0 <= score <= total):
+    return score / total * 100
+  return None
+```
+
+```terminal
+Alexis a obtenu 90.0 %
+Sébastien a obtenu None %
+```
+
+- Impact sur l'**annotation du type de retour** de la fonction
+- Doit être pratiquée pour interface avec l\'extérieur [Vérification de toutes données hors contrôle]{.small}
 
 ## Mecanisme d'exceptions
 
+- Gestion d'un code qui **pourrait planter**
 - **Code risqué** placé dans un bloc `try` [N\'y placer
   que le code risqué et tout code qui en dépend]{.small}
 - **Erreurs capturées** dans le bloc `except` [Y placer
@@ -242,29 +259,27 @@ from datetime import *
 birthyear = input('Année de naissance ? ')
 
 try:
-    now = datetime.now()
-    age = now.year - int(birthyear)
-    print('Tu as', age, 'ans')
+  now = datetime.now()
+  age = now.year - int(birthyear)
+  print('Tu as', age, 'ans')
 except:
-    print('Erreur')
+  print('Erreur')
 ```
 
 ## Instruction `try-except`
 
 - Si l\'utilisateur entre un nombre entier, **pas d\'erreurs**
 
-```lang-plaintext
-                    Année de naissance ? 1982
-                    Tu as 36 ans
-
+```terminal
+Année de naissance ? 1982
+Tu as 36 ans
 ```
 
 - Si l\'utilisateur n\'entre pas un nombre entier, **erreur capturée**
 
-```lang-plaintext
-                    Année de naissance ? BLA
-                    Erreur
-
+```terminal
+Année de naissance ? BLA
+Erreur
 ```
 
 ## Validité d\'une donnée
@@ -272,130 +287,122 @@ except:
 - Demande d\'une valeur à l\'utilisateur **en boucle** [Tant que la
   valeur demandée n\'est pas du bon type]{.small}
 
-```lang-python
-            from datetime import *
+```python
+from datetime import *
 
-            valid = False
-            while not valid:
-                birthyear = input('Année de naissance ? ')
-                try:
-                    birthyear = int(birthyear)
-                    valid = True
-                except:
-                    print('Veuillez entrer un nombre entier')
+valid = False
+while not valid:
+  birthyear = input('Année de naissance ? ')
+  try:
+    birthyear = int(birthyear)
+    valid = True
+  except:
+    print('Veuillez entrer un nombre entier')
 
-            now = datetime.now()
-            age = now.year - birthyear
-            print('Tu as', age, 'ans')
-
+now = datetime.now()
+age = now.year - birthyear
+print('Tu as', age, 'ans')
 ```
 
-## Vérifier le type d\'erreur (1)
+## Vérifier le type d\'erreur
 
 - Plusieurs **types d\'erreur** sont possibles [Division par zéro,
   erreur de conversion\...]{.small}
 - Toutes les erreurs sont capturées par l\'**instruction
-  `except`{.lang-python}** [Possibilité de capturer les erreurs de
+  `except`** [Possibilité de capturer les erreurs de
   manière spécifique]{.small}
 
-```lang-python
-            try:
-                a = int(input('a ? '))
-                b = int(input('b ? '))
-                print(a, '/', b, '=', a / b)
-            except:
-                print('Erreur')
-
+```python
+try:
+  a = int(input('a ? '))
+  b = int(input('b ? '))
+  print(a, '/', b, '=', a / b)
+except:
+  print('Erreur')
 ```
 
-## Vérifier le type d\'erreur (2)
+## Vérifier le type d\'erreur
 
 - Une **exception** est un objet qui représente une erreur [L\'objet
-  est généralement de type `Exception`{.lang-python}]{.small}
+  est généralement de type `Exception`]{.small}
 - Types spécifiques pour différencier les **types d\'erreurs**
   [ZeroDivisionError, ValueError\...]{.small}
 
-```lang-python
-            import sys
+```python
+import sys
 
-            try:
-                a = int(input('a ? '))
-                b = int(input('b ? '))
-                print(a, '/', b, '=', a / b)
-            except Exception as e:
-                print(type(e))
-                print(e)
-
+try:
+  a = int(input('a ? '))
+  b = int(input('b ? '))
+  print(a, '/', b, '=', a / b)
+except Exception as e:
+  print(type(e))
+  print(e)
 ```
 
-## Vérifier le type d\'erreur (3)
+## Vérifier le type d\'erreur
 
 - Division par zéro
 
-```lang-plaintext
-                    a ? deux
-                    <class 'ValueError'>
-                    invalid literal for int() with base 10: 'deux'
-
+```terminal
+a ? deux
+<class 'ValueError'>
+invalid literal for int() with base 10: 'deux'
 ```
 
 - Erreur de conversion
 
-```lang-plaintext
-                    a ? 2
-                    b ? 0
-                    <class 'ZeroDivisionError'>
-                    division by zero
-
+```terminal
+a ? 2
+b ? 0
+<class 'ZeroDivisionError'>
+division by zero
 ```
 
-## Capturer une erreur spécifique (1)
+## Capturer une erreur spécifique
 
 - **Gestionnaire d\'erreurs** différent pour chaque type d\'erreur [Il
-  suffit de déclarer un bloc `except`{.lang-python} par erreur à
+  suffit de déclarer un bloc `except` par erreur à
   capturer]{.small}
 - Attention à l\'**ordre de capture** (de haut en bas) [Il faut
   classer les erreurs de la plus à la moins spécificité]{.small}
 
-```lang-python
-            import sys
+```python
+import sys
 
-            try:
-                a = int(input('a ? '))
-                b = int(input('b ? '))
-                print(a, '/', b, '=', a / b)
-            except ValueError:
-                print('Erreur de conversion')
-            except ZeroDivisionError:
-                print('Division par zéro')
-            except:
-                print('Autre erreur')
-
+try:
+  a = int(input('a ? '))
+  b = int(input('b ? '))
+  print(a, '/', b, '=', a / b)
+except ValueError:
+  print('Erreur de conversion')
+except ZeroDivisionError:
+  print('Division par zéro')
+except:
+  print('Autre erreur')
 ```
 
-## Capturer une erreur spécifique (2)
+## Capturer une erreur spécifique
 
-```lang-python
-            import sys
+```python
+import sys
 
-            try:
-                a = int(input('a ? '))
-                b = int(input('b ? '))
-                print(a, '/', b, '=', a / b)
-            except Exception:
-                print('Erreur')
-            except ValueError:
-                print('Erreur de conversion')
-            except ZeroDivisionError:
-                print('Division par zéro')
-
+try:
+  a = int(input('a ? '))
+  b = int(input('b ? '))
+  print(a, '/', b, '=', a / b)
+except Exception:
+  print('Erreur')
+except ValueError:
+  print('Erreur de conversion')
+except ZeroDivisionError:
+  print('Division par zéro')
 ```
 
-```lang-plaintext
-            a ? 2
-            b ? 0
-            Autre erreur
-
+```terminal
+a ? 2
+b ? 0
+Autre erreur
 ```
 
 ## Information sur une erreur
@@ -403,23 +410,21 @@ except:
 - L\'**objet de l\'exception** peut contenir de l\'information [On
   peut accéder à des propriétés ou à des méthodes]{.small}
 
-```lang-python
-            try:
-                import mymod
-            except SyntaxError as e:
-                print(e)
-                print('File:', e.filename)
-                print('Line:', e.lineno)
-                print('Text:', e.text)
-
+```python
+try:
+  import mymod
+except SyntaxError as e:
+  print(e)
+  print('File:', e.filename)
+  print('Line:', e.lineno)
+  print('Text:', e.text)
 ```
 
-```lang-plaintext
-            can't assign to literal (mymod.py, line 1)
-            File: /Users/combefis/Desktop/mymod.py
-            Line: 1
-            Text: 2 = x
-
+```terminal
+can't assign to literal (mymod.py, line 1)
+File: /Users/combefis/Desktop/mymod.py
+Line: 1
+Text: 2 = x
 ```
 
 ## Gestionnaire d\'erreurs partagé
@@ -427,239 +432,284 @@ except:
 - **Même gestionnaire d\'erreurs** pour différents types [Tuple
   d\'exception fourni à l\'instruction `except`{.lang-python}]{.small}
 
-```lang-python
-            try:
-                a = int(input('a ? '))
-                b = int(input('b ? '))
-                print(a / b)
-            except (ZeroDivisionError, ValueError):
-                print('Erreur de calcul')
-            except:
-                print('Erreur')
-
+```python
+try:
+  a = int(input('a ? '))
+  b = int(input('b ? '))
+  print(a / b)
+except (ZeroDivisionError, ValueError):
+  print('Erreur de calcul')
+except:
+  print('Erreur')
 ```
 
-```lang-plaintext
-            a ? 1
-            b ? 0
-            Erreur de calcul
-
+```terminal
+a ? 1
+b ? 0
+Erreur de calcul
 ```
 
-## Propagation d\'erreur (1)
+## Propagation d\'erreur
 
 - Une **erreur non capturée** remonte les appels de fonction [Jusqu\'à
   être attrapée ou remonté jusqu\'au bout]{.small}
 - La **trace d\'erreur** montre le trajet pris par l\'exception [En la
   lisant à l\'envers, on peut suivre la propagation]{.small}
 
-## Propagation d\'erreur (2)
+## Propagation d\'erreur
 
 - **Passage** de `fun`{.lang-python} à `compute`{.lang-python} au
   programme principal
 
-```lang-python
-            def fun():
-                print(1 / 0)
+```python
+def fun():
+  print(1 / 0)
 
-            def compute():
-                fun()
+def compute():
+  fun()
 
-            compute()
-
+compute()
 ```
 
-```lang-plaintext
-            Traceback (most recent call last):
-                File "program.py", line 7, in <module>
-                    compute()
-                File "program.py", line 5, in compute
-                    fun()
-                File "program.py", line 2, in fun
-                    print(1 / 0)
-            ZeroDivisionError: division by zero
-
+```terminal
+Traceback (most recent call last):
+    File "program.py", line 7, in <module>
+        compute()
+    File "program.py", line 5, in compute
+        fun()
+    File "program.py", line 2, in fun
+        print(1 / 0)
+ZeroDivisionError: division by zero
 ```
 
-## Propagation d\'erreur (3)
+## Propagation d\'erreur
 
 - Exception **interceptée** dans la fonction `compute`{.lang-python}
 
-```lang-python
-                def fun():
-                    print(1 / 0)
+```python
+def fun():
+  print(1 / 0)
 
-                def compute():
-                    try:
-                        fun()
-                    except:
-                        print('Erreur.')
+def compute():
+  try:
+    fun()
+  except:
+    print('Erreur.')
 
-                compute()
-
+compute()
 ```
 
-```lang-plaintext
-                Erreur.
-
+```terminal
+Erreur.
 ```
 
-## Bloc `finally` (1)
-
-- Le bloc `finally`{.lang-python} s\'exécute **dans tous les cas**
-  [Après le bloc `try`{.lang-python} ou l\'`except`{.lang-python} en
-  cas d\'erreur]{.small}
-- Notamment utilisé pour faire du **nettoyage** [Par exemple pour
-  libérer des ressources qui ont été allouées]{.small}
-
-## Bloc `finally` (2)
-
-- Bloc `finally` **exécuté à tous les coups** avant la
-  fin du calcul
-
-```lang-python
-            print('Début du calcul.')
-            try:
-                a = int(input('a ? '))
-                b = int(input('b ? '))
-                print('Résultat :', a / b)
-            except:
-                print('Erreur.')
-            finally:
-                print('Nettoyage de la mémoire.')
-                print('Fin du calcul.')
-
-```
-
-```lang-plaintext
-            Début du calcul.
-            a ? 2
-            b ? 8
-            Résultat : 0.25
-            Nettoyage de la mémoire.
-            Fin du calcul.
-
-```
+<!--## Bloc `finally`-->
+<!---->
+<!--- Le bloc `finally`{.lang-python} s\'exécute **dans tous les cas**-->
+<!--  [Après le bloc `try`{.lang-python} ou l\'`except`{.lang-python} en-->
+<!--  cas d\'erreur]{.small}-->
+<!--- Notamment utilisé pour faire du **nettoyage** [Par exemple pour-->
+<!--  libérer des ressources qui ont été allouées]{.small}-->
+<!---->
+<!--## Bloc `finally`-->
+<!---->
+<!--- Bloc `finally` **exécuté à tous les coups** avant la-->
+<!--  fin du calcul-->
+<!---->
+<!--```python-->
+<!--print('Début du calcul.')-->
+<!--try:-->
+<!--  a = int(input('a ? '))-->
+<!--  b = int(input('b ? '))-->
+<!--  print('Résultat :', a / b)-->
+<!--except:-->
+<!--  print('Erreur.')-->
+<!--finally:-->
+<!--  print('Nettoyage de la mémoire.')-->
+<!--  print('Fin du calcul.')-->
+<!--```-->
+<!---->
+<!--```terminal-->
+<!--Début du calcul.-->
+<!--a ? 2-->
+<!--b ? 8-->
+<!--Résultat : 0.25-->
+<!--Nettoyage de la mémoire.-->
+<!--Fin du calcul.-->
+<!--```-->
 
 ## Générer une erreur
 
 - L\'**instruction `raise`{.lang-python}** permet de générer une
   erreur [Création d\'un objet du type de l\'exception]{.small}
 
-```lang-python
-            def fact(n):
-                if n < 0:
-                    raise ArithmeticError()
-                if n == 0:
-                    return 1
-                return n * fact(n - 1)
+```python
+def fact(n: int) -> int:
+  """Compute the factorial of `n`
 
-            try:
-                n = int(input('Entrez un nombre : '))
-                print(fact(n))
-            except ArithmeticError:
-                print('Veuillez entrer un nombre positif.')
-            except:
-                print('Veuillez entrer un nombre.')
+  Args:
+      `n`: a positive integer
 
+  Returns:
+      The factorial of `n`
+
+  Raises:
+      ArithmeticError: if `n` is negative
+  """
+  if n < 0:
+    raise ArithmeticError()
+  if n == 0:
+    return 1
+  return n * fact(n - 1)
+
+try:
+  n = int(input('Entrez un nombre : '))
+  print(fact(n))
+except ArithmeticError:
+  print('Veuillez entrer un nombre positif.')
+except:
+  print('Veuillez entrer un nombre.')
 ```
 
-```lang-plaintext
-            Entrez un nombre : -12
-            Veuillez entrer un nombre positif.
-
+```terminal
+Entrez un nombre : -12
+Veuillez entrer un nombre positif.
 ```
 
-## Définir une erreur (1)
+## Définir une erreur
 
 - **Définition d\'une erreur** en définissant une nouvelle classe [La
   classe est créée à partir de la classe
-  `Exception`{.lang-python}]{.small}
-- L\'**instruction `pass`{.lang-python}** ne fait rien
+  `Exception`]{.small}
+- L\'**instruction `pass`** ne fait rien
 
-```lang-python
-            from math import sqrt
+```python
+from math import sqrt
 
-            class NoRootException(Exception):
-                pass
+class NoRootException(Exception):
+  pass
 
-            def trinomialroots(a, b, c):
-                delta = b ** 2 - 4 * a * c
-                if delta < 0:
-                    raise NoRootException()
-                if delta == 0:
-                    return (-b / (2 * a),)
-                x1 = (-b + sqrt(delta)) / (2 * a)
-                x2 = (-b - sqrt(delta)) / (2 * a)
-                return (x1, x2)
+def trinomialroots(a: float, b: float, c: float) -> tuple[float, ...]:
+  """Compute the real roots of a second-degree equation
 
+  Args:
+      `a`, `b` and `c`: The coefficients of the second-degree equation
+
+  Returns:
+      A tuple with one or two real roots
+
+  Raises:
+      NoRootException: if the equation has no real roots
+  """
+  delta = b ** 2 - 4 * a * c
+  if delta < 0:
+    raise NoRootException()
+  if delta == 0:
+    return (-b / (2 * a),)
+  x1 = (-b + sqrt(delta)) / (2 * a)
+  x2 = (-b - sqrt(delta)) / (2 * a)
+  return (x1, x2)
 ```
 
-## Définir une erreur (2)
+## Définir une erreur
 
 - **Capture de la nouvelle erreur** avec l\'instruction
   `except`{.lang-python} [Le nouveau type d\'erreur est maintenant
   connu par Python]{.small}
 
-```lang-python
-            try:
-                print(trinomialroots(1, 0, 2))
-            except NoRootException:
-                print('Pas de racine réelle.')
-            except:
-                print('Erreur')
-
+```python
+try:
+  print(trinomialroots(1, 0, 2))
+except NoRootException:
+  print('Pas de racine réelle.')
+except:
+  print('Erreur')
 ```
 
-```lang-plaintext
-            Pas de racine réelle.
-
+```terminal
+Pas de racine réelle.
 ```
 
 ## Exception paramétrée
 
 - Stockage d\'un **paramètre** dans l\'exception
 
-```lang-python
-            class NoRootException(Exception):
-                def __init__(self, delta):
-                    self.__delta = delta
+```python
+from math import sqrt
 
-                @property
-                def delta(self):
-                    return self.__delta
+class NoRootException(Exception):
+  def __init__(self, delta):
+      self.delta = delta
 
-            def trinomialroots(a, b, c):
-                delta = b ** 2 - 4 * a * c
-                if delta < 0:
-                    raise NoRootException(delta)
-                if delta == 0:
-                    return (-b / (2 * a),)
-                x1 = (-b + sqrt(delta)) / (2 * a)
-                x2 = (-b - sqrt(delta)) / (2 * a)
-                return (x1, x2)
+def trinomialroots(a: float, b: float, c: float) -> tuple[float, ...]:
+  """Compute the real roots of a second-degree equation
 
-            try:
-                print(trinomialroots(1, 0, 2))
-            except NoRootException as e:
-                print('Pas de racine réelle (delta = {})'.format(e.delta))
-            except:
-                print('Erreur')
+  Args:
+      `a`, `b` and `c`: The coefficients of the second-degree equation
 
+  Returns:
+      A tuple with one or two real roots
 
+  Raises:
+      NoRootException: if the equation has no real roots
+  """
+  delta = b ** 2 - 4 * a * c
+  if delta < 0:
+      raise NoRootException(delta)
+  if delta == 0:
+      return (-b / (2 * a),)
+  x1 = (-b + sqrt(delta)) / (2 * a)
+  x2 = (-b - sqrt(delta)) / (2 * a)
+  return (x1, x2)
+
+try:
+  print(trinomialroots(1, 0, 2))
+except NoRootException as e:
+  print(f'Pas de racine réelle (delta = {e.delta})')
+except:
+  print('Erreur')
 ```
 
-```lang-plaintext
-            Pas de racine réelle (delta = -8)
-
+```terminal
+Pas de racine réelle (delta = -8)
 ```
 
-## Quand utiliser les erreurs ?
+## Exception avec `dataclass`
 
-- **Toujours** vérifier les données provenant de l\'**extérieur**
-  [Lecture avec `input`{.lang-python}, lecture d\'un
-  fichier\...]{.small}
-- Lors d\'un **appel à une fonction** d\'un module [Lire la
-  documentation de la fonction, pour les erreurs potentielles]{.small}
-- Quand on définit une **librairie** [Pour les fonctions publiques
-  offertes à l\'extérieur]{.small}
+```python
+from math import sqrt
+from dataclasses import dataclass
+
+@dataclass
+class NoRootException(Exception):
+  delta: float
+
+def trinomialroots(a: float, b: float, c: float) -> tuple[float, ...]:
+  """Compute the real roots of a second-degree equation
+
+  Args:
+      `a`, `b` and `c`: The coefficients of the second-degree equation
+
+  Returns:
+      A tuple with one or two real roots
+
+  Raises:
+      NoRootException: if the equation has no real roots
+  """
+  delta = b**2 - 4 * a * c
+  if delta < 0:
+      raise NoRootException(delta)
+  if delta == 0:
+      return (-b / (2 * a),)
+  x1 = (-b + sqrt(delta)) / (2 * a)
+  x2 = (-b - sqrt(delta)) / (2 * a)
+  return (x1, x2)
+
+try:
+  print(trinomialroots(1, 0, 2))
+except NoRootException as e:
+  print(f"Pas de racine réelle (delta = {e.delta})")
+except:
+  print("Erreur")
+
+```
