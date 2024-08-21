@@ -64,6 +64,7 @@ packages</strong></li>
 <section id="premier-programme-graphique" class="level2 code">
 <h2 class="code">Premier programme graphique</h2>
 <div class="pygments"><pre><span></span><span class="kn">import</span> <span class="nn">pygame</span>
+<span class="kn">import</span> <span class="nn">sys</span>
 
 <span class="c1"># initialisation de pygame</span>
 <span class="n">pygame</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
@@ -74,12 +75,16 @@ packages</strong></li>
 <span class="c1"># la clock sert à limiter le nombre d&#39;images par seconde</span>
 <span class="n">clock</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">Clock</span><span class="p">()</span>
 
-<span class="c1"># boucle jusqu&#39;à ce qu&#39;on quitte</span>
-<span class="k">while</span> <span class="ow">not</span> <span class="n">pygame</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">peek</span><span class="p">(</span><span class="n">pygame</span><span class="o">.</span><span class="n">QUIT</span><span class="p">):</span>
-
+<span class="c1"># boucle infinie</span>
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
   <span class="c1"># attends qu&#39;il se soit passé au moins 1/60</span>
   <span class="c1"># de seconde depuis le dernier tick</span>
   <span class="n">clock</span><span class="o">.</span><span class="n">tick</span><span class="p">(</span><span class="mi">60</span><span class="p">)</span>
+  <span class="c1"># Boucler sur tous les events</span>
+  <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">pygame</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">get</span><span class="p">():</span>
+    <span class="c1"># Quitter si l&#39;event est un QUIT</span>
+    <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">pygame</span><span class="o">.</span><span class="n">QUIT</span><span class="p">:</span>
+      <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
 
   <span class="c1"># dessine un cercle rouge centré en (100, 300) de rayon 20</span>
   <span class="n">pygame</span><span class="o">.</span><span class="n">draw</span><span class="o">.</span><span class="n">circle</span><span class="p">(</span><span class="n">screen</span><span class="p">,</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">300</span><span class="p">),</span> <span class="mi">20</span><span class="p">)</span>
@@ -96,6 +101,7 @@ packages</strong></li>
 <strong>position un peu différente</strong> à chaque image.</li>
 </ul>
 <div class="pygments"><pre><span></span><span class="kn">import</span> <span class="nn">pygame</span>
+<span class="kn">import</span> <span class="nn">sys</span>
 
 <span class="c1"># initialisation de pygame</span>
 <span class="n">pygame</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
@@ -107,9 +113,11 @@ packages</strong></li>
 
 <span class="n">xCircle</span> <span class="o">=</span> <span class="mi">100</span>
 
-<span class="c1"># boucle jusqu&#39;à ce qu&#39;on quitte</span>
-<span class="k">while</span> <span class="ow">not</span> <span class="n">pygame</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">peek</span><span class="p">(</span><span class="n">pygame</span><span class="o">.</span><span class="n">QUIT</span><span class="p">):</span>
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
   <span class="n">clock</span><span class="o">.</span><span class="n">tick</span><span class="p">(</span><span class="mi">60</span><span class="p">)</span>
+  <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">pygame</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">get</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">pygame</span><span class="o">.</span><span class="n">QUIT</span><span class="p">:</span>
+      <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
 
   <span class="c1"># dessine un rectangle noir pour effacer l&#39;image</span>
   <span class="n">pygame</span><span class="o">.</span><span class="n">draw</span><span class="o">.</span><span class="n">rect</span><span class="p">(</span><span class="n">screen</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Rect</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">800</span><span class="p">,</span> <span class="mi">600</span><span class="p">))</span>
@@ -134,25 +142,15 @@ class="small">Et autres événements comme
 <li><p>Fonctions dans le module <code>pygame.event</code></p></li>
 <li><p>Les événements captés par Pygame sont stocké dans une
 file</p></li>
-<li><p>Le fonction <code>pygame.event.peek</code> vérifie si un certain
-type d'événement attends dans la file</p></li>
-</ul>
-<div class="pygments"><pre><span></span><span class="c1"># boucle jusqu&#39;à ce qu&#39;on quitte</span>
-<span class="k">while</span> <span class="ow">not</span> <span class="n">pygame</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">peek</span><span class="p">(</span><span class="n">pygame</span><span class="o">.</span><span class="n">QUIT</span><span class="p">):</span>
-  <span class="c1"># ...</span>
-</pre></div>
-
-</section>
-<section id="clavier" class="level2">
-<h2>Clavier</h2>
-<ul>
-<li>Pour traiter tous les événements</li>
 </ul>
 <div class="pygments"><pre><span></span><span class="c1"># Boucler sur tous les events</span>
 <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">pygame</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">get</span><span class="p">():</span>
   <span class="c1"># Faire quelque chose avec l&#39;event</span>
 </pre></div>
 
+</section>
+<section id="clavier" class="level2">
+<h2>Clavier</h2>
 <ul>
 <li><p>Tester le type de l'événement avec l'attribut
 <code>event.type</code> <span class="small">Types des événements
@@ -189,7 +187,6 @@ constantes contenant les codes des touches de modification</a></p></li>
 <span class="n">xCircle</span> <span class="o">=</span> <span class="mi">100</span>
 <span class="n">vxCircle</span> <span class="o">=</span> <span class="mi">1</span>
 
-<span class="c1"># boucle infinie !</span>
 <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
   <span class="n">clock</span><span class="o">.</span><span class="n">tick</span><span class="p">(</span><span class="mi">60</span><span class="p">)</span>
   <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">pygame</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">get</span><span class="p">():</span>
@@ -263,7 +260,6 @@ milieu ou droit)</li>
 
 <span class="n">posCircle</span> <span class="o">=</span> <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
 
-<span class="c1"># boucle infinie !</span>
 <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
   <span class="n">clock</span><span class="o">.</span><span class="n">tick</span><span class="p">(</span><span class="mi">60</span><span class="p">)</span>
   <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">pygame</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">get</span><span class="p">():</span>

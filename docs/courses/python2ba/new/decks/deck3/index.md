@@ -33,6 +33,7 @@ typst: true
 
 ```python
 import pygame
+import sys
 
 # initialisation de pygame
 pygame.init()
@@ -43,12 +44,16 @@ screen = pygame.display.set_mode((800, 600))
 # la clock sert à limiter le nombre d'images par seconde
 clock = pygame.time.Clock()
 
-# boucle jusqu'à ce qu'on quitte
-while not pygame.event.peek(pygame.QUIT):
-
+# boucle infinie
+while True:
   # attends qu'il se soit passé au moins 1/60
   # de seconde depuis le dernier tick
   clock.tick(60)
+  # Boucler sur tous les events
+  for event in pygame.event.get():
+    # Quitter si l'event est un QUIT
+    if event.type == pygame.QUIT:
+      sys.exit()
 
   # dessine un cercle rouge centré en (100, 300) de rayon 20
   pygame.draw.circle(screen, (255, 0, 0), (100, 300), 20)
@@ -64,6 +69,7 @@ while not pygame.event.peek(pygame.QUIT):
 
 ```python
 import pygame
+import sys
 
 # initialisation de pygame
 pygame.init()
@@ -75,9 +81,11 @@ clock = pygame.time.Clock()
 
 xCircle = 100
 
-# boucle jusqu'à ce qu'on quitte
-while not pygame.event.peek(pygame.QUIT):
+while True:
   clock.tick(60)
+  for event in pygame.event.get():
+    if event.type == pygame.QUIT:
+      sys.exit()
 
   # dessine un rectangle noir pour effacer l'image
   pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(0, 0, 800, 600))
@@ -101,24 +109,13 @@ while not pygame.event.peek(pygame.QUIT):
 
 - Les événements captés par Pygame sont stocké dans une file
 
-- Le fonction `pygame.event.peek` vérifie si un certain type
-  d\'événement attends dans la file
-
-```python
-# boucle jusqu'à ce qu'on quitte
-while not pygame.event.peek(pygame.QUIT):
-  # ...
-```
-
-## Clavier
-
-- Pour traiter tous les événements
-
 ```python
 # Boucler sur tous les events
 for event in pygame.event.get():
   # Faire quelque chose avec l'event
 ```
+
+## Clavier
 
 - Tester le type de l\'événement avec l\'attribut `event.type` [Types
   des événements clavier: `pygame.KEYDOWN` et `pygame.KEYUP`]{.small}
@@ -153,7 +150,6 @@ clock = pygame.time.Clock()
 xCircle = 100
 vxCircle = 1
 
-# boucle infinie !
 while True:
   clock.tick(60)
   for event in pygame.event.get():
@@ -214,7 +210,6 @@ clock = pygame.time.Clock()
 
 posCircle = (100, 100)
 
-# boucle infinie !
 while True:
   clock.tick(60)
   for event in pygame.event.get():
