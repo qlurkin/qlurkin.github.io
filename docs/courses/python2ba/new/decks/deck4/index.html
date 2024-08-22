@@ -775,5 +775,679 @@ type d'erreur est maintenant connu par Python</span></li>
 </pre></div>
 
 </section>
+<section id="fichier" class="level2">
+<h2>Fichier</h2>
+<ul>
+<li>Un <strong>fichier</strong> stocke des informations sur le disque
+dur <span class="small">Il est créé, modifié, supprimé</span></li>
+<li>Manipulation des fichiers grâce au <strong>système
+d'exploitation</strong> <span class="small">L'interpréteur fait le
+relais avec Linux, Windows, Mac OS X...</span></li>
+<li>Des <strong>informations</strong> sont associées à un fichier <span
+class="small">Nom, taille, date de création, dernière date de
+modification...</span></li>
+</ul>
+</section>
+<section id="type-de-fichier" class="level2">
+<h2>Type de fichier</h2>
+<ul>
+<li>Au plus bas niveau, un fichier est une <strong>séquence de
+bits</strong> (<code class="lang-plaintext">0</code> et <code
+class="lang-plaintext">1</code>) <span class="small">La séquence doit
+être interprétée pour en obtenir le sens</span></li>
+<li><strong>Deux types</strong> de fichiers manipulés à des niveaux
+différents
+<ul>
+<li>Fichier texte est une séquence de caractères</li>
+<li>Fichier binaire est une séquence d'octets (8 bits)</li>
+</ul></li>
+</ul>
+</section>
+<section id="chemin" class="level2">
+<h2>Chemin</h2>
+<ul>
+<li>Fichier identifié sur une machine à l'aide de son
+<strong>chemin</strong> <span class="small">Identifie l'endroit où se
+situe le fichier</span></li>
+<li><strong>Deux façons</strong> de spécifier un chemin
+<ul>
+<li>Chemin absolu à partir de la racine <span class="small"><code
+class="lang-plaintext">C:\</code> (Windows), <code
+class="lang-plaintext">/</code> (OSX et Linux)</span></li>
+<li>Chemin relatif à partir du répertoire courant</li>
+</ul></li>
+</ul>
+<table>
+<colgroup>
+<col style="width: 39%" />
+<col style="width: 60%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Chemin relatif</th>
+<th>Chemin absolu</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>data.txt</td>
+<td>C:\Users\lur\Desktop\data.txt</td>
+</tr>
+<tr class="even">
+<td>src\program.py</td>
+<td>C:\Users\lur\Desktop\src\program.py</td>
+</tr>
+<tr class="odd">
+<td>..\image.png</td>
+<td>C:\Users\lur\image.png</td>
+</tr>
+<tr class="even">
+<td>..\movies\hamburgers.mp4</td>
+<td>C:\Users\lur\movies\hamburgers.mp4</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="navigation-en-ligne-de-commande" class="level2">
+<h2>Navigation en ligne de commande</h2>
+<p>Pour passer d'un répertoire à l'autre dans une console de
+commandes</p>
+<ul>
+<li><code class="lang-plaintext">pwd</code>: Affiche le chemin du
+répertoire courant <span class="small">Base des chemins
+relatifs</span></li>
+<li><code class="lang-plaintext">cd</code> <em>(suivi d'un chemin)</em>:
+Change de répertoire courant <span class="small"><code
+class="lang-plaintext">..</code> pour le répertoire parent</span></li>
+<li><code class="lang-plaintext">dir</code> <em>(Windows)</em> ou <code
+class="lang-plaintext">ls</code> <em>(OSX et Linux)</em>: Liste le
+contenu du répertoire</li>
+</ul>
+</section>
+<section id="ouverture-dun-fichier" class="level2">
+<h2>Ouverture d'un fichier</h2>
+<ul>
+<li>Pour manipuler un fichier, il faut d'abord l'<strong>ouvrir</strong>
+<span class="small">On utilise la fonction <code
+class="lang-python">open</code>, qui renvoie un identifiant de
+fichier</span></li>
+<li><strong>Erreurs</strong> possibles lors de l'ouverture <span
+class="small">Fichier introuvable, …</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">try</span><span class="p">:</span>
+  <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;data.txt&#39;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Le fichier est introuvable&#39;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Erreur d&#39;ouverture&quot;</span><span class="p">)</span>
+</pre></div>
+
+</section>
+<section id="mode-douverture" class="level2">
+<h2>Mode d'ouverture</h2>
+<ul>
+<li>Par défaut, fichier ouvert en <strong>lecture seule</strong> <span
+class="small">Tout ce qu'on peut faire c'est donc lire le contenu du
+fichier</span></li>
+<li>On peut spécifier le <strong>mode d'ouverture</strong> désiré <span
+class="small">Avec le deuxième paramètre de la fonction
+<code>open()</code></span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">try</span><span class="p">:</span>
+  <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;data.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>         <span class="c1"># Ouverture en écriture</span>
+<span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Erreur d&#39;ouverture&quot;</span><span class="p">)</span>
+</pre></div>
+
+</section>
+<section id="mode-douverture-1" class="level2">
+<h2>Mode d'ouverture</h2>
+<ul>
+<li>Mode d'ouverture définit avec des <strong>caractères</strong></li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th>Caractère</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>r</code></td>
+<td>Lecture (par défaut)</td>
+</tr>
+<tr class="even">
+<td><code>w</code></td>
+<td>Écriture (avec remise à zéro)</td>
+</tr>
+<tr class="odd">
+<td><code>x</code></td>
+<td>Création exclusive (erreur si fichier déjà existant)</td>
+</tr>
+<tr class="even">
+<td><code>a</code></td>
+<td>Écriture (avec ajout à la fin)</td>
+</tr>
+<tr class="odd">
+<td><code>b</code></td>
+<td>Mode binaire</td>
+</tr>
+<tr class="even">
+<td><code>t</code></td>
+<td>Mode texte (par défaut)</td>
+</tr>
+</tbody>
+</table>
+<div class="pygments"><pre><span></span><span class="k">try</span><span class="p">:</span>
+  <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;data.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;rt&#39;</span><span class="p">)</span>         <span class="c1"># Mode par défaut</span>
+<span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Le fichier est introuvable&#39;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Erreur d&#39;ouverture&quot;</span><span class="p">)</span>
+</pre></div>
+
+</section>
+<section id="fermeture-dun-fichier" class="level2">
+<h2>Fermeture d'un fichier</h2>
+<ul>
+<li>Une fois les opérations finies, il faut <strong>fermer</strong> le
+fichier <span class="small">On utilise la méthode <code>close</code>
+avec l'identifiant de fichier</span></li>
+<li><strong>Libération des ressources</strong> et sauvegarde sur disque
+<span class="small">Le système d'exploitation limite le nombre de
+fichiers ouverts</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">try</span><span class="p">:</span>
+  <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;data.txt&#39;</span><span class="p">)</span>
+  <span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>                          <span class="c1"># Fermeture du fichier</span>
+<span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Le fichier est introuvable&#39;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Erreur d&#39;ouverture&quot;</span><span class="p">)</span>
+</pre></div>
+
+</section>
+<section id="lecture" class="level2">
+<h2>Lecture</h2>
+<ul>
+<li><strong>Lecture</strong> intégrale du fichier comme une chaîne de
+caractères <span class="small">On utilise la méthode <code>read</code>
+avec l'identifiant de fichier</span></li>
+<li>La lecture peut échouer et provoquer une <strong>exception
+<code>IOError</code></strong> <span class="small">Par exemple si le
+disque est déconnecté pendant la lecture</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">try</span><span class="p">:</span>
+  <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;data.txt&#39;</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+  <span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Le fichier est introuvable&#39;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Erreur d&#39;entrée/sortie&quot;</span><span class="p">)</span>
+</pre></div>
+
+</section>
+<section id="instruction-finally" class="level2">
+<h2>Instruction <code>finally</code></h2>
+<ul>
+<li>En cas d'erreur, le fichier pourrait <strong>ne pas être
+fermé</strong> <span class="small">Car l'exécution du code saute
+directement dans l'<code>except</code></span></li>
+<li><strong>Instruction <code>finally</code></strong> exécutée dans tous
+les cas <span class="small">Après la fin du bloc <code>try</code> ou
+après un <code>except</code> éventuel</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">try</span><span class="p">:</span>
+  <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;data.txt&#39;</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+<span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Le fichier est introuvable&#39;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Erreur d&#39;ouverture&quot;</span><span class="p">)</span>
+<span class="k">finally</span><span class="p">:</span>
+  <span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+
+</section>
+<section id="instruction-finally-1" class="level2">
+<h2>Instruction <code>finally</code></h2>
+<ul>
+<li><strong>Bug</strong> dans le code précédent si le fichier n'a pas su
+être ouvert <span class="small">La variable <code>file</code> ne sera
+pas initialisée et <code>close</code> pas disponible</span></li>
+<li>On utilise une instruction <strong><code>try/finally</code></strong>
+additionnelle</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">try</span><span class="p">:</span>
+  <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;data.txt&#39;</span><span class="p">)</span>
+  <span class="k">try</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+  <span class="k">finally</span><span class="p">:</span>
+    <span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Le fichier est introuvable&#39;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Erreur d&#39;entrée/sortie&quot;</span><span class="p">)</span>
+</pre></div>
+
+</section>
+<section id="instruction-with" class="level2">
+<h2>Instruction <code>with</code></h2>
+<ul>
+<li><strong>Instruction <code>with</code></strong> pour fermeture propre
+des ressources <span class="small">L'appel à <code>close</code> sera
+fait automatiquement</span></li>
+<li>Il faut garder le <strong><code>try/except</code></strong> pour les
+<code>IOError</code></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">try</span><span class="p">:</span>
+  <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;data.txt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+<span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Le fichier est introuvable&#39;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Erreur d&#39;entrée/sortie&quot;</span><span class="p">)</span>
+</pre></div>
+
+<div class="terminal">Facebook:lur@ecam.be:lurk:8dj,Sj0m1
+Skype:mar@ecam.be:cedou:arduino
+Facebook:fle@ecam.be:fingerfood:b8ur,g2er
+</div>
+</section>
+<section id="écriture" class="level2">
+<h2>Écriture</h2>
+<ul>
+<li><strong>Écriture</strong> en ajoutant des chaines de caractères au
+fichier <span class="small">On utilise la fonction <code>write</code>
+avec l'identifiant de fichier</span></li>
+<li>L'écriture peut échouer et provoquer une <strong>exception
+<code>IOError</code></strong> <span class="small">Par exemple si
+l'espace disque devient plein pendant l'écriture</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;out.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+  <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;Table de 10</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1"> x 10 = </span><span class="si">{</span><span class="n">i</span><span class="o">*</span><span class="mi">10</span><span class="si">}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+
+</section>
+<section id="copie-dun-fichier" class="level2">
+<h2>Copie d'un fichier</h2>
+<ul>
+<li><strong>Copie</strong> en faisant une lecture puis écriture du
+contenu lu <span class="small">Deux instruction <code>with</code>
+imbriquées</span></li>
+<li>Si le fichier destination existe déjà, il est
+<strong>effacé</strong> <span class="small">Il faut utiliser le mode
+<code>x</code> au lieu de <code>w</code> pour empêcher cela</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;data.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">src</span><span class="p">,</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;copy.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">dest</span><span class="p">:</span>
+  <span class="n">dest</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">src</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+</pre></div>
+
+</section>
+<section id="lecture-ligne-par-ligne" class="level2">
+<h2>Lecture ligne par ligne</h2>
+<ul>
+<li>Utilisation d'un <strong>itérateur</strong> sur le fichier ouvert,
+avec <code>for</code> <span class="small">Parcours ligne par ligne, avec
+le retour de ligne inclus</span></li>
+<li>Fonction <code>rstrip</code> pour retirer les caractères blancs de
+droite <span class="small">right strip</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;data.txt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+  <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">file</span><span class="p">:</span>
+    <span class="n">cleaned</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
+    <span class="n">tokens</span> <span class="o">=</span> <span class="n">cleaned</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Compte </span><span class="si">{</span><span class="n">tokens</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s1"> de </span><span class="si">{</span><span class="n">tokens</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="si">}</span><span class="s1"> (mode de passe : </span><span class="si">{</span><span class="n">tokens</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
+</pre></div>
+
+<div class="terminal">Compte Facebook de lurk (mode de passe : 8dj,Sj0m1)
+Compte Skype de cedou (mode de passe : arduino)
+Compte Facebook de fingerfood (mode de passe : b8ur,g2er)
+</div>
+</section>
+<section id="lecture-ligne-par-ligne-1" class="level2">
+<h2>Lecture ligne par ligne</h2>
+<ul>
+<li>L'<strong>itérateur</strong> est un raccourci d'appel de
+<code>readline</code> <span class="small">Lis une ligne s'il en reste à
+lire dans le fichier</span></li>
+<li>Renvoie une <strong>chaine de caractères vide</strong> lorsqu'au
+bout du fichier <span class="small">Pratique lorsqu'on sait combien de
+lignes lire</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;data.txt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+  <span class="n">line</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+  <span class="k">while</span> <span class="n">line</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+    <span class="n">cleaned</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
+    <span class="n">tokens</span> <span class="o">=</span> <span class="n">cleaned</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Compte </span><span class="si">{</span><span class="n">tokens</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s1"> de </span><span class="si">{</span><span class="n">tokens</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="si">}</span><span class="s1"> (mode de passe : </span><span class="si">{</span><span class="n">tokens</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
+    <span class="n">line</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+</pre></div>
+
+</section>
+<section id="lecture-ligne-par-ligne-2" class="level2">
+<h2>Lecture ligne par ligne</h2>
+<ul>
+<li>La fonction <code>readlines</code> lis l'<strong>intégralité des
+lignes</strong> en une traite <span class="small">La fonction renvoie
+une liste de chaines de caractères</span></li>
+<li>On peut <strong>supprimer la variable</strong> <code>cleaned</code>
+inutile <span class="small">En enchainant directement les appels à
+<code>rstrip</code> et <code
+class="lang-python">split</code></span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;data.txt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+  <span class="n">content</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">content</span><span class="p">:</span>
+  <span class="n">tokens</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Compte </span><span class="si">{</span><span class="n">tokens</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s1"> de </span><span class="si">{</span><span class="n">tokens</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="si">}</span><span class="s1"> (mode de passe : </span><span class="si">{</span><span class="n">tokens</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
+</pre></div>
+
+</section>
+<section id="lecture-ligne-par-ligne-3" class="level2">
+<h2>Lecture ligne par ligne</h2>
+<ul>
+<li><strong>Amélioration du code</strong> avec une fonction de formatage
+<span class="small">On définit une fonction qui formate une
+ligne</span></li>
+<li>On définit une liste par compréhension et on joint ses éléments
+<span class="small">Jointure des éléments d'une liste réalisée avec
+fonction <code>join</code></span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">def</span> <span class="nf">format</span><span class="p">(</span><span class="n">line</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+  <span class="n">tokens</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
+  <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;Compte </span><span class="si">{</span><span class="n">tokens</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s1"> de </span><span class="si">{</span><span class="n">tokens</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="si">}</span><span class="s1"> (mode de passe : </span><span class="si">{</span><span class="n">tokens</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="si">}</span><span class="s1">)&#39;</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;data.txt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+  <span class="n">content</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">format</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">content</span><span class="p">]))</span>
+</pre></div>
+
+</section>
+<section id="exception" class="level2">
+<h2>Exception</h2>
+<ul>
+<li>L'erreur principale d'<strong>entrée/sortie</strong> est
+<code>IOError</code> <span class="small">On peut se limiter à capturer
+cette unique erreur</span></li>
+<li>Erreur <strong>spécialisée</strong> selon le type précis
+<ul>
+<li><code>FileNotFoundError</code>, si le fichier n'est pas trouvé</li>
+<li><code>FileExistsError</code>, si le fichier existe déjà</li>
+<li><code>PermissionError</code>, si l'utilisateur n'a pas les droits
+d'accès</li>
+<li><code>IsADirectoryError</code>, si le fichier est en fait un
+dossier</li>
+</ul></li>
+</ul>
+</section>
+<section id="encodage" class="level2">
+<h2>Encodage</h2>
+<ul>
+<li>Les caractères sont <strong>stockés au format binaire</strong> dans
+l'ordinateur <span class="small">Table de correspondance associant un
+entier à chaque caractère</span></li>
+<li>La <strong>table de caractères</strong> ASCII (iso-646) contient 128
+caractères <span class="small">Table suffisante pour des textes en
+anglais</span></li>
+</ul>
+<div style="font-size: 50%; margin: 0 auto;">
+<table>
+<colgroup>
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+<th>D</th>
+<th>E</th>
+<th>F</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>NUL</td>
+<td>SOH</td>
+<td>STH</td>
+<td>ETH</td>
+<td>EOT</td>
+<td>ENQ</td>
+<td>ACK</td>
+<td>BEL</td>
+<td>BS</td>
+<td>HT</td>
+<td>LF</td>
+<td>VT</td>
+<td>FF</td>
+<td>CR</td>
+<td>SO</td>
+<td>SI</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>DLE</td>
+<td>DC1</td>
+<td>CD2</td>
+<td>DC3</td>
+<td>DC4</td>
+<td>NAK</td>
+<td>SYN</td>
+<td>ETB</td>
+<td>CAN</td>
+<td>EM</td>
+<td>SUB</td>
+<td>ESC</td>
+<td>FS</td>
+<td>GS</td>
+<td>RS</td>
+<td>US</td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td>spc</td>
+<td>!</td>
+<td>"</td>
+<td>#</td>
+<td>$</td>
+<td>%</td>
+<td>&amp;</td>
+<td>'</td>
+<td>(</td>
+<td>)</td>
+<td>*</td>
+<td>+</td>
+<td>,</td>
+<td>-</td>
+<td>.</td>
+<td>/</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+<td>6</td>
+<td>7</td>
+<td>8</td>
+<td>9</td>
+<td>:</td>
+<td>;</td>
+<td>&lt;</td>
+<td>=</td>
+<td>&gt;</td>
+<td>?</td>
+</tr>
+<tr class="odd">
+<td>4</td>
+<td>@</td>
+<td>A</td>
+<td>B</td>
+<td>C</td>
+<td>D</td>
+<td>E</td>
+<td>F</td>
+<td>G</td>
+<td>H</td>
+<td>I</td>
+<td>J</td>
+<td>K</td>
+<td>L</td>
+<td>M</td>
+<td>N</td>
+<td>O</td>
+</tr>
+<tr class="even">
+<td>5</td>
+<td>P</td>
+<td>Q</td>
+<td>R</td>
+<td>S</td>
+<td>T</td>
+<td>U</td>
+<td>V</td>
+<td>W</td>
+<td>X</td>
+<td>Y</td>
+<td>Z</td>
+<td>[</td>
+<td>\</td>
+<td>]</td>
+<td>^</td>
+<td>_</td>
+</tr>
+<tr class="odd">
+<td>6</td>
+<td>`</td>
+<td>a</td>
+<td>b</td>
+<td>c</td>
+<td>d</td>
+<td>e</td>
+<td>f</td>
+<td>g</td>
+<td>h</td>
+<td>i</td>
+<td>j</td>
+<td>k</td>
+<td>l</td>
+<td>m</td>
+<td>n</td>
+<td>o</td>
+</tr>
+<tr class="even">
+<td>7</td>
+<td>p</td>
+<td>q</td>
+<td>r</td>
+<td>s</td>
+<td>t</td>
+<td>u</td>
+<td>v</td>
+<td>w</td>
+<td>x</td>
+<td>y</td>
+<td>z</td>
+<td>{</td>
+<td>|</td>
+<td>}</td>
+<td>~</td>
+<td>DEL</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="encodage-1" class="level2">
+<h2>Encodage</h2>
+<ul>
+<li>La fonction <code>ord</code> donne le <strong>code</strong> d'un
+caractère <span class="small">Sous forme d'un nombre entier</span></li>
+<li>La fonction <code>chr</code> donne le <strong>caractère</strong>
+correspondant à un code <span class="small">Sous forme d'une chaine de
+caractères</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">chr</span><span class="p">(</span><span class="mi">65</span><span class="p">))</span>           <span class="c1"># Affiche A</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;z&#39;</span><span class="p">))</span>          <span class="c1"># Affiche 90</span>
+</pre></div>
+
+</section>
+<section id="unicode-et-utf-8" class="level2">
+<h2>Unicode et UTF-8</h2>
+<ul>
+<li><strong>Unicode</strong> (ISO 10646) est un standard d'échange de
+texte <span class="small">Associe à tout caractère un nom et un
+identifiant numérique</span></li>
+<li><strong>UTF-8</strong> est un encodage pour les caractères Unicode
+<span class="small">Python travaille par défaut avec l'encodage
+UTF-8</span></li>
+</ul>
+<figure>
+<img src="images/unicode-characters.png"
+alt="Parcourir les caractères Unicode en ligne : http://unicode-table.com" />
+<figcaption aria-hidden="true">Parcourir les caractères Unicode en ligne
+: <a href="http://unicode-table.com"
+class="uri">http://unicode-table.com</a></figcaption>
+</figure>
+</section>
+<section id="choisir-lencodage" class="level2">
+<h2>Choisir l'encodage</h2>
+<ul>
+<li>On spécifie l'<strong>encodage des fichiers</strong> avec le
+paramètre <code>encoding</code></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;contains_unicode.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+  <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;😆&#39;</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;contains_unicode.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;ascii&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+</pre></div>
+
+<div class="terminal">Traceback (most recent call last):
+    File &quot;program.py&quot;, line 5, in
+        print(file.read())
+    File &quot;/Library/Frameworks/Python.framework/Versions/3.4/lib/python3.4/encodings/ascii.py&quot;, line 26, in decode
+        return codecs.ascii_decode(input, self.errors)[0]
+UnicodeDecodeError: &#39;ascii&#39; codec can&#39;t decode byte 0xf0 in position 11: ordinal not in range(128)
+</div>
+</section>
 </body>
 </html>

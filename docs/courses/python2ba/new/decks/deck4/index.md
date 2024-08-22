@@ -713,3 +713,391 @@ except:
   print("Erreur")
 
 ```
+
+## Fichier
+
+- Un **fichier** stocke des informations sur le disque dur [Il est
+  créé, modifié, supprimé]{.small}
+- Manipulation des fichiers grâce au **système d\'exploitation**
+  [L\'interpréteur fait le relais avec Linux, Windows, Mac OS
+  X\...]{.small}
+- Des **informations** sont associées à un fichier [Nom, taille, date
+  de création, dernière date de modification\...]{.small}
+
+## Type de fichier
+
+- Au plus bas niveau, un fichier est une **séquence de bits**
+  (`0`{.lang-plaintext} et `1`{.lang-plaintext}) [La séquence doit
+  être interprétée pour en obtenir le sens]{.small}
+- **Deux types** de fichiers manipulés à des niveaux différents
+  - Fichier texte est une séquence de caractères
+  - Fichier binaire est une séquence d\'octets (8 bits)
+
+## Chemin
+
+- Fichier identifié sur une machine à l\'aide de son **chemin**
+  [Identifie l\'endroit où se situe le fichier]{.small}
+- **Deux façons** de spécifier un chemin
+  - Chemin absolu à partir de la racine [`C:\`{.lang-plaintext}
+    (Windows), `/`{.lang-plaintext} (OSX et Linux)]{.small}
+  - Chemin relatif à partir du répertoire courant
+
+| Chemin relatif             | Chemin absolu                            |
+| -------------------------- | ---------------------------------------- |
+| data.txt                   | C:\\Users\\lur\\Desktop\\data.txt        |
+| src\\program.py            | C:\\Users\\lur\\Desktop\\src\\program.py |
+| ..\\image.png              | C:\\Users\\lur\\image.png                |
+| ..\\movies\\hamburgers.mp4 | C:\\Users\\lur\\movies\\hamburgers.mp4   |
+
+## Navigation en ligne de commande
+
+Pour passer d\'un répertoire à l\'autre dans une console de commandes
+
+- `pwd`{.lang-plaintext}: Affiche le chemin du répertoire courant
+  [Base des chemins relatifs]{.small}
+- `cd`{.lang-plaintext} _(suivi d\'un chemin)_: Change de répertoire
+  courant [`..`{.lang-plaintext} pour le répertoire parent]{.small}
+- `dir`{.lang-plaintext} _(Windows)_ ou `ls`{.lang-plaintext} _(OSX et
+  Linux)_: Liste le contenu du répertoire
+
+## Ouverture d\'un fichier
+
+- Pour manipuler un fichier, il faut d\'abord l\'**ouvrir** [On
+  utilise la fonction `open`{.lang-python}, qui renvoie un identifiant
+  de fichier]{.small}
+- **Erreurs** possibles lors de l\'ouverture [Fichier introuvable, ...]{.small}
+
+```python
+try:
+  file = open('data.txt')
+except FileNotFoundError:
+  print('Le fichier est introuvable')
+except IOError:
+  print("Erreur d'ouverture")
+```
+
+## Mode d\'ouverture
+
+- Par défaut, fichier ouvert en **lecture seule** [Tout ce qu\'on peut
+  faire c\'est donc lire le contenu du fichier]{.small}
+- On peut spécifier le **mode d\'ouverture** désiré [Avec le deuxième
+  paramètre de la fonction `open()`]{.small}
+
+```python
+try:
+  file = open('data.txt', 'w')         # Ouverture en écriture
+except IOError:
+  print("Erreur d'ouverture")
+```
+
+## Mode d\'ouverture
+
+- Mode d\'ouverture définit avec des **caractères**
+
+| Caractère | Description                                          |
+| --------- | ---------------------------------------------------- |
+| `r`       | Lecture (par défaut)                                 |
+| `w`       | Écriture (avec remise à zéro)                        |
+| `x`       | Création exclusive (erreur si fichier déjà existant) |
+| `a`       | Écriture (avec ajout à la fin)                       |
+| `b`       | Mode binaire                                         |
+| `t`       | Mode texte (par défaut)                              |
+
+```python
+try:
+  file = open('data.txt', 'rt')         # Mode par défaut
+except FileNotFoundError:
+  print('Le fichier est introuvable')
+except IOError:
+  print("Erreur d'ouverture")
+```
+
+## Fermeture d\'un fichier
+
+- Une fois les opérations finies, il faut **fermer** le fichier [On
+  utilise la méthode `close` avec l\'identifiant de
+  fichier]{.small}
+- **Libération des ressources** et sauvegarde sur disque [Le système
+  d\'exploitation limite le nombre de fichiers ouverts]{.small}
+
+```python
+try:
+  file = open('data.txt')
+  file.close()                          # Fermeture du fichier
+except FileNotFoundError:
+  print('Le fichier est introuvable')
+except IOError:
+  print("Erreur d'ouverture")
+```
+
+## Lecture
+
+- **Lecture** intégrale du fichier comme une chaîne de caractères [On
+  utilise la méthode `read` avec l\'identifiant de
+  fichier]{.small}
+- La lecture peut échouer et provoquer une **exception
+  `IOError`** [Par exemple si le disque est déconnecté
+  pendant la lecture]{.small}
+
+```python
+try:
+  file = open('data.txt')
+  print(file.read())
+  file.close()
+except FileNotFoundError:
+  print('Le fichier est introuvable')
+except IOError:
+  print("Erreur d'entrée/sortie")
+```
+
+## Instruction `finally`
+
+- En cas d\'erreur, le fichier pourrait **ne pas être fermé** [Car
+  l\'exécution du code saute directement dans
+  l\'`except`]{.small}
+- **Instruction `finally`** exécutée dans tous les cas
+  [Après la fin du bloc `try` ou après un
+  `except` éventuel]{.small}
+
+```python
+try:
+  file = open('data.txt')
+  print(file.read())
+except FileNotFoundError:
+  print('Le fichier est introuvable')
+except IOError:
+  print("Erreur d'ouverture")
+finally:
+  file.close()
+```
+
+## Instruction `finally`
+
+- **Bug** dans le code précédent si le fichier n\'a pas su être ouvert
+  [La variable `file` ne sera pas initialisée et
+  `close` pas disponible]{.small}
+- On utilise une instruction **`try/finally`**
+  additionnelle
+
+```python
+try:
+  file = open('data.txt')
+  try:
+    print(file.read())
+  finally:
+    file.close()
+except FileNotFoundError:
+  print('Le fichier est introuvable')
+except IOError:
+  print("Erreur d'entrée/sortie")
+```
+
+## Instruction `with`
+
+- **Instruction `with`** pour fermeture propre des
+  ressources [L\'appel à `close` sera fait
+  automatiquement]{.small}
+- Il faut garder le **`try/except`** pour les `IOError`
+
+```python
+try:
+  with open('data.txt') as file:
+    print(file.read())
+except FileNotFoundError:
+  print('Le fichier est introuvable')
+except IOError:
+  print("Erreur d'entrée/sortie")
+```
+
+```terminal
+Facebook:lur@ecam.be:lurk:8dj,Sj0m1
+Skype:mar@ecam.be:cedou:arduino
+Facebook:fle@ecam.be:fingerfood:b8ur,g2er
+```
+
+## Écriture
+
+- **Écriture** en ajoutant des chaines de caractères au fichier [On
+  utilise la fonction `write` avec l\'identifiant de
+  fichier]{.small}
+- L\'écriture peut échouer et provoquer une **exception
+  `IOError`** [Par exemple si l\'espace disque devient
+  plein pendant l\'écriture]{.small}
+
+```python
+with open('out.txt', 'w') as file:
+  file.write('Table de 10\n')
+  for i in range(10):
+    file.write(f'{i} x 10 = {i*10}\n')
+```
+
+## Copie d\'un fichier
+
+- **Copie** en faisant une lecture puis écriture du contenu lu [Deux
+  instruction `with` imbriquées]{.small}
+- Si le fichier destination existe déjà, il est **effacé** [Il faut
+  utiliser le mode `x` au lieu de `w` pour
+  empêcher cela]{.small}
+
+```python
+with open('data.txt', 'r') as src, open('copy.txt', 'w') as dest:
+  dest.write(src.read())
+```
+
+## Lecture ligne par ligne
+
+- Utilisation d\'un **itérateur** sur le fichier ouvert, avec
+  `for` [Parcours ligne par ligne, avec le retour de
+  ligne inclus]{.small}
+- Fonction `rstrip` pour retirer les caractères blancs
+  de droite [right strip]{.small}
+
+```python
+with open('data.txt') as file:
+  for line in file:
+    cleaned = line.rstrip()
+    tokens = cleaned.split(':')
+    print(f'Compte {tokens[0]} de {tokens[2]} (mode de passe : {tokens[3]})')
+```
+
+```terminal
+Compte Facebook de lurk (mode de passe : 8dj,Sj0m1)
+Compte Skype de cedou (mode de passe : arduino)
+Compte Facebook de fingerfood (mode de passe : b8ur,g2er)
+```
+
+## Lecture ligne par ligne
+
+- L\'**itérateur** est un raccourci d\'appel de
+  `readline` [Lis une ligne s\'il en reste à lire dans
+  le fichier]{.small}
+- Renvoie une **chaine de caractères vide** lorsqu\'au bout du fichier
+  [Pratique lorsqu\'on sait combien de lignes lire]{.small}
+
+```python
+with open('data.txt') as file:
+  line = file.readline()
+  while line != '':
+    cleaned = line.rstrip()
+    tokens = cleaned.split(':')
+    print(f'Compte {tokens[0]} de {tokens[2]} (mode de passe : {tokens[3]})')
+    line = file.readline()
+```
+
+## Lecture ligne par ligne
+
+- La fonction `readlines` lis l\'**intégralité des
+  lignes** en une traite [La fonction renvoie une liste de chaines de
+  caractères]{.small}
+- On peut **supprimer la variable** `cleaned` inutile
+  [En enchainant directement les appels à `rstrip` et
+  `split`{.lang-python}]{.small}
+
+```python
+with open('data.txt') as file:
+  content = file.readlines()
+
+for line in content:
+  tokens = line.rstrip().split(':')
+  print(f'Compte {tokens[0]} de {tokens[2]} (mode de passe : {tokens[3]})')
+```
+
+## Lecture ligne par ligne
+
+- **Amélioration du code** avec une fonction de formatage [On définit
+  une fonction qui formate une ligne]{.small}
+- On définit une liste par compréhension et on joint ses éléments
+  [Jointure des éléments d\'une liste réalisée avec fonction
+  `join`]{.small}
+
+```python
+def format(line: str) -> str:
+  tokens = line.rstrip().split(':')
+  return f'Compte {tokens[0]} de {tokens[2]} (mode de passe : {tokens[3]})'
+
+with open('data.txt') as file:
+  content = file.readlines()
+
+print('\n'.join([format(line) for line in content]))
+```
+
+## Exception
+
+- L\'erreur principale d\'**entrée/sortie** est
+  `IOError` [On peut se limiter à capturer cette unique
+  erreur]{.small}
+- Erreur **spécialisée** selon le type précis
+  - `FileNotFoundError`, si le fichier n\'est pas
+    trouvé
+  - `FileExistsError`, si le fichier existe déjà
+  - `PermissionError`, si l\'utilisateur n\'a pas les
+    droits d\'accès
+  - `IsADirectoryError`, si le fichier est en fait un
+    dossier
+
+## Encodage
+
+- Les caractères sont **stockés au format binaire** dans l\'ordinateur
+  [Table de correspondance associant un entier à chaque
+  caractère]{.small}
+- La **table de caractères** ASCII (iso-646) contient 128 caractères
+  [Table suffisante pour des textes en anglais]{.small}
+
+<div style="font-size: 50%; margin: 0 auto;">
+
+|     | 0   | 1   | 2   | 3   | 4   | 5   | 6   | 7   | 8   | 9   | A   | B   | C   | D   | E   | F   |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 0   | NUL | SOH | STH | ETH | EOT | ENQ | ACK | BEL | BS  | HT  | LF  | VT  | FF  | CR  | SO  | SI  |
+| 1   | DLE | DC1 | CD2 | DC3 | DC4 | NAK | SYN | ETB | CAN | EM  | SUB | ESC | FS  | GS  | RS  | US  |
+| 2   | spc | !   | \"  | \#  | \$  | \%  | &   | \'  | (   | )   | \*  | \+  | ,   | \-  | .   | /   |
+| 3   | 0   | 1   | 2   | 3   | 4   | 5   | 6   | 7   | 8   | 9   | :   | ;   | \<  | =   | \>  | ?   |
+| 4   | @   | A   | B   | C   | D   | E   | F   | G   | H   | I   | J   | K   | L   | M   | N   | O   |
+| 5   | P   | Q   | R   | S   | T   | U   | V   | W   | X   | Y   | Z   | \[  | \\  | \]  | \^  | \_  |
+| 6   | \`  | a   | b   | c   | d   | e   | f   | g   | h   | i   | j   | k   | l   | m   | n   | o   |
+| 7   | p   | q   | r   | s   | t   | u   | v   | w   | x   | y   | z   | {   | \|  | }   | \~  | DEL |
+
+</div>
+
+## Encodage
+
+- La fonction `ord` donne le **code** d\'un caractère
+  [Sous forme d\'un nombre entier]{.small}
+- La fonction `chr` donne le **caractère** correspondant
+  à un code [Sous forme d\'une chaine de caractères]{.small}
+
+```python
+print(chr(65))           # Affiche A
+print(ord('z'))          # Affiche 90
+```
+
+## Unicode et UTF-8
+
+- **Unicode** (ISO 10646) est un standard d\'échange de texte [Associe
+  à tout caractère un nom et un identifiant numérique]{.small}
+- **UTF-8** est un encodage pour les caractères Unicode [Python
+  travaille par défaut avec l\'encodage UTF-8]{.small}
+
+![Parcourir les caractères Unicode en ligne :
+<http://unicode-table.com>](images/unicode-characters.png)
+
+## Choisir l\'encodage
+
+- On spécifie l\'**encodage des fichiers** avec le paramètre
+  `encoding`
+
+```python
+with open('contains_unicode.txt', 'w', encoding='utf8') as file:
+  file.write('😆')
+
+with open('contains_unicode.txt', 'r', encoding='ascii') as file:
+  print(file.read())
+```
+
+```terminal
+Traceback (most recent call last):
+    File "program.py", line 5, in
+        print(file.read())
+    File "/Library/Frameworks/Python.framework/Versions/3.4/lib/python3.4/encodings/ascii.py", line 26, in decode
+        return codecs.ascii_decode(input, self.errors)[0]
+UnicodeDecodeError: 'ascii' codec can't decode byte 0xf0 in position 11: ordinal not in range(128)
+```
