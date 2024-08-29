@@ -307,7 +307,21 @@ def sum(T: tuple[int, ...]):
 
 - Le type des clés peut être spécifié
 
-![Annotation pour les clés et les valeurs](./dict.png){width=14em}
+```python
+def fun(D: dict[str, int]):
+  D['un'] = 1
+```
+
+- Les clés d'un dictionnaire doivent être non-modifiable (`Hashable`)
+
+```python
+from typing import Hashable, Any
+
+def add_key_value(D: dict, k: Hashable, v: Any):
+  D[k] = v
+```
+
+- Le type `Any` accepte n'importe quoi.
 
 ## Unions
 

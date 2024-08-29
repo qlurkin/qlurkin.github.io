@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>IN2L - Labo 2 - Imbrications de données</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="/document.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">IN2L - Labo 2
+<small>Imbrications de données</small>
+</h1>
+</header>
+<section id="structures-imbriquées" class="level2">
+<h2>Structures imbriquées</h2>
+<ol type="1">
+<li><p>Définir une fonction <code>def buildContacts(name, phone)</code>
+qui reçoit deux listes de même taille en paramètre, contenant le nom et
+le numéro de téléphone de vos contacts, et construit un dictionnaire
+représentant votre carnet de contacts. Le dictionnaire construit possède
+une clé <code>"contacts"</code> dont la valeur est une liste de
+dictionnaires représentant chacun un contact. Chaque dictionnaire de
+contact aura deux clés, <code>"name"</code> et <code>"phone"</code> dont
+les valeurs sont le nom et le numéro de téléphone du contact.</p></li>
+<li><p>Soit un dictionnaire qui permet de gérer les stocks d'un magasin.
+Chaque article possède un nom qui est la clé, et la quantité restant en
+stock ainsi que le prix en valeur. Par exemple :</p>
+<div class="pygments"><pre><span></span><span class="n">stock</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;Coca 33cl&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;quantity&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+        <span class="s1">&#39;price&#39;</span><span class="p">:</span> <span class="mf">1.0</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;Nokia 3310&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;quantity&#39;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span>
+        <span class="s1">&#39;price&#39;</span><span class="p">:</span> <span class="mf">35.99</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>Définir une fonction <code>def totalValue(stock)</code> qui calcule
+la valeur totale d'un stock (somme des quantité × prix, pour chaque
+article).</p></li>
+<li><p>Définir une fonction <code>def merge(S, T)</code> qui fusionne
+deux dictionnaires représentant les stocks S et T de deux magasins (un
+stock est défini comme à la question précédente). La fonction construit
+donc un nouveau dictionnaire représentant le stock conjoint des deux
+magasins (on supposera que les prix des articles communs sont les
+mêmes).</p></li>
+</ol>
+</section>
+<section id="classes-et-objets" class="level2">
+<h2>Classes et objets</h2>
+<ol type="1">
+<li><p>Définir une <code>dataclass</code> <code>Item</code> qui
+représente un article de magasin. Un tel article est défini par un
+code-barres (<code>int</code>), un nom de produit (<code>str</code>) et
+un prix en cents (<code>int</code>). On doit pouvoir créer une instance
+de cette classe comme suit :</p>
+<div class="pygments"><pre><span></span><span class="n">beer</span> <span class="o">=</span> <span class="n">Item</span> <span class="p">(</span><span class="mi">56273</span><span class="p">,</span> <span class="s2">&quot;Zundert 33 cl&quot;</span><span class="p">,</span> <span class="mi">250</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">beer</span><span class="p">)</span>
+</pre></div>
+
+<div class="terminal">Item(code=56273, name=&#39;Zundert 33 cl&#39;, cents=250)
+</div></li>
+<li><p>Améliorez la classe précédente en y ajoutant une méthode qui
+permet d'obtenir le prix en euros pour un article et aussi pour une
+quantité d'article qu'on commanderait. On doit pouvoir écrire l'exemple
+suivant:</p>
+<div class="pygments"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">beer</span><span class="o">.</span><span class="n">unitprice</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">beer</span><span class="o">.</span><span class="n">price</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+</pre></div>
+
+<div class="terminal">2.5
+25.0
+</div></li>
+<li><p>Enfin, ajoutez la méthode <code>__str__</code> à votre classe
+pour que l'article soit joliment affiché lors d'un <code>print()</code>
+:</p>
+<div class="pygments"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">beer</span><span class="p">)</span>
+</pre></div>
+
+<div class="terminal">Zundert 33 cl (code: 56273, prix: 2.5€)
+</div></li>
+<li><p>Définir une classe <code>Answer</code> qui représente une réponse
+d'une question de type QCM. Une telle réponse est composée de deux
+attributs:</p>
+<ul>
+<li>un identifiant (une chaine de caractères);</li>
+<li>l'énoncé de la réponse.</li>
+</ul>
+<p>Prévoyez deux variables d'instance privées, deux accesseurs
+<code>id</code> et <code>text</code> et aucun mutateur. On doit, par
+exemple, pouvoir écrire le code suivant tel qu'il produise le résultat
+montré, lors de son exécution (il vous faudra définir la fonction
+<code>__str__</code>) :</p>
+<div class="pygments"><pre><span></span>                a1 = Answer (&#39;A1&#39;, &quot;Il est blanc.&quot;)
+                a2 = Answer (&#39;A2&#39;, &quot;Il n&#39;en a pas.&quot;)
+                a3 = Answer (&#39;A1&#39;, &quot;Shuuut, je joue à Fortnite.&quot;)
+                a4 = Answer (&#39;A3&#39;, &quot;Il est rayé.&quot;)
+                print (a1, a2, a3, a4, sep=&#39;\n&#39;)
+</pre></div>
+
+<div class="pygments"><pre><span></span>                [A1] Il est blanc.
+                [A2] Il n&#39;en a pas.
+                [A1] Shuuut, je joue à Fortnite.
+                [A3] Il est rayé.
+</pre></div>
+</li>
+<li><p>Définir une classe <code>Question</code> qui représente une
+question d'un QCM. Une telle question est composée de trois
+attributs:</p>
+<ul>
+<li>un identifiant (une chaine de caractères);</li>
+<li>l'énoncé de la question;</li>
+<li>une liste de réponses (dont les identifiants sont uniques).</li>
+</ul>
+<p>La liste de réponses est initialement vide. Prévoyez trois variables
+d'instance privées pour les attributs, deux accesseurs <code>id</code>
+et <code>text</code> et aucun mutateur. De plus, prévoyez une variable
+d'instance privée de type dictionnaire pour retenir, pour chaque
+réponse, si elle est correcte ou non. Enfin, ajoutez une méthode
+<code>add</code> qui ajoute une réponse à la question (s'il n'y en avait
+pas déjà une avec le même identifiant). On doit, par exemple, pouvoir
+écrire le code suivant tel qu'il produise le résultat montré, lors de
+son exécution (il vous faudra définir la fonction
+<code>__str__</code>):</p>
+<div class="pygments"><pre><span></span><span class="n">q1</span> <span class="o">=</span> <span class="n">Question</span><span class="p">(</span><span class="s1">&#39;Q1&#39;</span><span class="p">,</span> <span class="s1">&#39;Quelle est la couleur du chat de Marchand?&#39;</span><span class="p">)</span>
+                <span class="n">q1</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">a1</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+                <span class="n">q1</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">a2</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+                <span class="n">q1</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">a3</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span> <span class="c1"># Ne sera pas ajoutée, car identifiant déjà existant</span>
+                <span class="n">q1</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">a4</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">q1</span><span class="p">)</span>
+</pre></div>
+
+<div class="pygments"><pre><span></span>                [Q1] Quelle est la couleur du chat de Marchand?
+                    [A1] Il est blanc. (True)
+                    [A2] Il n&#39;en a pas. (True)
+                    [A3] Il est rayé. (False)
+</pre></div>
+</li>
+</ol>
+</section>
+<section id="réflexion" class="level2">
+<h2>Réflexion</h2>
+<p>On souhaiterait construire un programme permettant de faire passer un
+quizz à un étudiant. Pour cela on va tout d'abord enrichir la classe
+<code>Question</code>, puis on écrira le programme principal.</p>
+<ol type="1">
+<li><p>Ajoutez une méthode <code>ask</code> dans la classe
+<code>Question</code>. Cette méthode permet de poser la question, en
+proposant deux choix de réponse et en s'assurant qu'une seule bonne
+réponse soit présentée. Dans un premier temps, parcourez simplement la
+liste des réponses et sélectionnez les successivement de sorte à en
+avoir une seule vraie.</p>
+<p>La méthode demande à l'utilisateur de rentrer un chiffre qui
+correspond à la réponse qu'il choisit (1 ou 2) et renvoie un booléen
+(<code>True</code> ou <code>False</code>) signalant si la réponse donnée
+est bonne ou non. Voici un exemple d'appel de cette méthode
+<code>ask</code> et le résultat produit:</p>
+<div class="pygments"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">q1</span><span class="o">.</span><span class="n">ask</span><span class="p">())</span>
+</pre></div>
+
+<div class="pygments"><pre><span></span>                Quelle est la couleur du chat de Marchand?
+                    1/ Il est blanc.
+                    2/ Il est rayé.
+                Votre réponse? 2
+                False
+</pre></div>
+</li>
+<li><p>On désire généraliser la méthode <code>ask</code> et pouvoir
+choisir le nombre de réponses que l'on souhaite voir afficher (par
+défaut, ça doit être deux). Modifiez donc la méthode <code>ask</code> de
+sorte que sa signature soit:</p>
+<div class="pygments"><pre><span></span><span class="k">def</span> <span class="nf">ask</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nb</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+</pre></div>
+
+<p>S'il n'y a pas assez de réponses pour la question, la méthode doit
+directement renvoyer <code>False</code> en affichant un message d'erreur
+à l'écran.</p></li>
+<li><p>Enfin, dernière chose que l'on veut faire, c'est un programme
+principal qui va poser plusieurs questions, retenir les réponses données
+et afficher le score à la fin de l'exécution. Voici un exemple
+d'exécution du programme:</p>
+<div class="pygments"><pre><span></span>                === Bienvenue dans myQuizz 2.0 ===
+
+                Quelle est la couleur du chat de Marchand?
+                    1/ Il est blanc.
+                    2/ Il est rayé.
+                Votre réponse? 2
+
+                Pourquoi Mélotte a un PC de gamer ?
+                    1/ N&#39;importe quoi, il a un Mac.
+                    2/ Parce qu&#39;il joue pendant ses pauses.
+                Votre réponse? 1
+
+                Peut-on contrôler le cerveau de quelqu&#39;un avec une Arduino?
+                    1/ Évidemment, c&#39;est pour cela que les bisseurs 1BA sont tous restés à l&#39;ECAM.
+                    2/ Non non, par contre il faut faire attention à la montre de Lurkin.
+                Votre réponse? 1
+
+                Quizz terminé.
+                Vous avez un score de 1/3.
+</pre></div>
+</li>
+</ol>
+</section>
+</body>
+</html>

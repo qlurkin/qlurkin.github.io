@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>IN2L - Labo 1 - Ensembles, dictionnaires et annotations</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="/document.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">IN2L - Labo 1
+<small>Ensembles, dictionnaires et annotations</small>
+</h1>
+</header>
+<section id="annotations-de-types" class="level2">
+<h2>Annotations de types</h2>
+<p>Activez la vérification de types dans <strong>Visual Studio
+Code</strong> (ou dans tout autre éditeur que vous utiliseriez).</p>
+<figure>
+<img src="./type_checking.png" class="half" alt="Dans VSCode" />
+<figcaption aria-hidden="true">Dans VSCode</figcaption>
+</figure>
+</section>
+<section id="ensemble-et-dictionnaires" class="level2">
+<h2>Ensemble et dictionnaires</h2>
+<ol type="1">
+<li>Définir un ensemble qui contient:
+<ol type="a">
+<li>les caractères utilisés dans la phrase
+<code>"Je suis un as en programmation."</code>,</li>
+<li>les naturels compris entre 1 et 1000 (inclus) qui sont divisibles
+par 3 et 13,</li>
+<li>les voyelles qui sont utilisées dans la phrase
+<code>"Maitriser les listes est crucial!"</code>.</li>
+</ol></li>
+<li>Définir une fonction <code>def set2list(A: set) -&gt; list</code>
+qui convertit l'ensemble <code>A</code> en une liste qui contient
+exactement les mêmes éléments, sans utiliser la fonction
+<code>list</code>.</li>
+<li>Définir une fonction
+<code>def common(A: set, B: set) -&gt; int</code> qui renvoie le nombre
+d'éléments qu'il y a en commun entre les deux ensembles <code>A</code>
+et <code>B</code>, de deux façons différentes :
+<ol type="1">
+<li>à l'aide d'une boucle <code>for</code> et de l'opérateur
+<code>in</code>,</li>
+<li>à l'aide d'un opérateur ensembliste.</li>
+</ol></li>
+<li>Définir une fonction <code>def xor(A:set , B: set) -&gt; set</code>
+qui renvoie l'union exclusive des ensembles <code>A</code> et
+<code>B</code>, c'est-à-dire l'ensemble des éléments qui se trouvent
+dans l'ensemble <code>A</code> ou dans l'ensemble <code>B</code>, mais
+pas dans les deux en même temps.</li>
+<li>Définir un dictionnaire qui contient :
+<ol type="a">
+<li>les dix premiers entiers pairs de 2 à 20 (inclus), comme clés, et la
+valeur de la clé moins un comme valeur,</li>
+<li>les dix premiers entiers de la forme <code>2n + 1</code>, pour
+<code>n</code> compris entre 1 et 10 (inclus), comme clés, et
+<code>True</code> ou <code>False</code> comme valeur selon que la clé
+est divisible par trois ou non,</li>
+<li>les mots de la liste
+<code>['lemon', 'apple', 'banana', 'watermelon']</code> comme clé, et le
+nombre de voyelles que chaque mot contient comme valeur (vous devriez
+sans doute préalablement définir une fonction qui compte le nombre de
+voyelles présentes dans un mot).</li>
+</ol></li>
+<li>Définir une fonction
+<code>def hasKey(key: Hashable, dico: dict) -&gt; bool</code> qui
+renvoie True si la clé key existe dans le dictionnaire et False sinon,
+de deux façons différentes :
+<ol type="a">
+<li>à l'aide d'une boucle <code>for</code></li>
+<li>à l'aide de l'opérateur <code>in</code></li>
+</ol></li>
+</ol>
+</section>
+<section id="réflexion" class="level2">
+<h2>Réflexion</h2>
+<p>Afin de déterminer quels types de soupes acheter pour ses employés,
+le directeur d'une entreprise propose à chacun de ses employés de voter
+parmi les choix possibles proposés par son fournisseur en soupes. Les
+votes des employés sont stockés dans une liste. Le directeur désire
+identifier la soupe qui a remporté le plus grand nombre de votes, et
+vous demande pour cela de définir les deux fonctions suivantes :</p>
+<ul>
+<li><code>def computeFreq(votes: list[str]) -&gt; dict[str, int]</code>
+permet de construire un dictionnaire à partir de la liste des votes,
+représentant le tableau des fréquences des votes,</li>
+<li><code>def maxFreq(frequencies: dict[str, int]) -&gt; int</code>
+renvoie la soupe qui a obtenu le plus grand nombre de votes (ou une des
+soupes si plusieurs ont obtenu le plus grand nombre de votes).</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="n">votes</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="s2">&quot;tomate&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;cerfeuil&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;tomate&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;potiron&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;tomate&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;cerfeuil&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;poulet&quot;</span>
+<span class="p">]</span>
+<span class="n">frequencies</span> <span class="o">=</span> <span class="n">computeFreq</span><span class="p">(</span><span class="n">votes</span><span class="p">)</span>
+<span class="n">soup</span> <span class="o">=</span> <span class="n">maxFreq</span><span class="p">(</span><span class="n">frequencies</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;La soupe la plus populaire est </span><span class="si">{</span><span class="n">soup</span><span class="si">}</span><span class="s2"> avec </span><span class="si">{</span><span class="n">frequencies</span><span class="p">[</span><span class="n">soup</span><span class="p">]</span><span class="si">}</span><span class="s2"> votes.&quot;</span><span class="p">)</span>
+</pre></div>
+
+<div class="terminal">La soupe la plus populaire est tomate avec 3 votes.
+</div>
+</section>
+</body>
+</html>

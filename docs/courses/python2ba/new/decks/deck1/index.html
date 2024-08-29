@@ -439,12 +439,23 @@ alt="Annotation pour les éléments" />
 <ul>
 <li>Le type des clés peut être spécifié</li>
 </ul>
-<figure>
-<img src="./dict.png" style="width:14em"
-alt="Annotation pour les clés et les valeurs" />
-<figcaption aria-hidden="true">Annotation pour les clés et les
-valeurs</figcaption>
-</figure>
+<div class="pygments"><pre><span></span><span class="k">def</span> <span class="nf">fun</span><span class="p">(</span><span class="n">D</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]):</span>
+  <span class="n">D</span><span class="p">[</span><span class="s1">&#39;un&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+</pre></div>
+
+<ul>
+<li>Les clés d’un dictionnaire doivent être non-modifiable
+(<code>Hashable</code>)</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Hashable</span><span class="p">,</span> <span class="n">Any</span>
+
+<span class="k">def</span> <span class="nf">add_key_value</span><span class="p">(</span><span class="n">D</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="n">Hashable</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
+  <span class="n">D</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+</pre></div>
+
+<ul>
+<li>Le type <code>Any</code> accepte n’importe quoi.</li>
+</ul>
 </section>
 <section id="unions" class="level2">
 <h2>Unions</h2>
