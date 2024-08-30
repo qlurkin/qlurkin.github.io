@@ -94,42 +94,35 @@ typst: true
     - un identifiant (une chaine de caractères);
     - l\'énoncé de la réponse.
 
-    Prévoyez deux variables d\'instance privées, deux accesseurs
-    `id` et `text` et aucun mutateur. On
-    doit, par exemple, pouvoir écrire le code suivant tel qu\'il
+    On doit, par exemple, pouvoir écrire le code suivant tel qu\'il
     produise le résultat montré, lors de son exécution (il vous faudra
     définir la fonction `__str__`) :
 
-    ```{.lang-python .wrap}
-                    a1 = Answer ('A1', "Il est blanc.")
-                    a2 = Answer ('A2', "Il n'en a pas.")
-                    a3 = Answer ('A1', "Shuuut, je joue à Fortnite.")
-                    a4 = Answer ('A3', "Il est rayé.")
-                    print (a1, a2, a3, a4, sep='\n')
-
+    ```python
+    a1 = Answer ('A1', "Il est blanc.")
+    a2 = Answer ('A2', "Il n'en a pas.")
+    a3 = Answer ('A1', "Shuuut, je joue à Fortnite.")
+    a4 = Answer ('A3', "Il est rayé.")
+    print (a1, a2, a3, a4, sep='\n')
     ```
 
-    ```lang-plaintext
-                    [A1] Il est blanc.
-                    [A2] Il n'en a pas.
-                    [A1] Shuuut, je joue à Fortnite.
-                    [A3] Il est rayé.
-
+    ```terminal
+    [A1] Il est blanc.
+    [A2] Il n'en a pas.
+    [A1] Shuuut, je joue à Fortnite.
+    [A3] Il est rayé.
     ```
 
 5.  Définir une classe `Question` qui représente une
-    question d\'un QCM. Une telle question est composée de trois
+    question d\'un QCM. Une telle question est composée de quatres
     attributs:
 
     - un identifiant (une chaine de caractères);
     - l\'énoncé de la question;
     - une liste de réponses (dont les identifiants sont uniques).
+    - un dictionnaire associant les identifiants des réponses avec le fait qu'elles soient vraies ou fausses.
 
-    La liste de réponses est initialement vide. Prévoyez trois variables
-    d\'instance privées pour les attributs, deux accesseurs
-    `id` et `text` et aucun mutateur. De
-    plus, prévoyez une variable d\'instance privée de type dictionnaire
-    pour retenir, pour chaque réponse, si elle est correcte ou non.
+    La liste de réponses est initialement vide.
     Enfin, ajoutez une méthode `add` qui ajoute une
     réponse à la question (s\'il n\'y en avait pas déjà une avec le même
     identifiant). On doit, par exemple, pouvoir écrire le code suivant
@@ -137,21 +130,19 @@ typst: true
     vous faudra définir la fonction `__str__`):
 
     ```python
-                    q1 = Question('Q1', 'Quelle est la couleur du chat de Marchand?')
-                    q1.add(a1, True)
-                    q1.add(a2, True)
-                    q1.add(a3, False) # Ne sera pas ajoutée, car identifiant déjà existant
-                    q1.add(a4, False)
-                    print(q1)
-
+    q1 = Question('Q1', 'Quelle est la couleur du chat de Marchand?')
+    q1.add(a1, True)
+    q1.add(a2, True)
+    q1.add(a3, False) # Ne sera pas ajoutée, car identifiant déjà existant
+    q1.add(a4, False)
+    print(q1)
     ```
 
-    ```lang-plaintext
-                    [Q1] Quelle est la couleur du chat de Marchand?
-                        [A1] Il est blanc. (True)
-                        [A2] Il n'en a pas. (True)
-                        [A3] Il est rayé. (False)
-
+    ```terminal
+    [Q1] Quelle est la couleur du chat de Marchand?
+        [A1] Il est blanc. (True)
+        [A2] Il n'en a pas. (True)
+        [A3] Il est rayé. (False)
     ```
 
 ## Réflexion
@@ -174,17 +165,15 @@ quizz à un étudiant. Pour cela on va tout d\'abord enrichir la classe
     cette méthode `ask` et le résultat produit:
 
     ```python
-                    print(q1.ask())
-
+    print(q1.ask())
     ```
 
-    ```lang-plaintext
-                    Quelle est la couleur du chat de Marchand?
-                        1/ Il est blanc.
-                        2/ Il est rayé.
-                    Votre réponse? 2
-                    False
-
+    ```terminal
+    Quelle est la couleur du chat de Marchand?
+        1/ Il est blanc.
+        2/ Il est rayé.
+    Votre réponse? 2
+    False
     ```
 
 2.  On désire généraliser la méthode `ask` et pouvoir
@@ -193,8 +182,7 @@ quizz à un étudiant. Pour cela on va tout d\'abord enrichir la classe
     `ask` de sorte que sa signature soit:
 
     ```python
-                    def ask(self, nb=2):
-
+    def ask(self, nb: int = 2) -> bool:
     ```
 
     S\'il n\'y a pas assez de réponses pour la question, la méthode doit
@@ -206,25 +194,24 @@ quizz à un étudiant. Pour cela on va tout d\'abord enrichir la classe
     données et afficher le score à la fin de l\'exécution. Voici un
     exemple d\'exécution du programme:
 
-    ```lang-plaintext
-                    === Bienvenue dans myQuizz 2.0 ===
+    ```terminal
+    === Bienvenue dans myQuizz 2.0 ===
 
-                    Quelle est la couleur du chat de Marchand?
-                        1/ Il est blanc.
-                        2/ Il est rayé.
-                    Votre réponse? 2
+    Quelle est la couleur du chat de Marchand?
+        1/ Il est blanc.
+        2/ Il est rayé.
+    Votre réponse? 2
 
-                    Pourquoi Mélotte a un PC de gamer ?
-                        1/ N'importe quoi, il a un Mac.
-                        2/ Parce qu'il joue pendant ses pauses.
-                    Votre réponse? 1
+    Pourquoi Mélotte a un PC de gamer ?
+        1/ N'importe quoi, il a un Mac.
+        2/ Parce qu'il joue pendant ses pauses.
+    Votre réponse? 1
 
-                    Peut-on contrôler le cerveau de quelqu'un avec une Arduino?
-                        1/ Évidemment, c'est pour cela que les bisseurs 1BA sont tous restés à l'ECAM.
-                        2/ Non non, par contre il faut faire attention à la montre de Lurkin.
-                    Votre réponse? 1
+    Peut-on contrôler le cerveau de quelqu'un avec une Arduino?
+        1/ Évidemment, c'est pour cela que les bisseurs 1BA sont tous restés à l'ECAM.
+        2/ Non non, par contre il faut faire attention à la montre de Lurkin.
+    Votre réponse? 1
 
-                    Quizz terminé.
-                    Vous avez un score de 1/3.
-
+    Quizz terminé.
+    Vous avez un score de 1/3.
     ```
