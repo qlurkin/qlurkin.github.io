@@ -1,6 +1,6 @@
 ---
 title: IN2L - Labo 2
-subtitle: Imbrications de données
+subtitle: Imbrications de données, classes et objets
 typst: true
 ---
 
