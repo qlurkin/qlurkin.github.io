@@ -49,7 +49,7 @@ crochets <code>[]</code></span></li>
 <section id="javascript-object-notation-json-1" class="level2">
 <h2>JavaScript Object Notation (JSON)</h2>
 <div class="pygments"><pre><span></span><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Carnet d&#39;adresses de Sébastien Combéfis&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Carnet d&#39;adresses de Quentin Lurkin&quot;</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;contacts&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">    </span><span class="p">{</span>
 <span class="w">      </span><span class="nt">&quot;firstname&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Cédric&quot;</span><span class="p">,</span>
@@ -57,13 +57,13 @@ crochets <code>[]</code></span></li>
 <span class="w">      </span><span class="nt">&quot;phone&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2837</span>
 <span class="w">    </span><span class="p">},</span>
 <span class="w">    </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;firstname&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Jonathan&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;lastname&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Verlant-Chenet&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;firstname&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;André&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;lastname&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Lorge&quot;</span><span class="p">,</span>
 <span class="w">      </span><span class="nt">&quot;phone&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4872</span>
 <span class="w">    </span><span class="p">},</span>
 <span class="w">    </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;firstname&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Quentin&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;lastname&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Lurkin&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;firstname&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Clémence&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;lastname&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Flémal&quot;</span><span class="p">,</span>
 <span class="w">      </span><span class="nt">&quot;phone&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">8723</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="w">  </span><span class="p">]</span>
@@ -110,6 +110,101 @@ dictionnaire</span></li>
 <span class="n">countries</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">document</span><span class="p">)</span>
 </pre></div>
 
+</section>
+<section id="manipuler-le-système-de-fichiers" class="level2">
+<h2>Manipuler le système de fichiers</h2>
+<ul>
+<li><strong>Trois modules</strong> pour manipuler le système de fichiers
+<ul>
+<li><code>os</code> : fonctions d’interface avec le système
+d’exploitation</li>
+<li><code>os.path</code> : manipulation de chemins dans le système de
+fichiers</li>
+<li><code>shutil</code> : opérations sur des fichiers et
+répertoires</li>
+</ul></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Votre OS :&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Répertoire courant :&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())</span>
+</pre></div>
+
+<div class="terminal">Votre OS : posix
+Répertoire courant : /Users/lur/Desktop
+</div>
+</section>
+<section id="répertoire-courant" class="level2">
+<h2>Répertoire courant</h2>
+<ul>
+<li><code>os.getcwd()</code> : renvoie le répertoire courant</li>
+<li><code>os.chdir(path)</code> : change le répertoire courant</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())</span>
+<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;/Users&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())</span>
+</pre></div>
+
+<div class="terminal">/Users/lur/Desktop
+/Users
+</div>
+</section>
+<section id="répertoires" class="level2">
+<h2>Répertoires</h2>
+<ul>
+<li>Fonctions de manipulation de <strong>répertoires</strong>
+<ul>
+<li><code>os.mkdir(path)</code> : crée un nouveau répertoire</li>
+<li><code>os.makedirs(path)</code> : crée un nouveau répertoire. <span
+class="small">Crée tous les répertoires de niveau intermédiaire
+nécessaires pour contenir le répertoire “feuille”</span></li>
+<li><code>os.rmdir(path)</code> : supprime un répertoire (doit être
+vide)</li>
+<li><code>os.listdir(path)</code> : renvoie la liste du contenu d’un
+répertoire</li>
+</ul></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;/tmp&#39;</span><span class="p">)</span>
+<span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="s1">&#39;test&#39;</span><span class="p">)</span>
+<span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="s1">&#39;test/data&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s1">&#39;/tmp/test&#39;</span><span class="p">))</span>
+</pre></div>
+
+<div class="terminal">[&#39;data&#39;]
+</div>
+</section>
+<section id="fichiers" class="level2">
+<h2>Fichiers</h2>
+<ul>
+<li>Fonctions de manipulation de <strong>fichiers</strong>
+<ul>
+<li><code>remove(path)</code> : supprime un fichier</li>
+</ul></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;hello.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+  <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;Hello World !&#39;</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;hello.txt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+
+<span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">&#39;hello.txt&#39;</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;hello.txt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+</pre></div>
+
+<div class="terminal">Hello World !
+Traceback (most recent call last):
+  File &quot;/Users/lur/program.py&quot;, line 12, in &lt;module&gt;
+    with open(&quot;hello.txt&quot;) as file:
+         ^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: &#39;hello.txt&#39;
+</div>
 </section>
 </body>
 </html>

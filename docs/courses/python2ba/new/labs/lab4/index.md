@@ -185,4 +185,28 @@ css: style.css
     | de 207 à 229    | .             |
     | de 230 à 255    | (espace)      |
 
-    **Remarque:** dans le résultat d'exemple ci-dessus, chaque caractère correspond au niveau de gris moyen d'un groupe de pixels (4 x 8). Ceci afin que le résultat sous forme de texte ne soit pas trop grand.
+    **Remarques:**
+
+    - dans le résultat d'exemple ci-dessus, chaque caractère correspond au **niveau de gris moyen** d'un groupe de pixels (4 x 8). Ceci afin que le résultat sous forme de texte ne soit pas trop grand.
+    - Un vrai fichier PGM peut contenir des commentaires commençant par #:
+
+      ```plain
+      P2
+      4 3
+      # file created by LUR
+      255
+      0
+      85
+      170
+      255
+      0
+      85
+      170
+      255
+      0
+      85
+      170
+      255
+      ```
+
+      Essayez de faire en sorte que votre programme supporte les fichiers contenant des commentaires.
