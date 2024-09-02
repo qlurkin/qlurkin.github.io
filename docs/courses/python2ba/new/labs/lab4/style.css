@@ -1,0 +1,13 @@
+table {
+  margin: 1rem auto;
+}
+
+.caption {
+  font-style: italic;
+  margin-top: -1rem;
+
+  p {
+    text-align: center;
+    font-size: 0.8em;
+  }
+}

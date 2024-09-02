@@ -1,5 +1,5 @@
 ---
-title: IN2L - Labo 1
+title: Labo 1
 subtitle: Ensembles, dictionnaires et annotations
 typst: true
 ---

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Labo 4 - Manipulations de fichiers textes</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="/document.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Labo 4
+<small>Manipulations de fichiers textes</small>
+</h1>
+</header>
+<ol type="1">
+<li><p>Écrire un programme pygame qui permet de charger un fichier JSON
+de la forme suivante:</p>
+<div class="pygments"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;firstname&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Quentin&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;lastname&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Lurkin&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;birthdate&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;24/08/1982&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;address&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;street&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Promenade de l&#39;Alma&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;number&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;50&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;CP&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1200</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;City&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Brussels&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;Country&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Belgium&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>et d'afficher ses informations de façon lisible.</p>
+<p>L'utilisateur pourra introduire le nom du fichier dans une boite de
+texte et il recevra un message d'erreur si le fichier n'existe pas ou
+s'il ne respecte pas le format.</p>
+<p><strong>Conseil:</strong> vous pouvez utiliser une <a
+href="https://pygame-gui.readthedocs.io/en/latest/pygame_gui.elements.html#module-pygame_gui.elements.ui_text_box"><code>UITextBox</code></a>.</p></li>
+<li><p>Définir une fonction <code>computesum(path: str)</code> qui
+reçoit un paramètre:</p>
+<ul>
+<li><code>path</code> contient le chemin vers un fichier sur
+l’ordinateur,</li>
+</ul>
+<p>qui est sensé contenir un nombre par ligne, et qui affiche à l’écran
+la somme de tous ces nombres. Attention, le fichier peut ne pas exister
+auquel cas un message d’erreur est affiché. Le fichier peut également
+être vide, dans ce cas la somme est nulle. De plus, des lignes peuvent
+être erronées (ne contiennent pas un nombre); ces dernières doivent
+simplement être ignorées. Voici un exemple d’appel avec le contenu du
+fichier <code>data.txt</code> et le résultat produit:</p>
+<div class="pygments"><pre><span></span>13
+7.5
+2.1
+DEUX
+4.4
+100
+</pre></div>
+
+<div class="pygments"><pre><span></span><span class="n">computesum</span><span class="p">(</span><span class="s1">&#39;data.txt&#39;</span><span class="p">)</span>
+</pre></div>
+
+<div class="terminal">La somme est 127.0
+</div></li>
+<li><p>On vous demande de réaliser un programme permettant de
+transformer une image en texte:</p>
+<figure>
+<img src="./images/dog.png" alt="l’image d’entrée" />
+<figcaption aria-hidden="true">l’image d’entrée</figcaption>
+</figure>
+<div style="font-size:5pt">
+<div class="pygments"><pre><span></span>                          .o==oCoOOCCCoCCC-                                 .==-
+                          =C-coCCCCCCoCCCC=                                co=:.
+                          :Cc=oCCCCCCCCCCOCc                              -Co--.
+                        .oOCcoOCCCCCCCoCCCOc:                           .oCo--:
+                        .cOOccooCCCCoooCCCOCo                          :==o==::
+                          COOo=oooooCCoCCCCOOOc                        :c==c---:
+                        --cOOCcooCoCCoooCCCOOCO=                     --=cccc-==:
+                        cOOOCcooooooCCCCCOOCOOC:                   :oc=o=cc=cc
+                        coOOOocooooooCCCCOOOCOOCc.                :=cccc=c-cco=
+                      .=OOOOocoocooCCCCCCOOCCCooo-c:.::.        .==cocccccccC=
+                        :CO8OCococ=cooCCOOCCCCooCOCo=oooc-.      =cc=-=coc--oo=.
+                        coOOOCooc===ccooCCCoCoooOCooCoCOOoc=-:..:=-=--cccc--=c=.
+                        oOOOOOoccc=c=ooooooocoCCoCoooOOCoccc=:.:::::::::-:::-::.
+                      .=CO8OOOOoooocccocococ=cCcocoCOOOCCoc-::..--::--::::==-----:::.
+                        :oO8OCoOOCooocooccccC==occoOOOOOOCc=::...::::...:--:..:---=-:-==--....
+                      .=O88OCoOCOOCCccooccooococCCO8OOOCc=:...:.::......   .......::=--cc=--::     .
+                        -o888O=-oOOCCccCoooocCCCCOOOOOOCo-:.        ...::::.  :--::::::=oCCo====. .:-.
+                      .=O888OO=.ccoooCCCCoo=CoCCOOOOOOCo:       .....  ..:.:. .....-==cCOoocCo:-:  :=cc
+                      :oO8888OC=:-=c=oCOOCCoCCCOOOOOOOOCc. ..   ..     .   ....  :-ccccCOOCoooo=-.  .-c
+                      :oO88888Oc=o=:-ccCoCCOOOCOOOOCOOOOc.          ...  ..  .-:-==-:.:cCCooccc=::.   --
+                      :oOOOO8OOOCc=Co-::c=oCOOoCCOOOCOOOO=.   .::..     ..   ...:=--==coCOOc==-:=--::   .:
+                      :oCOOOO888OCCCc-:=-.=O88OCCCCCOOOOC- .......  ..  .......:-=oooo==-=OOocc-------. .
+                    .cOOOOOOOO88OOOOOCo=:-COOOCCcCCOOOOo.    ..::...:--:. ..----==coo-:-=oCC===----===:........
+                    .=COOOOOOOCOOOO88OOCcoC888OocOOCOOCo-.  ..    .:-::-:::-cc=-==cc-:---:---::-=::-coc=:..:..........    ......
+                  .=oCOOO888OCO888OOOO88888888OO8OOOCc:::......:--:.:==--ooc==cc=--==-::::::..::..:-ooc-..:.... ..::....::.......::----:...
+                  :=cCOOOOOO88OCCO888OO88OC888888OOOCo=-. ...::.::------cc=occooc==--::........... ..:=oc:...:. .:::::-:::::..::=----======-::..
+                .:=oCCOOOOOO888OOOO88OOOCOO8888888OOC=:..... ..:::::-:-==ccooooooooooc=--:........ .  =c-:-=::-=-::--::---:-=cooCCoooocc=--:...
+              :-cooCCOOO88O8888OCCO88OOOCO88888OOOCo--::.:......:.:-=====cc==coCCocoCoc=:-:.:-.. .....=-=-c==c===-=c=---==--cCooCCCoocoo===--::--:.
+            ..:=coCCCCOOO888888OOOOOOOOOOO8888888OCo==-:::::::.::--::-:=c====coooCoCoooc-=---:-:...:::-c=-==.=-===cc=ccc====cccoCCOOCooCCo-oooooCOOo=.
+          .:-=ccoCCCCCOO8OOOO888888OOOOOO88888OCCCoo=--:::.....:::--::--=====-=ocoo===cCo=---:.:-=--::=c--c-:=--=coooc=coo=cccoooCCCCCocooCCCCCoOOOo=:
+        .:-=ccooooCCCCOO8888888O888888888888OOOOCoocc===--::::::.:-------==--=-:=oOCooc====--==c==-:---=:=COC==ccoCooCCocoococ=occCCCCoooo=oCCCCoc=--.
+      .:--=cccccoooCCCCOO888888O888888888888OOOCocccc====-:.:---:.::--==--=====cc===cooCccccc==-co==-=ooccooooooCCCCCCooooocccccoooCCCCCooCooc==:---=.
+    .::-=ccoooocccooooCCO8888888888888O88OOOOOCooCooccc=:.:::::..::--=-=-==--=-coCCCCoCCCCcccc=-=ooccc-coCCOCCoooCoccocccooooooCooooooCCoCCooococ==c-
+  .:--=ccooooocccccccooCCOOOOO888888888OO8OOOCCooccc==-:-::::...:--c=-----==-======cooCCoooCoooooooCCCCCcooOCCCCCCoooooCocooccoocccccocccooooocccc=:
+.:-==cooooocccccc==ccooCCooCCOOOO88888OOOCCCoc=:-=--:::..  .:-=--=ccc-=-=====c=ccoCCCCCOOCCOCoooCCoccCCC8OOOOOOOCCOCCCCooCCCCo=cocccc=cccccoocc==.
+:-==ccoooooccccccccccccccooooooooCOO888OCocc==-.:=:.:-::.:::::::::--cc===-ccccccCCCCOOOOOOO8OOO8OOO8OOOOOOOOO8OOOOCCCCCCCCocoCoocoooooccc=cccc=--:
+:=ccooooooocccccccc==cccccccooooCCCCCCoooccc=-===..-::...:::::..:::cc=====ccoooCCCOOOOO888888OOOO8OOOOOOOOOOOOOOOOOOOOOCCCCCCCooCCooooooc======-.
+-coCoooooooooccccc==ccccc==ccoooooCCOOCoccoc=cc=:::-:. . .. . .::---=--===coCCCOOCOOO88888888888O8888OO888888OOOOOOOOOOOCCCCCCCCoooooocccccc=-.
+=oooooooooocccccc=====cccccccccoooooCOOocc=ccc-----:.:::.....:==oCc-:::==coCOOOOO88O88888888888888888888OOOO88OOOOOOOOOOOCCCCCCCCoooooccc=:.
+coCCCCoooooocccccc===ccccccccccccocoCOOCCCo=------:-----::.---==coo===coCCCO8888O888888888888888888888888OOOOOOOOOOOOOCCCCCCCCocccc=--:.
+cooooCCoooocccoccccccc===cccc===cccoCOOOO=-==--::--===::::----===cc==coCCoOOO88OO8OO8888888888888OO8888OOOOOOOOOOOOCCCCCCCCoc=-.
+cCCCCooooooooccccccccccccccccccccccoooCCo=-==-----=--:==ccooc==coo-=-==oCO888OO8888888888888888OOOOOOOOOOOCCCCCCCCCCoo=--..
+cCCCCCCoooooooooooocooccccccccccccccooCOCocc=--====-:-=ccccc==ccoco=--ccoCOO88888888888888OOOOCCoc-=OOCCOCoccccccccoooc-.
+cCCCCCCooooooooccccocccccccoooocccccccooocooooc-:-==c--=c-===cooooc-=-cooCC88O8OO8888888O88OCCCo--..-CCCoCCo====ccccccccc=-.
+cCCCCCooooooocccccocccccooocoocc==cccooCOCCCCc==::-=::-=ccoocooCCCCoooOOO88OO8888888888O88O8OOOOCCooco=-.:oOoc====c====cc===-:.::-=-.
+cCCCCCCooooocoocccccccoooooooco===ccccooCCCCo===----:.:=cccooCCCCCoCoO888888888888@888OOO8OOOO88OOOOOCoocccCoccoc==-=======-.  .:::-:
+coooooooooooooooccccooCoooooooc--==c=cooooCCCoooC==-:--===-=ccoCCCOCOO88888888@8888@88OOOO8OOOOOOOOO8OOOOOOOCCCoooocc===-=-:   -.....
+coooooooooooocoooocoooooooCoocc=cc===cocccoCCCOCo-c:-:==-:-==ccoooCOOOO888O8888@@888@8OOOOOO888OOOOOOOOOOCCCCooooooooocooc-:..:=:
+=oooooooccccccocccooooooooCCooc=====ccc=ccooCCCCo=o--.---=::ccoooCCCOO888O8888888888@@8OOOOOOOOOOOOOOOOOCCCCooooooooooooooooc=-:..::..
+cCCooooocccccoccccoccocoooCCoc--==c=c=ccoocoooooOoc=.=.:=----=oCooCCOOO88C888888888888888OOOOCCCCCCCCCCCCCCCCCCCCCoooCooooooocc====---.
+cCCoooooccooo==ocooooccooCCCoccccc==oo=coc=coocCCoo===-:c=-:-=c==cooCCOOOC88@@@8888888888888OOOOOOOCOOOOOOOOCCCoooocooooooooococccc=-
+cCoooocoooccccoccoooooocoooCCo=c=c=ooocooco=cccoooocCoccc==--c=-:-ccooCOO888@@@@@888888888888888888OOOOOOOOCCCCCCCooCoooocc=c====-:.
+cCCCooocc==ccccccocooc=cooooococooooooccc=o=Cccoccoooooccc====:.--=cccoCC88888@@@888888888888OOOOOooc=ccoCCCCCoCooooocccccc=c==--.
+cCCCCCoocc=-====cccoocoooooooccoCCcooccococooCooooccococc=-.:==--.:--cooCOOOO8888O88888@@@@8888OOC=:.     ::-:-:::.::.::::-:..
+coCCCCoooccccccccc=ooooooocoooooCoooooooooocCCoooocc=c==o==::==----cc=cooooCOOOOCCCO88888888888OCCc...
+=cccooCCCoooccccc=cccoccococooooocoCCcooooooOoooooccc==-====:-...::-=c=oCCCCoCOOCoCO88888888OOCCo:::.
+=coccooCCCOooc==cccccccccccccooccooCCooccoocCocooooooc=c-.----=:.:---==oocooCCooCCCO8888888OOCooC=  ...
+=cccccoooCCoooCCoc=cccccccccocococooCOooooCooCoooc=oCCo=o=::::-c-:-::c==-ccccoooooCCO88888OCCCo=-=:
+-=====cccoCoCCCCCCoocc=coocccccoCccoooooooooooCoooc=ooCCocc-:-::==-ccc--cccooocccoCOO888888OCccC:.::                     ...             .:
+:--=--==cccoooCCCCCoccooCooc=ccooccccccooooooooooooococooooocc=c---=cccc=occcccccoCO8888888OCoc:=.  . ..   ..   ..... ....:..            .:::...
+</pre></div>
+
+</div>
+<div class="caption">
+<p>Le résultat</p>
+</div>
+<p>L’image devra être lue dans un fichier au format PGM. Voici un
+exemple de fichier PGM:</p>
+<div class="pygments"><pre><span></span>P2
+4 3
+255
+0
+85
+170
+255
+0
+85
+170
+255
+0
+85
+170
+255
+</pre></div>
+
+<p>Un fichier PGM est structuré comme suit:</p>
+<ul>
+<li>il commence toujours par P2,</li>
+<li>il contient ensuite la taille (largeur hauteur) de l’image,</li>
+<li>il contient ensuite la valeur maximale d’un niveau de gris
+(normalement 255),</li>
+<li>il contient ensuite les niveaux de gris de chaque pixel de l’image
+(de gauche à droite et de haut en bas).</li>
+</ul>
+<p>Télécharger le fichier <a href="./images/dog.pgm">dog.pgm</a></p>
+<p>Le résultat devra être écrit dans un fichier de sortie.</p>
+<p>Pour convertir les niveaux de gris en caractères, vous pouvez
+utiliser le tableau de correspondance suivant:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Niveaux de gris</th>
+<th>Caractère</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>de 0 à 22</td>
+<td>@</td>
+</tr>
+<tr class="even">
+<td>de 23 à 45</td>
+<td>8</td>
+</tr>
+<tr class="odd">
+<td>de 46 à 68</td>
+<td>O (majuscule)</td>
+</tr>
+<tr class="even">
+<td>de 69 à 91</td>
+<td>C (majuscule)</td>
+</tr>
+<tr class="odd">
+<td>de 92 à 114</td>
+<td>o (minuscule)</td>
+</tr>
+<tr class="even">
+<td>de 115 à 137</td>
+<td>c (minuscule)</td>
+</tr>
+<tr class="odd">
+<td>de 138 à 160</td>
+<td>=</td>
+</tr>
+<tr class="even">
+<td>de 161 à 183</td>
+<td>-</td>
+</tr>
+<tr class="odd">
+<td>de 184 à 206</td>
+<td>:</td>
+</tr>
+<tr class="even">
+<td>de 207 à 229</td>
+<td>.</td>
+</tr>
+<tr class="odd">
+<td>de 230 à 255</td>
+<td>(espace)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Remarque:</strong> dans le résultat d’exemple ci-dessus,
+chaque caractère correspond au niveau de gris moyen d’un groupe de
+pixels (4 x 8). Ceci afin que le résultat sous forme de texte ne soit
+pas trop grand.</p></li>
+</ol>
+</body>
+</html>
