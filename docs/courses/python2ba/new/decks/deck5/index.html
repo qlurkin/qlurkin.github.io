@@ -34,85 +34,6 @@
 <p class="author">Quentin Lurkin</p>
 <p class="author">Sébastien Combéfis</p>
 </header>
-<section id="javascript-object-notation-json" class="level2">
-<h2>JavaScript Object Notation (JSON)</h2>
-<ul>
-<li>Permet de <strong>représenter des objets</strong> <span
-class="small">Notation issue de la notation des objets
-Javascript</span></li>
-<li>Ensemble de <strong>paires</strong> (étiquette, valeur) <span
-class="small">Étiquette entre guillemets, deux-points et
-valeur</span></li>
-<li><strong>Valeurs</strong> sont soit une simple valeur, soit une liste
-de valeurs <span class="small">Liste de valeurs délimitée par des
-crochets <code>[]</code></span></li>
-</ul>
-</section>
-<section id="javascript-object-notation-json-1" class="level2">
-<h2>JavaScript Object Notation (JSON)</h2>
-<div class="pygments"><pre><span></span><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Carnet d&#39;adresses de Quentin Lurkin&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;contacts&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;firstname&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Cédric&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;lastname&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Marchand&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;phone&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2837</span>
-<span class="w">    </span><span class="p">},</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;firstname&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;André&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;lastname&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Lorge&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;phone&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4872</span>
-<span class="w">    </span><span class="p">},</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;firstname&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Clémence&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;lastname&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Flémal&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;phone&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">8723</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">]</span>
-<span class="p">}</span>
-</pre></div>
-
-</section>
-<section id="sérialisation" class="level2">
-<h2>Sérialisation</h2>
-<ul>
-<li><strong>Sérialisation</strong> d'un dictionnaire en document JSON
-<span class="small">Dictionnaire Python (<code>dict</code>) → document
-JSON (<code>str</code>)</span></li>
-<li>Fonction <strong><code>dumps</code></strong> du module
-<code>json</code> <span class="small">Renvoie une chaine de
-caractères</span></li>
-</ul>
-<div class="pygments"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
-
-<span class="n">bb</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;seasons&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;genre&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;crime drama&#39;</span><span class="p">,</span> <span class="s1">&#39;thriller&#39;</span><span class="p">]}</span>
-<span class="n">skins</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;seasons&#39;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span> <span class="s1">&#39;genre&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;teen drama&#39;</span><span class="p">,</span> <span class="s1">&#39;comedy drama&#39;</span><span class="p">]}</span>
-<span class="n">tvshows</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Breaking Bad&#39;</span><span class="p">:</span> <span class="n">bb</span><span class="p">,</span> <span class="s1">&#39;Skins&#39;</span><span class="p">:</span> <span class="n">skins</span><span class="p">}</span>
-
-<span class="n">document</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">tvshows</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
-</pre></div>
-
-</section>
-<section id="désérialisation" class="level2">
-<h2>Désérialisation</h2>
-<ul>
-<li><strong>Désérialisation</strong> d'un document JSON en dictionnaire
-<span class="small">Document JSON (<code>str</code>) → dictionnaire
-Python (<code>dict</code>)</span></li>
-<li>Fonction <strong><code>loads</code></strong> du module
-<code>json</code> <span class="small">Renvoie un
-dictionnaire</span></li>
-</ul>
-<div class="pygments"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
-
-<span class="n">document</span> <span class="o">=</span> <span class="s1">&#39;{&quot;Belgium&quot;:{&quot;capital&quot;:&quot;Brussels&quot;,&quot;languages&quot;:[&quot;french&quot;,&quot;dutch&quot;,&#39;</span>
-           <span class="s1">&#39;&quot;german&quot;]},&quot;China&quot;:{&quot;capital&quot;:&quot;Beijing&quot;,&quot;languages&quot;:&#39;</span>
-           <span class="s1">&#39;[&quot;mandarin chinese&quot;]}}&#39;</span>
-
-<span class="n">countries</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">document</span><span class="p">)</span>
-</pre></div>
-
-</section>
 <section id="manipuler-le-système-de-fichiers" class="level2">
 <h2>Manipuler le système de fichiers</h2>
 <ul>
@@ -347,6 +268,85 @@ répertoire</li>
 </ul></li>
 </ul>
 </section>
+<section id="javascript-object-notation-json" class="level2">
+<h2>JavaScript Object Notation (JSON)</h2>
+<ul>
+<li>Permet de <strong>représenter des objets</strong> <span
+class="small">Notation issue de la notation des objets
+Javascript</span></li>
+<li>Ensemble de <strong>paires</strong> (étiquette, valeur) <span
+class="small">Étiquette entre guillemets, deux-points et
+valeur</span></li>
+<li><strong>Valeurs</strong> sont soit une simple valeur, soit une liste
+de valeurs <span class="small">Liste de valeurs délimitée par des
+crochets <code>[]</code></span></li>
+</ul>
+</section>
+<section id="javascript-object-notation-json-1" class="level2">
+<h2>JavaScript Object Notation (JSON)</h2>
+<div class="pygments"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Carnet d&#39;adresses de Quentin Lurkin&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;contacts&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;firstname&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Cédric&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;lastname&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Marchand&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;phone&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2837</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;firstname&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;André&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;lastname&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Lorge&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;phone&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4872</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;firstname&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Clémence&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;lastname&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Flémal&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;phone&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">8723</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+
+</section>
+<section id="sérialisation" class="level2">
+<h2>Sérialisation</h2>
+<ul>
+<li><strong>Sérialisation</strong> d'un dictionnaire en document JSON
+<span class="small">Dictionnaire Python (<code>dict</code>) → document
+JSON (<code>str</code>)</span></li>
+<li>Fonction <strong><code>dumps</code></strong> du module
+<code>json</code> <span class="small">Renvoie une chaine de
+caractères</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
+
+<span class="n">bb</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;seasons&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;genre&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;crime drama&#39;</span><span class="p">,</span> <span class="s1">&#39;thriller&#39;</span><span class="p">]}</span>
+<span class="n">skins</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;seasons&#39;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span> <span class="s1">&#39;genre&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;teen drama&#39;</span><span class="p">,</span> <span class="s1">&#39;comedy drama&#39;</span><span class="p">]}</span>
+<span class="n">tvshows</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Breaking Bad&#39;</span><span class="p">:</span> <span class="n">bb</span><span class="p">,</span> <span class="s1">&#39;Skins&#39;</span><span class="p">:</span> <span class="n">skins</span><span class="p">}</span>
+
+<span class="n">document</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">tvshows</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+
+</section>
+<section id="désérialisation" class="level2">
+<h2>Désérialisation</h2>
+<ul>
+<li><strong>Désérialisation</strong> d'un document JSON en dictionnaire
+<span class="small">Document JSON (<code>str</code>) → dictionnaire
+Python (<code>dict</code>)</span></li>
+<li>Fonction <strong><code>loads</code></strong> du module
+<code>json</code> <span class="small">Renvoie un
+dictionnaire</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
+
+<span class="n">document</span> <span class="o">=</span> <span class="s1">&#39;{&quot;Belgium&quot;:{&quot;capital&quot;:&quot;Brussels&quot;,&quot;languages&quot;:[&quot;french&quot;,&quot;dutch&quot;,&#39;</span>
+           <span class="s1">&#39;&quot;german&quot;]},&quot;China&quot;:{&quot;capital&quot;:&quot;Beijing&quot;,&quot;languages&quot;:&#39;</span>
+           <span class="s1">&#39;[&quot;mandarin chinese&quot;]}}&#39;</span>
+
+<span class="n">countries</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">document</span><span class="p">)</span>
+</pre></div>
+
+</section>
 <section id="manipulation-de-documents-csv" class="level2">
 <h2>Manipulation de documents CSV</h2>
 <ul>
@@ -471,6 +471,7 @@ séparateur décimal</span></li>
 <section id="manipulation-de-documents-xlsx" class="level2">
 <h2>Manipulation de documents XLSX</h2>
 <ul>
+<li><code>pip install openpyxl</code></li>
 <li><strong>Document Excel</strong> (XLSX) représente des tableurs <span
 class="small">Contient principalement des données et des
 formules</span></li>
@@ -534,6 +535,239 @@ Cell D2 : None
 <ul>
 <li>La valeur de <code>D2</code> est <code>None</code> car le fichier
 n’a pas encore été ouvert et sauvé par Excel</li>
+</ul>
+</section>
+<section id="manipulation-de-document-docx" class="level2">
+<h2>Manipulation de document DOCX</h2>
+<ul>
+<li><code>pip install python-docx</code></li>
+<li><strong>Document Word</strong> (DOCX) représente des documents texte
+<span class="small">Contient principalement du texte avec du style et
+des images</span></li>
+<li><strong>Structure</strong> d’un document DOCX
+<ul>
+<li>Un document est constitué de <code>paragraph</code></li>
+<li>Un paragraphe est composé de <code>runs</code></li>
+</ul></li>
+</ul>
+</section>
+<section id="créer-un-document-docx" class="level2 code">
+<h2 class="code">Créer un document DOCX</h2>
+<div class="pygments"><pre><span></span><span class="kn">from</span> <span class="nn">docx</span> <span class="kn">import</span> <span class="n">Document</span>
+<span class="kn">from</span> <span class="nn">docx.shared</span> <span class="kn">import</span> <span class="n">Cm</span>
+
+<span class="n">document</span> <span class="o">=</span> <span class="n">Document</span><span class="p">()</span>
+
+<span class="n">document</span><span class="o">.</span><span class="n">add_heading</span><span class="p">(</span><span class="s1">&#39;Document Title&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">document</span><span class="o">.</span><span class="n">add_paragraph</span><span class="p">(</span><span class="s1">&#39;A plain paragraph having some &#39;</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">add_run</span><span class="p">(</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">bold</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">p</span><span class="o">.</span><span class="n">add_run</span><span class="p">(</span><span class="s1">&#39; and some &#39;</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">add_run</span><span class="p">(</span><span class="s1">&#39;italic.&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">italic</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="n">document</span><span class="o">.</span><span class="n">add_heading</span><span class="p">(</span><span class="s1">&#39;Heading, level 1&#39;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">document</span><span class="o">.</span><span class="n">add_paragraph</span><span class="p">(</span><span class="s1">&#39;Intense quote&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;Intense Quote&#39;</span><span class="p">)</span>
+
+<span class="n">document</span><span class="o">.</span><span class="n">add_paragraph</span><span class="p">(</span>
+  <span class="s1">&#39;first item in unordered list&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;List Bullet&#39;</span>
+<span class="p">)</span>
+<span class="n">document</span><span class="o">.</span><span class="n">add_paragraph</span><span class="p">(</span>
+  <span class="s1">&#39;first item in ordered list&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;List Number&#39;</span>
+<span class="p">)</span>
+
+<span class="n">document</span><span class="o">.</span><span class="n">add_picture</span><span class="p">(</span><span class="s1">&#39;cute-cat.jpg&#39;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">Cm</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
+
+<span class="n">records</span> <span class="o">=</span> <span class="p">(</span>
+  <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;101&#39;</span><span class="p">,</span> <span class="s1">&#39;Spam&#39;</span><span class="p">),</span>
+  <span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="s1">&#39;422&#39;</span><span class="p">,</span> <span class="s1">&#39;Eggs&#39;</span><span class="p">),</span>
+  <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;631&#39;</span><span class="p">,</span> <span class="s1">&#39;Spam, spam, eggs, and spam&#39;</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">table</span> <span class="o">=</span> <span class="n">document</span><span class="o">.</span><span class="n">add_table</span><span class="p">(</span><span class="n">rows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">cols</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">hdr_cells</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">rows</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">cells</span>
+<span class="n">hdr_cells</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Qty&#39;</span>
+<span class="n">hdr_cells</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Id&#39;</span>
+<span class="n">hdr_cells</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Desc&#39;</span>
+<span class="k">for</span> <span class="n">qty</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">desc</span> <span class="ow">in</span> <span class="n">records</span><span class="p">:</span>
+  <span class="n">row_cells</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">add_row</span><span class="p">()</span><span class="o">.</span><span class="n">cells</span>
+  <span class="n">row_cells</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">qty</span><span class="p">)</span>
+  <span class="n">row_cells</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="nb">id</span>
+  <span class="n">row_cells</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">desc</span>
+
+<span class="n">document</span><span class="o">.</span><span class="n">add_page_break</span><span class="p">()</span>
+
+<span class="n">document</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;demo.docx&#39;</span><span class="p">)</span>
+</pre></div>
+
+</section>
+<section id="manipulation-de-pdf" class="level2">
+<h2>Manipulation de PDF</h2>
+<ul>
+<li><p><strong>Portable Document Format</strong> (PDF) représente des
+textes <span class="small">Fichier au format binaire, pas manipulable
+directement</span></p></li>
+<li><p>Contient <strong>plusieurs éléments</strong></p>
+<ul>
+<li>Du texte</li>
+<li>Des polices de caractères</li>
+<li>Des images</li>
+</ul></li>
+</ul>
+</section>
+<section id="module-pypdf" class="level2">
+<h2>Module <code>pypdf</code></h2>
+<ul>
+<li><code>pip install pypdf</code></li>
+<li><strong>Extraction</strong> du texte d’un document PDF <span
+class="small">Aussi bien que possible, extraction pas
+parfaite</span></li>
+<li><strong>Création</strong> d’un nouveau PDF à partir d’un existant
+<span class="small">Récupération de page, rotation,
+recouvrement</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="kn">import</span> <span class="nn">pypdf</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;apprendre_python3_5.pdf&quot;</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+  <span class="n">pdfreader</span> <span class="o">=</span> <span class="n">pypdf</span><span class="o">.</span><span class="n">PdfReader</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+  <span class="n">pdfwriter</span> <span class="o">=</span> <span class="n">pypdf</span><span class="o">.</span><span class="n">PdfWriter</span><span class="p">()</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">pdfreader</span><span class="o">.</span><span class="n">get_num_pages</span><span class="p">())):</span>
+    <span class="n">pdfwriter</span><span class="o">.</span><span class="n">add_page</span><span class="p">(</span><span class="n">pdfreader</span><span class="o">.</span><span class="n">get_page</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+  <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;summary.pdf&quot;</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">output</span><span class="p">:</span>
+    <span class="n">pdfwriter</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+</pre></div>
+
+</section>
+<section id="ajout-dun-filigrane-top-secret" class="level2 code">
+<h2 class="code">Ajout d’un filigrane <em>Top Secret</em></h2>
+<div class="pygments"><pre><span></span><span class="kn">import</span> <span class="nn">os.path</span>
+<span class="kn">import</span> <span class="nn">pypdf</span>
+
+<span class="n">src</span> <span class="o">=</span> <span class="s2">&quot;summary.pdf&quot;</span>
+<span class="c1"># Adds a &#39;Top Secret&#39; watermark to all the pages</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file1</span><span class="p">,</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;topsecret.pdf&quot;</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file2</span><span class="p">:</span>
+  <span class="n">pdfreader</span> <span class="o">=</span> <span class="n">pypdf</span><span class="o">.</span><span class="n">PdfReader</span><span class="p">(</span><span class="n">file1</span><span class="p">)</span>
+  <span class="n">pdfwriter</span> <span class="o">=</span> <span class="n">pypdf</span><span class="o">.</span><span class="n">PdfWriter</span><span class="p">()</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">pdfreader</span><span class="o">.</span><span class="n">get_num_pages</span><span class="p">()):</span>
+    <span class="n">watermark</span> <span class="o">=</span> <span class="n">pypdf</span><span class="o">.</span><span class="n">PdfReader</span><span class="p">(</span><span class="n">file2</span><span class="p">)</span><span class="o">.</span><span class="n">get_page</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">page</span> <span class="o">=</span> <span class="n">pdfreader</span><span class="o">.</span><span class="n">get_page</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="n">watermark</span><span class="o">.</span><span class="n">merge_page</span><span class="p">(</span><span class="n">page</span><span class="p">)</span>
+    <span class="n">pdfwriter</span><span class="o">.</span><span class="n">add_page</span><span class="p">(</span><span class="n">watermark</span><span class="p">)</span>
+  <span class="c1"># Writes the result file</span>
+  <span class="n">name</span><span class="p">,</span> <span class="n">ext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">src</span><span class="p">)</span>
+  <span class="n">dst</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">src</span><span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">_secret.</span><span class="si">{</span><span class="n">ext</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+  <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">output</span><span class="p">:</span>
+    <span class="n">pdfwriter</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+</pre></div>
+
+</section>
+<section id="module-fpdf2" class="level2">
+<h2>Module <code>fpdf2</code></h2>
+<ul>
+<li><code>pip install fpdf2</code></li>
+<li>Possibilité de <strong>créer un document</strong> PDF <span
+class="small">Similaire à une librairie de dessin des éléments à
+insérer</span></li>
+<li><strong>Trois étapes</strong> à suivre
+<ul>
+<li>Ajout d’une page dans le document</li>
+<li>Définition du style à appliquer</li>
+<li>Ajout des éléments dans la page (texte, image…)</li>
+</ul></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="kn">from</span> <span class="nn">fpdf</span> <span class="kn">import</span> <span class="n">FPDF</span>
+
+<span class="n">pdf</span> <span class="o">=</span> <span class="n">FPDF</span><span class="p">()</span>
+<span class="n">pdf</span><span class="o">.</span><span class="n">add_page</span><span class="p">()</span>
+<span class="n">pdf</span><span class="o">.</span><span class="n">set_font</span><span class="p">(</span><span class="s1">&#39;helvetica&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">pdf</span><span class="o">.</span><span class="n">cell</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;hello world&quot;</span><span class="p">)</span>
+<span class="n">pdf</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s2">&quot;hello_world.pdf&quot;</span><span class="p">)</span>
+</pre></div>
+
+</section>
+<section id="manipulation-dimages" class="level2">
+<h2>Manipulation d’images</h2>
+<ul>
+<li><code>pip install pillow</code></li>
+<li>Utilisation de la librairie <code>pillow</code> <span
+class="small">Chargement, obtention d’information et modification
+d’images</span></li>
+<li><strong>Découpe sous-image</strong> avec
+<code>crop(left, upper, right, lower)</code></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+
+<span class="n">image</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;cute-cat.jpg&quot;</span><span class="p">)</span>
+<span class="n">cropped</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">crop</span><span class="p">((</span><span class="mi">100</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">150</span><span class="p">))</span>
+<span class="n">cropped</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;cropped-cat.jpg&quot;</span><span class="p">)</span>
+</pre></div>
+
+<div class="row">
+<div class="span6">
+<figure>
+<img src="./images/cute-cat.jpg" alt="cute-cat.jpg" />
+<figcaption aria-hidden="true">cute-cat.jpg</figcaption>
+</figure>
+</div>
+<div class="span6">
+<figure>
+<img src="./images/cropped-cat.jpg" alt="cropped-cat.jpg" />
+<figcaption aria-hidden="true">cropped-cat.jpg</figcaption>
+</figure>
+</div>
+</div>
+</section>
+<section id="création-dune-mosaïque" class="level2">
+<h2>Création d’une mosaïque</h2>
+<ul>
+<li><strong>Coller</strong> des images sur une autre avec
+<code>paste</code> <span class="small">Découpe d’une sous-image pour
+création d’une mosaique</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+
+<span class="n">image</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;cute-cat.jpg&quot;</span><span class="p">)</span>
+<span class="n">cropped</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">crop</span><span class="p">((</span><span class="mi">100</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">150</span><span class="p">))</span>
+<span class="n">mosaic</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;RGB&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+        <span class="n">mosaic</span><span class="o">.</span><span class="n">paste</span><span class="p">(</span><span class="n">cropped</span><span class="p">,</span> <span class="p">(</span><span class="n">i</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="n">j</span> <span class="o">*</span> <span class="mi">100</span><span class="p">))</span>
+        <span class="n">mosaic</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;mosaic-cat.jpg&quot;</span><span class="p">)</span>
+</pre></div>
+
+<figure>
+<img src="./images/mosaic-cat.jpg" alt="mosaic-cat.jpg" />
+<figcaption aria-hidden="true">mosaic-cat.jpg</figcaption>
+</figure>
+</section>
+<section id="documentations" class="level2">
+<h2>Documentations</h2>
+<ul>
+<li><code>os</code> : <a
+href="https://docs.python.org/3/library/os.html"
+class="uri">https://docs.python.org/3/library/os.html</a></li>
+<li><code>shutil</code> : <a
+href="https://docs.python.org/3/library/shutil.html"
+class="uri">https://docs.python.org/3/library/shutil.html</a></li>
+<li><code>json</code> : <a
+href="https://docs.python.org/3/library/json.html"
+class="uri">https://docs.python.org/3/library/json.html</a></li>
+<li><code>csv</code> : <a
+href="https://docs.python.org/3/library/csv.html"
+class="uri">https://docs.python.org/3/library/csv.html</a></li>
+<li><code>openpyxl</code> : <a
+href="https://openpyxl.readthedocs.io/en/stable/"
+class="uri">https://openpyxl.readthedocs.io/en/stable/</a></li>
+<li><code>python-docx</code> : <a
+href="https://python-docx.readthedocs.io/en/latest/"
+class="uri">https://python-docx.readthedocs.io/en/latest/</a></li>
+<li><code>pypdf</code> : <a
+href="https://pypdf.readthedocs.io/en/stable/index.html"
+class="uri">https://pypdf.readthedocs.io/en/stable/index.html</a></li>
+<li><code>fpdf2</code> : <a href="https://py-pdf.github.io/fpdf2/"
+class="uri">https://py-pdf.github.io/fpdf2/</a></li>
+<li><code>pillow</code> : <a
+href="https://pillow.readthedocs.io/en/stable/"
+class="uri">https://pillow.readthedocs.io/en/stable/</a></li>
 </ul>
 </section>
 </body>
