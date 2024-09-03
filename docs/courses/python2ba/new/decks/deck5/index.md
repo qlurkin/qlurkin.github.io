@@ -2,7 +2,9 @@
 title: Cours 5
 subtitle: Manipulation de documents
 type: deck
-author: Quentin Lurkin
+author:
+  - Quentin Lurkin
+  - Sébastien Combéfis
 typst: true
 ---
 
@@ -163,3 +165,282 @@ Traceback (most recent call last):
 FileNotFoundError: [Errno 2] No such file or directory: 'hello.txt'
 ```
 
+## Module `os.path`
+
+- Fonctions pour manipuler des chemins de fichier/répertoire [Opérations spécifiques au système (posixpath, ntpath, macpath)]{.small}
+- Construction d’un chemin **spécifique**
+  - `os.path.join(paths, ...)` : construit un chemin avec plusieurs
+  - `os.path.split(path)` : découpe un chemin en deux
+
+```python
+import os.path
+
+p = os.path.join('/tmp/test', 'data', 'main.cmd')
+print(p)
+print(os.path.split(p))
+```
+
+```terminal
+/tmp/test/data/main.cmd
+('/tmp/test/data', 'main.cmd')
+```
+
+## Chemin relatif et absolu
+
+- **Deux façons** de décrire le chemin d’un fichier/répertoire
+
+  - Chemin décrit à partir de la racine (absolu)
+  - Chemin décrit à partir du répertoire courant (relatif)
+
+- **Conversion** de description de chemin
+  - `os.path.abspath(path)` : obtient le chemin absolu
+  - `os.path.relpath(path)` : obtient le chemin relatif
+
+```python
+import os.path
+
+print(os.path.relpath('/tmp/test/data/main.cmd'))
+print(os.path.abspath('data.txt'))
+```
+
+```terminal
+../../../tmp/test/data/main.cmd
+/Users/lur/Desktop/data.txt
+```
+
+## Chemin relatif et absolu
+
+- Deux **dossiers spéciaux** en mode relatif
+  - `.` représente le répertoire courant
+  - `..` représente répertoire parent
+
+```python
+import os.path
+
+print(os.path.abspath('.'))
+print(os.path.abspath('..'))
+print(os.path.abspath('./../.././././lur'))
+```
+
+```terminal
+/Users/lur/Desktop
+/Users/lur
+/Users/lur
+```
+
+## Parties d’un chemin
+
+- **Décomposition** d'un chemin
+
+  - `os.path.basename(path)` : partie de base du chemin
+  - `os.path.dirname(path)` : répertoire du chemin
+
+- Extraction du **nom et de l'extension** d'un fichier
+  - `os.path.splitext(path)` : renvoie le nom et l'extension
+
+```python
+import os.path
+
+p = '/tmp/test/log.txt'
+print(os.path.basename(p))
+print(os.path.dirname(p))
+print(os.path.splitext(p))
+```
+
+```terminal
+log.txt
+/tmp/test
+(’/tmp/test/log’, ’.txt’)
+```
+
+## Existence et type
+
+- Tester le **type** d’un chemin
+
+  - `os.path.isfile(path)` : teste si le chemin est un fichier
+  - `os.path.isdir(path)` : teste si le chemin est un dossier
+
+- Tester l'**existence** d’un chemin
+  - `os.path.exists(path)` : teste si le chemin existe
+
+```python
+import os.path
+
+p = '/tmp/test/log.txt'
+if os.path.exists(p):
+  print(os.path.isfile(p))
+```
+
+```terminal
+True
+```
+
+## Module `shutil`
+
+- Opérations de **haut-niveau** sur les fichiers et répertoires
+  - `shutil.copyfile(src, dst)` : copie un fichier
+  - `shutil.copy(src, dst)` : copie un fichier dans un répertoire
+  - `shutil.copytree(src, dst)` : copie un répertoire
+  - `shutil.rmtree(src, dst)` : supprime un répertoire
+  - `shutil.move(src, dst)` : déplace un fichier/répertoire [Sera aussi utilisé pour renommer]{.small}
+
+## Manipulation de documents CSV
+
+- Un **enregistrement** par ligne, valeurs séparées par des virgules [Entête sur la première ligne]{.small}
+- **Séparateur décimal** est par défaut le point [Convention anglaise de notation des nombres]{.small}
+
+```csv
+Nom,Prix,Code
+Banane,5.99,77
+Pomme,2.99,99
+Poire,7.99,170
+```
+
+## Module `csv`
+
+- Lecture avec un `csv.reader`
+
+```python
+import csv
+
+src = "cart.csv"
+with open(src) as file:
+  csvreader = csv.reader(file)
+  next(csvreader)  # Ignore header line
+  totalprice = 0
+  for line in csvreader:
+    totalprice += float(line[1])
+  print(f"Prix total : {totalprice} €")
+```
+
+```terminal
+Prix total : 16.97 €
+```
+
+## Module `csv`
+
+- Lecture avec un `csv.DictReader` [Les entêtes sont utilisés pour créer des dictionnaires]{.small}
+
+```python
+import csv
+
+src = "cart.csv"
+with open(src) as file:
+  csvreader = csv.DictReader(file)
+  totalprice = 0
+  for line in csvreader:
+    totalprice += float(line['Prix'])
+  print(f"Prix total : {totalprice} €")
+```
+
+```terminal
+Prix total : 16.97 €
+```
+
+## Autre format CSV
+
+- En Belgique, comme nous utilisons la `,` comme **séparateur décimal**, le `;` est souvent utilisé comme **délimiteur de CSV**.
+- Voici un fichier CSV créé avec **Excel** [CSV UTF-8 (délimité par des virgules) (.csv)]{.small}
+
+```csv
+Titre;Auteur;Editeur;Prix
+NoSQL;Rudi;Eyrolles;17,99
+SQL;"Ronald; Ryan; Arie";Pearson;21,99
+"Sabina, ""la juive"" de Jung";Alain;PGdR Editions;10,5
+Un défilé de robots;Asimov;J'ai Lu;7,4
+```
+
+## Autre format CSV
+
+- Pour lire ce fichier avec le module `csv`
+
+```python
+import csv
+
+src = "books.csv"
+with open(src, encoding="utf-8-sig") as file:
+  csvreader = csv.DictReader(file, delimiter=";")
+  totalprice = 0
+  for line in csvreader:
+    print(line)
+    totalprice += float(line["Prix"].replace(",", "."))
+  print(f"Prix total : {totalprice} €")
+```
+
+- `encoding="utf-8-sig"` : Excel utilise une variante de l'UTF-8 [UTF-8 avec BOM (Byte Order Mark)]{.small}
+- `delimiter=";"` : Le délimiteur est le `;`
+- `.replace(",", ".")` : On remplace les séparateurs décimaux
+
+## Écrire un fichier CSV
+
+- Écriture avec un `csv.writer` comme **Excel**
+
+```python
+import csv
+
+with open('result.csv', 'w', encoding='utf-8-sig') as file:
+  csvwriter = csv.writer(file)
+  csvwriter.writerow(['Nom', 'Prix', 'Code'])
+  csvwriter.writerow(['Banane', str(5.99).replace('.', ','), 77])
+  csvwriter.writerow(['Pomme', str(2.99).replace('.', ','), 99])
+  csvwriter.writerow(['Poire', str(7.99).replace('.', ','), 170])
+```
+
+- Les champs non-string sont convertis avec `str()` par défaut [Il faut quand même faire attention au séparateur décimal]{.small}
+
+## Manipulation de documents XLSX
+
+- **Document Excel** (XLSX) représente des tableurs [Contient principalement des données et des formules]{.small}
+- **Structure** d’un document XLSX
+  - Un document Excel est appelé un `workbook`
+  - Possède plusieurs `worksheets` (feuille)
+  - Chaque feuille est découpée en lignes et colonnes
+
+## Créer un document XLSX
+
+- Création d'un **Workbook vide** puis remplissage
+
+```python
+import openpyxl
+
+wb = openpyxl.Workbook()
+sheet = wb.active
+sheet.title = 'June 2025'
+
+sheet['B1'] = 'Labo'
+sheet['C1'] = 'Examen'
+sheet['D1'] = 'Moyenne'
+
+sheet['A2'] = 'Tom'
+sheet['B2'] = '18'
+sheet['C2'] = '11'
+sheet['D2'] = '=0.3*B2+0.7*C2'
+
+print(sheet['D2'].value)
+
+wb.save('results.xlsx')
+```
+
+## Lire un document XLSX
+
+- Ouverture d’un **Workbook** en mode brut ou données [L'option `data_only=True` permet de récupérer les résultats des formules **calculés et sauvés** par Excel]{.small}
+
+```python
+import openpyxl
+
+wb = openpyxl.load_workbook('results.xlsx', data_only=True)
+sheet = wb.active
+for i in range(1, 5):
+  cell = sheet.cell(row=1, column=i)
+  print(cell.value , end=' ')
+
+cell = sheet['D2']
+print(f'\nCell {cell.column_letter}{cell.row} : {cell.value}')
+```
+
+```terminal
+None Labo Examen Moyenne
+Cell D2 : None
+```
+
+- La valeur de `D2` est `None` car le fichier n'a pas encore été ouvert et sauvé par Excel

@@ -5,6 +5,7 @@
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <meta name="author" content="Quentin Lurkin" />
+  <meta name="author" content="Sébastien Combéfis" />
   <title>Cours 5 - Manipulation de documents</title>
   <style>
     code{white-space: pre-wrap;}
@@ -31,6 +32,7 @@
 <small>Manipulation de documents</small>
 </h1>
 <p class="author">Quentin Lurkin</p>
+<p class="author">Sébastien Combéfis</p>
 </header>
 <section id="javascript-object-notation-json" class="level2">
 <h2>JavaScript Object Notation (JSON)</h2>
@@ -205,6 +207,334 @@ Traceback (most recent call last):
          ^^^^^^^^^^^^^^^^^
 FileNotFoundError: [Errno 2] No such file or directory: &#39;hello.txt&#39;
 </div>
+</section>
+<section id="module-os.path" class="level2">
+<h2>Module <code>os.path</code></h2>
+<ul>
+<li>Fonctions pour manipuler des chemins de fichier/répertoire <span
+class="small">Opérations spécifiques au système (posixpath, ntpath,
+macpath)</span></li>
+<li>Construction d’un chemin <strong>spécifique</strong>
+<ul>
+<li><code>os.path.join(paths, ...)</code> : construit un chemin avec
+plusieurs</li>
+<li><code>os.path.split(path)</code> : découpe un chemin en deux</li>
+</ul></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="kn">import</span> <span class="nn">os.path</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;/tmp/test&#39;</span><span class="p">,</span> <span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="s1">&#39;main.cmd&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">p</span><span class="p">))</span>
+</pre></div>
+
+<div class="terminal">/tmp/test/data/main.cmd
+(&#39;/tmp/test/data&#39;, &#39;main.cmd&#39;)
+</div>
+</section>
+<section id="chemin-relatif-et-absolu" class="level2">
+<h2>Chemin relatif et absolu</h2>
+<ul>
+<li><p><strong>Deux façons</strong> de décrire le chemin d’un
+fichier/répertoire</p>
+<ul>
+<li>Chemin décrit à partir de la racine (absolu)</li>
+<li>Chemin décrit à partir du répertoire courant (relatif)</li>
+</ul></li>
+<li><p><strong>Conversion</strong> de description de chemin</p>
+<ul>
+<li><code>os.path.abspath(path)</code> : obtient le chemin absolu</li>
+<li><code>os.path.relpath(path)</code> : obtient le chemin relatif</li>
+</ul></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="kn">import</span> <span class="nn">os.path</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">relpath</span><span class="p">(</span><span class="s1">&#39;/tmp/test/data/main.cmd&#39;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s1">&#39;data.txt&#39;</span><span class="p">))</span>
+</pre></div>
+
+<div class="terminal">../../../tmp/test/data/main.cmd
+/Users/lur/Desktop/data.txt
+</div>
+</section>
+<section id="chemin-relatif-et-absolu-1" class="level2">
+<h2>Chemin relatif et absolu</h2>
+<ul>
+<li>Deux <strong>dossiers spéciaux</strong> en mode relatif
+<ul>
+<li><code>.</code> représente le répertoire courant</li>
+<li><code>..</code> représente répertoire parent</li>
+</ul></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="kn">import</span> <span class="nn">os.path</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s1">&#39;..&#39;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s1">&#39;./../.././././lur&#39;</span><span class="p">))</span>
+</pre></div>
+
+<div class="terminal">/Users/lur/Desktop
+/Users/lur
+/Users/lur
+</div>
+</section>
+<section id="parties-dun-chemin" class="level2">
+<h2>Parties d’un chemin</h2>
+<ul>
+<li><p><strong>Décomposition</strong> d’un chemin</p>
+<ul>
+<li><code>os.path.basename(path)</code> : partie de base du chemin</li>
+<li><code>os.path.dirname(path)</code> : répertoire du chemin</li>
+</ul></li>
+<li><p>Extraction du <strong>nom et de l’extension</strong> d’un
+fichier</p>
+<ul>
+<li><code>os.path.splitext(path)</code> : renvoie le nom et
+l’extension</li>
+</ul></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="kn">import</span> <span class="nn">os.path</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="s1">&#39;/tmp/test/log.txt&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">p</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">p</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">p</span><span class="p">))</span>
+</pre></div>
+
+<div class="terminal">log.txt
+/tmp/test
+(’/tmp/test/log’, ’.txt’)
+</div>
+</section>
+<section id="existence-et-type" class="level2">
+<h2>Existence et type</h2>
+<ul>
+<li><p>Tester le <strong>type</strong> d’un chemin</p>
+<ul>
+<li><code>os.path.isfile(path)</code> : teste si le chemin est un
+fichier</li>
+<li><code>os.path.isdir(path)</code> : teste si le chemin est un
+dossier</li>
+</ul></li>
+<li><p>Tester l’<strong>existence</strong> d’un chemin</p>
+<ul>
+<li><code>os.path.exists(path)</code> : teste si le chemin existe</li>
+</ul></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="kn">import</span> <span class="nn">os.path</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="s1">&#39;/tmp/test/log.txt&#39;</span>
+<span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">p</span><span class="p">))</span>
+</pre></div>
+
+<div class="terminal">True
+</div>
+</section>
+<section id="module-shutil" class="level2">
+<h2>Module <code>shutil</code></h2>
+<ul>
+<li>Opérations de <strong>haut-niveau</strong> sur les fichiers et
+répertoires
+<ul>
+<li><code>shutil.copyfile(src, dst)</code> : copie un fichier</li>
+<li><code>shutil.copy(src, dst)</code> : copie un fichier dans un
+répertoire</li>
+<li><code>shutil.copytree(src, dst)</code> : copie un répertoire</li>
+<li><code>shutil.rmtree(src, dst)</code> : supprime un répertoire</li>
+<li><code>shutil.move(src, dst)</code> : déplace un fichier/répertoire
+<span class="small">Sera aussi utilisé pour renommer</span></li>
+</ul></li>
+</ul>
+</section>
+<section id="manipulation-de-documents-csv" class="level2">
+<h2>Manipulation de documents CSV</h2>
+<ul>
+<li>Un <strong>enregistrement</strong> par ligne, valeurs séparées par
+des virgules <span class="small">Entête sur la première
+ligne</span></li>
+<li><strong>Séparateur décimal</strong> est par défaut le point <span
+class="small">Convention anglaise de notation des nombres</span></li>
+</ul>
+<div class="pygments"><pre><span></span>Nom,Prix,Code
+Banane,5.99,77
+Pomme,2.99,99
+Poire,7.99,170
+</pre></div>
+
+</section>
+<section id="module-csv" class="level2">
+<h2>Module <code>csv</code></h2>
+<ul>
+<li>Lecture avec un <code>csv.reader</code></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="kn">import</span> <span class="nn">csv</span>
+
+<span class="n">src</span> <span class="o">=</span> <span class="s2">&quot;cart.csv&quot;</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">src</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+  <span class="n">csvreader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+  <span class="nb">next</span><span class="p">(</span><span class="n">csvreader</span><span class="p">)</span>  <span class="c1"># Ignore header line</span>
+  <span class="n">totalprice</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">csvreader</span><span class="p">:</span>
+    <span class="n">totalprice</span> <span class="o">+=</span> <span class="nb">float</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Prix total : </span><span class="si">{</span><span class="n">totalprice</span><span class="si">}</span><span class="s2"> €&quot;</span><span class="p">)</span>
+</pre></div>
+
+<div class="terminal">Prix total : 16.97 €
+</div>
+</section>
+<section id="module-csv-1" class="level2">
+<h2>Module <code>csv</code></h2>
+<ul>
+<li>Lecture avec un <code>csv.DictReader</code> <span class="small">Les
+entêtes sont utilisés pour créer des dictionnaires</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="kn">import</span> <span class="nn">csv</span>
+
+<span class="n">src</span> <span class="o">=</span> <span class="s2">&quot;cart.csv&quot;</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">src</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+  <span class="n">csvreader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">DictReader</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+  <span class="n">totalprice</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">csvreader</span><span class="p">:</span>
+    <span class="n">totalprice</span> <span class="o">+=</span> <span class="nb">float</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="s1">&#39;Prix&#39;</span><span class="p">])</span>
+  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Prix total : </span><span class="si">{</span><span class="n">totalprice</span><span class="si">}</span><span class="s2"> €&quot;</span><span class="p">)</span>
+</pre></div>
+
+<div class="terminal">Prix total : 16.97 €
+</div>
+</section>
+<section id="autre-format-csv" class="level2">
+<h2>Autre format CSV</h2>
+<ul>
+<li>En Belgique, comme nous utilisons la <code>,</code> comme
+<strong>séparateur décimal</strong>, le <code>;</code> est souvent
+utilisé comme <strong>délimiteur de CSV</strong>.</li>
+<li>Voici un fichier CSV créé avec <strong>Excel</strong> <span
+class="small">CSV UTF-8 (délimité par des virgules) (.csv)</span></li>
+</ul>
+<div class="pygments"><pre><span></span>Titre;Auteur;Editeur;Prix
+NoSQL;Rudi;Eyrolles;17,99
+SQL;&quot;Ronald; Ryan; Arie&quot;;Pearson;21,99
+&quot;Sabina, &quot;&quot;la juive&quot;&quot; de Jung&quot;;Alain;PGdR Editions;10,5
+Un défilé de robots;Asimov;J&#39;ai Lu;7,4
+</pre></div>
+
+</section>
+<section id="autre-format-csv-1" class="level2">
+<h2>Autre format CSV</h2>
+<ul>
+<li>Pour lire ce fichier avec le module <code>csv</code></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="kn">import</span> <span class="nn">csv</span>
+
+<span class="n">src</span> <span class="o">=</span> <span class="s2">&quot;books.csv&quot;</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8-sig&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+  <span class="n">csvreader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">DictReader</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s2">&quot;;&quot;</span><span class="p">)</span>
+  <span class="n">totalprice</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">csvreader</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+    <span class="n">totalprice</span> <span class="o">+=</span> <span class="nb">float</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="s2">&quot;Prix&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">,</span> <span class="s2">&quot;.&quot;</span><span class="p">))</span>
+  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Prix total : </span><span class="si">{</span><span class="n">totalprice</span><span class="si">}</span><span class="s2"> €&quot;</span><span class="p">)</span>
+</pre></div>
+
+<ul>
+<li><code>encoding="utf-8-sig"</code> : Excel utilise une variante de
+l’UTF-8 <span class="small">UTF-8 avec BOM (Byte Order Mark)</span></li>
+<li><code>delimiter=";"</code> : Le délimiteur est le
+<code>;</code></li>
+<li><code>.replace(",", ".")</code> : On remplace les séparateurs
+décimaux</li>
+</ul>
+</section>
+<section id="écrire-un-fichier-csv" class="level2">
+<h2>Écrire un fichier CSV</h2>
+<ul>
+<li>Écriture avec un <code>csv.writer</code> comme
+<strong>Excel</strong></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="kn">import</span> <span class="nn">csv</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;result.csv&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8-sig&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+  <span class="n">csvwriter</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+  <span class="n">csvwriter</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="s1">&#39;Nom&#39;</span><span class="p">,</span> <span class="s1">&#39;Prix&#39;</span><span class="p">,</span> <span class="s1">&#39;Code&#39;</span><span class="p">])</span>
+  <span class="n">csvwriter</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="s1">&#39;Banane&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="mf">5.99</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="s1">&#39;,&#39;</span><span class="p">),</span> <span class="mi">77</span><span class="p">])</span>
+  <span class="n">csvwriter</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="s1">&#39;Pomme&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="mf">2.99</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="s1">&#39;,&#39;</span><span class="p">),</span> <span class="mi">99</span><span class="p">])</span>
+  <span class="n">csvwriter</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="s1">&#39;Poire&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="mf">7.99</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="s1">&#39;,&#39;</span><span class="p">),</span> <span class="mi">170</span><span class="p">])</span>
+</pre></div>
+
+<ul>
+<li>Les champs non-string sont convertis avec <code>str()</code> par
+défaut <span class="small">Il faut quand même faire attention au
+séparateur décimal</span></li>
+</ul>
+</section>
+<section id="manipulation-de-documents-xlsx" class="level2">
+<h2>Manipulation de documents XLSX</h2>
+<ul>
+<li><strong>Document Excel</strong> (XLSX) représente des tableurs <span
+class="small">Contient principalement des données et des
+formules</span></li>
+<li><strong>Structure</strong> d’un document XLSX
+<ul>
+<li>Un document Excel est appelé un <code>workbook</code></li>
+<li>Possède plusieurs <code>worksheets</code> (feuille)</li>
+<li>Chaque feuille est découpée en lignes et colonnes</li>
+</ul></li>
+</ul>
+</section>
+<section id="créer-un-document-xlsx" class="level2">
+<h2>Créer un document XLSX</h2>
+<ul>
+<li>Création d’un <strong>Workbook vide</strong> puis remplissage</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="kn">import</span> <span class="nn">openpyxl</span>
+
+<span class="n">wb</span> <span class="o">=</span> <span class="n">openpyxl</span><span class="o">.</span><span class="n">Workbook</span><span class="p">()</span>
+<span class="n">sheet</span> <span class="o">=</span> <span class="n">wb</span><span class="o">.</span><span class="n">active</span>
+<span class="n">sheet</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;June 2025&#39;</span>
+
+<span class="n">sheet</span><span class="p">[</span><span class="s1">&#39;B1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Labo&#39;</span>
+<span class="n">sheet</span><span class="p">[</span><span class="s1">&#39;C1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Examen&#39;</span>
+<span class="n">sheet</span><span class="p">[</span><span class="s1">&#39;D1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Moyenne&#39;</span>
+
+<span class="n">sheet</span><span class="p">[</span><span class="s1">&#39;A2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Tom&#39;</span>
+<span class="n">sheet</span><span class="p">[</span><span class="s1">&#39;B2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;18&#39;</span>
+<span class="n">sheet</span><span class="p">[</span><span class="s1">&#39;C2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;11&#39;</span>
+<span class="n">sheet</span><span class="p">[</span><span class="s1">&#39;D2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;=0.3*B2+0.7*C2&#39;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">sheet</span><span class="p">[</span><span class="s1">&#39;D2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+
+<span class="n">wb</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;results.xlsx&#39;</span><span class="p">)</span>
+</pre></div>
+
+</section>
+<section id="lire-un-document-xlsx" class="level2">
+<h2>Lire un document XLSX</h2>
+<ul>
+<li>Ouverture d’un <strong>Workbook</strong> en mode brut ou données
+<span class="small">L’option <code>data_only=True</code> permet de
+récupérer les résultats des formules <strong>calculés et sauvés</strong>
+par Excel</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="kn">import</span> <span class="nn">openpyxl</span>
+
+<span class="n">wb</span> <span class="o">=</span> <span class="n">openpyxl</span><span class="o">.</span><span class="n">load_workbook</span><span class="p">(</span><span class="s1">&#39;results.xlsx&#39;</span><span class="p">,</span> <span class="n">data_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sheet</span> <span class="o">=</span> <span class="n">wb</span><span class="o">.</span><span class="n">active</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">):</span>
+  <span class="n">cell</span> <span class="o">=</span> <span class="n">sheet</span><span class="o">.</span><span class="n">cell</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="n">i</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">cell</span><span class="o">.</span><span class="n">value</span> <span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+
+<span class="n">cell</span> <span class="o">=</span> <span class="n">sheet</span><span class="p">[</span><span class="s1">&#39;D2&#39;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Cell </span><span class="si">{</span><span class="n">cell</span><span class="o">.</span><span class="n">column_letter</span><span class="si">}{</span><span class="n">cell</span><span class="o">.</span><span class="n">row</span><span class="si">}</span><span class="s1"> : </span><span class="si">{</span><span class="n">cell</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+
+<div class="terminal">None Labo Examen Moyenne
+Cell D2 : None
+</div>
+<ul>
+<li>La valeur de <code>D2</code> est <code>None</code> car le fichier
+n’a pas encore été ouvert et sauvé par Excel</li>
+</ul>
 </section>
 </body>
 </html>
