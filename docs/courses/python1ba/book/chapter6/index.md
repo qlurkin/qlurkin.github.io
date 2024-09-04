@@ -6,7 +6,7 @@ typst: true
 
 Vous l'avez sûrement déjà remarqué, les mathématiques sont essentielles aux sciences de l'ingénieur. Durant toutes vos études et votre carrière, vous serez souvent amené à effectuer des calculs. C'est d'ailleurs quelque chose que vous faites régulièrement aux séances d'exercices de math. Cependant, les exercices auxquels vous êtes habituellement confrontés sont soigneusement conçus pour pouvoir se résoudre par les méthodes analytiques que l'on vous enseigne. Malheureusement, dans la pratique, il existe beaucoup de problèmes pour lesquels il n'existe pas de description analytique ou pour lesquels on ne peut pas trouver de solution analytique. Il est donc souvent nécessaire de faire appel à des méthodes numériques.
 
-Pour bien comprendre la différence entre une expression analytique et une expression numérique, nous allons donner un petit exemple. Pour décrire un cercle de rayon `1` centré en `(0, 0)` analytiquement, on pourrait utiliser l'équation suivante : $$ x^2 + y^2 = 1 $$
+Pour bien comprendre la différence entre une expression analytique et une expression numérique, nous allons donner un petit exemple. Pour décrire un cercle de rayon $1$ centré en $(0, 0)$ analytiquement, on pourrait utiliser l'équation suivante : $$ x^2 + y^2 = 1 $$
 
 Cette équation décrit parfaitement l'infinité des points du cercle et ce avec une précision infinie.
 
