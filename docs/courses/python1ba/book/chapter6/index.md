@@ -1,12 +1,12 @@
 ---
-title: "Chapitre 6"
-subtitle: "Calcul numérique"
+title: 'Chapitre 6'
+subtitle: 'Calcul numérique'
 typst: true
 ---
 
 Vous l'avez sûrement déjà remarqué, les mathématiques sont essentielles aux sciences de l'ingénieur. Durant toutes vos études et votre carrière, vous serez souvent amené à effectuer des calculs. C'est d'ailleurs quelque chose que vous faites régulièrement aux séances d'exercices de math. Cependant, les exercices auxquels vous êtes habituellement confrontés sont soigneusement conçus pour pouvoir se résoudre par les méthodes analytiques que l'on vous enseigne. Malheureusement, dans la pratique, il existe beaucoup de problèmes pour lesquels il n'existe pas de description analytique ou pour lesquels on ne peut pas trouver de solution analytique. Il est donc souvent nécessaire de faire appel à des méthodes numériques.
 
-Pour bien comprendre la différence entre une expression analytique et une expression numérique, nous allons donner un petit exemple. Pour décrire un cercle de rayon $$1$$ centré en $$(0, 0)$$ analytiquement, on pourrait utiliser l'équation suivante : $$ x^2 + y^2 = 1 $$
+Pour bien comprendre la différence entre une expression analytique et une expression numérique, nous allons donner un petit exemple. Pour décrire un cercle de rayon `1` centré en `(0, 0)` analytiquement, on pourrait utiliser l'équation suivante : $$ x^2 + y^2 = 1 $$
 
 Cette équation décrit parfaitement l'infinité des points du cercle et ce avec une précision infinie.
 
@@ -103,7 +103,7 @@ print(abs(x))                   # module
 print(cmath.polar(x))           # module et argument
 
 # définition d'1 nb complex à partir du module et argument
-print(cmath.rect(1, cmath.pi))  
+print(cmath.rect(1, cmath.pi))
 
 # fonction
 print(cmath.exp(x))             # exponentielle
@@ -127,7 +127,7 @@ def add(a, b):
 print(add(v1, v2))  # affiche (4, 6)
 ```
 
-Ce serait par contre très long de créer toutes les fonctions permettant de faire toutes les opérations sur les vecteurs. De plus, la notation `add(v1, v2)` est quand même moins pratique que `v1 + v2`. 
+Ce serait par contre très long de créer toutes les fonctions permettant de faire toutes les opérations sur les vecteurs. De plus, la notation `add(v1, v2)` est quand même moins pratique que `v1 + v2`.
 
 ### Numpy
 
@@ -137,7 +137,7 @@ Ce module permet de faire bien d'autres choses que du simple calcul vectoriel. I
 
 ### Installation
 
-On installe le module `numpy` en tapant la commande suivante dans le terminal : 
+On installe le module `numpy` en tapant la commande suivante dans le terminal :
 
 <pre class="terminal">
 > python -m pip install numpy
@@ -187,10 +187,10 @@ np.linspace(0, 10, 5)  # vecteur de 5 valeurs allant uniformément de 0 à 10.
 np.arange(0, 10, 0.2)  # correspond à np.array(range(0, 10, 0.2))
 ```
 
-Il y a aussi plusieurs façons de créer des vecteurs des vecteurs de valeurs aléatoires : 
+Il y a aussi plusieurs façons de créer des vecteurs des vecteurs de valeurs aléatoires :
 
 ```python
-np.random.random(10)  # valeurs choisies entre 0 et 1 avec une 
+np.random.random(10)  # valeurs choisies entre 0 et 1 avec une
                       # distribution uniforme
 
 np.random.randn(10)   # valeurs choisies avec une distribution normale
@@ -231,10 +231,19 @@ a + b    # [6, 8, 10, 12]
 a * b    # [5, 12, 21, 32]
 ```
 
-Une autre opération courante est le calcul de la norme d'un vecteur : 
+Une autre opération courante est le calcul de la norme d'un vecteur :
 
 ```python
 print(np.linalg.norm(v))     # Norme
+```
+
+Les opérations mathématiques entre vecteurs sont aussi disponibles :
+
+```python
+print(v.dot(v))              # Produit scalaire
+print(v @ v)                 # Produit scalaire
+v2 = np.array([2, -1, 2]
+print(np.cross(v, v2)))      # Produit vectoriel
 ```
 
 ### Fonctions vectorisées
@@ -275,7 +284,6 @@ print(fun(0, y))  # affiche [1 1 1]
 La documentation de `numpy` se trouve sur :
 
 [https://numpy.org/doc/stable/](https://numpy.org/doc/stable/)
-
 
 ## Graphiques de fonctions
 
@@ -477,7 +485,6 @@ Comme dans notre exemple, les méthodes numériques sont souvent itératives. Si
 
 Bien entendu, il existe des modules qui implémentent déjà des méthodes numériques pour la plupart des problèmes courants. Nous allons utiliser `scipy`. Il faut bien entendu l'installer :
 
-
 <pre class="terminal">
 > python -m pip install scipy
 </pre>
@@ -522,7 +529,7 @@ print(root)  # -1.2646564339411952
 
 ### Intégrale définie
 
-Un autre problème que l'on peut résoudre avec des méthodes numériques est le calcul d'intégrales définies $$ integral_(-1)^1 sqrt(1 - x^2) dif x $$
+Un autre problème que l'on peut résoudre avec des méthodes numériques est le calcul d'intégrales définies $$ integral\_(-1)^1 sqrt(1 - x^2) dif x $$
 
 ```python
 from scipy import integrate
