@@ -1,5 +1,5 @@
 ---
-title: "Hello Pandoc"
+title: 'Hello Pandoc'
 typst: true
 ---
 
@@ -83,4 +83,3 @@ stop
 
 @enduml
 ```
-
