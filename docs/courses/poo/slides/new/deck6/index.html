@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Cours 6 - Principes SOLID</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="/document.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Cours 6 - Principes SOLID
+</h1>
+</header>
+<section
+id="po3t---programmation-orientée-objets-cours-6---principes-solid"
+class="level1">
+<h1>PO3T - programmation Orientée Objets <span class="small">Cours 6 -
+Principes SOLID</span></h1>
+<p>Quentin Lurkin</p>
+</section>
+<section id="solid" class="level2">
+<h2>SOLID</h2>
+<ul>
+<li><strong>Cinq principes</strong> en design d’applications avec
+l’orienté objet</li>
+<li>Permet une application plus facilement
+<strong>maintenable</strong></li>
+<li>Les cinq principes à retenir avec l’acronyme SOLID
+<ul>
+<li><span class="letter">S</span>ingle Responsibility Principle
+(SRP)</li>
+<li><span class="letter">O</span>pen/closed principle (OCP)</li>
+<li><span class="letter">L</span>iskov Substitution Principle (LSP)</li>
+<li><span class="letter">I</span>nterface Segregation Principle
+(ISP)</li>
+<li><span class="letter">D</span>ependency Inversion Principle
+(DIP)</li>
+</ul></li>
+</ul>
+</section>
+<section id="application-exemple" class="level2">
+<h2>Application exemple</h2>
+<ul>
+<li>Application de vente fictive</li>
+</ul>
+</section>
+<section id="classe-item" class="level2 code">
+<h2>Classe Item</h2>
+<div class="pygments"><pre><span></span>        namespace solid {
+            class Item {
+                private String name;
+                private double price;
+                public String Name { get { return name; } }
+                public double Price { get { return price; } }
+        
+                public Item(String name, double price) {
+                    this.name = name;
+                    this.price = price;
+                }
+            }
+        }
+    
+</pre></div>
+
+</section>
+<section id="classe-order" class="level2 code">
+<h2>Classe Order</h2>
+<div class="pygments"><pre><span></span>        namespace solid {
+            class Order {
+                class OrderItem {
+                    private Item item;
+                    private int quantity;
+        
+                    public Item Item { get { return item; }}
+        
+                    public int Quantity { get { return quantity; } }
+        
+                    public OrderItem(Item item, int quantity) {
+                        this.item = item;
+                        this.quantity = quantity;
+                    }
+                }
+        
+                public enum OrderStatus {
+                    Open,
+                    Paid
+                }
+        
+                private List&lt;OrderItem&gt; items;
+                private OrderStatus status;
+        
+                public OrderStatus Status { get { return status; } }
+        
+                public Order() {
+                    items = new List&lt;OrderItem&gt;();
+                    status = OrderStatus.Open;
+                }
+        
+                public void Add_item(Item item, int quantity) {
+                    items.Add(new OrderItem(item, quantity));
+                }
+        
+                public double Total_price() {
+                    double total = 0;
+                    foreach(OrderItem oi in items) {
+                        total += oi.Item.Price * oi.Quantity;
+                    }
+                    return total;
+                }
+        
+                public void Pay(String payment_type, String security_code) {
+                    if(payment_type == &quot;debit&quot;) {
+                        Console.WriteLine(&quot;Processing Debit Payment&quot;);
+                        Console.WriteLine(&quot;Verifying Security Code: {0}&quot;, security_code);
+                        status = OrderStatus.Paid;
+                    }
+                    else if(payment_type == &quot;credit&quot;) {
+                        Console.WriteLine(&quot;Processing Credit Payment&quot;);
+                        Console.WriteLine(&quot;Verifying Security Code: {0}&quot;, security_code);
+                        status = OrderStatus.Paid;
+                    }
+                    else {
+                        throw new Exception(String.Format(&quot;Unknown Payment Type: {0}&quot;, payment_type));
+                    }
+                }
+            }
+        }
+    
+</pre></div>
+
+</section>
+<section id="utilisation" class="level2">
+<h2>Utilisation</h2>
+<div class="pygments"><pre><span></span>        namespace solid {
+            class Program {
+                public static void Main() {
+                    Order order = new Order();
+        
+                    order.Add_item(new Item(&quot;Keyboard&quot;, 50), 1);
+                    order.Add_item(new Item(&quot;SSD&quot;, 150), 1);
+                    order.Add_item(new Item(&quot;USB Cable&quot;, 2), 5);
+        
+                    Console.WriteLine(order.Total_price());
+                    order.Pay(&quot;credit&quot;, &quot;7683625&quot;);
+                    Console.WriteLine(order.Status);
+                }
+            }
+        }
+    
+</pre></div>
+
+<div class="terminal">        $&gt; dotnet run
+        210
+        Processing Credit Payment
+        Verifying Security Code: 7683625
+        Paid
+    
+</div>
+</section>
+<section id="single-responsibility-principle" class="level1">
+<h1>Single Responsibility Principle</h1>
+</section>
+<section id="single-responsibility-principle-1" class="level2">
+<h2>Single Responsibility Principle</h2>
+<ul>
+<li>Les classes et les méthodes ne doivent être responsables que d'une
+chose</li>
+<li>Cela permet d'avoir une grande cohésion</li>
+</ul>
+</section>
+<section id="problème-dans-lapplication-exemple" class="level2">
+<h2>Problème dans l'application exemple</h2>
+<ul>
+<li>La classe <code>Order</code> fait trop de chose</li>
+<li>Construire la commande</li>
+<li>Exécute le paiement</li>
+<li>Il faut la diviser <span class="small">Création de la classe
+<code>PaymentProcessor</code></span></li>
+</ul>
+</section>
+<section id="classe-paymentprocessor" class="level2 code">
+<h2>Classe PaymentProcessor</h2>
+<div class="pygments"><pre><span></span>            namespace solid {
+                class PaymentProcessor {
+                    public void Pay_credit(Order order, String security_code) {
+                        Console.WriteLine(&quot;Processing Credit Payment&quot;);
+                        Console.WriteLine(&quot;Verifying Security Code: {0}&quot;, security_code);
+                        order.Status = Order.OrderStatus.Paid;
+                    }
+            
+                    public void Pay_debit(Order order, String security_code) {
+                        Console.WriteLine(&quot;Processing Debit Payment&quot;);
+                        Console.WriteLine(&quot;Verifying Security Code: {0}&quot;, security_code);
+                        order.Status = Order.OrderStatus.Paid;
+                    }
+                }
+            }
+        
+</pre></div>
+
+</section>
+<section id="classe-order-1" class="level2 code">
+<h2>Classe Order</h2>
+<div class="pygments"><pre><span></span>        namespace solid {
+            class Order {
+                class OrderItem {
+                    private Item item;
+                    private int quantity;
+        
+                    public Item Item { get { return item; }}
+        
+                    public int Quantity { get { return quantity; } }
+        
+                    public OrderItem(Item item, int quantity) {
+                        this.item = item;
+                        this.quantity = quantity;
+                    }
+                }
+        
+                public enum OrderStatus {
+                    Open,
+                    Paid
+                }
+        
+                private List&lt;OrderItem&gt; items;
+                private OrderStatus status;
+        
+                public OrderStatus Status {
+                    get { return status; }
+                    set { status = value; }
+                }
+        
+                public Order() {
+                    items = new List&lt;OrderItem&gt;();
+                    status = OrderStatus.Open;
+                }
+        
+                public void Add_item(Item item, int quantity) {
+                    items.Add(new OrderItem(item, quantity));
+                }
+        
+                public double Total_price() {
+                    double total = 0;
+                    foreach(OrderItem oi in items) {
+                        total += oi.Item.Price * oi.Quantity;
+                    }
+                    return total;
+                }
+            }
+        }
+    
+</pre></div>
+
+</section>
+<section id="utilisation-1" class="level2">
+<h2>Utilisation</h2>
+<div class="pygments"><pre><span></span>        namespace solid {
+            class Program {
+                public static void Main() {
+                    Order order = new Order();
+        
+                    order.Add_item(new Item(&quot;Keyboard&quot;, 50), 1);
+                    order.Add_item(new Item(&quot;SSD&quot;, 150), 1);
+                    order.Add_item(new Item(&quot;USB Cable&quot;, 2), 5);
+        
+                    Console.WriteLine(order.Total_price());
+                    new PaymentProcessor().Pay_credit(order, &quot;7683625&quot;);
+                    Console.WriteLine(order.Status);
+                }
+            }
+        }
+    
+</pre></div>
+
+<div class="terminal">        $&gt; dotnet run
+        210
+        Processing Credit Payment
+        Verifying Security Code: 7683625
+        Paid
+    
+</div>
+</section>
+<section id="openclosed-principle" class="level1">
+<h1>Open/closed Principle</h1>
+</section>
+<section id="openclosed-principle-1" class="level2">
+<h2>Open/closed Principle</h2>
+<ul>
+<li>Open: Le code doit être ouvert aux extensions <span class="small">On
+doit pouvoir ajouter des fonctionnalités</span></li>
+<li>Closed: le code doit être fermé aux modifications <span
+class="small">Sans modifier le code existant</span></li>
+</ul>
+</section>
+<section id="problème-dans-lapplication-exemple-1" class="level2">
+<h2>Problème dans l'application exemple</h2>
+<ul>
+<li>L'ajout d'un type de paiement nécessite de modifier le code de
+<code>PaymentProcessor</code></li>
+<li>Nous allons utiliser une interface et des sous-classes</li>
+</ul>
+</section>
+<section id="interface-paymentprocessor" class="level2 code">
+<h2>Interface PaymentProcessor</h2>
+<div class="pygments"><pre><span></span>        namespace solid {
+            interface PaymentProcessor {
+                void Pay(Order order, String security_code);
+            }
+        }
+    
+</pre></div>
+
+</section>
+<section id="classe-creditpaymentprocessor" class="level2 code">
+<h2>Classe CreditPaymentProcessor</h2>
+<div class="pygments"><pre><span></span>        namespace solid {
+            class CreditPaymentProcessor : PaymentProcessor {
+                public void Pay(Order order, String security_code) {
+                    Console.WriteLine(&quot;Processing Credit Payment&quot;);
+                    Console.WriteLine(&quot;Verifying Security Code: {0}&quot;, security_code);
+                    order.Status = Order.OrderStatus.Paid;
+                }
+            }
+        }
+    
+</pre></div>
+
+</section>
+<section id="classe-debitpaymentprocessor" class="level2 code">
+<h2>Classe DebitPaymentProcessor</h2>
+<div class="pygments"><pre><span></span>        namespace solid {
+            class DebitPaymentProcessor : PaymentProcessor {
+                public void Pay(Order order, String security_code) {
+                    Console.WriteLine(&quot;Processing Debit Payment&quot;);
+                    Console.WriteLine(&quot;Verifying Security Code: {0}&quot;, security_code);
+                    order.Status = Order.OrderStatus.Paid;
+                }
+            }
+        }
+    
+</pre></div>
+
+</section>
+<section id="openclosed-principle-2" class="level2">
+<h2>Open/Closed Principle</h2>
+<ul>
+<li>Ajoutons Paypal</li>
+</ul>
+<div class="pygments"><pre><span></span>        namespace solid {
+            class PaypalPaymentProcessor : PaymentProcessor {
+                public void Pay(Order order, String security_code) {
+                    Console.WriteLine(&quot;Processing Paypal Payment&quot;);
+                    Console.WriteLine(&quot;Verifying Email Address: {0}&quot;, security_code);
+                    order.Status = Order.OrderStatus.Paid;
+                }
+            }
+        }
+    
+</pre></div>
+
+</section>
+<section id="utilisation-2" class="level2">
+<h2>Utilisation</h2>
+<div class="pygments"><pre><span></span>        namespace solid {
+            class Program {
+                public static void Main() {
+                    Order order = new Order();
+        
+                    order.Add_item(new Item(&quot;Keyboard&quot;, 50), 1);
+                    order.Add_item(new Item(&quot;SSD&quot;, 150), 1);
+                    order.Add_item(new Item(&quot;USB Cable&quot;, 2), 5);
+        
+                    Console.WriteLine(order.Total_price());
+                    new PaypalPaymentProcessor().Pay(order, &quot;lur@ecam.be&quot;);
+                    Console.WriteLine(order.Status);
+                }
+            }
+        }
+    
+</pre></div>
+
+<div class="terminal">        $&gt; dotnet run
+        210
+        Processing Paypal Payment
+        Verifying Email Address: lur@ecam.be
+        Paid
+    
+</div>
+</section>
+<section id="liskov-substitution-principle" class="level1">
+<h1>Liskov Substitution Principle</h1>
+</section>
+<section id="liskov-substitution-principle-1" class="level2">
+<h2>Liskov Substitution Principle</h2>
+<ul>
+<li>Un type devrait pouvoir être remplacé par un sous-type <span
+class="small">Sans que le programme devienne sémantiquement
+incorrect</span></li>
+<li><strong>Attention: syntaxiquement, un sous-type peut toujours
+remplacer un de ses types de base</strong></li>
+<li>LSP impose qu'un remplacement par un sous-type doit toujours
+<strong>avoir du sens</strong>.</li>
+</ul>
+</section>
+<section id="problème-dans-lapplication-exemple-2" class="level2">
+<h2>Problème dans l'application exemple</h2>
+<ul>
+<li>La class PaypalPaymentProcessor prend l'adresse email dans un
+paramètre destiné à un code de sécurité.</li>
+<li>Déplaçons les informations propre à la méthode de paiement dans le
+constructeur</li>
+</ul>
+</section>
+<section id="interface-paymentprocessor-1" class="level2 code">
+<h2>Interface PaymentProcessor</h2>
+<div class="pygments"><pre><span></span>        namespace solid {
+            interface PaymentProcessor {
+                void Pay(Order order);
+            }
+        }
+    
+</pre></div>
+
+</section>
+<section id="class-paypalpaymentprocessor" class="level2 code">
+<h2>Class PaypalPaymentProcessor</h2>
+<div class="pygments"><pre><span></span>        namespace solid {
+            class PaypalPaymentProcessor : PaymentProcessor {
+                private String email;
+        
+                public PaypalPaymentProcessor(String email) {
+                    this.email = email;
+                }
+        
+                public void Pay(Order order) {
+                    Console.WriteLine(&quot;Processing Paypal Payment&quot;);
+                    Console.WriteLine(&quot;Verifying Email Address: {0}&quot;, email);
+                    order.Status = Order.OrderStatus.Paid;
+                }
+            }
+        }
+    
+</pre></div>
+
+</section>
+<section id="class-creditpaymentprocessor" class="level2 code">
+<h2>Class CreditPaymentProcessor</h2>
+<div class="pygments"><pre><span></span>        namespace solid {
+            class CreditPaymentProcessor : PaymentProcessor {
+                private String security_code;
+        
+                public CreditPaymentProcessor(string security_code) {
+                    this.security_code = security_code;
+                }
+        
+                public void Pay(Order order) {
+                    Console.WriteLine(&quot;Processing Credit Payment&quot;);
+                    Console.WriteLine(&quot;Verifying Security Code: {0}&quot;, security_code);
+                    order.Status = Order.OrderStatus.Paid;
+                }
+            }
+        }
+    
+</pre></div>
+
+</section>
+<section id="class-debitpaymentprocessor" class="level2 code">
+<h2>Class DebitPaymentProcessor</h2>
+<div class="pygments"><pre><span></span>        namespace solid {
+            class DebitPaymentProcessor : PaymentProcessor {
+                private String security_code;
+        
+                public DebitPaymentProcessor(string security_code) {
+                    this.security_code = security_code;
+                }
+                
+                public void Pay(Order order) {
+                    Console.WriteLine(&quot;Processing Debit Payment&quot;);
+                    Console.WriteLine(&quot;Verifying Security Code: {0}&quot;, security_code);
+                    order.Status = Order.OrderStatus.Paid;
+                }
+            }
+        }
+    
+</pre></div>
+
+</section>
+<section id="utilisation-3" class="level2">
+<h2>Utilisation</h2>
+<div class="pygments"><pre><span></span>        namespace solid {
+            class Program {
+                public static void Main() {
+                    Order order = new Order();
+        
+                    order.Add_item(new Item(&quot;Keyboard&quot;, 50), 1);
+                    order.Add_item(new Item(&quot;SSD&quot;, 150), 1);
+                    order.Add_item(new Item(&quot;USB Cable&quot;, 2), 5);
+        
+                    Console.WriteLine(order.Total_price());
+                    new PaypalPaymentProcessor(&quot;lur@ecam.be&quot;).Pay(order);
+                    Console.WriteLine(order.Status);
+                }
+            }
+        }
+    
+</pre></div>
+
+<div class="terminal">        $&gt; dotnet run
+        210
+        Processing Paypal Payment
+        Verifying Email Address: lur@ecam.be
+        Paid
+    
+</div>
+</section>
+<section id="interface-segregation-principle" class="level1">
+<h1>Interface Segregation Principle</h1>
+</section>
+<section id="application-exemple-1" class="level2">
+<h2>Application Exemple</h2>
+<ul>
+<li><p>Ajout: authentification à 2 facteurs</p></li>
+<li><p>Ajout de la méthode nécessaire à
+<code>PaymentProcessor</code></p>
+<div class="pygments"><pre><span></span>                    namespace solid {
+                        interface PaymentProcessor {
+                            void Auth_sms(string code);   // Nouvelle méthode
+                            void Pay(Order order);
+                        }
+                    }
+</pre></div>
+</li>
+<li><p>Besoin de modifier les sous-classes</p></li>
+</ul>
+</section>
+<section id="paypalpaymentprocessor" class="level2 code">
+<h2>PaypalPaymentProcessor</h2>
+<div class="pygments"><pre><span></span>            namespace solid {
+                class PaypalPaymentProcessor : PaymentProcessor {
+                    private String email;
+                    private bool verified;
+            
+                    public PaypalPaymentProcessor(String email) {
+                        this.email = email;
+                        verified = false;
+                    }
+            
+                    public void Auth_sms(string code) {
+                        Console.WriteLine(&quot;Verifying SMS code: {0}&quot;, code);
+                        verified = true;
+                    }
+            
+                    public void Pay(Order order) {
+                        if(!verified) {
+                            throw new System.Exception(&quot;Not authorized&quot;);
+                        }
+                        Console.WriteLine(&quot;Processing Paypal Payment&quot;);
+                        Console.WriteLine(&quot;Verifying Email Address: {0}&quot;, email);
+                        order.Status = Order.OrderStatus.Paid;
+                    }
+                }
+            }
+        
+</pre></div>
+
+</section>
+<section id="debitpaymentprocessor" class="level2 code">
+<h2>DebitPaymentProcessor</h2>
+<div class="pygments"><pre><span></span>            namespace solid {
+                class DebitPaymentProcessor : PaymentProcessor {
+                    private String security_code;
+                    private bool verified;
+            
+                    public DebitPaymentProcessor(string security_code) {
+                        this.security_code = security_code;
+                        verified = false;
+                    }
+            
+                    public void Auth_sms(string code) {
+                        Console.WriteLine(&quot;Verifying SMS code: {0}&quot;, code);
+                        verified = true;
+                    }
+                    
+                    public void Pay(Order order) {
+                        if(!verified) {
+                            throw new System.Exception(&quot;Not authorized&quot;);
+                        }
+                        Console.WriteLine(&quot;Processing Debit Payment&quot;);
+                        Console.WriteLine(&quot;Verifying Security Code: {0}&quot;, security_code);
+                        order.Status = Order.OrderStatus.Paid;
+                    }
+                }
+            }
+        
+</pre></div>
+
+</section>
+<section id="creditpaymentprocessor" class="level2 code">
+<h2>CreditPaymentProcessor</h2>
+<div class="pygments"><pre><span></span>            namespace solid {
+                class CreditPaymentProcessor : PaymentProcessor {
+                    private String security_code;
+            
+                    public CreditPaymentProcessor(string security_code) {
+                        this.security_code = security_code;
+                    }
+            
+                    // Ce type de paiements ne supporte pas l&#39;autorisation par SMS 
+                    public void Auth_sms(string code) {
+                        throw new System.Exception(&quot;Credit card payments don&#39;t support SMS code authorization&quot;);
+                    }
+            
+                    public void Pay(Order order) {
+                        Console.WriteLine(&quot;Processing Credit Payment&quot;);
+                        Console.WriteLine(&quot;Verifying Security Code: {0}&quot;, security_code);
+                        order.Status = Order.OrderStatus.Paid;
+                    }
+                }
+            }
+        
+</pre></div>
+
+</section>
+<section id="le-problème" class="level2">
+<h2>Le problème</h2>
+<ul>
+<li>L'interface <code>PaymentProcessor</code> nous oblige à implémenter
+une méthode <code>Auth_sms</code> dans
+<code>CreditPaymentProcessor.</code></li>
+<li>Cette méthode n'a pas de raison d'exister. Il faut donc inventer
+quelque chose.</li>
+<li>Il y a ici une violation du LSP.</li>
+</ul>
+</section>
+<section id="interface-segregation-principle-1" class="level2">
+<h2>Interface Segregation Principle</h2>
+<ul>
+<li>Éviter les grosses interfaces généralistes</li>
+<li>Ne pas forcer à implémenter des méthode inutile.</li>
+<li>On evite comme ça d'introduire du couplage inutile.</li>
+<li>Le respect du SCP aide à naturellement à valider l'ISP</li>
+</ul>
+</section>
+<section id="solution" class="level2">
+<h2>Solution</h2>
+<ul>
+<li>Creation d'une classe <code>SMSAuthorizer</code></li>
+<li>Ajout d'un <code>SMSAuthorizer</code> aux classes <strong>qui en ont
+besoin</strong></li>
+</ul>
+</section>
+<section id="smsauthorizer" class="level2 code">
+<h2>SMSAuthorizer</h2>
+<div class="pygments"><pre><span></span>            namespace solid {
+                class SMSAuthorizer {
+                    private bool authorized;
+            
+                    public SMSAuthorizer() {
+                        authorized = false;
+                    }
+            
+                    public void Verify(string code) {
+                        Console.WriteLine(&quot;Verifying SMS code: {0}&quot;, code);
+                        authorized = true;
+                    }
+            
+                    public bool Authorized {
+                        get { return authorized; }
+                    }
+                }
+            }
+        
+</pre></div>
+
+</section>
+<section id="paymentprocessor" class="level2 code">
+<h2>PaymentProcessor</h2>
+<div class="pygments"><pre><span></span>            namespace solid {
+                // Disparition de la méthode d’autorisation
+                interface PaymentProcessor {
+                    void Pay(Order order);
+                }
+            }
+        
+</pre></div>
+
+</section>
+<section id="paypalpaymentprocessor-1" class="level2 code">
+<h2>PaypalPaymentProcessor</h2>
+<div class="pygments"><pre><span></span>            namespace solid {
+                class PaypalPaymentProcessor : PaymentProcessor {
+                    private String email;
+                    private SMSAuthorizer authorizer;
+            
+                    public PaypalPaymentProcessor(String email, SMSAuthorizer authorizer) {
+                        this.authorizer = authorizer;
+                        this.email = email;
+                    }
+            
+                    public void Pay(Order order) {
+                        if(!authorizer.Authorized) {
+                            throw new System.Exception(&quot;Not authorized&quot;);
+                        }
+                        Console.WriteLine(&quot;Processing Paypal Payment&quot;);
+                        Console.WriteLine(&quot;Verifying Email Address: {0}&quot;, email);
+                        order.Status = Order.OrderStatus.Paid;
+                    }
+                }
+            }
+        
+</pre></div>
+
+</section>
+<section id="debitpaymentprocessor-1" class="level2 code">
+<h2>DebitPaymentProcessor</h2>
+<div class="pygments"><pre><span></span>            namespace solid {
+                class DebitPaymentProcessor : PaymentProcessor {
+                    private String security_code;
+                    private SMSAuthorizer authorizer;
+            
+                    public DebitPaymentProcessor(string security_code, SMSAuthorizer authorizer) {
+                        this.authorizer = authorizer;
+                        this.security_code = security_code;
+                    }
+                    
+                    public void Pay(Order order) {
+                        if(!authorizer.Authorized) {
+                            throw new System.Exception(&quot;Not authorized&quot;);
+                        }
+                        Console.WriteLine(&quot;Processing Debit Payment&quot;);
+                        Console.WriteLine(&quot;Verifying Security Code: {0}&quot;, security_code);
+                        order.Status = Order.OrderStatus.Paid;
+                    }
+                }
+            }
+        
+</pre></div>
+
+</section>
+<section id="creditpaymentprocessor-1" class="level2 code">
+<h2>CreditPaymentProcessor</h2>
+<div class="pygments"><pre><span></span>            namespace solid {
+                // Pas d&#39;authorizer ici :-)
+                class CreditPaymentProcessor : PaymentProcessor {
+                    private String security_code;
+            
+                    public CreditPaymentProcessor(string security_code) {
+                        this.security_code = security_code;
+                    }
+            
+                    public void Pay(Order order) {
+                        Console.WriteLine(&quot;Processing Credit Payment&quot;);
+                        Console.WriteLine(&quot;Verifying Security Code: {0}&quot;, security_code);
+                        order.Status = Order.OrderStatus.Paid;
+                    }
+                }
+            }
+        
+</pre></div>
+
+</section>
+<section id="utilisation-4" class="level2">
+<h2>Utilisation</h2>
+<div class="pygments"><pre><span></span>            namespace solid {
+                class Program {
+                    public static void Main() {
+                        Order order = new Order();
+            
+                        order.Add_item(new Item(&quot;Keyboard&quot;, 50), 1);
+                        order.Add_item(new Item(&quot;SSD&quot;, 150), 1);
+                        order.Add_item(new Item(&quot;USB Cable&quot;, 2), 5);
+            
+                        Console.WriteLine(order.Total_price());
+            
+                        SMSAuthorizer authorizer = new SMSAuthorizer();
+                        PaymentProcessor processor =  new PaypalPaymentProcessor(&quot;lur@ecam.be&quot;, authorizer);
+                        authorizer.Verify(&quot;4269&quot;);
+                        processor.Pay(order);
+                        Console.WriteLine(order.Status);
+                    }
+                }
+            }
+        
+</pre></div>
+
+<div class="terminal">            $&gt; dotnet run
+            210
+            Verifying SMS code: 4269
+            Processing Paypal Payment
+            Verifying Email Address: lur@ecam.be
+            Paid
+        
+</div>
+</section>
+<section id="dependency-inversion-principle" class="level1">
+<h1>Dependency Inversion Principle</h1>
+</section>
+<section id="dependency-inversion-principle-1" class="level2">
+<h2>Dependency Inversion Principle</h2>
+<ul>
+<li><p>On en devrait dépendre que de classe abstraite</p></li>
+<li><p>Cela aide à maintenir l'OCP</p></li>
+<li><p>Problème dans l'application exemple:
+<code>DebitPaymentProcessor</code> et
+<code>PaypalPaymentProcessor</code> dépendent de la classe concrète
+<code>SMSAuthorizer</code></p></li>
+<li><p>Solution: création d'une interface <code>Authorizer</code></p>
+<div class="pygments"><pre><span></span>                    namespace solid {
+                        interface Authorizer {
+                            bool Authorized { get; }
+                        }
+                    }
+</pre></div>
+</li>
+</ul>
+</section>
+<section id="smsauthorizer-1" class="level2 code">
+<h2>SMSAuthorizer</h2>
+<div class="pygments"><pre><span></span>            namespace solid {
+                class SMSAuthorizer : Authorizer {
+                    private bool authorized;
+            
+                    public SMSAuthorizer() {
+                        authorized = false;
+                    }
+            
+                    public void Verify(string code) {
+                        Console.WriteLine(&quot;Verifying SMS code: {0}&quot;, code);
+                        authorized = true;
+                    }
+            
+                    public bool Authorized {
+                        get { return authorized; }
+                    }
+                }
+            }
+        
+</pre></div>
+
+</section>
+<section id="paypalpaymentprocessor-2" class="level2 code">
+<h2>PaypalPaymentProcessor</h2>
+<div class="pygments"><pre><span></span>            namespace solid {
+                class PaypalPaymentProcessor : PaymentProcessor {
+                    private String email;
+                    private Authorizer authorizer;
+            
+                    public PaypalPaymentProcessor(String email, Authorizer authorizer) {
+                        this.authorizer = authorizer;
+                        this.email = email;
+                    }
+            
+                    public void Pay(Order order) {
+                        if(!authorizer.Authorized) {
+                            throw new System.Exception(&quot;Not authorized&quot;);
+                        }
+                        Console.WriteLine(&quot;Processing Paypal Payment&quot;);
+                        Console.WriteLine(&quot;Verifying Email Address: {0}&quot;, email);
+                        order.Status = Order.OrderStatus.Paid;
+                    }
+                }
+            }
+        
+</pre></div>
+
+</section>
+<section id="debitpaymentprocessor-2" class="level2 code">
+<h2>DebitPaymentProcessor</h2>
+<div class="pygments"><pre><span></span>            namespace solid {
+                class DebitPaymentProcessor : PaymentProcessor {
+                    private String security_code;
+                    private Authorizer authorizer;
+            
+                    public DebitPaymentProcessor(string security_code, Authorizer authorizer) {
+                        this.authorizer = authorizer;
+                        this.security_code = security_code;
+                    }
+                    
+                    public void Pay(Order order) {
+                        if(!authorizer.Authorized) {
+                            throw new System.Exception(&quot;Not authorized&quot;);
+                        }
+                        Console.WriteLine(&quot;Processing Debit Payment&quot;);
+                        Console.WriteLine(&quot;Verifying Security Code: {0}&quot;, security_code);
+                        order.Status = Order.OrderStatus.Paid;
+                    }
+                }
+            }
+        
+</pre></div>
+
+</section>
+<section id="notrobotauthorizer" class="level2 code">
+<h2>NotRobotAuthorizer</h2>
+<ul>
+<li>On peut créer d'autres <code>Authorizer</code></li>
+</ul>
+<div class="pygments"><pre><span></span>            namespace solid {
+                class NotRobotAuthorizer : Authorizer {
+                    private bool authorized;
+            
+                    public NotRobotAuthorizer() {
+                        authorized = false;
+                    }
+            
+                    public void Turing_test() {
+                        Console.WriteLine(&quot;Are you a Robot ? Naaaa...&quot;);
+                        authorized = true;
+                    }
+            
+                    public bool Authorized {
+                        get { return authorized; }
+                    }
+                }
+            }
+        
+</pre></div>
+
+</section>
+<section id="utilisation-5" class="level2">
+<h2>Utilisation</h2>
+<div class="pygments"><pre><span></span>            namespace solid {
+                class Program {
+                    public static void Main() {
+                        Order order = new Order();
+            
+                        order.Add_item(new Item(&quot;Keyboard&quot;, 50), 1);
+                        order.Add_item(new Item(&quot;SSD&quot;, 150), 1);
+                        order.Add_item(new Item(&quot;USB Cable&quot;, 2), 5);
+            
+                        Console.WriteLine(order.Total_price());
+            
+                        NotRobotAuthorizer authorizer = new NotRobotAuthorizer();
+                        PaymentProcessor processor =  new PaypalPaymentProcessor(&quot;lur@ecam.be&quot;, authorizer);
+                        authorizer.Turing_test();
+                        processor.Pay(order);
+                        Console.WriteLine(order.Status);
+                    }
+                }
+            }
+        
+</pre></div>
+
+<div class="terminal">            $&gt; dotnet run
+            210
+            Are you a Robot ? Naaaa...
+            Processing Paypal Payment
+            Verifying Email Address: lur@ecam.be
+            Paid
+        
+</div>
+</section>
+<section id="principes-stupid" class="level1">
+<h1>Principes STUPID</h1>
+</section>
+<section id="stupid" class="level2">
+<h2>STUPID</h2>
+<ul>
+<li>Les six principes à retenir avec l’acronyme <strong>STUPID</strong>
+<ul>
+<li><span class="letter">S</span>ingleton</li>
+<li><span class="letter">T</span>ight Coupling</li>
+<li><span class="letter">U</span>ntestability</li>
+<li><span class="letter">P</span>remature Optimization</li>
+<li><span class="letter">I</span>ndescriptive Naming</li>
+<li><span class="letter">D</span>uplication</li>
+</ul></li>
+</ul>
+</section>
+<section id="singleton" class="level1">
+<h1>Singleton</h1>
+</section>
+<section id="singleton-1" class="level2">
+<h2>Singleton</h2>
+<ul>
+<li>Singleton parfois considéré comme un anti-pattern <span
+class="small">Pas un problème en soi, mais symptôme d’éventuels
+problèmes</span></li>
+<li>Deux majeures difficultés avec le singleton
+<ul>
+<li>Difficulté à tester un programme avec un état global</li>
+<li>Dépendances cachées</li>
+</ul></li>
+</ul>
+</section>
+<section id="tight-coupling" class="level1">
+<h1>Tight Coupling</h1>
+</section>
+<section id="tight-coupling-1" class="level2">
+<h2>Tight Coupling</h2>
+<ul>
+<li>Le couplage fort est à éviter</li>
+<li>On le dit depuis le premier cours</li>
+<li>Très difficile à réutiliser, et aussi à tester</li>
+<li>Changer un module ne doit pas nécessiter d’en changer d’autres</li>
+</ul>
+</section>
+<section id="untestability" class="level1">
+<h1>Untestability</h1>
+</section>
+<section id="untestability-1" class="level2">
+<h2>Untestability</h2>
+<ul>
+<li>Tester un programme ne doit pas être difficile</li>
+<li>Code fortement couplé très difficile à tester</li>
+</ul>
+</section>
+<section id="premature-optimization" class="level1">
+<h1>Premature Optimization</h1>
+</section>
+<section id="premature-optimization-1" class="level2">
+<h2>Premature Optimization</h2>
+<p>« Premature optimization is the root of all evil. » — Sir Tony
+Hoare</p>
+<ul>
+<li>Optimiser à l’avance n’aura que des coûts, aucun bénéfice
+<ul>
+<li>Plus complexe</li>
+<li>Plus lent à développer</li>
+<li>Plus de chance de faire des erreurs</li>
+<li>Keep It Simple, Stupid (KISS)</li>
+</ul></li>
+<li>Deux règles de l’optimisation d’un programme :
+<ol type="1">
+<li>Don’t do it</li>
+<li>(for experts only !) Don’t do it yet.</li>
+</ol></li>
+</ul>
+</section>
+<section id="indescriptive-naming" class="level1">
+<h1>Indescriptive Naming</h1>
+</section>
+<section id="indescriptive-naming-1" class="level2">
+<h2>Indescriptive Naming</h2>
+<ul>
+<li>Noms appropriés pour classes, méthodes, attributs, variables...
+<span class="small">Et ne pas faire d’abréviations !</span></li>
+<li>Les langages de programmation sont pour les humains <span
+class="small">On ne code pas pour l’ordinateur, il ne comprend que les 0
+et 1...</span></li>
+</ul>
+</section>
+<section id="duplication" class="level1">
+<h1>Duplication</h1>
+</section>
+<section id="duplication-1" class="level2">
+<h2>Duplication</h2>
+<ul>
+<li>Be lazy the right way - write code only once ! <span
+class="small">Don’t Repeat Yourself (DRY)</span></li>
+<li>Attention à tous les types de duplications <span class="small">De
+code, de données, de logique, de design...</span></li>
+</ul>
+</section>
+<section id="crédit" class="level2">
+<h2>Crédit</h2>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=pTB30aXS77U"
+class="uri">https://www.youtube.com/watch?v=pTB30aXS77U</a></li>
+</ul>
+</section>
+</body>
+</html>

@@ -9,7 +9,7 @@ build_and_index(
     'imageprocessing',
     'mobile',
     'poo',
-    'python1ba/slides',
+    'python1ba',
     'python2ba',
     'python2be',
     'scalable',

@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Cours 2 - Relation d'héritage</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="/document.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Cours 2 - Relation d'héritage
+</h1>
+</header>
+<section id="po3t---cours-2relation-dhéritage" class="level1">
+<h1>PO3T - Cours 2<span class="small">Relation d'héritage</span></h1>
+<p>Quentin Lurkin</p>
+</section>
+<section id="héritage" class="level2">
+<h2>Héritage</h2>
+<ul>
+<li>Définir une classe <strong>à partir</strong> d'une autre <span
+class="small">Sous-ensemble des membres communs entre les deux
+classes</span></li>
+<li>Possibilité d'exploiter le <strong>polymorphisme</strong> <span
+class="small">Un même objet peut prendre plusieurs formes selon le
+contexte</span></li>
+<li>Nouveau niveau de <strong>visibilité</strong> pour les membres d'une
+classe <span class="small">Membres privés à une classe, mais hérités
+auprès des sous-classes</span></li>
+</ul>
+</section>
+<section id="représentation-dune-paire" class="level2 code">
+<h2>Représentation d'une paire</h2>
+<div class="pygments"><pre><span></span>         public class Pair
+         {
+            private readonly double x, y;
+
+            public Pair(double x, double y)
+            {
+               this.x = x;
+               this.y = y;
+            }
+
+            public bool IsOrdered ()
+            {
+               return x &lt;= y;
+            }
+
+            public override string ToString ()
+            {
+               return string.Format(&quot;({0}, {1})&quot;, x, y);
+            }
+         }
+      
+</pre></div>
+
+</section>
+<section id="représentation-dune-paire-1" class="level2">
+<h2>Représentation d'une paire</h2>
+<ul>
+<li>Une paire est composée de deux nombres réels <span class="small">On
+renseigne les deux nombres au moment de la construction</span></li>
+<li>La méthode <code>IsOrdered()</code> teste si la paire est
+<strong>ordonnée</strong></li>
+</ul>
+<div class="pygments"><pre><span></span>         Pair p1 = new Pair(12, 7);
+         Pair p2 = new Pair(-2, 0);
+
+         Console.WriteLine(string.Format(&quot;{0}: {1}&quot;, p1, p1.IsOrdered()));
+         Console.WriteLine(string.Format(&quot;{0}: {1}&quot;, p2, p2.IsOrdered()));
+      
+</pre></div>
+
+<div class="terminal">
+<p>(12, 7) : False (-2, 0) : True</p>
+</div>
+</section>
+<section id="paire-ordonnée" class="level2">
+<h2>Paire ordonnée</h2>
+<ul>
+<li>La classe OrderedPair représente une <strong>paire ordonnée</strong>
+<span class="small">Le premier élément de la paire doit être ≤ au
+second</span></li>
+<li><strong>Deux manières</strong> de définir une telle classe
+<ul>
+<li>Imposer la contrainte sur les paramètres du constructeur</li>
+<li>Laisser le constructeur réordonner les éléments de la paire</li>
+</ul></li>
+<li>Faire confiance à l'utilisateur ou avoir un <strong>code
+robuste</strong> <span class="small">Code interne de confiance, mais
+code public doit être robuste</span></li>
+</ul>
+</section>
+<section id="paire-ordonnée-1" class="level2">
+<h2>Paire ordonnée</h2>
+<div class="pygments"><pre><span></span>         public class OrderedPair
+         {
+            private readonly double x, y;
+
+            public Pair(double x, double y)
+            {
+               this.x = a &lt;= b ? a : b;
+               this.y = a &lt;= b ? b : a;
+            }
+
+            public bool IsOrdered ()
+            {
+               return true;
+            }
+
+            public override string ToString ()
+            {
+               return string.Format(&quot;({0}, {1})&quot;, x, y);
+            }
+         }
+      
+</pre></div>
+
+</section>
+<section id="paire-ordonnée-2" class="level2">
+<h2>Paire ordonnée</h2>
+<ul>
+<li>Une paire ordonnée ré-ordonne les nombres réels <span
+class="small">Au moment d'appeler le constructeur de la
+classe</span></li>
+<li>La méthode <code>IsOrdered()</code> renvoie toujours
+<code>True</code></li>
+</ul>
+<div class="pygments"><pre><span></span>         Pair o1 = new OrderedPair(12, 7);
+         Pair o2 = new OrderedPair(-2, 0);
+
+         Console.WriteLine(string.Format(&quot;{0}: {1}&quot;, o1, o1.IsOrdered()));
+         Console.WriteLine(string.Format(&quot;{0}: {1}&quot;, o2, o2.IsOrdered()));
+      
+</pre></div>
+
+<div class="terminal">
+<p>(7, 12) : True (-2, 0) : True</p>
+</div>
+</section>
+<section id="extension-dune-classe" class="level2">
+<h2>Extension d'une classe</h2>
+<ul>
+<li>Une <strong>paire ordonnée</strong> est en fait une paire
+<ul>
+<li>Avec des spécificités juste pour les paires ordonnées</li>
+<li><code>OrderedPair</code> vu comme une spécialisation de la classe
+<code>Pair</code></li>
+</ul></li>
+<li>On veut <strong>hériter</strong> une partie du comportement de la
+classe <code>Pair</code> <span class="small">Éviter de la duplication de
+code, réutiliser l'existant</span></li>
+<li>On veut <strong>ajouter</strong> des comportements spécifiques à
+<code>OrderedPair</code> <span class="small">Pouvoir différencier la
+nouvelle classe</span></li>
+</ul>
+</section>
+<section id="extension-dune-classe-1" class="level2">
+<h2>Extension d'une classe</h2>
+<ul>
+<li>Une sous-classe <strong>étend</strong> une super-classe
+<ul>
+<li>La sous-classe hérite d'une série d'éléments de la super-classe</li>
+<li>Il peut y avoir du code spécifique à la sous-classe</li>
+</ul></li>
+</ul>
+<figure id="heritage">
+</figure>
+</section>
+<section id="extension-dune-classe-2" class="level2">
+<h2>Extension d'une classe</h2>
+<ul>
+<li>Une sous-classe (classe dérivée, classe enfant)
+<strong>étend</strong> une autre <span class="small">la super-classe
+(classe étendue, classe parent)</span></li>
+<li><strong>Constructeur d'une sous-classe</strong> appelle celui de la
+classe parent <span class="small">Construire la super-classe avant la
+sous-classe !</span></li>
+</ul>
+<div class="pygments"><pre><span></span>         public class OrderedPair : Pair
+         {
+            public OrderedPair(double a, double b) :
+            base(a &lt;= b ? a : b, a &lt;= b ? b : a)
+            {
+
+            }
+         }
+      
+</pre></div>
+
+</section>
+<section id="et-en-java..." class="level2">
+<h2>Et en Java...</h2>
+<ul>
+<li>Signaler l'extension avec <code>extends</code></li>
+<li>Appel du <strong>constructeur de la super-classe</strong> avec
+<code>super</code> <span class="small">Doit être la première instruction
+du constructeur</span></li>
+</ul>
+<div class="pygments"><pre><span></span>         public class OrderedPair extends Pair
+         {
+            public OrderedPair ( double a, double b)
+            {
+               super (a &lt;= b ? a : b, a &lt;= b ? b : a);
+            }
+         }
+      
+</pre></div>
+
+</section>
+<section id="et-en-c" class="level2">
+<h2>Et en C++</h2>
+<ul>
+<li>Signaler <strong>l'extension</strong> en précisant la super-classe
+après le <code>:</code> <span class="small">Mot réservé
+<code>public</code> nécessaire pour le polymorphisme</span></li>
+<li>Appel au <strong>constructeur de la super-classe</strong> via son
+nom</li>
+</ul>
+<div class="pygments"><pre><span></span>         class OrderedPair : public Pair
+         {
+            public :
+               OrderedPair(double a, double b);
+         };
+
+         OrderedPair::OrderedPair(double x, double y) :
+         Pair (x &lt;= y ? x : y, x &lt;= y ? y : x)
+         {
+
+         }
+      
+</pre></div>
+
+</section>
+<section id="et-en-python..." class="level2">
+<h2>Et en Python...</h2>
+<ul>
+<li>Signaler la <strong>classe étendue</strong> entre parenthèses</li>
+<li>Appel du <strong>constructeur de la super-classe</strong> avec
+<code>super()</code> <span class="small">Appel explicite, il faut écrire
+<code>__init__()</code></span></li>
+</ul>
+<div class="pygments"><pre><span></span>         class OrderedPair(Pair):
+            def __init__(self, x, y):
+               super().__init__ (x if x &lt;= y else y, y if x &lt;= y else x)
+      
+</pre></div>
+
+</section>
+<section id="représentation-dune-personne" class="level2">
+<h2>Représentation d'une personne</h2>
+<ul>
+<li>Une personne a un nom et une date de naissance <span
+class="small">Le prénom et le nom sont ici stockés ensemble</span></li>
+</ul>
+<div class="pygments"><pre><span></span>         public class Person
+         {
+            private String name;
+            private DateTime birthday;
+
+            public Person(string name, DateTime birthday)
+            {
+               this.name = name;
+               this.birthday = birthday;
+            }
+
+            public override string ToString()
+            {
+               return string.Format(&quot;{0} ({1})&quot;, name, birthday);
+            }
+         }
+      
+</pre></div>
+
+</section>
+<section id="représentation-dune-personne-1" class="level2">
+<h2>Représentation d'une personne</h2>
+<ul>
+<li>Création de <strong>deux objets</strong> dans le but de créer une
+personne <span class="small">Est-ce une agrégation ou une composition
+?</span></li>
+</ul>
+<div class="pygments"><pre><span></span>         DateTime birthday = new DateTime(1996, 2, 18);
+         Person arno = new Person(&quot;Arno Feelters&quot;, birthday);
+      
+</pre></div>
+
+</section>
+<section id="représentation-dun-employé" class="level2">
+<h2>Représentation d'un employé</h2>
+<ul>
+<li>Un <strong>employé</strong> est une personne avec un salaire <span
+class="small">La classe <code>Employee</code> étend la classe
+<code>Person</code></span></li>
+<li>Ajout d'une <strong>variable et méthode d'instance</strong> dans la
+sous-classe</li>
+</ul>
+<div class="pygments"><pre><span></span>         public class Employee : Person
+         {
+            private double salary;
+
+            public Employee(string name, DateTime birthday, double salary ) :
+            base (name, birthday)
+            {
+               this.salary = salary;
+            }
+
+            public double GetSalary()
+            {
+               return this.salary;
+            }
+         }
+      
+</pre></div>
+
+<div class="pygments"><pre><span></span>         Employee flemal = new Employee(
+            &quot;C. Flemal&quot;,
+            new DateTime (1992, 4, 21),
+            3200
+         );
+      
+</pre></div>
+
+</section>
+<section id="constructeur-dune-sous-classe" class="level2">
+<h2>Constructeur d'une sous-classe</h2>
+<ul>
+<li>Deux missions pour le constructeur d'une sous-classe
+<ul>
+<li>Initialisation de la super-classe</li>
+<li>Construction de la sous-classe</li>
+</ul></li>
+<li>Utilisation du mot réservé <code>base</code> après l'entête du
+constructeur <span class="small">Invocation du constructeur de la
+super-classe</span></li>
+</ul>
+<div class="pygments"><pre><span></span>         public Employee (string name, DateTime birthday, double salary) :
+         base (name , birthday)
+         {
+            this.salary = salary;
+         }
+      
+</pre></div>
+
+</section>
+<section id="accès-à-la-super-classe" class="level2">
+<h2>Accès à la super-classe</h2>
+<ul>
+<li>Accès restreint aux variables d'instance de la super-classe <span
+class="small">Variables privées pas accessibles dans la
+sous-classe</span></li>
+</ul>
+<div class="pygments"><pre><span></span>         public Employee (string name, DateTime birthday, double salary) :
+         base (name , birthday)
+         {
+            this.name = name;
+            this.salary = salary;
+         }
+      
+</pre></div>
+
+<div class="terminal">
+<p>Employees.cs (29 ,18) : error CS0122 : 'Cours2.Person.name' is
+inaccessible due to its protection level</p>
+</div>
+</section>
+<section id="masquage-de-variable" class="level2">
+<h2>Masquage de variable</h2>
+<ul>
+<li>Masquage d'une variable d'instance de la super-classe <span
+class="small">Si variable d'instance de même nom dans la
+sous-classe</span></li>
+<li>L'instance possède deux <strong>variables d'instance</strong> de
+même nom <span class="small">Elles ne sont pas toutes les deux
+accessibles</span></li>
+</ul>
+<div class="pygments"><pre><span></span>         public class Employee : Person
+         {
+            private String name;
+            private double salary;
+
+            public Employee(string name, DateTime birthday, double salary ) :
+            base (name, birthday)
+            {
+               this.name = name;
+               this.salary = salary;
+            }
+
+            // ...
+         }
+      
+</pre></div>
+
+</section>
+<section id="masquage-de-variable-1" class="level2">
+<h2>Masquage de variable</h2>
+<ul>
+<li>Chaque variable d'instance est accessible depuis sa classe <span
+class="small">Celle où la variable a été définie</span></li>
+<li>Quel <code>nom</code> est affiché ? "C. Flemal" ou "Bullshit"</li>
+</ul>
+<div class="pygments"><pre><span></span>         public class Employee : Person
+         {
+            private String name;
+            private double salary;
+
+            public Employee(string name, DateTime birthday, double salary ) :
+            base (name, birthday)
+            {
+               this.name = &quot;Bullshit&quot;;
+               this.salary = salary;
+            }
+
+            public double GetSalary()
+            {
+               return this.salary;
+            }
+         }
+
+         // dans le Main
+         Employee flemal = new Employee(
+            &quot;C. Flemal&quot;,
+            new DateTime (1992, 4, 21),
+            3200
+         );
+         Console.WriteLine(flemal);
+      
+</pre></div>
+
+</section>
+<section id="accès-à-la-super-classe-1" class="level2">
+<h2>Accès à la super-classe</h2>
+<ul>
+<li>Variable d'instance publique accessible depuis la sous-classe <span
+class="small">La sous-classe peut modifier une variable de la
+super-classe</span></li>
+<li>Quel <code>nom</code> est affiché ? "C. Flemal" ou "Bullshit"</li>
+</ul>
+<div class="pygments"><pre><span></span>         public class Person
+         {
+            public String name;
+            private DateTime birthday;
+
+            public Person(string name, DateTime birthday)
+            {
+               this.name = name;
+               this.birthday = birthday;
+            }
+
+            public override string ToString()
+            {
+               return string.Format(&quot;{0} ({1})&quot;, name, birthday);
+            }
+         }
+
+         public class Employee : Person
+         {
+            private String name;
+            private double salary;
+
+            public Employee(string name, DateTime birthday, double salary ) :
+            base (name, birthday)
+            {
+               this.name = &quot;Bullshit&quot;;
+               this.salary = salary;
+            }
+
+            public double GetSalary()
+            {
+               return this.salary;
+            }
+         }
+
+         // dans le Main
+         Employee flemal = new Employee(
+            &quot;C. Flemal&quot;,
+            new DateTime (1992, 4, 21),
+            3200
+         );
+         Console.WriteLine(flemal);
+      
+</pre></div>
+
+</section>
+<section id="masquage-et-accès-à-la-super-classe" class="level2">
+<h2>Masquage et accès à la super-classe</h2>
+<ul>
+<li>Accès direct et explicite à la super-classe avec <code>base</code>
+<span class="small">La sous-classe peut modifier une variable de la
+super-classe</span></li>
+<li>Quel <code>nom</code> est affiché ? "C. Flemal", "Bullshit" ou
+"Shitbull"</li>
+</ul>
+<div class="pygments"><pre><span></span>         public class Person
+         {
+            public String name;
+            private DateTime birthday;
+
+            public Person(string name, DateTime birthday)
+            {
+               this.name = name;
+               this.birthday = birthday;
+            }
+
+            public override string ToString()
+            {
+               return string.Format(&quot;{0} ({1})&quot;, name, birthday);
+            }
+         }
+
+         public class Employee : Person
+         {
+            private String name;
+            private double salary;
+
+            public Employee(string name, DateTime birthday, double salary ) :
+            base (name, birthday)
+            {
+               this.name = &quot;Bullshit&quot;;
+               base.name = &quot;Shitbull&quot;;
+               this.salary = salary;
+            }
+
+            public double GetSalary()
+            {
+               return this.salary;
+            }
+         }
+
+         // dans le Main
+         Employee flemal = new Employee(
+            &quot;C. Flemal&quot;,
+            new DateTime (1992, 4, 21),
+            3200
+         );
+         Console.WriteLine(flemal);
+      
+</pre></div>
+
+</section>
+<section id="résolution-de-variable" class="level2">
+<h2>Résolution de variable</h2>
+<ul>
+<li>Pas d'obligation d'utiliser this ou base <span class="small">Pour
+autant qu'il n'y a pas d'ambiguïté possible</span></li>
+<li>Règle d'évaluation dans la recherche d'une variable
+<ul>
+<li>Variable locale</li>
+<li>Variable d'instance définie dans la même classe</li>
+<li>Variable d'instance héritée d'un ancêtre</li>
+</ul></li>
+</ul>
+</section>
+<section id="redéfinition-de-méthode" class="level2">
+<h2>Redéfinition de méthode</h2>
+<ul>
+<li>Une sous-classe peut redéfinir une méthode héritée <span
+class="small">La version de la super-classe est masquée</span></li>
+<li>Quel <code>nom</code> est affiché ? "C. Flemal" ou "C.
+Marchand"</li>
+</ul>
+<div class="pygments"><pre><span></span>         public class Person
+         {
+            public String name;
+            private DateTime birthday;
+
+            public Person(string name, DateTime birthday)
+            {
+               this.name = name;
+               this.birthday = birthday;
+            }
+
+            public override string ToString()
+            {
+               return string.Format(&quot;{0} ({1})&quot;, name, birthday);
+            }
+         }
+
+         public class Employee : Person
+         {
+            private String name;
+            private double salary;
+
+            public Employee(string name, DateTime birthday, double salary ) :
+            base (name, birthday)
+            {
+               this.name = &quot;Bullshit&quot;;
+               base.name = &quot;Shitbull&quot;;
+               this.salary = salary;
+            }
+
+            public double GetSalary()
+            {
+               return this.salary;
+            }
+
+            public override string ToString()
+            {
+               return &quot;C. Marchand&quot;;
+            }
+
+         }
+
+         // dans le Main
+         Employee flemal = new Employee(
+            &quot;C. Flemal&quot;,
+            new DateTime (1992, 4, 21),
+            3200
+         );
+         Console.WriteLine(flemal);
+      
+</pre></div>
+
+</section>
+<section id="redéfinition-de-méthode-1" class="level2">
+<h2>Redéfinition de méthode</h2>
+<ul>
+<li>Permet de faire une spécialisation dans la sous-classe <span
+class="small">Peut repartir du comportement de la super-classe avec
+<code>base</code></span></li>
+<li>Le mot réservé <code>override</code> indique une redéfinition <span
+class="small"></span></li>
+<li>La méthode de la super-classe doit être redéfinissable
+(<code>virtual</code>) <span class="small">Les redéfinitions sont
+<code>virtual</code> par défaut</span></li>
+</ul>
+<div class="pygments"><pre><span></span>         public class Employee : Person
+         {
+            public override string ToString()
+            {
+               return base.ToString() + String.Format(&quot;\nSalaire : {0}&quot;, salary);
+            }
+         }
+      
+</pre></div>
+
+</section>
+<section id="et-en-python...-1" class="level2">
+<h2>Et en Python...</h2>
+<div class="pygments"><pre><span></span>         class Mammal:
+            def yell(self):
+               print(&#39;Bwaaah&#39;)
+
+         class Cat(Mammal):
+            def yell(self):
+               print(&#39;Meow&#39;)
+
+         class DuckBilledPlatypus(Mammal):
+            pass
+
+         a = Mammal()
+         b = Cat()
+         c = DuckBilledPlatypus()
+         
+         a.yell()
+         b.yell()
+         c.yell()
+      
+</pre></div>
+
+<div class="terminal">
+<p>Bwaaah Meow Bwaaah</p>
+</div>
+</section>
+<section id="masquage-de-méthode" class="level2">
+<h2>Masquage de méthode</h2>
+<ul>
+<li>Méthode de même entête masque version de super-classe <span
+class="small">Si elle n'est pas marquée comme une
+redéfinition</span></li>
+<li>Quel <code>nom</code> est affiché ? "C. Flemal" ou "C.
+Marchand"</li>
+</ul>
+<div class="pygments"><pre><span></span>         public class Employee : Person
+         {
+            // ...
+
+            public string ToString()
+            {
+               return &quot;C. Marchand&quot;;
+            }
+         }
+
+         // dans le Main
+         Employee flemal = new Employee(
+            &quot;C. Flemal&quot;,
+            new DateTime (1992, 4, 21),
+            3200
+         );
+         Console.WriteLine(flemal);
+      
+</pre></div>
+
+</section>
+<section id="masquage-de-méthode-1" class="level2">
+<h2>Masquage de méthode</h2>
+<ul>
+<li>Le mot réservé <code>new</code> indique explicitement un masquage
+<span class="small">Pas obligé d'utiliser, mais warning à la
+compilation</span></li>
+</ul>
+<div class="pygments"><pre><span></span>         public class Employee : Person
+         {
+            // ...
+
+            public new string ToString()
+            {
+               return &quot;C. Marchand&quot;;
+            }
+         }
+      
+</pre></div>
+
+</section>
+<section id="masquage-de-méthode-2" class="level2">
+<h2>Masquage de méthode</h2>
+<ul>
+<li>Comportement étrange... là c'est Flemal...</li>
+</ul>
+<div class="pygments"><pre><span></span>         Employee flemal = new Employee(
+            &quot;C. Flemal&quot;,
+            new DateTime (1992, 4, 21),
+            3200
+         );
+         Console.WriteLine(flemal);
+      
+</pre></div>
+
+<div class="terminal">
+<p>C. Flemal</p>
+</div>
+<ul>
+<li>...et ici c'est Marchand</li>
+</ul>
+<div class="pygments"><pre><span></span>         Employee flemal = new Employee(
+            &quot;C. Flemal&quot;,
+            new DateTime (1992, 4, 21),
+            3200
+         );
+         Console.WriteLine(flemal.ToString());
+      
+</pre></div>
+
+<div class="terminal">
+<p>C. Marchand</p>
+</div>
+</section>
+</body>
+</html>

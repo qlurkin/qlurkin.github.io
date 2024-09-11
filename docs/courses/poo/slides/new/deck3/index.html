@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Cours 3 - Polymorphisme, interface et classe abstraite</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="/document.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Cours 3 - Polymorphisme, interface et classe abstraite
+</h1>
+</header>
+<section id="po3t---cours-3-polymorphisme-interface-et-classe-abstraite"
+class="level1">
+<h1>PO3T - Cours 3 <span class="small">Polymorphisme, interface et
+classe abstraite</span></h1>
+<p>Quentin Lurkin</p>
+</section>
+<section id="point-dans-le-plan" class="level2">
+<h2>Point dans le plan</h2>
+<ul>
+<li><strong>Point</strong> dans le plan en coordonnées entières <span
+class="small">Accesseurs pour les coordonnées <code>x</code> et
+<code>y</code> et méthode <code>ToString</code></span></li>
+</ul>
+<div class="pygments"><pre><span></span>            public class Point
+            {
+                private readonly int x, y;
+
+                public Point (int x, int y)
+                {
+                    this.x = x;
+                    this.y = y;
+                }
+
+                public int X { get { return x; } }
+                public int Y { get { return y; } }
+
+                // [...]
+
+                public override string ToString()
+                {
+                    return String.Format (&quot;({0}, {1})&quot;, x, y);
+                }
+            }
+        
+</pre></div>
+
+</section>
+<section id="point-coloré" class="level2">
+<h2>Point coloré</h2>
+<ul>
+<li><strong>Extension</strong> de la classe <code>Point</code> <span
+class="small">Ajout d’une variable d’instance pour stocker la
+couleur</span></li>
+<li><strong>Réutilisation</strong> du code de la classe mère avec
+<code>base</code></li>
+</ul>
+<div class="pygments"><pre><span></span>            public class ColouredPoint : Point
+            {
+                private readonly Color colour;
+
+                public Color Colour { get { return colour; } }
+
+                public ColouredPoint(int x, int y, Color colour) :
+                base(x, y)
+                {
+                    this.colour = colour;
+                }
+
+                // [...]
+
+                public override string ToString ()
+                {
+                    return String.Format(&quot;{0} [color={1}]&quot;,
+                        base.ToString(), colour.Name
+                    );
+                }
+            }
+        
+</pre></div>
+
+</section>
+<section id="hiérarchie-de-classe" class="level2">
+<h2>Hiérarchie de classe</h2>
+<ul>
+<li>Établissement d’une <strong>hiérarchie de classe</strong> <span
+class="small">Plusieurs classes liées par des relations
+d’héritage</span></li>
+<li>Une classe peut avoir des <strong>ancêtres et/ou des
+enfants</strong></li>
+</ul>
+<figure id="point">
+</figure>
+</section>
+<section id="méthode-héritée" class="level2">
+<h2>Méthode héritée</h2>
+<ul>
+<li>Méthodes publiques de la super-classe sont <strong>héritées</strong>
+<span class="small">Comme si elles avaient été définies dans la
+sous-classe</span></li>
+<li>Ajout d’une méthode <strong>Translate</strong> dans la classe
+<code>Point</code> <span class="small">Création et renvoi d’un nouvel
+objet <code>Point</code></span></li>
+</ul>
+<div class="pygments"><pre><span></span>            public class Point
+            {
+                // [...]
+
+                public Point Translate(int dx, int dy)
+                {
+                    return new Point(x + dx, y + dy);
+                }
+
+                // [...]
+            }
+        
+</pre></div>
+
+</section>
+<section id="méthode-héritée-1" class="level2">
+<h2>Méthode héritée</h2>
+<ul>
+<li>On peut <strong>translater</strong> un point coloré <span
+class="small">Mais le résultat produit sera un simple
+point...</span></li>
+</ul>
+<div class="pygments"><pre><span></span>            public class Program
+            {
+                public static void Main(string[] args)
+                {
+                    ColouredPoint cp = new ColouredPoint(1, 2, Color.Red);
+                    Console.WriteLine(cp);
+                    Console.WriteLine(cp.Translate(1, 0));
+                }
+            }
+        
+</pre></div>
+
+<div class="terminal">
+<p>(1, 2) [color=Red] (2, 2)</p>
+</div>
+</section>
+<section id="redéfinition-de-méthode" class="level2">
+<h2>Redéfinition de méthode</h2>
+<ul>
+<li><strong>Redéfinition</strong> d’une méthode <span
+class="small">Remplacement de la version de la super-classe</span></li>
+<li><strong>Maintien de la couleur</strong> lors d’une translation <span
+class="small">Création d’un nouvel objet
+<code>ColouredPoint</code></span></li>
+</ul>
+<div class="pygments"><pre><span></span>            public class ColouredPoint : Point
+            {
+                // [...]
+
+                public override Point Translate(int dx, int dy)
+                {
+                    return new ColouredPoint(X + dx, Y + dy, colour);
+                }
+
+                // [...]
+            }
+        
+</pre></div>
+
+</section>
+<section id="autorisation-de-redéfinition" class="level2">
+<h2>Autorisation de redéfinition</h2>
+<ul>
+<li>La super-classe doit <strong>autoriser la redéfinition</strong> de
+ses méthodes <span class="small">Avec visibilité ou modificateurs
+(<code>virtual</code> en C#, <code>final</code> en Java...)</span></li>
+<li>La méthode redéfinie doit garder (quasi) la <strong>même
+signature</strong> <span class="small">La visibilité peut être
+éventuellement modifiée</span></li>
+</ul>
+<div class="pygments"><pre><span></span>            public class Point
+            {
+                // [...]
+
+                public virtual Point Translate(int dx, int dy)
+                {
+                    return new Point(x + dx, y + dy);
+                }
+
+                // [...]
+            }
+        
+</pre></div>
+
+</section>
+<section id="polymorphisme" class="level1">
+<h1>Polymorphisme</h1>
+</section>
+<section id="représentation-en-mémoire" class="level2">
+<h2>Représentation en mémoire</h2>
+<ul>
+<li>Création de deux objets distincts de <strong>différents
+types</strong> <span class="small">Références stockées dans des
+variables de différents types</span></li>
+<li><strong>Deux instances distinctes</strong> sont créées en mémoire
+<span class="small">Un objet de type Point et un de type
+ColouredPoint</span></li>
+</ul>
+<div class="pygments"><pre><span></span>            public class Program
+            {
+                public static void Main(string[] args)
+                {
+                    Point p = new Point(3, 5);
+
+                    ColouredPoint cp = new ColouredPoint(1, 2, Color.Red);
+                }
+            }
+        
+</pre></div>
+
+</section>
+<section id="représentation-en-mémoire-1" class="level2">
+<h2>Représentation en mémoire</h2>
+<figure id="point_instance">
+</figure>
+</section>
+<section id="type-dune-variable" class="level2">
+<h2>Type d’une variable</h2>
+<ul>
+<li>Une variable peut avoir <strong>plusieurs types</strong> <span
+class="small">Une instance d’une sous-classe est aussi une de la
+super-classe</span></li>
+<li>Principale distinction entre <strong>deux types</strong>
+<ul>
+<li>Type de la variable (lors de sa déclaration)</li>
+<li>Type de l’objet référencé par la variable</li>
+</ul></li>
+</ul>
+<div class="pygments"><pre><span></span>            ColouredPoint cp = new ColouredPoint(1, 2, Color.Red);
+        
+</pre></div>
+
+</section>
+<section id="type-dune-variable-1" class="level2">
+<h2>Type d’une variable</h2>
+<ul>
+<li>Une variable d’un type peut contenir un <strong>objet d’un autre
+type</strong> <span class="small">Pour autant que les types soient
+compatibles</span></li>
+<li><strong>Stockage</strong> d’un objet <code>ColouredPoint</code> dans
+une variable <code>Point</code> <span class="small">Car
+<code>ColouredPoint</code> est une sous-classe de
+<code>Point</code></span></li>
+</ul>
+<div class="pygments"><pre><span></span>            Point p = new ColouredPoint(1, 2, Color.Red);
+        
+</pre></div>
+
+</section>
+<section id="polymorphisme-1" class="level2">
+<h2>Polymorphisme</h2>
+<ul>
+<li>Un objet peut être <strong>vu avec différents types</strong> <span
+class="small">En fonction du type de la variable utilisée pour le
+référencer</span></li>
+<li>Le type de la variable définit les <strong>méthodes
+utilisables</strong> <span class="small">Des méthodes existantes peuvent
+donc être indisponibles</span></li>
+<li>Un même objet peut <strong>"changer de type"</strong> durant
+l’exécution <span class="small">Le type de l’objet ne changera jamais,
+seulement celui perçu</span></li>
+</ul>
+</section>
+<section id="polymorphisme-2" class="level2">
+<h2>Polymorphisme</h2>
+<ul>
+<li>Tester le type de l’<strong>objet référencé</strong> à partir d’une
+variable <span class="small">Test de la relation
+<em>is-a</em></span></li>
+<li>Opérateur de test de la <strong>compatibilité de type</strong> <span
+class="small">Variable contient une référence vers un objet d’un type
+donné</span></li>
+</ul>
+<div class="pygments"><pre><span></span>            Console.WriteLine(( p is Point)+&quot; / &quot;+( p is ColouredPoint));
+            Console.WriteLine((cp is Point)+&quot; / &quot;+(cp is ColouredPoint));
+        
+</pre></div>
+
+<div class="terminal">
+<p>True / False True / True</p>
+</div>
+</section>
+<section id="conversion-implicite" class="level2">
+<h2>Conversion implicite</h2>
+<ul>
+<li>Une référence peut être <strong>convertie implicitement</strong>
+<span class="small">D’un objet qui est d’un sous-type de celui de la
+variable</span></li>
+<li>Conversion par <strong>affectation</strong> directe ou par appel de
+méthode</li>
+</ul>
+<div class="pygments"><pre><span></span>            public class Program
+            {
+                public static void Main(string[] args)
+                {
+                    // [...]
+
+                    Console.WriteLine(sum(p, cp));
+                }
+
+                private static Point sum(Point a, Point b)
+                {
+                    return new Point(a.X + b.X, a.Y + b.Y);
+                }
+            }
+        
+</pre></div>
+
+</section>
+<section id="conversion-explicite" class="level2">
+<h2>Conversion explicite</h2>
+<ul>
+<li>Une référence peut être <strong>convertie explicitement</strong>
+<span class="small">Pour autant que le type de l’objet soit
+compatible</span></li>
+<li>Conversion à l’aide de l’<strong>opérateur de
+conversion</strong></li>
+</ul>
+<div class="pygments"><pre><span></span>            public class Program
+            {
+                public static void Main(string[] args)
+                {
+                    // [...]
+
+                    Point q = new ColouredPoint(1, 2, Color.Red);
+                    Console.WriteLine(IsRed((ColouredPoint) q));
+                }
+
+                private static bool IsRed(ColouredPoint p)
+                {
+                    return p.Colour.Equals(Color.Red);
+                }
+            }
+        
+</pre></div>
+
+</section>
+<section id="compatibilité-versus-type" class="level2">
+<h2>Compatibilité versus type</h2>
+<ul>
+<li>Test du <strong>type réel</strong> d’un objet <span
+class="small">L’objet est une instance de quelle classe ?</span></li>
+<li>Test de <strong>compatibilité du type</strong> d’un objet <span
+class="small">Peut-on convertir implicitement l’objet vers un type
+?</span></li>
+</ul>
+<div class="pygments"><pre><span></span>            Console.WriteLine((cp is Point)+&quot; / &quot;+(cp is ColouredPoint));
+
+            Console.WriteLine(cp.GetType() == typeof(Point));
+            Console.WriteLine(cp.GetType() == typeof(ColouredPoint));
+        
+</pre></div>
+
+<div class="terminal">
+<p>True / True False True</p>
+</div>
+</section>
+<section id="conversion-explicite-1" class="level2">
+<h2>Conversion explicite</h2>
+<ul>
+<li><strong>Vérification de la compatibilité</strong> avant conversion
+explicite <span class="small">Sans quoi il y a risque d’une erreur de
+conversion</span></li>
+</ul>
+<div class="pygments"><pre><span></span>            public class Program
+            {
+                public static void Main(string[] args)
+                {
+                    // [...]
+
+                    Point q = new ColouredPoint(1, 2, Color.Red);
+                    if(q is ColouredPoint)
+                    {
+                        ColouredPoint cp = (ColouredPoint) q;
+                        Console.WriteLine(IsRed(cp));
+                    }
+                }
+
+                // [...]
+            }
+        
+</pre></div>
+
+</section>
+<section id="type-statique-versus-dynamique" class="level2">
+<h2>Type statique versus dynamique</h2>
+<ul>
+<li><strong>Type statique</strong> lors de la <strong>déclaration de la
+variable</strong>
+<ul>
+<li>Déterminé une fois pour toute à la déclaration</li>
+<li>Limite les références qui pourront être stockées</li>
+<li>Uniquement pour les langages typés statiquement</li>
+</ul></li>
+<li><strong>Type dynamique</strong> de l’<strong>objet référencé par la
+variable</strong>
+<ul>
+<li>Déterminé lors de l’exécution</li>
+<li>Peut changer en cours d’exécution</li>
+</ul></li>
+</ul>
+</section>
+<section id="type-compatible" class="level2">
+<h2>Type compatible</h2>
+<ul>
+<li>Deux types <strong>compatibles</strong> sont liés par une relation
+de filiation</li>
+<li>Attention, la compatibilité est
+<strong>unidirectionnelle</strong></li>
+<li>Conversions si <strong>type dynamique de <code>b</code> compatible
+avec <code>A</code></strong>
+<ul>
+<li>Implicite : A a = b;</li>
+<li>Explicite : A a = (A) b;</li>
+</ul></li>
+</ul>
+</section>
+<section id="résolution-des-appels-de-méthode" class="level2">
+<h2>Résolution des appels de méthode</h2>
+<ul>
+<li>Le type statique détermine les <strong>méthodes accessibles</strong>
+<span class="small">Les seules méthodes accessibles sont celles du type
+statique</span></li>
+<li>La <strong>méthode effectivement appelée</strong> dépend du type
+dynamique <span class="small">En cas de redéfinition, la méthode de la
+sous-classe est appelée</span></li>
+<li>Résolution en <strong>deux étapes</strong>
+<ul>
+<li>Méthodes accessibles vérifiées à la compilation</li>
+<li>Méthode appelée décidée à l’exécution</li>
+</ul></li>
+</ul>
+</section>
+<section id="résolution-des-appels-de-méthode-1" class="level2">
+<h2>Résolution des appels de méthode</h2>
+<ul>
+<li>Méthode de la sous-classe <strong>non accessible</strong> <span
+class="small">Car le type statique est celui de la
+super-classe</span></li>
+</ul>
+<div class="pygments"><pre><span></span>            Point p = new ColouredPoint (7, 5, Color.Red);
+
+            Console.WriteLine(p.Colour);
+        
+</pre></div>
+
+<div class="terminal">
+<p>Program.cs (32, 25) : error CS1061 : Type 'Cours4 .Point' does not
+contain a definition for 'Colour' and no extension method 'Colour' of
+type 'Cours4.Point' could be found. Are you missing an assembly
+reference ?</p>
+</div>
+</section>
+<section id="résolution-des-appels-de-méthode-2" class="level2">
+<h2>Résolution des appels de méthode</h2>
+<ul>
+<li>Méthode redéfinie dans sous-classe <strong>appelée</strong> <span
+class="small">Même si type statique de la variable est de la
+super-classe</span></li>
+</ul>
+<div class="pygments"><pre><span></span>            Point p = new ColouredPoint(7, 5, Color.Red);
+
+            Console.WriteLine(p.ToString());
+        
+</pre></div>
+
+<div class="terminal">
+<p>(7, 5) [color=Red]</p>
+</div>
+</section>
+<section id="classe-object" class="level2">
+<h2>Classe Object</h2>
+<ul>
+<li>La classe <code>Object</code> est la super-classe de tout le monde
+<span class="small">Racine de toutes les hiérarchies de
+classe</span></li>
+<li>Contient plusieurs <strong>méthodes redéfinissables</strong>
+communes à tous
+<ul>
+<li><p>Représentation d’un objet sous forme de chaine de caractères</p>
+<div class="pygments"><pre><span></span>                            public virtual string ToString()
+</pre></div>
+</li>
+<li><p>Test de l’égalité de deux objets</p>
+<div class="pygments"><pre><span></span>                            public virtual bool Equals (object obj)
+</pre></div>
+</li>
+<li><p>Obtention d’un code de hachage pour l’objet</p>
+<div class="pygments"><pre><span></span>                            public virtual int GetHashCode()
+</pre></div>
+</li>
+</ul></li>
+</ul>
+</section>
+<section id="classe-object-1" class="level2">
+<h2>Classe Object</h2>
+<ul>
+<li>Classe permettant de représenter des paires d’entiers <span
+class="small">Redéfinition des méthodes Equals et ToString</span></li>
+</ul>
+<div class="pygments"><pre><span></span>            public class IntPair
+            {
+                private readonly int x, y;
+
+                // [...]
+
+                public override bool Equals(object obj)
+                {
+                    if(obj == null || GetType () != obj.GetType ())
+                    {
+                        return false;
+                    }
+
+                    IntPair p = (IntPair) obj;
+                    return x == p.x &amp;&amp; y == p.y;
+                }
+
+                public override string ToString()
+                {
+                    return String.Format(&quot;({0}, {1})&quot;, x, y);
+                }
+            }
+        
+</pre></div>
+
+</section>
+<section id="surcharge-de-méthode" class="level2">
+<h2>Surcharge de méthode</h2>
+<ul>
+<li>Plusieurs méthodes peuvent avoir le <strong>même nom</strong> <span
+class="small">Pour autant que les types de la liste de paramètres
+différent</span></li>
+<li>Simule les <strong>paramètres optionnels</strong> (de Python, par
+exemple)</li>
+</ul>
+<div class="pygments"><pre><span></span>            public static void Kill(string target, Weapon weapon)
+            {
+                // ...
+            }
+
+            public static void Kill(string target)
+            {
+                Kill(target, new CrossBow());
+            }
+        
+</pre></div>
+
+</section>
+<section id="résolution-de-la-surcharge" class="level2">
+<h2>Résolution de la surcharge</h2>
+<ul>
+<li>Étapes de la résolution de la <strong>surcharge de méthodes</strong>
+<ol type="1">
+<li>Construction liste des types des paramètres réels</li>
+<li>Identification des méthodes accessibles avec le type statique</li>
+<li>Recherche d’une méthode avec la même liste de types</li>
+<li>Recherche des méthodes avec paramètres compatibles</li>
+<li>Choix de la méthode la plus spécifique</li>
+</ol></li>
+<li>Avec la signature candidate, il faut choisir la <strong>version à
+exécuter</strong> <span class="small">On reprend la règle de résolution
+liée à la redéfinition</span></li>
+</ul>
+</section>
+<section id="interface-et-classe-abstraite" class="level1">
+<h1>Interface et classe abstraite</h1>
+</section>
+<section id="interface" class="level2">
+<h2>Interface</h2>
+<ul>
+<li>Une <strong>interface</strong> ne contient que des entêtes de
+méthode <span class="small">Visibilité publique forcée des
+méthodes</span></li>
+<li>Permet de définir un <strong>contrat</strong> avec un utilisateur
+<span class="small">Définition d’un ensemble de méthodes qui devront
+être présentes</span></li>
+</ul>
+<div class="pygments"><pre><span></span>            public interface Complex
+            {
+                double Real();
+                double Imag();
+                double Abs();
+                double Arg();
+            }
+        
+</pre></div>
+
+</section>
+<section id="relation-dimplémentation" class="level2">
+<h2>Relation d’implémentation</h2>
+<ul>
+<li>Une classe peut <strong>implémenter</strong> une interface <span
+class="small">Doit fournir un corps pour toutes les méthodes de
+l’interface</span></li>
+</ul>
+<div class="pygments"><pre><span></span>            public class CartesianComplex : Complex
+            {
+                private readonly double a, b;
+
+                public CartesianComplex(double a, double b)
+                {
+                    this.a = a;
+                    this.b = b;
+                }
+
+                public double Real() { return a; }
+                public double Imag() { return b; }
+                public double Abs() { return Math.Sqrt (a*a + b*b); }
+                public double Arg() { return Math.Acos (a / Abs()); }
+            }
+        
+</pre></div>
+
+</section>
+<section id="polymorphisme-avec-interface" class="level2">
+<h2>Polymorphisme avec interface</h2>
+<ul>
+<li>Plusieurs classes peuvent implémenter la même interface <span
+class="small">Permet du polymorphisme comme avec l’héritage</span></li>
+</ul>
+<div class="pygments"><pre><span></span>            public class PolarComplex : Complex
+            {
+                private readonly double r, theta;
+
+                public PolarComplex(double r, double theta)
+                {
+                    this.r = r;
+                    this.theta = theta;
+                }
+
+                public double Real() { return r * Math.Cos(theta); }
+                public double Imag() { return r * Math.Sin(theta); }
+                public double Abs() { return r; }
+                public double Arg() { return theta; }
+            }
+        
+</pre></div>
+
+</section>
+<section id="polymorphisme-avec-interface-1" class="level2">
+<h2>Polymorphisme avec interface</h2>
+<ul>
+<li><strong>Somme de nombres complexes</strong> facilitée par
+polymorphisme <span class="small">Il suffit de passer par les méthodes
+de l’interface</span></li>
+</ul>
+<div class="pygments"><pre><span></span>            List&lt;Complex&gt; list = new List&lt;Complex&gt;();
+            list.Add(new CartesianComplex(2, -1));
+            list.Add(new PolarComplex(2, Math.PI / 2));
+            list.Add(new CartesianComplex(-1, 1));
+
+            double a = 0;
+            double b = 0;
+            foreach(Complex c in list)
+            {
+                a += c.Real();
+                b += c.Imag();
+            }
+
+            Complex sum = new CartesianComplex(a, b);
+            Console.WriteLine(sum);
+        
+</pre></div>
+
+<div class="terminal">
+<p>1 + 2i</p>
+</div>
+</section>
+<section id="implémentation-multiple" class="level2">
+<h2>Implémentation multiple</h2>
+<ul>
+<li>Une classe peut <strong>implémenter plusieurs interfaces</strong>
+<span class="small">Ce qui lève la limitation des langages sans héritage
+multiple</span></li>
+<li>La <strong>relation implements</strong> est également une relation
+<em>is-a</em></li>
+</ul>
+</section>
+<section id="classe-abstraite" class="level2">
+<h2>Classe abstraite</h2>
+<ul>
+<li><strong>Intermédiaire</strong> entre l’interface et la classe
+concrète <span class="small">Certaines méthodes communes peuvent être
+implémentées</span></li>
+<li>Une classe abstraite n’est <strong>pas instanciable</strong></li>
+</ul>
+<div class="pygments"><pre><span></span>            public abstract class Complex
+            {
+                public abstract double Real();
+                public abstract double Imag();
+
+                public virtual double Abs()
+                {
+                    double a = Real();
+                    double b = Imag();
+                    return Math.Sqrt(a*a + b*b);
+                }
+
+                public virtual double Arg()
+                {
+                    return Math.Acos(Real()/Abs());
+                }
+            }
+        
+</pre></div>
+
+</section>
+<section id="classe-abstraite-1" class="level2">
+<h2>Classe abstraite</h2>
+<ul>
+<li>Deux <strong>modificateurs</strong> de méthode
+<ul>
+<li>Méthode sans corps à redéfinir dans les sous-classes
+(<code>abstract</code>)</li>
+<li>Méthode avec corps mais redéfinissable (<code>virtual</code>)</li>
+</ul></li>
+</ul>
+<div class="pygments"><pre><span></span>            public abstract class Complex
+            {
+                public abstract double Real();
+                public abstract double Imag();
+
+                public virtual double Abs()
+                {
+                    double a = Real();
+                    double b = Imag();
+                    return Math.Sqrt(a*a + b*b);
+                }
+
+                public virtual double Arg()
+                {
+                    return Math.Acos(Real()/Abs());
+                }
+            }
+        
+</pre></div>
+
+</section>
+<section id="classe-abstraite-2" class="level2">
+<h2>Classe abstraite</h2>
+<ul>
+<li>Une classe abstraite est <strong>étendue</strong> en classe concrète
+<span class="small">Il faut définir le corps des méthodes
+abstraites</span></li>
+</ul>
+<div class="pygments"><pre><span></span>            public class CartesianComplex : Complex
+            {
+                private readonly double a, b;
+
+                // a + bi
+                public CartesianComplex(double a, double b)
+                {
+                    this.a = a;
+                    this.b = b;
+                }
+
+                public override double Real() { return a; }
+                public override double Imag() { return b; }
+
+                public override string ToString()
+                {
+                    return String.Format(&quot;{0} + {1}i&quot;, a, b);
+                }
+            }
+        
+</pre></div>
+
+</section>
+<section id="classe-abstraite-3" class="level2">
+<h2>Classe abstraite</h2>
+<ul>
+<li>On peut redéfinir une méthode définie dans la classe abstraite <span
+class="small">Il s’agit d’une simple redéfinition de méthode</span></li>
+</ul>
+<div class="pygments"><pre><span></span>            public class PolarComplex : Complex
+            {
+                private readonly double r, theta;
+
+                public PolarComplex(double r, double theta)
+                {
+                    this.r = r;
+                    this.theta = theta;
+                }
+
+                public override double Real() { return r * Math.Cos(theta); }
+                public override double Imag() { return r * Math.Sin(theta); }
+
+                public override double Abs() { return r; }
+                public override double Arg() { return theta ; }
+            }
+        
+</pre></div>
+
+</section>
+<section id="hiérarchie-de-classe-1" class="level2">
+<h2>Hiérarchie de classe</h2>
+<ul>
+<li>Une interface est une <strong>classe abstraite pure</strong> <span
+class="small">Et ne contenant pas de constructeur, ni de variables
+d’instance</span></li>
+<li>Une sous-classe d’une classe abstraite peut être
+<strong>abstraite</strong> <span class="small">Si elle ne fournit pas de
+corps à toutes les méthodes abstraites</span></li>
+<li>Permet d’<strong>éviter</strong> de la duplication de code <span
+class="small">En rassemblant les membres communs dans la
+super-classe</span></li>
+</ul>
+</section>
+</body>
+</html>
