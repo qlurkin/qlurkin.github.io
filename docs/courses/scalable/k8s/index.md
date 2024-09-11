@@ -6,7 +6,7 @@ typst: true
 
 ## Scalability
 
-Nowadays, it is increasingly common for an application to handle a workload $$W_l$$ that varies over time. To manage more workload, more hardware capacity $$H_c$$ is required. However, it is incorrect to think that simply doubling the hardware capacity will allow you to handle twice the workload. This is referred to as the scalability factor $$S_f$$.
+Nowadays, it is increasingly common for an application to handle a workload $W_l$ that varies over time. To manage more workload, more hardware capacity $H_c$ is required. However, it is incorrect to think that simply doubling the hardware capacity will allow you to handle twice the workload. This is referred to as the scalability factor $S_f$.
 
 $$ W_l = S_f times H_c $$
 
