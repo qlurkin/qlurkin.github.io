@@ -438,36 +438,24 @@ La 2e racine est 2.0
 
 <p><strong>Et voilà !</strong> Ça marche.</p>
 <p>Nous avons eu ici un exemple classique de rédaction de programme. <strong>On écrit du code, on teste, on lit les messages d&#39;erreur, on corrige et on recommence.</strong></p>
-<h2>Exercices</h2>
-<ol>
-<li><p>La somme des amplitudes des angles d&#39;un triangle vaut toujours 180° en géométrie euclidienne. Écrire un programme qui demande les amplitudes de deux angles d’un triangle et qui affiche l&#39;amplitude du troisième.</p>
-</li>
-<li><p>Écrire un programme qui demande les longueurs des deux côtés de l&#39;angle droit d&#39;un triangle rectangle et qui affiche la longueur de l&#39;hypoténuse.</p>
-</li>
-<li><p>La relation entre température en degrés Celcius \(T_c\) et en degrés Fahrenheit \(T_f\) est la suivante: $$T_f = 1.8 \times T_c + 32$$ Écrivez deux programmes. Un qui convertit les degrés Fahrenheit en degrés Celcius. L&#39;autre, qui convertit les degrés Celcius en degrés Fahrenheit.</p>
-</li>
-<li><p>Écrire un programme qui reçoit le rayon d&#39;un cercle et qui affiche sa surface.</p>
-</li>
-<li><p>Écrire un programme qui demande un nombre de secondes et qui affiche les nombres d&#39;heures, de minutes et de secondes correspondant (au format H:M:S).</p>
 <script type="module" defer>
   fetch("https://endoflife.date/api/python.json")
- .then((response) => response.json())
- .then((data) => {
-   const version = data[0].latest;
-   const shortVersion = version.split(".").slice(0, 2).join(".");
-   const pathVersion = shortVersion.split(".").join("")
-   document.querySelectorAll(".pyversion").forEach((elem) => {
-     elem.innerHTML = version;
-   });
-   document.querySelectorAll(".pyshortversion").forEach((elem) => {
-     elem.innerHTML = shortVersion;
-   });
-   document.querySelectorAll(".pypathversion").forEach((elem) => {
-     elem.innerHTML = pathVersion;
-   });
- });
-</script></li>
-</ol>
+    .then((response) => response.json())
+    .then((data) => {
+      const version = data[0].latest;
+      const shortVersion = version.split(".").slice(0, 2).join(".");
+      const pathVersion = shortVersion.split(".").join("")
+      document.querySelectorAll(".pyversion").forEach((elem) => {
+        elem.innerHTML = version;
+      });
+      document.querySelectorAll(".pyshortversion").forEach((elem) => {
+        elem.innerHTML = shortVersion;
+      });
+      document.querySelectorAll(".pypathversion").forEach((elem) => {
+        elem.innerHTML = pathVersion;
+      });
+    });
+</script>
 
 </body>
 </html>

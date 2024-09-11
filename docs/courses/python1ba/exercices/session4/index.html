@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Exercices 4</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="/document.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Exercices 4
+</h1>
+</header>
+<ol type="1">
+<li><p>Écrire un programme qui demande un nombre de côtés et qui affiche
+un polygone régulier avec le nombre de côtés demandé. La fonction <a
+href="https://www.pygame.org/docs/ref/draw.html#pygame.draw.line"><code>pygame.draw.line()</code></a>
+peut vous aider.</p>
+<p><em>Indice: un polygone régulier est inscrit dans un cercle, vous
+devriez connaître les équations paramétriques d’un cercle</em>.</p></li>
+<li><p>Écrire un programme qui dessine une spirale.</p></li>
+<li><p>A partir du code suivant:</p>
+<div class="pygments"><pre><span></span><span class="kn">import</span> <span class="nn">pygame</span>
+
+<span class="c1"># initialisation de pygame</span>
+<span class="n">pygame</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+
+<span class="c1"># demande une fenêtre de 800x600 pixels</span>
+<span class="n">screen</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">set_mode</span><span class="p">((</span><span class="mi">800</span><span class="p">,</span> <span class="mi">600</span><span class="p">))</span>
+
+<span class="n">xCircle</span> <span class="o">=</span> <span class="mi">100</span>
+
+<span class="c1"># boucle jusqu&#39;à ce qu&#39;on quitte</span>
+<span class="k">while</span> <span class="ow">not</span> <span class="n">pygame</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">peek</span><span class="p">(</span><span class="n">pygame</span><span class="o">.</span><span class="n">QUIT</span><span class="p">):</span>
+
+    <span class="c1"># dessine un rectangle noir pour effacer l&#39;image</span>
+    <span class="n">pygame</span><span class="o">.</span><span class="n">draw</span><span class="o">.</span><span class="n">rect</span><span class="p">(</span><span class="n">screen</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Rect</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">800</span><span class="p">,</span> <span class="mi">600</span><span class="p">))</span>
+
+    <span class="c1"># dessine un cercle rouge centré en (xCircle, 300) de rayon 20</span>
+    <span class="n">pygame</span><span class="o">.</span><span class="n">draw</span><span class="o">.</span><span class="n">circle</span><span class="p">(</span><span class="n">screen</span><span class="p">,</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="n">xCircle</span><span class="p">,</span> <span class="mi">300</span><span class="p">),</span> <span class="mi">20</span><span class="p">)</span>
+
+    <span class="c1"># déplace le cercle</span>
+    <span class="n">xCircle</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="c1"># affiche l&#39;image qui vient d&#39;être dessinée</span>
+    <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">flip</span><span class="p">()</span>
+</pre></div>
+
+<p>faites bouger le cercle en x et en y et faites le rebondir sur les
+bords de la fenêtre.</p></li>
+<li><p>Même exercice que le précédent, mais le programme demande un
+nombre de cercles à l’utilisateur et anime ensuite le nombre de cercles
+demandé.</p></li>
+<li><p>Écrire un programme qui permet de cliquer dans une fenêtre et qui
+dessine des lignes entre chaque point cliqué.</p></li>
+</ol>
+</body>
+</html>

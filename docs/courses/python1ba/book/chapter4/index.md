@@ -281,14 +281,4 @@ while True:
 
 La bibliothèque `pygame` offre, bien entendu, beaucoup **d'autres possibilités**. Par exemple, nous n'avons vu que les fonctions de dessin `pygame.draw.circle` et `pygame.draw.rect` mais il en existe bien d'autres. Pour les découvrir, vous pouvez vous rendre sur [la documentation officielle de Pygame](https://www.pygame.org/docs/).
 
-## Exercices
 
-1. Écrire un programme qui demande un nombre de côtés et qui affiche un polygone régulier avec le nombre de côtés demandé. La fonction [`pygame.draw.line()`](https://www.pygame.org/docs/ref/draw.html#pygame.draw.line) peut vous aider. *Indice: un polygone régulier est inscrit dans un cercle, vous devriez connaitre les équations paramétriques d'un cercle*.
-
-1. Écrire un programme qui dessine une spirale.
-
-1. A partir du <span data-link="anim">code</span>, faites bouger le cercle en x et en y et faites le rebondir sur les bords de la fenêtre.
-
-1. Même exercice que le précédent, mais le programme demande un nombre de cercles à l'utilisateur et anime ensuite le nombre de cercles demandé.
-
-1. Écrire un programme qui permet de cliquer dans une fenêtre et qui dessine des lignes entre chaque point cliqué.
