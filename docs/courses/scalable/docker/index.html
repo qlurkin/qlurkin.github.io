@@ -1,15 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Labo 1: Getting Started with Docker</title>
+<head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-  </head>
-  <body>
-    <script>
-      
-        window.location.href = `https://docs.docker.com/get-started/`
-      
-    </script>
-  </body>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 1 - Getting started with Docker</title>
+    <script src="/document.js" defer></script>
+    
+</head>
+<body>
+    <h1>Lab 1 <small>Getting started with Docker</small></h1>
+    
+    <h2>Organisation</h2>
+<p><strong>Mandatory Attendance:</strong> The project requires collaboration among students, which is only possible if you are present.</p>
+<p>The activities <strong>AC5L-L1: Distributed Systems Project 1</strong> and <strong>AD5L-L1: Distributed Systems Project 2</strong> are dedicated to the same project. Therefore, you have a total of 14 lab sessions.</p>
+<p>Labs 1 and 2 are dedicated to exploring Docker and Kubernetes tools. <strong>The project statement will be provided in Lab 3</strong>.</p>
+<h2>The problem</h2>
+<p>When creating an application on your development computer, everything generally works well. It&#39;s when you send it to <strong>someone else</strong> or run it on the <strong>production server</strong> that problems start to arise. This is because these machines are configured differently (OS, applications, libraries, etc.).</p>
+<h2>Container</h2>
+<p>The use of containers is a solution to this problem. A container is a <strong>virtualization of an operating system</strong>. It is a much lighter solution than a virtual machine, which virtualizes the hardware and requires installing a full operating system as well as the application&#39;s dependencies, and this for each application you want to run on the host machine.</p>
+<p>There are three essential elements when using Docker:</p>
+<ul>
+<li><strong>Dockerfile</strong>: It is a list of instructions used to build an image.</li>
+<li><strong>Image</strong>: It is a snapshot of the state of your application and all its dependencies at a specific point in time. An image is immutable and can be used to create multiple containers.</li>
+<li><strong>Container</strong>: It is an instance of the execution of the virtual operating system with your application and its dependencies.</li>
+</ul>
+<h3>Example of Dockerfile:</h3>
+<pre><code class="language-dockerfile"># Use the official Ubuntu image as the base image
+FROM ubuntu:24.04
+
+# Set the working directory in the container
+WORKDIR /usr/src
+
+# Install Python and pip
+RUN apt-get update &amp;&amp; \
+    apt-get install -y python3 python3-pip.
+
+# Expose the port 8000 for your app
+EXPOSE 8000
+
+# Command to run your app
+CMD [&quot;python3&quot;, &quot;-m&quot;, &quot;http.server&quot;, &quot;8000&quot;]
+</code></pre>
+<h3>Building an image:</h3>
+<pre><code class="language-terminal">docker build -t myapp ./
+</code></pre>
+<p>The <code>-t</code> option allows you to specify the image name <em>(tag name)</em>, and the path at the end of the command indicates where to find the Dockerfile.</p>
+<h3>Start a container:</h3>
+<pre><code class="language-terminal">docker run myapp
+</code></pre>
+<p>This command will use the <code>myapp</code> image to create and start a container.</p>
+<h3>Examine the containers that are currently running:</h3>
+<pre><code class="language-terminal">docker ps
+</code></pre>
+<h2>Get used to Docker</h2>
+<p><a href="https://docs.docker.com/get-started/introduction/">Introduction to Docker</a></p>
+
+</body>
 </html>
