@@ -321,7 +321,6 @@ sol = solve_ivp(
   rtol = 1e-5
 )
 
-
 plt.plot(sol.t, sol.y[0], '--s')
 plt.show()
 ```
