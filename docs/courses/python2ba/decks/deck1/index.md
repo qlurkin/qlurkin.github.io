@@ -367,13 +367,13 @@ def sum(L: list[int]) -> int:
 
 - L'éditeur peut aussi vérifier qu'on respecte bien les types
 
-![](./typecheck.png)
+![Activer la vérification de types](./typecheck.png)
 
 ## Documentation
 
 - Les fonctions prédéfinies ont une documentation intégrée que l'éditeur peut afficher
 
-![](./docstring.png)
+![Documentation intégrée](./docstring.png)
 
 - Ce texte de documentation s'appelle le `docstring`
 
@@ -381,4 +381,4 @@ def sum(L: list[int]) -> int:
 
 - Dans vos fonctions, vous pouvez définir le `docstring` en début de fonction avec des triples `'` ou `"`
 
-![](./docstring2.png)
+![Définition du *docstring*](./docstring2.png)
