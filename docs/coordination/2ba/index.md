@@ -173,27 +173,27 @@ css: style.css
 <!--</section>-->
 <!--</div>-->
 
-## Un ingénieur informaticien ?
+## Un·e ingénieur·e informaticien·ne ?
 
 - Ce n'est pas...
 
 :::row
 ::::span6
-![Un Geek](./images/geeks_stand.jpg)
+![Un·e Geek·ette](./images/geeks_stand.jpg)
 ::::
 ::::span6
-![Un NoLife](./images/programmer.jpg){.third2}
+![Un·e NoLife](./images/programmer.jpg){.third2}
 ::::
 :::
 
-## Un ingénieur informaticien ?
+## Un·e ingénieur·e informaticien·ne ?
 
-- C'est un ingénieur. [Comme les autres]{.small}
-- Il conçoit l'architecture générale en relation avec le client.
-- Il planifie le travail.
-- Il organise l'équipe.
+- C'est un·e ingénieur·e. [Comme les autres]{.small}
+- Conçoit l'architecture générale en relation avec le client.
+- Planifie le travail.
+- Organise l'équipe.
 
-<p style="font-size: 1.5em; font-weight: bold; text-align: center;">Comme tous les ingénieurs !</p>
+<p style="font-size: 1.5em; font-weight: bold; text-align: center;">Comme tous les ingénieur·e·s !</p>
 
 ## Un domaine particulier
 
