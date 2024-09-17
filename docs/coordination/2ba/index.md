@@ -273,7 +273,7 @@ css: style.css
 - Récolte des **exigences** du client
 - Traduction en objectifs **techniques**
 - Compréhension de l'entreprise et de son **business** dans son ensemble
-- **Communication** entre équipe de développement et client
+- **Communication** entre équipes de développement et client
 - Suivi de **projets**
 
 :::
