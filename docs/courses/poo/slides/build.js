@@ -4,6 +4,7 @@ build_and_index(
   [
     // 'slides1',
     'deck1',
+    'deck2',
     // 'slides2',
     // 'slides3',
     // 'slides4',

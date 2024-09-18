@@ -1,0 +1,12 @@
+@startuml
+start
+:Faire chauffer la poêle;
+:Mettre de l'huile dans la poêle;
+:Casser l'oeuf dans la poêle;
+:Ajouter du sel et du poivre;
+while(Est-ce que c'est cuit?) is (non)
+    :On attend 10 secondes;
+endwhile (oui)
+stop
+@enduml
+

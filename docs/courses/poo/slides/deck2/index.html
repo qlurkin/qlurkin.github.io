@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>PO3T - Cours 2 - Visibilité, Encapsulation et
+Immuabilité</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="/deck.css" />
+  <script src="/deck_only.js" defer></script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">PO3T - Cours 2
+<small>Visibilité, Encapsulation et Immuabilité</small>
+</h1>
+</header>
+<section id="visibilité-publique" class="level2">
+<h2>Visibilité publique</h2>
+<ul>
+<li>Membre <strong>public</strong> accessible depuis partout <span
+class="small">Aucune limitation à la visibilité d’un membre
+public</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">Foo</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">12</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">Program</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Main</span><span class="w"> </span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Foo</span><span class="w"> </span><span class="n">foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Foo</span><span class="p">();</span>
+<span class="w">        </span><span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="w"> </span><span class="p">(</span><span class="n">foo</span><span class="p">.</span><span class="n">x</span><span class="p">);</span><span class="w"> </span><span class="c1">// Accès OK</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+</section>
+<section id="quels-sont-les-accès-autorisés-et-ceux-interdits"
+class="level2 code">
+<h2 class="code">Quels sont les accès autorisés et ceux interdits ?</h2>
+<div class="pygments"><pre><span></span><span class="n">B</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">B</span><span class="w"> </span><span class="p">(</span><span class="m">42</span><span class="p">);</span>
+<span class="n">b</span><span class="p">.</span><span class="n">a</span><span class="p">.</span><span class="n">Method</span><span class="p">();</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">A</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Method</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">{}</span>
+<span class="p">}</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">B</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">A</span><span class="p">();</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="nf">B</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">x</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+</section>
+<section id="visibilité-privée" class="level2">
+<h2>Visibilité privée</h2>
+<ul>
+<li>Membre <strong>privé</strong> accessible que depuis le <strong>corps
+de la classe</strong> <span class="small">Peu importe l’instance, tant
+qu’on est dans le corps de la classe</span></li>
+<li><strong>Erreur de compilation</strong> si tentative d’accès à un
+membre privé</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="n">Foo</span><span class="w"> </span><span class="n">foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Foo</span><span class="p">();</span>
+<span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="w"> </span><span class="p">(</span><span class="n">foo</span><span class="p">.</span><span class="n">x</span><span class="p">);</span><span class="w"> </span><span class="c1">// Accès pas OK</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">Foo</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">12</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Method</span><span class="w"> </span><span class="p">(</span><span class="n">Foo</span><span class="w"> </span><span class="n">f</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="w"> </span><span class="p">(</span><span class="n">f</span><span class="p">.</span><span class="n">x</span><span class="p">);</span><span class="w"> </span><span class="c1">// Accès OK</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+</section>
+<section id="quels-sont-les-accès-autorisés-et-ceux-interdits-1"
+class="level2 code">
+<h2 class="code">Quels sont les accès autorisés et ceux interdits ?</h2>
+<div class="pygments"><pre><span></span><span class="n">B</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">B</span><span class="w"> </span><span class="p">(</span><span class="m">42</span><span class="p">);</span>
+<span class="n">b</span><span class="p">.</span><span class="n">a</span><span class="p">.</span><span class="n">Method</span><span class="p">();</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">A</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Method</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">{}</span>
+<span class="p">}</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">B</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">A</span><span class="p">();</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="nf">B</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">x</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+</section>
+<section id="visibilité-interne" class="level2">
+<h2>Visibilité interne</h2>
+<ul>
+<li>Membre <strong>interne</strong> accessible partout dans le même
+assembly <span class="small">Moins large que visibilité
+publique</span></li>
+</ul>
+</section>
+<section id="visibilité-par-défaut" class="level2">
+<h2>Visibilité par défaut</h2>
+<ul>
+<li>Chaque type de membre possède une <strong>visibilité par
+défaut</strong> <span class="small">Qui s’applique si on ne mentionne
+aucun modificateur</span></li>
+<li>Visibilité internal par défaut des <strong>membres de premier
+niveau</strong> <span class="small">Ne peuvent d’ailleurs être que
+<code>public</code> ou <code>internal</code></span></li>
+<li>Visibilité de <strong>membres imbriqués</strong> dépend du contenant
+<ul>
+<li>Membres d’une classe <code>private</code> par défaut</li>
+<li>Membres d’une interface <code>public</code> par défaut <em>(voir
+cours 4)</em></li>
+</ul></li>
+</ul>
+</section>
+<section id="bonnes-pratiques" class="level2">
+<h2>Bonnes pratiques</h2>
+<ul>
+<li>Toujours partir de la visibilité la <strong>moins
+grande</strong></li>
+<li>Quelques règles par défaut de visibilité
+<ul>
+<li><strong>Variable</strong> d’instance devrait être
+<strong>privée</strong></li>
+<li><strong>Constructeur</strong> devrait être
+<strong>publique</strong></li>
+<li><strong>Méthode</strong> devrait être <strong>publique</strong></li>
+</ul></li>
+<li>Cas particulier envisageable
+<ul>
+<li>Méthode privée pour la découpe en
+<strong>sous-problèmes</strong></li>
+</ul></li>
+</ul>
+</section>
+<section id="portée" class="level2">
+<h2>Portée</h2>
+<ul>
+<li>Attention à ne pas confondre <strong>visibilité</strong> et
+<strong>portée</strong> d’une variable
+<ul>
+<li><strong>Visibilité</strong> définit à partir d’où on peut
+<strong>accéder</strong> à une variable</li>
+<li><strong>Portée</strong> définit où un nom de variable
+<strong>existe</strong> et peut être utilisé</li>
+</ul></li>
+<li>Variable d’instance versus locale
+<ul>
+<li><strong>Variable d’instance</strong> définie dans tout le corps de
+la <strong>classe</strong></li>
+<li><strong>Variable locale</strong> dans tout le corps de la
+<strong>méthode</strong> à partir de sa définition</li>
+</ul></li>
+</ul>
+</section>
+<section id="encapsulation" class="level2">
+<h2>Encapsulation</h2>
+<ul>
+<li>L’encapsulation consiste à cacher les <strong>détails
+d’implémentation</strong> <span class="small">Contrôle de l’accès à
+certains membres d’une classe</span></li>
+<li>Représentation <strong>interne cachée</strong> de l’extérieur <span
+class="small">Un changement d’implémentation interne n’affecte pas les
+autres</span></li>
+<li>Manipulation de l’objet à travers des <strong>méthodes
+publiques</strong></li>
+</ul>
+</section>
+<section id="sans-encapsulation" class="level2 code">
+<h2 class="code">Sans encapsulation</h2>
+<div class="pygments"><pre><span></span><span class="n">Vector</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Vector</span><span class="w"> </span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="m">1</span><span class="p">);</span>
+<span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="kt">string</span><span class="p">.</span><span class="n">Format</span><span class="p">(</span><span class="s">&quot;({0}, {1})&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">.</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">.</span><span class="n">y</span><span class="p">));</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">Vector</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="nf">Vector</span><span class="w"> </span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">y</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+</section>
+<section id="sans-encapsulation---après-changement" class="level2 code">
+<h2 class="code">Sans encapsulation - après changement</h2>
+<div class="pygments"><pre><span></span><span class="n">Vector</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Vector</span><span class="w"> </span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="m">1</span><span class="p">);</span>
+<span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="kt">string</span><span class="p">.</span><span class="n">Format</span><span class="p">(</span><span class="s">&quot;({0}, {1})&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">.</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">.</span><span class="n">y</span><span class="p">));</span><span class="w"> </span><span class="c1">// code client cassé !</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">Vector</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">double</span><span class="p">[]</span><span class="w"> </span><span class="n">coords</span><span class="p">;</span><span class="w"> </span><span class="c1">// changement de représentation interne</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="nf">Vector</span><span class="w"> </span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">y</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">coords</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">double</span><span class="p">[]</span><span class="w"> </span><span class="p">{</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">};</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+</section>
+<section id="avec-encapsulation" class="level2 code">
+<h2 class="code">Avec encapsulation</h2>
+<div class="pygments"><pre><span></span><span class="n">Vector</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Vector</span><span class="w"> </span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="m">1</span><span class="p">);</span>
+<span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="kt">string</span><span class="p">.</span><span class="n">Format</span><span class="p">(</span><span class="s">&quot;({0}, {1})&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">.</span><span class="n">X</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">.</span><span class="n">Y</span><span class="p">));</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">Vector</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="nf">Vector</span><span class="w"> </span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">y</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">Y</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">y</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+</section>
+<section id="avec-encapsulation---après-changement" class="level2 code">
+<h2 class="code">Avec encapsulation - après changement</h2>
+<div class="pygments"><pre><span></span><span class="n">Vector</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Vector</span><span class="w"> </span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="m">1</span><span class="p">);</span>
+<span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="kt">string</span><span class="p">.</span><span class="n">Format</span><span class="p">(</span><span class="s">&quot;({0}, {1})&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">.</span><span class="n">X</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">.</span><span class="n">Y</span><span class="p">));</span><span class="w"> </span><span class="c1">// code client préservé !</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">Vector</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">double</span><span class="p">[]</span><span class="w"> </span><span class="n">coords</span><span class="p">;</span><span class="w"> </span><span class="c1">// changement de représentation interne</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="nf">Vector</span><span class="w"> </span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">y</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">coords</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">double</span><span class="p">[]</span><span class="w"> </span><span class="p">{</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">};</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">coords</span><span class="p">[</span><span class="m">0</span><span class="p">];</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">Y</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">coords</span><span class="p">[</span><span class="m">1</span><span class="p">];</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+</section>
+<section id="bénéfice-de-lencapsulation" class="level2">
+<h2>Bénéfice de l’encapsulation</h2>
+<ul>
+<li>Contrôle de l’<strong>accès</strong> aux variables d’instance d’une
+classe <span class="small">Peuvent être accessibles en lecture et/ou
+écriture</span></li>
+<li>Contrôle des <strong>valeurs stockées</strong> dans les variables
+d’instance <span class="small">La classe est la seule à avoir accès à sa
+structure interne</span></li>
+<li><strong>Indépendance</strong> par rapport à l’utilisateur <span
+class="small">La classe est libre de modifier son
+implémentation</span></li>
+</ul>
+</section>
+<section id="interface-publique" class="level2">
+<h2>Interface publique</h2>
+<ul>
+<li>Définition de l’<strong>interface publique</strong> d’un objet <span
+class="small">Seule façon d’interagir avec l’objet de
+l’extérieur</span></li>
+<li>L’utilisateur fait <strong>abstraction</strong> de l’implémentation
+pour l’utiliser</li>
+<li>Garantie du <strong>résultat</strong> de l’exécution des méthodes
+publiques <span class="small">Ne doit pas être affecté par des
+changements d’implémentation</span></li>
+<li>L’interface publique doit être la plus <strong>stable</strong>
+possible</li>
+</ul>
+</section>
+<section id="soyez-discrets" class="level2">
+<h2>Soyez discrets !</h2>
+<p>"What you hide, you can change"</p>
+<p>Do not break encapsulation!</p>
+</section>
+<section id="problème-avec-les-objets-mutables" class="level2 code">
+<h2 class="code">Problème avec les objets mutables</h2>
+<div class="pygments"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="n">List</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">L</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">L</span><span class="p">.</span><span class="n">Count</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="m">1</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">--</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">L</span><span class="p">[</span><span class="n">i</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">L</span><span class="p">[</span><span class="n">i</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">L</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">L</span><span class="p">[</span><span class="m">0</span><span class="p">];</span>
+<span class="p">}</span>
+
+
+<span class="n">List</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">list</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">};</span>
+<span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="s">&quot;Sum = {0}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">sum</span><span class="p">(</span><span class="n">list</span><span class="p">));</span><span class="w"> </span><span class="c1">// 6 Ok</span>
+<span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="s">&quot;List = [{0}]&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="p">.</span><span class="n">Join</span><span class="p">(</span><span class="s">&quot;, &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">list</span><span class="p">));</span>
+</pre></div>
+
+</section>
+<section id="objet-immuable" class="level2">
+<h2>Objet immuable</h2>
+<ul>
+<li>Un objet est immuable si son <strong>état</strong> ne peut être
+changé <span class="small">Après avoir été initialisé par le
+constructeur</span></li>
+<li>Pouvoir partager une référence vers un objet de manière
+<strong>sure</strong> <span class="small">Sans risquer de voir l’état de
+l’objet modifié</span></li>
+<li><strong>Copies</strong> de l’objet pas nécessaires <span
+class="small">Économie de la quantité de mémoire utilisée</span></li>
+</ul>
+</section>
+<section id="les-instances-de-la-classe-suivante-sont-elles-immuables"
+class="level2 code">
+<h2 class="code">Les instances de la classe suivante sont-elles
+immuables?</h2>
+<div class="pygments"><pre><span></span><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">Mysterious</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">readonly</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">secret</span><span class="p">;</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="nf">Mysterious</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">data</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">secret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+</section>
+<section id="les-instances-de-la-classe-suivante-sont-elles-immuables-1"
+class="level2 code">
+<h2 class="code">Les instances de la classe suivante sont-elles
+immuables?</h2>
+<div class="pygments"><pre><span></span><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">Mysterious</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">readonly</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">secret</span><span class="p">;</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="nf">Mysterious</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">data</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">secret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<ul>
+<li>Variable d’instance publique, mais constante <span class="small">Sa
+valeur ne pourra donc pas être changée, état préservé</span></li>
+</ul>
+</section>
+<section id="les-instances-de-la-classe-suivante-sont-elles-immuables-2"
+class="level2">
+<h2>Les instances de la classe suivante sont-elles immuables?</h2>
+<div class="pygments"><pre><span></span><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">SuperMysterious</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">readonly</span><span class="w"> </span><span class="kt">int</span><span class="p">[]</span><span class="w"> </span><span class="n">secrets</span><span class="p">;</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="nf">SuperMysterious</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">y</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">secrets</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="p">[]</span><span class="w"> </span><span class="p">{</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">};</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+</section>
+<section id="les-instances-de-la-classe-suivante-sont-elles-immuables-3"
+class="level2 code">
+<h2 class="code">Les instances de la classe suivante sont-elles
+immuables?</h2>
+<div class="pygments"><pre><span></span><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">SuperMysterious</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">readonly</span><span class="w"> </span><span class="kt">int</span><span class="p">[]</span><span class="w"> </span><span class="n">secrets</span><span class="p">;</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="nf">SuperMysterious</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">y</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">secrets</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="p">[]</span><span class="w"> </span><span class="p">{</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">};</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<ul>
+<li>Variable d’instance publique, mais constante <span class="small">La
+référence est constante mais l'état de l'objet référencé peut changer
+!</span></li>
+<li>Attention lorsque les variables d’instance sont des objets</li>
+</ul>
+</section>
+<section id="les-instances-de-la-classe-suivante-sont-elles-immuables-4"
+class="level2 code">
+<h2 class="code">Les instances de la classe suivante sont-elles
+immuables?</h2>
+<div class="pygments"><pre><span></span><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">MysteriousCeption</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">ppublic</span><span class="w"> </span><span class="k">readonly</span><span class="w"> </span><span class="n">Mysterious</span><span class="w"> </span><span class="n">secret</span><span class="p">;</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="nf">MysteriousCeption</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">secret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Mysterious</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+</section>
+<section id="les-instances-de-la-classe-suivante-sont-elles-immuables-5"
+class="level2 code">
+<h2 class="code">Les instances de la classe suivante sont-elles
+immuables?</h2>
+<div class="pygments"><pre><span></span><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">MysteriousCeption</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">ppublic</span><span class="w"> </span><span class="k">readonly</span><span class="w"> </span><span class="n">Mysterious</span><span class="w"> </span><span class="n">secret</span><span class="p">;</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="nf">MysteriousCeption</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">secret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Mysterious</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<ul>
+<li>Variable d’instance publique, mais constante et immuable <span
+class="small">Sa valeur ne pourra donc pas être changée, ni son état
+!</span></li>
+</ul>
+</section>
+<section id="critères-à-vérifier" class="level2">
+<h2>Critères à vérifier</h2>
+<ul>
+<li>Variable d’instance privée</li>
+<li>Variable d’instance publique et constante <span class="small">Pour
+autant que le type soit un primitif ou d’objet immuable</span></li>
+</ul>
+</section>
+<section id="référence-passée-au-constructeur" class="level2">
+<h2>Référence passée au constructeur</h2>
+<ul>
+<li>Modification d’un objet passé en paramètre au constructeur <span
+class="small">Altération de l’état si l’objet reçu par le constructeur
+en fait partie</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="kt">double</span><span class="p">[]</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="m">1</span><span class="p">};</span>
+<span class="n">Vector</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Vector</span><span class="w"> </span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+<span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="w"> </span><span class="p">(</span><span class="n">u</span><span class="p">);</span>
+
+<span class="n">data</span><span class="p">[</span><span class="m">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">;</span>
+<span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="w"> </span><span class="p">(</span><span class="n">u</span><span class="p">);</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">Vector</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">double</span><span class="p">[]</span><span class="w"> </span><span class="n">coords</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="nf">Vector</span><span class="w"> </span><span class="p">(</span><span class="kt">double</span><span class="p">[]</span><span class="w"> </span><span class="n">coords</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="n">coords</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">coords</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">double</span><span class="p">[]</span><span class="w"> </span><span class="n">Coords</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">coords</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="nf">ToString</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">String</span><span class="p">.</span><span class="n">Format</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;({0}, {1})&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">coords</span><span class="p">[</span><span class="m">0</span><span class="p">],</span><span class="w"> </span><span class="n">coords</span><span class="p">[</span><span class="m">1</span><span class="p">]);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+</section>
+<section id="référence-passée-au-constructeur-1" class="level2">
+<h2>Référence passée au constructeur</h2>
+<ul>
+<li>Le constructeur doit faire une copie de l’objet reçu <span
+class="small">Pas nécessaire si l’objet est immuable</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="kt">double</span><span class="p">[]</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="m">1</span><span class="p">};</span>
+<span class="n">Vector</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Vector</span><span class="w"> </span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+<span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="w"> </span><span class="p">(</span><span class="n">u</span><span class="p">);</span>
+
+<span class="n">data</span><span class="p">[</span><span class="m">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">;</span>
+<span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="w"> </span><span class="p">(</span><span class="n">u</span><span class="p">);</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">Vector</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">double</span><span class="p">[]</span><span class="w"> </span><span class="n">coords</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="nf">Vector</span><span class="w"> </span><span class="p">(</span><span class="kt">double</span><span class="p">[]</span><span class="w"> </span><span class="n">coords</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="n">coords</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">double</span><span class="p">[</span><span class="n">coords</span><span class="p">.</span><span class="n">Length</span><span class="p">];</span>
+<span class="w">        </span><span class="n">Array</span><span class="p">.</span><span class="n">Copy</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="n">coords</span><span class="p">,</span><span class="w"> </span><span class="n">coords</span><span class="p">.</span><span class="n">Length</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">double</span><span class="p">[]</span><span class="w"> </span><span class="n">Coords</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">coords</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="nf">ToString</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">String</span><span class="p">.</span><span class="n">Format</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;({0}, {1})&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">coords</span><span class="p">[</span><span class="m">0</span><span class="p">],</span><span class="w"> </span><span class="n">coords</span><span class="p">[</span><span class="m">1</span><span class="p">]);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<div class="terminal">(1, -1) (1, -1)
+</div>
+</section>
+<section id="renvoi-dune-référence" class="level2">
+<h2>Renvoi d’une référence</h2>
+<ul>
+<li>Modification d’un objet renvoyé par une méthode <span
+class="small">Altération de l’état si l’objet renvoyé en fait
+partie</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="n">Vector</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Vector</span><span class="w"> </span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="kt">double</span><span class="p">[]</span><span class="w"> </span><span class="p">{</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="m">1</span><span class="p">});</span>
+<span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="w"> </span><span class="p">(</span><span class="n">u</span><span class="p">);</span>
+
+<span class="kt">double</span><span class="p">[]</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">u</span><span class="p">.</span><span class="n">Coords</span><span class="p">;</span>
+<span class="n">data</span><span class="w"> </span><span class="p">[</span><span class="m">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">;</span>
+<span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="w"> </span><span class="p">(</span><span class="n">u</span><span class="p">);</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">Vector</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">double</span><span class="p">[]</span><span class="w"> </span><span class="n">coords</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="nf">Vector</span><span class="w"> </span><span class="p">(</span><span class="kt">double</span><span class="p">[]</span><span class="w"> </span><span class="n">coords</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="n">coords</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">double</span><span class="p">[</span><span class="n">coords</span><span class="p">.</span><span class="n">Length</span><span class="p">];</span>
+<span class="w">        </span><span class="n">Array</span><span class="p">.</span><span class="n">Copy</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="n">coords</span><span class="p">,</span><span class="w"> </span><span class="n">coords</span><span class="p">.</span><span class="n">Length</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">double</span><span class="p">[]</span><span class="w"> </span><span class="n">Coords</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">coords</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="nf">ToString</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">String</span><span class="p">.</span><span class="n">Format</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;({0}, {1})&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">coords</span><span class="p">[</span><span class="m">0</span><span class="p">],</span><span class="w"> </span><span class="n">coords</span><span class="p">[</span><span class="m">1</span><span class="p">]);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<div class="terminal">(1, -1) (0, -1)
+</div>
+</section>
+<section id="renvoi-dune-référence-1" class="level2">
+<h2>Renvoi d’une référence</h2>
+<ul>
+<li>La méthode doit renvoyer une copie de l’objet à renvoyer <span
+class="small">Pas nécessaire si l’objet est immuable</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="n">Vector</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Vector</span><span class="w"> </span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="kt">double</span><span class="p">[]</span><span class="w"> </span><span class="p">{</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="m">1</span><span class="p">});</span>
+<span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="w"> </span><span class="p">(</span><span class="n">u</span><span class="p">);</span>
+
+<span class="kt">double</span><span class="p">[]</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">u</span><span class="p">.</span><span class="n">Coords</span><span class="p">;</span>
+<span class="n">data</span><span class="w"> </span><span class="p">[</span><span class="m">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">;</span>
+<span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="w"> </span><span class="p">(</span><span class="n">u</span><span class="p">);</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">Vector</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">double</span><span class="p">[]</span><span class="w"> </span><span class="n">coords</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="nf">Vector</span><span class="w"> </span><span class="p">(</span><span class="kt">double</span><span class="p">[]</span><span class="w"> </span><span class="n">coords</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="n">coords</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">double</span><span class="p">[</span><span class="n">coords</span><span class="p">.</span><span class="n">Length</span><span class="p">];</span>
+<span class="w">        </span><span class="n">Array</span><span class="p">.</span><span class="n">Copy</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="n">coords</span><span class="p">,</span><span class="w"> </span><span class="n">coords</span><span class="p">.</span><span class="n">Length</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">double</span><span class="p">[]</span><span class="w"> </span><span class="n">Coords</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">get</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="kt">double</span><span class="p">[]</span><span class="w"> </span><span class="n">coords</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">double</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="n">coords</span><span class="p">.</span><span class="n">Length</span><span class="p">];</span>
+<span class="w">            </span><span class="n">Array</span><span class="p">.</span><span class="n">Copy</span><span class="w"> </span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="n">coords</span><span class="p">,</span><span class="w"> </span><span class="n">coords</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="n">coords</span><span class="p">.</span><span class="n">Length</span><span class="p">);</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">coords</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="nf">ToString</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">String</span><span class="p">.</span><span class="n">Format</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;({0}, {1})&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">coords</span><span class="p">[</span><span class="m">0</span><span class="p">],</span><span class="w"> </span><span class="n">coords</span><span class="p">[</span><span class="m">1</span><span class="p">]);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<div class="terminal">(1, -1) (1, -1)
+</div>
+</section>
+<section id="critères-à-vérifier-1" class="level2">
+<h2>Critères à vérifier</h2>
+<ul>
+<li><strong>Copie</strong> de tous les objets <strong>mutables</strong>
+reçus en paramètres <span class="small">Seulement pour ceux qui font
+partie de l’état de l’objet</span></li>
+<li><strong>Copie</strong> des objets <strong>mutables</strong> dont une
+référence est renvoyée <span class="small">Seulement s’ils font partie
+de l’état de l’objet</span></li>
+<li><strong>Aucune copie</strong> nécessaire pour les objets
+<strong>immuables</strong> <span class="small">Leur état ne pourra
+jamais être modifié</span></li>
+</ul>
+</section>
+<section id="intérêts-des-objets-immuables" class="level2">
+<h2>Intérêts des objets immuables</h2>
+<ul>
+<li>Partage de références <strong>sans aucun risque</strong> <span
+class="small">Puisque personne ne pourra altérer l’état de
+l’objet</span></li>
+<li>Utilisation d’un même <strong>objet partagé</strong> entre plusieurs
+threads <span class="small">Aucun souci de cohérence de l’état de
+l’objet, vu par les threads</span></li>
+<li><strong>Pas besoin d’en faire des copies</strong> <span
+class="small">Utilisation efficace de la mémoire</span></li>
+</ul>
+</section>
+</body>
+</html>
