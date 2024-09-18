@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Cours 1 - Rappels et relations</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="/deck.css" />
+  <script src="/deck_only.js" defer></script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Cours 1
+<small>Rappels et relations</small>
+</h1>
+</header>
+<section id="objectifs" class="level2">
+<h2>Objectifs</h2>
+<ul>
+<li><p>Programmer de façon <strong>professionnelle</strong></p>
+<ul>
+<li>Beaucoup d’aspects</li>
+</ul></li>
+<li><p>Rendre le code <strong>maintenable</strong></p>
+<ul>
+<li>Facile à modifier</li>
+</ul></li>
+</ul>
+</section>
+<section id="c" class="level2">
+<h2>C#</h2>
+<ul>
+<li>Nous utiliserons le <strong>C#</strong>
+<ul>
+<li>Développé par Microsoft</li>
+<li>Développement d’application Windows</li>
+<li>Unity</li>
+<li>Développement Multi-plateforme</li>
+<li>langage <strong>compilé</strong></li>
+<li><strong>typé statiquement</strong></li>
+</ul></li>
+</ul>
+</section>
+<section id="objets" class="level2">
+<h2>Objets</h2>
+<ul>
+<li>Un <strong>objet</strong> possède deux types de membres
+<ul>
+<li>des attributs (caractéristiques)</li>
+<li>des méthodes (fonctionnalités)</li>
+</ul></li>
+<li><strong>L'état de l'objet</strong> peut varier tout au long de
+l'exécution <span class="small">Défini par l'ensemble des valeurs des
+attributs</span></li>
+</ul>
+</section>
+<section id="classes" class="level2">
+<h2>Classes</h2>
+<ul>
+<li>Une classe permet de <strong>construire</strong> des objets <span
+class="small">Il s'agit d'un modèle qui décrit les attributs et
+fonctionnalités</span></li>
+<li>Un objet est une <strong>instance</strong> d'une classe <span
+class="small">On crée un nouvel objet à partir d'une classe</span></li>
+</ul>
+</section>
+<section id="instances" class="level2">
+<h2>Instances</h2>
+<p><strong>Trois éléments</strong> distincts sont à identifier</p>
+<ol type="1">
+<li>Une <strong>classe</strong> est un modèle</li>
+<li>Un objet est une <strong>instance</strong> d'une classe</li>
+<li>Une variable stocke une <strong>référence</strong> vers l'objet</li>
+</ol>
+<figure id="schema">
+</figure>
+<figure><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXMtYXNjaWkiIHN0YW5kYWxvbmU9Im5vIj8+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBjb250ZW50U3R5bGVUeXBlPSJ0ZXh0L2NzcyIgaGVpZ2h0PSIyOThweCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSIgc3R5bGU9IndpZHRoOjIyOXB4O2hlaWdodDoyOThweDtiYWNrZ3JvdW5kOiNGRkZGRkY7IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAyMjkgMjk4IiB3aWR0aD0iMjI5cHgiIHpvb21BbmRQYW49Im1hZ25pZnkiPjxkZWZzLz48Zz48IS0tY2xhc3MgR1NNLS0+PGcgaWQ9ImVsZW1fR1NNIj48cmVjdCBjb2RlTGluZT0iMSIgZmlsbD0iI0YxRjFGMSIgaGVpZ2h0PSIxNDYuOTI5NyIgaWQ9IkdTTSIgcng9IjIuNSIgcnk9IjIuNSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB3aWR0aD0iMTQ2IiB4PSI3IiB5PSI3Ii8+PGVsbGlwc2UgY3g9IjYwLjc1IiBjeT0iMjMiIGZpbGw9IiNBREQxQjIiIHJ4PSIxMSIgcnk9IjExIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDsiLz48cGF0aCBkPSJNNjMuMjIzMSwyOS4xNDMxIFE2Mi42NDIxLDI5LjQ0MTkgNjIuMDAyOSwyOS41OTEzIFE2MS4zNjM4LDI5Ljc0MDcgNjAuNjU4MiwyOS43NDA3IFE1OC4xNTE0LDI5Ljc0MDcgNTYuODMxNSwyOC4wODg5IFE1NS41MTE3LDI2LjQzNyA1NS41MTE3LDIzLjMxNTkgUTU1LjUxMTcsMjAuMTg2NSA1Ni44MzE1LDE4LjUzNDcgUTU4LjE1MTQsMTYuODgyOCA2MC42NTgyLDE2Ljg4MjggUTYxLjM2MzgsMTYuODgyOCA2Mi4wMTEyLDE3LjAzMjIgUTYyLjY1ODcsMTcuMTgxNiA2My4yMjMxLDE3LjQ4MDUgTDYzLjIyMzEsMjAuMjAzMSBRNjIuNTkyMywxOS42MjIxIDYxLjk5ODgsMTkuMzUyMyBRNjEuNDA1MywxOS4wODI1IDYwLjc3NDQsMTkuMDgyNSBRNTkuNDI5NywxOS4wODI1IDU4Ljc0NDksMjAuMTQ5MiBRNTguMDYwMSwyMS4yMTU4IDU4LjA2MDEsMjMuMzE1OSBRNTguMDYwMSwyNS40MDc3IDU4Ljc0NDksMjYuNDc0NCBRNTkuNDI5NywyNy41NDEgNjAuNzc0NCwyNy41NDEgUTYxLjQwNTMsMjcuNTQxIDYxLjk5ODgsMjcuMjcxMiBRNjIuNTkyMywyNy4wMDE1IDYzLjIyMzEsMjYuNDIwNCBaICIgZmlsbD0iIzAwMDAwMCIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjMwIiB4PSI4MS4yNSIgeT0iMjguMjkxIj5HU008L3RleHQ+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB4MT0iOCIgeDI9IjE1MiIgeTE9IjM5IiB5Mj0iMzkiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI1MyIgeD0iMTMiIHk9IjU2LjUzNTIiPm1hcnF1ZTwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI1MSIgeD0iMTMiIHk9IjczLjAyMzQiPm1vZCYjMjMzO2xlPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjUyIiB4PSIxMyIgeT0iODkuNTExNyI+Y291bGV1cjwvdGV4dD48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHgxPSI4IiB4Mj0iMTUyIiB5MT0iOTYuNDY0OCIgeTI9Ijk2LjQ2NDgiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI5MiIgeD0iMTMiIHk9IjExNCI+ZW52b3llclNNUygpPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjEwNSIgeD0iMTMiIHk9IjEzMC40ODgzIj5yZWNldm9pckFwcGxlKCk8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMTM0IiB4PSIxMyIgeT0iMTQ2Ljk3NjYiPnZvaXJOaXZlYXVCZXR0ZXJpZSgpPC90ZXh0PjwvZz48ZyBpZD0iZWxlbV8zNDI2Ij48cmVjdCBmaWxsPSIjRjFGMUYxIiBoZWlnaHQ9Ijc3Ljk1MzEiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgd2lkdGg9Ijc3IiB4PSIxMDguNSIgeT0iMjEzLjkzIi8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMzYiIHg9IjEyOSIgeT0iMjI5LjQ2NTIiPjM0MjY8L3RleHQ+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB4MT0iMTA5LjUiIHgyPSIxODQuNSIgeTE9IjIzNC40MTgzIiB5Mj0iMjM0LjQxODMiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI0MCIgeD0iMTE0LjUiIHk9IjI1MS45NTM0Ij5BcHBsZTwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI2NSIgeD0iMTE0LjUiIHk9IjI2OC40NDE3Ij5pUGhvbmUxMjwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIyNyIgeD0iMTE0LjUiIHk9IjI4NC45MyI+UkVEPC90ZXh0PjwvZz48IS0tZW50aXR5IGEtLT48ZyBpZD0iZWxlbV9hIj48ZWxsaXBzZSBjeD0iMjE1IiBjeT0iODAuNDYiIGZpbGw9IiNGMUYxRjEiIHJ4PSI4IiByeT0iOCIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iOCIgeD0iMjExIiB5PSIxMTAuOTk1MiI+YTwvdGV4dD48L2c+PCEtLXJldmVyc2UgbGluayBHU00gdG8gMzQyNi0tPjxnIGlkPSJsaW5rX0dTTV8zNDI2Ij48cGF0aCBjb2RlTGluZT0iMTgiIGQ9Ik0xMTEuNTM3MSwxNjEuNjg1MyBDMTE5LjU3NzEsMTgyLjEzNTMgMTI1LjA3LDE5Ni4xMSAxMzEuOTcsMjEzLjY3ICIgZmlsbD0ibm9uZSIgaWQ9IkdTTS1iYWNrdG8tMzQyNiIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7IiB4MT0iMTExLjUzNzEiIHgyPSIxMDEuMTY0NyIgeTE9IjE2MS42ODUzIiB5Mj0iMTU0LjI0Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7IiB4MT0iMTExLjUzNzEiIHgyPSIxMTYuMDU1MyIgeTE9IjE2MS42ODUzIiB5Mj0iMTU0LjI0Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7IiB4MT0iMTExLjUzNzEiIHgyPSIxMDguNjEiIHkxPSIxNjEuNjg1MyIgeTI9IjE1NC4yNCIvPjwvZz48IS0tbGluayBhIHRvIDM0MjYtLT48ZyBpZD0ibGlua19hXzM0MjYiPjxwYXRoIGNvZGVMaW5lPSIyMCIgZD0iTTIxMS45LDg5LjIzIEMyMDMuMjgsMTEwLjg1IDE4MC43NzMyLDE2Ny4yNTcxIDE2NC40NTMyLDIwOC4xNjcxICIgZmlsbD0ibm9uZSIgaWQ9ImEtdG8tMzQyNiIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7Ii8+PHBvbHlnb24gZmlsbD0iIzE4MTgxOCIgcG9pbnRzPSIxNjIuMjMsMjEzLjc0LDE2OS4yOCwyMDYuODYyNywxNjQuMDgyNiwyMDkuMDk1OSwxNjEuODQ5NSwyMDMuODk4NSwxNjIuMjMsMjEzLjc0IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDsiLz48L2c+PCEtLVNSQz1bOU92MTJpOG01NEp0X25IX2dPaWloRTlJSzlJa0FjOUU0RUUwYVRaS3R3R1dxV0R2M1l6Y0tiVnBQbFdwVkVqRHR0RWo2dHVKRnVteTR4QTZ3X1ZaQ3pZR0Y5OEdlbnQyMnc4UkZQaUoyb282dTZKUlRIdWJBRVJlMWZZcUd1bUdMekFIQTVwa2k5Nk5nc2ZUemRhZ1A3TWRNc1luZzNBVTNfam9RUHJPM3BQNHZQVEhnUWI0UDVZZnBQel9dLS0+PC9nPjwvc3ZnPg=="></figure>
+</section>
+<section id="alias" class="level2">
+<h2>Alias</h2>
+<ul>
+<li>Une variable est une <strong>référence</strong> vers un objet <span
+class="small">La variable permet d'accéder à l'objet et ainsi le
+manipuler</span></li>
+<li>Un <strong>alias</strong> réfère le même objet qu'une autre
+variable</li>
+</ul>
+<figure id="alias">
+</figure>
+<figure><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXMtYXNjaWkiIHN0YW5kYWxvbmU9Im5vIj8+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBjb250ZW50U3R5bGVUeXBlPSJ0ZXh0L2NzcyIgaGVpZ2h0PSIyOThweCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSIgc3R5bGU9IndpZHRoOjMxOHB4O2hlaWdodDoyOThweDtiYWNrZ3JvdW5kOiNGRkZGRkY7IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAzMTggMjk4IiB3aWR0aD0iMzE4cHgiIHpvb21BbmRQYW49Im1hZ25pZnkiPjxkZWZzLz48Zz48IS0tY2xhc3MgR1NNLS0+PGcgaWQ9ImVsZW1fR1NNIj48cmVjdCBjb2RlTGluZT0iMSIgZmlsbD0iI0YxRjFGMSIgaGVpZ2h0PSIxNDYuOTI5NyIgaWQ9IkdTTSIgcng9IjIuNSIgcnk9IjIuNSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB3aWR0aD0iMTQ2IiB4PSI3IiB5PSI3Ii8+PGVsbGlwc2UgY3g9IjYwLjc1IiBjeT0iMjMiIGZpbGw9IiNBREQxQjIiIHJ4PSIxMSIgcnk9IjExIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDsiLz48cGF0aCBkPSJNNjMuMjIzMSwyOS4xNDMxIFE2Mi42NDIxLDI5LjQ0MTkgNjIuMDAyOSwyOS41OTEzIFE2MS4zNjM4LDI5Ljc0MDcgNjAuNjU4MiwyOS43NDA3IFE1OC4xNTE0LDI5Ljc0MDcgNTYuODMxNSwyOC4wODg5IFE1NS41MTE3LDI2LjQzNyA1NS41MTE3LDIzLjMxNTkgUTU1LjUxMTcsMjAuMTg2NSA1Ni44MzE1LDE4LjUzNDcgUTU4LjE1MTQsMTYuODgyOCA2MC42NTgyLDE2Ljg4MjggUTYxLjM2MzgsMTYuODgyOCA2Mi4wMTEyLDE3LjAzMjIgUTYyLjY1ODcsMTcuMTgxNiA2My4yMjMxLDE3LjQ4MDUgTDYzLjIyMzEsMjAuMjAzMSBRNjIuNTkyMywxOS42MjIxIDYxLjk5ODgsMTkuMzUyMyBRNjEuNDA1MywxOS4wODI1IDYwLjc3NDQsMTkuMDgyNSBRNTkuNDI5NywxOS4wODI1IDU4Ljc0NDksMjAuMTQ5MiBRNTguMDYwMSwyMS4yMTU4IDU4LjA2MDEsMjMuMzE1OSBRNTguMDYwMSwyNS40MDc3IDU4Ljc0NDksMjYuNDc0NCBRNTkuNDI5NywyNy41NDEgNjAuNzc0NCwyNy41NDEgUTYxLjQwNTMsMjcuNTQxIDYxLjk5ODgsMjcuMjcxMiBRNjIuNTkyMywyNy4wMDE1IDYzLjIyMzEsMjYuNDIwNCBaICIgZmlsbD0iIzAwMDAwMCIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjMwIiB4PSI4MS4yNSIgeT0iMjguMjkxIj5HU008L3RleHQ+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB4MT0iOCIgeDI9IjE1MiIgeTE9IjM5IiB5Mj0iMzkiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI1MyIgeD0iMTMiIHk9IjU2LjUzNTIiPm1hcnF1ZTwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI1MSIgeD0iMTMiIHk9IjczLjAyMzQiPm1vZCYjMjMzO2xlPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjUyIiB4PSIxMyIgeT0iODkuNTExNyI+Y291bGV1cjwvdGV4dD48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHgxPSI4IiB4Mj0iMTUyIiB5MT0iOTYuNDY0OCIgeTI9Ijk2LjQ2NDgiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI5MiIgeD0iMTMiIHk9IjExNCI+ZW52b3llclNNUygpPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjEwNSIgeD0iMTMiIHk9IjEzMC40ODgzIj5yZWNldm9pckFwcGxlKCk8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMTM0IiB4PSIxMyIgeT0iMTQ2Ljk3NjYiPnZvaXJOaXZlYXVCZXR0ZXJpZSgpPC90ZXh0PjwvZz48ZyBpZD0iZWxlbV8zNDI2Ij48cmVjdCBmaWxsPSIjRjFGMUYxIiBoZWlnaHQ9Ijc3Ljk1MzEiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgd2lkdGg9Ijc3IiB4PSIxNzYuNSIgeT0iMjEzLjkzIi8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMzYiIHg9IjE5NyIgeT0iMjI5LjQ2NTIiPjM0MjY8L3RleHQ+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB4MT0iMTc3LjUiIHgyPSIyNTIuNSIgeTE9IjIzNC40MTgzIiB5Mj0iMjM0LjQxODMiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI0MCIgeD0iMTgyLjUiIHk9IjI1MS45NTM0Ij5BcHBsZTwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI2NSIgeD0iMTgyLjUiIHk9IjI2OC40NDE3Ij5pUGhvbmUxMjwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIyNyIgeD0iMTgyLjUiIHk9IjI4NC45MyI+UkVEPC90ZXh0PjwvZz48IS0tZW50aXR5IGEtLT48ZyBpZD0iZWxlbV9hIj48ZWxsaXBzZSBjeD0iMjE1IiBjeT0iODAuNDYiIGZpbGw9IiNGMUYxRjEiIHJ4PSI4IiByeT0iOCIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iOCIgeD0iMjExIiB5PSIxMTAuOTk1MiI+YTwvdGV4dD48L2c+PCEtLWVudGl0eSBiLS0+PGcgaWQ9ImVsZW1fYiI+PGVsbGlwc2UgY3g9IjMwNCIgY3k9IjgwLjQ2IiBmaWxsPSIjRjFGMUYxIiByeD0iOCIgcnk9IjgiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjkiIHg9IjI5OS41IiB5PSIxMTAuOTk1MiI+YjwvdGV4dD48L2c+PCEtLXJldmVyc2UgbGluayBHU00gdG8gMzQyNi0tPjxnIGlkPSJsaW5rX0dTTV8zNDI2Ij48cGF0aCBjb2RlTGluZT0iMTkiIGQ9Ik0xNDIuNjA3NiwxNjAuNTEwOCBDMTU4LjgwNzYsMTgwLjk2MDggMTcwLjgxLDE5Ni4xMSAxODQuNzIsMjEzLjY3ICIgZmlsbD0ibm9uZSIgaWQ9IkdTTS1iYWNrdG8tMzQyNiIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7IiB4MT0iMTQyLjYwNzYiIHgyPSIxMzEuMzY5MiIgeTE9IjE2MC41MTA4IiB5Mj0iMTU0LjI0Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7IiB4MT0iMTQyLjYwNzYiIHgyPSIxNDMuOTEwOCIgeTE9IjE2MC41MTA4IiB5Mj0iMTU0LjI0Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7IiB4MT0iMTQyLjYwNzYiIHgyPSIxMzcuNjQiIHkxPSIxNjAuNTEwOCIgeTI9IjE1NC4yNCIvPjwvZz48IS0tbGluayBhIHRvIDM0MjYtLT48ZyBpZD0ibGlua19hXzM0MjYiPjxwYXRoIGNvZGVMaW5lPSIyMSIgZD0iTTIxNSw4OS4yMyBDMjE1LDExMC44NSAyMTUsMTY2LjgzIDIxNSwyMDcuNzQgIiBmaWxsPSJub25lIiBpZD0iYS10by0zNDI2IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDsiLz48cG9seWdvbiBmaWxsPSIjMTgxODE4IiBwb2ludHM9IjIxNSwyMTMuNzQsMjE5LDIwNC43NCwyMTUsMjA4Ljc0LDIxMSwyMDQuNzQsMjE1LDIxMy43NCIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7Ii8+PC9nPjwhLS1saW5rIGIgdG8gMzQyNi0tPjxnIGlkPSJsaW5rX2JfMzQyNiI+PHBhdGggY29kZUxpbmU9IjIyIiBkPSJNMjk5Ljk0LDg5LjIzIEMyODguNjUsMTEwLjg1IDI1OS4wNjcsMTY3LjUxMTMgMjM3LjcwNywyMDguNDIxMyAiIGZpbGw9Im5vbmUiIGlkPSJiLXRvLTM0MjYiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjxwb2x5Z29uIGZpbGw9IiMxODE4MTgiIHBvaW50cz0iMjM0LjkzLDIxMy43NCwyNDIuNjQxMywyMDcuNjEzMywyMzcuMjQ0MiwyMDkuMzA3OCwyMzUuNTQ5NywyMDMuOTEwNywyMzQuOTMsMjEzLjc0IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDsiLz48L2c+PCEtLVNSQz1bSE92MTJpOG01NEp0X25IX2dPaWloRTlJSzFITjVSNGRJRUUwYVRaS3RvT1dxV0R2M1l6Y0tYNU55c1J1Q3RwWlREVm5sWWh2SU5wSlNXejh3aV9sYnFqV1Y3MDhHZW1jLVdVYUFnbDliNVhXNEJzTFRUaXd2MjJSV3V0R09PRS1YellTM2FJLWxpQnFGNXlLb3hwRk9vNmZGTHZ5V3JjSHlCSlJ2YWpabkpZbV9hNURiOXlRYjFoUkg5Z0xNZHN2X2tDN10tLT48L2c+PC9zdmc+"></figure>
+</section>
+<section id="définir-une-classe" class="level2">
+<h2>Définir une classe</h2>
+<ul>
+<li>Définition d'une classe Contact représentant un
+<strong>contact</strong> <span class="small">Caractérisé par un prénom,
+un nom et un numéro de téléphone</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Contact</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="k">private</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">firstname</span><span class="p">,</span><span class="w"> </span><span class="n">lastname</span><span class="p">;</span>
+<span class="w">  </span><span class="k">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">phonenumber</span><span class="p">;</span>
+
+<span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="nf">Contact</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">firstname</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">lastname</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="n">firstname</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">firstname</span><span class="p">;</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="n">lastname</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lastname</span><span class="p">;</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="n">phonenumber</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="nf">SetPhoneNumber</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">phonenumber</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="n">phonenumber</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">phonenumber</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+</section>
+<section id="constructeur-et-variable-dinstance" class="level2">
+<h2>Constructeur et variable d'instance</h2>
+<ul>
+<li>Le <strong>constructeur</strong> initialise l'état de l'objet <span
+class="small">L'instantiation invoque implicitement le
+constructeur</span></li>
+<li>Initialisation des <strong>variables d'instance</strong> <span
+class="small">On affecte une valeur à chaque variable
+d'instance</span></li>
+</ul>
+</section>
+<section id="vie-dun-objet" class="level2">
+<h2>Vie d'un objet</h2>
+<p>Trois étapes principales dans la <strong>vie d'un objet</strong></p>
+<ul>
+<li>Création de l'objet (<em>initialisation</em>)</li>
+<li>Appel de méthode et changement d'état (<em>utilisation</em>)</li>
+<li>Destruction de l'objet (<em>finalisation</em>)</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="n">Contact</span><span class="w"> </span><span class="n">lur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Contact</span><span class="p">(</span><span class="s">&quot;Quentin&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Lurkin&quot;</span><span class="p">)</span>
+<span class="n">lur</span><span class="p">.</span><span class="n">SetPhoneNumber</span><span class="p">(</span><span class="m">4242</span><span class="p">)</span>
+</pre></div>
+
+</section>
+<section id="variable-dinstance" class="level2">
+<h2>Variable d'instance</h2>
+<ul>
+<li>Une <strong>variable d'instance</strong> est liée à l'objet <span
+class="small">Sa valeur fait partie de l'état de l'objet</span></li>
+<li>Peuvent avoir une certaine <strong>visibilité</strong> <span
+class="small">Uniquement accessible dans la classe ou visible de
+l'extérieur</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Contact</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="k">private</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">firstname</span><span class="p">,</span><span class="w"> </span><span class="n">lastname</span><span class="p">;</span>
+<span class="w">  </span><span class="k">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">phonenumber</span><span class="p">;</span>
+
+<span class="w">  </span><span class="c1">// [...]</span>
+<span class="p">}</span>
+</pre></div>
+
+</section>
+<section id="instanciation" class="level2">
+<h2>Instanciation</h2>
+<ul>
+<li>On peut créer plusieurs instances d'une classe <span
+class="small">Chaque instance a son identité propre</span></li>
+</ul>
+<figure id="instanciation">
+</figure>
+<figure><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXMtYXNjaWkiIHN0YW5kYWxvbmU9Im5vIj8+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBjb250ZW50U3R5bGVUeXBlPSJ0ZXh0L2NzcyIgaGVpZ2h0PSIyNjVweCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSIgc3R5bGU9IndpZHRoOjMyOHB4O2hlaWdodDoyNjVweDtiYWNrZ3JvdW5kOiNGRkZGRkY7IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAzMjggMjY1IiB3aWR0aD0iMzI4cHgiIHpvb21BbmRQYW49Im1hZ25pZnkiPjxkZWZzLz48Zz48IS0tY2xhc3MgQ29udGFjdC0tPjxnIGlkPSJlbGVtX0NvbnRhY3QiPjxyZWN0IGNvZGVMaW5lPSIxIiBmaWxsPSIjRjFGMUYxIiBoZWlnaHQ9IjExMy45NTMxIiBpZD0iQ29udGFjdCIgcng9IjIuNSIgcnk9IjIuNSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB3aWR0aD0iMTU0IiB4PSI5NyIgeT0iNyIvPjxlbGxpcHNlIGN4PSIxNDMuMjUiIGN5PSIyMyIgZmlsbD0iI0FERDFCMiIgcng9IjExIiByeT0iMTEiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjxwYXRoIGQ9Ik0xNDUuNzIzMSwyOS4xNDMxIFExNDUuMTQyMSwyOS40NDE5IDE0NC41MDI5LDI5LjU5MTMgUTE0My44NjM4LDI5Ljc0MDcgMTQzLjE1ODIsMjkuNzQwNyBRMTQwLjY1MTQsMjkuNzQwNyAxMzkuMzMxNSwyOC4wODg5IFExMzguMDExNywyNi40MzcgMTM4LjAxMTcsMjMuMzE1OSBRMTM4LjAxMTcsMjAuMTg2NSAxMzkuMzMxNSwxOC41MzQ3IFExNDAuNjUxNCwxNi44ODI4IDE0My4xNTgyLDE2Ljg4MjggUTE0My44NjM4LDE2Ljg4MjggMTQ0LjUxMTIsMTcuMDMyMiBRMTQ1LjE1ODcsMTcuMTgxNiAxNDUuNzIzMSwxNy40ODA1IEwxNDUuNzIzMSwyMC4yMDMxIFExNDUuMDkyMywxOS42MjIxIDE0NC40OTg4LDE5LjM1MjMgUTE0My45MDUzLDE5LjA4MjUgMTQzLjI3NDQsMTkuMDgyNSBRMTQxLjkyOTcsMTkuMDgyNSAxNDEuMjQ0OSwyMC4xNDkyIFExNDAuNTYwMSwyMS4yMTU4IDE0MC41NjAxLDIzLjMxNTkgUTE0MC41NjAxLDI1LjQwNzcgMTQxLjI0NDksMjYuNDc0NCBRMTQxLjkyOTcsMjcuNTQxIDE0My4yNzQ0LDI3LjU0MSBRMTQzLjkwNTMsMjcuNTQxIDE0NC40OTg4LDI3LjI3MTIgUTE0NS4wOTIzLDI3LjAwMTUgMTQ1LjcyMzEsMjYuNDIwNCBaICIgZmlsbD0iIzAwMDAwMCIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjUzIiB4PSIxNjMuNzUiIHk9IjI4LjI5MSI+Q29udGFjdDwvdGV4dD48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHgxPSI5OCIgeDI9IjI1MCIgeTE9IjM5IiB5Mj0iMzkiLz48cmVjdCBmaWxsPSJub25lIiBoZWlnaHQ9IjYiIHN0eWxlPSJzdHJva2U6I0M4MjkzMDtzdHJva2Utd2lkdGg6MS4wOyIgd2lkdGg9IjYiIHg9IjEwNSIgeT0iNDkuNzQ0MSIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjY1IiB4PSIxMTciIHk9IjU2LjUzNTIiPmZpcnN0bmFtZTwvdGV4dD48cmVjdCBmaWxsPSJub25lIiBoZWlnaHQ9IjYiIHN0eWxlPSJzdHJva2U6I0M4MjkzMDtzdHJva2Utd2lkdGg6MS4wOyIgd2lkdGg9IjYiIHg9IjEwNSIgeT0iNjYuMjMyNCIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjYyIiB4PSIxMTciIHk9IjczLjAyMzQiPmxhc3RuYW1lPC90ZXh0PjxyZWN0IGZpbGw9Im5vbmUiIGhlaWdodD0iNiIgc3R5bGU9InN0cm9rZTojQzgyOTMwO3N0cm9rZS13aWR0aDoxLjA7IiB3aWR0aD0iNiIgeD0iMTA1IiB5PSI4Mi43MjA3Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iOTgiIHg9IjExNyIgeT0iODkuNTExNyI+cGhvbmVudW1iZXI8L3RleHQ+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB4MT0iOTgiIHgyPSIyNTAiIHkxPSI5Ni40NjQ4IiB5Mj0iOTYuNDY0OCIvPjxlbGxpcHNlIGN4PSIxMDgiIGN5PSIxMTAuMjA5IiBmaWxsPSIjODRCRTg0IiByeD0iMyIgcnk9IjMiIHN0eWxlPSJzdHJva2U6IzAzODA0ODtzdHJva2Utd2lkdGg6MS4wOyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjEyOCIgeD0iMTE3IiB5PSIxMTQiPnNldFBob25lTnVtYmVyKCk8L3RleHQ+PC9nPjxnIGlkPSJlbGVtXzM0MjYiPjxyZWN0IGZpbGw9IiNGMUYxRjEiIGhlaWdodD0iNzcuOTUzMSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB3aWR0aD0iODAiIHg9IjciIHk9IjE4MC45NiIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjM2IiB4PSIyOSIgeT0iMTk2LjQ5NTIiPjM0MjY8L3RleHQ+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB4MT0iOCIgeDI9Ijg2IiB5MT0iMjAxLjQ0ODMiIHkyPSIyMDEuNDQ4MyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjQ0IiB4PSIxMyIgeT0iMjE4Ljk4MzQiPkNlZHJpYzwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI2OCIgeD0iMTMiIHk9IjIzNS40NzE3Ij5NYXJjaGFuZDwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIzNiIgeD0iMTMiIHk9IjI1MS45NiI+ODA3MjwvdGV4dD48L2c+PGcgaWQ9ImVsZW1fODk1NiI+PHJlY3QgZmlsbD0iI0YxRjFGMSIgaGVpZ2h0PSI3Ny45NTMxIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHdpZHRoPSI3OSIgeD0iMjAzLjUiIHk9IjE4MC45NiIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjM2IiB4PSIyMjUiIHk9IjE5Ni40OTUyIj44OTU2PC90ZXh0PjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgeDE9IjIwNC41IiB4Mj0iMjgxLjUiIHkxPSIyMDEuNDQ4MyIgeTI9IjIwMS40NDgzIi8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iNjciIHg9IjIwOS41IiB5PSIyMTguOTgzNCI+Q2wmIzIzMzttZW5jZTwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI0NSIgeD0iMjA5LjUiIHk9IjIzNS40NzE3Ij5GbCYjMjMzO21hbDwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI5IiB4PSIyMDkuNSIgeT0iMjUxLjk2Ij4wPC90ZXh0PjwvZz48IS0tZW50aXR5IG1hci0tPjxnIGlkPSJlbGVtX21hciI+PGVsbGlwc2UgY3g9IjM1IiBjeT0iNjMuOTgiIGZpbGw9IiNGMUYxRjEiIHJ4PSI4IiByeT0iOCIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMjciIHg9IjIxLjUiIHk9Ijk0LjUxNTIiPm1hcjwvdGV4dD48L2c+PCEtLWVudGl0eSBmbGUtLT48ZyBpZD0iZWxlbV9mbGUiPjxlbGxpcHNlIGN4PSIzMTMiIGN5PSI2My45OCIgZmlsbD0iI0YxRjFGMSIgcng9IjgiIHJ5PSI4IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxNyIgeD0iMzA0LjUiIHk9Ijk0LjUxNTIiPmZsZTwvdGV4dD48L2c+PCEtLXJldmVyc2UgbGluayBDb250YWN0IHRvIDM0MjYtLT48ZyBpZD0ibGlua19Db250YWN0XzM0MjYiPjxwYXRoIGNvZGVMaW5lPSIyNCIgZD0iTTEyMi4zNCwxMjcuNjAxOCBDMTA2LjA2LDE0Ny4zNDE4IDkzLjI2LDE2Mi44NSA3OC41LDE4MC43NCAiIGZpbGw9Im5vbmUiIGlkPSJDb250YWN0LWJhY2t0by0zNDI2IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDsiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDsiIHgxPSIxMjIuMzQiIHgyPSIxMjEuMjU4MiIgeTE9IjEyNy42MDE4IiB5Mj0iMTIxLjQzIi8+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7IiB4MT0iMTIyLjM0IiB4Mj0iMTMzLjYwMTgiIHkxPSIxMjcuNjAxOCIgeTI9IjEyMS40MyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIgeDE9IjEyMi4zNCIgeDI9IjEyNy40MyIgeTE9IjEyNy42MDE4IiB5Mj0iMTIxLjQzIi8+PC9nPjwhLS1yZXZlcnNlIGxpbmsgQ29udGFjdCB0byA4OTU2LS0+PGcgaWQ9ImxpbmtfQ29udGFjdF84OTU2Ij48cGF0aCBjb2RlTGluZT0iMjUiIGQ9Ik0yMDIuNTcyOCwxMjguNzI5OSBDMjExLjQyMjgsMTQ4LjQ2OTkgMjE3Ljg2LDE2Mi44NSAyMjUuODgsMTgwLjc0ICIgZmlsbD0ibm9uZSIgaWQ9IkNvbnRhY3QtYmFja3RvLTg5NTYiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIgeDE9IjIwMi41NzI4IiB4Mj0iMTkyLjAwMDEiIHkxPSIxMjguNzI5OSIgeTI9IjEyMS40MyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIgeDE9IjIwMi41NzI4IiB4Mj0iMjA2LjU5OTkiIHkxPSIxMjguNzI5OSIgeTI9IjEyMS40MyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIgeDE9IjIwMi41NzI4IiB4Mj0iMTk5LjMiIHkxPSIxMjguNzI5OSIgeTI9IjEyMS40MyIvPjwvZz48IS0tbGluayBtYXIgdG8gMzQyNi0tPjxnIGlkPSJsaW5rX21hcl8zNDI2Ij48cGF0aCBjb2RlTGluZT0iMjciIGQ9Ik0zNS42MSw3Mi44MyBDMzcuMTQsOTIuMzcgNDAuNzE0MywxMzguMjk4MSA0My41NDQzLDE3NC42NDgxICIgZmlsbD0ibm9uZSIgaWQ9Im1hci10by0zNDI2IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDsiLz48cG9seWdvbiBmaWxsPSIjMTgxODE4IiBwb2ludHM9IjQ0LjAxLDE4MC42Myw0Ny4yOTk0LDE3MS4zNDY3LDQzLjYyMTksMTc1LjY0NTEsMzkuMzIzNSwxNzEuOTY3Niw0NC4wMSwxODAuNjMiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjwvZz48IS0tbGluayBmbGUgdG8gODk1Ni0tPjxnIGlkPSJsaW5rX2ZsZV84OTU2Ij48cGF0aCBjb2RlTGluZT0iMjgiIGQ9Ik0zMDkuNDMsNzIuODMgQzMwMC41NCw5Mi4zNyAyNzkuNDIzNywxMzguODE4MiAyNjIuODkzNywxNzUuMTY4MiAiIGZpbGw9Im5vbmUiIGlkPSJmbGUtdG8tODk1NiIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7Ii8+PHBvbHlnb24gZmlsbD0iIzE4MTgxOCIgcG9pbnRzPSIyNjAuNDEsMTgwLjYzLDI2Ny43NzY4LDE3NC4wOTMxLDI2Mi40Nzk4LDE3Ni4wNzg1LDI2MC40OTQ0LDE3MC43ODE1LDI2MC40MSwxODAuNjMiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjwvZz48IS0tU1JDPVtMT3V6M2k4bTM4THRkeThaMjRMMnZReWlCOU5PRzVwMUpMc3JBNGJINFlSSzB0NEVCZU9KZzBKUnZfVVVkd3FEWE8zTHUyQmZZMHowclZPLUg0VU1YU01TeURPRFpqdFRya20xNXU3WjlHZGRCQ3BjQzA4Q3pQTWJPeEtramdhOEFzdnlobUxFdjdMN2hYNGlieGxZOXJsa0R6LWlVSnFqRW9zTnk5WU9aRDBvSEs3dE5YajZJdHgyclozMHpGRWVMQnh2OXdIWTA1YjFmR3VWTXZSb2FBcXRdLS0+PC9nPjwvc3ZnPg=="></figure>
+</section>
+<section id="méthode" class="level2">
+<h2>Méthode</h2>
+<ul>
+<li>Une <strong>méthode</strong> (d'instance) représente une
+fonctionnalité <span class="small">Elle agit sur une instance
+spécifique, l'objet cible</span></li>
+<li>Mot réservé spécifique pour accéder à l'<strong>objet cible</strong>
+<span class="small">Référence vers l'objet cible (this)</span></li>
+<li>Peuvent avoir une certaine <strong>visibilité</strong> <span
+class="small">Uniquement accessible dans la classe ou visible de
+l'extérieur</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Contact</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="c1">// ...</span>
+
+<span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="nf">SetPhoneNumber</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">phonenumber</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="n">phonenumber</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">phonenumber</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+</section>
+<section id="relation-entre-classes" class="level2">
+<h2>Relation entre classes</h2>
+<ul>
+<li>Une classe définit un nouveau type de donnée <span class="small">On
+peut l'utiliser pour définir des objets de ce type</span></li>
+<li>Plusieurs classes peuvent être liées entre elle <span
+class="small">Plusieurs types de relation sont possibles entre
+classes</span></li>
+<li>Création de dépendances entre classes <span class="small">Et donc
+entre les instances de ces classes</span></li>
+</ul>
+</section>
+<section id="représentation-dun-dé" class="level2 code">
+<h2 class="code">Représentation d'un dé</h2>
+<div class="pygments"><pre><span></span><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">Die</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="k">readonly</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">nbFaces</span><span class="p">;</span><span class="w"> </span><span class="c1">// Constante</span>
+<span class="w">  </span><span class="k">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">visibleFace</span><span class="p">;</span>
+<span class="w">  </span><span class="k">private</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="n">Random</span><span class="w"> </span><span class="n">generator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Random</span><span class="p">();</span>
+
+<span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">VisibleFace</span><span class="p">{</span>
+<span class="w">      </span><span class="k">get</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">visibleFace</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="nf">Die</span><span class="p">()</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="k">this</span><span class="p">(</span><span class="m">6</span><span class="p">){}</span><span class="w"> </span><span class="c1">// Appel de l&#39;autre constructeur</span>
+
+<span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="nf">Die</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">faces</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">      </span><span class="n">nbFaces</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">faces</span><span class="p">;</span>
+<span class="w">      </span><span class="n">Roll</span><span class="p">();</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Roll</span><span class="p">()</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">      </span><span class="n">visibleFace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">generator</span><span class="p">.</span><span class="n">Next</span><span class="p">(</span><span class="n">nbFaces</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">1</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+</section>
+<section id="création-de-dés" class="level2">
+<h2>Création de dés</h2>
+<div class="pygments"><pre><span></span><span class="n">Die</span><span class="w"> </span><span class="n">d1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Die</span><span class="p">();</span><span class="w"> </span><span class="c1">// Dé à 6 faces</span>
+<span class="n">Die</span><span class="w"> </span><span class="n">d2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Die</span><span class="p">(</span><span class="m">12</span><span class="p">);</span><span class="w"> </span><span class="c1">// Dé à 12 faces</span>
+
+<span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">d1</span><span class="p">.</span><span class="n">VisibleFace</span><span class="p">);</span>
+<span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">d2</span><span class="p">.</span><span class="n">VisibleFace</span><span class="p">);</span>
+</pre></div>
+
+<figure id="dices">
+</figure>
+</section>
+<section id="représentation-dune-paire-de-dés" class="level2 code">
+<h2 class="code">Représentation d’une paire de dés</h2>
+<div class="pygments"><pre><span></span><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">PairOfDice</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="k">private</span><span class="w"> </span><span class="k">readonly</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">nbFaces</span><span class="p">;</span>
+<span class="w">  </span><span class="k">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">visibleFace1</span><span class="p">,</span><span class="w"> </span><span class="n">visibleFace2</span><span class="p">;</span>
+<span class="w">  </span><span class="k">private</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="n">Random</span><span class="w"> </span><span class="n">generator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Random</span><span class="p">();</span>
+
+<span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="nf">PairOfDice</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">faces</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">      </span><span class="n">nbFaces</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">faces</span><span class="p">;</span>
+<span class="w">      </span><span class="n">visibleFace1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">generator</span><span class="p">.</span><span class="n">Next</span><span class="p">(</span><span class="n">nbFaces</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">1</span><span class="p">;</span>
+<span class="w">      </span><span class="n">visibleFace2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">generator</span><span class="p">.</span><span class="n">Next</span><span class="p">(</span><span class="n">nbFaces</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">1</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">PrintFaces</span><span class="p">()</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">      </span><span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">String</span><span class="p">.</span><span class="n">Format</span><span class="p">(</span><span class="s">&quot;{0}, {1}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">visibleFace1</span><span class="p">,</span><span class="w"> </span><span class="n">visibleFace2</span><span class="p">));</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+</section>
+<section id="composition-de-classe" class="level2">
+<h2>Composition de classe</h2>
+<ul>
+<li>Définir une nouvelle classe à partir d’autres <span class="small">En
+déclarant des variables d’instance des types utilisés</span></li>
+<li>Éviter la répétition de code inutile <span class="small">Facilite
+les corrections et les évolutions</span></li>
+<li>Construire des objets à partir de blocs simples <span
+class="small">Comme on le fait dans la vraie vie...</span></li>
+</ul>
+</section>
+<section id="représentation-dune-paire-de-dés-2" class="level2">
+<h2>Représentation d’une paire de dés (2)</h2>
+<div class="pygments"><pre><span></span><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">PairOfDice</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="k">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">nbFaces</span><span class="p">;</span>
+<span class="w">  </span><span class="k">private</span><span class="w"> </span><span class="n">Die</span><span class="w"> </span><span class="n">die1</span><span class="p">,</span><span class="w"> </span><span class="n">die2</span><span class="p">;</span><span class="w">        </span><span class="c1">// Composition à partir</span>
+<span class="w">                                  </span><span class="c1">// de deux objets Die</span>
+<span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="nf">PairOfDice</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">faces</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">      </span><span class="n">nbFaces</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">faces</span><span class="p">;</span>
+<span class="w">      </span><span class="n">die1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Die</span><span class="p">(</span><span class="n">faces</span><span class="p">);</span>
+<span class="w">      </span><span class="n">die2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Die</span><span class="p">(</span><span class="n">faces</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">PrintFaces</span><span class="p">()</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">      </span><span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">String</span><span class="p">.</span><span class="n">Format</span><span class="p">(</span><span class="s">&quot;{0}, {1}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">die1</span><span class="p">.</span><span class="n">VisibleFace</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">die2</span><span class="p">.</span><span class="n">VisibleFace</span><span class="p">));</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+</section>
+<section id="relation-de-composition" class="level2">
+<h2>Relation de composition</h2>
+<ul>
+<li>Une classe A est composée à partir d’une classe B <span
+class="small">Une instance de A a des variables d’instance de type
+B</span></li>
+<li>Également appelée relation has-a (ou is-made-up-of ) <span
+class="small">Une instance de A has-a une(des) instance(s) de
+B</span></li>
+</ul>
+<figure id="composition">
+</figure>
+<figure><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXMtYXNjaWkiIHN0YW5kYWxvbmU9Im5vIj8+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBjb250ZW50U3R5bGVUeXBlPSJ0ZXh0L2NzcyIgaGVpZ2h0PSIxNzBweCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSIgc3R5bGU9IndpZHRoOjExN3B4O2hlaWdodDoxNzBweDtiYWNrZ3JvdW5kOiNGRkZGRkY7IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAxMTcgMTcwIiB3aWR0aD0iMTE3cHgiIHpvb21BbmRQYW49Im1hZ25pZnkiPjxkZWZzLz48Zz48IS0tY2xhc3MgUGFpck9mRGljZS0tPjxnIGlkPSJlbGVtX1BhaXJPZkRpY2UiPjxyZWN0IGZpbGw9IiNGMUYxRjEiIGhlaWdodD0iNDgiIGlkPSJQYWlyT2ZEaWNlIiByeD0iMi41IiByeT0iMi41IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHdpZHRoPSIxMDMiIHg9IjciIHk9IjciLz48ZWxsaXBzZSBjeD0iMjIiIGN5PSIyMyIgZmlsbD0iI0FERDFCMiIgcng9IjExIiByeT0iMTEiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjxwYXRoIGQ9Ik0yNC40NzMxLDI5LjE0MzEgUTIzLjg5MjEsMjkuNDQxOSAyMy4yNTI5LDI5LjU5MTMgUTIyLjYxMzgsMjkuNzQwNyAyMS45MDgyLDI5Ljc0MDcgUTE5LjQwMTQsMjkuNzQwNyAxOC4wODE1LDI4LjA4ODkgUTE2Ljc2MTcsMjYuNDM3IDE2Ljc2MTcsMjMuMzE1OSBRMTYuNzYxNywyMC4xODY1IDE4LjA4MTUsMTguNTM0NyBRMTkuNDAxNCwxNi44ODI4IDIxLjkwODIsMTYuODgyOCBRMjIuNjEzOCwxNi44ODI4IDIzLjI2MTIsMTcuMDMyMiBRMjMuOTA4NywxNy4xODE2IDI0LjQ3MzEsMTcuNDgwNSBMMjQuNDczMSwyMC4yMDMxIFEyMy44NDIzLDE5LjYyMjEgMjMuMjQ4OCwxOS4zNTIzIFEyMi42NTUzLDE5LjA4MjUgMjIuMDI0NCwxOS4wODI1IFEyMC42Nzk3LDE5LjA4MjUgMTkuOTk0OSwyMC4xNDkyIFExOS4zMTAxLDIxLjIxNTggMTkuMzEwMSwyMy4zMTU5IFExOS4zMTAxLDI1LjQwNzcgMTkuOTk0OSwyNi40NzQ0IFEyMC42Nzk3LDI3LjU0MSAyMi4wMjQ0LDI3LjU0MSBRMjIuNjU1MywyNy41NDEgMjMuMjQ4OCwyNy4yNzEyIFEyMy44NDIzLDI3LjAwMTUgMjQuNDczMSwyNi40MjA0IFogIiBmaWxsPSIjMDAwMDAwIi8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iNzEiIHg9IjM2IiB5PSIyOC4yOTEiPlBhaXJPZkRpY2U8L3RleHQ+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB4MT0iOCIgeDI9IjEwOSIgeTE9IjM5IiB5Mj0iMzkiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHgxPSI4IiB4Mj0iMTA5IiB5MT0iNDciIHkyPSI0NyIvPjwvZz48IS0tY2xhc3MgRGllLS0+PGcgaWQ9ImVsZW1fRGllIj48cmVjdCBmaWxsPSIjRjFGMUYxIiBoZWlnaHQ9IjQ4IiBpZD0iRGllIiByeD0iMi41IiByeT0iMi41IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHdpZHRoPSI1NCIgeD0iMzEuNSIgeT0iMTE1Ii8+PGVsbGlwc2UgY3g9IjQ2LjUiIGN5PSIxMzEiIGZpbGw9IiNBREQxQjIiIHJ4PSIxMSIgcnk9IjExIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDsiLz48cGF0aCBkPSJNNDguOTczMSwxMzcuMTQzMSBRNDguMzkyMSwxMzcuNDQxOSA0Ny43NTI5LDEzNy41OTEzIFE0Ny4xMTM4LDEzNy43NDA3IDQ2LjQwODIsMTM3Ljc0MDcgUTQzLjkwMTQsMTM3Ljc0MDcgNDIuNTgxNSwxMzYuMDg4OSBRNDEuMjYxNywxMzQuNDM3IDQxLjI2MTcsMTMxLjMxNTkgUTQxLjI2MTcsMTI4LjE4NjUgNDIuNTgxNSwxMjYuNTM0NyBRNDMuOTAxNCwxMjQuODgyOCA0Ni40MDgyLDEyNC44ODI4IFE0Ny4xMTM4LDEyNC44ODI4IDQ3Ljc2MTIsMTI1LjAzMjIgUTQ4LjQwODcsMTI1LjE4MTYgNDguOTczMSwxMjUuNDgwNSBMNDguOTczMSwxMjguMjAzMSBRNDguMzQyMywxMjcuNjIyMSA0Ny43NDg4LDEyNy4zNTIzIFE0Ny4xNTUzLDEyNy4wODI1IDQ2LjUyNDQsMTI3LjA4MjUgUTQ1LjE3OTcsMTI3LjA4MjUgNDQuNDk0OSwxMjguMTQ5MiBRNDMuODEwMSwxMjkuMjE1OCA0My44MTAxLDEzMS4zMTU5IFE0My44MTAxLDEzMy40MDc3IDQ0LjQ5NDksMTM0LjQ3NDQgUTQ1LjE3OTcsMTM1LjU0MSA0Ni41MjQ0LDEzNS41NDEgUTQ3LjE1NTMsMTM1LjU0MSA0Ny43NDg4LDEzNS4yNzEyIFE0OC4zNDIzLDEzNS4wMDE1IDQ4Ljk3MzEsMTM0LjQyMDQgWiAiIGZpbGw9IiMwMDAwMDAiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIyMiIgeD0iNjAuNSIgeT0iMTM2LjI5MSI+RGllPC90ZXh0PjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgeDE9IjMyLjUiIHgyPSI4NC41IiB5MT0iMTQ3IiB5Mj0iMTQ3Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB4MT0iMzIuNSIgeDI9Ijg0LjUiIHkxPSIxNTUiIHkyPSIxNTUiLz48L2c+PCEtLXJldmVyc2UgbGluayBQYWlyT2ZEaWNlIHRvIERpZS0tPjxnIGlkPSJsaW5rX1BhaXJPZkRpY2VfRGllIj48cGF0aCBjb2RlTGluZT0iMSIgZD0iTTU4LjUsNjcuMjYgQzU4LjUsODQuOTQgNTguNSw5Ny4xMyA1OC41LDExNC43OSAiIGZpbGw9Im5vbmUiIGlkPSJQYWlyT2ZEaWNlLWJhY2t0by1EaWUiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjxwb2x5Z29uIGZpbGw9IiMxODE4MTgiIHBvaW50cz0iNTguNSw1NS4yNiw1NC41LDYxLjI2LDU4LjUsNjcuMjYsNjIuNSw2MS4yNiw1OC41LDU1LjI2IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDsiLz48L2c+PCEtLVNSQz1bMnFaQ0JGOUZTeWJDSmJOR3FqTExTQ2JDMUcwMF0tLT48L2c+PC9zdmc+"></figure>
+</section>
+<section id="lien-fort-entre-les-instances-composées" class="level2">
+<h2>Lien fort entre les instances composées</h2>
+<ul>
+<li>Objets contenus <strong>fortement liés</strong> à l’objet contenant
+<span class="small">Ils disparaissent de la mémoire avec l’objet
+contenant</span></li>
+<li>Instances contenues <strong>créées en même temps</strong> que la
+contenante <span class="small">Lors de l’initialisation de l’instance
+contenante</span></li>
+<li><strong>Avantages</strong> et inconvénients
+<ul>
+<li>On construit sur l’existant, plus grande modularité</li>
+<li>Redondance et duplication de données (nombre de faces)</li>
+<li>Souplesse et évolutivité (différents nombres de faces possible)</li>
+</ul></li>
+</ul>
+</section>
+<section id="agrégation" class="level2">
+<h2>Agrégation</h2>
+<ul>
+<li>Généralisation de la composition, sans l’appartenance <span
+class="small">Deux objets indépendamment créés vont pouvoir être
+agrégés</span></li>
+<li>Suppression de l’objet contenant sans toucher aux contenus</li>
+</ul>
+<figure id="aggregation">
+</figure>
+<figure><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXMtYXNjaWkiIHN0YW5kYWxvbmU9Im5vIj8+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBjb250ZW50U3R5bGVUeXBlPSJ0ZXh0L2NzcyIgaGVpZ2h0PSIxNzBweCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSIgc3R5bGU9IndpZHRoOjk0cHg7aGVpZ2h0OjE3MHB4O2JhY2tncm91bmQ6I0ZGRkZGRjsiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDk0IDE3MCIgd2lkdGg9Ijk0cHgiIHpvb21BbmRQYW49Im1hZ25pZnkiPjxkZWZzLz48Zz48IS0tY2xhc3MgQ2l0eS0tPjxnIGlkPSJlbGVtX0NpdHkiPjxyZWN0IGZpbGw9IiNGMUYxRjEiIGhlaWdodD0iNDgiIGlkPSJDaXR5IiByeD0iMi41IiByeT0iMi41IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHdpZHRoPSI1OCIgeD0iMTgiIHk9IjciLz48ZWxsaXBzZSBjeD0iMzMiIGN5PSIyMyIgZmlsbD0iI0FERDFCMiIgcng9IjExIiByeT0iMTEiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjxwYXRoIGQ9Ik0zNS40NzMxLDI5LjE0MzEgUTM0Ljg5MjEsMjkuNDQxOSAzNC4yNTI5LDI5LjU5MTMgUTMzLjYxMzgsMjkuNzQwNyAzMi45MDgyLDI5Ljc0MDcgUTMwLjQwMTQsMjkuNzQwNyAyOS4wODE1LDI4LjA4ODkgUTI3Ljc2MTcsMjYuNDM3IDI3Ljc2MTcsMjMuMzE1OSBRMjcuNzYxNywyMC4xODY1IDI5LjA4MTUsMTguNTM0NyBRMzAuNDAxNCwxNi44ODI4IDMyLjkwODIsMTYuODgyOCBRMzMuNjEzOCwxNi44ODI4IDM0LjI2MTIsMTcuMDMyMiBRMzQuOTA4NywxNy4xODE2IDM1LjQ3MzEsMTcuNDgwNSBMMzUuNDczMSwyMC4yMDMxIFEzNC44NDIzLDE5LjYyMjEgMzQuMjQ4OCwxOS4zNTIzIFEzMy42NTUzLDE5LjA4MjUgMzMuMDI0NCwxOS4wODI1IFEzMS42Nzk3LDE5LjA4MjUgMzAuOTk0OSwyMC4xNDkyIFEzMC4zMTAxLDIxLjIxNTggMzAuMzEwMSwyMy4zMTU5IFEzMC4zMTAxLDI1LjQwNzcgMzAuOTk0OSwyNi40NzQ0IFEzMS42Nzk3LDI3LjU0MSAzMy4wMjQ0LDI3LjU0MSBRMzMuNjU1MywyNy41NDEgMzQuMjQ4OCwyNy4yNzEyIFEzNC44NDIzLDI3LjAwMTUgMzUuNDczMSwyNi40MjA0IFogIiBmaWxsPSIjMDAwMDAwIi8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMjYiIHg9IjQ3IiB5PSIyOC4yOTEiPkNpdHk8L3RleHQ+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB4MT0iMTkiIHgyPSI3NSIgeTE9IjM5IiB5Mj0iMzkiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHgxPSIxOSIgeDI9Ijc1IiB5MT0iNDciIHkyPSI0NyIvPjwvZz48IS0tY2xhc3MgQ2l0aXplbi0tPjxnIGlkPSJlbGVtX0NpdGl6ZW4iPjxyZWN0IGZpbGw9IiNGMUYxRjEiIGhlaWdodD0iNDgiIGlkPSJDaXRpemVuIiByeD0iMi41IiByeT0iMi41IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHdpZHRoPSI4MCIgeD0iNyIgeT0iMTE1Ii8+PGVsbGlwc2UgY3g9IjIyIiBjeT0iMTMxIiBmaWxsPSIjQUREMUIyIiByeD0iMTEiIHJ5PSIxMSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7Ii8+PHBhdGggZD0iTTI0LjQ3MzEsMTM3LjE0MzEgUTIzLjg5MjEsMTM3LjQ0MTkgMjMuMjUyOSwxMzcuNTkxMyBRMjIuNjEzOCwxMzcuNzQwNyAyMS45MDgyLDEzNy43NDA3IFExOS40MDE0LDEzNy43NDA3IDE4LjA4MTUsMTM2LjA4ODkgUTE2Ljc2MTcsMTM0LjQzNyAxNi43NjE3LDEzMS4zMTU5IFExNi43NjE3LDEyOC4xODY1IDE4LjA4MTUsMTI2LjUzNDcgUTE5LjQwMTQsMTI0Ljg4MjggMjEuOTA4MiwxMjQuODgyOCBRMjIuNjEzOCwxMjQuODgyOCAyMy4yNjEyLDEyNS4wMzIyIFEyMy45MDg3LDEyNS4xODE2IDI0LjQ3MzEsMTI1LjQ4MDUgTDI0LjQ3MzEsMTI4LjIwMzEgUTIzLjg0MjMsMTI3LjYyMjEgMjMuMjQ4OCwxMjcuMzUyMyBRMjIuNjU1MywxMjcuMDgyNSAyMi4wMjQ0LDEyNy4wODI1IFEyMC42Nzk3LDEyNy4wODI1IDE5Ljk5NDksMTI4LjE0OTIgUTE5LjMxMDEsMTI5LjIxNTggMTkuMzEwMSwxMzEuMzE1OSBRMTkuMzEwMSwxMzMuNDA3NyAxOS45OTQ5LDEzNC40NzQ0IFEyMC42Nzk3LDEzNS41NDEgMjIuMDI0NCwxMzUuNTQxIFEyMi42NTUzLDEzNS41NDEgMjMuMjQ4OCwxMzUuMjcxMiBRMjMuODQyMywxMzUuMDAxNSAyNC40NzMxLDEzNC40MjA0IFogIiBmaWxsPSIjMDAwMDAwIi8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iNDgiIHg9IjM2IiB5PSIxMzYuMjkxIj5DaXRpemVuPC90ZXh0PjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgeDE9IjgiIHgyPSI4NiIgeTE9IjE0NyIgeTI9IjE0NyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgeDE9IjgiIHgyPSI4NiIgeTE9IjE1NSIgeTI9IjE1NSIvPjwvZz48IS0tcmV2ZXJzZSBsaW5rIENpdHkgdG8gQ2l0aXplbi0tPjxnIGlkPSJsaW5rX0NpdHlfQ2l0aXplbiI+PHBhdGggY29kZUxpbmU9IjEiIGQ9Ik00Nyw2Ny4yNiBDNDcsODQuOTQgNDcsOTcuMTMgNDcsMTE0Ljc5ICIgZmlsbD0ibm9uZSIgaWQ9IkNpdHktYmFja3RvLUNpdGl6ZW4iIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjxwb2x5Z29uIGZpbGw9Im5vbmUiIHBvaW50cz0iNDcsNTUuMjYsNDMsNjEuMjYsNDcsNjcuMjYsNTEsNjEuMjYsNDcsNTUuMjYiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjwvZz48IS0tU1JDPVtTeXVpZ0xKOHJ6TExTQ3Vpb1FuQXBHQzBdLS0+PC9nPjwvc3ZnPg=="></figure>
+</section>
+<section id="composition-et-agrégation" class="level2">
+<h2>Composition et agrégation</h2>
+<ul>
+<li>Relation de contenance entre objets</li>
+<li>Existence indépendante de l’objet contenu ou non
+<ul>
+<li>Oui dans le cas d’une agrégation (owns-a)</li>
+<li>Non dans le cas d’une composition (is-made-up-of)</li>
+</ul></li>
+</ul>
+</section>
+<section id="relation-dassociation" class="level2">
+<h2>Relation d'association</h2>
+<ul>
+<li>Relation d’utilisation entre deux classes (use) <span
+class="small">Beaucoup plus générale que composition et
+agrégation</span></li>
+<li>Plusieurs situations possibles d’utilisation
+<ul>
+<li>Recevoir un objet en paramètre</li>
+<li>Renvoyer un objet</li>
+<li>Utiliser un objet dans le corps d’une méthode</li>
+</ul></li>
+</ul>
+<figure id="association">
+</figure>
+<figure><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXMtYXNjaWkiIHN0YW5kYWxvbmU9Im5vIj8+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBjb250ZW50U3R5bGVUeXBlPSJ0ZXh0L2NzcyIgaGVpZ2h0PSIxNzBweCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSIgc3R5bGU9IndpZHRoOjEwM3B4O2hlaWdodDoxNzBweDtiYWNrZ3JvdW5kOiNGRkZGRkY7IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAxMDMgMTcwIiB3aWR0aD0iMTAzcHgiIHpvb21BbmRQYW49Im1hZ25pZnkiPjxkZWZzLz48Zz48IS0tY2xhc3MgRGllLS0+PGcgaWQ9ImVsZW1fRGllIj48cmVjdCBjb2RlTGluZT0iMSIgZmlsbD0iI0YxRjFGMSIgaGVpZ2h0PSI0OCIgaWQ9IkRpZSIgcng9IjIuNSIgcnk9IjIuNSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB3aWR0aD0iNTQiIHg9IjI0LjUiIHk9IjciLz48ZWxsaXBzZSBjeD0iMzkuNSIgY3k9IjIzIiBmaWxsPSIjQUREMUIyIiByeD0iMTEiIHJ5PSIxMSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7Ii8+PHBhdGggZD0iTTQxLjk3MzEsMjkuMTQzMSBRNDEuMzkyMSwyOS40NDE5IDQwLjc1MjksMjkuNTkxMyBRNDAuMTEzOCwyOS43NDA3IDM5LjQwODIsMjkuNzQwNyBRMzYuOTAxNCwyOS43NDA3IDM1LjU4MTUsMjguMDg4OSBRMzQuMjYxNywyNi40MzcgMzQuMjYxNywyMy4zMTU5IFEzNC4yNjE3LDIwLjE4NjUgMzUuNTgxNSwxOC41MzQ3IFEzNi45MDE0LDE2Ljg4MjggMzkuNDA4MiwxNi44ODI4IFE0MC4xMTM4LDE2Ljg4MjggNDAuNzYxMiwxNy4wMzIyIFE0MS40MDg3LDE3LjE4MTYgNDEuOTczMSwxNy40ODA1IEw0MS45NzMxLDIwLjIwMzEgUTQxLjM0MjMsMTkuNjIyMSA0MC43NDg4LDE5LjM1MjMgUTQwLjE1NTMsMTkuMDgyNSAzOS41MjQ0LDE5LjA4MjUgUTM4LjE3OTcsMTkuMDgyNSAzNy40OTQ5LDIwLjE0OTIgUTM2LjgxMDEsMjEuMjE1OCAzNi44MTAxLDIzLjMxNTkgUTM2LjgxMDEsMjUuNDA3NyAzNy40OTQ5LDI2LjQ3NDQgUTM4LjE3OTcsMjcuNTQxIDM5LjUyNDQsMjcuNTQxIFE0MC4xNTUzLDI3LjU0MSA0MC43NDg4LDI3LjI3MTIgUTQxLjM0MjMsMjcuMDAxNSA0MS45NzMxLDI2LjQyMDQgWiAiIGZpbGw9IiMwMDAwMDAiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIyMiIgeD0iNTMuNSIgeT0iMjguMjkxIj5EaWU8L3RleHQ+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB4MT0iMjUuNSIgeDI9Ijc3LjUiIHkxPSIzOSIgeTI9IjM5Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB4MT0iMjUuNSIgeDI9Ijc3LjUiIHkxPSI0NyIgeTI9IjQ3Ii8+PC9nPjwhLS1jbGFzcyBSYW5kb20tLT48ZyBpZD0iZWxlbV9SYW5kb20iPjxyZWN0IGNvZGVMaW5lPSIyIiBmaWxsPSIjRjFGMUYxIiBoZWlnaHQ9IjQ4IiBpZD0iUmFuZG9tIiByeD0iMi41IiByeT0iMi41IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHdpZHRoPSI4OSIgeD0iNyIgeT0iMTE1Ii8+PGVsbGlwc2UgY3g9IjIyIiBjeT0iMTMxIiBmaWxsPSIjQUREMUIyIiByeD0iMTEiIHJ5PSIxMSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7Ii8+PHBhdGggZD0iTTI0LjQ3MzEsMTM3LjE0MzEgUTIzLjg5MjEsMTM3LjQ0MTkgMjMuMjUyOSwxMzcuNTkxMyBRMjIuNjEzOCwxMzcuNzQwNyAyMS45MDgyLDEzNy43NDA3IFExOS40MDE0LDEzNy43NDA3IDE4LjA4MTUsMTM2LjA4ODkgUTE2Ljc2MTcsMTM0LjQzNyAxNi43NjE3LDEzMS4zMTU5IFExNi43NjE3LDEyOC4xODY1IDE4LjA4MTUsMTI2LjUzNDcgUTE5LjQwMTQsMTI0Ljg4MjggMjEuOTA4MiwxMjQuODgyOCBRMjIuNjEzOCwxMjQuODgyOCAyMy4yNjEyLDEyNS4wMzIyIFEyMy45MDg3LDEyNS4xODE2IDI0LjQ3MzEsMTI1LjQ4MDUgTDI0LjQ3MzEsMTI4LjIwMzEgUTIzLjg0MjMsMTI3LjYyMjEgMjMuMjQ4OCwxMjcuMzUyMyBRMjIuNjU1MywxMjcuMDgyNSAyMi4wMjQ0LDEyNy4wODI1IFEyMC42Nzk3LDEyNy4wODI1IDE5Ljk5NDksMTI4LjE0OTIgUTE5LjMxMDEsMTI5LjIxNTggMTkuMzEwMSwxMzEuMzE1OSBRMTkuMzEwMSwxMzMuNDA3NyAxOS45OTQ5LDEzNC40NzQ0IFEyMC42Nzk3LDEzNS41NDEgMjIuMDI0NCwxMzUuNTQxIFEyMi42NTUzLDEzNS41NDEgMjMuMjQ4OCwxMzUuMjcxMiBRMjMuODQyMywxMzUuMDAxNSAyNC40NzMxLDEzNC40MjA0IFogIiBmaWxsPSIjMDAwMDAwIi8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iNTciIHg9IjM2IiB5PSIxMzYuMjkxIj5SYW5kb208L3RleHQ+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB4MT0iOCIgeDI9Ijk1IiB5MT0iMTQ3IiB5Mj0iMTQ3Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB4MT0iOCIgeDI9Ijk1IiB5MT0iMTU1IiB5Mj0iMTU1Ii8+PC9nPjwhLS1saW5rIERpZSB0byBSYW5kb20tLT48ZyBpZD0ibGlua19EaWVfUmFuZG9tIj48cGF0aCBjb2RlTGluZT0iMyIgZD0iTTUxLjUsNTUuMjYgQzUxLjUsNzIuOTQgNTEuNSw5MS4xMyA1MS41LDEwOC43OSAiIGZpbGw9Im5vbmUiIGlkPSJEaWUtdG8tUmFuZG9tIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDsiLz48cG9seWdvbiBmaWxsPSIjMTgxODE4IiBwb2ludHM9IjUxLjUsMTE0Ljc5LDU1LjUsMTA1Ljc5LDUxLjUsMTA5Ljc5LDQ3LjUsMTA1Ljc5LDUxLjUsMTE0Ljc5IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDsiLz48L2c+PCEtLVNSQz1bSXl2OUIydk1TQ2JDdktlNml1OEl5ckJvU3hjMDBXZ3drZFBHQlcwMF0tLT48L2c+PC9zdmc+"></figure>
+</section>
+<section id="comparaison-des-relations" class="level2">
+<h2>Comparaison des relations</h2>
+<ul>
+<li>Classement des relations en fonction de leur force <span
+class="small">Association &lt; Agrégation &lt; Composition</span></li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>cycles de vie indépendants</th>
+<th>appartenance</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>association</td>
+<td>oui</td>
+<td><strong>non</strong></td>
+</tr>
+<tr class="even">
+<td>agrégation</td>
+<td>oui</td>
+<td>oui</td>
+</tr>
+<tr class="odd">
+<td>composition</td>
+<td><strong>non</strong></td>
+<td>oui</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="couplage-et-cohésion" class="level2">
+<h2>Couplage et cohésion</h2>
+<ul>
+<li>Classes <strong>couplées</strong> si l’une dépend de
+l’implémentation de l’autre <span class="small">Une classe accède aux
+variables d’instance de l’autre...</span></li>
+<li><strong>Cohésion</strong> d’une classe mesure son niveau
+d’indépendance <span class="small">Classe cohérente facilement
+maintenable et réutilisable</span></li>
+<li>Il faut minimiser ↓ le couplage et maximiser ↑ la cohésion <span
+class="small">Règle de bonne pratique en programmation orientée
+objet</span></li>
+</ul>
+</section>
+</body>
+</html>
