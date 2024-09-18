@@ -233,8 +233,8 @@ class Contact
 {
   // ...
 
-  public SetPhoneNumber(int phonenumber) {
-    this.phonenumber = phonenumber
+  public void SetPhoneNumber(int phonenumber) {
+    this.phonenumber = phonenumber;
   }
 }
 
