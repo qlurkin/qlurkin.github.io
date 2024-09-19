@@ -8,6 +8,8 @@ typst: true
 
 Activez la vérification de types dans **Visual Studio Code** (ou dans tout autre éditeur que vous utiliseriez).
 
+![Dans Visual Studio Code](./typecheck.png)
+
 ## Ensemble et dictionnaires
 
 1.  Définir un ensemble qui contient:
@@ -62,7 +64,7 @@ vous demande pour cela de définir les deux fonctions suivantes :
 - `def computeFreq(votes: list[str]) -> dict[str, int]` permet de construire un
   dictionnaire à partir de la liste des votes, représentant le tableau
   des fréquences des votes,
-- `def maxFreq(frequencies: dict[str, int]) -> int` renvoie la soupe qui a
+- `def maxFreq(frequencies: dict[str, int]) -> str` renvoie la soupe qui a
   obtenu le plus grand nombre de votes (ou une des soupes si plusieurs
   ont obtenu le plus grand nombre de votes).
 
