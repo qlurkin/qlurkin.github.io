@@ -27,7 +27,7 @@ def plantuml(elem, doc):
     if caption is not None:
         caption_html = f"<figcaption>{caption}</figcaption>"
 
-    html = f'<figure><img src="{base64}">{caption_html}</figure>'
+    html = f'<figure><img class="plantuml" src="{base64}">{caption_html}</figure>'
     return pf.RawBlock(html, format="html")
 
 

@@ -1,5 +1,3 @@
-import { build } from "build_lib"
+import { build } from 'build_lib'
 
-build([
-  'courses'
-])
+build(['courses'])

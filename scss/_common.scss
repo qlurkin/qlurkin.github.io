@@ -11,7 +11,6 @@
 }
 
 body {
-
   font-family: system-ui, sans-serif;
   font-weight: normal;
   -webkit-font-smoothing: antialiased;
@@ -24,15 +23,17 @@ h1,
 h2,
 h3,
 h4 {
-  font-family: 'Iowan Old Style', 'Palatino Linotype', 'URW Palladio L', P052, serif;
+  font-family: 'Iowan Old Style', 'Palatino Linotype', 'URW Palladio L', P052,
+    serif;
 }
 
 code {
-  font-size: .875em;
-  color: #AA0000;
+  font-size: 0.875em;
+  color: #aa0000;
   white-space: pre;
   // font-family: 'Fira Code', monospace;
-  font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
+  font-family: ui-monospace, 'Source Code Pro', Menlo, Consolas,
+    'DejaVu Sans Mono', monospace;
   font-weight: normal;
   // font-optical-sizing: auto;
   // font-variant-ligatures: none;
@@ -40,18 +41,19 @@ code {
 
 pre {
   // font-family: 'Fira Code', monospace;
-  font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
+  font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas,
+    'DejaVu Sans Mono', monospace;
   font-weight: normal;
   // font-optical-sizing: auto;
   // font-variant-ligatures: none;
   overflow-x: auto;
   padding: 1em 0.8em;
-  background: #F0F0F0;
+  background: #f0f0f0;
   border-radius: 4px;
   font-size: 75%;
 }
 
-pre>code {
+pre > code {
   font-size: 100%;
 }
 
@@ -65,7 +67,6 @@ h3,
 h4 {
   margin-bottom: 1rem;
 }
-
 
 h1,
 h2,
@@ -152,7 +153,7 @@ figure {
   }
 }
 
-h1>small {
+h1 > small {
   display: block;
   font-size: 0.6em;
   font-weight: normal;
@@ -226,7 +227,6 @@ h1>small {
   text-align: right;
 }
 
-
 code.wrap {
   white-space: pre-wrap !important;
 }
@@ -241,7 +241,7 @@ code.wrap {
   margin-bottom: 1rem;
 
   &::before {
-    content: "Terminal";
+    content: 'Terminal';
     display: block;
     background-color: black;
     text-align: center;
@@ -297,7 +297,6 @@ table {
 }
 
 @media print {
-
   p,
   h2,
   h3 {

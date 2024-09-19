@@ -201,9 +201,9 @@ h4 {
 
 code {
   font-size: 0.875em;
-  color: #AA0000;
+  color: #aa0000;
   white-space: pre;
-  font-family: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, "DejaVu Sans Mono", monospace;
+  font-family: ui-monospace, "Source Code Pro", Menlo, Consolas, "DejaVu Sans Mono", monospace;
   font-weight: normal;
 }
 
@@ -212,7 +212,7 @@ pre {
   font-weight: normal;
   overflow-x: auto;
   padding: 1em 0.8em;
-  background: #F0F0F0;
+  background: #f0f0f0;
   border-radius: 4px;
   font-size: 75%;
 }
