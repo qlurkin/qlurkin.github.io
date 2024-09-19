@@ -8,8 +8,6 @@ typst: true
 
 Activez la vérification de types dans **Visual Studio Code** (ou dans tout autre éditeur que vous utiliseriez).
 
-![Dans VSCode](./type_checking.png){.half}
-
 ## Ensemble et dictionnaires
 
 1.  Définir un ensemble qui contient:
