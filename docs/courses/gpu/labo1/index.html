@@ -1,37 +1,66 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lab 1 &amp; 2 - Beginning with Rust</title>
-    <script src="/document.js" defer></script>
-    
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Lab 1 &amp; 2 - Beginning with Rust</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="/document.css" />
 </head>
 <body>
-    <h1>Lab 1 &amp; 2 - Beginning with Rust</h1>
-    
-    <h2>Installation</h2>
-<p><em>Note: If you&#39;re on MacOS, make sure you&#39;ve installed Xcode and its developer tools by typing <code>xcode-select --install</code>. Note: If you&#39;re on Linux, make sure you&#39;ve installed gcc. Deb: <code>sudo apt install gcc</code>. Yum: <code>sudo yum -y install gcc</code>.</em></p>
-<p>Follow the instructions on <a href="https://rustup.rs">rustup.rs</a>. This will install <code>rustc</code> (the Rust compiler) and <code>cargo</code> (the build toolchain). <code>cargo</code> is for Rust what <code>npm</code> is for Javascript.</p>
+<header id="title-block-header">
+<h1 class="title">Lab 1 &amp; 2 - Beginning with Rust
+</h1>
+</header>
+<section id="installation" class="level2">
+<h2>Installation</h2>
+<p><em>Note: If you’re on MacOS, make sure you’ve installed Xcode and
+its developer tools by typing <code>xcode-select --install</code>. Note:
+If you’re on Linux, make sure you’ve installed gcc. Deb:
+<code>sudo apt install gcc</code>. Yum:
+<code>sudo yum -y install gcc</code>.</em></p>
+<p>Follow the instructions on <a href="https://rustup.rs">rustup.rs</a>.
+This will install <code>rustc</code> (the Rust compiler) and
+<code>cargo</code> (the build toolchain). <code>cargo</code> is for Rust
+what <code>npm</code> is for Javascript.</p>
+</section>
+<section id="create-a-project" class="level2">
 <h2>Create a project</h2>
 <p>To create a project use <code>cargo</code>.</p>
 <pre class="terminal">
 > cargo new project_name
 </pre>
-
 <p>This will create the following file tree.</p>
-<pre><code class="language-plaintext">📦 project-name
+<div class="pygments"><pre><span></span>📦 project-name
 ┣ 📂 src
 ┃ ┗ 📜 main.rs
 ┗ 📜 Cargo.toml
-</code></pre>
-<p>We can <code>cd</code> into the newly created project root folder.</p>
+</pre></div>
+
+<p>We can <code>cd</code> into the newly created project root
+folder.</p>
 <p>Then you can add your code in <code>main.rs</code>.</p>
-<pre><code class="language-rust">fn main() {
-    println!(&quot;Hello, world!&quot;);
-}
-</code></pre>
+<div class="pygments"><pre><span></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;Hello, world!&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+
 <p>You can then run it with:</p>
 <pre class="terminal">
 <b>> cargo run</b>
@@ -40,37 +69,48 @@
      <b style='color: chartreuse'>Running</b> `target/debug/project-name`
 Hello, world!
 </pre>
-
+</section>
+<section id="development-environment" class="level2">
 <h2>Development Environment</h2>
-<p>The use of an editor that support <em>Language Server Protocol</em> (LSP) is recommended. The best language server for Rust is <code>rust-analyzer</code>.</p>
-<p><strong>Visual Studio Code</strong> is a good choice and you can easily install <code>rust-analyzer</code> as a VSCode Extension.</p>
-<p>You can also use <strong>RustRover</strong> from JetBrains which is a new Rust IDE that is in free early access.</p>
+<p>The use of an editor that support <em>Language Server Protocol</em>
+(LSP) is recommended. The best language server for Rust is
+<code>rust-analyzer</code>.</p>
+<p><strong>Visual Studio Code</strong> is a good choice and you can
+easily install <code>rust-analyzer</code> as a VSCode Extension.</p>
+<p>You can also use <strong>RustRover</strong> from JetBrains which is a
+new Rust IDE that is in free early access.</p>
+</section>
+<section id="documentation" class="level2">
 <h2>Documentation</h2>
-<p>The best source to learn about Rust is the <strong><a href="https://doc.rust-lang.org/stable/book/">Rust Book</a></strong>. You can find more resource at <a href="https://www.rust-lang.org/learn">www.rust-lang.org/learn</a></p>
+<p>The best source to learn about Rust is the <strong><a
+href="https://doc.rust-lang.org/stable/book/">Rust Book</a></strong>.
+You can find more resource at <a
+href="https://www.rust-lang.org/learn">www.rust-lang.org/learn</a></p>
+</section>
+<section id="exercices" class="level2">
 <h2>Exercices</h2>
-<p>To train ourselves to write Rust programs, we will follow the <code>rustlings</code> project which contains small exercices to practice various aspects of the language.</p>
-<p class='center'><a href='https://github.com/rust-lang/rustlings'>github.com/rust-lang/rustlings</a></p>
-
-<p>To start with <code>rustlings</code>, you clone the repository latest release, <code>cd</code> in the root folder and use <code>cargo</code> to install it.</p>
-<pre class='terminal'>
-> git clone -b 5.6.0 --depth 1 https://github.com/rust-lang/rustlings
-> cd rustlings
-> cargo install --force --path .
-</pre>
-
-<p>This will install the <code>rustlings</code> command.</p>
-<p>To make <code>rust-analyzer</code> fully functional in the exercices, you must create project files by running:</p>
-<pre class='terminal' id='term1'>
-$> rustlings lsp
-</pre>
-
-<p>Then you can start the exercices by running:</p>
-<pre class='terminal' id='term2'>
-> rustlings watch
-</pre>
-
-<p>This will watch the exercices files and recompile it on each modification.</p>
-<p>While <code>rustlings watch</code> is running, you can type the <code>hint</code> subcommand to get hint about the Rust way of solving it. I recommend to check the hint on each exercices even if you manage to solve it by yourself.</p>
-
+<p>To train ourselves to write Rust programs, we will follow the
+<code>rustlings</code> project which contains small exercices to
+practice various aspects of the language.</p>
+<p class="center">
+<a href='https://github.com/rust-lang/rustlings'>github.com/rust-lang/rustlings</a>
+</p>
+<p>To start with <code>rustlings</code>, you install the
+<code>rustlings</code> command with cargo.</p>
+<div class="terminal">&gt; cargo install rustlings
+</div>
+<p>then you can initialize your working directory :</p>
+<div class="terminal">&gt; cd the_choosen_working_directory
+&gt; rustlings init
+</div>
+<p>This has create a <code>rustlings</code> folder. To start with the
+exercices run the <code>rustlings</code> command in the
+<code>rustlings</code> directory</p>
+<div class="terminal">&gt; cd rustlings
+&gt; rustlings
+</div>
+<p>This will watch the exercices files and recompile it on each
+modification.</p>
+</section>
 </body>
 </html>

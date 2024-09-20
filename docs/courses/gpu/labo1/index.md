@@ -4,7 +4,7 @@ title: Lab 1 & 2 - Beginning with Rust
 
 ## Installation
 
-*Note: If you're on MacOS, make sure you've installed Xcode and its developer tools by typing `xcode-select --install`. Note: If you're on Linux, make sure you've installed gcc. Deb: `sudo apt install gcc`. Yum: `sudo yum -y install gcc`.*
+_Note: If you're on MacOS, make sure you've installed Xcode and its developer tools by typing `xcode-select --install`. Note: If you're on Linux, make sure you've installed gcc. Deb: `sudo apt install gcc`. Yum: `sudo yum -y install gcc`._
 
 Follow the instructions on [rustup.rs](https://rustup.rs). This will install `rustc` (the Rust compiler) and `cargo` (the build toolchain). `cargo` is for Rust what `npm` is for Javascript.
 
@@ -47,7 +47,7 @@ Hello, world!
 
 ## Development Environment
 
-The use of an editor that support *Language Server Protocol* (LSP) is recommended. The best language server for Rust is `rust-analyzer`.
+The use of an editor that support _Language Server Protocol_ (LSP) is recommended. The best language server for Rust is `rust-analyzer`.
 
 **Visual Studio Code** is a good choice and you can easily install `rust-analyzer` as a VSCode Extension.
 
@@ -63,28 +63,24 @@ To train ourselves to write Rust programs, we will follow the `rustlings` projec
 
 <p class='center'><a href='https://github.com/rust-lang/rustlings'>github.com/rust-lang/rustlings</a></p>
 
-To start with `rustlings`, you clone the repository latest release, `cd` in the root folder and use `cargo` to install it.
+To start with `rustlings`, you install the `rustlings` command with cargo.
 
-<pre class='terminal'>
-> git clone -b 5.6.0 --depth 1 https://github.com/rust-lang/rustlings
+```terminal
+> cargo install rustlings
+```
+
+then you can initialize your working directory :
+
+```terminal
+> cd the_choosen_working_directory
+> rustlings init
+```
+
+This has create a `rustlings` folder. To start with the exercices run the `rustlings` command in the `rustlings` directory
+
+```terminal
 > cd rustlings
-> cargo install --force --path .
-</pre>
-
-This will install the `rustlings` command.
-
-To make `rust-analyzer` fully functional in the exercices, you must create project files by running:
-
-<pre class='terminal' id='term1'>
-$> rustlings lsp
-</pre>
-
-Then you can start the exercices by running:
-
-<pre class='terminal' id='term2'>
-> rustlings watch
-</pre>
+> rustlings
+```
 
 This will watch the exercices files and recompile it on each modification.
-
-While `rustlings watch` is running, you can type the `hint` subcommand to get hint about the Rust way of solving it. I recommend to check the hint on each exercices even if you manage to solve it by yourself.
