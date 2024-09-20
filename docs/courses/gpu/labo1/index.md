@@ -4,7 +4,9 @@ title: Lab 1 & 2 - Beginning with Rust
 
 ## Installation
 
-_Note: If you're on MacOS, make sure you've installed Xcode and its developer tools by typing `xcode-select --install`. Note: If you're on Linux, make sure you've installed gcc. Deb: `sudo apt install gcc`. Yum: `sudo yum -y install gcc`._
+_Note: If you're on MacOS, make sure you've installed Xcode and its developer tools by typing `xcode-select --install`._
+
+_Note: If you're on Linux, make sure you've installed gcc. Deb: `sudo apt install gcc`. Yum: `sudo yum -y install gcc`._
 
 Follow the instructions on [rustup.rs](https://rustup.rs). This will install `rustc` (the Rust compiler) and `cargo` (the build toolchain). `cargo` is for Rust what `npm` is for Javascript.
 
