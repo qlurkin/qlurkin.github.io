@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Project 2024 - Brussels Traffic Monitoring</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="/document.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Project 2024
+<small>Brussels Traffic Monitoring</small>
+</h1>
+</header>
+<figure>
+<img src="./Designer.jpeg" alt=" " />
+<figcaption aria-hidden="true"> </figcaption>
+</figure>
+<section id="introduction" class="level2">
+<h2>Introduction</h2>
+<p>For the purposes of mobility and sustainable development, a research
+project focused on analyzing <strong>traffic in Brussels</strong> will
+be initiated. To collect data, Brussels’ <strong>ANPR camera
+network</strong> will be enhanced, and the data produced will be
+<strong>centralized</strong> for analysis. These cameras are capable of
+recognizing license plates as well as various characteristics of
+vehicles.</p>
+<p>As part of this analysis, a number of <strong>metrics</strong> will
+need to be computed based on the data. These metrics will have to be
+computed <strong>as the data arrives</strong>, allowing for easy
+analysis of their evolution.</p>
+</section>
+<section id="microservices" class="level2">
+<h2>Microservices</h2>
+<p>In the ever-evolving landscape of software development and modern
+application design, <strong>microservice architecture</strong> has
+emerged as a transformative paradigm, revolutionizing the way we build
+and maintain <strong>complex systems</strong>. As organizations strive
+for <strong>agility</strong>, <strong>scalability</strong>, and the
+ability to <strong>adapt</strong> swiftly to changing market dynamics,
+microservices have become a fundamental approach for achieving these
+objectives.</p>
+<p>At its core, microservice architecture is a design pattern that
+structures an application as a <strong>collection</strong> of
+<strong>small</strong>, loosely coupled, and
+<strong>independently</strong> deployable services. Unlike traditional
+monolithic applications, where all functionalities are tightly
+integrated into a single codebase, microservices break down complex
+systems into a network of smaller, <strong>self-contained
+components</strong>, each responsible for a specific business
+capability.</p>
+<p>This architectural approach brings numerous benefits, including
+enhanced <strong>flexibility, scalability, and maintainability</strong>.
+Each microservice operates as a standalone entity, often with its own
+database and APIs, enabling development teams to work independently on
+different services. This decoupling of services fosters parallel
+development, enabling <strong>faster</strong> release cycles and the
+ability to respond rapidly to <strong>changing requirements</strong> or
+customer feedback.</p>
+<p>The advantages of microservices extend beyond development. Operations
+teams benefit from <strong>simpler deployment</strong> and monitoring,
+as each service can be <strong>updated or scaled independently</strong>
+without affecting the entire application. Fault isolation and recovery
+are also improved, as issues in one service are less likely to cascade
+throughout the entire system.</p>
+</section>
+<section id="architecture" class="level2">
+<h2>Architecture</h2>
+<p>Here are the services that will make up the system :</p>
+<ul>
+<li><p><strong>Map</strong>:</p>
+<ul>
+<li>Store the graph of the map.</li>
+<li>Compute the shortest path between points.</li>
+<li>API for map updates (roadworks, one-way street, road closure, new
+road, etc.).</li>
+<li>Cache relevant results to avoid redundant computations.</li>
+</ul></li>
+<li><p><strong>ANPR</strong>:</p>
+<ul>
+<li>Store events from ANPR cameras.</li>
+<li>Ping cameras for health checks.</li>
+<li>API to add or remove cameras.</li>
+<li>Ensure that only registered cameras can send data to your
+service.</li>
+</ul></li>
+<li><p><strong>Metrics</strong>:</p>
+<ul>
+<li>Add or remove metrics to compute over time.</li>
+<li>Compute the metrics.</li>
+<li>Store the computed data.</li>
+<li>Ensure security when executing client code.</li>
+</ul></li>
+</ul>
+</section>
+<section id="your-work" class="level2">
+<h2>Your Work</h2>
+<p>You will work in groups of two.</p>
+<p>You’ll be part of a <strong>development team</strong> responsible for
+one of these microservices.</p>
+<p>You will:</p>
+<ul>
+<li>meet with other teams to identify data flows and design <strong>API
+specifications</strong>,</li>
+<li>develop your service with a suitable frontend,</li>
+<li>ensure quality through <strong>unit testing</strong>,</li>
+<li>store the <strong>data</strong> for which you are responsible,</li>
+<li>account for the unavailability of other services,</li>
+<li>produce all the necessary documentation.</li>
+</ul>
+<p>You will also act as the <strong>administrator of a Kubernetes
+Cluster</strong> <em>(your Minikube installation)</em> that will run the
+entire system. In this role, you will:</p>
+<ul>
+<li>pull all services to <strong>deploy</strong> them on your
+cluster,</li>
+<li>ensure that services can <strong>communicate</strong> with each
+other within the cluster,</li>
+<li>expose all frontends and external APIs through a
+<strong>proxy</strong> like Traefik, nginx, or Apache,</li>
+<li><strong>monitor</strong> load and <strong>scale</strong> services
+individually,</li>
+<li>perform <strong>updates</strong> to services individually without
+service interruption.</li>
+</ul>
+</section>
+<section id="evaluation" class="level2">
+<h2>Evaluation</h2>
+<p>The evaluation will occur in several stages:</p>
+<ul>
+<li><p>3 <strong>progress presentations</strong> and a final
+presentation:</p>
+<ul>
+<li>1st presentation <em>(October 8 PM, 13% of the points)</em>:
+<ul>
+<li>Have a trivial service usable by cluster administrators.</li>
+<li>Deploy all services on your cluster and make them accessible via the
+proxy.</li>
+</ul></li>
+<li>2nd presentation <em>(13% of the points)</em>: details to be
+determined.</li>
+<li>3rd presentation <em>(13% of the points)</em>: details to be
+determined.</li>
+<li>Final presentation <em>(December 10 PM, 36% of the
+points)</em>.</li>
+</ul></li>
+<li><p>A <strong>Git repository</strong> <em>(25% of the points)</em>
+containing:</p>
+<ul>
+<li>The code for your service.</li>
+<li>The files necessary for deployment on Kubernetes.</li>
+<li>Complete API documentation.</li>
+<li>A report describing the methods used and issues encountered.</li>
+</ul></li>
+</ul>
+</section>
+</body>
+</html>
