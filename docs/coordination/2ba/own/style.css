@@ -1,0 +1,116 @@
+.program-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem 0.5rem;
+  font-weight: normal;
+  font-size: 0.8em;
+  margin: 1rem -1.5cm;
+  page-break-inside: avoid;
+
+  section {
+    background-color: rgb(231, 230, 230);
+    border-radius: 10px;
+    padding: 0.5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1em 1em 1px auto;
+    gap: 0.5rem 0.5rem;
+    grid-auto-flow: dense;
+  }
+
+  .block,
+  .quadrimestre {
+    font-family: system-ui, sans-serif;
+    font-size: 1em;
+    margin: 0;
+    text-align: center;
+    font-weight: 100;
+
+    &:before {
+      content: none;
+      counter-increment: none;
+    }
+  }
+
+  .block {
+    grid-column: span 2;
+  }
+
+  .ruler {
+    grid-column: span 2;
+    border-top: 1px solid gray;
+  }
+
+  .q1 {
+    grid-column: 1;
+  }
+
+  .q2 {
+    grid-column: 2;
+  }
+
+  .all {
+    grid-column: span 2;
+  }
+
+  .ue {
+    padding: 0.5rem;
+    border: 1px solid gray;
+    border-radius: 4px;
+    background-color: rgb(202, 223, 184);
+    grid-row: auto;
+    align-content: center;
+  }
+
+  .ue.in {
+    background-color: rgb(223, 202, 184);
+  }
+
+  .name,
+  .ects {
+    text-align: center;
+    p {
+      text-align: center;
+      margin-bottom: 0;
+    }
+  }
+
+  .name {
+    font-weight: 700;
+  }
+}
+
+.wide {
+  margin: 1rem -1.5cm;
+}
+
+table.wide {
+  font-size: 0.5em;
+  width: calc(100% + 3cm);
+}
+
+th {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+tr:nth-child(odd) {
+  background-color: rgb(231, 230, 230);
+}
+
+.logo {
+  height: 70px;
+  margin: 0.5rem;
+}
+
+.compact {
+  font-size: 0.8em;
+}
+
+iframe.center {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+ul li {
+  text-align: left;
+}
