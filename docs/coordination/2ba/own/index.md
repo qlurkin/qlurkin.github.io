@@ -160,7 +160,7 @@ css: style.css
 - Administration Linux
 - Introduction aux réseaux
 
-<div style="text-align: center;"><img src="./img/Tux.png" height="350"><img src="./img/website.png" height="300"><img src="./img/OSI_Model_v1.svg.png" height="350"></div>
+<div style="text-align: center;"><img src="./img/Tux.png" height="200"><img src="./img/website.png" height="200"><img src="./img/OSI_Model_v1.svg.png" height="200"></div>
 
 ## Programme des cours Master
 
@@ -347,7 +347,7 @@ css: style.css
   - Graphismes 3D
   - Calculs
 
-<iframe width="745" height="600" style="margin: 0 auto;" src="https://www.youtube.com/embed/Z3sC6cZTnyc?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; autoplay; loop" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<iframe class="center" src="https://ecambxl-my.sharepoint.com/personal/lur_ecam_be/_layouts/15/embed.aspx?UniqueId=a4a3d208-f9e4-43c4-92b8-4a1658f64d90&embed=%7B%22af%22%3Atrue%2C%22hvm%22%3Atrue%2C%22ust%22%3Atrue%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create" width="745" height="600" frameborder="0" scrolling="no" allowfullscreen title="cloth Simulation in Rust.mp4"></iframe>
 
 ## 4MIN - Operating Systems
 
