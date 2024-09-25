@@ -133,7 +133,7 @@ css: style.css
   - IA pour un jeu
   - Compétition réseau
 
-<iframe class="center" src="https://ecambxl.sharepoint.com/sites/PI2C-ProjetInformatique2021-2022/_layouts/15/embed.aspx?UniqueId=4164be2a-7165-4715-bf25-e12d99ac79b0&embed=%7B%22af%22%3Atrue%2C%22hvm%22%3Atrue%2C%22ust%22%3Atrue%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create" width="1280" height="720" frameborder="0" scrolling="no" allowfullscreen title="Othello 2022.mp4"></iframe>
+<iframe class="center" src="https://ecambxl.sharepoint.com/sites/PI2C-ProjetInformatique2021-2022/_layouts/15/embed.aspx?UniqueId=4164be2a-7165-4715-bf25-e12d99ac79b0&embed=%7B%22af%22%3Atrue%2C%22hvm%22%3Atrue%2C%22ust%22%3Atrue%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create" width="1000" height="565" frameborder="0" scrolling="no" allowfullscreen title="Othello 2022.mp4"></iframe>
 
 ## 3BE - Software engineering 1 & 2
 
