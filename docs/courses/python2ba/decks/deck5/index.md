@@ -248,7 +248,7 @@ True
 }
 ```
 
-## Sérialisation
+## Avec des `dict` et des `list`
 
 - **Sérialisation** d\'un dictionnaire en document JSON [Dictionnaire
   Python (`dict`) → document JSON
@@ -266,7 +266,7 @@ tvshows = {'Breaking Bad': bb, 'Skins': skins}
 document = json.dumps(tvshows, indent=4)
 ```
 
-## Désérialisation
+## Avec des `dict` et des `list`
 
 - **Désérialisation** d\'un document JSON en dictionnaire [Document
   JSON (`str`) → dictionnaire Python
@@ -282,6 +282,128 @@ document = '{"Belgium":{"capital":"Brussels","languages":["french","dutch",'
            '["mandarin chinese"]}}'
 
 countries = json.loads(document)
+```
+
+## Sérialisation
+
+- Comment fait on avec des `dataclass` ?
+
+```python
+@dataclass
+class Vector:
+  x: float
+  y: float
+
+v = Vector(2, 1)
+
+def encoder(obj: Any) -> Any:
+    if isinstance(obj, Vector):
+        return {"x": obj.x, "y": obj.y}
+
+    # On laisse passer les autres types sans les changer
+    return obj
+
+document = json.dumps(v, default=encoder)
+print(document)
+```
+
+```terminal
+{"x": 2, "y": 1}
+```
+
+## Sérialisation
+
+- Cela marche sur des structures imbriquée
+- fonction `default` est appelée sur tous ce qui ne se converti pas tout seul.
+
+```python
+data = [Vector(1, 1), {"point": Vector(2, 2)}]
+document = json.dumps(data, default=encoder)
+print(document)
+```
+
+```terminal
+[{"x": 1, "y": 1}, {"point": {"x": 2, "y": 2}}]
+```
+
+## Désérialisation
+
+- Pour la conversion inverse, il faut:
+  - **"deviner"** la classe
+  - appeler le **constructeur**
+- fonction `object_hook` est appelée sur tous les "objets JSON" _(aka `dict` Python)_
+
+```python
+def decoder(dct: dict) -> Any:
+    if 'x' in dct and 'y' in dct:
+       return Vector(dct['x'], dct['y'])
+
+    # Si on ne reconnait rien, on ne change rien
+    return dct
+
+data = json.loads(document, object_hook=decoder)
+```
+
+## Désérialisation
+
+- Cela fonctionne aussi avec les structures imbriquées.
+
+```python
+document = '[{"x": 1, "y": 1}, {"point": {"x": 2, "y": 2}}]'
+data = json.loads(document, object_hook=decoder)
+```
+
+```terminal
+[Vector(x=1, y=1), {'point': Vector(x=2, y=2)}]
+```
+
+## Attention avec classes imbriquées{.code}
+
+```python
+import json
+from dataclasses import dataclass
+from typing import Any
+
+@dataclass
+class Vector:
+  x: float
+  y: float
+
+@dataclass
+class Rectangle:
+  top_left: Vector
+  bottom_right: Vector
+
+def encoder(obj: Any) -> Any:
+  if isinstance(obj, Vector):
+    return {"x": obj.x, "y": obj.y}
+
+  if isinstance(obj, Rectangle):
+    # Attention, il faut faire l'encodage profond
+    return {
+      "top_left": encoder(obj.top_left),         # appel récursif à encoder
+      "bottom_right": encoder(obj.bottom_right)  # appel récursif à encoder
+    }
+
+  # On laisse passer les autres types sans les changer
+  return obj
+
+# Le décodage se fait du fond vers la surface
+def decoder(dct: dict) -> Any:
+    if 'x' in dct and 'y' in dct:
+       return Vector(dct['x'], dct['y'])
+
+    if 'top_left' in dct and 'bottom_right' in dct:
+      # À ce stade dct['top_left'] et dct['bottom_right'] sont déjà décodés
+      return Rectangle(dct['top_left'], dct['bottom_right'])
+
+    # Si on ne reconnait rien, on ne change rien
+    return dct
+
+r = Rectangle(Vector(0, 0), Vector(1, 1))
+r_json = json.dumps(r, default=encoder)
+print(r_json)
+print(json.loads(r_json, object_hook=decoder))
 ```
 
 ## Manipulation de documents CSV

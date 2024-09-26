@@ -307,8 +307,8 @@ crochets <code>[]</code></span></li>
 </pre></div>
 
 </section>
-<section id="sérialisation" class="level2">
-<h2>Sérialisation</h2>
+<section id="avec-des-dict-et-des-list" class="level2">
+<h2>Avec des <code>dict</code> et des <code>list</code></h2>
 <ul>
 <li><strong>Sérialisation</strong> d'un dictionnaire en document JSON
 <span class="small">Dictionnaire Python (<code>dict</code>) → document
@@ -327,8 +327,8 @@ caractères</span></li>
 </pre></div>
 
 </section>
-<section id="désérialisation" class="level2">
-<h2>Désérialisation</h2>
+<section id="avec-des-dict-et-des-list-1" class="level2">
+<h2>Avec des <code>dict</code> et des <code>list</code></h2>
 <ul>
 <li><strong>Désérialisation</strong> d'un document JSON en dictionnaire
 <span class="small">Document JSON (<code>str</code>) → dictionnaire
@@ -344,6 +344,130 @@ dictionnaire</span></li>
            <span class="s1">&#39;[&quot;mandarin chinese&quot;]}}&#39;</span>
 
 <span class="n">countries</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">document</span><span class="p">)</span>
+</pre></div>
+
+</section>
+<section id="sérialisation" class="level2">
+<h2>Sérialisation</h2>
+<ul>
+<li>Comment fait on avec des <code>dataclass</code> ?</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Vector</span><span class="p">:</span>
+  <span class="n">x</span><span class="p">:</span> <span class="nb">float</span>
+  <span class="n">y</span><span class="p">:</span> <span class="nb">float</span>
+
+<span class="n">v</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">encoder</span><span class="p">(</span><span class="n">obj</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Vector</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">obj</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="n">obj</span><span class="o">.</span><span class="n">y</span><span class="p">}</span>
+
+    <span class="c1"># On laisse passer les autres types sans les changer</span>
+    <span class="k">return</span> <span class="n">obj</span>
+
+<span class="n">document</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">encoder</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">document</span><span class="p">)</span>
+</pre></div>
+
+<div class="terminal">{&quot;x&quot;: 2, &quot;y&quot;: 1}
+</div>
+</section>
+<section id="sérialisation-1" class="level2">
+<h2>Sérialisation</h2>
+<ul>
+<li>Cela marche sur des structures imbriquée</li>
+<li>fonction <code>default</code> est appelée sur tous ce qui ne se
+converti pas tout seul.</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">Vector</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">{</span><span class="s2">&quot;point&quot;</span><span class="p">:</span> <span class="n">Vector</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)}]</span>
+<span class="n">document</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">encoder</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">document</span><span class="p">)</span>
+</pre></div>
+
+<div class="terminal">[{&quot;x&quot;: 1, &quot;y&quot;: 1}, {&quot;point&quot;: {&quot;x&quot;: 2, &quot;y&quot;: 2}}]
+</div>
+</section>
+<section id="désérialisation" class="level2">
+<h2>Désérialisation</h2>
+<ul>
+<li>Pour la conversion inverse, il faut:
+<ul>
+<li><strong>“deviner”</strong> la classe</li>
+<li>appeler le <strong>constructeur</strong></li>
+</ul></li>
+<li>fonction <code>object_hook</code> est appelée sur tous les “objets
+JSON” <em>(aka <code>dict</code> Python)</em></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">def</span> <span class="nf">decoder</span><span class="p">(</span><span class="n">dct</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+    <span class="k">if</span> <span class="s1">&#39;x&#39;</span> <span class="ow">in</span> <span class="n">dct</span> <span class="ow">and</span> <span class="s1">&#39;y&#39;</span> <span class="ow">in</span> <span class="n">dct</span><span class="p">:</span>
+       <span class="k">return</span> <span class="n">Vector</span><span class="p">(</span><span class="n">dct</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">],</span> <span class="n">dct</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">])</span>
+
+    <span class="c1"># Si on ne reconnait rien, on ne change rien</span>
+    <span class="k">return</span> <span class="n">dct</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">document</span><span class="p">,</span> <span class="n">object_hook</span><span class="o">=</span><span class="n">decoder</span><span class="p">)</span>
+</pre></div>
+
+</section>
+<section id="désérialisation-1" class="level2">
+<h2>Désérialisation</h2>
+<ul>
+<li>Cela fonctionne aussi avec les structures imbriquées.</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="n">document</span> <span class="o">=</span> <span class="s1">&#39;[{&quot;x&quot;: 1, &quot;y&quot;: 1}, {&quot;point&quot;: {&quot;x&quot;: 2, &quot;y&quot;: 2}}]&#39;</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">document</span><span class="p">,</span> <span class="n">object_hook</span><span class="o">=</span><span class="n">decoder</span><span class="p">)</span>
+</pre></div>
+
+<div class="terminal">[Vector(x=1, y=1), {&#39;point&#39;: Vector(x=2, y=2)}]
+</div>
+</section>
+<section id="attention-avec-classes-imbriquées" class="level2 code">
+<h2 class="code">Attention avec classes imbriquées</h2>
+<div class="pygments"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Vector</span><span class="p">:</span>
+  <span class="n">x</span><span class="p">:</span> <span class="nb">float</span>
+  <span class="n">y</span><span class="p">:</span> <span class="nb">float</span>
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Rectangle</span><span class="p">:</span>
+  <span class="n">top_left</span><span class="p">:</span> <span class="n">Vector</span>
+  <span class="n">bottom_right</span><span class="p">:</span> <span class="n">Vector</span>
+
+<span class="k">def</span> <span class="nf">encoder</span><span class="p">(</span><span class="n">obj</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+  <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Vector</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">obj</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="n">obj</span><span class="o">.</span><span class="n">y</span><span class="p">}</span>
+
+  <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Rectangle</span><span class="p">):</span>
+    <span class="c1"># Attention, il faut faire l&#39;encodage profond</span>
+    <span class="k">return</span> <span class="p">{</span>
+      <span class="s2">&quot;top_left&quot;</span><span class="p">:</span> <span class="n">encoder</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">top_left</span><span class="p">),</span>         <span class="c1"># appel récursif à encoder</span>
+      <span class="s2">&quot;bottom_right&quot;</span><span class="p">:</span> <span class="n">encoder</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">bottom_right</span><span class="p">)</span>  <span class="c1"># appel récursif à encoder</span>
+    <span class="p">}</span>
+
+  <span class="c1"># On laisse passer les autres types sans les changer</span>
+  <span class="k">return</span> <span class="n">obj</span>
+
+<span class="c1"># Le décodage se fait du fond vers la surface</span>
+<span class="k">def</span> <span class="nf">decoder</span><span class="p">(</span><span class="n">dct</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+    <span class="k">if</span> <span class="s1">&#39;x&#39;</span> <span class="ow">in</span> <span class="n">dct</span> <span class="ow">and</span> <span class="s1">&#39;y&#39;</span> <span class="ow">in</span> <span class="n">dct</span><span class="p">:</span>
+       <span class="k">return</span> <span class="n">Vector</span><span class="p">(</span><span class="n">dct</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">],</span> <span class="n">dct</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">])</span>
+
+    <span class="k">if</span> <span class="s1">&#39;top_left&#39;</span> <span class="ow">in</span> <span class="n">dct</span> <span class="ow">and</span> <span class="s1">&#39;bottom_right&#39;</span> <span class="ow">in</span> <span class="n">dct</span><span class="p">:</span>
+      <span class="c1"># À ce stade dct[&#39;top_left&#39;] et dct[&#39;bottom_right&#39;] sont déjà décodés</span>
+      <span class="k">return</span> <span class="n">Rectangle</span><span class="p">(</span><span class="n">dct</span><span class="p">[</span><span class="s1">&#39;top_left&#39;</span><span class="p">],</span> <span class="n">dct</span><span class="p">[</span><span class="s1">&#39;bottom_right&#39;</span><span class="p">])</span>
+
+    <span class="c1"># Si on ne reconnait rien, on ne change rien</span>
+    <span class="k">return</span> <span class="n">dct</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">Rectangle</span><span class="p">(</span><span class="n">Vector</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">Vector</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">r_json</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">encoder</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">r_json</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r_json</span><span class="p">,</span> <span class="n">object_hook</span><span class="o">=</span><span class="n">decoder</span><span class="p">))</span>
 </pre></div>
 
 </section>
