@@ -145,6 +145,29 @@ print(marchand['firstname'])          # Cédric
 print(marchand['address']['city'])    # Woluwé-Saint-Lambert
 ```
 
+## Attention aux références
+
+- **Qu\'affiche le code suivant** après exécution ?
+  - `magic1` appelle une méthode sur `data`
+  - `magic2` modifie la variable locale `data`
+
+```python
+def magic1(data: list[int]):
+    data.append(4)
+
+def magic2(data: list[int]):
+    data = []
+
+a = [0, 1, 2, 3]
+print(a)
+
+magic1(a)
+print(a)
+
+magic2(a)
+print(a)
+```
+
 ## Copie
 
 - Affecter une même liste à deux variables crée un **alias** [Même
@@ -539,57 +562,6 @@ v = u
 print(u == v)                  # True
 ```
 
-## Attention aux références
-
-- **Qu\'affiche le code suivant** après exécution ?
-  - `magic1` appelle une méthode sur `data`
-  - `magic2` modifie la variable locale `data`
-
-```python
-def magic1(data: list[int]):
-    data.append(4)
-
-def magic2(data: list[int]):
-    data = []
-
-a = [0, 1, 2, 3]
-print(a)
-
-magic1(a)
-print(a)
-
-magic2(a)
-print(a)
-```
-
-## Surcharge d'opérateur
-
-- On peut **redéfinir** les opérateurs arithmétiques [`__add__` pour
-  `+`, `__sub__` pour `-`, `__mul__` pour `*`\...]{.small}
-
-```python
-from typing import Self
-
-class Vector:
-  def __init__(self, x: float, y: float):
-    self.x = x
-    self.y = y
-
-  def __add__(self, other: Self):
-    return Vector(self.x + other.x, self.y + other.y)
-
-  # ...
-
-u = Vector(1, -1)
-v = Vector(2, 1)
-print(u + v)
-
-```
-
-```terminal
-(3, 0)
-```
-
 ## Surcharge d'opérateur
 
 - On peut **redéfinir** les opérateurs de comparaison [`__lt__` pour
@@ -619,6 +591,34 @@ print(u is v)                  # False
   références]{.small}
 - **Comparaison des identités** avec l\'opérateur `is` [Comparaison
   des références des objets]{.small}
+
+## Surcharge d'opérateur
+
+- On peut **redéfinir** les opérateurs arithmétiques [`__add__` pour
+  `+`, `__sub__` pour `-`, `__mul__` pour `*`\...]{.small}
+
+```python
+from typing import Self
+
+class Vector:
+  def __init__(self, x: float, y: float):
+    self.x = x
+    self.y = y
+
+  def __add__(self, other: Self):
+    return Vector(self.x + other.x, self.y + other.y)
+
+  # ...
+
+u = Vector(1, -1)
+v = Vector(2, 1)
+print(u + v)
+
+```
+
+```terminal
+(3, 0)
+```
 
 ## Composition d'objets
 

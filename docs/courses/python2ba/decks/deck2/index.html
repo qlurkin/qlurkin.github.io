@@ -202,6 +202,33 @@ class="small">Des séquences, ensembles et dictionnaires</span></li>
 </pre></div>
 
 </section>
+<section id="attention-aux-références" class="level2">
+<h2>Attention aux références</h2>
+<ul>
+<li><strong>Qu'affiche le code suivant</strong> après exécution ?
+<ul>
+<li><code>magic1</code> appelle une méthode sur <code>data</code></li>
+<li><code>magic2</code> modifie la variable locale
+<code>data</code></li>
+</ul></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">def</span> <span class="nf">magic1</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]):</span>
+    <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">magic2</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]):</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+
+<span class="n">magic1</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+
+<span class="n">magic2</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+
+</section>
 <section id="copie" class="level2">
 <h2>Copie</h2>
 <ul>
@@ -683,62 +710,7 @@ mémoire</span></li>
 </pre></div>
 
 </section>
-<section id="attention-aux-références" class="level2">
-<h2>Attention aux références</h2>
-<ul>
-<li><strong>Qu'affiche le code suivant</strong> après exécution ?
-<ul>
-<li><code>magic1</code> appelle une méthode sur <code>data</code></li>
-<li><code>magic2</code> modifie la variable locale
-<code>data</code></li>
-</ul></li>
-</ul>
-<div class="pygments"><pre><span></span><span class="k">def</span> <span class="nf">magic1</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]):</span>
-    <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
-
-<span class="k">def</span> <span class="nf">magic2</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]):</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
-
-<span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
-
-<span class="n">magic1</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
-
-<span class="n">magic2</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
-</pre></div>
-
-</section>
 <section id="surcharge-dopérateur" class="level2">
-<h2>Surcharge d’opérateur</h2>
-<ul>
-<li>On peut <strong>redéfinir</strong> les opérateurs arithmétiques
-<span class="small"><code>__add__</code> pour <code>+</code>,
-<code>__sub__</code> pour <code>-</code>, <code>__mul__</code> pour
-<code>*</code>...</span></li>
-</ul>
-<div class="pygments"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Self</span>
-
-<span class="k">class</span> <span class="nc">Vector</span><span class="p">:</span>
-  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
-
-  <span class="k">def</span> <span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Self</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">Vector</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="n">other</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="n">other</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
-
-  <span class="c1"># ...</span>
-
-<span class="n">u</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">v</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">u</span> <span class="o">+</span> <span class="n">v</span><span class="p">)</span>
-</pre></div>
-
-<div class="terminal">(3, 0)
-</div>
-</section>
-<section id="surcharge-dopérateur-1" class="level2">
 <h2>Surcharge d’opérateur</h2>
 <ul>
 <li>On peut <strong>redéfinir</strong> les opérateurs de comparaison
@@ -772,6 +744,34 @@ et non plus les références</span></li>
 <code>is</code> <span class="small">Comparaison des références des
 objets</span></li>
 </ul>
+</section>
+<section id="surcharge-dopérateur-1" class="level2">
+<h2>Surcharge d’opérateur</h2>
+<ul>
+<li>On peut <strong>redéfinir</strong> les opérateurs arithmétiques
+<span class="small"><code>__add__</code> pour <code>+</code>,
+<code>__sub__</code> pour <code>-</code>, <code>__mul__</code> pour
+<code>*</code>...</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Self</span>
+
+<span class="k">class</span> <span class="nc">Vector</span><span class="p">:</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+
+  <span class="k">def</span> <span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">Vector</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="n">other</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="n">other</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+
+  <span class="c1"># ...</span>
+
+<span class="n">u</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">u</span> <span class="o">+</span> <span class="n">v</span><span class="p">)</span>
+</pre></div>
+
+<div class="terminal">(3, 0)
+</div>
 </section>
 <section id="composition-dobjets" class="level2">
 <h2>Composition d’objets</h2>
