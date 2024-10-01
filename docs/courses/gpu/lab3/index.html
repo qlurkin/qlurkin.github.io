@@ -32,336 +32,305 @@
 </ul>
 <p>So we add these crates in our dependencies (<code>Cargo.toml</code>):</p>
 <pre><code class="language-toml">[package]
-name = &quot;gpu_game_of_life&quot;
+name = &quot;life&quot;
 version = &quot;0.1.0&quot;
 edition = &quot;2021&quot;
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [dependencies]
-wgpu = &quot;0.17&quot;
-winit = &quot;0.28&quot;
+wgpu = &quot;22.1&quot;
+winit = &quot;0.30&quot;
 log = &quot;0.4&quot;
-env_logger = &quot;0.10&quot;
-</code></pre>
-<h2>Create a Window</h2>
-<p>Here&#39;s a simple example of how to use <code>winit</code> to create a window:</p>
-<pre><code class="language-rust">use winit::{
-    event::{Event, WindowEvent},
-    event_loop::EventLoop,
-    window::WindowBuilder,
-};
-
-pub fn start() {
-  let event_loop = EventLoop::new();
-  let window = WindowBuilder::new().build(&amp;event_loop).unwrap();
-
-  event_loop.run(move |event, _, control_flow| {
-    // ControlFlow::Poll continuously runs the event loop, even if the OS hasn&#39;t
-    // dispatched any events. This is ideal for games and similar applications.
-    control_flow.set_poll();
-
-    match event {
-      Event::WindowEvent {
-        ref event,
-        window_id,
-      } if window_id == window.id() =&gt; {
-        match event {
-          WindowEvent::CloseRequested =&gt; {
-            println!(&quot;The close button was pressed; stopping&quot;);
-            control_flow.set_exit();
-          }
-          _ =&gt; {}
-        }
-      },
-      Event::MainEventsCleared =&gt; {
-        // Application update code.
-
-        // Queue a RedrawRequested event.
-        window.request_redraw();
-      },
-      Event::RedrawRequested(_) =&gt; {
-        // Redraw the application.
-      },
-      _ =&gt; ()
-    }
-  });
-}
-
-fn main() {
-  env_logger::init();
-  start();
-}
-</code></pre>
-<p>The <code>event_loop</code> will run the closure <code>|event, _, control_flow| { ... }</code> for all events. In this example, we deal with three kind of events:</p>
-<ul>
-<li><code>MainEventsCleared</code>: Emitted when all of the event loop’s input events have been processed. This event is useful if you want to do stuff that happens as the “main body” of your event loop.</li>
-<li><code>RedrawRequested</code>: which happens each time a redraw is requested by the OS or by our code with <code>window.request_redraw()</code>,</li>
-<li><code>WindowEvent</code>: which can be of different types. Here, we only look for <code>CloseRequested</code> which happens when we close the window.</li>
-</ul>
-<p>It is very important to enable logging via <code>env_logger::init()</code>. When wgpu hits any error it panics with a generic message, while logging the real error via the log crate. This means if you don&#39;t include <code>env_logger::init()</code>, wgpu will fail silently, leaving you very confused! This has been done at the beginning of the <code>main()</code> function. </p>
-<h2>The <code>window</code> module</h2>
-<p>To keep our code organized, we&#39;ll divide it into several modules. We&#39;ll put our <code>start()</code> function in a new module called <code>window</code>. First we declare the module in the <code>main.rs</code> file:</p>
-<pre><code class="language-rust">mod window
-</code></pre>
-<p>Then we create a new a new file named <code>window.rs</code> and we put the <code>start()</code> function in it. To make our function accessible outside the module we must declare it as public.</p>
-<pre><code class="language-rust">use winit::{
-    event::{Event, WindowEvent},
-    event_loop::EventLoop,
-    window::WindowBuilder,
-};
-
-pub fn start() {
-  //...
-}
-</code></pre>
-<p>To use the function in our <code>main.rs</code> we need to bring it into the scope with a <code>use</code> statement. So in the <code>main.rs</code> file we add:</p>
-<pre><code class="language-rust">use crate::window::start;
-</code></pre>
-<p>Now our <code>main.rs</code> look like this:</p>
-<pre><code class="language-rust">mod window;
-
-use crate::window::start;
-
-fn main() {
-  env_logger::init();
-  start();
-}
-</code></pre>
-<h2>The surface</h2>
-<p>To use our GPU, we need tu create a <code>Device</code>, a <code>Queue</code>, a <code>Surface</code> and multiple other things. To keep all these handles, we&#39;ll create a <code>struct</code> named <code>Context</code> in the <code>window.rs</code> file.</p>
-<pre><code class="language-rust">use winit::window::Window;
-
-pub struct Context {
-  surface: wgpu::Surface,
-  device: wgpu::Device,
-  queue: wgpu::Queue,
-  config: wgpu::SurfaceConfiguration,
-  size: winit::dpi::PhysicalSize&lt;u32&gt;,
-  // The window must be declared after the surface so
-  // it gets dropped after it as the surface contains
-  // unsafe references to the window&#39;s resources.
-  window: Window,
-}
-</code></pre>
-<p>To create a <code>Context</code>, let&#39;s create a <code>new</code> method for it:</p>
-<pre><code class="language-rust">impl Context {
-  // Creating some of the wgpu types requires async code
-  pub async fn new(window: Window) -&gt; Self {
-    let size = window.inner_size();
-
-    // The instance is the context for all other wgpu objects.
-    // Backends::all =&gt; Vulkan + Metal + DX12
-    let instance = wgpu::Instance::new(wgpu::InstanceDescriptor {
-      backends: wgpu::Backends::all(),
-      dx12_shader_compiler: Default::default(),
-    });
-    
-    // # Safety
-    //
-    // The surface needs to live as long as the window that created it.
-    // State owns the window so this should be safe.
-    let surface = unsafe { instance.create_surface(&amp;window) }.unwrap();
-
-    // The adapter is a handle to a physical graphics and/or compute device.
-    let adapter = instance.request_adapter(
-      &amp;wgpu::RequestAdapterOptions {
-        power_preference: wgpu::PowerPreference::default(),
-        compatible_surface: Some(&amp;surface),
-        force_fallback_adapter: false,
-      },
-    ).await.unwrap();
-
-    // The Device is an open connection to a graphics and/or compute device.
-    // The Queue is a handle to a command queue on a device.
-    let (device, queue) = adapter.request_device(
-      &amp;wgpu::DeviceDescriptor {
-        features: wgpu::Features::empty(),
-        limits: wgpu::Limits::default(),
-        label: None,
-      },
-      None, // Trace path
-    ).await.unwrap();
-
-    let surface_caps = surface.get_capabilities(&amp;adapter);
-    // Shader code in this tutorial assumes an sRGB surface texture. Using a
-    // different one will result all the colors coming out darker. If you want
-    // to support non sRGB surfaces, you&#39;ll need to account for that when
-    // drawing to the frame.
-    let surface_format = surface_caps.formats.iter()
-      .copied()
-      .find(|f| f.is_srgb())            
-      .unwrap_or(surface_caps.formats[0]);
-    let config = wgpu::SurfaceConfiguration {
-      usage: wgpu::TextureUsages::RENDER_ATTACHMENT,
-      format: surface_format,
-      width: size.width,
-      height: size.height,
-      present_mode: surface_caps.present_modes[0],
-      alpha_mode: surface_caps.alpha_modes[0],
-      view_formats: vec![],
-    };
-    surface.configure(&amp;device, &amp;config);
-
-    Self {
-      window,
-      surface,
-      device,
-      queue,
-      config,
-      size,
-    }
-  }
-}
-</code></pre>
-<p>Now we can create our <code>Context</code> in the <code>start()</code> function:</p>
-<pre><code class="language-rust">pub async fn start() {
-  // Window setup...
-
-  let mut context = Context::new(window).await;
-
-  // Event loop...
-}
-</code></pre>
-<p>At this point we get a borrowing error because <code>window</code> has moved into the <code>Context</code> and we can no longer use it in our event loop. We just need to use the <code>window</code> inside the <code>Context</code> instead in:</p>
-<pre><code class="language-rust">Event::MainEventsCleared =&gt; {
-  context.window.request_redraw();
-},
-</code></pre>
-<p>and in:</p>
-<pre><code class="language-rust">Event::WindowEvent {
-    ref event,
-    window_id,
-} if window_id == context.window.id() =&gt; {
-  // ...
-}
-</code></pre>
-<p>The <code>start()</code> function must become <code>async</code> because it call the <code>Context::new()</code> that is <code>async</code>. To run <code>start()</code> in our <code>main()</code> function we need to use a crate that is able to await future. We will use <code>pollster</code> so let&#39; add it to our <code>Cargo.toml</code>:</p>
-<pre><code class="language-toml">[dependencies]
-# other deps...
+env_logger = &quot;0.11&quot;
 pollster = &quot;0.3&quot;
 </code></pre>
-<p>We can now update the <code>main()</code> to use <code>pollster</code>:</p>
-<pre><code class="language-rust">fn main() {
-  env_logger::init();
-  pollster::block_on(start());
-}
-</code></pre>
-<p>If we want to support resizing in our application, we&#39;re going to need to reconfigure the surface every time the window&#39;s size changes. That&#39;s the reason we stored the physical size and the config used to configure the surface. With all of these, we can add a resize method to our <code>Context</code>:</p>
-<pre><code class="language-rust">pub fn resize(&amp;mut self, new_size: winit::dpi::PhysicalSize&lt;u32&gt;) {
-  if new_size.width &gt; 0 &amp;&amp; new_size.height &gt; 0 {
-    self.size = new_size;
-    self.config.width = new_size.width;
-    self.config.height = new_size.height;
-    self.surface.configure(&amp;self.device, &amp;self.config);
-  }
-}
-</code></pre>
-<p>And we can call it when we get a <code>Resized</code> event or a <code>ScaleFactorChanged</code> event in our event loop:</p>
-<pre><code class="language-rust">// ...
-match event {
-    Event::WindowEvent {
-        ref event,
-        window_id,
-    } if window_id == context.window.id() =&gt; {
-        match event {
-            WindowEvent::CloseRequested =&gt; {
-                println!(&quot;The close button was pressed; stopping&quot;);
-                control_flow.set_exit();
-            },
-            WindowEvent::Resized(physical_size) =&gt; {
-                println!(&quot;Scaling Window&quot;);
-                context.resize(*physical_size);
-            },
-            WindowEvent::ScaleFactorChanged { new_inner_size, .. } =&gt; {
-                println!(&quot;Scale Factor Changed&quot;);
-                context.resize(**new_inner_size);
-            },
-            _ =&gt; {}
-        }
-    },
-    // other events
-</code></pre>
-<h2>Our App</h2>
-<p>All the previous code is actually boilerplate not specific to our application. We will put the code of our app in a separate module named <code>app</code>. So we declare the module in <code>main.rs</code> and we add a <code>app.rs</code> file with:</p>
-<pre><code class="language-rust">pub struct App {
+<h2>Boilerplate</h2>
+<p>To get a window and the associated WebGPU Instance we have some boilerplate code to write. We will put that code in a Rust module named <code>runner</code>. To declare that module we will add <code>mod runner;</code> on top of <code>main.rs</code>. The code of the module will go in <code>runner.rs</code>:</p>
+<pre><code class="language-rust">use std::sync::Arc;
 
+use pollster::FutureExt;
+use wgpu::{Adapter, Device, Instance, PresentMode, Queue, Surface, SurfaceCapabilities};
+use winit::application::ApplicationHandler;
+use winit::dpi::PhysicalSize;
+use winit::event::WindowEvent;
+use winit::event_loop::{ActiveEventLoop, EventLoop};
+use winit::window::{Window, WindowId};
+
+pub struct Runner {
+    context: Option&lt;Context&gt;,
 }
+
+impl Runner {
+    pub fn new() -&gt; Self {
+        Self { context: None }
+    }
+
+    pub async fn run(&amp;mut self) {
+        let event_loop = EventLoop::new().unwrap();
+        let _ = event_loop.run_app(self);
+    }
+}
+
+impl ApplicationHandler for Runner {
+    fn resumed(&amp;mut self, event_loop: &amp;ActiveEventLoop) {
+        let window = event_loop
+            .create_window(Window::default_attributes().with_title(&quot;Game of Life&quot;))
+            .unwrap();
+        self.context = Some(Context::new(window));
+    }
+
+    fn window_event(
+        &amp;mut self,
+        event_loop: &amp;ActiveEventLoop,
+        window_id: WindowId,
+        event: WindowEvent,
+    ) {
+        let window = self.context.as_ref().unwrap().window();
+
+        if window.id() == window_id {
+            match event {
+                WindowEvent::CloseRequested =&gt; {
+                    event_loop.exit();
+                }
+                WindowEvent::Resized(physical_size) =&gt; {
+                    self.context.as_mut().unwrap().resize(physical_size);
+                }
+                WindowEvent::RedrawRequested =&gt; {}
+                _ =&gt; {}
+            }
+        }
+    }
+
+    fn about_to_wait(&amp;mut self, _event_loop: &amp;ActiveEventLoop) {
+        let window = self.context.as_ref().unwrap().window();
+        window.request_redraw();
+    }
+}
+
+pub struct Context {
+    surface: Surface&lt;&#39;static&gt;,
+    device: Device,
+    queue: Queue,
+    config: wgpu::SurfaceConfiguration,
+
+    size: PhysicalSize&lt;u32&gt;,
+    window: Arc&lt;Window&gt;,
+}
+
+impl Context {
+    pub fn new(window: Window) -&gt; Self {
+        let window_arc = Arc::new(window);
+        let size = window_arc.inner_size();
+        let instance = Self::create_gpu_instance();
+        let surface = instance.create_surface(window_arc.clone()).unwrap();
+        let adapter = Self::create_adapter(instance, &amp;surface);
+        let (device, queue) = Self::create_device(&amp;adapter);
+        let surface_caps = surface.get_capabilities(&amp;adapter);
+        let config = Self::create_surface_config(size, surface_caps);
+        surface.configure(&amp;device, &amp;config);
+
+        Self {
+            surface,
+            device,
+            queue,
+            config,
+            size,
+            window: window_arc,
+        }
+    }
+
+    fn create_surface_config(
+        size: PhysicalSize&lt;u32&gt;,
+        capabilities: SurfaceCapabilities,
+    ) -&gt; wgpu::SurfaceConfiguration {
+        let surface_format = capabilities
+            .formats
+            .iter()
+            .find(|f| f.is_srgb())
+            .copied()
+            .unwrap_or(capabilities.formats[0]);
+
+        wgpu::SurfaceConfiguration {
+            usage: wgpu::TextureUsages::RENDER_ATTACHMENT,
+            format: surface_format,
+            width: size.width,
+            height: size.height,
+            present_mode: PresentMode::AutoNoVsync,
+            alpha_mode: capabilities.alpha_modes[0],
+            view_formats: vec![],
+            desired_maximum_frame_latency: 2,
+        }
+    }
+
+    fn create_device(adapter: &amp;Adapter) -&gt; (Device, Queue) {
+        adapter
+            .request_device(
+                &amp;wgpu::DeviceDescriptor {
+                    required_features: wgpu::Features::empty(),
+                    required_limits: wgpu::Limits::default(),
+                    label: None,
+                    memory_hints: Default::default(),
+                },
+                None,
+            )
+            .block_on()
+            .unwrap()
+    }
+
+    fn create_adapter(instance: Instance, surface: &amp;Surface) -&gt; Adapter {
+        instance
+            .request_adapter(&amp;wgpu::RequestAdapterOptions {
+                power_preference: wgpu::PowerPreference::default(),
+                compatible_surface: Some(&amp;surface),
+                force_fallback_adapter: false,
+            })
+            .block_on()
+            .unwrap()
+    }
+
+    fn create_gpu_instance() -&gt; Instance {
+        Instance::new(wgpu::InstanceDescriptor {
+            backends: wgpu::Backends::PRIMARY,
+            ..Default::default()
+        })
+    }
+
+    pub fn resize(&amp;mut self, new_size: PhysicalSize&lt;u32&gt;) {
+        if new_size.width &gt; 0 &amp;&amp; new_size.height &gt; 0 {
+            self.size = new_size;
+
+            self.config.width = new_size.width;
+            self.config.height = new_size.height;
+
+            self.surface.configure(&amp;self.device, &amp;self.config);
+
+            println!(&quot;Resized to {:?} from state!&quot;, new_size);
+        }
+    }
+
+    pub fn window(&amp;self) -&gt; &amp;Window {
+        &amp;self.window
+    }
+}
+</code></pre>
+<p>The <code>Runner</code> struct that implement the <code>ApplicationHandler</code> trait is in charge of handleling the application. It use the <code>resumed()</code> method to create the window and a <code>Context</code> that contains all the relevent WebGPU handles.</p>
+<p>We will start the app by running the <code>run()</code> method. It will create an <code>event_loop</code> that will handle window&#39;s events and send them to the <code>window_event()</code> method.</p>
+<p>For now we only deal with 2 kinds of events:</p>
+<ul>
+<li><code>RedrawRequested</code>: which happens each time a redraw is requested by the OS or by our code with <code>window.request_redraw()</code>,</li>
+<li><code>CloseRequested</code>: which happens when we close the window.</li>
+<li><code>Resized</code>: which happens if the window is resized and we use it to reconfigure the WebGPU instance.</li>
+</ul>
+<p>It is very important to enable logging via <code>env_logger::init()</code>. When wgpu hits any error it panics with a generic message, while logging the real error via the log crate. This means if you don&#39;t include <code>env_logger::init()</code>, wgpu will fail silently, leaving you very confused! This has been done at the beginning of the <code>main()</code> function.</p>
+<p>Our <code>main.rs</code> will now look like this:</p>
+<pre><code class="language-rust">mod runner;
+
+use pollster::block_on;
+use runner::Runner;
+
+fn main() {
+    let mut runner = Runner::new();
+    block_on(runner.run());
+}
+</code></pre>
+<p>We must use <code>block_on</code> to launch <code>run()</code> because it&#39;s an asynchronous method. Some of the WebGPU initialisation is asynchronous.</p>
+<h2>Our App</h2>
+<p>We will put the code of our app in a separate module named <code>app</code>. So we declare the module in <code>main.rs</code> and we add a <code>app.rs</code> file with:</p>
+<pre><code class="language-rust">use winit::event::WindowEvent;
+
+use crate::runner::Context;
+
+pub struct App {}
 
 impl App {
-  pub fn new(context: &amp;mut Context) -&gt; Self {
-    Self {
-
+    pub fn new(context: &amp;mut Context) -&gt; Self {
+        Self {}
     }
-  }
 
-  pub fn input(&amp;mut self, event: &amp;WindowEvent) -&gt; bool {
-    return false;  // means that the event must be handeld in the start() function
-  }
+    pub fn input(&amp;mut self, _event: &amp;WindowEvent) -&gt; bool {
+        return false; // means that the event must be handeld in the start() function
+    }
 
-  pub fn update(&amp;mut self, context: &amp;mut Context) {
+    pub fn update(&amp;mut self, context: &amp;mut Context) {}
 
-  }
-
-  pub fn render(&amp;mut self, context: &amp;mut Context) -&gt; Result&lt;(), wgpu::SurfaceError&gt; {
-
-  }
+    pub fn render(&amp;mut self, context: &amp;mut Context) -&gt; Result&lt;(), wgpu::SurfaceError&gt; {
+        Ok(())
+    }
 }
 </code></pre>
 <p>The <code>new()</code> method will act as a constructor. The <code>input()</code> method will get events to let us react to user&#39;s inputs. The <code>update()</code> method will comtain the simulation logic. And the <code>render()</code> method will eb in charge of rendering the frame.</p>
-<p>We will create the <code>App</code> and call its methods in the <code>start()</code> function:</p>
-<pre><code class="language-rust">use crate::app::App;
+<p>We will create the <code>App</code> and call its methods in the <code>runner.rs</code> file:</p>
+<pre><code class="language-rust">//...
+
+use crate::app::App;  // new
+
+pub struct Runner {
+    context: Option&lt;Context&gt;,
+    app: Option&lt;App&gt;,         // new
+}
+
+impl Runner {
+    pub fn new() -&gt; Self {
+        Self {
+            context: None,
+            app: None,        // new
+        }
+    }
+
+    // ...
+}
+
 // ...
 
-pub async fn start() {
-  // ...
-  
-  let mut context = Context::new(window).await;
-  let mut app = App::new(&amp;mut context);
-
-  event_loop.run(move |event, _, control_flow| {
-    control_flow.set_poll();
-
-    match event {
-      Event::WindowEvent {
-        ref event,
-        window_id,
-      } if window_id == context.window.id() =&gt; {
-        if !app.input(event) {
-          match event {
-            // ...
-          }
-        }
-      },
-      // ...
-      Event::RedrawRequested(_) =&gt; {
-        app.update(&amp;mut context);
-        match app.render(&amp;mut context) {
-          Ok(_) =&gt; {}
-          // Reconfigure the surface if lost
-          Err(wgpu::SurfaceError::Lost) =&gt; context.resize(context.size),
-          // The system is out of memory, we should probably quit
-          Err(wgpu::SurfaceError::OutOfMemory) =&gt; {
-            eprintln!(&quot;Out Of Memory&quot;);
-            control_flow.set_exit()
-          }
-          // All other errors (Outdated, Timeout) should be resolved by
-          // the next frame
-          Err(e) =&gt; eprintln!(&quot;{:?}&quot;, e),
-        }
-      }
-      _ =&gt; (),
+impl ApplicationHandler for Runner {
+    fn resumed(&amp;mut self, event_loop: &amp;ActiveEventLoop) {
+        let window = event_loop
+            .create_window(Window::default_attributes().with_title(&quot;Hello!&quot;))
+            .unwrap();
+        self.context = Some(Context::new(window));
+        self.app = Some(App::new(self.context.as_mut().unwrap())); // new
     }
-  });
+
+    fn window_event(
+        &amp;mut self,
+        event_loop: &amp;ActiveEventLoop,
+        window_id: WindowId,
+        event: WindowEvent,
+    ) {
+        let window = self.context.as_ref().unwrap().window();
+
+        if window.id() == window_id {
+            if !self.app.as_mut().unwrap().input(&amp;event) { // new
+                match event {
+                    WindowEvent::CloseRequested =&gt; {
+                        event_loop.exit();
+                    }
+                    WindowEvent::Resized(physical_size) =&gt; {
+                        self.context.as_mut().unwrap().resize(physical_size);
+                    }
+                    WindowEvent::RedrawRequested =&gt; {
+                        self.app                                       // new
+                            .as_mut()                                  // new
+                            .unwrap()                                  // new
+                            .update(self.context.as_mut().unwrap());   // new
+                        self.app                                       // new
+                            .as_mut()                                  // new
+                            .unwrap()                                  // new
+                            .render(self.context.as_mut().unwrap())    // new
+                            .unwrap();                                 // new
+                    }
+                    _ =&gt; {}
+                }
+            } // new
+        }
+    }
+
+    // ...
 }
 </code></pre>
 <p>With this, all the methods of our <code>App</code> will be called at the right moment !</p>
-<p>We have pass the <code>Context</code> to our <code>new()</code> method. It&#39;s because we will need multiple fieldof it. The problem is that none of these fields are public. So let&#39;s add some getters to our <code>Context</code> struct:</p>
+<p>We have pass the <code>Context</code> to our methods. It&#39;s because we will need multiple field of it. The problem is that none of these fields are public. So let&#39;s add some getters to our <code>Context</code> struct:</p>
 <pre><code class="language-rust">impl Context {
- // ...
- pub fn window(&amp;self) -&gt; &amp;Window {
-    &amp;self.window
-  }
+  // ...
 
   pub fn surface(&amp;self) -&gt; &amp;wgpu::Surface {
     &amp;self.surface
@@ -394,11 +363,11 @@ pub async fn start() {
     context
       .device()
       .create_command_encoder(&amp;wgpu::CommandEncoderDescriptor {
-          label: Some(&quot;Render Encoder&quot;),
+        label: Some(&quot;Render Encoder&quot;),
       });
 
   {
-    let mut render_pass = encoder.begin_render_pass(&amp;wgpu::RenderPassDescriptor {
+    let _render_pass = encoder.begin_render_pass(&amp;wgpu::RenderPassDescriptor {
       label: Some(&quot;Render Pass&quot;),
       color_attachments: &amp;[Some(wgpu::RenderPassColorAttachment {
         view: &amp;view,
@@ -410,23 +379,24 @@ pub async fn start() {
             b: 0.4,
             a: 1.0,
           }),
-          store: true,
+          store: wgpu::StoreOp::Store,
         },
       })],
       depth_stencil_attachment: None,
+      occlusion_query_set: None,
+      timestamp_writes: None,
     });
   }
 
   // submit will accept anything that implements IntoIter
   context.queue().submit(std::iter::once(encoder.finish()));
   output.present();
-
   Ok(())
 }
 </code></pre>
 <p>You also have to specify what you want the render pass to do with the texture when it starts and when it ends:</p>
 <p>A <code>load</code> value of <code>Clear</code> indicates that you want the texture to be cleared when the render pass starts.
-A <code>store</code> value of <code>true</code> indicates that once the render pass is finished you want the results of any drawing done during the render pass saved into the texture.
+A <code>store</code> value of <code>wgpu::StoreOp::Store</code> indicates that once the render pass is finished you want the results of any drawing done during the render pass saved into the texture.
 Once the render pass has begun we do... nothing! At least for now. The act of starting the render pass with <code>load: Clear()</code> is enough to clear the texture view and the canvas.</p>
 <p>You&#39;ve probably notice the extra block (<code>{}</code>) around <code>encoder.begin_render_pass()</code>. <code>begin_render_pass()</code> borrows <code>encoder</code> mutably. We can&#39;t call <code>encoder.finish()</code> until we release that mutable borrow. The block tells rust to drop any variables within it when the code leaves that scope thus releasing the mutable borrow on <code>encoder</code> and allowing us to <code>finish()</code> it. If you don&#39;t like the <code>{}</code>, you can also use <code>drop(render_pass)</code> to achieve the same effect.</p>
 <p>Let&#39;s draw some triangles. Be warned now that it&#39;ll seem like a lot of work for such simple output, but that&#39;s because WebGPU is designed to render lots of geometry very efficiently. A side effect of this efficiency is that doing relatively simple things might feel unusually difficult, but that&#39;s the expectation if you&#39;re turning to an API like WebGPU—you want to do something a little more complex.</p>
@@ -458,7 +428,7 @@ struct Vertex {
 }
 </code></pre>
 <p>for now our vertices will just have a 2D position. WebGPU Buffer are just arrays of bytes (<code>&amp;[u8]</code>) so we will use the crate <code>bytemuck</code> to convert our array of <code>Vertex</code>. Let&#39;s add that dependency:</p>
-<pre><code class="language-toml">bytemuck = { version = &quot;1.12&quot;, features = [ &quot;derive&quot; ] }
+<pre><code class="language-toml">bytemuck = { version = &quot;1.18&quot;, features = [ &quot;derive&quot; ] }
 </code></pre>
 <p>The two derives <code>Pod</code> and <code>Zeroable</code> make our <code>Vertex</code> struct castable by <code>bytemuck</code>.</p>
 <p>Let&#39;s create the array of <code>Vertex</code> as a constant in the <code>app.rs</code> file:</p>
@@ -581,6 +551,7 @@ let render_pipeline =
         module: &amp;shader,
         entry_point: &quot;vertexMain&quot;,
         buffers: &amp;[vertex_buffer_layout],
+        compilation_options: wgpu::PipelineCompilationOptions::default(),
       },
       fragment: Some(wgpu::FragmentState {
         module: &amp;shader,
@@ -590,6 +561,7 @@ let render_pipeline =
           blend: Some(wgpu::BlendState::REPLACE),
           write_mask: wgpu::ColorWrites::ALL,
         })],
+        compilation_options: wgpu::PipelineCompilationOptions::default(),
       }),
       primitive: wgpu::PrimitiveState {
         topology: wgpu::PrimitiveTopology::TriangleList,
@@ -610,6 +582,7 @@ let render_pipeline =
         alpha_to_coverage_enabled: false,
       },
       multiview: None,
+      cache: None,
     });
 </code></pre>
 <p>Every pipeline needs a <code>layout</code> that describes what types of inputs (other than vertex buffers) the pipeline needs, but we don&#39;t really have any. Fortunately, we can pass <code>None</code> for now, and the pipeline builds its own layout from the shaders.</p>
@@ -650,8 +623,9 @@ impl App {
 </code></pre>
 <h2>Draw the square</h2>
 <p>And with that, you now have everything that you need in order to draw your square!</p>
-<pre><code class="language-rust">{
-  let mut render_pass = encoder.begin_render_pass(
+<pre><code class="language-rust">// in render
+{
+  let mut render_pass = encoder.begin_render_pass(  // modified
     // ...
   );
 
@@ -732,16 +706,16 @@ let bind_group = context
 <h2>Bind the bind group</h2>
 <p>Now that the bind group is created, you still need to tell WebGPU to use it when drawing. To do that you need to access it in the <code>render()</code> method. So you must add it to our <code>App</code> struct.</p>
 <pre><code class="language-rust">pub struct App {
-    vertex_buffer: wgpu::Buffer,
-    render_pipeline: wgpu::RenderPipeline,
-    num_vertices: u32,
-    bind_group: wgpu::BindGroup,   // new
+  vertex_buffer: wgpu::Buffer,
+  render_pipeline: wgpu::RenderPipeline,
+  num_vertices: u32,
+  bind_group: wgpu::BindGroup,   // new
 }
 
 impl App {
   pub fn new(context: &amp;mut Context) -&gt; Self {
     // ...
-    
+
     Self {
       vertex_buffer,
       render_pipeline,
@@ -803,7 +777,7 @@ fn vertexMain(@location(0) pos: vec2f) -&gt;
   // Subtract 1 after dividing by the grid size.
   let gridPos = (pos + 1.0) / grid - 1.0;
 
-  return vec4f(gridPos, 0.0, 1.0); 
+  return vec4f(gridPos, 0.0, 1.0);
 }
 // ...
 </code></pre>
@@ -819,7 +793,7 @@ fn vertexMain(@location(0) pos: vec2&lt;f32&gt;) -&gt; @builtin(position) vec4&l
   let cell = vec2f(1.0, 1.0);
   let cellOffset = cell / grid * 2.0;
   let gridPos = (pos + 1.0) / grid - 1.0 + cellOffset;
-  return vec4f(gridPos, 0.0, 1.0); 
+  return vec4f(gridPos, 0.0, 1.0);
 }
 </code></pre>
 <p>And this gives you exactly what you want.</p>
@@ -850,7 +824,7 @@ fn vertexMain(
   let cell = vec2f(i % grid.x, floor(i / grid.x));
   let cellOffset = cell / grid * 2.0;
   let gridPos = (pos + 1.0) / grid - 1.0 + cellOffset;
-  return vec4f(gridPos, 0.0, 1.0); 
+  return vec4f(gridPos, 0.0, 1.0);
 }
 // ...
 </code></pre>
@@ -863,9 +837,9 @@ fn vertexMain(
 
 <p>Tada! You can actually make this grid really, really big now and your average GPU handles it just fine. You&#39;ll stop seeing the individual squares long before you run into any GPU performance bottlenecks.</p>
 <p>To make our window square we can add this at the beginning of our <code>App.new()</code>.</p>
-<pre><code class="language-rust">context
+<pre><code class="language-rust">let _ = context
   .window()
-  .set_inner_size(PhysicalSize::new(1200, 1200));
+  .request_inner_size(PhysicalSize::new(1200, 1200));
 </code></pre>
 <h2>Manage cell state</h2>
 <p>Next, you need to control which cells on the grid render, based on some state that&#39;s stored on the GPU. This is important for the final simulation!</p>
@@ -875,15 +849,16 @@ fn vertexMain(
 <p>Storage buffers are general-use buffers that can be read and written to in compute shaders, and read in vertex shaders. They can be very large, and they don&#39;t need a specific declared size in a shader, which makes them much more like general memory. That&#39;s what you use to store the cell state.</p>
 <p><em>If storage buffers are so much more flexible, why bother with uniform buffers at all? It actually depends on your GPU hardware! There&#39;s a good chance that uniform buffers are given special treatment by your GPU in order to allow them to update and be read faster than a storage buffer, so for smaller amounts of data that have the potential to update frequently (like model, view, and projection matrices in 3D applications), uniforms are typically the safer choice for better performance.</em></p>
 <p>To create a storage buffer for your cell state, use what—by now—is probably starting to be a familiar-looking snippet of buffer creation code:</p>
-<pre><code class="language-rust">let cell_state_array = [0u32; (GRID_SIZE * GRID_SIZE) as usize];
-  let cell_state_storage =
-    context
-      .device()
-      .create_buffer_init(&amp;wgpu::util::BufferInitDescriptor {
-        label: Some(&quot;Storage Buffer&quot;),
-        contents: bytemuck::cast_slice(&amp;cell_state_array),
-        usage: wgpu::BufferUsages::STORAGE,
-      });
+<pre><code class="language-rust">// in App.new()
+let cell_state_array = [0u32; (GRID_SIZE * GRID_SIZE) as usize];
+let cell_state_storage =
+  context
+    .device()
+    .create_buffer_init(&amp;wgpu::util::BufferInitDescriptor {
+      label: Some(&quot;Storage Buffer&quot;),
+      contents: bytemuck::cast_slice(&amp;cell_state_array),
+      usage: wgpu::BufferUsages::STORAGE,
+    });
 </code></pre>
 <h2>Read the storage buffer in the shader</h2>
 <p>Next, update your shader to look at the contents of the storage buffer before you render the grid. This looks very similar to how uniforms were added previously.</p>
@@ -905,12 +880,13 @@ fn vertexMain(
   let state = f32(cellState[instance]);
   let cellOffset = cell / grid * 2.0;
   let gridPos = (pos*state + 1.0) / grid - 1.0 + cellOffset;
-  return vec4f(gridPos, 0.0, 1.0); 
+  return vec4f(gridPos, 0.0, 1.0);
 }
 </code></pre>
 <h2>Add the storage buffer to the bind group</h2>
-<p>Before you can see the cell state take effect, add the storage buffer to a bind group. Because it&#39;s part of the same <code>@group</code> as the uniform buffer, add it to the same bind group in the JavaScript code, as well.</p>
-<pre><code class="language-rust">let bind_group = context
+<p>Before you can see the cell state take effect, add the storage buffer to a bind group. Because it&#39;s part of the same <code>@group</code> as the uniform buffer, add it to the same bind group in the Rust code, as well.</p>
+<pre><code class="language-rust">// in App.new()
+let bind_group = context
   .device()
   .create_bind_group(&amp;wgpu::BindGroupDescriptor {
     label: Some(&quot;Bind Group&quot;),
@@ -920,10 +896,10 @@ fn vertexMain(
         binding: 0,
         resource: uniform_buffer.as_entire_binding(),
       },
-      wgpu::BindGroupEntry {
-        binding: 1,
-        resource: cell_state_storage.as_entire_binding(),
-      },
+      wgpu::BindGroupEntry {                                //new
+        binding: 1,                                         //new
+        resource: cell_state_storage.as_entire_binding(),   //new
+      },                                                    //new
     ],
   });
 </code></pre>
@@ -933,18 +909,18 @@ fn vertexMain(
 <p>Most simulations like the one you&#39;re building typically use at least two copies of their state. On each step of the simulation, they read from one copy of the state and write to the other. Then, on the next step, flip it and read from the state they wrote to previously. This is commonly referred to as a ping pong pattern because the most up-to-date version of the state bounces back and forth between state copies each step.</p>
 <p>Why is that necessary? Look at a simplified example: imagine that you&#39;re writing a very simple simulation in which you move any active blocks right by one cell each step. To keep things easy to understand, you define your data and simulation in JavaScript:</p>
 <pre><code class="language-javascript">// Example simulation. Don&#39;t copy into the project!
-const state = [1, 0, 0, 0, 0, 0, 0, 0];
+const state = [1, 0, 0, 0, 0, 0, 0, 0]
 
 function simulate() {
-  for (let i = 0; i &lt; state.length-1; ++i) {
+  for (let i = 0; i &lt; state.length - 1; ++i) {
     if (state[i] == 1) {
-      state[i] = 0;
-      state[i+1] = 1;
+      state[i] = 0
+      state[i + 1] = 1
     }
   }
 }
 
-simulate(); // Run the simulation for one step.
+simulate() // Run the simulation for one step.
 </code></pre>
 <p>But if you run that code, the active cell moves all the way to the end of the array in one step! Why? Because you keep updating the state in-place, so you move the active cell right, and then you look at the next cell and... hey! It&#39;s active! Better move it to the right again. The fact that you change the data at the same time that you observe it corrupts the results.</p>
 <p>By using the ping pong pattern, you ensure that you always perform the next step of the simulation using only the results of the last step.</p>
@@ -964,7 +940,8 @@ simulate(stateA, stateB);
 simulate(stateB, stateA);
 </code></pre>
 <p>Use this pattern in your own code by updating your storage buffer allocation in order to create two identical buffers. To help visualize the difference between the two buffers, fill them with different data:</p>
-<pre><code class="language-rust">let cell_state_array = [
+<pre><code class="language-rust">// in App.new()
+let cell_state_array = [
   [0u32; (GRID_SIZE * GRID_SIZE) as usize],
   [1u32; (GRID_SIZE * GRID_SIZE) as usize],
 ];
@@ -986,7 +963,8 @@ let cell_state_storage = [
 ];
 </code></pre>
 <p>To show the different storage buffers in your rendering, update your bind groups to have two different variants, as well:</p>
-<pre><code class="language-rust">let bind_group = [
+<pre><code class="language-rust">// in App.new()
+let bind_group = [
   context
     .device()
     .create_bind_group(&amp;wgpu::BindGroupDescriptor {
@@ -1082,7 +1060,8 @@ impl App {
 <p>You&#39;ve learned abstractly about compute shaders throughout this codelab, but what exactly are they?</p>
 <p>A compute shader is similar to vertex and fragment shaders in that they are designed to run with extreme parallelism on the GPU, but unlike the other two shader stages, they don&#39;t have a specific set of inputs and outputs. You are reading and writing data exclusively from sources you choose, like storage buffers. This means that instead of executing once for each vertex, instance, or pixel, you have to tell it how many invocations of the shader function you want. Then, when you run the shader, you are told which invocation is being processed, and you can decide what data you are going to access and which operations you are going to perform from there.</p>
 <p>Compute shaders must be created in a shader module, just like vertex and fragment shaders, so add that to your code to get started. As you might guess, given the structure of the other shaders that you&#39;ve implemented, the main function for your compute shader needs to be marked with the <code>@compute</code> attribute.</p>
-<pre><code class="language-rust">let compute_shader = context
+<pre><code class="language-rust">// in App.new()
+let compute_shader = context
   .device()
   .create_shader_module(wgpu::ShaderModuleDescriptor {
     label: Some(&quot;Compute Shader&quot;),
@@ -1107,7 +1086,8 @@ fn computeMain() {
 
 }
 </code></pre>
-<pre><code class="language-rust">let compute_shader = context
+<pre><code class="language-rust">// in App.new()
+let compute_shader = context
   .device()
   .create_shader_module(wgpu::ShaderModuleDescriptor {
     label: Some(&quot;Compute Shader&quot;),
@@ -1195,7 +1175,7 @@ fn computeMain(@builtin(global_invocation_id) cell: vec3u) {
 <p>One thing that you might notice from the above shader is that it largely uses the same inputs (uniforms and storage buffers) as your render pipeline. So you might think that you can simply use the same bind groups and be done with it, right? The good news is that you can! It just takes a bit more manual setup to be able to do that.</p>
 <p>Any time that you create a bind group, you need to provide a <code>BindGroupLayout.</code> Previously, you got that layout by calling <code>get_bind_group_layout()</code> on the render pipeline, which in turn created it automatically because you supplied <code>layout: None</code> when you created it. That approach works well when you only use a single pipeline, but if you have multiple pipelines that want to share resources, you need to create the layout explicitly, and then provide it to both the bind group and pipelines.</p>
 <p>To help understand why, consider this: in your render pipelines you use a single uniform buffer and a single storage buffer, but in the compute shader you just wrote, you need a second storage buffer. Because the two shaders use the same <code>@binding</code> values for the uniform and first storage buffer, you can share those between pipelines, and the render pipeline ignores the second storage buffer, which it doesn&#39;t use. You want to create a layout that describes all of the resources that are present in the bind group, not just the ones used by a specific pipeline.</p>
-<p>Create that layout before the <code>render_pipeline</code>, call device.createBindGroupLayout():</p>
+<p>Create that layout before the <code>render_pipeline</code>, call <code>device.createBindGroupLayout()</code>:</p>
 <pre><code class="language-rust">let bind_group_layout =
   context
     .device()
@@ -1313,6 +1293,8 @@ fn computeMain(@builtin(global_invocation_id) cell: vec3u) {
       layout: Some(&amp;pipeline_layout),
       module: &amp;compute_shader,
       entry_point: &quot;computeMain&quot;,
+      compilation_options: wgpu::PipelineCompilationOptions::default(),
+      cache: None,
     });
 </code></pre>
 <p>Notice that you pass in the new <code>pipeline_layout</code> instead of <code>None</code>, just like in the updated render pipeline, which ensures that both your render pipeline and your compute pipeline can use the same bind groups.</p>
@@ -1360,6 +1342,7 @@ impl App {
     {
       let mut compute_pass = encoder.begin_compute_pass(&amp;wgpu::ComputePassDescriptor {
         label: Some(&quot;Compute Pass&quot;),
+        timestamp_writes: None,
       });
     }
 
@@ -1385,10 +1368,11 @@ impl App {
     {
       let mut compute_pass = encoder.begin_compute_pass(&amp;wgpu::ComputePassDescriptor {
         label: Some(&quot;Compute Pass&quot;),
+        timestamp_writes: None,
       });
 
       compute_pass.set_pipeline(&amp;self.compute_pipeline);
-      compute_pass.set_bind_group(0, &amp;self.bind_group[(self.step % 2) as usize], &amp;[])
+      compute_pass.set_bind_group(0, &amp;self.bind_group[(self.step % 2) as usize], &amp;[]);
     }
 
     context.queue().submit(std::iter::once(encoder.finish()));
@@ -1411,10 +1395,11 @@ impl App {
     {
       let mut compute_pass = encoder.begin_compute_pass(&amp;wgpu::ComputePassDescriptor {
         label: Some(&quot;Compute Pass&quot;),
+        timestamp_writes: None,
       });
 
       compute_pass.set_pipeline(&amp;self.compute_pipeline);
-      compute_pass.set_bind_group(0, &amp;self.bind_group[(self.step % 2) as usize], &amp;[])
+      compute_pass.set_bind_group(0, &amp;self.bind_group[(self.step % 2) as usize], &amp;[]);
 
       let workgroup_count = (GRID_SIZE as f32 / WORKGROUP_SIZE as f32).ceil() as u32;
       compute_pass.dispatch_workgroups(workgroup_count, workgroup_count, 1);
@@ -1438,7 +1423,7 @@ impl App {
 </code></pre>
 <p>Like this if we see the cells blinking, it means that our compute shader works !</p>
 <h2>Implement the algorithm for the Game of Life</h2>
-<p>efore you update the compute shader to implement the final algorithm, you want to go back to the code that&#39;s initializing the storage buffer content and update it to produce a random buffer on each page load. (Regular patterns don&#39;t make for very interesting Game of Life starting points.) You can randomize the values however you want, but there&#39;s an easy way to start that gives reasonable results.</p>
+<p>Before you update the compute shader to implement the final algorithm, you want to go back to the code that&#39;s initializing the storage buffer content and update it to produce a random buffer on each page load. (Regular patterns don&#39;t make for very interesting Game of Life starting points.) You can randomize the values however you want, but there&#39;s an easy way to start that gives reasonable results.</p>
 <p>To start each cell in a random state, update the cellStateArray initialization to the following code:</p>
 <pre><code class="language-rust">let mut cell_state_array = [
   [0u32; (GRID_SIZE * GRID_SIZE) as usize],
