@@ -284,7 +284,7 @@ impl Runner {
 impl ApplicationHandler for Runner {
     fn resumed(&amp;mut self, event_loop: &amp;ActiveEventLoop) {
         let window = event_loop
-            .create_window(Window::default_attributes().with_title(&quot;Hello!&quot;))
+            .create_window(Window::default_attributes().with_title(&quot;Game of life&quot;))
             .unwrap();
         self.context = Some(Context::new(window));
         self.app = Some(App::new(self.context.as_mut().unwrap())); // new
