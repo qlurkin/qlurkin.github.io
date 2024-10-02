@@ -52,6 +52,13 @@ type: deck
 
 ```plantuml {.build}
 @startuml
+hide circle
+skinparam classAttributeIconSize 0
+skinparam object {
+BackgroundColor Yellow
+}
+skinparam defaultFontSize 24
+
 class GSM {
  marque
  modéle
@@ -69,9 +76,9 @@ object 3426 {
 
 circle a
 
-GSM }-- 3426
+GSM }-left- 3426
 
-a --> 3426
+a -right-> 3426
 
 @enduml
 ```
@@ -88,6 +95,13 @@ a --> 3426
 
 ```plantuml {.build}
 @startuml
+hide circle
+skinparam classAttributeIconSize 0
+skinparam object {
+BackgroundColor Yellow
+}
+skinparam defaultFontSize 24
+
 class GSM {
  marque
  modéle
@@ -108,8 +122,8 @@ circle b
 
 GSM }-- 3426
 
-a --> 3426
-b --> 3426
+a -right-> 3426
+b -left-> 3426
 
 @enduml
 ```
@@ -187,6 +201,13 @@ class Contact
 
 ```plantuml {.build}
 @startuml
+hide circle
+skinparam classAttributeIconSize 0
+skinparam object {
+BackgroundColor Yellow
+}
+skinparam defaultFontSize 24
+
 class Contact {
  -firstname
  -lastname
@@ -213,8 +234,8 @@ circle fle
 Contact }-- 3426
 Contact }-- 8956
 
-mar --> 3426
-fle --> 8956
+mar -right-> 3426
+fle -left-> 8956
 
 @enduml
 ```
@@ -358,6 +379,10 @@ public class PairOfDice
 
 ```plantuml {.build}
 @startuml
+hide circle
+skinparam classAttributeIconSize 0
+skinparam defaultFontSize 24
+
 PairOfDice *-- Die
 @enduml
 ```
@@ -385,6 +410,10 @@ PairOfDice *-- Die
 
 ```plantuml {.build}
 @startuml
+hide circle
+skinparam classAttributeIconSize 0
+skinparam defaultFontSize 24
+
 City o-- Citizen
 @enduml
 ```
@@ -411,6 +440,10 @@ City o-- Citizen
 
 ```plantuml {.build}
 @startuml
+hide circle
+skinparam classAttributeIconSize 0
+skinparam defaultFontSize 24
+
 class Die
 class Random
 Die --> Random

@@ -1,6 +1,6 @@
 ---
 title: PO3T - Cours 2
-subtitle: Visibilité, Encapsulation et Immuabilité
+subtitle: Encapsulation et Immuabilité
 type: deck
 ---
 
