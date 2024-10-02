@@ -135,7 +135,7 @@ for event in pygame.event.get():
 - [Les constantes contenant les codes des touches de
   modification](https://www.pygame.org/docs/ref/key.html#key-modifiers-label)
 
-## Clavier
+## Clavier{.code}
 
 ```python
 import pygame
@@ -196,7 +196,7 @@ if event.mod & (pygame.KMOD_SHIFT | pygame.KMOD_ALT):
   - `button`: 1, 2 ou 3 en fonction du bouton pressé (gauche, milieu ou droit)
   - `pos`: les coordonnées de la souris
 
-## Souris
+## Souris{.code}
 
 ```python
 import pygame
@@ -226,7 +226,6 @@ while True:
   pygame.draw.circle(screen, (255, 0, 0), posCircle, 20)
 
   pygame.display.flip()
-
 ```
 
 ## Widget
