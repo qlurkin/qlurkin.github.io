@@ -62,6 +62,36 @@ while True:
   pygame.display.flip()
 ```
 
+## Avec des classe {.code}
+
+```python
+import pygame
+import sys
+
+
+class App:
+    def __init__(self):
+        pygame.init()
+        self.screen = pygame.display.set_mode((800, 600))
+
+    def draw(self):
+        pygame.draw.circle(self.screen, (255, 0, 0), (100, 300), 20)
+
+    def run(self):
+        clock = pygame.time.Clock()
+        while True:
+            clock.tick(60)
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    sys.exit()
+
+            self.draw()
+            pygame.display.flip()
+
+
+App().run()
+```
+
 ## Animation
 
 - Pour animer le cercle, il suffit de le dessiner à une **position un peu
@@ -70,34 +100,52 @@ while True:
 ```python
 import pygame
 import sys
+from dataclasses import dataclass
 
-# initialisation de pygame
-pygame.init()
 
-# demande une fenêtre de 800x600 pixels
-screen = pygame.display.set_mode((800, 600))
+@dataclass
+class Ball:
+    x: int
+    y: int
 
-clock = pygame.time.Clock()
+    def move(self, dx, dy):
+        self.x += dx
+        self.y += dy
 
-xCircle = 100
+    def draw(self, screen):
+        pygame.draw.circle(screen, (255, 0, 0), (self.x, self.y), 20)
 
-while True:
-  clock.tick(60)
-  for event in pygame.event.get():
-    if event.type == pygame.QUIT:
-      sys.exit()
 
-  # dessine un rectangle noir pour effacer l'image
-  pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(0, 0, 800, 600))
+class App:
+    def __init__(self):
+        pygame.init()
+        self.screen = pygame.display.set_mode((800, 600))
+        self.ball = Ball(100, 300)
 
-  # dessine un cercle rouge centré en (xCircle, 300) de rayon 20
-  pygame.draw.circle(screen, (255, 0, 0), (xCircle, 300), 20)
+    def draw(self):
+        self.ball.draw(self.screen)
 
-  # déplace le cercle
-  xCircle += 1
+    def update(self):
+        self.ball.move(1, 0)
 
-  # affiche l'image qui vient d'être dessinée
-  pygame.display.flip()
+    def run(self):
+        clock = pygame.time.Clock()
+        while True:
+            clock.tick(60)
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    sys.exit()
+
+            self.update()
+
+            # dessine un rectangle noir pour effacer l'image
+            pygame.draw.rect(self.screen, (0, 0, 0), pygame.Rect(0, 0, 800, 600))
+            self.draw()
+
+            pygame.display.flip()
+
+
+App().run()
 ```
 
 ## Événements
