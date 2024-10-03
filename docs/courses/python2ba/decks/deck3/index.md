@@ -70,23 +70,23 @@ import sys
 
 
 class App:
-    def __init__(self):
-        pygame.init()
-        self.screen = pygame.display.set_mode((800, 600))
+  def __init__(self):
+    pygame.init()
+    self.screen = pygame.display.set_mode((800, 600))
 
-    def draw(self):
-        pygame.draw.circle(self.screen, (255, 0, 0), (100, 300), 20)
+  def draw(self):
+    pygame.draw.circle(self.screen, (255, 0, 0), (100, 300), 20)
 
-    def run(self):
-        clock = pygame.time.Clock()
-        while True:
-            clock.tick(60)
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    sys.exit()
+  def run(self):
+    clock = pygame.time.Clock()
+    while True:
+      clock.tick(60)
+      for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+          sys.exit()
 
-            self.draw()
-            pygame.display.flip()
+      self.draw()
+      pygame.display.flip()
 
 
 App().run()
@@ -105,49 +105,49 @@ from dataclasses import dataclass
 
 @dataclass
 class Ball:
-    x: int
-    y: int
-    vx: int
-    vy: int
+  x: int
+  y: int
+  vx: int
+  vy: int
 
-    def move(self, dx, dy):
-        self.x += dx
-        self.y += dy
+  def move(self, dx: int, dy: int):
+    self.x += dx
+    self.y += dy
 
-    def update(self):
-        self.move(self.vx, self.vy)
+  def update(self):
+    self.move(self.vx, self.vy)
 
-    def draw(self, screen):
-        pygame.draw.circle(screen, (255, 0, 0), (self.x, self.y), 20)
+  def draw(self, screen: pygame.Surface):
+    pygame.draw.circle(screen, (255, 0, 0), (self.x, self.y), 20)
 
 
 class App:
-    def __init__(self):
-        pygame.init()
-        self.screen = pygame.display.set_mode((800, 600))
-        self.ball = Ball(100, 300, 1, 0)
+  def __init__(self):
+    pygame.init()
+    self.screen = pygame.display.set_mode((800, 600))
+    self.ball = Ball(100, 300, 1, 0)
 
-    def draw(self):
-        self.ball.draw(self.screen)
+  def draw(self):
+    self.ball.draw(self.screen)
 
-    def update(self):
-        self.ball.update()
+  def update(self):
+    self.ball.update()
 
-    def run(self):
-        clock = pygame.time.Clock()
-        while True:
-            clock.tick(60)
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    sys.exit()
+  def run(self):
+    clock = pygame.time.Clock()
+    while True:
+      clock.tick(60)
+      for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+          sys.exit()
 
-            self.update()
+      self.update()
 
-            # dessine un rectangle noir pour effacer l'image
-            pygame.draw.rect(self.screen, (0, 0, 0), pygame.Rect(0, 0, 800, 600))
-            self.draw()
+      # dessine un rectangle noir pour effacer l'image
+      pygame.draw.rect(self.screen, (0, 0, 0), pygame.Rect(0, 0, 800, 600))
+      self.draw()
 
-            pygame.display.flip()
+      pygame.display.flip()
 
 
 App().run()
@@ -198,53 +198,53 @@ from dataclasses import dataclass
 
 @dataclass
 class Ball:
-    x: int
-    y: int
-    vx: int
-    vy: int
+  x: int
+  y: int
+  vx: int
+  vy: int
 
-    def move(self, dx, dy):
-        self.x += dx
-        self.y += dy
+  def move(self, dx: int, dy: int):
+    self.x += dx
+    self.y += dy
 
-    def update(self):
-        self.move(self.vx, self.vy)
+  def update(self):
+    self.move(self.vx, self.vy)
 
-    def draw(self, screen):
-        pygame.draw.circle(screen, (255, 0, 0), (self.x, self.y), 20)
+  def draw(self, screen: pygame.Surface):
+    pygame.draw.circle(screen, (255, 0, 0), (self.x, self.y), 20)
 
 
 class App:
-    def __init__(self):
-        pygame.init()
-        self.screen = pygame.display.set_mode((800, 600))
-        self.ball = Ball(100, 300, 1, 0)
+  def __init__(self):
+    pygame.init()
+    self.screen = pygame.display.set_mode((800, 600))
+    self.ball = Ball(100, 300, 1, 0)
 
-    def draw(self):
-        self.ball.draw(self.screen)
+  def draw(self):
+    self.ball.draw(self.screen)
 
-    def update(self):
-        self.ball.update()
+  def update(self):
+    self.ball.update()
 
-    def process_events(self, event):
-        if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-            self.ball.vx = -self.ball.vx
+  def process_events(self, event: pygame.event.Event):
+    if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+      self.ball.vx = -self.ball.vx
 
-    def run(self):
-        clock = pygame.time.Clock()
-        while True:
-            clock.tick(60)
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    sys.exit()
-                self.process_events(event)
+  def run(self):
+    clock = pygame.time.Clock()
+    while True:
+      clock.tick(60)
+      for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+          sys.exit()
+        self.process_events(event)
 
-            self.update()
+      self.update()
 
-            pygame.draw.rect(self.screen, (0, 0, 0), pygame.Rect(0, 0, 800, 600))
-            self.draw()
+      pygame.draw.rect(self.screen, (0, 0, 0), pygame.Rect(0, 0, 800, 600))
+      self.draw()
 
-            pygame.display.flip()
+      pygame.display.flip()
 
 
 App().run()
@@ -286,56 +286,56 @@ from dataclasses import dataclass
 
 @dataclass
 class Ball:
-    x: int
-    y: int
-    vx: int
-    vy: int
+  x: int
+  y: int
+  vx: int
+  vy: int
 
-    def move(self, dx, dy):
-        self.x += dx
-        self.y += dy
+  def move(self, dx: int, dy: int):
+    self.x += dx
+    self.y += dy
 
-    def update(self):
-        self.move(self.vx, self.vy)
+  def update(self):
+    self.move(self.vx, self.vy)
 
-    def draw(self, screen):
-        pygame.draw.circle(screen, (255, 0, 0), (self.x, self.y), 20)
+  def draw(self, screen: pygame.Surface):
+    pygame.draw.circle(screen, (255, 0, 0), (self.x, self.y), 20)
 
 
 class App:
-    def __init__(self):
-        pygame.init()
-        self.screen = pygame.display.set_mode((800, 600))
-        self.ball = Ball(100, 300, 1, 0)
+  def __init__(self):
+    pygame.init()
+    self.screen = pygame.display.set_mode((800, 600))
+    self.ball = Ball(100, 300, 1, 0)
 
-    def draw(self):
-        self.ball.draw(self.screen)
+  def draw(self):
+    self.ball.draw(self.screen)
 
-    def update(self):
-        self.ball.update()
+  def update(self):
+    self.ball.update()
 
-    def process_events(self, event):
-        if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-            self.ball.vx = -self.ball.vx
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            self.ball.x = event.pos[0]
-            self.ball.y = event.pos[1]
+  def process_events(self, event: pygame.event.Event):
+    if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+        self.ball.vx = -self.ball.vx
+    if event.type == pygame.MOUSEBUTTONDOWN:
+        self.ball.x = event.pos[0]
+        self.ball.y = event.pos[1]
 
-    def run(self):
-        clock = pygame.time.Clock()
-        while True:
-            clock.tick(60)
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    sys.exit()
-                self.process_events(event)
+  def run(self):
+    clock = pygame.time.Clock()
+    while True:
+      clock.tick(60)
+      for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+          sys.exit()
+        self.process_events(event)
 
-            self.update()
+      self.update()
 
-            pygame.draw.rect(self.screen, (0, 0, 0), pygame.Rect(0, 0, 800, 600))
-            self.draw()
+      pygame.draw.rect(self.screen, (0, 0, 0), pygame.Rect(0, 0, 800, 600))
+      self.draw()
 
-            pygame.display.flip()
+      pygame.display.flip()
 
 
 App().run()
@@ -366,70 +366,71 @@ from dataclasses import dataclass
 
 @dataclass
 class Ball:
-    x: int
-    y: int
-    vx: int
-    vy: int
+  x: int
+  y: int
+  vx: int
+  vy: int
 
-    def move(self, dx, dy):
-        self.x += dx
-        self.y += dy
+  def move(self, dx: int, dy: int):
+    self.x += dx
+    self.y += dy
 
-    def update(self):
-        self.move(self.vx, self.vy)
+  def update(self):
+    self.move(self.vx, self.vy)
 
-    def draw(self, screen):
-        pygame.draw.circle(screen, (255, 0, 0), (self.x, self.y), 20)
+  def draw(self, screen: pygame.Surface):
+    pygame.draw.circle(screen, (255, 0, 0), (self.x, self.y), 20)
 
 
 class App:
-    def __init__(self):
-        pygame.init()
-        self.size = (800, 600)
-        self.screen = pygame.display.set_mode(self.size)
-        self.manager = pygame_gui.UIManager(self.size)
-        self.ball = Ball(100, 300, 1, 0)
+  def __init__(self):
+    pygame.init()
+    self.size = (800, 600)
+    self.screen = pygame.display.set_mode(self.size)
+    self.manager = pygame_gui.UIManager(self.size)
+    self.ball = Ball(100, 300, 1, 0)
 
-    def draw(self):
-        self.ball.draw(self.screen)
+  def draw(self):
+    self.ball.draw(self.screen)
 
-    def update(self):
-        self.ball.update()
+  def update(self):
+    self.ball.update()
 
-    def process_events(self, event):
-        if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-            self.ball.vx = -self.ball.vx
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            self.ball.x = event.pos[0]
-            self.ball.y = event.pos[1]
+  def process_events(self, event: pygame.event.Event):
+    if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+      self.ball.vx = -self.ball.vx
+    if event.type == pygame.MOUSEBUTTONDOWN:
+      self.ball.x = event.pos[0]
+      self.ball.y = event.pos[1]
 
-    def run(self):
-        clock = pygame.time.Clock()
-        while True:
-            # tick renvoie le temps écoulé depuis le dernier tick (en ms)
-            time_delta = clock.tick(60)
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    sys.exit()
+  def run(self):
+    clock = pygame.time.Clock()
+    while True:
+      # tick renvoie le temps écoulé depuis le dernier tick (en ms)
+      time_delta = clock.tick(60)
+      for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            sys.exit()
 
-                # manager.process_event() permet à pygame_gui de recevoir les events.
-                # Cette méthode renvoi True si elle a utilisé l'événement
-                if not self.manager.process_events(event):
-                    # si le manager n'a pas utiliser l'événement, alors on le traite nous même
-                    self.process_events(event)
+        # Manager.process_event() permet à pygame_gui de recevoir les
+        # events. Cette méthode renvoi True si elle a utilisé l'événement
+        if not self.manager.process_events(event):
+          # Si le manager n'a pas utiliser l'événement, alors on le traite
+          # nous même
+          self.process_events(event)
 
-            self.update()
+      self.update()
 
-            # permet à pygame_gui de mettre à jour les animations (en s)
-            self.manager.update(time_delta/1000)
+      # Permet à pygame_gui de mettre à jour les animations (en s)
+      self.manager.update(time_delta/1000)
 
-            pygame.draw.rect(self.screen, (0, 0, 0), pygame.Rect(0, 0, 800, 600))
-            self.draw()
+      pygame.draw.rect(self.screen, (0, 0, 0), pygame.Rect(0, 0, 800, 600))
+      self.draw()
 
-            # affiche les widgets
-            self.manager.draw_ui(self.screen)
+      # Affiche les widgets
+      self.manager.draw_ui(self.screen)
 
-            pygame.display.flip()
+      pygame.display.flip()
 
 
 App().run()
@@ -449,67 +450,67 @@ from dataclasses import dataclass
 
 @dataclass
 class Ball:
-    x: int
-    y: int
-    vx: int
-    vy: int
+  x: int
+  y: int
+  vx: int
+  vy: int
 
-    def move(self, dx, dy):
-        self.x += dx
-        self.y += dy
+  def move(self, dx: int, dy: int):
+    self.x += dx
+    self.y += dy
 
-    def update(self):
-        self.move(self.vx, self.vy)
+  def update(self):
+    self.move(self.vx, self.vy)
 
-    def draw(self, screen):
-        pygame.draw.circle(screen, (255, 0, 0), (self.x, self.y), 20)
+  def draw(self, screen: pygame.Surface):
+    pygame.draw.circle(screen, (255, 0, 0), (self.x, self.y), 20)
 
 
 class App:
-    def __init__(self):
-        pygame.init()
-        self.size = (800, 600)
-        self.screen = pygame.display.set_mode(self.size)
-        self.manager = pygame_gui.UIManager(self.size)
-        self.ball = Ball(100, 300, 1, 0)
+  def __init__(self):
+    pygame.init()
+    self.size = (800, 600)
+    self.screen = pygame.display.set_mode(self.size)
+    self.manager = pygame_gui.UIManager(self.size)
+    self.ball = Ball(100, 300, 1, 0)
 
-        self.hello_button = UIButton(
-          relative_rect=pygame.Rect(350, 275, 150, 50),
-          text='Hello World',
-          manager=self.manager
-        )
+    self.hello_button = UIButton(
+      relative_rect=pygame.Rect(350, 275, 150, 50),
+      text='Hello World',
+      manager=self.manager
+    )
 
-    def draw(self):
-        self.ball.draw(self.screen)
+  def draw(self):
+    self.ball.draw(self.screen)
 
-    def update(self):
-        self.ball.update()
+  def update(self):
+    self.ball.update()
 
-    def process_events(self, event):
-        if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-            self.ball.vx = -self.ball.vx
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            self.ball.x = event.pos[0]
-            self.ball.y = event.pos[1]
+  def process_events(self, event: pygame.event.Event):
+    if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+      self.ball.vx = -self.ball.vx
+    if event.type == pygame.MOUSEBUTTONDOWN:
+      self.ball.x = event.pos[0]
+      self.ball.y = event.pos[1]
 
-    def run(self):
-        clock = pygame.time.Clock()
-        while True:
-            time_delta = clock.tick(60)
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    sys.exit()
-                if not self.manager.process_events(event):
-                    self.process_events(event)
+  def run(self):
+    clock = pygame.time.Clock()
+    while True:
+      time_delta = clock.tick(60)
+      for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+          sys.exit()
+        if not self.manager.process_events(event):
+          self.process_events(event)
 
-            self.update()
-            self.manager.update(time_delta/1000)
+      self.update()
+      self.manager.update(time_delta/1000)
 
-            pygame.draw.rect(self.screen, (0, 0, 0), pygame.Rect(0, 0, 800, 600))
-            self.draw()
-            self.manager.draw_ui(self.screen)
+      pygame.draw.rect(self.screen, (0, 0, 0), pygame.Rect(0, 0, 800, 600))
+      self.draw()
+      self.manager.draw_ui(self.screen)
 
-            pygame.display.flip()
+      pygame.display.flip()
 
 
 App().run()
@@ -534,71 +535,71 @@ from dataclasses import dataclass
 
 @dataclass
 class Ball:
-    x: int
-    y: int
-    vx: int
-    vy: int
+  x: int
+  y: int
+  vx: int
+  vy: int
 
-    def move(self, dx, dy):
-        self.x += dx
-        self.y += dy
+  def move(self, dx: int, dy: int):
+    self.x += dx
+    self.y += dy
 
-    def update(self):
-        self.move(self.vx, self.vy)
+  def update(self):
+    self.move(self.vx, self.vy)
 
-    def draw(self, screen):
-        pygame.draw.circle(screen, (255, 0, 0), (self.x, self.y), 20)
+  def draw(self, screen: pygame.Surface):
+    pygame.draw.circle(screen, (255, 0, 0), (self.x, self.y), 20)
 
 
 class App:
-    def __init__(self):
-        pygame.init()
-        self.size = (800, 600)
-        self.screen = pygame.display.set_mode(self.size)
-        self.manager = pygame_gui.UIManager(self.size)
-        self.ball = Ball(100, 300, 1, 0)
+  def __init__(self):
+    pygame.init()
+    self.size = (800, 600)
+    self.screen = pygame.display.set_mode(self.size)
+    self.manager = pygame_gui.UIManager(self.size)
+    self.ball = Ball(100, 300, 1, 0)
 
-        self.hello_button = UIButton(
-          relative_rect=pygame.Rect(350, 275, 150, 50),
-          text='Hello World',
-          manager=self.manager
-        )
+    self.hello_button = UIButton(
+      relative_rect=pygame.Rect(350, 275, 150, 50),
+      text='Hello World',
+      manager=self.manager
+    )
 
-    def draw(self):
-        self.ball.draw(self.screen)
+  def draw(self):
+    self.ball.draw(self.screen)
 
-    def update(self):
-        self.ball.update()
+  def update(self):
+    self.ball.update()
 
-    def process_events(self, event):
-        if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-            self.ball.vx = -self.ball.vx
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            self.ball.x = event.pos[0]
-            self.ball.y = event.pos[1]
-        if event.type == pygame_gui.UI_BUTTON_PRESSED:
-          if event.ui_element is self.hello_button:
-            # affiche 'Hello World!' dans le terminal
-            print('Hello World!')
+  def process_events(self, event: pygame.event.Event):
+    if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+      self.ball.vx = -self.ball.vx
+    if event.type == pygame.MOUSEBUTTONDOWN:
+      self.ball.x = event.pos[0]
+      self.ball.y = event.pos[1]
+    if event.type == pygame_gui.UI_BUTTON_PRESSED:
+      if event.ui_element is self.hello_button:
+        # affiche 'Hello World!' dans le terminal
+        print('Hello World!')
 
-    def run(self):
-        clock = pygame.time.Clock()
-        while True:
-            time_delta = clock.tick(60)
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    sys.exit()
-                if not self.manager.process_events(event):
-                    self.process_events(event)
+  def run(self):
+      clock = pygame.time.Clock()
+      while True:
+        time_delta = clock.tick(60)
+        for event in pygame.event.get():
+          if event.type == pygame.QUIT:
+            sys.exit()
+          if not self.manager.process_events(event):
+            self.process_events(event)
 
-            self.update()
-            self.manager.update(time_delta/1000)
+        self.update()
+        self.manager.update(time_delta/1000)
 
-            pygame.draw.rect(self.screen, (0, 0, 0), pygame.Rect(0, 0, 800, 600))
-            self.draw()
-            self.manager.draw_ui(self.screen)
+        pygame.draw.rect(self.screen, (0, 0, 0), pygame.Rect(0, 0, 800, 600))
+        self.draw()
+        self.manager.draw_ui(self.screen)
 
-            pygame.display.flip()
+        pygame.display.flip()
 
 
 App().run()
@@ -616,83 +617,82 @@ from dataclasses import dataclass
 
 @dataclass
 class Ball:
-    x: int
-    y: int
-    vx: int
-    vy: int
+  x: int
+  y: int
+  vx: int
+  vy: int
 
-    def move(self, dx, dy):
-        self.x += dx
-        self.y += dy
+  def move(self, dx: int, dy: int):
+    self.x += dx
+    self.y += dy
 
-    def update(self):
-        self.move(self.vx, self.vy)
+  def update(self):
+    self.move(self.vx, self.vy)
 
-    def draw(self, screen):
-        pygame.draw.circle(screen, (255, 0, 0), (self.x, self.y), 20)
+  def draw(self, screen: pygame.Surface):
+    pygame.draw.circle(screen, (255, 0, 0), (self.x, self.y), 20)
 
 
 class App:
-    def __init__(self):
-        pygame.init()
-        self.size = (800, 600)
-        self.screen = pygame.display.set_mode(self.size)
-        self.manager = pygame_gui.UIManager(self.size)
-        self.ball = Ball(100, 300, 1, 0)
+  def __init__(self):
+    pygame.init()
+    self.size = (800, 600)
+    self.screen = pygame.display.set_mode(self.size)
+    self.manager = pygame_gui.UIManager(self.size)
+    self.ball = Ball(100, 300, 1, 0)
 
-        self.hello_button = UIButton(
-          relative_rect=pygame.Rect(350, 275, 150, 50),
-          text='Hello',
-          manager=self.manager
-        )
+    self.hello_button = UIButton(
+      relative_rect=pygame.Rect(350, 275, 150, 50),
+      text='Hello',
+      manager=self.manager
+    )
 
-        self.input = UITextEntryLine(
-            relative_rect=pygame.Rect(350, 220, 150, 50),
-            manager=self.manager
-        )
+    self.input = UITextEntryLine(
+      relative_rect=pygame.Rect(350, 220, 150, 50),
+      manager=self.manager
+    )
 
-        self.display = UILabel(
-            relative_rect=pygame.Rect(350, 330, 150, 50),
-            text='',
-            manager=self.manager
-        )
+    self.display = UILabel(
+      relative_rect=pygame.Rect(350, 330, 150, 50),
+      text='',
+      manager=self.manager
+    )
 
-    def draw(self):
-        self.ball.draw(self.screen)
+  def draw(self):
+    self.ball.draw(self.screen)
 
-    def update(self):
-        self.ball.update()
+  def update(self):
+    self.ball.update()
 
-    def process_events(self, event):
-        if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-            self.ball.vx = -self.ball.vx
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            self.ball.x = event.pos[0]
-            self.ball.y = event.pos[1]
-        if event.type == pygame_gui.UI_BUTTON_PRESSED:
-          if event.ui_element is self.hello_button:
-            # affiche 'Hello World!' dans le terminal
-            name = self.input.text
-            self.display.set_text(f'Hello {name}')
+  def process_events(self, event: pygame.event.Event):
+    if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+      self.ball.vx = -self.ball.vx
+    if event.type == pygame.MOUSEBUTTONDOWN:
+      self.ball.x = event.pos[0]
+      self.ball.y = event.pos[1]
+    if event.type == pygame_gui.UI_BUTTON_PRESSED:
+      if event.ui_element is self.hello_button:
+        name = self.input.text
+        self.display.set_text(f'Hello {name}')
 
-    def run(self):
-        clock = pygame.time.Clock()
-        while True:
-            time_delta = clock.tick(60)
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    sys.exit()
-                if not self.manager.process_events(event):
-                    self.process_events(event)
+  def run(self):
+    clock = pygame.time.Clock()
+    while True:
+      time_delta = clock.tick(60)
+      for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+          sys.exit()
+        if not self.manager.process_events(event):
+          self.process_events(event)
 
-            self.update()
-            self.manager.update(time_delta/1000)
+      self.update()
+      self.manager.update(time_delta/1000)
 
-            pygame.draw.rect(self.screen, (0, 0, 0), pygame.Rect(0, 0, 800, 600))
-            self.draw()
-            self.manager.draw_ui(self.screen)
+      pygame.draw.rect(self.screen, (0, 0, 0), pygame.Rect(0, 0, 800, 600))
+      self.draw()
+      self.manager.draw_ui(self.screen)
 
-            pygame.display.flip()
+      pygame.display.flip()
 
 
 App().run()
