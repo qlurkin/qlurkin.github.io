@@ -463,10 +463,12 @@ milieu ou droit)</li>
             <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">pygame</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">get</span><span class="p">():</span>
                 <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">pygame</span><span class="o">.</span><span class="n">QUIT</span><span class="p">:</span>
                     <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">process_events</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
 
-                <span class="c1"># permet à pygame_gui de recevoir les events</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">manager</span><span class="o">.</span><span class="n">process_events</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+                <span class="c1"># manager.process_event() permet à pygame_gui de recevoir les events.</span>
+                <span class="c1"># Cette méthode renvoi True si elle a utilisé l&#39;événement</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">manager</span><span class="o">.</span><span class="n">process_events</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+                    <span class="c1"># si le manager n&#39;a pas utiliser l&#39;événement, alors on le traite nous même</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">process_events</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
 
@@ -550,8 +552,8 @@ milieu ou droit)</li>
             <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">pygame</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">get</span><span class="p">():</span>
                 <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">pygame</span><span class="o">.</span><span class="n">QUIT</span><span class="p">:</span>
                     <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">process_events</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">manager</span><span class="o">.</span><span class="n">process_events</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">manager</span><span class="o">.</span><span class="n">process_events</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">process_events</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">manager</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">time_delta</span><span class="o">/</span><span class="mi">1000</span><span class="p">)</span>
@@ -643,8 +645,8 @@ widget qui a créé l'événement</strong>.</li>
             <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">pygame</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">get</span><span class="p">():</span>
                 <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">pygame</span><span class="o">.</span><span class="n">QUIT</span><span class="p">:</span>
                     <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">process_events</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">manager</span><span class="o">.</span><span class="n">process_events</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">manager</span><span class="o">.</span><span class="n">process_events</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">process_events</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">manager</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">time_delta</span><span class="o">/</span><span class="mi">1000</span><span class="p">)</span>
@@ -737,8 +739,8 @@ widget qui a créé l'événement</strong>.</li>
             <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">pygame</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">get</span><span class="p">():</span>
                 <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">pygame</span><span class="o">.</span><span class="n">QUIT</span><span class="p">:</span>
                     <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">process_events</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">manager</span><span class="o">.</span><span class="n">process_events</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">manager</span><span class="o">.</span><span class="n">process_events</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">process_events</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">manager</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">time_delta</span><span class="o">/</span><span class="mi">1000</span><span class="p">)</span>

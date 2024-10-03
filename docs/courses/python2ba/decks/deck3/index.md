@@ -411,10 +411,12 @@ class App:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     sys.exit()
-                self.process_events(event)
 
-                # permet à pygame_gui de recevoir les events
-                self.manager.process_events(event)
+                # manager.process_event() permet à pygame_gui de recevoir les events.
+                # Cette méthode renvoi True si elle a utilisé l'événement
+                if not self.manager.process_events(event):
+                    # si le manager n'a pas utiliser l'événement, alors on le traite nous même
+                    self.process_events(event)
 
             self.update()
 
@@ -497,8 +499,8 @@ class App:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     sys.exit()
-                self.process_events(event)
-                self.manager.process_events(event)
+                if not self.manager.process_events(event):
+                    self.process_events(event)
 
             self.update()
             self.manager.update(time_delta/1000)
@@ -586,8 +588,8 @@ class App:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     sys.exit()
-                self.process_events(event)
-                self.manager.process_events(event)
+                if not self.manager.process_events(event):
+                    self.process_events(event)
 
             self.update()
             self.manager.update(time_delta/1000)
@@ -680,8 +682,8 @@ class App:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     sys.exit()
-                self.process_events(event)
-                self.manager.process_events(event)
+                if not self.manager.process_events(event):
+                    self.process_events(event)
 
             self.update()
             self.manager.update(time_delta/1000)
