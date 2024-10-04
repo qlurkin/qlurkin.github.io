@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -9,8 +9,111 @@
   </head>
   <body>
     <section>
-      <h1>IC1T - Programmation <small> Séquences et interfaces graphiques </small></h1>
+      <h1>
+        IC1T - Programmation <small> Séquences et interfaces graphiques </small>
+      </h1>
       <p>Quentin Lurkin</p>
+    </section>
+
+    <section>
+      <h2><code>if</code>, <code>else</code>, <code>elif</code></h2>
+      <ul>
+        <li>Il est possible de raccourcir des <code>if</code> imbriqués</li>
+      </ul>
+      <div class="row">
+        <div class="span6">
+          <pre><code class="lang-python">
+          if D &lt; 0:
+            print("Pas de solution réelle")
+          else:
+            if D == 0:
+              print(-b/(2*a))
+            else:
+              print((-b-sqrt(D))/(2*a))
+              print((-b+sqrt(D))/(2*a))
+        </code></pre>
+        </div>
+        <div class="span6">
+          <pre><code class="lang-python">
+            if D &lt; 0:
+              print("Pas de solution réelle")
+            elif D == 0:
+              print(-b/(2*a))
+            else:
+              print((-b-sqrt(D))/(2*a))
+              print((-b+sqrt(D))/(2*a))
+          </code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2><code>while</code></h2>
+
+      <ul>
+        <li>
+          Le <code>while</code> execute son bloc <strong>tant que</strong> sa
+          condition est vraie
+        </li>
+      </ul>
+
+      <div class="row">
+        <div class="span6">
+          <pre><code class="lang-python">
+          i = 0
+          while i < 5:
+              i = i + 1
+              print(i)
+        </code></pre>
+        </div>
+        <div class="span6">
+          <figure id="while">
+            <div></div>
+            <figcaption>Le <code>while</code></figcaption>
+          </figure>
+          <script type="module" defer>
+            const draw = await Deck.Draw('#while > div', 350, 350)
+            const start = draw.start().move(1, 2)
+            const init = draw
+              .round('Met la valeur <code>0</code> dans <code>i</code>')
+              .belowOf(start)
+            const back = draw.dummy().belowOf(init)
+            const cond = draw.round('i < 5 ?').belowOf(back)
+            const if1 = draw.diamond().belowOf(cond)
+            const oui = draw.node('oui').belowOf(if1)
+            const non = draw.node('non').rightOf(if1)
+            const dummy = draw.dummy().leftOf(if1)
+            const inc = draw.round('Incrémente <code>i</code>').belowOf(oui)
+            const show = draw
+              .round('Affiche la valeur de <code>i</code>')
+              .belowOf(inc)
+            const end = draw.end().belowOf(show)
+            draw.polyline([
+              start,
+              '-->',
+              init,
+              '--',
+              back,
+              '-->',
+              cond,
+              '-->',
+              if1,
+              '--',
+              oui,
+              '-->',
+              inc,
+              '-->',
+              show,
+              '-|',
+              dummy,
+              '|->',
+              back,
+            ])
+            draw.polyline([if1, '--', non, '|->', end])
+            draw.done()
+          </script>
+        </div>
+      </div>
     </section>
 
     <section>
@@ -268,21 +371,24 @@
       </ul>
     </section>
 
-		<section>
-			<h2>Tuple</h2>
-			<ul>
-				<li>
-					Séquence <strong>non modifiable</strong> d'éléments
+    <section>
+      <h2>Tuple</h2>
+      <ul>
+        <li>
+          Séquence <strong>non modifiable</strong> d'éléments
 
-					<small>Les éléments d'un tuple ne peuvent pas être réassignés et on ne peut pas en ajouter ou en enlever</small>
-				</li>
-				<li>
-					<strong>Définition</strong> d'un tuple avec <code>()</code>
+          <small
+            >Les éléments d'un tuple ne peuvent pas être réassignés et on ne
+            peut pas en ajouter ou en enlever</small
+          >
+        </li>
+        <li>
+          <strong>Définition</strong> d'un tuple avec <code>()</code>
 
-					<small>Parenthèses pas obligatoires lorsqu'au moins un élément</small>
-				</li>
-			</ul>
-			<pre><code class="lang-python">
+          <small>Parenthèses pas obligatoires lorsqu'au moins un élément</small>
+        </li>
+      </ul>
+      <pre><code class="lang-python">
 		    # Tuple vide
 		    a = ()
 		    
@@ -294,29 +400,30 @@
 		    d = 1, 2, 3
 		    e = (1, 2, 3)
 	    </code></pre>
-			<ul>
-				<li>
-					<strong>Utilisation</strong> d'un tuple similaire à celle des listes
-				</li>
-			</ul>
-		</section>
+      <ul>
+        <li>
+          <strong>Utilisation</strong> d'un tuple similaire à celle des listes
+        </li>
+      </ul>
+    </section>
 
-		<section>
-			<h2>Emballage et déballage</h2>
+    <section>
+      <h2>Emballage et déballage</h2>
 
-			<ul>
-				<li>
-					On peut <strong>emballer</strong> plusieurs valeurs dans un tuple
-					<small>Elles sont toutes accessibles à partir d'une seule variable</small>
-				</li>
-				<li>
-					On peut <strong>déballer</strong> un tuple dans plusieurs variables
-					<small>Chaque variable reçoit la valeur d'un élément du tuple</small>
-				</li>
-			</ul>
+      <ul>
+        <li>
+          On peut <strong>emballer</strong> plusieurs valeurs dans un tuple
+          <small
+            >Elles sont toutes accessibles à partir d'une seule variable</small
+          >
+        </li>
+        <li>
+          On peut <strong>déballer</strong> un tuple dans plusieurs variables
+          <small>Chaque variable reçoit la valeur d'un élément du tuple</small>
+        </li>
+      </ul>
 
-
-			<pre><code class="lang-python">
+      <pre><code class="lang-python">
 		    t = 1, 2, 3
 		    print(t)
 		    
@@ -324,38 +431,38 @@
 		    print(a, b, c, sep='/')
 	    </code></pre>
 
-			<pre><code class="lang-plaintext">
+      <pre><code class="lang-plaintext">
 		    (1, 2, 3)
 		    1/2/3
 	    </code></pre>
-		</section>
+    </section>
 
-		<!-- <section> -->
-		<!-- 	<h2>Plusieurs valeurs de retour</h2> -->
-		<!---->
-		<!-- 	<ul> -->
-		<!-- 		<li> -->
-		<!-- 			Une fonction peut <strong>renvoyer plusieurs valeurs</strong> -->
-		<!-- 			<small>Il suffit en fait de renvoyer un tuple</small> -->
-		<!-- 		</li> -->
-		<!-- 		<li> -->
-		<!-- 			Fonction qui <strong>trie</strong> deux valeurs <small>Renvoie les deux valeurs dans l'ordre</small> -->
-		<!-- 		</li> -->
-		<!-- 	</ul> -->
-		<!---->
-		<!-- 	<pre><code class="lang-python"> -->
-		<!--     def sort(a, b): -->
-		<!--       if a &lt; b: -->
-		<!--         return a, b -->
-		<!--       return b, a -->
-		<!---->
-		<!--     a = 42 -->
-		<!--     b = 24 -->
-		<!---->
-		<!--     a, b = sort(a, b) -->
-		<!--     print('a =', a, 'b =', b) -->
-		<!--    </code></pre> -->
-		<!-- </section> -->
+    <!-- <section> -->
+    <!-- 	<h2>Plusieurs valeurs de retour</h2> -->
+    <!---->
+    <!-- 	<ul> -->
+    <!-- 		<li> -->
+    <!-- 			Une fonction peut <strong>renvoyer plusieurs valeurs</strong> -->
+    <!-- 			<small>Il suffit en fait de renvoyer un tuple</small> -->
+    <!-- 		</li> -->
+    <!-- 		<li> -->
+    <!-- 			Fonction qui <strong>trie</strong> deux valeurs <small>Renvoie les deux valeurs dans l'ordre</small> -->
+    <!-- 		</li> -->
+    <!-- 	</ul> -->
+    <!---->
+    <!-- 	<pre><code class="lang-python"> -->
+    <!--     def sort(a, b): -->
+    <!--       if a &lt; b: -->
+    <!--         return a, b -->
+    <!--       return b, a -->
+    <!---->
+    <!--     a = 42 -->
+    <!--     b = 24 -->
+    <!---->
+    <!--     a, b = sort(a, b) -->
+    <!--     print('a =', a, 'b =', b) -->
+    <!--    </code></pre> -->
+    <!-- </section> -->
 
     <section>
       <h2>Boucler dans une séquence</h2>
@@ -479,45 +586,46 @@
     <!--   </p> -->
     <!--   <p class="center">A remettre sur claco</p> -->
     <!-- </section> -->
-	<section>
-		<h2>Programmation graphique</h2>
-		<ul>
-			<li>Ouvre une <strong>fenêtre</strong> de l'OS</li>
-			<li>
-				Tourne <strong>jusqu'à ce qu'on quitte</strong>
-				<small>boucle !</small>
-			</li>
-			<li>
-				Permet d'afficher des formes, images, animation
-				<small>Une animation est une succession rapide d'images</small>
-			</li>
-		</ul>
-	</section>
+    <section>
+      <h2>Programmation graphique</h2>
+      <ul>
+        <li>Ouvre une <strong>fenêtre</strong> de l'OS</li>
+        <li>
+          Tourne <strong>jusqu'à ce qu'on quitte</strong>
+          <small>boucle !</small>
+        </li>
+        <li>
+          Permet d'afficher des formes, images, animation
+          <small>Une animation est une succession rapide d'images</small>
+        </li>
+      </ul>
+    </section>
 
-	<section>
-		<h2>Pygame</h2>
-		<ul>
-			<li>Permet de créer un programme graphique</li>
-			<li>
-				Non-inclus dans l'installation de Python
-				<small>Il faut installer le package</small>
-			</li>
-		</ul>
-		<h3>Installation</h3>
-		<ul>
-			<li>
-				Python peut <strong>télécharger et installer automatiquement des packages</strong>
-			</li>
-			<li>Pour installer Pygame :</li>
-		</ul>
-		<pre class="terminal">
+    <section>
+      <h2>Pygame</h2>
+      <ul>
+        <li>Permet de créer un programme graphique</li>
+        <li>
+          Non-inclus dans l'installation de Python
+          <small>Il faut installer le package</small>
+        </li>
+      </ul>
+      <h3>Installation</h3>
+      <ul>
+        <li>
+          Python peut
+          <strong>télécharger et installer automatiquement des packages</strong>
+        </li>
+        <li>Pour installer Pygame :</li>
+      </ul>
+      <pre class="terminal">
 			<b>> python -m pip install pygame</b>
 		</pre>
-	</section>
+    </section>
 
-	<section class="code">
-		<h2>Premier programme graphique</h2>
-		<pre>
+    <section class="code">
+      <h2>Premier programme graphique</h2>
+      <pre>
 			<code class="lang-python">
 				import pygame
 
@@ -544,12 +652,15 @@
 					pygame.display.flip()
 			</code>
 		</pre>
-	</section>
+    </section>
 
-	<section>
-		<h2>Animation</h2>
-		<p>Pour animer le cercle, il suffit de le dessiner à une position un peu différente à chaque image.</p>
-		<pre><code class="lang-python">
+    <section>
+      <h2>Animation</h2>
+      <p>
+        Pour animer le cercle, il suffit de le dessiner à une position un peu
+        différente à chaque image.
+      </p>
+      <pre><code class="lang-python">
 			import pygame
 
 			# initialisation de pygame
@@ -578,47 +689,62 @@
 				# affiche l'image qui vient d'être dessinée
 				pygame.display.flip()
 		</code></pre>
-	</section>
+    </section>
 
-	<section>
-		<h2>Événements</h2>
-		<ul>
-			<li>Gestion des événements lié à la souris et au clavier
-				<small>Et autres événements comme <code>pygame.QUIT</code></small>
-			</li>
-			<li>Fonctions dans le module <code>pygame.event</code></li>
-			<li>Les événements captés par Pygame sont stocké dans une file</li>
-			<li>Le fonction <code>pygame.event.peek</code> vérifie si un certain type d'événement attends dans la file
-				<pre><code class="lang-python">
+    <section>
+      <h2>Événements</h2>
+      <ul>
+        <li>
+          Gestion des événements lié à la souris et au clavier
+          <small>Et autres événements comme <code>pygame.QUIT</code></small>
+        </li>
+        <li>Fonctions dans le module <code>pygame.event</code></li>
+        <li>Les événements captés par Pygame sont stocké dans une file</li>
+        <li>
+          Le fonction <code>pygame.event.peek</code> vérifie si un certain type
+          d'événement attends dans la file
+          <pre><code class="lang-python">
 					# boucle jusqu'à ce qu'on quitte
 					while not pygame.event.peek(pygame.QUIT):
 						# ...
 				</code></pre>
-			</li>
-		</ul>
-	</section>
+        </li>
+      </ul>
+    </section>
 
-	<section>
-		<h2>Clavier</h2>
-		<ul>
-			<li>Pour traiter tous les événements
-				<pre><code class="lang-python">
+    <section>
+      <h2>Clavier</h2>
+      <ul>
+        <li>
+          Pour traiter tous les événements
+          <pre><code class="lang-python">
 					# Boucler sur tous les events
 					for event in pygame.event.get():
 						# Faire quelque-chose avec l'event
 				</code></pre>
-			</li>
-			<li>Tester le type de l'événement avec l'attribut <code>event.type</code> <small>
-				Types des événements clavier: <code>pygame.KEYDOWN</code> et <code>pygame.KEYUP</code>
-			</small></li>
-			<li><code>event.key</code> contient un code correspondant à la touche concernée.</li>
-			<li><a href="https://www.pygame.org/docs/ref/key.html#key-constants-label">Les constantes contenant les <code>key</code> code</a></li>
-		</ul>
-	</section>
+        </li>
+        <li>
+          Tester le type de l'événement avec l'attribut <code>event.type</code>
+          <small>
+            Types des événements clavier: <code>pygame.KEYDOWN</code> et
+            <code>pygame.KEYUP</code>
+          </small>
+        </li>
+        <li>
+          <code>event.key</code> contient un code correspondant à la touche
+          concernée.
+        </li>
+        <li>
+          <a href="https://www.pygame.org/docs/ref/key.html#key-constants-label"
+            >Les constantes contenant les <code>key</code> code</a
+          >
+        </li>
+      </ul>
+    </section>
 
-	<section class="code">
-		<h2>Clavier</h2>
-		<pre><code class="lang-python">
+    <section class="code">
+      <h2>Clavier</h2>
+      <pre><code class="lang-python">
 			import pygame
 			import sys
 
@@ -651,50 +777,61 @@
 
 				pygame.display.flip()
 		</code></pre>
-	</section>
+    </section>
 
-	<!-- <section> -->
-	<!-- 	<h2>Touche de modification</h2> -->
-	<!-- 	<ul> -->
-	<!-- 		<li>Pour tester si une touche de modification sont appuyée : -->
-	<!-- 		<pre><code class="lang-python"> -->
-	<!-- 			if event.mod & pygame.KMOD_SHIFT: -->
-	<!-- 				# SHIFT était appuyé lors de cet event -->
-	<!-- 		</code></pre> -->
-	<!-- 		</li> -->
-	<!-- 		<li>Ou plusieurs : -->
-	<!-- 			<pre><code class="lang-python"> -->
-	<!-- 				if event.mod & (pygame.KMOD_SHIFT | pygame.KMOD_ALT): -->
-	<!-- 					# SHIFT et ALT étaient appuyés lors de cet event -->
-	<!-- 			</code></pre> -->
-	<!-- 		</li> -->
-	<!-- 	</ul> -->
-	<!-- </section> -->
+    <!-- <section> -->
+    <!-- 	<h2>Touche de modification</h2> -->
+    <!-- 	<ul> -->
+    <!-- 		<li>Pour tester si une touche de modification sont appuyée : -->
+    <!-- 		<pre><code class="lang-python"> -->
+    <!-- 			if event.mod & pygame.KMOD_SHIFT: -->
+    <!-- 				# SHIFT était appuyé lors de cet event -->
+    <!-- 		</code></pre> -->
+    <!-- 		</li> -->
+    <!-- 		<li>Ou plusieurs : -->
+    <!-- 			<pre><code class="lang-python"> -->
+    <!-- 				if event.mod & (pygame.KMOD_SHIFT | pygame.KMOD_ALT): -->
+    <!-- 					# SHIFT et ALT étaient appuyés lors de cet event -->
+    <!-- 			</code></pre> -->
+    <!-- 		</li> -->
+    <!-- 	</ul> -->
+    <!-- </section> -->
 
-	<section>
-		<h2>Souris</h2>
-		<ul>
-			<li>Types des événements souris: <code>pygame.MOUSEBUTTONDOWN</code>, <code>pygame.MOUSEBUTTONUP</code>, <code>pygame.MOUSEMOTION</code></li>
-			<li>Les attributs intéressants des événements <code>pygame.MOUSEMOTION</code> sont :
-				<ul>
-					<li><code>pos</code>: les coordonnées de la souris</li>
-					<li><code>rel</code>: la vitesse de la souris</li>
-				</ul>
-			</li>
+    <section>
+      <h2>Souris</h2>
+      <ul>
+        <li>
+          Types des événements souris: <code>pygame.MOUSEBUTTONDOWN</code>,
+          <code>pygame.MOUSEBUTTONUP</code>, <code>pygame.MOUSEMOTION</code>
+        </li>
+        <li>
+          Les attributs intéressants des événements
+          <code>pygame.MOUSEMOTION</code> sont :
+          <ul>
+            <li><code>pos</code>: les coordonnées de la souris</li>
+            <li><code>rel</code>: la vitesse de la souris</li>
+          </ul>
+        </li>
 
-			<li>Les attributs intéressants des événements <code>pygame.MOUSEBUTTONDOWN</code> et <code>pygame.MOUSEBUTTONUP</code> sont :
-				<ul>
-					<li><code>button</code>: 1, 2 ou 3 en fonction du bouton pressé (gauche, milieu ou droit)</li>
-					<li><code>pos</code>: les coordonnées de la souris</li>
-				</ul>
-			</li>
-		</ul>
-	</section>
+        <li>
+          Les attributs intéressants des événements
+          <code>pygame.MOUSEBUTTONDOWN</code> et
+          <code>pygame.MOUSEBUTTONUP</code> sont :
+          <ul>
+            <li>
+              <code>button</code>: 1, 2 ou 3 en fonction du bouton pressé
+              (gauche, milieu ou droit)
+            </li>
+            <li><code>pos</code>: les coordonnées de la souris</li>
+          </ul>
+        </li>
+      </ul>
+    </section>
 
-	<section class="code">
-		<h2>Souris</h2>
+    <section class="code">
+      <h2>Souris</h2>
 
-		<pre><code class="lang-python">
+      <pre><code class="lang-python">
 			import pygame
 			import sys
 
@@ -725,11 +862,11 @@
 
 				pygame.display.flip()
 		</code></pre>
-	</section>
-  <section>
-		<h2>Documentation</h2>
-		<h3>Pygame</h3>
-		<p><a href="https://www.pygame.org/docs/">www.pygame.org/docs/</a></p>
-	</section>
+    </section>
+    <section>
+      <h2>Documentation</h2>
+      <h3>Pygame</h3>
+      <p><a href="https://www.pygame.org/docs/">www.pygame.org/docs/</a></p>
+    </section>
   </body>
 </html>
