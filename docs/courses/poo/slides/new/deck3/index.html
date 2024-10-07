@@ -28,12 +28,6 @@
 <h1 class="title">Cours 3 - Polymorphisme, interface et classe abstraite
 </h1>
 </header>
-<section id="po3t---cours-3-polymorphisme-interface-et-classe-abstraite"
-class="level1">
-<h1>PO3T - Cours 3 <span class="small">Polymorphisme, interface et
-classe abstraite</span></h1>
-<p>Quentin Lurkin</p>
-</section>
 <section id="point-dans-le-plan" class="level2">
 <h2>Point dans le plan</h2>
 <ul>
@@ -41,27 +35,26 @@ classe abstraite</span></h1>
 class="small">Accesseurs pour les coordonnées <code>x</code> et
 <code>y</code> et méthode <code>ToString</code></span></li>
 </ul>
-<div class="pygments"><pre><span></span>            public class Point
-            {
-                private readonly int x, y;
+<div class="pygments"><pre><span></span><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">Point</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">readonly</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">;</span>
 
-                public Point (int x, int y)
-                {
-                    this.x = x;
-                    this.y = y;
-                }
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="nf">Point</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">y</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 
-                public int X { get { return x; } }
-                public int Y { get { return y; } }
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">Y</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">y</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}</span>
 
-                // [...]
+<span class="w">    </span><span class="c1">// [...]</span>
 
-                public override string ToString()
-                {
-                    return String.Format (&quot;({0}, {1})&quot;, x, y);
-                }
-            }
-        
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="nf">ToString</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">String</span><span class="p">.</span><span class="n">Format</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;({0}, {1})&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 
 </section>
@@ -74,28 +67,27 @@ couleur</span></li>
 <li><strong>Réutilisation</strong> du code de la classe mère avec
 <code>base</code></li>
 </ul>
-<div class="pygments"><pre><span></span>            public class ColouredPoint : Point
-            {
-                private readonly Color colour;
+<div class="pygments"><pre><span></span><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">ColouredPoint</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Point</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">readonly</span><span class="w"> </span><span class="n">Color</span><span class="w"> </span><span class="n">colour</span><span class="p">;</span>
 
-                public Color Colour { get { return colour; } }
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">Color</span><span class="w"> </span><span class="n">Colour</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">colour</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}</span>
 
-                public ColouredPoint(int x, int y, Color colour) :
-                base(x, y)
-                {
-                    this.colour = colour;
-                }
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="nf">ColouredPoint</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">Color</span><span class="w"> </span><span class="n">colour</span><span class="p">)</span><span class="w"> </span><span class="p">:</span>
+<span class="w">    </span><span class="k">base</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">colour</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 
-                // [...]
+<span class="w">    </span><span class="c1">// [...]</span>
 
-                public override string ToString ()
-                {
-                    return String.Format(&quot;{0} [color={1}]&quot;,
-                        base.ToString(), colour.Name
-                    );
-                }
-            }
-        
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="nf">ToString</span><span class="w"> </span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">String</span><span class="p">.</span><span class="n">Format</span><span class="p">(</span><span class="s">&quot;{0} [color={1}]&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="k">base</span><span class="p">.</span><span class="n">ToString</span><span class="p">(),</span><span class="w"> </span><span class="n">colour</span><span class="p">.</span><span class="n">Name</span>
+<span class="w">        </span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 
 </section>
@@ -108,8 +100,6 @@ d’héritage</span></li>
 <li>Une classe peut avoir des <strong>ancêtres et/ou des
 enfants</strong></li>
 </ul>
-<figure id="point">
-</figure>
 </section>
 <section id="méthode-héritée" class="level2">
 <h2>Méthode héritée</h2>
@@ -121,18 +111,17 @@ sous-classe</span></li>
 <code>Point</code> <span class="small">Création et renvoi d’un nouvel
 objet <code>Point</code></span></li>
 </ul>
-<div class="pygments"><pre><span></span>            public class Point
-            {
-                // [...]
+<div class="pygments"><pre><span></span><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">Point</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// [...]</span>
 
-                public Point Translate(int dx, int dy)
-                {
-                    return new Point(x + dx, y + dy);
-                }
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">Point</span><span class="w"> </span><span class="nf">Translate</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">dx</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">dy</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="nf">Point</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">dx</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">dy</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
 
-                // [...]
-            }
-        
+<span class="w">    </span><span class="c1">// [...]</span>
+<span class="p">}</span>
 </pre></div>
 
 </section>
@@ -143,20 +132,19 @@ objet <code>Point</code></span></li>
 class="small">Mais le résultat produit sera un simple
 point...</span></li>
 </ul>
-<div class="pygments"><pre><span></span>            public class Program
-            {
-                public static void Main(string[] args)
-                {
-                    ColouredPoint cp = new ColouredPoint(1, 2, Color.Red);
-                    Console.WriteLine(cp);
-                    Console.WriteLine(cp.Translate(1, 0));
-                }
-            }
-        
+<div class="pygments"><pre><span></span><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">Program</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">ColouredPoint</span><span class="w"> </span><span class="n">cp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ColouredPoint</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">Color</span><span class="p">.</span><span class="n">Red</span><span class="p">);</span>
+<span class="w">        </span><span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">cp</span><span class="p">);</span>
+<span class="w">        </span><span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">cp</span><span class="p">.</span><span class="n">Translate</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">));</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 
-<div class="terminal">
-<p>(1, 2) [color=Red] (2, 2)</p>
+<div class="terminal">(1, 2) [color=Red]
+(2, 2)
 </div>
 </section>
 <section id="redéfinition-de-méthode" class="level2">
@@ -168,18 +156,17 @@ class="small">Remplacement de la version de la super-classe</span></li>
 class="small">Création d’un nouvel objet
 <code>ColouredPoint</code></span></li>
 </ul>
-<div class="pygments"><pre><span></span>            public class ColouredPoint : Point
-            {
-                // [...]
+<div class="pygments"><pre><span></span><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">ColouredPoint</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Point</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// [...]</span>
 
-                public override Point Translate(int dx, int dy)
-                {
-                    return new ColouredPoint(X + dx, Y + dy, colour);
-                }
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="n">Point</span><span class="w"> </span><span class="nf">Translate</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">dx</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">dy</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="nf">ColouredPoint</span><span class="p">(</span><span class="n">X</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">dx</span><span class="p">,</span><span class="w"> </span><span class="n">Y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">dy</span><span class="p">,</span><span class="w"> </span><span class="n">colour</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
 
-                // [...]
-            }
-        
+<span class="w">    </span><span class="c1">// [...]</span>
+<span class="p">}</span>
 </pre></div>
 
 </section>
@@ -193,24 +180,22 @@ ses méthodes <span class="small">Avec visibilité ou modificateurs
 signature</strong> <span class="small">La visibilité peut être
 éventuellement modifiée</span></li>
 </ul>
-<div class="pygments"><pre><span></span>            public class Point
-            {
-                // [...]
+<div class="pygments"><pre><span></span><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">Point</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// [...]</span>
 
-                public virtual Point Translate(int dx, int dy)
-                {
-                    return new Point(x + dx, y + dy);
-                }
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">virtual</span><span class="w"> </span><span class="n">Point</span><span class="w"> </span><span class="nf">Translate</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">dx</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">dy</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="nf">Point</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">dx</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">dy</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
 
-                // [...]
-            }
-        
+<span class="w">    </span><span class="c1">// [...]</span>
+<span class="p">}</span>
 </pre></div>
 
 </section>
 <section id="polymorphisme" class="level1">
 <h1>Polymorphisme</h1>
-</section>
 <section id="représentation-en-mémoire" class="level2">
 <h2>Représentation en mémoire</h2>
 <ul>
@@ -221,16 +206,15 @@ variables de différents types</span></li>
 <span class="small">Un objet de type Point et un de type
 ColouredPoint</span></li>
 </ul>
-<div class="pygments"><pre><span></span>            public class Program
-            {
-                public static void Main(string[] args)
-                {
-                    Point p = new Point(3, 5);
+<div class="pygments"><pre><span></span><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">Program</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Point</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Point</span><span class="p">(</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">);</span>
 
-                    ColouredPoint cp = new ColouredPoint(1, 2, Color.Red);
-                }
-            }
-        
+<span class="w">        </span><span class="n">ColouredPoint</span><span class="w"> </span><span class="n">cp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ColouredPoint</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">Color</span><span class="p">.</span><span class="n">Red</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 
 </section>
@@ -251,8 +235,7 @@ super-classe</span></li>
 <li>Type de l’objet référencé par la variable</li>
 </ul></li>
 </ul>
-<div class="pygments"><pre><span></span>            ColouredPoint cp = new ColouredPoint(1, 2, Color.Red);
-        
+<div class="pygments"><pre><span></span><span class="n">ColouredPoint</span><span class="w"> </span><span class="n">cp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ColouredPoint</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">Color</span><span class="p">.</span><span class="n">Red</span><span class="p">);</span>
 </pre></div>
 
 </section>
@@ -267,8 +250,7 @@ une variable <code>Point</code> <span class="small">Car
 <code>ColouredPoint</code> est une sous-classe de
 <code>Point</code></span></li>
 </ul>
-<div class="pygments"><pre><span></span>            Point p = new ColouredPoint(1, 2, Color.Red);
-        
+<div class="pygments"><pre><span></span><span class="n">Point</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ColouredPoint</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">Color</span><span class="p">.</span><span class="n">Red</span><span class="p">);</span>
 </pre></div>
 
 </section>
@@ -296,13 +278,12 @@ variable <span class="small">Test de la relation
 class="small">Variable contient une référence vers un objet d’un type
 donné</span></li>
 </ul>
-<div class="pygments"><pre><span></span>            Console.WriteLine(( p is Point)+&quot; / &quot;+( p is ColouredPoint));
-            Console.WriteLine((cp is Point)+&quot; / &quot;+(cp is ColouredPoint));
-        
+<div class="pygments"><pre><span></span><span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">((</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">Point</span><span class="p">)</span><span class="o">+</span><span class="s">&quot; / &quot;</span><span class="o">+</span><span class="p">(</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">ColouredPoint</span><span class="p">));</span>
+<span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">((</span><span class="n">cp</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">Point</span><span class="p">)</span><span class="o">+</span><span class="s">&quot; / &quot;</span><span class="o">+</span><span class="p">(</span><span class="n">cp</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">ColouredPoint</span><span class="p">));</span>
 </pre></div>
 
-<div class="terminal">
-<p>True / False True / True</p>
+<div class="terminal">True / False
+True / True
 </div>
 </section>
 <section id="conversion-implicite" class="level2">
@@ -314,21 +295,20 @@ variable</span></li>
 <li>Conversion par <strong>affectation</strong> directe ou par appel de
 méthode</li>
 </ul>
-<div class="pygments"><pre><span></span>            public class Program
-            {
-                public static void Main(string[] args)
-                {
-                    // [...]
+<div class="pygments"><pre><span></span><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">Program</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// [...]</span>
 
-                    Console.WriteLine(sum(p, cp));
-                }
+<span class="w">        </span><span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">sum</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">cp</span><span class="p">));</span>
+<span class="w">    </span><span class="p">}</span>
 
-                private static Point sum(Point a, Point b)
-                {
-                    return new Point(a.X + b.X, a.Y + b.Y);
-                }
-            }
-        
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="n">Point</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="n">Point</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">Point</span><span class="w"> </span><span class="n">b</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="nf">Point</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">X</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">X</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">Y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">Y</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 
 </section>
@@ -341,22 +321,21 @@ compatible</span></li>
 <li>Conversion à l’aide de l’<strong>opérateur de
 conversion</strong></li>
 </ul>
-<div class="pygments"><pre><span></span>            public class Program
-            {
-                public static void Main(string[] args)
-                {
-                    // [...]
+<div class="pygments"><pre><span></span><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">Program</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// [...]</span>
 
-                    Point q = new ColouredPoint(1, 2, Color.Red);
-                    Console.WriteLine(IsRed((ColouredPoint) q));
-                }
+<span class="w">        </span><span class="n">Point</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ColouredPoint</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">Color</span><span class="p">.</span><span class="n">Red</span><span class="p">);</span>
+<span class="w">        </span><span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">IsRed</span><span class="p">((</span><span class="n">ColouredPoint</span><span class="p">)</span><span class="w"> </span><span class="n">q</span><span class="p">));</span>
+<span class="w">    </span><span class="p">}</span>
 
-                private static bool IsRed(ColouredPoint p)
-                {
-                    return p.Colour.Equals(Color.Red);
-                }
-            }
-        
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="nf">IsRed</span><span class="p">(</span><span class="n">ColouredPoint</span><span class="w"> </span><span class="n">p</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">p</span><span class="p">.</span><span class="n">Colour</span><span class="p">.</span><span class="n">Equals</span><span class="p">(</span><span class="n">Color</span><span class="p">.</span><span class="n">Red</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 
 </section>
@@ -369,15 +348,13 @@ class="small">L’objet est une instance de quelle classe ?</span></li>
 class="small">Peut-on convertir implicitement l’objet vers un type
 ?</span></li>
 </ul>
-<div class="pygments"><pre><span></span>            Console.WriteLine((cp is Point)+&quot; / &quot;+(cp is ColouredPoint));
+<div class="pygments"><pre><span></span><span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">((</span><span class="n">cp</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">Point</span><span class="p">)</span><span class="o">+</span><span class="s">&quot; / &quot;</span><span class="o">+</span><span class="p">(</span><span class="n">cp</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">ColouredPoint</span><span class="p">));</span>
 
-            Console.WriteLine(cp.GetType() == typeof(Point));
-            Console.WriteLine(cp.GetType() == typeof(ColouredPoint));
-        
+<span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">cp</span><span class="p">.</span><span class="n">GetType</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="k">typeof</span><span class="p">(</span><span class="n">Point</span><span class="p">));</span>
+<span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">cp</span><span class="p">.</span><span class="n">GetType</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="k">typeof</span><span class="p">(</span><span class="n">ColouredPoint</span><span class="p">));</span>
 </pre></div>
 
-<div class="terminal">
-<p>True / True False True</p>
+<div class="terminal">True / True False True
 </div>
 </section>
 <section id="conversion-explicite-1" class="level2">
@@ -387,23 +364,22 @@ class="small">Peut-on convertir implicitement l’objet vers un type
 explicite <span class="small">Sans quoi il y a risque d’une erreur de
 conversion</span></li>
 </ul>
-<div class="pygments"><pre><span></span>            public class Program
-            {
-                public static void Main(string[] args)
-                {
-                    // [...]
+<div class="pygments"><pre><span></span><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">Program</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// [...]</span>
 
-                    Point q = new ColouredPoint(1, 2, Color.Red);
-                    if(q is ColouredPoint)
-                    {
-                        ColouredPoint cp = (ColouredPoint) q;
-                        Console.WriteLine(IsRed(cp));
-                    }
-                }
+<span class="w">        </span><span class="n">Point</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ColouredPoint</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">Color</span><span class="p">.</span><span class="n">Red</span><span class="p">);</span>
+<span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="n">q</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">ColouredPoint</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">ColouredPoint</span><span class="w"> </span><span class="n">cp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">ColouredPoint</span><span class="p">)</span><span class="w"> </span><span class="n">q</span><span class="p">;</span>
+<span class="w">            </span><span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">IsRed</span><span class="p">(</span><span class="n">cp</span><span class="p">));</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
 
-                // [...]
-            }
-        
+<span class="w">    </span><span class="c1">// [...]</span>
+<span class="p">}</span>
 </pre></div>
 
 </section>
@@ -418,11 +394,8 @@ variable</strong>
 <li>Uniquement pour les langages typés statiquement</li>
 </ul></li>
 <li><strong>Type dynamique</strong> de l’<strong>objet référencé par la
-variable</strong>
-<ul>
-<li>Déterminé lors de l’exécution</li>
-<li>Peut changer en cours d’exécution</li>
-</ul></li>
+variable</strong> - Déterminé lors de l’exécution - Peut changer en
+cours d’exécution</li>
 </ul>
 </section>
 <section id="type-compatible" class="level2">
@@ -433,11 +406,8 @@ de filiation</li>
 <li>Attention, la compatibilité est
 <strong>unidirectionnelle</strong></li>
 <li>Conversions si <strong>type dynamique de <code>b</code> compatible
-avec <code>A</code></strong>
-<ul>
-<li>Implicite : A a = b;</li>
-<li>Explicite : A a = (A) b;</li>
-</ul></li>
+avec <code>A</code></strong> - Implicite : A a = b; - Explicite : A a =
+(A) b;</li>
 </ul>
 </section>
 <section id="résolution-des-appels-de-méthode" class="level2">
@@ -449,11 +419,8 @@ statique</span></li>
 <li>La <strong>méthode effectivement appelée</strong> dépend du type
 dynamique <span class="small">En cas de redéfinition, la méthode de la
 sous-classe est appelée</span></li>
-<li>Résolution en <strong>deux étapes</strong>
-<ul>
-<li>Méthodes accessibles vérifiées à la compilation</li>
-<li>Méthode appelée décidée à l’exécution</li>
-</ul></li>
+<li>Résolution en <strong>deux étapes</strong> - Méthodes accessibles
+vérifiées à la compilation - Méthode appelée décidée à l’exécution</li>
 </ul>
 </section>
 <section id="résolution-des-appels-de-méthode-1" class="level2">
@@ -463,17 +430,15 @@ sous-classe est appelée</span></li>
 class="small">Car le type statique est celui de la
 super-classe</span></li>
 </ul>
-<div class="pygments"><pre><span></span>            Point p = new ColouredPoint (7, 5, Color.Red);
+<div class="pygments"><pre><span></span><span class="n">Point</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ColouredPoint</span><span class="w"> </span><span class="p">(</span><span class="m">7</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="n">Color</span><span class="p">.</span><span class="n">Red</span><span class="p">);</span>
 
-            Console.WriteLine(p.Colour);
-        
+<span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">Colour</span><span class="p">);</span>
 </pre></div>
 
-<div class="terminal">
-<p>Program.cs (32, 25) : error CS1061 : Type 'Cours4 .Point' does not
-contain a definition for 'Colour' and no extension method 'Colour' of
-type 'Cours4.Point' could be found. Are you missing an assembly
-reference ?</p>
+<div class="terminal">Program.cs (32, 25) : error CS1061 : Type &#39;Cours4.Point&#39; does not
+contain a definition for &#39;Colour&#39; and no extension method &#39;Colour&#39;
+of type &#39;Cours4.Point&#39; could be found. Are you missing an assembly
+reference ?
 </div>
 </section>
 <section id="résolution-des-appels-de-méthode-2" class="level2">
@@ -483,69 +448,66 @@ reference ?</p>
 class="small">Même si type statique de la variable est de la
 super-classe</span></li>
 </ul>
-<div class="pygments"><pre><span></span>            Point p = new ColouredPoint(7, 5, Color.Red);
+<div class="pygments"><pre><span></span><span class="n">Point</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ColouredPoint</span><span class="p">(</span><span class="m">7</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="n">Color</span><span class="p">.</span><span class="n">Red</span><span class="p">);</span>
 
-            Console.WriteLine(p.ToString());
-        
+<span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">ToString</span><span class="p">());</span>
 </pre></div>
 
-<div class="terminal">
-<p>(7, 5) [color=Red]</p>
+<div class="terminal">(7, 5) [color=Red]
 </div>
 </section>
 <section id="classe-object" class="level2">
-<h2>Classe Object</h2>
+<h2>Classe <code>Object</code></h2>
 <ul>
-<li>La classe <code>Object</code> est la super-classe de tout le monde
-<span class="small">Racine de toutes les hiérarchies de
-classe</span></li>
-<li>Contient plusieurs <strong>méthodes redéfinissables</strong>
-communes à tous
+<li><p>La classe <code>Object</code> est la super-classe de tout le
+monde <span class="small">Racine de toutes les hiérarchies de
+classe</span></p></li>
+<li><p>Contient plusieurs <strong>méthodes redéfinissables</strong>
+communes à tous</p>
 <ul>
 <li><p>Représentation d’un objet sous forme de chaine de caractères</p>
-<div class="pygments"><pre><span></span>                            public virtual string ToString()
+<div class="pygments"><pre><span></span><span class="k">public</span><span class="w"> </span><span class="k">virtual</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="nf">ToString</span><span class="p">()</span>
 </pre></div>
 </li>
 <li><p>Test de l’égalité de deux objets</p>
-<div class="pygments"><pre><span></span>                            public virtual bool Equals (object obj)
+<div class="pygments"><pre><span></span><span class="k">public</span><span class="w"> </span><span class="k">virtual</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="nf">Equals</span><span class="w"> </span><span class="p">(</span><span class="kt">object</span><span class="w"> </span><span class="n">obj</span><span class="p">)</span>
 </pre></div>
 </li>
 <li><p>Obtention d’un code de hachage pour l’objet</p>
-<div class="pygments"><pre><span></span>                            public virtual int GetHashCode()
+<div class="pygments"><pre><span></span><span class="k">public</span><span class="w"> </span><span class="k">virtual</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">GetHashCode</span><span class="p">()</span>
 </pre></div>
 </li>
 </ul></li>
 </ul>
 </section>
 <section id="classe-object-1" class="level2">
-<h2>Classe Object</h2>
+<h2>Classe <code>Object</code></h2>
 <ul>
 <li>Classe permettant de représenter des paires d’entiers <span
 class="small">Redéfinition des méthodes Equals et ToString</span></li>
 </ul>
-<div class="pygments"><pre><span></span>            public class IntPair
-            {
-                private readonly int x, y;
+<div class="pygments"><pre><span></span><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">IntPair</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">readonly</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">;</span>
 
-                // [...]
+<span class="w">    </span><span class="c1">// [...]</span>
 
-                public override bool Equals(object obj)
-                {
-                    if(obj == null || GetType () != obj.GetType ())
-                    {
-                        return false;
-                    }
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="nf">Equals</span><span class="p">(</span><span class="kt">object</span><span class="w"> </span><span class="n">obj</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="n">obj</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="k">null</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">GetType</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">obj</span><span class="p">.</span><span class="n">GetType</span><span class="w"> </span><span class="p">())</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="k">false</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
 
-                    IntPair p = (IntPair) obj;
-                    return x == p.x &amp;&amp; y == p.y;
-                }
+<span class="w">        </span><span class="n">IntPair</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">IntPair</span><span class="p">)</span><span class="w"> </span><span class="n">obj</span><span class="p">;</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">p</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">p</span><span class="p">.</span><span class="n">y</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 
-                public override string ToString()
-                {
-                    return String.Format(&quot;({0}, {1})&quot;, x, y);
-                }
-            }
-        
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="nf">ToString</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">String</span><span class="p">.</span><span class="n">Format</span><span class="p">(</span><span class="s">&quot;({0}, {1})&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 
 </section>
@@ -558,16 +520,15 @@ différent</span></li>
 <li>Simule les <strong>paramètres optionnels</strong> (de Python, par
 exemple)</li>
 </ul>
-<div class="pygments"><pre><span></span>            public static void Kill(string target, Weapon weapon)
-            {
-                // ...
-            }
+<div class="pygments"><pre><span></span><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Kill</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">target</span><span class="p">,</span><span class="w"> </span><span class="n">Weapon</span><span class="w"> </span><span class="n">weapon</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// ...</span>
+<span class="p">}</span>
 
-            public static void Kill(string target)
-            {
-                Kill(target, new CrossBow());
-            }
-        
+<span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Kill</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">target</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">Kill</span><span class="p">(</span><span class="n">target</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">CrossBow</span><span class="p">());</span>
+<span class="p">}</span>
 </pre></div>
 
 </section>
@@ -587,9 +548,9 @@ exécuter</strong> <span class="small">On reprend la règle de résolution
 liée à la redéfinition</span></li>
 </ul>
 </section>
+</section>
 <section id="interface-et-classe-abstraite" class="level1">
 <h1>Interface et classe abstraite</h1>
-</section>
 <section id="interface" class="level2">
 <h2>Interface</h2>
 <ul>
@@ -600,14 +561,13 @@ méthodes</span></li>
 <span class="small">Définition d’un ensemble de méthodes qui devront
 être présentes</span></li>
 </ul>
-<div class="pygments"><pre><span></span>            public interface Complex
-            {
-                double Real();
-                double Imag();
-                double Abs();
-                double Arg();
-            }
-        
+<div class="pygments"><pre><span></span><span class="k">public</span><span class="w"> </span><span class="k">interface</span><span class="w"> </span><span class="n">Complex</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="nf">Real</span><span class="p">();</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="nf">Imag</span><span class="p">();</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="nf">Abs</span><span class="p">();</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="nf">Arg</span><span class="p">();</span>
+<span class="p">}</span>
 </pre></div>
 
 </section>
@@ -618,22 +578,21 @@ méthodes</span></li>
 class="small">Doit fournir un corps pour toutes les méthodes de
 l’interface</span></li>
 </ul>
-<div class="pygments"><pre><span></span>            public class CartesianComplex : Complex
-            {
-                private readonly double a, b;
+<div class="pygments"><pre><span></span><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">CartesianComplex</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Complex</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">readonly</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">;</span>
 
-                public CartesianComplex(double a, double b)
-                {
-                    this.a = a;
-                    this.b = b;
-                }
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="nf">CartesianComplex</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">b</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">b</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 
-                public double Real() { return a; }
-                public double Imag() { return b; }
-                public double Abs() { return Math.Sqrt (a*a + b*b); }
-                public double Arg() { return Math.Acos (a / Abs()); }
-            }
-        
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="nf">Real</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">a</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="nf">Imag</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">b</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="nf">Abs</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">Math</span><span class="p">.</span><span class="n">Sqrt</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="o">*</span><span class="n">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span><span class="o">*</span><span class="n">b</span><span class="p">);</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="nf">Arg</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">Math</span><span class="p">.</span><span class="n">Acos</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">Abs</span><span class="p">());</span><span class="w"> </span><span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 
 </section>
@@ -643,22 +602,21 @@ l’interface</span></li>
 <li>Plusieurs classes peuvent implémenter la même interface <span
 class="small">Permet du polymorphisme comme avec l’héritage</span></li>
 </ul>
-<div class="pygments"><pre><span></span>            public class PolarComplex : Complex
-            {
-                private readonly double r, theta;
+<div class="pygments"><pre><span></span><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">PolarComplex</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Complex</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">readonly</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">r</span><span class="p">,</span><span class="w"> </span><span class="n">theta</span><span class="p">;</span>
 
-                public PolarComplex(double r, double theta)
-                {
-                    this.r = r;
-                    this.theta = theta;
-                }
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="nf">PolarComplex</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">r</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">theta</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">r</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="n">theta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">theta</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 
-                public double Real() { return r * Math.Cos(theta); }
-                public double Imag() { return r * Math.Sin(theta); }
-                public double Abs() { return r; }
-                public double Arg() { return theta; }
-            }
-        
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="nf">Real</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Math</span><span class="p">.</span><span class="n">Cos</span><span class="p">(</span><span class="n">theta</span><span class="p">);</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="nf">Imag</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Math</span><span class="p">.</span><span class="n">Sin</span><span class="p">(</span><span class="n">theta</span><span class="p">);</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="nf">Abs</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">r</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="nf">Arg</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">theta</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 
 </section>
@@ -669,26 +627,24 @@ class="small">Permet du polymorphisme comme avec l’héritage</span></li>
 polymorphisme <span class="small">Il suffit de passer par les méthodes
 de l’interface</span></li>
 </ul>
-<div class="pygments"><pre><span></span>            List&lt;Complex&gt; list = new List&lt;Complex&gt;();
-            list.Add(new CartesianComplex(2, -1));
-            list.Add(new PolarComplex(2, Math.PI / 2));
-            list.Add(new CartesianComplex(-1, 1));
+<div class="pygments"><pre><span></span><span class="n">List</span><span class="o">&lt;</span><span class="n">Complex</span><span class="o">&gt;</span><span class="w"> </span><span class="n">list</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Complex</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="n">list</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">CartesianComplex</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="m">1</span><span class="p">));</span>
+<span class="n">list</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">PolarComplex</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">Math</span><span class="p">.</span><span class="n">PI</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="m">2</span><span class="p">));</span>
+<span class="n">list</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">CartesianComplex</span><span class="p">(</span><span class="o">-</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">));</span>
 
-            double a = 0;
-            double b = 0;
-            foreach(Complex c in list)
-            {
-                a += c.Real();
-                b += c.Imag();
-            }
+<span class="kt">double</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">;</span>
+<span class="kt">double</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">;</span>
+<span class="k">foreach</span><span class="p">(</span><span class="n">Complex</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">list</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">a</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="n">Real</span><span class="p">();</span>
+<span class="w">    </span><span class="n">b</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="n">Imag</span><span class="p">();</span>
+<span class="p">}</span>
 
-            Complex sum = new CartesianComplex(a, b);
-            Console.WriteLine(sum);
-        
+<span class="n">Complex</span><span class="w"> </span><span class="n">sum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">CartesianComplex</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">);</span>
+<span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">sum</span><span class="p">);</span>
 </pre></div>
 
-<div class="terminal">
-<p>1 + 2i</p>
+<div class="terminal">1 + 2i
 </div>
 </section>
 <section id="implémentation-multiple" class="level2">
@@ -709,24 +665,23 @@ concrète <span class="small">Certaines méthodes communes peuvent être
 implémentées</span></li>
 <li>Une classe abstraite n’est <strong>pas instanciable</strong></li>
 </ul>
-<div class="pygments"><pre><span></span>            public abstract class Complex
-            {
-                public abstract double Real();
-                public abstract double Imag();
+<div class="pygments"><pre><span></span><span class="k">public</span><span class="w"> </span><span class="k">abstract</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">Complex</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">abstract</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="nf">Real</span><span class="p">();</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">abstract</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="nf">Imag</span><span class="p">();</span>
 
-                public virtual double Abs()
-                {
-                    double a = Real();
-                    double b = Imag();
-                    return Math.Sqrt(a*a + b*b);
-                }
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">virtual</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="nf">Abs</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">double</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Real</span><span class="p">();</span>
+<span class="w">        </span><span class="kt">double</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Imag</span><span class="p">();</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">Math</span><span class="p">.</span><span class="n">Sqrt</span><span class="p">(</span><span class="n">a</span><span class="o">*</span><span class="n">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span><span class="o">*</span><span class="n">b</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
 
-                public virtual double Arg()
-                {
-                    return Math.Acos(Real()/Abs());
-                }
-            }
-        
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">virtual</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="nf">Arg</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">Math</span><span class="p">.</span><span class="n">Acos</span><span class="p">(</span><span class="n">Real</span><span class="p">()</span><span class="o">/</span><span class="n">Abs</span><span class="p">());</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 
 </section>
@@ -740,24 +695,23 @@ implémentées</span></li>
 <li>Méthode avec corps mais redéfinissable (<code>virtual</code>)</li>
 </ul></li>
 </ul>
-<div class="pygments"><pre><span></span>            public abstract class Complex
-            {
-                public abstract double Real();
-                public abstract double Imag();
+<div class="pygments"><pre><span></span><span class="k">public</span><span class="w"> </span><span class="k">abstract</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">Complex</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">abstract</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="nf">Real</span><span class="p">();</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">abstract</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="nf">Imag</span><span class="p">();</span>
 
-                public virtual double Abs()
-                {
-                    double a = Real();
-                    double b = Imag();
-                    return Math.Sqrt(a*a + b*b);
-                }
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">virtual</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="nf">Abs</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">double</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Real</span><span class="p">();</span>
+<span class="w">        </span><span class="kt">double</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Imag</span><span class="p">();</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">Math</span><span class="p">.</span><span class="n">Sqrt</span><span class="p">(</span><span class="n">a</span><span class="o">*</span><span class="n">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span><span class="o">*</span><span class="n">b</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
 
-                public virtual double Arg()
-                {
-                    return Math.Acos(Real()/Abs());
-                }
-            }
-        
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">virtual</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="nf">Arg</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">Math</span><span class="p">.</span><span class="n">Acos</span><span class="p">(</span><span class="n">Real</span><span class="p">()</span><span class="o">/</span><span class="n">Abs</span><span class="p">());</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 
 </section>
@@ -768,26 +722,25 @@ implémentées</span></li>
 <span class="small">Il faut définir le corps des méthodes
 abstraites</span></li>
 </ul>
-<div class="pygments"><pre><span></span>            public class CartesianComplex : Complex
-            {
-                private readonly double a, b;
+<div class="pygments"><pre><span></span><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">CartesianComplex</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Complex</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">readonly</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">;</span>
 
-                // a + bi
-                public CartesianComplex(double a, double b)
-                {
-                    this.a = a;
-                    this.b = b;
-                }
+<span class="w">    </span><span class="c1">// a + bi</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="nf">CartesianComplex</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">b</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">b</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 
-                public override double Real() { return a; }
-                public override double Imag() { return b; }
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="nf">Real</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">a</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="nf">Imag</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">b</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
 
-                public override string ToString()
-                {
-                    return String.Format(&quot;{0} + {1}i&quot;, a, b);
-                }
-            }
-        
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="nf">ToString</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">String</span><span class="p">.</span><span class="n">Format</span><span class="p">(</span><span class="s">&quot;{0} + {1}i&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 
 </section>
@@ -797,23 +750,22 @@ abstraites</span></li>
 <li>On peut redéfinir une méthode définie dans la classe abstraite <span
 class="small">Il s’agit d’une simple redéfinition de méthode</span></li>
 </ul>
-<div class="pygments"><pre><span></span>            public class PolarComplex : Complex
-            {
-                private readonly double r, theta;
+<div class="pygments"><pre><span></span><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">PolarComplex</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Complex</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">readonly</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">r</span><span class="p">,</span><span class="w"> </span><span class="n">theta</span><span class="p">;</span>
 
-                public PolarComplex(double r, double theta)
-                {
-                    this.r = r;
-                    this.theta = theta;
-                }
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="nf">PolarComplex</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">r</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">theta</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">r</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="n">theta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">theta</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 
-                public override double Real() { return r * Math.Cos(theta); }
-                public override double Imag() { return r * Math.Sin(theta); }
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="nf">Real</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Math</span><span class="p">.</span><span class="n">Cos</span><span class="p">(</span><span class="n">theta</span><span class="p">);</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="nf">Imag</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Math</span><span class="p">.</span><span class="n">Sin</span><span class="p">(</span><span class="n">theta</span><span class="p">);</span><span class="w"> </span><span class="p">}</span>
 
-                public override double Abs() { return r; }
-                public override double Arg() { return theta ; }
-            }
-        
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="nf">Abs</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">r</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="nf">Arg</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">theta</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 
 </section>
@@ -830,6 +782,7 @@ corps à toutes les méthodes abstraites</span></li>
 class="small">En rassemblant les membres communs dans la
 super-classe</span></li>
 </ul>
+</section>
 </section>
 </body>
 </html>

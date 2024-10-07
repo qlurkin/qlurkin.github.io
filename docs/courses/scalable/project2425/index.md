@@ -76,10 +76,13 @@ The evaluation will occur in several stages:
 - 3 **progress presentations** and a final presentation:
 
   - 1st presentation _(October 8 PM, 13% of the points)_:
-    - Have a trivial service usable by cluster administrators.
-    - Deploy all services on your cluster and make them accessible via the proxy.
-  - 2nd presentation _(13% of the points)_: details to be determined.
-  - 3rd presentation _(13% of the points)_: details to be determined.
+    - Have a trivial service usable by cluster administrators (1/2).
+    - Deploy all services on your cluster and make them accessible via the proxy (1/2).
+  - 2nd presentation _(November 5 PM, 13% of the points)_:
+    - Your API specification is done (1/3).
+    - The documentation of your API is published on your git repository (1/3).
+    - All the routes of the API are requestable (even if it respond with dummy data) (1/3).
+  - 3rd presentation _(November 26 PM, 13% of the points)_: details to be determined.
   - Final presentation _(December 10 PM, 36% of the points)_.
 
 - A **Git repository** _(25% of the points)_ containing:
