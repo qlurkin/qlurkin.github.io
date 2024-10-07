@@ -1,15 +1,119 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Labo 1 - Découverte et prise en main du C#</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-  </head>
-  <body>
-    <script>
-      
-        window.location.pathname = `/courses/poo/labs/lab1/index.pdf`
-      
-    </script>
-  </body>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>PO3L - Labo 1 - objets, agrégation et composition</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="/document.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">PO3L - Labo 1
+<small>objets, agrégation et composition</small>
+</h1>
+</header>
+<section id="bases-du-c" class="level2">
+<h2>Bases du C</h2>
+<ol type="1">
+<li><p>Pour vous familiariser avec la syntaxe du C#, traduisez le
+programme suivant en C# :</p>
+<div class="pygments"><pre><span></span><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">sqrt</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Recherche des racines de ax^2 + bx + c&quot;</span><span class="p">)</span>
+<span class="n">a</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Coefficient a : &quot;</span><span class="p">))</span>
+<span class="n">b</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Coefficient b : &quot;</span><span class="p">))</span>
+<span class="n">c</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Coefficient c : &quot;</span><span class="p">))</span>
+
+<span class="c1"># Calcul du discriminant</span>
+<span class="n">delta</span> <span class="o">=</span> <span class="n">b</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">a</span> <span class="o">*</span> <span class="n">c</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Discriminant :&quot;</span><span class="p">,</span> <span class="n">delta</span><span class="p">)</span>
+
+<span class="c1"># Test des trois cas possibles et affichage des racines du trinôme</span>
+<span class="k">if</span> <span class="n">delta</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+  <span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Pas de racine réelle&quot;</span><span class="p">)</span>
+<span class="k">elif</span> <span class="n">delta</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+  <span class="n">x</span> <span class="o">=</span> <span class="o">-</span><span class="n">b</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="p">)</span>
+  <span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Une racine réelle double :&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+<span class="k">else</span> <span class="p">:</span>
+  <span class="n">x1</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">b</span> <span class="o">-</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">delta</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="p">)</span>
+  <span class="n">x2</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">b</span> <span class="o">+</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">delta</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="p">)</span>
+  <span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Deux racines réelles distinctes :&quot;</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="s2">&quot;et&quot;</span><span class="p">,</span> <span class="n">x2</span><span class="p">)</span>
+</pre></div>
+
+<p>Voici les constructions qu’il vous faut savoir faire en C# :</p>
+<ul>
+<li>insérer un commentaire dans un code source;</li>
+<li>variable : déclaration, initialisation et utilisation;</li>
+<li>lecture et écriture à la console avec l’objet
+<code>Console</code>;</li>
+<li>conversion de données avec l’objet <code>Convert</code>;</li>
+<li>calcul d’une racine carrée avec l’objet <code>Math</code>;</li>
+<li>construction d’expressions booléennes pour définir des
+conditions;</li>
+<li>utilisation de l’instruction <code>if-else</code>.</li>
+</ul></li>
+<li><p>Vous devez maintenant améliorer le programme pour gérer le cas où
+l’utilisateur entre du texte qui n’est pas valide, c’est-à-dire qui ne
+représente pas un nombre. Tant qu’il n’a pas renseigné une valeur
+valide, le programme doit continuer à lui demander en boucle la valeur
+attendue. Pour cela, vous allez devoir découvrir le fonctionnement des
+concepts suivants :</p>
+<ul>
+<li>définition d’une fonction;</li>
+<li>utilisation de l’instruction <code>while</code>;</li>
+<li>utilisation du mécanisme d’exception <code>try-catch</code>.</li>
+</ul></li>
+</ol>
+</section>
+<section id="agrégation-et-composition-bibliothèque" class="level2">
+<h2>Agrégation et composition: Bibliothèque</h2>
+<p>Nous allons modéliser une bibliothèque qui contient des livres,
+chaque livre étant composé de chapitres, et chaque bibliothèque ayant
+des abonnés.</p>
+<section id="relations" class="level3">
+<h3>Relations:</h3>
+<ul>
+<li><strong>Composition :</strong> Chaque livre est composé de plusieurs
+chapitres. Si un livre est supprimé, ses chapitres le sont aussi. Un
+chapitre ne peut pas exister sans un livre.</li>
+<li><strong>Agrégation :</strong> Chaque bibliothèque a une liste
+d’abonnés (des personnes). Les abonnés peuvent exister en dehors de la
+bibliothèque, et peuvent être abonnés à plusieurs bibliothèques.</li>
+</ul>
+</section>
+<section id="classes" class="level3">
+<h3>Classes:</h3>
+<figure><img class="plantuml" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBjb250ZW50U3R5bGVUeXBlPSJ0ZXh0L2NzcyIgaGVpZ2h0PSI0MjZweCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSIgc3R5bGU9IndpZHRoOjQ4M3B4O2hlaWdodDo0MjZweDtiYWNrZ3JvdW5kOiNGRkZGRkY7IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCA0ODMgNDI2IiB3aWR0aD0iNDgzcHgiIHpvb21BbmRQYW49Im1hZ25pZnkiPjxkZWZzLz48Zz48IS0tY2xhc3MgTGlicmFyeS0tPjxnIGlkPSJlbGVtX0xpYnJhcnkiPjxyZWN0IGNvZGVMaW5lPSIzIiBmaWxsPSIjRjFGMUYxIiBoZWlnaHQ9IjEyNC45Mjk3IiBpZD0iTGlicmFyeSIgcng9IjIuNSIgcnk9IjIuNSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB3aWR0aD0iMzE3Ljk5NzEiIHg9IjEzMC4yNiIgeT0iNyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjQ2LjgyNjIiIHg9IjI2NS44NDU0IiB5PSIyNS41MzUyIj5MaWJyYXJ5PC90ZXh0PjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgeDE9IjEzMS4yNiIgeDI9IjQ0Ny4yNTcxIiB5MT0iMzMuNDg4MyIgeTI9IjMzLjQ4ODMiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxNDQuNjI3OSIgeD0iMTM2LjI2IiB5PSI1MS4wMjM0Ij4tbGlicmFyeV9uYW1lOiBTdHJpbmc8L3RleHQ+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB4MT0iMTMxLjI2IiB4Mj0iNDQ3LjI1NzEiIHkxPSI1Ny45NzY2IiB5Mj0iNTcuOTc2NiIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjMwNS45OTcxIiB4PSIxMzYuMjYiIHk9Ijc1LjUxMTciPithZGRTdWJzY3JpYmVyKHN1YnNjcmliZXI6IFN1YnNjcmliZXIpOiB2b2lkPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjE5My4wNzQyIiB4PSIxMzYuMjYiIHk9IjkyIj4rYWRkQm9vayhib29rOiBCb29rKTogdm9pZDwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxODQuMjk2OSIgeD0iMTM2LjI2IiB5PSIxMDguNDg4MyI+K2Rpc3BsYXlTdWJzY3JpYmVycygpOiB2b2lkPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjE0Ni4yNjg2IiB4PSIxMzYuMjYiIHk9IjEyNC45NzY2Ij4rZGlzcGxheUJvb2tzKCk6IHZvaWQ8L3RleHQ+PC9nPjwhLS1jbGFzcyBCb29rLS0+PGcgaWQ9ImVsZW1fQm9vayI+PHJlY3QgY29kZUxpbmU9IjExIiBmaWxsPSIjRjFGMUYxIiBoZWlnaHQ9IjkxLjk1MzEiIGlkPSJCb29rIiByeD0iMi41IiByeT0iMi41IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHdpZHRoPSIzMTIuNTA3OCIgeD0iNyIgeT0iMTkxLjkzIi8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMzMuNDM0NiIgeD0iMTQ2LjUzNjYiIHk9IjIxMC40NjUyIj5Cb29rPC90ZXh0PjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgeDE9IjgiIHgyPSIzMTguNTA3OCIgeTE9IjIxOC40MTgzIiB5Mj0iMjE4LjQxODMiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxMjQuNDg5MyIgeD0iMTMiIHk9IjIzNS45NTM0Ij4tYm9va190aXRsZTogU3RyaW5nPC90ZXh0PjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgeDE9IjgiIHgyPSIzMTguNTA3OCIgeTE9IjI0Mi45MDY2IiB5Mj0iMjQyLjkwNjYiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIzMDAuNTA3OCIgeD0iMTMiIHk9IjI2MC40NDE3Ij4rYWRkQ2hhcHRlcihudW1iZXI6IGludCwgdGl0bGU6IFN0cmluZyk6IHZvaWQ8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMTY2LjUxNjYiIHg9IjEzIiB5PSIyNzYuOTMiPitkaXNwbGF5Q2hhcHRlcnMoKTogdm9pZDwvdGV4dD48L2c+PCEtLWNsYXNzIENoYXB0ZXItLT48ZyBpZD0iZWxlbV9DaGFwdGVyIj48cmVjdCBjb2RlTGluZT0iMTciIGZpbGw9IiNGMUYxRjEiIGhlaWdodD0iNzUuNDY0OCIgaWQ9IkNoYXB0ZXIiIHJ4PSIyLjUiIHJ5PSIyLjUiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgd2lkdGg9Ijk5LjcxODgiIHg9IjExMy4zOSIgeT0iMzQzLjg5Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iNTMuNjgyNiIgeD0iMTM2LjQwODEiIHk9IjM2Mi40MjUyIj5DaGFwdGVyPC90ZXh0PjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgeDE9IjExNC4zOSIgeDI9IjIxMi4xMDg4IiB5MT0iMzcwLjM3ODMiIHkyPSIzNzAuMzc4MyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9Ijg3LjcxODgiIHg9IjExOS4zOSIgeT0iMzg3LjkxMzQiPi1udW1iZXI6IGludDwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI4My4yOTU5IiB4PSIxMTkuMzkiIHk9IjQwNC40MDE3Ij4tdGl0bGU6IFN0cmluZzwvdGV4dD48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHgxPSIxMTQuMzkiIHgyPSIyMTIuMTA4OCIgeTE9IjQxMS4zNTQ4IiB5Mj0iNDExLjM1NDgiLz48L2c+PCEtLWNsYXNzIFN1YnNjcmliZXItLT48ZyBpZD0iZWxlbV9TdWJzY3JpYmVyIj48cmVjdCBjb2RlTGluZT0iMjIiIGZpbGw9IiNGMUYxRjEiIGhlaWdodD0iNzUuNDY0OCIgaWQ9IlN1YnNjcmliZXIiIHJ4PSIyLjUiIHJ5PSIyLjUiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgd2lkdGg9IjEyMi4wODU5IiB4PSIzNTQuMjEiIHk9IjIwMC4xOCIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjcxLjQ2MjkiIHg9IjM3OS41MjE1IiB5PSIyMTguNzE1MiI+U3Vic2NyaWJlcjwvdGV4dD48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHgxPSIzNTUuMjEiIHgyPSI0NzUuMjk1OSIgeTE9IjIyNi42NjgzIiB5Mj0iMjI2LjY2ODMiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI5NC4yMTk3IiB4PSIzNjAuMjEiIHk9IjI0NC4yMDM0Ij4tbmFtZTogU3RyaW5nPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjExMC4wODU5IiB4PSIzNjAuMjEiIHk9IjI2MC42OTE3Ij4tYWRkcmVzczogU3RyaW5nPC90ZXh0PjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgeDE9IjM1NS4yMSIgeDI9IjQ3NS4yOTU5IiB5MT0iMjY3LjY0NDgiIHkyPSIyNjcuNjQ0OCIvPjwvZz48IS0tcmV2ZXJzZSBsaW5rIExpYnJhcnkgdG8gQm9vay0tPjxnIGlkPSJsaW5rX0xpYnJhcnlfQm9vayI+PHBhdGggY29kZUxpbmU9IjI3IiBkPSJNMjM1LjQ0ODksMTQxLjUzOTEgQzIyMC41MTg5LDE2MS4yNjkxIDIxMS41MSwxNzMuMTcgMTk3LjYxLDE5MS41MiAiIGZpbGw9Im5vbmUiIGlkPSJMaWJyYXJ5LWJhY2t0by1Cb29rIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDsiLz48cG9seWdvbiBmaWxsPSJub25lIiBwb2ludHM9IjI0Mi42OSwxMzEuOTcsMjM1Ljg3OTgsMTM0LjM0MDgsMjM1LjQ0ODksMTQxLjUzOTEsMjQyLjI1OTIsMTM5LjE2ODIsMjQyLjY5LDEzMS45NyIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iOC4yMjAyIiB4PSIyMTYuMTgxNiIgeT0iMTUyLjY1MDciPjE8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iOC4wNjc5IiB4PSIxOTQuMDczNSIgeT0iMTgxLjE5NjYiPm48L3RleHQ+PC9nPjwhLS1yZXZlcnNlIGxpbmsgQm9vayB0byBDaGFwdGVyLS0+PGcgaWQ9ImxpbmtfQm9va19DaGFwdGVyIj48cGF0aCBjb2RlTGluZT0iMjgiIGQ9Ik0xNjMuMjUsMjk2LjE0IEMxNjMuMjUsMzE1LjI1IDE2My4yNSwzMjUuMjQgMTYzLjI1LDM0My40ICIgZmlsbD0ibm9uZSIgaWQ9IkJvb2stYmFja3RvLUNoYXB0ZXIiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjxwb2x5Z29uIGZpbGw9IiMxODE4MTgiIHBvaW50cz0iMTYzLjI1LDI4NC4xNCwxNTkuMjUsMjkwLjE0LDE2My4yNSwyOTYuMTQsMTY3LjI1LDI5MC4xNCwxNjMuMjUsMjg0LjE0IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDsiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMyIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI4LjIyMDIiIHg9IjE1NC43MDI0IiB5PSIzMDQuMjg2NSI+MTwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMyIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI4LjA2NzkiIHg9IjE1NC41Njg0IiB5PSIzMzMuMTM2NSI+bjwvdGV4dD48L2c+PCEtLXJldmVyc2UgbGluayBMaWJyYXJ5IHRvIFN1YnNjcmliZXItLT48ZyBpZD0ibGlua19MaWJyYXJ5X1N1YnNjcmliZXIiPjxwYXRoIGNvZGVMaW5lPSIyOSIgZD0iTTM0My4wNTQzLDE0MS41MzY2IEMzNjAuMzA0MywxNjQuMzE2NiAzNzIuMDcsMTc5Ljg3IDM4Ny4xNywxOTkuODEgIiBmaWxsPSJub25lIiBpZD0iTGlicmFyeS1iYWNrdG8tU3Vic2NyaWJlciIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7Ii8+PHBvbHlnb24gZmlsbD0ibm9uZSIgcG9pbnRzPSIzMzUuODEsMTMxLjk3LDMzNi4yNDMzLDEzOS4xNjgxLDM0My4wNTQzLDE0MS41MzY2LDM0Mi42MjEsMTM0LjMzODYsMzM1LjgxLDEzMS45NyIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iOC4yMjAyIiB4PSIzMzIuNzQyNyIgeT0iMTUyLjY1MDciPjE8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iOC4wNjc5IiB4PSIzNjAuNjU5NSIgeT0iMTg5LjU2NzEiPm48L3RleHQ+PC9nPjwhLS1TUkM9W1JQNzFSaUNXMzhSbEY4TjVBVHFNUVJ0Y2prcXFRUlN5RzRLMGpMTzlINDBjakxOVmxTMGU5NUN1OEVGVjdfdW45bkdJRTVnazk3NWRyMUVwUjBJa2M3Q1Z0YmlTUFktX2tUNHpOWU15YW9KMDNtd01zR2xTMjhKTFdsZXg3cEdSUEdUem1GR25JUV8wWEVaZG1WNW1heElEQXM0ZUFfNmtXci0zZVhBVm5mb1I4TW1UbjcyajJ0SUpPZlVBa3NRcDg5OUxrZkZpRlFRQnlUWlp1RDZoM1RqVjlwUnZ1NWRGT19BQnNoXzFnZFFwUlNPc0VjVWJENXpTZDNEaDltTWlKd3RpX3FjdHFSQUxwWXRudnBfSFZRWVdPRGVNZ0FQZjEySkRXVXVmbEVIaWpoVTBkYUkyZ21kbzAwMDBdLS0+PC9nPjwvc3ZnPg=="></figure>
+</section>
+<section id="remarques" class="level3">
+<h3>Remarques :</h3>
+<ul>
+<li><p>Les différents liens dans ce diagramme se matérialiseront par des
+attributs de type <code>List&lt;...&gt;</code> qui ne sont pas
+représentés dans le diagramme.</p></li>
+<li><p>Il faudra sans doute ajouter quelques méthodes
+<code>ToString()</code>.</p></li>
+<li><p>Écrivez aussi un programme qui construit quelques objets et
+montre que les méthodes fonctionnent.</p></li>
+</ul>
+</section>
+</section>
+</body>
 </html>
