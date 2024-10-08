@@ -26,7 +26,7 @@ typst: true
 - Pour installer Pygame :
 
 ```terminal
-&> python -m pip install pygame
+&> python -m pip install pygame-ce
 ```
 
 ## Premier programme graphique {.code}
