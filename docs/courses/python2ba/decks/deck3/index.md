@@ -702,7 +702,7 @@ App().run()
 
 ### Pygame
 
-[www.pygame.org/docs/](https://www.pygame.org/docs/)
+[www.pygame.org/docs/](https://www.pyga.me/docs/)
 
 ### Pygame_gui
 
