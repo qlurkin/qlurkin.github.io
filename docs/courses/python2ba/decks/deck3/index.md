@@ -424,7 +424,7 @@ class App:
       # Permet à pygame_gui de mettre à jour les animations (en s)
       self.manager.update(time_delta/1000)
 
-      pygame.draw.rect(self.screen, (0, 0, 0), pygame.Rect(0, 0, 800, 600))
+      pygame.draw.rect(self.screen, (0, 0, 0), pygame.Rect((0, 0), self.size))
       self.draw()
 
       # Affiche les widgets
@@ -506,7 +506,7 @@ class App:
       self.update()
       self.manager.update(time_delta/1000)
 
-      pygame.draw.rect(self.screen, (0, 0, 0), pygame.Rect(0, 0, 800, 600))
+      pygame.draw.rect(self.screen, (0, 0, 0), pygame.Rect((0, 0), self.size))
       self.draw()
       self.manager.draw_ui(self.screen)
 
@@ -595,7 +595,7 @@ class App:
         self.update()
         self.manager.update(time_delta/1000)
 
-        pygame.draw.rect(self.screen, (0, 0, 0), pygame.Rect(0, 0, 800, 600))
+        pygame.draw.rect(self.screen, (0, 0, 0), pygame.Rect((0, 0), self.size))
         self.draw()
         self.manager.draw_ui(self.screen)
 
@@ -688,7 +688,7 @@ class App:
       self.update()
       self.manager.update(time_delta/1000)
 
-      pygame.draw.rect(self.screen, (0, 0, 0), pygame.Rect(0, 0, 800, 600))
+      pygame.draw.rect(self.screen, (0, 0, 0), pygame.Rect((0, 0), self.size))
       self.draw()
       self.manager.draw_ui(self.screen)
 
