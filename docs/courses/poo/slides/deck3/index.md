@@ -1217,6 +1217,8 @@ Driver --* MurderRobotDog
 Barker --* MurderRobotDog
 ```
 
+<div style="font-size: 0.7em; font-style: italic">L'exemple vient de <a href="https://www.youtube.com/watch?v=wfMtDGfHWpA">Fun Fun Function: Composition over Inheritance</a></div>
+
 ## Composition > héritage
 
 - Design orienté **héritage**: conception des classes par rapport à ce qu'elles **sont**
