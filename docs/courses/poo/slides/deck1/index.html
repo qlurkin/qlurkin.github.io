@@ -124,8 +124,8 @@ un nom et un numéro de téléphone</span></li>
 <span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="n">phonenumber</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">;</span>
 <span class="w">  </span><span class="p">}</span>
 
-<span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="nf">SetPhoneNumber</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">phonenumber</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="n">phonenumber</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">phonenumber</span>
+<span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">SetPhoneNumber</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">phonenumber</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="n">phonenumber</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">phonenumber</span><span class="p">;</span>
 <span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -206,6 +206,53 @@ l'extérieur</span></li>
 <span class="p">}</span>
 </pre></div>
 
+</section>
+<section id="surcharge-de-méthode" class="level2">
+<h2>Surcharge de méthode</h2>
+<ul>
+<li>Plusieurs méthodes peuvent avoir le <strong>même nom</strong> <span
+class="small">Pour autant que les types de la liste de paramètres
+différent</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Contact</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="k">private</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">firstname</span><span class="p">,</span><span class="w"> </span><span class="n">lastname</span><span class="p">;</span>
+<span class="w">  </span><span class="k">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">phonenumber</span><span class="p">;</span>
+
+<span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="nf">Contact</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">firstname</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">lastname</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">phonenumber</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="n">firstname</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">firstname</span><span class="p">;</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="n">lastname</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lastname</span><span class="p">;</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="n">phonenumber</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">phonenumber</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="nf">Contact</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">firstname</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">lastname</span><span class="p">):</span>
+<span class="w">  </span><span class="k">this</span><span class="p">(</span><span class="n">firstname</span><span class="p">,</span><span class="w"> </span><span class="n">lastname</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{}</span>
+
+<span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">SetPhoneNumber</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">phonenumber</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="n">phonenumber</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">phonenumber</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">SetPhoneNumber</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">phonenumber</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="n">phonenumber</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Convert</span><span class="p">.</span><span class="n">ToInt32</span><span class="p">(</span><span class="n">phonenumber</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+</section>
+<section id="résolution-de-la-surcharge" class="level2">
+<h2>Résolution de la surcharge</h2>
+<ul>
+<li>Étapes de la résolution de la <strong>surcharge de méthodes</strong>
+<ol type="1">
+<li>Construction liste des types des paramètres réels</li>
+<li>Identification des méthodes accessibles avec le type statique</li>
+<li>Recherche d’une méthode avec la même liste de types</li>
+<li>Recherche des méthodes avec paramètres compatibles</li>
+<li>Choix de la méthode la plus spécifique</li>
+</ol></li>
+</ul>
 </section>
 <section id="relation-entre-classes" class="level2">
 <h2>Relation entre classes</h2>

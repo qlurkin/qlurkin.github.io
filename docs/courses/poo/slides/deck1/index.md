@@ -147,8 +147,8 @@ class Contact
     this.phonenumber = 0;
   }
 
-  public SetPhoneNumber(int phonenumber) {
-    this.phonenumber = phonenumber
+  public void SetPhoneNumber(int phonenumber) {
+    this.phonenumber = phonenumber;
   }
 }
 ```
@@ -260,6 +260,48 @@ class Contact
 }
 
 ```
+
+## Surcharge de méthode
+
+- Plusieurs méthodes peuvent avoir le **même nom** [Pour autant que
+  les types de la liste de paramètres différent]{.small}
+
+```cs
+class Contact
+{
+  private string firstname, lastname;
+  private int phonenumber;
+
+  public Contact(string firstname, string lastname, int phonenumber)
+  {
+    this.firstname = firstname;
+    this.lastname = lastname;
+    this.phonenumber = phonenumber;
+  }
+
+  public Contact(string firstname, string lastname):
+  this(firstname, lastname, 0)
+  {}
+
+  public void SetPhoneNumber(int phonenumber) {
+    this.phonenumber = phonenumber;
+  }
+
+  public void SetPhoneNumber(string phonenumber) {
+    this.phonenumber = Convert.ToInt32(phonenumber);
+  }
+}
+
+```
+
+## Résolution de la surcharge
+
+- Étapes de la résolution de la **surcharge de méthodes**
+  1.  Construction liste des types des paramètres réels
+  2.  Identification des méthodes accessibles avec le type statique
+  3.  Recherche d'une méthode avec la même liste de types
+  4.  Recherche des méthodes avec paramètres compatibles
+  5.  Choix de la méthode la plus spécifique
 
 ## Relation entre classes
 
