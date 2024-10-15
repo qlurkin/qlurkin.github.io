@@ -5,31 +5,31 @@ typst: true
 css: style.css
 ---
 
-1.  Écrire un programme pygame qui permet de charger un fichier JSON de
-    la forme suivante:
-
-    ```json
-    {
-      "firstname": "Quentin",
-      "lastname": "Lurkin",
-      "birthdate": "24/08/1982",
-      "address": {
-        "street": "Promenade de l'Alma",
-        "number": "50",
-        "CP": 1200,
-        "City": "Brussels",
-        "Country": "Belgium"
-      }
-    }
-    ```
-
-    et d\'afficher ses informations de façon lisible.
-
-    L\'utilisateur pourra introduire le nom du fichier dans une boite de
-    texte et il recevra un message d\'erreur si le fichier n\'existe pas
-    ou s\'il ne respecte pas le format.
-
-    **Conseil:** vous pouvez utiliser une [`UITextBox`](https://pygame-gui.readthedocs.io/en/latest/pygame_gui.elements.html#module-pygame_gui.elements.ui_text_box).
+<!-- 1.  Écrire un programme pygame qui permet de charger un fichier JSON de -->
+<!--     la forme suivante: -->
+<!---->
+<!--     ```json -->
+<!--     { -->
+<!--       "firstname": "Quentin", -->
+<!--       "lastname": "Lurkin", -->
+<!--       "birthdate": "24/08/1982", -->
+<!--       "address": { -->
+<!--         "street": "Promenade de l'Alma", -->
+<!--         "number": "50", -->
+<!--         "CP": 1200, -->
+<!--         "City": "Brussels", -->
+<!--         "Country": "Belgium" -->
+<!--       } -->
+<!--     } -->
+<!--     ``` -->
+<!---->
+<!--     et d\'afficher ses informations de façon lisible. -->
+<!---->
+<!--     L\'utilisateur pourra introduire le nom du fichier dans une boite de -->
+<!--     texte et il recevra un message d\'erreur si le fichier n\'existe pas -->
+<!--     ou s\'il ne respecte pas le format. -->
+<!---->
+<!--     **Conseil:** vous pouvez utiliser une [`UITextBox`](https://pygame-gui.readthedocs.io/en/latest/pygame_gui.elements.html#module-pygame_gui.elements.ui_text_box). -->
 
 2.  Définir une fonction `computesum(path: str)` qui reçoit un
     paramètre:

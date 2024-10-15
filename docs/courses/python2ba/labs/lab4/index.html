@@ -30,29 +30,32 @@
 <small>Manipulations de fichiers textes</small>
 </h1>
 </header>
-<ol type="1">
-<li><p>Écrire un programme pygame qui permet de charger un fichier JSON
-de la forme suivante:</p>
-<div class="pygments"><pre><span></span><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;firstname&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Quentin&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;lastname&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Lurkin&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;birthdate&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;24/08/1982&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;address&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;street&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Promenade de l&#39;Alma&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;number&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;50&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;CP&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1200</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;City&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Brussels&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;Country&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Belgium&quot;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-
-<p>et d'afficher ses informations de façon lisible.</p>
-<p>L'utilisateur pourra introduire le nom du fichier dans une boite de
-texte et il recevra un message d'erreur si le fichier n'existe pas ou
-s'il ne respecte pas le format.</p>
-<p><strong>Conseil:</strong> vous pouvez utiliser une <a
-href="https://pygame-gui.readthedocs.io/en/latest/pygame_gui.elements.html#module-pygame_gui.elements.ui_text_box"><code>UITextBox</code></a>.</p></li>
+<!-- 1.  Écrire un programme pygame qui permet de charger un fichier JSON de -->
+<!--     la forme suivante: -->
+<!---->
+<!--     ```json -->
+<!--     { -->
+<!--       "firstname": "Quentin", -->
+<!--       "lastname": "Lurkin", -->
+<!--       "birthdate": "24/08/1982", -->
+<!--       "address": { -->
+<!--         "street": "Promenade de l'Alma", -->
+<!--         "number": "50", -->
+<!--         "CP": 1200, -->
+<!--         "City": "Brussels", -->
+<!--         "Country": "Belgium" -->
+<!--       } -->
+<!--     } -->
+<!--     ``` -->
+<!---->
+<!--     et d\'afficher ses informations de façon lisible. -->
+<!---->
+<!--     L\'utilisateur pourra introduire le nom du fichier dans une boite de -->
+<!--     texte et il recevra un message d\'erreur si le fichier n\'existe pas -->
+<!--     ou s\'il ne respecte pas le format. -->
+<!---->
+<!--     **Conseil:** vous pouvez utiliser une [`UITextBox`](https://pygame-gui.readthedocs.io/en/latest/pygame_gui.elements.html#module-pygame_gui.elements.ui_text_box). -->
+<ol start="2" type="1">
 <li><p>Définir une fonction <code>computesum(path: str)</code> qui
 reçoit un paramètre:</p>
 <ul>
