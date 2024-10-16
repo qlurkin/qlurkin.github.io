@@ -786,16 +786,16 @@ public class SMSNotification : INotification
 
 public class NotificationService
 {
-  private readonly List<INotification> _notifications;
+  private readonly List<INotification> notifications;
 
   public NotificationService(List<INotification> notifications)
   {
-    _notifications = notifications;
+    notifications = notifications;
   }
 
   public void Notify(string message)
   {
-    foreach (var notification in _notifications)
+    foreach (var notification in notifications)
     {
       notification.Send(message);
     }
