@@ -909,12 +909,6 @@ except IOError:
   print("Erreur d'entrée/sortie")
 ```
 
-```terminal
-Facebook:lur@ecam.be:lurk:8dj,Sj0m1
-Skype:mar@ecam.be:cedou:arduino
-Facebook:fle@ecam.be:fingerfood:b8ur,g2er
-```
-
 ## Écriture
 
 - **Écriture** en ajoutant des chaines de caractères au fichier [On
@@ -951,6 +945,16 @@ with open('data.txt', 'r') as src, open('copy.txt', 'w') as dest:
   ligne inclus]{.small}
 - Fonction `rstrip` pour retirer les caractères blancs
   de droite [right strip]{.small}
+
+:::{.file-title}
+data.txt
+:::
+
+```plain
+Facebook:lur@ecam.be:lurk:8dj,Sj0m1
+Skype:mar@ecam.be:cedou:arduino
+Facebook:fle@ecam.be:fingerfood:b8ur,g2er
+```
 
 ```python
 with open('data.txt') as file:

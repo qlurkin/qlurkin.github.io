@@ -259,6 +259,10 @@ code.wrap {
   padding: 0.5rem;
   text-align: center;
   background-color: #686868;
+
+  p {
+    margin-bottom: 0 !important;
+  }
 }
 
 table {

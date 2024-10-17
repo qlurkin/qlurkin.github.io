@@ -402,6 +402,9 @@ code.wrap {
   text-align: center;
   background-color: #686868;
 }
+.file-title p {
+  margin-bottom: 0 !important;
+}
 
 table {
   border-collapse: collapse;
