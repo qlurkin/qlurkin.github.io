@@ -790,7 +790,7 @@ public class NotificationService
 
   public NotificationService(List<INotification> notifications)
   {
-    notifications = notifications;
+    this.notifications = notifications;
   }
 
   public void Notify(string message)
