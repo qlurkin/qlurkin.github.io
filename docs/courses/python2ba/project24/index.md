@@ -21,12 +21,13 @@ Votre programme devra:
 - Placer des bombes aléatoirement (module `random`) _(2 points)_
 - Détecter les cases cliquées _(2 points)_
 - Afficher correctement le nombre de bombes voisines _(2 points)_
-- Dévoiler automatiquement les zones de `0` _(3 points)_
+- Dévoiler automatiquement les zones de `0` _(2 points)_
+- Permettre de placer et d'enlever des drapeaux _(2 points)_
 - Afficher un chronomètre qui mesure la durée de la partie _(2 points)_
 - Mettre fin à la partie quand toutes les cases sont dévoilées ou que vous avez fait exploser une bombe _(2 points)_
 - Permettre de choisir un pseudo pour enregistrer son temps à la fin de la partie. Les temps seront enregistrés dans un fichier JSON _(3 points)_
 - Afficher le meilleur temps enregistré _(2 points)_
-- Permettre de choisir entre plusieurs tailles de grilles et plusieurs densités de bombes _(3 points)_
+- Permettre de choisir entre plusieurs tailles de grilles et plusieurs densités de bombes _(2 points)_
 - Avoir un visuel particulièrement soigné _(1 point)_
 
 Le tout est noté sur 20 points. Si vous obtenez plus que 20 points, votre note sera majorée à 20/20.
