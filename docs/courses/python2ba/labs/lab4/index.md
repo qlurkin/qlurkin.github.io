@@ -31,7 +31,7 @@ css: style.css
 <!---->
 <!--     **Conseil:** vous pouvez utiliser une [`UITextBox`](https://pygame-gui.readthedocs.io/en/latest/pygame_gui.elements.html#module-pygame_gui.elements.ui_text_box). -->
 
-2.  Définir une fonction `computesum(path: str)` qui reçoit un
+1.  Définir une fonction `computesum(path: str)` qui reçoit un
     paramètre:
 
     - `path` contient le chemin vers un fichier sur
@@ -63,7 +63,7 @@ css: style.css
     La somme est 127.0
     ```
 
-3.  On vous demande de réaliser un programme permettant de transformer une image en texte:
+2.  On vous demande de réaliser un programme permettant de transformer une image en texte:
 
     ![l'image d'entrée](./images/dog.png)
 
