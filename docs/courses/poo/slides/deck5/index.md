@@ -349,40 +349,50 @@ class LinkedList<T> {
     get { return length; }
   }
 
-  public bool IsEmpty() { return Length == 0;}
-
   public void AddFirst(T data) {
     first = new Node(data, first);
     length++;
   }
 
-  public void AddLast(T data) {
-    Node node= new Node(data, null);
-    if(first == null) {
-      first = node;
+  public void RemoveFirst() {
+    if (first == null) {
+        throw new IndexOutOfRangeException("Try to remove from an empty list");
     }
-    else {
-      Node current = first;
-      while(current.next != null) {
-        current = current.next;
-      }
-      current.next = node;
-    }
-    length++;
+
+    first = first.next;
+    length--;
   }
 
-  public override string ToString() {
-    if(first == null) {
-      return "[]";
-    }
+  public T this[int index] {
+      get {
+          if (first == null) {
+              throw new IndexOutOfRangeException("List is Empty");
+          }
+          Node current = first;
+          for (int i = 0; i < index; i++) {
+              if (current.next == null) {
+                  throw new IndexOutOfRangeException("List too small");
+              }
+              current = current.next;
+          }
 
-    Node current = first;
-    string res = "[" + current.data;
-    while(current.next != null) {
-      current = current.next;
-      res += ", " + current.data;
-    }
-    return res + "]";
+          return current.data;
+      }
+  }
+
+  public override string ToString()
+  {
+      if (first == null) {
+          return "[]";
+      }
+
+      Node current = first;
+      string res = "[" + current.data;
+      while (current.next != null) {
+          current = current.next;
+          res += ", " + current.data;
+      }
+      return res + "]";
   }
 }
 ```
