@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Labo 5 - Manipulations de documents</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="/document.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Labo 5
+<small>Manipulations de documents</small>
+</h1>
+</header>
+<ol type="1">
+<li><p>Créez un fichier texte contenant un document JSON, comme
+l’exemple minimal ci-dessous. Chargez ensuite le fichier et récupérez
+son contenu comme un dictionnaire Python. Pour chaque pays, ajoutez une
+entrée <code>nblang</code> qui contient le nombre de langues
+officielles. Sauvegardez ensuite le dictionnaire mis à jour dans le même
+fichier.</p>
+<div class="pygments"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;Belgium&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;capital&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Brussels&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;languages&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;french&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;dutch&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;german&quot;</span><span class="p">]</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;China&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;capital&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Beijing&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;languages&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;mandarin chinese&quot;</span><span class="p">]</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</li>
+<li><p>Créez une fonction qui reçoit un chemin vers un fichier Excel. Le
+fichier aura la structure suivante:</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+<th>D</th>
+<th>E</th>
+<th>F</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>X</td>
+<td>Y</td>
+<td>Radius</td>
+<td>Red</td>
+<td>Green</td>
+<td>Blue</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>20</td>
+<td>20</td>
+<td>15</td>
+<td>255</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>100</td>
+<td>120</td>
+<td>30</td>
+<td>0</td>
+<td>255</td>
+<td>255</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>300</td>
+<td>40</td>
+<td>40</td>
+<td>255</td>
+<td>0</td>
+<td>255</td>
+</tr>
+</tbody>
+</table>
+<p>La fonction recevra aussi les dimensions d’une image qu’elle devra
+créer et dans laquelle elle devra <a
+href="https://pillow.readthedocs.io/en/stable/reference/ImageDraw.html#PIL.ImageDraw.ImageDraw.circle">dessiner
+les cercles</a> décrits dans le fichier Excel. L’image devra être sauvée
+dans un fichier ayant le même nom que le fichier Excel (mais avec
+l’extension <code>.jpg</code>) et dans le même dossier que
+celui-ci.</p></li>
+</ol>
+</body>
+</html>
