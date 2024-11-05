@@ -25,7 +25,7 @@ css: style.css
     }
     ```
 
-2.  Créez une fonction qui reçoit un chemin vers un fichier Excel. Le fichier
+2.  Créez une fonction qui reçoit un chemin vers un [fichier Excel](./circles.xlsx). Le fichier
     aura la structure suivante:
 
     |     | A   | B   | C      | D   | E     | F    |

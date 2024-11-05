@@ -41,3 +41,24 @@ Pour les groupes de deux, chaque membre pourra avoir une note de maîtrise diff�
 Il est conseillé de **ne pas** faire appel à ChatGPT ou à un de ses concurrents.
 
 Si un plagiat manifeste est constaté entre projets, tous les étudiants impliqués seront sanctionnés d’une note nulle.
+
+## Remarque
+
+- Les boutons `pygame_gui` ne réagissent pas aux clique droit par défaut. Pour activer le clique droit il faut les créer comme suit:
+
+  ```python
+  button = UIButton(
+    relative_rect=pygame.Rect(
+        button_x,
+        button_y,
+        button_width,
+        button_height,
+    ),
+    text="Button Text",
+    manager=manager,
+    generate_click_events_from={
+        pygame.BUTTON_LEFT,
+        pygame.BUTTON_RIGHT,
+    }
+  )
+  ```
