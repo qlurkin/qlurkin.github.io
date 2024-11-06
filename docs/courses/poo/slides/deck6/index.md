@@ -120,17 +120,14 @@ activate View
 View -> ViewModel: `set` une propriété
 activate ViewModel
 ViewModel -> Model: met à jour
-deactivate ViewModel
 deactivate View
 activate Model
-Model -> ViewModel: notifie
-activate ViewModel
 ViewModel -> View: notifie
+deactivate ViewModel
+deactivate Model
 activate View
 View -> User: affiche données à jour
 deactivate View
-deactivate ViewModel
-deactivate Model
 ```
 
 ## Tutorial
