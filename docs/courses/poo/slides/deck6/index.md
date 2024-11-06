@@ -10,7 +10,7 @@ type: deck
 > dotnet new install Avalonia.Templates
 ```
 
-[Extension VSCode](https://marketplace.visualstudio.com/items?itemName=AvaloniaTeam.vscode-avalonia)
+[Extensions Éditeurs](https://avaloniaui.net/gettingstarted#installation)
 
 ## Design Pattern: Observer
 
