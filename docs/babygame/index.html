@@ -1,0 +1,190 @@
+<?doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+    <title>Charly's Run</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body, html, div {
+        padding: 0;
+        margin: 0;
+      }
+
+      canvas, img {
+        image-rendering: optimizeSpeed;             /* Older versions of FF          */
+        image-rendering: -moz-crisp-edges;          /* FF 6.0+                       */
+        image-rendering: -webkit-optimize-contrast; /* Safari                        */
+        image-rendering: -o-crisp-edges;            /* OS X & Windows Opera (12.02+) */
+        image-rendering: pixelated;                 /* Awesome future-browsers       */
+        -ms-interpolation-mode: nearest-neighbor;   /* IE                            */
+      }
+
+      canvas {
+        width: 100%;
+        height: 100%;
+      }
+
+      img {
+        opacity: 0;
+      }
+
+      #canvas, #overlay, #hud {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+      }
+
+      #score {
+        font-family: 'Press Start 2P', monospace;
+        font-size: 6vmin;
+        position: absolute;
+        top: 3vmin;
+        right: 3vmin;
+      }
+
+      #overlay {
+        opacity: 0;
+      }
+
+      #canvas {
+        background-color: #4866C5;
+      }
+
+      #bulle {
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 14vmin;
+        width: 94vmin;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        align-content: center;
+        flex-direction: row;
+        font-family: 'Press Start 2P', monospace;
+        background-color: white;
+        border: 1vmin solid black;
+        text-align: center;
+        height: 40%;
+        font-size: 3vmin;
+        line-height: 1.6;
+        padding: 5vmin;
+      }
+
+      #credits {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        background-color: black;
+        font-family: 'Press Start 2P', monospace;
+        font-size: 1.5vmin;
+        color: white;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        opacity: 0;
+      }
+
+      .credits #credits {
+        opacity: 0.9;
+      }
+
+      #credits h1 {
+        font-size: 1em;
+        color: red;
+        margin-top: 4vmin;
+      }
+
+      #credits h1:first-child {
+        margin-top: 0;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      .announced .hidden {
+        display: block;
+      }
+
+    </style>
+  </head>
+  <body class="description">
+    <img id="background" src="background.png" /> <!-- source: OpenGameArt.org, author: GrafxKid -->
+    <img id="cat" src="cat.png" /><!-- dog and cat source: OpenGameArt.org, author: Shepardskin-->
+    <img id="dog" src="dog.png" /><!-- dog and cat source: OpenGameArt.org, author: Shepardskin-->
+    <img id="charly" src="charly.png" /> <!-- source: OpenGameArt.org, author: Antifarea -->
+    <img id="ground" src="ground.png" /> <!-- source: OpenGameArt.org, author: GrafxKid -->
+    <img id="bird" src="bird.png" /> <!-- source: OpenGameArt.org, author: LD -->
+    <audio id="music" loop autoplay> <!-- source: OpenGameArt.org, author: CodeManu -->
+      <source src="music.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="jump"> <!-- source: OpenGameArt.org, author: dklon -->
+      <source src="jump.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="canvas"></div>
+    <div id="hud">
+      <div id="score">0m</div>
+    </div>
+    <div id="overlay">
+      <div id="bulle">
+        <div id="bulle-content"></div>
+      </div>
+    </div>
+    <div id="credits">
+      <h1>Programmation</h1>
+      <p>Quentin Lurkin </p>
+      <h1>Charly</h1>
+      <p>Antifarea (OpenGameArt.org)</p>
+      <h1>Décors</h1>
+      <p>GrafxKid (OpenGameArt.org)</p>
+      <h1>Chiens et chats</h1>
+      <p>Shepardskin (OpenGameArt.org)</p>
+      <h1>Oiseaux</h1>
+      <p>LD (OpenGameArt.org)</p>
+      <h1>Musique</h1>
+      <p>CodeManu (OpenGameArt.org)</p>
+      <h1>Son</h1>
+      <p>dklon (OpenGameArt.org)</p>
+      <h1 class="hidden">Bébé</h1>
+      <p class="hidden">Evelyne Queeckers</p>
+      <p class="hidden">Quentin Lurkin</p>
+    </div>
+
+    <script src="tiles.js"></script>
+    <script src="requestAnimationFrame.js"></script>
+    <script src="drawable.js"></script>
+    <script src="ground.js"></script>
+    <script src="background.js"></script>
+    <script src="hero.js"></script>
+    <script src="vilain.js"></script>
+    <script src="bird.js"></script>
+    <script src="cat.js"></script>
+    <script src="dog.js"></script>
+    <script src="script.js"></script>
+    <script src="event.js"></script>
+    <script>
+      App.init();
+    </script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-88162155-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+  </body>
+</html>
