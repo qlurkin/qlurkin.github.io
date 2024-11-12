@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Projet 2024 - Écosystème</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="/document.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Projet 2024 - Écosystème
+</h1>
+</header>
+<section id="description" class="level2">
+<h2>Description</h2>
+<p>On vous demande de réaliser un simulateur d’<strong>écosystème
+simplifié</strong>. Dans cet écosystème :</p>
+<ul>
+<li>Le monde est représenté par un plan 2D.</li>
+<li>Toute les formes de vie ont des <strong>points de vie</strong> et
+des <strong>réserves d’énergie</strong>.</li>
+<li>Les réserves d’énergie diminuent avec le temps.</li>
+<li>Lorsqu’une forme de vie n’a plus d’énergie, elle convertit ses
+points de vie en énergie.</li>
+<li>Une forme de vie qui n’a plus de point de vie meurt. Les animaux
+deviennent de la viande. Les plantes deviennent des déchets
+organiques.</li>
+<li>Les animaux peuvent se déplacer. Les plantes ne le peuvent pas.</li>
+<li>La viande devient un déchet organique après un certain temps.</li>
+<li>Une forme de vie doit <strong>se nourrir</strong> pour remplir ses
+réserves d’énergie.
+<ul>
+<li>Les carnivores se nourrissent de viande. Ils doivent donc tuer
+d’autre animaux. Ils doivent attaquer pour faire perdre tous les points
+de vie de leurs proies. Pour attaquer, les carnivores doivent rentrer en
+contact avec leur cible.</li>
+<li>Les herbivores mangent des plantes.</li>
+<li>Les plantes se nourrissent de déchets organiques.</li>
+<li>Les animaux laissent régulièrement des déchets organiques derrière
+eux.</li>
+</ul></li>
+<li>Une forme de vie doit <strong>se reproduire</strong>.
+<ul>
+<li>Pour les animaux, un mâle et une femelle doivent entrer en contact.
+Après une période de gestation, un petit naît près de la femelle.</li>
+<li>Les plantes se répandent, de nouvelles plantes naissent dans les
+alentours d’une plante existante</li>
+</ul></li>
+<li>Autour d’une forme de vie, il y a plusieurs zones. Ces zones sont
+circulaires et sont caractérisées par leur rayon.
+<ul>
+<li>La <strong>zone de vision</strong> est la zone dans laquelle un
+animal peut voir (des proies, de la nourriture, des prédateurs).</li>
+<li>la <strong>zone de contact</strong> est la zone dans laquelle on
+considère que le contact est possible. Un prédateur peut attaquer une
+proie. Un herbivore peut manger une plante. Un mâle et une femelle
+peuvent se reproduire…</li>
+<li>Pour les plantes, la <strong>zone de racines</strong> est la zone
+dans laquelle elle peut consommer les déchets organiques.</li>
+<li>Et toujours pour les plantes, la <strong>zone de semis</strong> est
+la zone dans laquelle de nouvelles plantes peuvent apparaître autour
+d’une plante existante.</li>
+</ul></li>
+</ul>
+</section>
+<section id="délivrable" class="level2">
+<h2>Délivrable</h2>
+<p><strong>Dans un dépôt Github</strong> vous remettrez:</p>
+<ul>
+<li><p><strong>Un projet C# Avalonia UI</strong> correspondant à la
+description ci-dessus.</p>
+<p>La description ne mentionne rien sur comment les différentes formes
+de vie s’organisent pour se déplacer, se nourrir, se reproduire. Il est
+bien entendu possible d’implémenter beaucoup d’espèces différentes qui
+auraient des comportements divers et variés. Votre projet devra
+implémenter, au minimum, une espèce de carnivore, une espèce d’herbivore
+et une espèce de plante. Il devra être conçu pour qu’il soit facile
+<strong>d’ajouter des espèces</strong>.</p></li>
+<li><p>Un <strong>Rapport</strong> comprenant :</p>
+<ul>
+<li>un diagramme de classes,</li>
+<li>un diagramme de séquences,</li>
+<li>Une description (avec justifications) d’au moins <strong>deux
+principes SOLID</strong> utilisés dans le projet.</li>
+</ul>
+<p>Le rapport sera inclus dans le dépôt Github au format
+<strong>Markdown</strong>.</p></li>
+</ul>
+<p>Les liens de vos dépôts sont à remettre pour le 5 janvier 2025 dans
+un fichier Excel partagé sur le groupe Teams du cours. Tous les commits
+ultérieurs seront ignorés.</p>
+<p>Le projet est à faire en <strong>binôme</strong>.</p>
+</section>
+<section id="grille-dévaluation" class="level2">
+<h2>Grille d’évaluation</h2>
+<ul>
+<li>Gestion des points de vie et d’énergie: 3 points</li>
+<li>Gestion des zones: 2 points</li>
+<li>Gestion de l’alimentation: 2 points</li>
+<li>Gestion de la reproduction: 2 points</li>
+<li>Diagramme UML: 4 points</li>
+<li>Principes SOLID: 4 points</li>
+<li>Le projet fonctionne et montre une simulation: 3 points</li>
+</ul>
+</section>
+</body>
+</html>
