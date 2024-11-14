@@ -9,6 +9,7 @@ build_and_index(
     'deck4',
     'deck5',
     'deck6',
+    'deck7',
     // 'slides2',
     // 'slides3',
     // 'slides4',
