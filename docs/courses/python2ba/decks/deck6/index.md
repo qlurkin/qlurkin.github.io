@@ -329,6 +329,53 @@ plt.show()
 
 ## Opérations sur des tableaux de données avec `pandas`
 
+- Manipulation de tableau de données [un peu comme Excel]{.small}
+- Basé sur `numpy`
+- Très utilisé dans le domaine des _Data Sciences_
+
+```terminal
+> pip install pandas
+```
+
+## Importer des données
+
+- `pandas` permet d'importer de **multiples formats de données**.
+
+```python
+import pandas as ps
+
+dataframe = ps.read_excel("foo.xlsx")
+print(dataframe)
+```
+
+```terminal
+  matricule             name  project  labs  exam
+0       LUR   Quentin Lurkin       15    20    20
+1       LRG      André Lorge       20    15    20
+2       DLH  Quentin Delhaye       20    20    15
+```
+
+## Opérations sur les données
+
+- Une fois les données dans un _Dataframe_, il est possible de les manipuler **très efficacement**.
+
+```python
+dataframe["total"] = (
+  dataframe["project"] +
+  dataframe["exam"] +
+  dataframe["labs"]
+) / 3
+print(dataframe)
+```
+
+## Exporter des données
+
+- On peut ensuite **exporter** les données
+
+```python
+dataframe.to_json("students_with_total.json")
+```
+
 ## Documentations
 
 - `numpy` : <https://numpy.org/doc/stable/>
