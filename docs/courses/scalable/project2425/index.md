@@ -82,7 +82,9 @@ The evaluation will occur in several stages:
     - Your API specification is done (1/3).
     - The documentation of your API is published on your git repository (1/3).
     - All the routes of the API are requestable (even if it respond with dummy data) (1/3).
-  - 3rd presentation _(November 26 PM, 13% of the points)_: details to be determined.
+  - 3rd presentation _(November 26 PM, 13% of the points)_:
+    - Your service save his data in an actual Database hosted in the cluster.
+    - The Database is distributed across mutliple pods (sharded or replicated).
   - Final presentation _(December 10 PM, 36% of the points)_.
 
 - A **Git repository** _(25% of the points)_ containing:
