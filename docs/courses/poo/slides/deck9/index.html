@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>PO3T - Cours 9 - Design Patterns</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="/deck.css" />
+  <script src="/deck_only.js" defer></script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">PO3T - Cours 9
+<small>Design Patterns</small>
+</h1>
+</header>
+<section id="source" class="level2">
+<h2>Source</h2>
+<div class="row">
+<div class="span6">
+<figure>
+<img src="./book.jpg" class="third2" alt="Le livre" />
+<figcaption aria-hidden="true">Le livre</figcaption>
+</figure>
+</div>
+<div class="span6">
+<ul>
+<li><p>1994</p></li>
+<li><p><strong><em>Gang of Four</em></strong></p>
+<ul>
+<li>Erich Gamma</li>
+<li>Richard Helm</li>
+<li>Ralph Johnson</li>
+<li>John Vlissides</li>
+</ul></li>
+<li><p>23 <em>patterns</em></p></li>
+<li><p>Ce n’est pas une Bible !</p></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="types" class="level2">
+<h2>Types</h2>
+<ul>
+<li><p><em><strong>Creational</strong> Patterns</em></p>
+<ul>
+<li>A propos de la création d’instances</li>
+</ul></li>
+<li><p><em><strong>Structural</strong> Patterns</em></p>
+<ul>
+<li>A propos des relations entre objets</li>
+</ul></li>
+<li><p><em><strong>Behavioral</strong> Patterns</em></p>
+<ul>
+<li>A propos de la communication entre objets</li>
+</ul></li>
+</ul>
+</section>
+<section id="singleton" class="level2">
+<h2>Singleton</h2>
+<ul>
+<li><p><em>Creational Pattern</em></p></li>
+<li><p>Déjà abordé au <a href="../deck5/">cours 5</a></p></li>
+<li><p>Moyen de créer un état global <span class="small">Ce qui est
+controversé</span></p></li>
+<li><p>Inutile dans les langages qui permettent d’avoir des objets
+globaux</p></li>
+</ul>
+</section>
+<section id="factory" class="level2">
+<h2>Factory</h2>
+<ul>
+<li><p><em>Creational Pattern</em></p></li>
+<li><p>Utiliser une fonction ou une méthode pour créer une
+instance</p></li>
+</ul>
+<figure><img class="plantuml" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBjb250ZW50U3R5bGVUeXBlPSJ0ZXh0L2NzcyIgaGVpZ2h0PSIyMjBweCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSIgc3R5bGU9IndpZHRoOjgyNHB4O2hlaWdodDoyMjBweDtiYWNrZ3JvdW5kOiNGRkZGRkY7IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCA4MjQgMjIwIiB3aWR0aD0iODI0cHgiIHpvb21BbmRQYW49Im1hZ25pZnkiPjxkZWZzLz48Zz48IS0tY2xhc3MgUHJvZHVjdC0tPjxnIGlkPSJlbGVtX1Byb2R1Y3QiPjxyZWN0IGNvZGVMaW5lPSIxIiBmaWxsPSIjRjFGMUYxIiBoZWlnaHQ9IjQ4IiBpZD0iUHJvZHVjdCIgcng9IjIuNSIgcnk9IjIuNSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB3aWR0aD0iODMuOTczNiIgeD0iMTM2LjM4IiB5PSIyMy40OSIvPjxlbGxpcHNlIGN4PSIxNTEuMzgiIGN5PSIzOS40OSIgZmlsbD0iI0E5RENERiIgcng9IjExIiByeT0iMTEiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjxwYXRoIGQ9Ik0xNTEuMjQzMywzNC44MzgxIEwxNTAuMDg5NSwzOS45MDk5IEwxNTIuNDA1NCwzOS45MDk5IFogTTE0OS43NDkxLDMyLjU5NjkgTDE1Mi43NDU3LDMyLjU5NjkgTDE1Ni4wOTA5LDQ0Ljk5IEwxNTMuNjQyMiw0NC45OSBMMTUyLjg3ODUsNDEuOTI3IEwxNDkuNTk5Nyw0MS45MjcgTDE0OC44NTI3LDQ0Ljk5IEwxNDYuNDAzOSw0NC45OSBaICIgZmlsbD0iIzAwMDAwMCIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmb250LXN0eWxlPSJpdGFsaWMiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iNTEuOTczNiIgeD0iMTY1LjM4IiB5PSI0NC43ODEiPlByb2R1Y3Q8L3RleHQ+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB4MT0iMTM3LjM4IiB4Mj0iMjE5LjM1MzYiIHkxPSI1NS40OSIgeTI9IjU1LjQ5Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB4MT0iMTM3LjM4IiB4Mj0iMjE5LjM1MzYiIHkxPSI2My40OSIgeTI9IjYzLjQ5Ii8+PC9nPjwhLS1jbGFzcyBDcmVhdG9yLS0+PGcgaWQ9ImVsZW1fQ3JlYXRvciI+PHJlY3QgY29kZUxpbmU9IjMiIGZpbGw9IiNGMUYxRjEiIGhlaWdodD0iODAuOTc2NiIgaWQ9IkNyZWF0b3IiIHJ4PSIyLjUiIHJ5PSIyLjUiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgd2lkdGg9IjE4Mi40MTk5IiB4PSIzODQuMTYiIHk9IjciLz48ZWxsaXBzZSBjeD0iNDQ1Ljg2NDYiIGN5PSIyMyIgZmlsbD0iI0E5RENERiIgcng9IjExIiByeT0iMTEiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjxwYXRoIGQ9Ik00NDUuNzI3OSwxOC4zNDgxIEw0NDQuNTc0MSwyMy40MTk5IEw0NDYuODksMjMuNDE5OSBaIE00NDQuMjMzNywxNi4xMDY5IEw0NDcuMjMwMywxNi4xMDY5IEw0NTAuNTc1NSwyOC41IEw0NDguMTI2OCwyOC41IEw0NDcuMzYzMSwyNS40MzcgTDQ0NC4wODQzLDI1LjQzNyBMNDQzLjMzNzIsMjguNSBMNDQwLjg4ODUsMjguNSBaICIgZmlsbD0iIzAwMDAwMCIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmb250LXN0eWxlPSJpdGFsaWMiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iNTAuNTEwNyIgeD0iNDY2LjM2NDYiIHk9IjI4LjI5MSI+Q3JlYXRvcjwvdGV4dD48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHgxPSIzODUuMTYiIHgyPSI1NjUuNTc5OSIgeTE9IjM5IiB5Mj0iMzkiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHgxPSIzODUuMTYiIHgyPSI1NjUuNTc5OSIgeTE9IjQ3IiB5Mj0iNDciLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZm9udC1zdHlsZT0iaXRhbGljIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjE3MC40MTk5IiB4PSIzOTAuMTYiIHk9IjY0LjUzNTIiPkZhY3RvcnlNZXRob2QoKTogUHJvZHVjdDwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI5NC45NzE3IiB4PSIzOTAuMTYiIHk9IjgxLjAyMzQiPkFuT3BlcmF0aW9uKCk8L3RleHQ+PC9nPjwhLS1jbGFzcyBDb25jcmV0ZVByb2R1Y3RBLS0+PGcgaWQ9ImVsZW1fQ29uY3JldGVQcm9kdWN0QSI+PHJlY3QgY29kZUxpbmU9IjgiIGZpbGw9IiNGMUYxRjEiIGhlaWdodD0iNDgiIGlkPSJDb25jcmV0ZVByb2R1Y3RBIiByeD0iMi41IiByeT0iMi41IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHdpZHRoPSIxNTQuMzQyOCIgeD0iMTk1LjIiIHk9IjE1Ni45NCIvPjxlbGxpcHNlIGN4PSIyMTAuMiIgY3k9IjE3Mi45NCIgZmlsbD0iI0FERDFCMiIgcng9IjExIiByeT0iMTEiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjxwYXRoIGQ9Ik0yMTIuNjczMSwxNzkuMDgzMSBRMjEyLjA5MjEsMTc5LjM4MTkgMjExLjQ1MjksMTc5LjUzMTMgUTIxMC44MTM4LDE3OS42ODA3IDIxMC4xMDgyLDE3OS42ODA3IFEyMDcuNjAxNCwxNzkuNjgwNyAyMDYuMjgxNSwxNzguMDI4OSBRMjA0Ljk2MTcsMTc2LjM3NyAyMDQuOTYxNywxNzMuMjU1OSBRMjA0Ljk2MTcsMTcwLjEyNjUgMjA2LjI4MTUsMTY4LjQ3NDcgUTIwNy42MDE0LDE2Ni44MjI4IDIxMC4xMDgyLDE2Ni44MjI4IFEyMTAuODEzOCwxNjYuODIyOCAyMTEuNDYxMiwxNjYuOTcyMiBRMjEyLjEwODcsMTY3LjEyMTYgMjEyLjY3MzEsMTY3LjQyMDUgTDIxMi42NzMxLDE3MC4xNDMxIFEyMTIuMDQyMywxNjkuNTYyMSAyMTEuNDQ4OCwxNjkuMjkyMyBRMjEwLjg1NTMsMTY5LjAyMjUgMjEwLjIyNDQsMTY5LjAyMjUgUTIwOC44Nzk3LDE2OS4wMjI1IDIwOC4xOTQ5LDE3MC4wODkyIFEyMDcuNTEwMSwxNzEuMTU1OCAyMDcuNTEwMSwxNzMuMjU1OSBRMjA3LjUxMDEsMTc1LjM0NzcgMjA4LjE5NDksMTc2LjQxNDQgUTIwOC44Nzk3LDE3Ny40ODEgMjEwLjIyNDQsMTc3LjQ4MSBRMjEwLjg1NTMsMTc3LjQ4MSAyMTEuNDQ4OCwxNzcuMjExMiBRMjEyLjA0MjMsMTc2Ljk0MTUgMjEyLjY3MzEsMTc2LjM2MDQgWiAiIGZpbGw9IiMwMDAwMDAiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxMjIuMzQyOCIgeD0iMjI0LjIiIHk9IjE3OC4yMzEiPkNvbmNyZXRlUHJvZHVjdEE8L3RleHQ+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB4MT0iMTk2LjIiIHgyPSIzNDguNTQyOCIgeTE9IjE4OC45NCIgeTI9IjE4OC45NCIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgeDE9IjE5Ni4yIiB4Mj0iMzQ4LjU0MjgiIHkxPSIxOTYuOTQiIHkyPSIxOTYuOTQiLz48L2c+PCEtLWNsYXNzIENvbmNyZXRlUHJvZHVjdEItLT48ZyBpZD0iZWxlbV9Db25jcmV0ZVByb2R1Y3RCIj48cmVjdCBjb2RlTGluZT0iOSIgZmlsbD0iI0YxRjFGMSIgaGVpZ2h0PSI0OCIgaWQ9IkNvbmNyZXRlUHJvZHVjdEIiIHJ4PSIyLjUiIHJ5PSIyLjUiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgd2lkdGg9IjE1Mi43MzYzIiB4PSI3IiB5PSIxNTYuOTQiLz48ZWxsaXBzZSBjeD0iMjIiIGN5PSIxNzIuOTQiIGZpbGw9IiNBREQxQjIiIHJ4PSIxMSIgcnk9IjExIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDsiLz48cGF0aCBkPSJNMjQuNDczMSwxNzkuMDgzMSBRMjMuODkyMSwxNzkuMzgxOSAyMy4yNTI5LDE3OS41MzEzIFEyMi42MTM4LDE3OS42ODA3IDIxLjkwODIsMTc5LjY4MDcgUTE5LjQwMTQsMTc5LjY4MDcgMTguMDgxNSwxNzguMDI4OSBRMTYuNzYxNywxNzYuMzc3IDE2Ljc2MTcsMTczLjI1NTkgUTE2Ljc2MTcsMTcwLjEyNjUgMTguMDgxNSwxNjguNDc0NyBRMTkuNDAxNCwxNjYuODIyOCAyMS45MDgyLDE2Ni44MjI4IFEyMi42MTM4LDE2Ni44MjI4IDIzLjI2MTIsMTY2Ljk3MjIgUTIzLjkwODcsMTY3LjEyMTYgMjQuNDczMSwxNjcuNDIwNSBMMjQuNDczMSwxNzAuMTQzMSBRMjMuODQyMywxNjkuNTYyMSAyMy4yNDg4LDE2OS4yOTIzIFEyMi42NTUzLDE2OS4wMjI1IDIyLjAyNDQsMTY5LjAyMjUgUTIwLjY3OTcsMTY5LjAyMjUgMTkuOTk0OSwxNzAuMDg5MiBRMTkuMzEwMSwxNzEuMTU1OCAxOS4zMTAxLDE3My4yNTU5IFExOS4zMTAxLDE3NS4zNDc3IDE5Ljk5NDksMTc2LjQxNDQgUTIwLjY3OTcsMTc3LjQ4MSAyMi4wMjQ0LDE3Ny40ODEgUTIyLjY1NTMsMTc3LjQ4MSAyMy4yNDg4LDE3Ny4yMTEyIFEyMy44NDIzLDE3Ni45NDE1IDI0LjQ3MzEsMTc2LjM2MDQgWiAiIGZpbGw9IiMwMDAwMDAiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxMjAuNzM2MyIgeD0iMzYiIHk9IjE3OC4yMzEiPkNvbmNyZXRlUHJvZHVjdEI8L3RleHQ+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB4MT0iOCIgeDI9IjE1OC43MzYzIiB5MT0iMTg4Ljk0IiB5Mj0iMTg4Ljk0Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB4MT0iOCIgeDI9IjE1OC43MzYzIiB5MT0iMTk2Ljk0IiB5Mj0iMTk2Ljk0Ii8+PC9nPjwhLS1jbGFzcyBDb25jcmV0ZUNyZWF0b3ItLT48ZyBpZD0iZWxlbV9Db25jcmV0ZUNyZWF0b3IiPjxyZWN0IGNvZGVMaW5lPSIxMSIgZmlsbD0iI0YxRjFGMSIgaGVpZ2h0PSI2NC40ODgzIiBpZD0iQ29uY3JldGVDcmVhdG9yIiByeD0iMi41IiByeT0iMi41IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHdpZHRoPSIxODIuNDE5OSIgeD0iMzg0LjE2IiB5PSIxNDguNyIvPjxlbGxpcHNlIGN4PSI0MTYuNzk5NiIgY3k9IjE2NC43IiBmaWxsPSIjQUREMUIyIiByeD0iMTEiIHJ5PSIxMSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7Ii8+PHBhdGggZD0iTTQxOS4yNzI4LDE3MC44NDMxIFE0MTguNjkxNywxNzEuMTQxOSA0MTguMDUyNiwxNzEuMjkxMyBRNDE3LjQxMzQsMTcxLjQ0MDcgNDE2LjcwNzksMTcxLjQ0MDcgUTQxNC4yMDEsMTcxLjQ0MDcgNDEyLjg4MTIsMTY5Ljc4ODkgUTQxMS41NjE0LDE2OC4xMzcgNDExLjU2MTQsMTY1LjAxNTkgUTQxMS41NjE0LDE2MS44ODY1IDQxMi44ODEyLDE2MC4yMzQ3IFE0MTQuMjAxLDE1OC41ODI4IDQxNi43MDc5LDE1OC41ODI4IFE0MTcuNDEzNCwxNTguNTgyOCA0MTguMDYwOSwxNTguNzMyMiBRNDE4LjcwODMsMTU4Ljg4MTYgNDE5LjI3MjgsMTU5LjE4MDUgTDQxOS4yNzI4LDE2MS45MDMxIFE0MTguNjQxOSwxNjEuMzIyMSA0MTguMDQ4NCwxNjEuMDUyMyBRNDE3LjQ1NDksMTYwLjc4MjUgNDE2LjgyNDEsMTYwLjc4MjUgUTQxNS40NzkzLDE2MC43ODI1IDQxNC43OTQ1LDE2MS44NDkyIFE0MTQuMTA5NywxNjIuOTE1OCA0MTQuMTA5NywxNjUuMDE1OSBRNDE0LjEwOTcsMTY3LjEwNzcgNDE0Ljc5NDUsMTY4LjE3NDQgUTQxNS40NzkzLDE2OS4yNDEgNDE2LjgyNDEsMTY5LjI0MSBRNDE3LjQ1NDksMTY5LjI0MSA0MTguMDQ4NCwxNjguOTcxMiBRNDE4LjY0MTksMTY4LjcwMTUgNDE5LjI3MjgsMTY4LjEyMDQgWiAiIGZpbGw9IiMwMDAwMDAiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxMTEuMjIwNyIgeD0iNDM0LjcxOTYiIHk9IjE2OS45OTEiPkNvbmNyZXRlQ3JlYXRvcjwvdGV4dD48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHgxPSIzODUuMTYiIHgyPSI1NjUuNTc5OSIgeTE9IjE4MC43IiB5Mj0iMTgwLjciLz48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHgxPSIzODUuMTYiIHgyPSI1NjUuNTc5OSIgeTE9IjE4OC43IiB5Mj0iMTg4LjciLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxNzAuNDE5OSIgeD0iMzkwLjE2IiB5PSIyMDYuMjM1MiI+RmFjdG9yeU1ldGhvZCgpOiBQcm9kdWN0PC90ZXh0PjwvZz48cGF0aCBkPSJNNjAxLjA4LDI5LjgzIEw2MDEuMDgsMzguNDg1MyBMNDg1LjEzMTcsNzUuNzMyNCBMNjAxLjA4LDQ2LjQ4NTMgTDYwMS4wOCw1NS4xNDA1IEEwLDAgMCAwIDAgNjAxLjA4LDU1LjE0MDUgTDc5MS42NTc2LDU1LjE0MDUgQTAsMCAwIDAgMCA3OTEuNjU3Niw1NS4xNDA1IEw3OTEuNjU3NiwzOS44MyBMNzgxLjY1NzYsMjkuODMgTDYwMS4wOCwyOS44MyBBMCwwIDAgMCAwIDYwMS4wOCwyOS44MyAiIGZpbGw9IiNGRUZGREQiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIvPjxwYXRoIGQ9Ik03ODEuNjU3NiwyOS44MyBMNzgxLjY1NzYsMzkuODMgTDc5MS42NTc2LDM5LjgzIEw3ODEuNjU3NiwyOS44MyAiIGZpbGw9IiNGRUZGREQiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEzIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjE2OS41Nzc2IiB4PSI2MDcuMDgiIHk9IjQ3LjM5ODQiPnByb2R1Y3QgPSBGYWN0b3J5TWV0aG9kKCk8L3RleHQ+PHBhdGggZD0iTTYwMS42MiwxNDcuOTggTDYwMS42MiwxNzEuOTQ1OCBMNTYwLjU3OTksMjAwLjk0NDEgTDYwMS42MiwxNzkuOTQ1OCBMNjAxLjYyLDIwMy45MTE2IEEwLDAgMCAwIDAgNjAxLjYyLDIwMy45MTE2IEw4MTcuMTEyMiwyMDMuOTExNiBBMCwwIDAgMCAwIDgxNy4xMTIyLDIwMy45MTE2IEw4MTcuMTEyMiwxNTcuOTggTDgwNy4xMTIyLDE0Ny45OCBMNjAxLjYyLDE0Ny45OCBBMCwwIDAgMCAwIDYwMS42MiwxNDcuOTggIiBmaWxsPSIjRkVGRkREIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiLz48cGF0aCBkPSJNODA3LjExMjIsMTQ3Ljk4IEw4MDcuMTEyMiwxNTcuOTggTDgxNy4xMTIyLDE1Ny45OCBMODA3LjExMjIsMTQ3Ljk4ICIgZmlsbD0iI0ZFRkZERCIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMTk0LjQ5MjIiIHg9IjYwNy42MiIgeT0iMTY1LjU0ODQiPnJldHVybiBuZXcgQ29uY3JldGVQcm9kdWN0QSgpPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEzIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjEzLjMwNDciIHg9IjYwNy42MiIgeT0iMTgwLjg1ODkiPm9yPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEzIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjE5My4wMDA1IiB4PSI2MDcuNjIiIHk9IjE5Ni4xNjk1Ij5yZXR1cm4gbmV3IENvbmNyZXRlUHJvZHVjdEIoKTwvdGV4dD48IS0tcmV2ZXJzZSBsaW5rIFByb2R1Y3QgdG8gQ29uY3JldGVQcm9kdWN0QS0tPjxnIGlkPSJsaW5rX1Byb2R1Y3RfQ29uY3JldGVQcm9kdWN0QSI+PHBhdGggZD0iTTIwNS40Mjc1LDg2LjMzMzUgQzIyMi40OTc1LDExMC4yMTM1IDIzOC41LDEzMi41OCAyNTUuNjMsMTU2LjU0ICIgZmlsbD0ibm9uZSIgaWQ9IlByb2R1Y3QtYmFja3RvLUNvbmNyZXRlUHJvZHVjdEEiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjxwb2x5Z29uIGZpbGw9Im5vbmUiIHBvaW50cz0iMTk0Ljk2LDcxLjY5LDIwMC41NDYzLDg5LjgyMjYsMjEwLjMwODcsODIuODQ0MywxOTQuOTYsNzEuNjkiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjwvZz48IS0tcmV2ZXJzZSBsaW5rIFByb2R1Y3QgdG8gQ29uY3JldGVQcm9kdWN0Qi0tPjxnIGlkPSJsaW5rX1Byb2R1Y3RfQ29uY3JldGVQcm9kdWN0QiI+PHBhdGggZD0iTTE1MS4wNTU4LDg2LjI3ODQgQzEzMy43OTU4LDExMC4xNTg0IDExNy42LDEzMi41OCAxMDAuMjksMTU2LjU0ICIgZmlsbD0ibm9uZSIgaWQ9IlByb2R1Y3QtYmFja3RvLUNvbmNyZXRlUHJvZHVjdEIiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjxwb2x5Z29uIGZpbGw9Im5vbmUiIHBvaW50cz0iMTYxLjYsNzEuNjksMTQ2LjE5Myw4Mi43NjM2LDE1NS45MTg2LDg5Ljc5MzEsMTYxLjYsNzEuNjkiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjwvZz48IS0tcmV2ZXJzZSBsaW5rIENyZWF0b3IgdG8gQ29uY3JldGVDcmVhdG9yLS0+PGcgaWQ9ImxpbmtfQ3JlYXRvcl9Db25jcmV0ZUNyZWF0b3IiPjxwYXRoIGQ9Ik00NzUuMzcsMTA2LjI5IEM0NzUuMzcsMTI1LjQ4IDQ3NS4zNywxMzAuMTkgNDc1LjM3LDE0OC4yICIgZmlsbD0ibm9uZSIgaWQ9IkNyZWF0b3ItYmFja3RvLUNvbmNyZXRlQ3JlYXRvciIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7Ii8+PHBvbHlnb24gZmlsbD0ibm9uZSIgcG9pbnRzPSI0NzUuMzcsODguMjksNDY5LjM3LDEwNi4yOSw0ODEuMzcsMTA2LjI5LDQ3NS4zNyw4OC4yOSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7Ii8+PC9nPjwhLS1yZXZlcnNlIGxpbmsgQ29uY3JldGVQcm9kdWN0QSB0byBDb25jcmV0ZUNyZWF0b3ItLT48ZyBpZD0ibGlua19Db25jcmV0ZVByb2R1Y3RBX0NvbmNyZXRlQ3JlYXRvciI+PHBhdGggY29kZUxpbmU9IjI1IiBkPSJNMzU1LjY4LDE4MC45NCBDMzY3LjE0LDE4MC45NCAzNzIuNTksMTgwLjk0IDM4NC4wNSwxODAuOTQgIiBmaWxsPSJub25lIiBpZD0iQ29uY3JldGVQcm9kdWN0QS1iYWNrdG8tQ29uY3JldGVDcmVhdG9yIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDtzdHJva2UtZGFzaGFycmF5OjcuMCw3LjA7Ii8+PHBvbHlnb24gZmlsbD0iIzE4MTgxOCIgcG9pbnRzPSIzNDkuNjgsMTgwLjk0LDM1OC42OCwxODQuOTQsMzU0LjY4LDE4MC45NCwzNTguNjgsMTc2Ljk0LDM0OS42OCwxODAuOTQiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjwvZz48IS0tcmV2ZXJzZSBsaW5rIENvbmNyZXRlUHJvZHVjdEIgdG8gQ29uY3JldGVDcmVhdG9yLS0+PGcgaWQ9ImxpbmtfQ29uY3JldGVQcm9kdWN0Ql9Db25jcmV0ZUNyZWF0b3IiPjxwYXRoIGNvZGVMaW5lPSIyNiIgZD0iTTEyMS4wMjYsMTUzLjE1NzUgQzE0Mi4yNjYsMTM4Ljg0NzUgMTY2LjI3LDEyNS40OSAxOTQuODcsMTE3Ljk4IEMyNjEuNDksMTAwLjQ3IDI4Mi44MywxMDIuMSAzNDkuODcsMTE3Ljk4IEMzNzUuNDksMTI0LjA0IDQwMS44MywxMzYuMiA0MjMuNzIsMTQ4LjIzICIgZmlsbD0ibm9uZSIgaWQ9IkNvbmNyZXRlUHJvZHVjdEItYmFja3RvLUNvbmNyZXRlQ3JlYXRvciIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7c3Ryb2tlLWRhc2hhcnJheTo3LjAsNy4wOyIvPjxwb2x5Z29uIGZpbGw9IiMxODE4MTgiIHBvaW50cz0iMTE2LjA1LDE1Ni41MSwxMjUuNzQ5LDE1NC43OTg2LDEyMC4xOTY3LDE1My43MTYzLDEyMS4yNzksMTQ4LjE2MzksMTE2LjA1LDE1Ni41MSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7Ii8+PC9nPjwhLS1TUkM9W1pQMUQyaThtNDRSdEVTS2l4UU83MjJZcVdabEhBeUhxUVdpYkt3UEpMNGhsUmlINi13Rlk5ZWxDLXp2eVozYXJtaU9Bc0NlcTNIb1BpalFBS2NSd2xzS3FHV29UMGtaMmg4VVRWdWJsVXZJMmliTWFOdGMwbjFyZ1AyQ2JrTE1hVWdLNjRKZEJBM1kwMlUxTHE2TmxwSC1uVDg3RGtEMGxPRUUtTnFsd0tldTRXU2pwOEsxdkk2YXpBa3k1elBFN3pMb2JfMnZ1QTFRWVFJc2o5cTZsekNFTTdKWXlCMnhZakczNEZ3NXFpZGotWEJaMk5FQkRtbG1sY0R1MV0tLT48L2c+PC9zdmc+"></figure>
+<ul>
+<li>Utile quand:
+<ul>
+<li>Une classe abstraite veut déléguer la construction d’une instance à
+ses concrétions.</li>
+<li>Le type concret à créer ne peut être déterminé que durant
+l’exécution.</li>
+</ul></li>
+</ul>
+</section>
+<section id="exemple" class="level2 code">
+<h2 class="code">Exemple</h2>
+<ul>
+<li>Basé sur l’exemple de <a href="../deck4/">cours 4</a></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">abstract</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">WidgetList</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Widget</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Widget</span><span class="o">&gt;</span><span class="w"> </span><span class="n">items</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Widget</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">itemHeight</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="nf">WidgetList</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">itemHeight</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="n">itemHeight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">itemHeight</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">abstract</span><span class="w"> </span><span class="n">Widget</span><span class="w"> </span><span class="nf">CreateItem</span><span class="p">(</span><span class="kt">object?</span><span class="w"> </span><span class="n">data</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">AddItem</span><span class="p">(</span><span class="kt">object?</span><span class="w"> </span><span class="n">data</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">items</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">CreateItem</span><span class="p">(</span><span class="n">data</span><span class="p">));</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">render</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">top</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">height</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">items</span><span class="p">.</span><span class="n">Count</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="c1">// Don&#39;t render items that goes outside the outer rect</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">top</span><span class="o">+</span><span class="n">itemHeight</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">height</span><span class="p">)</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+
+<span class="w">            </span><span class="n">items</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">render</span><span class="p">(</span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="n">top</span><span class="p">,</span><span class="w"> </span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="n">itemHeight</span><span class="p">);</span>
+<span class="w">            </span><span class="n">top</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">top</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">itemHeight</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">FillerList</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">WidgetList</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="nf">FillerList</span><span class="p">():</span><span class="w"> </span><span class="k">base</span><span class="p">(</span><span class="m">3</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="n">Widget</span><span class="w"> </span><span class="nf">CreateItem</span><span class="p">(</span><span class="kt">object?</span><span class="w"> </span><span class="n">data</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">border</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Border</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">border</span><span class="p">.</span><span class="n">AddChild</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">Filler</span><span class="p">());</span>
+
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">border</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Program</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Main</span><span class="p">(</span><span class="n">String</span><span class="p">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">FillerList</span><span class="w"> </span><span class="n">list</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">FillerList</span><span class="p">();</span>
+<span class="w">        </span><span class="n">Runner</span><span class="w"> </span><span class="n">runner</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Runner</span><span class="p">(</span><span class="n">list</span><span class="p">);</span>
+
+<span class="w">        </span><span class="n">list</span><span class="p">.</span><span class="n">AddItem</span><span class="p">(</span><span class="k">null</span><span class="p">);</span>
+<span class="w">        </span><span class="n">list</span><span class="p">.</span><span class="n">AddItem</span><span class="p">(</span><span class="k">null</span><span class="p">);</span>
+<span class="w">        </span><span class="n">list</span><span class="p">.</span><span class="n">AddItem</span><span class="p">(</span><span class="k">null</span><span class="p">);</span>
+<span class="w">        </span><span class="n">list</span><span class="p">.</span><span class="n">AddItem</span><span class="p">(</span><span class="k">null</span><span class="p">);</span>
+
+<span class="w">        </span><span class="n">runner</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="m">30</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+</section>
+<section id="builder" class="level2">
+<h2>Builder</h2>
+<ul>
+<li><em>Creational Pattern</em></li>
+<li>Création d’un objet par l’utilisation d’un autre objet</li>
+</ul>
+<figure><img class="plantuml" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBjb250ZW50U3R5bGVUeXBlPSJ0ZXh0L2NzcyIgaGVpZ2h0PSIyNTJweCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSIgc3R5bGU9IndpZHRoOjU3MHB4O2hlaWdodDoyNTJweDtiYWNrZ3JvdW5kOiNGRkZGRkY7IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCA1NzAgMjUyIiB3aWR0aD0iNTcwcHgiIHpvb21BbmRQYW49Im1hZ25pZnkiPjxkZWZzLz48Zz48IS0tY2xhc3MgRGlyZWN0b3ItLT48ZyBpZD0iZWxlbV9EaXJlY3RvciI+PHJlY3QgY29kZUxpbmU9IjEiIGZpbGw9IiNGMUYxRjEiIGhlaWdodD0iODAuOTc2NiIgaWQ9IkRpcmVjdG9yIiByeD0iMi41IiByeT0iMi41IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHdpZHRoPSIxMTUuOTY3OCIgeD0iMTQ3LjI5IiB5PSI3Ii8+PGVsbGlwc2UgY3g9IjE3NS40MTY5IiBjeT0iMjMiIGZpbGw9IiNBREQxQjIiIHJ4PSIxMSIgcnk9IjExIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDsiLz48cGF0aCBkPSJNMTc3Ljg5LDI5LjE0MzEgUTE3Ny4zMDksMjkuNDQxOSAxNzYuNjY5OCwyOS41OTEzIFExNzYuMDMwNywyOS43NDA3IDE3NS4zMjUxLDI5Ljc0MDcgUTE3Mi44MTgzLDI5Ljc0MDcgMTcxLjQ5ODQsMjguMDg4OSBRMTcwLjE3ODYsMjYuNDM3IDE3MC4xNzg2LDIzLjMxNTkgUTE3MC4xNzg2LDIwLjE4NjUgMTcxLjQ5ODQsMTguNTM0NyBRMTcyLjgxODMsMTYuODgyOCAxNzUuMzI1MSwxNi44ODI4IFExNzYuMDMwNywxNi44ODI4IDE3Ni42NzgxLDE3LjAzMjIgUTE3Ny4zMjU2LDE3LjE4MTYgMTc3Ljg5LDE3LjQ4MDUgTDE3Ny44OSwyMC4yMDMxIFExNzcuMjU5MiwxOS42MjIxIDE3Ni42NjU3LDE5LjM1MjMgUTE3Ni4wNzIyLDE5LjA4MjUgMTc1LjQ0MTMsMTkuMDgyNSBRMTc0LjA5NjYsMTkuMDgyNSAxNzMuNDExOCwyMC4xNDkyIFExNzIuNzI3LDIxLjIxNTggMTcyLjcyNywyMy4zMTU5IFExNzIuNzI3LDI1LjQwNzcgMTczLjQxMTgsMjYuNDc0NCBRMTc0LjA5NjYsMjcuNTQxIDE3NS40NDEzLDI3LjU0MSBRMTc2LjA3MjIsMjcuNTQxIDE3Ni42NjU3LDI3LjI3MTIgUTE3Ny4yNTkyLDI3LjAwMTUgMTc3Ljg5LDI2LjQyMDQgWiAiIGZpbGw9IiMwMDAwMDAiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI1NC43OTY5IiB4PSIxOTIuMzM0IiB5PSIyOC4yOTEiPkRpcmVjdG9yPC90ZXh0PjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgeDE9IjE0OC4yOSIgeDI9IjI2Mi4yNTc4IiB5MT0iMzkiIHkyPSIzOSIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjEwMy45Njc4IiB4PSIxNTMuMjkiIHk9IjU2LjUzNTIiPmJ1aWxkZXI6IEJ1aWxkZXI8L3RleHQ+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB4MT0iMTQ4LjI5IiB4Mj0iMjYyLjI1NzgiIHkxPSI2My40ODgzIiB5Mj0iNjMuNDg4MyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9Ijc1LjI3NzMiIHg9IjE1My4yOSIgeT0iODEuMDIzNCI+Q29uc3RydWN0KCk8L3RleHQ+PC9nPjwhLS1jbGFzcyBCdWlsZGVyLS0+PGcgaWQ9ImVsZW1fQnVpbGRlciI+PHJlY3QgY29kZUxpbmU9IjYiIGZpbGw9IiNGMUYxRjEiIGhlaWdodD0iODAuOTc2NiIgaWQ9IkJ1aWxkZXIiIHJ4PSIyLjUiIHJ5PSIyLjUiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgd2lkdGg9IjE0Ni44Nzk5IiB4PSIyOTcuODQiIHk9IjciLz48ZWxsaXBzZSBjeD0iMzQzLjQ0MjUiIGN5PSIyMyIgZmlsbD0iI0E5RENERiIgcng9IjExIiByeT0iMTEiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjxwYXRoIGQ9Ik0zNDMuMzA1OCwxOC4zNDgxIEwzNDIuMTUyLDIzLjQxOTkgTDM0NC40Njc5LDIzLjQxOTkgWiBNMzQxLjgxMTcsMTYuMTA2OSBMMzQ0LjgwODMsMTYuMTA2OSBMMzQ4LjE1MzUsMjguNSBMMzQ1LjcwNDcsMjguNSBMMzQ0Ljk0MTEsMjUuNDM3IEwzNDEuNjYyMywyNS40MzcgTDM0MC45MTUyLDI4LjUgTDMzOC40NjY1LDI4LjUgWiAiIGZpbGw9IiMwMDAwMDAiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZm9udC1zdHlsZT0iaXRhbGljIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjQ3LjE3NDgiIHg9IjM2My45NDI1IiB5PSIyOC4yOTEiPkJ1aWxkZXI8L3RleHQ+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB4MT0iMjk4Ljg0IiB4Mj0iNDQzLjcxOTkiIHkxPSIzOSIgeTI9IjM5Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB4MT0iMjk4Ljg0IiB4Mj0iNDQzLjcxOTkiIHkxPSI0NyIgeTI9IjQ3Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZvbnQtc3R5bGU9Iml0YWxpYyIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxMzQuODc5OSIgeD0iMzAzLjg0IiB5PSI2NC41MzUyIj5CdWlsZFBhcnRBKCk6IEJ1aWxkZXI8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZvbnQtc3R5bGU9Iml0YWxpYyIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxMzMuMjczNCIgeD0iMzAzLjg0IiB5PSI4MS4wMjM0Ij5CdWlsZFBhcnRCKCk6IEJ1aWxkZXI8L3RleHQ+PC9nPjwhLS1jbGFzcyBDb25jcmV0ZUJ1aWxkZXItLT48ZyBpZD0iZWxlbV9Db25jcmV0ZUJ1aWxkZXIiPjxyZWN0IGNvZGVMaW5lPSIxMSIgZmlsbD0iI0YxRjFGMSIgaGVpZ2h0PSI5Ny40NjQ4IiBpZD0iQ29uY3JldGVCdWlsZGVyIiByeD0iMi41IiByeT0iMi41IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHdpZHRoPSIxNDYuODc5OSIgeD0iMjk3Ljg0IiB5PSIxNDcuOTgiLz48ZWxsaXBzZSBjeD0iMzE1Ljk4NzgiIGN5PSIxNjMuOTgiIGZpbGw9IiNBREQxQjIiIHJ4PSIxMSIgcnk9IjExIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDsiLz48cGF0aCBkPSJNMzE4LjQ2MDksMTcwLjEyMzEgUTMxNy44Nzk5LDE3MC40MjE5IDMxNy4yNDA3LDE3MC41NzEzIFEzMTYuNjAxNiwxNzAuNzIwNyAzMTUuODk2LDE3MC43MjA3IFEzMTMuMzg5MiwxNzAuNzIwNyAzMTIuMDY5MywxNjkuMDY4OSBRMzEwLjc0OTUsMTY3LjQxNyAzMTAuNzQ5NSwxNjQuMjk1OSBRMzEwLjc0OTUsMTYxLjE2NjUgMzEyLjA2OTMsMTU5LjUxNDcgUTMxMy4zODkyLDE1Ny44NjI4IDMxNS44OTYsMTU3Ljg2MjggUTMxNi42MDE2LDE1Ny44NjI4IDMxNy4yNDksMTU4LjAxMjIgUTMxNy44OTY1LDE1OC4xNjE2IDMxOC40NjA5LDE1OC40NjA1IEwzMTguNDYwOSwxNjEuMTgzMSBRMzE3LjgzMDEsMTYwLjYwMjEgMzE3LjIzNjYsMTYwLjMzMjMgUTMxNi42NDMxLDE2MC4wNjI1IDMxNi4wMTIyLDE2MC4wNjI1IFEzMTQuNjY3NSwxNjAuMDYyNSAzMTMuOTgyNywxNjEuMTI5MiBRMzEzLjI5NzksMTYyLjE5NTggMzEzLjI5NzksMTY0LjI5NTkgUTMxMy4yOTc5LDE2Ni4zODc3IDMxMy45ODI3LDE2Ny40NTQ0IFEzMTQuNjY3NSwxNjguNTIxIDMxNi4wMTIyLDE2OC41MjEgUTMxNi42NDMxLDE2OC41MjEgMzE3LjIzNjYsMTY4LjI1MTIgUTMxNy44MzAxLDE2Ny45ODE1IDMxOC40NjA5LDE2Ny40MDA0IFogIiBmaWxsPSIjMDAwMDAwIi8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMTA3Ljg4NDgiIHg9IjMzMC42ODczIiB5PSIxNjkuMjcxIj5Db25jcmV0ZUJ1aWxkZXI8L3RleHQ+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB4MT0iMjk4Ljg0IiB4Mj0iNDQzLjcxOTkiIHkxPSIxNzkuOTgiIHkyPSIxNzkuOTgiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHgxPSIyOTguODQiIHgyPSI0NDMuNzE5OSIgeTE9IjE4Ny45OCIgeTI9IjE4Ny45OCIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjEzNC44Nzk5IiB4PSIzMDMuODQiIHk9IjIwNS41MTUyIj5CdWlsZFBhcnRBKCk6IEJ1aWxkZXI8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMTMzLjI3MzQiIHg9IjMwMy44NCIgeT0iMjIyLjAwMzQiPkJ1aWxkUGFydEIoKTogQnVpbGRlcjwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxMzQuODUyNSIgeD0iMzAzLjg0IiB5PSIyMzguNDkxNyI+R2V0UmVzdWx0KCk6IFByb2R1Y3Q8L3RleHQ+PC9nPjwhLS1jbGFzcyBQcm9kdWN0LS0+PGcgaWQ9ImVsZW1fUHJvZHVjdCI+PHJlY3QgY29kZUxpbmU9IjE3IiBmaWxsPSIjRjFGMUYxIiBoZWlnaHQ9IjQ4IiBpZD0iUHJvZHVjdCIgcng9IjIuNSIgcnk9IjIuNSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB3aWR0aD0iODMuOTczNiIgeD0iNDc5LjI5IiB5PSIxNzIuNzEiLz48ZWxsaXBzZSBjeD0iNDk0LjI5IiBjeT0iMTg4LjcxIiBmaWxsPSIjQUREMUIyIiByeD0iMTEiIHJ5PSIxMSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7Ii8+PHBhdGggZD0iTTQ5Ni43NjMxLDE5NC44NTMxIFE0OTYuMTgyMSwxOTUuMTUxOSA0OTUuNTQyOSwxOTUuMzAxMyBRNDk0LjkwMzgsMTk1LjQ1MDcgNDk0LjE5ODIsMTk1LjQ1MDcgUTQ5MS42OTE0LDE5NS40NTA3IDQ5MC4zNzE1LDE5My43OTg5IFE0ODkuMDUxNywxOTIuMTQ3IDQ4OS4wNTE3LDE4OS4wMjU5IFE0ODkuMDUxNywxODUuODk2NSA0OTAuMzcxNSwxODQuMjQ0NyBRNDkxLjY5MTQsMTgyLjU5MjggNDk0LjE5ODIsMTgyLjU5MjggUTQ5NC45MDM4LDE4Mi41OTI4IDQ5NS41NTEyLDE4Mi43NDIyIFE0OTYuMTk4NywxODIuODkxNiA0OTYuNzYzMSwxODMuMTkwNSBMNDk2Ljc2MzEsMTg1LjkxMzEgUTQ5Ni4xMzIzLDE4NS4zMzIxIDQ5NS41Mzg4LDE4NS4wNjIzIFE0OTQuOTQ1MywxODQuNzkyNSA0OTQuMzE0NCwxODQuNzkyNSBRNDkyLjk2OTcsMTg0Ljc5MjUgNDkyLjI4NDksMTg1Ljg1OTIgUTQ5MS42MDAxLDE4Ni45MjU4IDQ5MS42MDAxLDE4OS4wMjU5IFE0OTEuNjAwMSwxOTEuMTE3NyA0OTIuMjg0OSwxOTIuMTg0NCBRNDkyLjk2OTcsMTkzLjI1MSA0OTQuMzE0NCwxOTMuMjUxIFE0OTQuOTQ1MywxOTMuMjUxIDQ5NS41Mzg4LDE5Mi45ODEyIFE0OTYuMTMyMywxOTIuNzExNSA0OTYuNzYzMSwxOTIuMTMwNCBaICIgZmlsbD0iIzAwMDAwMCIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjUxLjk3MzYiIHg9IjUwOC4yOSIgeT0iMTk0LjAwMSI+UHJvZHVjdDwvdGV4dD48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHgxPSI0ODAuMjkiIHgyPSI1NjIuMjYzNiIgeTE9IjIwNC43MSIgeTI9IjIwNC43MSIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgeDE9IjQ4MC4yOSIgeDI9IjU2Mi4yNjM2IiB5MT0iMjEyLjcxIiB5Mj0iMjEyLjcxIi8+PC9nPjxwYXRoIGQ9Ik02LDE0LjUyIEw2LDcwLjQ1MTYgQTAsMCAwIDAgMCA2LDcwLjQ1MTYgTDExMi41NTM3LDcwLjQ1MTYgQTAsMCAwIDAgMCAxMTIuNTUzNyw3MC40NTE2IEwxMTIuNTUzNyw0Ni40ODU4IEwxNTEuMjksNzUuNzMyNCBMMTEyLjU1MzcsMzguNDg1OCBMMTEyLjU1MzcsMjQuNTIgTDEwMi41NTM3LDE0LjUyIEw2LDE0LjUyIEEwLDAgMCAwIDAgNiwxNC41MiAiIGZpbGw9IiNGRUZGREQiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIvPjxwYXRoIGQ9Ik0xMDIuNTUzNywxNC41MiBMMTAyLjU1MzcsMjQuNTIgTDExMi41NTM3LDI0LjUyIEwxMDIuNTUzNywxNC41MiAiIGZpbGw9IiNGRUZGREQiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEzIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjQ0LjUwOTgiIHg9IjEyIiB5PSIzMi4wODg0Ij5idWlsZGVyPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEzIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9Ijc3LjMyNzEiIHg9IjIwLjIyNjYiIHk9IjQ3LjM5ODkiPi5CdWlsZFBhcnRBKCk8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iNzUuODM1NCIgeD0iMjAuMjI2NiIgeT0iNjIuNzA5NSI+LkJ1aWxkUGFydEIoKTwvdGV4dD48IS0tcmV2ZXJzZSBsaW5rIEJ1aWxkZXIgdG8gQ29uY3JldGVCdWlsZGVyLS0+PGcgaWQ9ImxpbmtfQnVpbGRlcl9Db25jcmV0ZUJ1aWxkZXIiPjxwYXRoIGQ9Ik0zNzEuMjgsMTA2LjMzIEMzNzEuMjgsMTI0LjY0IDM3MS4yOCwxMjguNSAzNzEuMjgsMTQ3LjcxICIgZmlsbD0ibm9uZSIgaWQ9IkJ1aWxkZXItYmFja3RvLUNvbmNyZXRlQnVpbGRlciIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7Ii8+PHBvbHlnb24gZmlsbD0ibm9uZSIgcG9pbnRzPSIzNzEuMjgsODguMzMsMzY1LjI4LDEwNi4zMywzNzcuMjgsMTA2LjMzLDM3MS4yOCw4OC4zMyIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7Ii8+PC9nPjwhLS1saW5rIENvbmNyZXRlQnVpbGRlciB0byBQcm9kdWN0LS0+PGcgaWQ9ImxpbmtfQ29uY3JldGVCdWlsZGVyX1Byb2R1Y3QiPjxwYXRoIGNvZGVMaW5lPSIxOSIgZD0iTTQ0NS4xLDE5Ni43MSBDNDU2LjQxLDE5Ni43MSA0NjEuNzIsMTk2LjcxIDQ3My4wMywxOTYuNzEgIiBmaWxsPSJub25lIiBpZD0iQ29uY3JldGVCdWlsZGVyLXRvLVByb2R1Y3QiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wO3N0cm9rZS1kYXNoYXJyYXk6Ny4wLDcuMDsiLz48cG9seWdvbiBmaWxsPSIjMTgxODE4IiBwb2ludHM9IjQ3OS4wMywxOTYuNzEsNDcwLjAzLDE5Mi43MSw0NzQuMDMsMTk2LjcxLDQ3MC4wMywyMDAuNzEsNDc5LjAzLDE5Ni43MSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7Ii8+PC9nPjwhLS1saW5rIERpcmVjdG9yIHRvIEJ1aWxkZXItLT48ZyBpZD0ibGlua19EaXJlY3Rvcl9CdWlsZGVyIj48cGF0aCBjb2RlTGluZT0iMjAiIGQ9Ik0yNzUuNjQsNDcuNDkgQzI4Ni45OSw0Ny40OSAyODAuMzQsNDcuNDkgMjkxLjY5LDQ3LjQ5ICIgZmlsbD0ibm9uZSIgaWQ9IkRpcmVjdG9yLUJ1aWxkZXIiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjxwb2x5Z29uIGZpbGw9Im5vbmUiIHBvaW50cz0iMjYzLjY0LDQ3LjQ5LDI2OS42NCw1MS40OSwyNzUuNjQsNDcuNDksMjY5LjY0LDQzLjQ5LDI2My42NCw0Ny40OSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7Ii8+PHBvbHlnb24gZmlsbD0iIzE4MTgxOCIgcG9pbnRzPSIyOTcuNjksNDcuNDksMjg4LjY5LDQzLjQ5LDI5Mi42OSw0Ny40OSwyODguNjksNTEuNDksMjk3LjY5LDQ3LjQ5IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDsiLz48L2c+PCEtLVNSQz1bVFAxRDJlRDAzOE50RUtNTVRRNDdhNUFlQk5HaGxTNHVuYk9PN0NYNEE4WHR4X1d0TWg2eHA5bGFWU2RKSFpjN3p2ZjlZc05pMEI1ZVFyQ0lmdlhEWFBUa2pkNzJoUFBKMTNzMEFsbkJRSzR6Sml6enV0MnRfRk1KZDJrTXdvZFFjWHNyUERpTUp2WUNGTE9wMklxMC1XV3J2SV9tNy1OTzZsNTF5WUpONlhkYWQ2dGZocmc5WW0xcFdVVjRLMk45VlhLOFlUY093elRSdWFqVzAzSE0yOFN2ajVOOERhcjNZY2w4bGE5Q2paVmk1Qnl6LTlqbmlGbTJdLS0+PC9nPjwvc3ZnPg=="></figure>
+<ul>
+<li>Utile quand:
+<ul>
+<li>La construction de l’objet implique plusieurs étapes dont le nombre
+et l’ordre peuvent varier</li>
+<li>Le constructeur peut être passer à une autre
+fonction/méthode/instance.</li>
+</ul></li>
+</ul>
+</section>
+<section id="exemple-1" class="level2 code">
+<h2 class="code">Exemple</h2>
+<div class="pygments"><pre><span></span><span class="k">interface</span><span class="w"> </span><span class="n">DocumentBuilder</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">DocumentBuilder</span><span class="w"> </span><span class="nf">add_title</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">title</span><span class="p">);</span>
+<span class="w">    </span><span class="n">DocumentBuilder</span><span class="w"> </span><span class="nf">add_par</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">par</span><span class="p">);</span>
+<span class="w">    </span><span class="n">DocumentBuilder</span><span class="w"> </span><span class="nf">start_list</span><span class="p">();</span>
+<span class="w">    </span><span class="n">DocumentBuilder</span><span class="w"> </span><span class="nf">add_bullet</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">Bullet</span><span class="p">);</span>
+<span class="w">    </span><span class="n">DocumentBuilder</span><span class="w"> </span><span class="nf">end_list</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Facture</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">Client</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">Price</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="nf">Facture</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">client</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">price</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Client</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">client</span><span class="p">;</span>
+<span class="w">        </span><span class="n">Price</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">price</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Export</span><span class="p">(</span><span class="n">DocumentBuilder</span><span class="w"> </span><span class="n">builder</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">builder</span>
+<span class="w">            </span><span class="p">.</span><span class="n">add_title</span><span class="p">(</span><span class="s">&quot;Facture&quot;</span><span class="p">)</span>
+<span class="w">            </span><span class="p">.</span><span class="n">add_par</span><span class="p">(</span><span class="s">&quot;Instructions:&quot;</span><span class="p">)</span>
+<span class="w">            </span><span class="p">.</span><span class="n">start_list</span><span class="p">()</span>
+<span class="w">            </span><span class="p">.</span><span class="n">add_bullet</span><span class="p">(</span><span class="s">&quot;IBAN: BEXX XXXX XXXXXXXX&quot;</span><span class="p">)</span>
+<span class="w">            </span><span class="p">.</span><span class="n">add_bullet</span><span class="p">(</span><span class="s">&quot;à payer dans 10 jours&quot;</span><span class="p">)</span>
+<span class="w">            </span><span class="p">.</span><span class="n">end_list</span><span class="p">()</span>
+<span class="w">            </span><span class="p">.</span><span class="n">add_par</span><span class="p">(</span><span class="n">String</span><span class="p">.</span><span class="n">Format</span><span class="p">(</span><span class="s">&quot;{0} €&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">Price</span><span class="p">));</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">MDBuilder</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">DocumentBuilder</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">content</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">DocumentBuilder</span><span class="w"> </span><span class="nf">add_title</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">title</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">content</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s">&quot;# &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">title</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;\n\n&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">DocumentBuilder</span><span class="w"> </span><span class="nf">add_par</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">par</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">content</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">par</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;\n\n&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">DocumentBuilder</span><span class="w"> </span><span class="nf">start_list</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">DocumentBuilder</span><span class="w"> </span><span class="nf">add_bullet</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">Bullet</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">content</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s">&quot;- &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Bullet</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;\n&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">DocumentBuilder</span><span class="w"> </span><span class="nf">end_list</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">content</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s">&quot;\n&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">build</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">content</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">HTMLBuilder</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">DocumentBuilder</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">content</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;&lt;html&gt;&quot;</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">DocumentBuilder</span><span class="w"> </span><span class="nf">add_title</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">title</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">content</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s">&quot;&lt;h1&gt;&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">title</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;&lt;/h1&gt;&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">DocumentBuilder</span><span class="w"> </span><span class="nf">add_par</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">par</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">content</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s">&quot;&lt;p&gt;&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">par</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;&lt;/p&gt;&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">DocumentBuilder</span><span class="w"> </span><span class="nf">start_list</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">content</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s">&quot;&lt;ul&gt;&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">DocumentBuilder</span><span class="w"> </span><span class="nf">add_bullet</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">Bullet</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">content</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s">&quot;&lt;li&gt;&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Bullet</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;&lt;/li&gt;&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">DocumentBuilder</span><span class="w"> </span><span class="nf">end_list</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">content</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s">&quot;&lt;/li&gt;&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">build</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">content</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s">&quot;&lt;/html&gt;&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">content</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Program</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Main</span><span class="p">(</span><span class="n">String</span><span class="p">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">facture</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Facture</span><span class="p">(</span><span class="s">&quot;Quentin Lurkin&quot;</span><span class="p">,</span><span class="w"> </span><span class="m">42.0</span><span class="p">);</span>
+
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">builder1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">MDBuilder</span><span class="p">();</span>
+<span class="w">        </span><span class="n">facture</span><span class="p">.</span><span class="n">Export</span><span class="p">(</span><span class="n">builder1</span><span class="p">);</span>
+<span class="w">        </span><span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">builder1</span><span class="p">.</span><span class="n">build</span><span class="p">());</span>
+
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">builder2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HTMLBuilder</span><span class="p">();</span>
+<span class="w">        </span><span class="n">facture</span><span class="p">.</span><span class="n">Export</span><span class="p">(</span><span class="n">builder2</span><span class="p">);</span>
+<span class="w">        </span><span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">builder2</span><span class="p">.</span><span class="n">build</span><span class="p">());</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+</section>
+</body>
+</html>
