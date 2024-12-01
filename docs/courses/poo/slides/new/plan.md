@@ -51,7 +51,7 @@
 - type generique
 - contraintes
 - methode generique
-  
+
 ## Membre de classe
 
 - membre de classe
@@ -64,9 +64,22 @@
 
 ## Principe SOLID
 
-
-
 ## Design Pattern
 
+### Creational Pattern
 
+- Singleton
+- Factory Method
+- Builder
+- Prototype
 
+### Structural Pattern
+
+- Decorator
+- Facade
+
+### Behavioral Pattern
+
+- Iterator
+- Observer
+- Strategy

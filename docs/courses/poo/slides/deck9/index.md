@@ -53,6 +53,31 @@ type: deck
 
 - Inutile dans les langages qui permettent d'avoir des objets globaux
 
+## Exemple {.code}
+
+```cs
+using System.Collections.Immutable;
+
+class Log {
+    private static Log instance = new Log();
+    private List<string> logs;
+
+    private Log() {
+        logs = new List<string>();
+    }
+
+    public static Log Instance {get {return instance;}}
+
+    public void Add(string log) {
+        logs.Add(log);
+    }
+
+    public ImmutableList<string> GetLogs() {
+        return logs.ToImmutableList();
+    }
+}
+```
+
 ## Factory
 
 - _Creational Pattern_
@@ -63,8 +88,8 @@ type: deck
 abstract class Product
 
 abstract class Creator {
-  {abstract} FactoryMethod(): Product
   AnOperation()
+  {abstract} FactoryMethod(): Product
 }
 
 class ConcreteProductA extends Product
@@ -98,41 +123,57 @@ ConcreteCreator .left.> ConcreteProductB
 
 ```cs
 abstract class WidgetList : Widget {
-
-    private List<Widget> items = new List<Widget>();
     private int itemHeight;
 
-    public WidgetList(int itemHeight) {
+    public WidgetList(int itemHeight, IEnumerable values) : base(int.MaxValue) {
         this.itemHeight = itemHeight;
+        foreach(object item in values) {
+            AddItem(item);
+        }
     }
 
-    public abstract Widget CreateItem(object? data);
+    public abstract Widget CreateItem(object data);
 
-    public void AddItem(object? data) {
-        items.Add(CreateItem(data));
+    public void AddItem(object data) {
+        AddChild(CreateItem(data));
     }
 
     public override void render(int left, int top, int width, int height)
     {
-        for (int i = 0; i < items.Count; i++) {
+        var children = Children;
+        for (int i = 0; i < children.Count; i++) {
             // Don't render items that goes outside the outer rect
             if (top+itemHeight > height) break;
 
-            items[i].render(left, top, width, itemHeight);
+            children[i].render(left, top, width, itemHeight);
             top = top + itemHeight;
         }
     }
 }
 
-class FillerList : WidgetList {
-    public FillerList(): base(3) {}
+class IntList : WidgetList {
+    public IntList(List<int> values): base(3, values) {}
 
-    public override Widget CreateItem(object? data)
+    public override Widget CreateItem(object data)
     {
         var border = new Border("", "");
-        border.AddChild(new Filler());
+        border.AddChild(new ValueWidget<int>((int) data));
 
         return border;
+    }
+}
+
+class ValueWidget<T> : Widget {
+
+    private T value;
+
+    public ValueWidget(T value) {
+        this.value = value;
+    }
+    public override void render(int left, int top, int width, int height)
+    {
+        Console.SetCursorPosition(left, top);
+        Console.Write("{0}", value);
     }
 }
 
@@ -140,13 +181,10 @@ class Program
 {
     public static void Main(String[] args)
     {
-        FillerList list = new FillerList();
-        Runner runner = new Runner(list);
+        var ints = new List<int> {1, 2, 3, 4};
 
-        list.AddItem(null);
-        list.AddItem(null);
-        list.AddItem(null);
-        list.AddItem(null);
+        IntList list = new IntList(ints);
+        Runner runner = new Runner(list);
 
         runner.run(30);
     }
@@ -311,6 +349,116 @@ class Program
         var builder2 = new HTMLBuilder();
         facture.Export(builder2);
         Console.WriteLine(builder2.build());
+    }
+}
+```
+
+## Decorator
+
+- _Structural Pattern_
+
+- Emballer un objet dans un autre pour ajouter une fonctionalité
+
+```plantuml {.build}
+abstract class Component {
+  Operation()
+}
+
+abstract class Decorator extends Component {
+  component: Component
+  Operation()
+}
+
+Component <--o Decorator
+
+note left of Decorator::component
+  component.Operation()
+end note
+
+class ConcreteComponent extends Component {
+  Operation()
+}
+
+class ConcreteDecoratorA extends Decorator {
+  addedState
+  Operation()
+}
+
+class ConcreteDecoratorB extends Decorator {
+  Operation()
+  AddedBehavior()
+}
+
+note left of ConcreteDecoratorB::Operation
+  base.Operation()
+  AddedBehavior()
+end note
+```
+
+- Utile pour ajouter un comportement de façon dynamique et plus flexible qu'avec un héritage
+
+## Exemple {.code}
+
+- Le `Border` _widget_ de l'exemple du [cours 4](../deck4/)
+
+```cs
+class Border : Widget
+{
+    private string title;
+    private string footnote;
+
+    public Border(string title, string footnote) : base(1) {
+        this.title = title;
+        this.footnote = footnote;
+    }
+
+    public Border() : this("", "") {}
+
+    public string Title {
+        get { return title; }
+        set { title = value; }
+    }
+
+    public string Footnote {
+        get { return footnote; }
+        set { footnote = value; }
+    }
+
+    private void write_h_line(string txt, int width) {
+        for (int i = 0; i < width/2 - txt.Length/2; i++)
+        {
+            Console.Write("━");
+        }
+        Console.Write(txt);
+        for (int i = 0; i < width - width / 2 - (txt.Length - txt.Length/2); i++)
+        {
+            Console.Write("━");
+        }
+    }
+
+    public override void render(int left, int top, int width, int height)
+    {
+        Console.SetCursorPosition(left, top);
+        Console.Write("┏");
+        write_h_line(Title, width-2);
+        Console.Write("┓");
+
+        for (int i = 1; i < height - 1; i++)
+        {
+            Console.SetCursorPosition(left, top + i);
+            Console.Write("┃");
+            Console.SetCursorPosition(left + width - 1, top + i);
+            Console.Write("┃");
+        }
+
+        Console.SetCursorPosition(left, top + height - 1);
+        Console.Write("┗");
+        write_h_line(Footnote, width-2);
+        Console.Write("┛");
+
+        if (HasChildren) {
+            Child.render(left+1, top+1, width-2, height-2);
+        }
     }
 }
 ```

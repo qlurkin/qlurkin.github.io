@@ -376,6 +376,7 @@ skinparam defaultFontSize 24
 class Runner {
   - root: Widget
   + run(fps: int): void
+  + ProcessKey(key: ConsoleKeyInfo): void
 }
 
 abstract class Widget {
@@ -408,34 +409,39 @@ Runner o-- Widget
 ```cs
 class Runner
 {
-  private Widget root;
+    private Widget root;
+    private bool running = false;
 
-  public Runner(Widget root) {
-      this.root = root;
-  }
-
-  public void run(int fps)
-  {
-    Console.CursorVisible = false;
-    int frame_time = 1000 / fps;
-    bool running = true;
-    while (running)
-    {
-      int height = Console.BufferHeight;
-      int width = Console.BufferWidth;
-      if (Console.KeyAvailable)
-      {
-        ConsoleKeyInfo key = Console.ReadKey(true);
-        if (key.Key == ConsoleKey.Q) {
-          running = false;
-        }
-      }
-      Console.Clear();
-      root.render(0, 0, width, height);
-      Thread.Sleep(frame_time);
+    public Runner(Widget root) {
+        this.root = root;
     }
-    Console.Clear();
-  }
+
+    public virtual void ProcessKey(ConsoleKeyInfo key) {
+        if (key.Key == ConsoleKey.Q) {
+            running = false;
+        }
+    }
+
+    public void run(int fps)
+    {
+        Console.CursorVisible = false;
+        int frame_time = 1000 / fps;
+        running = true;
+        while (running)
+        {
+            int height = Console.BufferHeight;
+            int width = Console.BufferWidth;
+            while (Console.KeyAvailable)
+            {
+                ConsoleKeyInfo key = Console.ReadKey(true);
+                ProcessKey(key);
+            }
+            Console.Clear();
+            root.render(0, 0, width, height);
+            Thread.Sleep(frame_time);
+        }
+        Console.Clear();
+    }
 }
 ```
 
