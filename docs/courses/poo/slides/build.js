@@ -2,7 +2,6 @@ import { build_and_index } from 'build_lib'
 
 build_and_index(
   [
-    // 'slides1',
     'deck1',
     'deck2',
     'deck3',
@@ -12,12 +11,6 @@ build_and_index(
     'deck7',
     'deck8',
     'deck9',
-    // 'slides2',
-    // 'slides3',
-    // 'slides4',
-    // 'slides5',
-    // 'slides6',
-    // 'slides7',
   ],
   { title: 'Slides' },
 )
