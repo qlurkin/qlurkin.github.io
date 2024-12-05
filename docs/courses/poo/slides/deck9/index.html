@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>PO3T - Cours 9 - Design Patterns</title>
+  <title>PO3T - Cours 9 &amp; 10 - Design Patterns</title>
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -26,7 +26,7 @@
 </head>
 <body>
 <header id="title-block-header">
-<h1 class="title">PO3T - Cours 9
+<h1 class="title">PO3T - Cours 9 &amp; 10
 <small>Design Patterns</small>
 </h1>
 </header>
@@ -103,6 +103,22 @@ globaux</p></li>
 
 <span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">ImmutableList</span><span class="o">&lt;</span><span class="kt">string</span><span class="o">&gt;</span><span class="w"> </span><span class="n">GetLogs</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">logs</span><span class="p">.</span><span class="n">ToImmutableList</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">LogWidget</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Widget</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">render</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">top</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">height</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">;</span>
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">logs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Log</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">GetLogs</span><span class="p">();</span>
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">logs</span><span class="p">.</span><span class="n">Count</span><span class="p">;</span>
+<span class="w">        </span><span class="k">foreach</span><span class="w"> </span><span class="p">(</span><span class="kt">var</span><span class="w"> </span><span class="n">log</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">logs</span><span class="p">.</span><span class="n">GetRange</span><span class="p">(</span><span class="n">Math</span><span class="p">.</span><span class="n">Max</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">count</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">height</span><span class="p">),</span><span class="w"> </span><span class="n">Math</span><span class="p">.</span><span class="n">Min</span><span class="p">(</span><span class="n">count</span><span class="p">,</span><span class="w"> </span><span class="n">height</span><span class="p">)))</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">Console</span><span class="p">.</span><span class="n">SetCursorPosition</span><span class="p">(</span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="n">top</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">i</span><span class="p">);</span>
+<span class="w">            </span><span class="n">Console</span><span class="p">.</span><span class="n">Write</span><span class="p">(</span><span class="n">log</span><span class="p">.</span><span class="n">Substring</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">Math</span><span class="p">.</span><span class="n">Min</span><span class="p">(</span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="n">log</span><span class="p">.</span><span class="n">Length</span><span class="p">)));</span>
+<span class="w">            </span><span class="n">i</span><span class="o">++</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -417,6 +433,431 @@ href="../deck4/">cours 4</a></li>
 <span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HasChildren</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">            </span><span class="n">Child</span><span class="p">.</span><span class="n">render</span><span class="p">(</span><span class="n">left</span><span class="o">+</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">top</span><span class="o">+</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">width</span><span class="o">-</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">height</span><span class="o">-</span><span class="m">2</span><span class="p">);</span>
 <span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+</section>
+<section id="proxy" class="level2">
+<h2>Proxy</h2>
+<ul>
+<li><em>Structural Pattern</em></li>
+<li>Emballer un objet dans un autre pour en contrôler les accès.</li>
+</ul>
+<figure><img class="plantuml" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBjb250ZW50U3R5bGVUeXBlPSJ0ZXh0L2NzcyIgaGVpZ2h0PSIyMTlweCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSIgc3R5bGU9IndpZHRoOjUyMHB4O2hlaWdodDoyMTlweDtiYWNrZ3JvdW5kOiNGRkZGRkY7IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCA1MjAgMjE5IiB3aWR0aD0iNTIwcHgiIHpvb21BbmRQYW49Im1hZ25pZnkiPjxkZWZzLz48Zz48IS0tY2xhc3MgU3ViamVjdC0tPjxnIGlkPSJlbGVtX1N1YmplY3QiPjxyZWN0IGNvZGVMaW5lPSIxIiBmaWxsPSIjRjFGMUYxIiBoZWlnaHQ9IjY0LjQ4ODMiIGlkPSJTdWJqZWN0IiByeD0iMi41IiByeT0iMi41IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHdpZHRoPSI4MS41MDU5IiB4PSIzMjguOTkiIHk9IjciLz48ZWxsaXBzZSBjeD0iMzQzLjk5IiBjeT0iMjMiIGZpbGw9IiNBOURDREYiIHJ4PSIxMSIgcnk9IjExIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDsiLz48cGF0aCBkPSJNMzQzLjg1MzMsMTguMzQ4MSBMMzQyLjY5OTUsMjMuNDE5OSBMMzQ1LjAxNTQsMjMuNDE5OSBaIE0zNDIuMzU5MSwxNi4xMDY5IEwzNDUuMzU1NywxNi4xMDY5IEwzNDguNzAwOSwyOC41IEwzNDYuMjUyMiwyOC41IEwzNDUuNDg4NSwyNS40MzcgTDM0Mi4yMDk3LDI1LjQzNyBMMzQxLjQ2MjcsMjguNSBMMzM5LjAxMzksMjguNSBaICIgZmlsbD0iIzAwMDAwMCIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmb250LXN0eWxlPSJpdGFsaWMiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iNDkuNTA1OSIgeD0iMzU3Ljk5IiB5PSIyOC4yOTEiPlN1YmplY3Q8L3RleHQ+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB4MT0iMzI5Ljk5IiB4Mj0iNDA5LjQ5NTkiIHkxPSIzOSIgeTI9IjM5Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB4MT0iMzI5Ljk5IiB4Mj0iNDA5LjQ5NTkiIHkxPSI0NyIgeTI9IjQ3Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZvbnQtc3R5bGU9Iml0YWxpYyIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI2My40MzA3IiB4PSIzMzQuOTkiIHk9IjY0LjUzNTIiPlJlcXVlc3QoKTwvdGV4dD48L2c+PCEtLWNsYXNzIFJlYWxTdWJqZWN0LS0+PGcgaWQ9ImVsZW1fUmVhbFN1YmplY3QiPjxyZWN0IGNvZGVMaW5lPSI1IiBmaWxsPSIjRjFGMUYxIiBoZWlnaHQ9IjY0LjQ4ODMiIGlkPSJSZWFsU3ViamVjdCIgcng9IjIuNSIgcnk9IjIuNSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB3aWR0aD0iMTA5LjkzNjUiIHg9IjQwMy43NyIgeT0iMTM5LjczIi8+PGVsbGlwc2UgY3g9IjQxOC43NyIgY3k9IjE1NS43MyIgZmlsbD0iI0FERDFCMiIgcng9IjExIiByeT0iMTEiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjxwYXRoIGQ9Ik00MjEuMjQzMSwxNjEuODczMSBRNDIwLjY2MjEsMTYyLjE3MTkgNDIwLjAyMjksMTYyLjMyMTMgUTQxOS4zODM4LDE2Mi40NzA3IDQxOC42NzgyLDE2Mi40NzA3IFE0MTYuMTcxNCwxNjIuNDcwNyA0MTQuODUxNSwxNjAuODE4OSBRNDEzLjUzMTcsMTU5LjE2NyA0MTMuNTMxNywxNTYuMDQ1OSBRNDEzLjUzMTcsMTUyLjkxNjUgNDE0Ljg1MTUsMTUxLjI2NDcgUTQxNi4xNzE0LDE0OS42MTI4IDQxOC42NzgyLDE0OS42MTI4IFE0MTkuMzgzOCwxNDkuNjEyOCA0MjAuMDMxMiwxNDkuNzYyMiBRNDIwLjY3ODcsMTQ5LjkxMTYgNDIxLjI0MzEsMTUwLjIxMDUgTDQyMS4yNDMxLDE1Mi45MzMxIFE0MjAuNjEyMywxNTIuMzUyMSA0MjAuMDE4OCwxNTIuMDgyMyBRNDE5LjQyNTMsMTUxLjgxMjUgNDE4Ljc5NDQsMTUxLjgxMjUgUTQxNy40NDk3LDE1MS44MTI1IDQxNi43NjQ5LDE1Mi44NzkyIFE0MTYuMDgwMSwxNTMuOTQ1OCA0MTYuMDgwMSwxNTYuMDQ1OSBRNDE2LjA4MDEsMTU4LjEzNzcgNDE2Ljc2NDksMTU5LjIwNDQgUTQxNy40NDk3LDE2MC4yNzEgNDE4Ljc5NDQsMTYwLjI3MSBRNDE5LjQyNTMsMTYwLjI3MSA0MjAuMDE4OCwxNjAuMDAxMiBRNDIwLjYxMjMsMTU5LjczMTUgNDIxLjI0MzEsMTU5LjE1MDQgWiAiIGZpbGw9IiMwMDAwMDAiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI3Ny45MzY1IiB4PSI0MzIuNzciIHk9IjE2MS4wMjEiPlJlYWxTdWJqZWN0PC90ZXh0PjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgeDE9IjQwNC43NyIgeDI9IjUxMi43MDY1IiB5MT0iMTcxLjczIiB5Mj0iMTcxLjczIi8+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB4MT0iNDA0Ljc3IiB4Mj0iNTEyLjcwNjUiIHkxPSIxNzkuNzMiIHkyPSIxNzkuNzMiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI2My40MzA3IiB4PSI0MDkuNzciIHk9IjE5Ny4yNjUyIj5SZXF1ZXN0KCk8L3RleHQ+PC9nPjwhLS1jbGFzcyBQcm94eS0tPjxnIGlkPSJlbGVtX1Byb3h5Ij48cmVjdCBjb2RlTGluZT0iOSIgZmlsbD0iI0YxRjFGMSIgaGVpZ2h0PSI4MC45NzY2IiBpZD0iUHJveHkiIHJ4PSIyLjUiIHJ5PSIyLjUiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgd2lkdGg9IjE3My42MDg0IiB4PSIxOTQuOTQiIHk9IjEzMS40OCIvPjxlbGxpcHNlIGN4PSIyNTguNTEwOCIgY3k9IjE0Ny40OCIgZmlsbD0iI0FERDFCMiIgcng9IjExIiByeT0iMTEiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjxwYXRoIGQ9Ik0yNjAuOTgzOSwxNTMuNjIzMSBRMjYwLjQwMjksMTUzLjkyMTkgMjU5Ljc2MzcsMTU0LjA3MTMgUTI1OS4xMjQ2LDE1NC4yMjA3IDI1OC40MTksMTU0LjIyMDcgUTI1NS45MTIyLDE1NC4yMjA3IDI1NC41OTIzLDE1Mi41Njg5IFEyNTMuMjcyNSwxNTAuOTE3IDI1My4yNzI1LDE0Ny43OTU5IFEyNTMuMjcyNSwxNDQuNjY2NSAyNTQuNTkyMywxNDMuMDE0NyBRMjU1LjkxMjIsMTQxLjM2MjggMjU4LjQxOSwxNDEuMzYyOCBRMjU5LjEyNDYsMTQxLjM2MjggMjU5Ljc3MiwxNDEuNTEyMiBRMjYwLjQxOTUsMTQxLjY2MTYgMjYwLjk4MzksMTQxLjk2MDUgTDI2MC45ODM5LDE0NC42ODMxIFEyNjAuMzUzMSwxNDQuMTAyMSAyNTkuNzU5NiwxNDMuODMyMyBRMjU5LjE2NjEsMTQzLjU2MjUgMjU4LjUzNTIsMTQzLjU2MjUgUTI1Ny4xOTA1LDE0My41NjI1IDI1Ni41MDU3LDE0NC42MjkyIFEyNTUuODIwOSwxNDUuNjk1OCAyNTUuODIwOSwxNDcuNzk1OSBRMjU1LjgyMDksMTQ5Ljg4NzcgMjU2LjUwNTcsMTUwLjk1NDQgUTI1Ny4xOTA1LDE1Mi4wMjEgMjU4LjUzNTIsMTUyLjAyMSBRMjU5LjE2NjEsMTUyLjAyMSAyNTkuNzU5NiwxNTEuNzUxMiBRMjYwLjM1MzEsMTUxLjQ4MTUgMjYwLjk4MzksMTUwLjkwMDQgWiAiIGZpbGw9IiMwMDAwMDAiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIzNy45NjY4IiB4PSIyNzkuMDEwOCIgeT0iMTUyLjc3MSI+UHJveHk8L3RleHQ+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB4MT0iMTk1Ljk0IiB4Mj0iMzY3LjU0ODQiIHkxPSIxNjMuNDgiIHkyPSIxNjMuNDgiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxNjEuNjA4NCIgeD0iMjAwLjk0IiB5PSIxODEuMDE1MiI+cmVhbFN1YmplY3Q6IFJlYWxTdWJqZWN0PC90ZXh0PjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgeDE9IjE5NS45NCIgeDI9IjM2Ny41NDg0IiB5MT0iMTg3Ljk2ODMiIHkyPSIxODcuOTY4MyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjYzLjQzMDciIHg9IjIwMC45NCIgeT0iMjA1LjUwMzQiPlJlcXVlc3QoKTwvdGV4dD48L2c+PHBhdGggZD0iTTYsMTU0LjMyIEw2LDE3OS42MzA1IEEwLDAgMCAwIDAgNiwxNzkuNjMwNSBMMTU5LjQ4MTksMTc5LjYzMDUgQTAsMCAwIDAgMCAxNTkuNDgxOSwxNzkuNjMwNSBMMTU5LjQ4MTksMTcyLjMyIEwxOTguOTQsMjAwLjIxMjQgTDE1OS40ODE5LDE2NC4zMiBMMTU5LjQ4MTksMTY0LjMyIEwxNDkuNDgxOSwxNTQuMzIgTDYsMTU0LjMyIEEwLDAgMCAwIDAgNiwxNTQuMzIgIiBmaWxsPSIjRkVGRkREIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiLz48cGF0aCBkPSJNMTQ5LjQ4MTksMTU0LjMyIEwxNDkuNDgxOSwxNjQuMzIgTDE1OS40ODE5LDE2NC4zMiBMMTQ5LjQ4MTksMTU0LjMyICIgZmlsbD0iI0ZFRkZERCIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMTMyLjQ4MTkiIHg9IjEyIiB5PSIxNzEuODg4NCI+cmVhbFN1YmplY3QuUmVxdWVzdCgpPC90ZXh0PjwhLS1yZXZlcnNlIGxpbmsgU3ViamVjdCB0byBSZWFsU3ViamVjdC0tPjxnIGlkPSJsaW5rX1N1YmplY3RfUmVhbFN1YmplY3QiPjxwYXRoIGQ9Ik00MDEuNDE5NSw4Ni43NjkzIEM0MTUuNDA5NSwxMDcuMzE5MyA0MjMuNDQsMTE5LjEyIDQzNy4zOSwxMzkuNjIgIiBmaWxsPSJub25lIiBpZD0iU3ViamVjdC1iYWNrdG8tUmVhbFN1YmplY3QiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjxwb2x5Z29uIGZpbGw9Im5vbmUiIHBvaW50cz0iMzkxLjI5LDcxLjg5LDM5Ni40NTk3LDkwLjE0NTgsNDA2LjM3OTMsODMuMzkyOCwzOTEuMjksNzEuODkiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjwvZz48IS0tcmV2ZXJzZSBsaW5rIFN1YmplY3QgdG8gUHJveHktLT48ZyBpZD0ibGlua19TdWJqZWN0X1Byb3h5Ij48cGF0aCBkPSJNMzM4LjM4NCw4Ni44MTkxIEMzMjYuMzc0LDEwNC42NDkxIDMyMS4zMywxMTIuMTcgMzA4LjUyLDEzMS4xOCAiIGZpbGw9Im5vbmUiIGlkPSJTdWJqZWN0LWJhY2t0by1Qcm94eSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7Ii8+PHBvbHlnb24gZmlsbD0ibm9uZSIgcG9pbnRzPSIzNDguNDQsNzEuODksMzMzLjQwNzcsODMuNDY3MSwzNDMuMzYwNCw5MC4xNzExLDM0OC40NCw3MS44OSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7Ii8+PC9nPjwhLS1saW5rIFByb3h5IHRvIFJlYWxTdWJqZWN0LS0+PGcgaWQ9ImxpbmtfUHJveHlfUmVhbFN1YmplY3QiPjxwYXRoIGNvZGVMaW5lPSIxNCIgZD0iTTM4MC44NiwxNzEuOTcgQzM5Mi40NCwxNzEuOTcgMzg2LjAzLDE3MS45NyAzOTcuNjIsMTcxLjk3ICIgZmlsbD0ibm9uZSIgaWQ9IlByb3h5LVJlYWxTdWJqZWN0IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDsiLz48cG9seWdvbiBmaWxsPSIjMTgxODE4IiBwb2ludHM9IjM2OC44NiwxNzEuOTcsMzc0Ljg2LDE3NS45NywzODAuODYsMTcxLjk3LDM3NC44NiwxNjcuOTcsMzY4Ljg2LDE3MS45NyIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7Ii8+PHBvbHlnb24gZmlsbD0iIzE4MTgxOCIgcG9pbnRzPSI0MDMuNjIsMTcxLjk3LDM5NC42MiwxNjcuOTcsMzk4LjYyLDE3MS45NywzOTQuNjIsMTc1Ljk3LDQwMy42MiwxNzEuOTciIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjwvZz48IS0tU1JDPVtST3ZEM2ExMDM0UnRGS01OSTNaMG4yNjQ0bklyYThjOWNLZzhrQmtIOE52WXNRX1ZVb3RMSlltcldlcWN2eDJRd2Z4emowQllJa1RrbXZCN1lQcjRDTW0wZUxhb3dRbERpXzNHbGthVmZCMWNOZHhCemZRZmZfZGhVSHhES3lzVGY0ZEcwV242Njh5OEpIU29mS3h1Vkk2eGJWdUhGQldUXS0tPjwvZz48L3N2Zz4="></figure>
+</section>
+<section id="exemple-4" class="level2 code">
+<h2 class="code">Exemple</h2>
+<div class="pygments"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="nn">System.Collections</span><span class="p">;</span>
+
+<span class="k">interface</span><span class="w"> </span><span class="n">ITextFile</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">string</span><span class="w"> </span><span class="nf">GetName</span><span class="p">();</span>
+<span class="w">    </span><span class="kt">string</span><span class="w"> </span><span class="nf">GetContent</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">TextFile</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">ITextFile</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">name</span><span class="p">;</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">content</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="nf">TextFile</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">name</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">name</span><span class="p">;</span>
+<span class="w">        </span><span class="k">try</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="k">using</span><span class="w"> </span><span class="p">(</span><span class="n">StreamReader</span><span class="w"> </span><span class="n">sr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">StreamReader</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">                </span><span class="n">content</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sr</span><span class="p">.</span><span class="n">ReadToEnd</span><span class="p">();</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">            </span><span class="n">Log</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">name</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot; LOADED&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">Exception</span><span class="w"> </span><span class="n">e</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">content</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;The file could not be read&quot;</span><span class="p">;</span>
+<span class="w">            </span><span class="n">Log</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="nf">GetContent</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">content</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="nf">GetName</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">name</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">TextFileProxy</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">ITextFile</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">TextFile</span><span class="o">?</span><span class="w"> </span><span class="n">textFile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">null</span><span class="p">;</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">name</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="nf">TextFileProxy</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">name</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">name</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="nf">GetContent</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">textFile</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="k">null</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">textFile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TextFile</span><span class="p">(</span><span class="n">name</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">textFile</span><span class="p">.</span><span class="n">GetContent</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="nf">GetName</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">name</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">TextFileWidget</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Widget</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">ITextFile</span><span class="w"> </span><span class="n">textFile</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="nf">TextFileWidget</span><span class="p">(</span><span class="n">ITextFile</span><span class="w"> </span><span class="n">textFile</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="n">textFile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">textFile</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">render</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">top</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">height</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Console</span><span class="p">.</span><span class="n">SetCursorPosition</span><span class="p">(</span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="n">top</span><span class="p">);</span>
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">content</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">textFile</span><span class="p">.</span><span class="n">GetContent</span><span class="p">().</span><span class="n">Replace</span><span class="p">(</span><span class="s">&quot;\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">).</span><span class="n">Replace</span><span class="p">(</span><span class="s">&quot;\r&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="p">.</span><span class="n">Length</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">width</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">content</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">content</span><span class="p">.</span><span class="n">Substring</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">width</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="n">Console</span><span class="p">.</span><span class="n">Write</span><span class="p">(</span><span class="n">content</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">TextFileList</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">WidgetList</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="nf">TextFileList</span><span class="p">(</span><span class="n">IEnumerable</span><span class="w"> </span><span class="n">values</span><span class="p">)</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="k">base</span><span class="p">(</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="n">values</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="n">Widget</span><span class="w"> </span><span class="nf">CreateItem</span><span class="p">(</span><span class="kt">object</span><span class="w"> </span><span class="n">obj</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">ITextFile</span><span class="w"> </span><span class="n">textFile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">ITextFile</span><span class="p">)</span><span class="n">obj</span><span class="p">;</span>
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">widget</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Border</span><span class="p">(</span><span class="s">&quot; &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">textFile</span><span class="p">.</span><span class="n">GetName</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">widget</span><span class="p">.</span><span class="n">AddChild</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">TextFileWidget</span><span class="p">(</span><span class="n">textFile</span><span class="p">));</span>
+
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">widget</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Program</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Main</span><span class="p">(</span><span class="n">String</span><span class="p">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">content</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Split</span><span class="p">();</span>
+
+<span class="w">        </span><span class="kt">string</span><span class="p">[]</span><span class="w"> </span><span class="n">names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Directory</span><span class="p">.</span><span class="n">GetFiles</span><span class="p">(</span><span class="s">&quot;.&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="n">ITextFile</span><span class="o">&gt;</span><span class="w"> </span><span class="n">files</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">ITextFile</span><span class="o">&gt;</span><span class="p">();</span>
+
+<span class="w">        </span><span class="k">foreach</span><span class="w"> </span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">names</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">files</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">TextFileProxy</span><span class="p">(</span><span class="n">name</span><span class="p">));</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="n">content</span><span class="p">.</span><span class="n">AddChild</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">TextFileList</span><span class="p">(</span><span class="n">files</span><span class="p">));</span>
+
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">console</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Border</span><span class="p">(</span><span class="s">&quot; Console &quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">console</span><span class="p">.</span><span class="n">AddChild</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">LogWidget</span><span class="p">());</span>
+<span class="w">        </span><span class="n">content</span><span class="p">.</span><span class="n">AddChild</span><span class="p">(</span><span class="n">console</span><span class="p">);</span>
+
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">runner</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Runner</span><span class="p">(</span><span class="n">content</span><span class="p">);</span>
+<span class="w">        </span><span class="n">runner</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="m">30</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+</section>
+<section id="observer" class="level2">
+<h2>Observer</h2>
+<ul>
+<li><em>Behavioral Pattern</em></li>
+<li>Permet de notifier plusieurs <em>Observers</em> d’un évènement sur
+un <em>Observable</em>.</li>
+<li>Déjà abordé dans le <a href="../deck6/">cours 6</a></li>
+</ul>
+</section>
+<section id="exemple-5" class="level2 code">
+<h2 class="code">Exemple</h2>
+<div class="pygments"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="nn">System.Collections</span><span class="p">;</span>
+
+<span class="k">interface</span><span class="w"> </span><span class="n">IKeyObserver</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">OnKey</span><span class="p">(</span><span class="n">ConsoleKeyInfo</span><span class="w"> </span><span class="n">key</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">abstract</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">KeyObservable</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">IKeyObserver</span><span class="o">&gt;</span><span class="w"> </span><span class="n">observers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">IKeyObserver</span><span class="o">&gt;</span><span class="p">();</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Subscribe</span><span class="p">(</span><span class="n">IKeyObserver</span><span class="w"> </span><span class="n">observer</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">observers</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">observer</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">UnSubscribe</span><span class="p">(</span><span class="n">IKeyObserver</span><span class="w"> </span><span class="n">observer</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">observers</span><span class="p">.</span><span class="n">Remove</span><span class="p">(</span><span class="n">observer</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Notify</span><span class="p">(</span><span class="n">ConsoleKeyInfo</span><span class="w"> </span><span class="n">key</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">foreach</span><span class="w"> </span><span class="p">(</span><span class="n">IKeyObserver</span><span class="w"> </span><span class="n">observer</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">observers</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">observer</span><span class="p">.</span><span class="n">OnKey</span><span class="p">(</span><span class="n">key</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Runner</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">KeyObservable</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">Widget</span><span class="w"> </span><span class="n">root</span><span class="p">;</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">running</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">false</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="nf">Runner</span><span class="p">(</span><span class="n">Widget</span><span class="w"> </span><span class="n">root</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="n">root</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">root</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">virtual</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">ProcessKey</span><span class="p">(</span><span class="n">ConsoleKeyInfo</span><span class="w"> </span><span class="n">key</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">key</span><span class="p">.</span><span class="n">Key</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">ConsoleKey</span><span class="p">.</span><span class="n">Q</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">running</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">false</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">fps</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Console</span><span class="p">.</span><span class="n">CursorVisible</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">false</span><span class="p">;</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">frame_time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1000</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">fps</span><span class="p">;</span>
+<span class="w">        </span><span class="n">running</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span>
+<span class="w">        </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">running</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">height</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Console</span><span class="p">.</span><span class="n">BufferHeight</span><span class="p">;</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Console</span><span class="p">.</span><span class="n">BufferWidth</span><span class="p">;</span>
+<span class="w">            </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">Console</span><span class="p">.</span><span class="n">KeyAvailable</span><span class="p">)</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">                </span><span class="n">ConsoleKeyInfo</span><span class="w"> </span><span class="n">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Console</span><span class="p">.</span><span class="n">ReadKey</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
+<span class="w">                </span><span class="n">ProcessKey</span><span class="p">(</span><span class="n">key</span><span class="p">);</span>
+<span class="w">                </span><span class="n">Notify</span><span class="p">(</span><span class="n">key</span><span class="p">);</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">            </span><span class="n">Console</span><span class="p">.</span><span class="n">Clear</span><span class="p">();</span>
+<span class="w">            </span><span class="n">root</span><span class="p">.</span><span class="n">render</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="n">height</span><span class="p">);</span>
+<span class="w">            </span><span class="n">Thread</span><span class="p">.</span><span class="n">Sleep</span><span class="p">(</span><span class="n">frame_time</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="n">Console</span><span class="p">.</span><span class="n">Clear</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">abstract</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">WidgetList</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Widget</span><span class="p">,</span><span class="w"> </span><span class="n">IKeyObserver</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">itemHeight</span><span class="p">;</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">offset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="nf">WidgetList</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">itemHeight</span><span class="p">,</span><span class="w"> </span><span class="n">IEnumerable</span><span class="w"> </span><span class="n">values</span><span class="p">)</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="k">base</span><span class="p">(</span><span class="kt">int</span><span class="p">.</span><span class="n">MaxValue</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="n">itemHeight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">itemHeight</span><span class="p">;</span>
+<span class="w">        </span><span class="k">foreach</span><span class="w"> </span><span class="p">(</span><span class="kt">object</span><span class="w"> </span><span class="n">item</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">values</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">AddItem</span><span class="p">(</span><span class="n">item</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">abstract</span><span class="w"> </span><span class="n">Widget</span><span class="w"> </span><span class="nf">CreateItem</span><span class="p">(</span><span class="kt">object</span><span class="w"> </span><span class="n">data</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">AddItem</span><span class="p">(</span><span class="kt">object</span><span class="w"> </span><span class="n">data</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">AddChild</span><span class="p">(</span><span class="n">CreateItem</span><span class="p">(</span><span class="n">data</span><span class="p">));</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">render</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">top</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">height</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">children</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Children</span><span class="p">;</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">offset</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">children</span><span class="p">.</span><span class="n">Count</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="c1">// Don&#39;t render items that goes outside the outer rect</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">top</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">itemHeight</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">height</span><span class="p">)</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+
+<span class="w">            </span><span class="n">children</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">render</span><span class="p">(</span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="n">top</span><span class="p">,</span><span class="w"> </span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="n">itemHeight</span><span class="p">);</span>
+<span class="w">            </span><span class="n">top</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">top</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">itemHeight</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnKey</span><span class="p">(</span><span class="n">ConsoleKeyInfo</span><span class="w"> </span><span class="n">key</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">key</span><span class="p">.</span><span class="n">Key</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">ConsoleKey</span><span class="p">.</span><span class="n">DownArrow</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">offset</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="m">1</span><span class="p">;</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">offset</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">Children</span><span class="p">.</span><span class="n">Count</span><span class="p">)</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">                </span><span class="n">offset</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="m">1</span><span class="p">;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">key</span><span class="p">.</span><span class="n">Key</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">ConsoleKey</span><span class="p">.</span><span class="n">UpArrow</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">offset</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="m">1</span><span class="p">;</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">offset</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="m">0</span><span class="p">)</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">                </span><span class="n">offset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Program</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Main</span><span class="p">(</span><span class="n">String</span><span class="p">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">content</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Split</span><span class="p">();</span>
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">runner</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Runner</span><span class="p">(</span><span class="n">content</span><span class="p">);</span>
+
+<span class="w">        </span><span class="kt">string</span><span class="p">[]</span><span class="w"> </span><span class="n">names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Directory</span><span class="p">.</span><span class="n">GetFiles</span><span class="p">(</span><span class="s">&quot;.&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="n">ITextFile</span><span class="o">&gt;</span><span class="w"> </span><span class="n">files</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">ITextFile</span><span class="o">&gt;</span><span class="p">();</span>
+
+<span class="w">        </span><span class="k">foreach</span><span class="w"> </span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">names</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">files</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">TextFileProxy</span><span class="p">(</span><span class="n">name</span><span class="p">));</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">list</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TextFileList</span><span class="p">(</span><span class="n">files</span><span class="p">);</span>
+<span class="w">        </span><span class="n">runner</span><span class="p">.</span><span class="n">Subscribe</span><span class="p">(</span><span class="n">list</span><span class="p">);</span>
+
+<span class="w">        </span><span class="n">content</span><span class="p">.</span><span class="n">AddChild</span><span class="p">(</span><span class="n">list</span><span class="p">);</span>
+
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">console</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Border</span><span class="p">(</span><span class="s">&quot; Console &quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">console</span><span class="p">.</span><span class="n">AddChild</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">LogWidget</span><span class="p">());</span>
+<span class="w">        </span><span class="n">content</span><span class="p">.</span><span class="n">AddChild</span><span class="p">(</span><span class="n">console</span><span class="p">);</span>
+
+
+<span class="w">        </span><span class="n">runner</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="m">30</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+</section>
+<section id="iterator" class="level2">
+<h2>Iterator</h2>
+<ul>
+<li><em>Behavioral Pattern</em></li>
+<li>Fournit un moyen d’accéder aux élément d’une collection sans exposer
+sa représentation interne.</li>
+</ul>
+<figure><img class="plantuml" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBjb250ZW50U3R5bGVUeXBlPSJ0ZXh0L2NzcyIgaGVpZ2h0PSIyNzRweCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSIgc3R5bGU9IndpZHRoOjQ0MHB4O2hlaWdodDoyNzRweDtiYWNrZ3JvdW5kOiNGRkZGRkY7IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCA0NDAgMjc0IiB3aWR0aD0iNDQwcHgiIHpvb21BbmRQYW49Im1hZ25pZnkiPjxkZWZzLz48Zz48IS0tY2xhc3MgQWJzdHJhY3RMaXN0LS0+PGcgaWQ9ImVsZW1fQWJzdHJhY3RMaXN0Ij48cmVjdCBjb2RlTGluZT0iMSIgZmlsbD0iI0YxRjFGMSIgaGVpZ2h0PSIxMTMuOTUzMSIgaWQ9IkFic3RyYWN0TGlzdCIgcng9IjIuNSIgcnk9IjIuNSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB3aWR0aD0iMTE1LjE4MTYiIHg9IjciIHk9IjciLz48ZWxsaXBzZSBjeD0iMjMuMTYzNyIgY3k9IjIzIiBmaWxsPSIjQTlEQ0RGIiByeD0iMTEiIHJ5PSIxMSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7Ii8+PHBhdGggZD0iTTIzLjAyNywxOC4zNDgxIEwyMS44NzMxLDIzLjQxOTkgTDI0LjE4OTEsMjMuNDE5OSBaIE0yMS41MzI4LDE2LjEwNjkgTDI0LjUyOTQsMTYuMTA2OSBMMjcuODc0NiwyOC41IEwyNS40MjU5LDI4LjUgTDI0LjY2MjIsMjUuNDM3IEwyMS4zODM0LDI1LjQzNyBMMjAuNjM2MywyOC41IEwxOC4xODc2LDI4LjUgWiAiIGZpbGw9IiMwMDAwMDAiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZm9udC1zdHlsZT0iaXRhbGljIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjgwLjU5NTciIHg9IjM3LjQyMjMiIHk9IjI4LjI5MSI+QWJzdHJhY3RMaXN0PC90ZXh0PjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgeDE9IjgiIHgyPSIxMjEuMTgxNiIgeTE9IjM5IiB5Mj0iMzkiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHgxPSI4IiB4Mj0iMTIxLjE4MTYiIHkxPSI0NyIgeTI9IjQ3Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMTAzLjE4MTYiIHg9IjEzIiB5PSI2NC41MzUyIj5DcmVhdGVJdGVyYXRvcigpPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjUwLjAwNDkiIHg9IjEzIiB5PSI4MS4wMjM0Ij5Db3VudCgpPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjkxLjg0MDgiIHg9IjEzIiB5PSI5Ny41MTE3Ij5BcHBlbmQoaXRlbSk8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iOTIuNjI3IiB4PSIxMyIgeT0iMTE0Ij5SZW1vdmUoaXRlbSk8L3RleHQ+PC9nPjwhLS1jbGFzcyBJdGVyYXRvci0tPjxnIGlkPSJlbGVtX0l0ZXJhdG9yIj48cmVjdCBjb2RlTGluZT0iOCIgZmlsbD0iI0YxRjFGMSIgaGVpZ2h0PSIxMTMuOTUzMSIgaWQ9Ikl0ZXJhdG9yIiByeD0iMi41IiByeT0iMi41IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHdpZHRoPSIxNDEuODE0NSIgeD0iMjkxLjY4IiB5PSI3Ii8+PGVsbGlwc2UgY3g9IjMzMy41NTQzIiBjeT0iMjMiIGZpbGw9IiNBOURDREYiIHJ4PSIxMSIgcnk9IjExIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDsiLz48cGF0aCBkPSJNMzMzLjQxNzYsMTguMzQ4MSBMMzMyLjI2MzgsMjMuNDE5OSBMMzM0LjU3OTcsMjMuNDE5OSBaIE0zMzEuOTIzNSwxNi4xMDY5IEwzMzQuOTIsMTYuMTA2OSBMMzM4LjI2NTMsMjguNSBMMzM1LjgxNjUsMjguNSBMMzM1LjA1MjksMjUuNDM3IEwzMzEuNzc0LDI1LjQzNyBMMzMxLjAyNywyOC41IEwzMjguNTc4MiwyOC41IFogIiBmaWxsPSIjMDAwMDAwIi8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZvbnQtc3R5bGU9Iml0YWxpYyIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI1MC4wOTM4IiB4PSIzNTMuNTI2NCIgeT0iMjguMjkxIj5JdGVyYXRvcjwvdGV4dD48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHgxPSIyOTIuNjgiIHgyPSI0MzIuNDk0NSIgeTE9IjM5IiB5Mj0iMzkiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHgxPSIyOTIuNjgiIHgyPSI0MzIuNDk0NSIgeTE9IjQ3IiB5Mj0iNDciLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIzOC43NTk4IiB4PSIyOTcuNjgiIHk9IjY0LjUzNTIiPkZpcnN0KCk8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iNDEuMDcwMyIgeD0iMjk3LjY4IiB5PSI4MS4wMjM0Ij5OZXh0KCk8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iNTUuODQ5NiIgeD0iMjk3LjY4IiB5PSI5Ny41MTE3Ij5Jc0RvbmUoKTwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxMjkuODE0NSIgeD0iMjk3LjY4IiB5PSIxMTQiPkN1cnJlbnRJdGVtKCk6IGl0ZW08L3RleHQ+PC9nPjwhLS1jbGFzcyBDbGllbnQtLT48ZyBpZD0iZWxlbV9DbGllbnQiPjxyZWN0IGNvZGVMaW5lPSIxNSIgZmlsbD0iI0YxRjFGMSIgaGVpZ2h0PSI0OCIgaWQ9IkNsaWVudCIgcng9IjIuNSIgcnk9IjIuNSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB3aWR0aD0iNzEuNTA0OSIgeD0iMTY3Ljg0IiB5PSIzOS45OCIvPjxlbGxpcHNlIGN4PSIxODIuODQiIGN5PSI1NS45OCIgZmlsbD0iI0FERDFCMiIgcng9IjExIiByeT0iMTEiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjxwYXRoIGQ9Ik0xODUuMzEzMSw2Mi4xMjMxIFExODQuNzMyMSw2Mi40MjE5IDE4NC4wOTI5LDYyLjU3MTMgUTE4My40NTM4LDYyLjcyMDcgMTgyLjc0ODIsNjIuNzIwNyBRMTgwLjI0MTQsNjIuNzIwNyAxNzguOTIxNSw2MS4wNjg5IFExNzcuNjAxNyw1OS40MTcgMTc3LjYwMTcsNTYuMjk1OSBRMTc3LjYwMTcsNTMuMTY2NSAxNzguOTIxNSw1MS41MTQ3IFExODAuMjQxNCw0OS44NjI4IDE4Mi43NDgyLDQ5Ljg2MjggUTE4My40NTM4LDQ5Ljg2MjggMTg0LjEwMTIsNTAuMDEyMiBRMTg0Ljc0ODcsNTAuMTYxNiAxODUuMzEzMSw1MC40NjA1IEwxODUuMzEzMSw1My4xODMxIFExODQuNjgyMyw1Mi42MDIxIDE4NC4wODg4LDUyLjMzMjMgUTE4My40OTUzLDUyLjA2MjUgMTgyLjg2NDQsNTIuMDYyNSBRMTgxLjUxOTcsNTIuMDYyNSAxODAuODM0OSw1My4xMjkyIFExODAuMTUwMSw1NC4xOTU4IDE4MC4xNTAxLDU2LjI5NTkgUTE4MC4xNTAxLDU4LjM4NzcgMTgwLjgzNDksNTkuNDU0NCBRMTgxLjUxOTcsNjAuNTIxIDE4Mi44NjQ0LDYwLjUyMSBRMTgzLjQ5NTMsNjAuNTIxIDE4NC4wODg4LDYwLjI1MTIgUTE4NC42ODIzLDU5Ljk4MTUgMTg1LjMxMzEsNTkuNDAwNCBaICIgZmlsbD0iIzAwMDAwMCIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjM5LjUwNDkiIHg9IjE5Ni44NCIgeT0iNjEuMjcxIj5DbGllbnQ8L3RleHQ+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB4MT0iMTY4Ljg0IiB4Mj0iMjM4LjM0NDkiIHkxPSI3MS45OCIgeTI9IjcxLjk4Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB4MT0iMTY4Ljg0IiB4Mj0iMjM4LjM0NDkiIHkxPSI3OS45OCIgeTI9Ijc5Ljk4Ii8+PC9nPjxnIGlkPSJlbGVtX0dNTjgiPjxwYXRoIGQ9Ik0xMTUuMTIsMTgwLjk2IEwxMTUuMTIsMjY3LjUxMjcgQTAsMCAwIDAgMCAxMTUuMTIsMjY3LjUxMjcgTDI5Mi4wNjkyLDI2Ny41MTI3IEEwLDAgMCAwIDAgMjkyLjA2OTIsMjY3LjUxMjcgTDI5Mi4wNjkyLDE5MC45NiBMMjgyLjA2OTIsMTgwLjk2IEwyMDcuNTksMTgwLjk2IEwyMDMuNTksODguMzMgTDE5OS41OSwxODAuOTYgTDExNS4xMiwxODAuOTYgQTAsMCAwIDAgMCAxMTUuMTIsMTgwLjk2ICIgZmlsbD0iI0ZFRkZERCIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7Ii8+PHBhdGggZD0iTTI4Mi4wNjkyLDE4MC45NiBMMjgyLjA2OTIsMTkwLjk2IEwyOTIuMDY5MiwxOTAuOTYgTDI4Mi4wNjkyLDE4MC45NiAiIGZpbGw9IiNGRUZGREQiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEzIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjE1MC4yMjM2IiB4PSIxMjEuMTIiIHk9IjE5OC41Mjg0Ij5pdCA9IGxpc3QuQ3JlYXRlSXRlcmF0b3IoKTs8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMTM5LjI2MTIiIHg9IjEyMS4xMiIgeT0iMjEzLjgzODkiPndoaWxlKG5vdCBpdC5Jc0RvbmUoKSkgezwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMyIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxNDcuNzIyNyIgeD0iMTI5LjM0NjYiIHk9IjIyOS4xNDk1Ij5pdGVtID0gaXQuQ3VycmVudEl0ZW0oKTs8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iNTQuOTgzNCIgeD0iMTI5LjM0NjYiIHk9IjI0NC40NiI+aXQuTmV4dCgpOzwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMyIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI0LjIyNzUiIHg9IjEyMS4xMiIgeT0iMjU5Ljc3MDUiPn08L3RleHQ+PC9nPjwhLS1jbGFzcyBMaXN0LS0+PGcgaWQ9ImVsZW1fTGlzdCI+PHJlY3QgY29kZUxpbmU9IjI4IiBmaWxsPSIjRjFGMUYxIiBoZWlnaHQ9IjQ4IiBpZD0iTGlzdCIgcng9IjIuNSIgcnk9IjIuNSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB3aWR0aD0iNTUuODg0OCIgeD0iMjQuNjUiIHk9IjIwMC4yMyIvPjxlbGxpcHNlIGN4PSIzOS42NSIgY3k9IjIxNi4yMyIgZmlsbD0iI0FERDFCMiIgcng9IjExIiByeT0iMTEiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjxwYXRoIGQ9Ik00Mi4xMjMxLDIyMi4zNzMxIFE0MS41NDIxLDIyMi42NzE5IDQwLjkwMjksMjIyLjgyMTMgUTQwLjI2MzgsMjIyLjk3MDcgMzkuNTU4MiwyMjIuOTcwNyBRMzcuMDUxNCwyMjIuOTcwNyAzNS43MzE1LDIyMS4zMTg5IFEzNC40MTE3LDIxOS42NjcgMzQuNDExNywyMTYuNTQ1OSBRMzQuNDExNywyMTMuNDE2NSAzNS43MzE1LDIxMS43NjQ3IFEzNy4wNTE0LDIxMC4xMTI4IDM5LjU1ODIsMjEwLjExMjggUTQwLjI2MzgsMjEwLjExMjggNDAuOTExMiwyMTAuMjYyMiBRNDEuNTU4NywyMTAuNDExNiA0Mi4xMjMxLDIxMC43MTA1IEw0Mi4xMjMxLDIxMy40MzMxIFE0MS40OTIzLDIxMi44NTIxIDQwLjg5ODgsMjEyLjU4MjMgUTQwLjMwNTMsMjEyLjMxMjUgMzkuNjc0NCwyMTIuMzEyNSBRMzguMzI5NywyMTIuMzEyNSAzNy42NDQ5LDIxMy4zNzkyIFEzNi45NjAxLDIxNC40NDU4IDM2Ljk2MDEsMjE2LjU0NTkgUTM2Ljk2MDEsMjE4LjYzNzcgMzcuNjQ0OSwyMTkuNzA0NCBRMzguMzI5NywyMjAuNzcxIDM5LjY3NDQsMjIwLjc3MSBRNDAuMzA1MywyMjAuNzcxIDQwLjg5ODgsMjIwLjUwMTIgUTQxLjQ5MjMsMjIwLjIzMTUgNDIuMTIzMSwyMTkuNjUwNCBaICIgZmlsbD0iIzAwMDAwMCIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjIzLjg4NDgiIHg9IjUzLjY1IiB5PSIyMjEuNTIxIj5MaXN0PC90ZXh0PjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgeDE9IjI1LjY1IiB4Mj0iNzkuNTM0OCIgeTE9IjIzMi4yMyIgeTI9IjIzMi4yMyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgeDE9IjI1LjY1IiB4Mj0iNzkuNTM0OCIgeTE9IjI0MC4yMyIgeTI9IjI0MC4yMyIvPjwvZz48IS0tY2xhc3MgTGlzdEl0ZXJhdG9yLS0+PGcgaWQ9ImVsZW1fTGlzdEl0ZXJhdG9yIj48cmVjdCBjb2RlTGluZT0iMzAiIGZpbGw9IiNGMUYxRjEiIGhlaWdodD0iNDgiIGlkPSJMaXN0SXRlcmF0b3IiIHJ4PSIyLjUiIHJ5PSIyLjUiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgd2lkdGg9IjEwNS45Nzg1IiB4PSIzMjYuNiIgeT0iMjAwLjIzIi8+PGVsbGlwc2UgY3g9IjM0MS42IiBjeT0iMjE2LjIzIiBmaWxsPSIjQUREMUIyIiByeD0iMTEiIHJ5PSIxMSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7Ii8+PHBhdGggZD0iTTM0NC4wNzMxLDIyMi4zNzMxIFEzNDMuNDkyMSwyMjIuNjcxOSAzNDIuODUyOSwyMjIuODIxMyBRMzQyLjIxMzgsMjIyLjk3MDcgMzQxLjUwODIsMjIyLjk3MDcgUTMzOS4wMDE0LDIyMi45NzA3IDMzNy42ODE1LDIyMS4zMTg5IFEzMzYuMzYxNywyMTkuNjY3IDMzNi4zNjE3LDIxNi41NDU5IFEzMzYuMzYxNywyMTMuNDE2NSAzMzcuNjgxNSwyMTEuNzY0NyBRMzM5LjAwMTQsMjEwLjExMjggMzQxLjUwODIsMjEwLjExMjggUTM0Mi4yMTM4LDIxMC4xMTI4IDM0Mi44NjEyLDIxMC4yNjIyIFEzNDMuNTA4NywyMTAuNDExNiAzNDQuMDczMSwyMTAuNzEwNSBMMzQ0LjA3MzEsMjEzLjQzMzEgUTM0My40NDIzLDIxMi44NTIxIDM0Mi44NDg4LDIxMi41ODIzIFEzNDIuMjU1MywyMTIuMzEyNSAzNDEuNjI0NCwyMTIuMzEyNSBRMzQwLjI3OTcsMjEyLjMxMjUgMzM5LjU5NDksMjEzLjM3OTIgUTMzOC45MTAxLDIxNC40NDU4IDMzOC45MTAxLDIxNi41NDU5IFEzMzguOTEwMSwyMTguNjM3NyAzMzkuNTk0OSwyMTkuNzA0NCBRMzQwLjI3OTcsMjIwLjc3MSAzNDEuNjI0NCwyMjAuNzcxIFEzNDIuMjU1MywyMjAuNzcxIDM0Mi44NDg4LDIyMC41MDEyIFEzNDMuNDQyMywyMjAuMjMxNSAzNDQuMDczMSwyMTkuNjUwNCBaICIgZmlsbD0iIzAwMDAwMCIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjczLjk3ODUiIHg9IjM1NS42IiB5PSIyMjEuNTIxIj5MaXN0SXRlcmF0b3I8L3RleHQ+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB4MT0iMzI3LjYiIHgyPSI0MzEuNTc4NSIgeTE9IjIzMi4yMyIgeTI9IjIzMi4yMyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgeDE9IjMyNy42IiB4Mj0iNDMxLjU3ODUiIHkxPSIyNDAuMjMiIHkyPSIyNDAuMjMiLz48L2c+PCEtLWxpbmsgQ2xpZW50IHRvIEl0ZXJhdG9yLS0+PGcgaWQ9ImxpbmtfQ2xpZW50X0l0ZXJhdG9yIj48cGF0aCBjb2RlTGluZT0iMTciIGQ9Ik0yMzkuNjEsNjMuOTggQzI1Ni45MSw2My45OCAyNjguMiw2My45OCAyODUuNDksNjMuOTggIiBmaWxsPSJub25lIiBpZD0iQ2xpZW50LXRvLUl0ZXJhdG9yIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDsiLz48cG9seWdvbiBmaWxsPSIjMTgxODE4IiBwb2ludHM9IjI5MS40OSw2My45OCwyODIuNDksNTkuOTgsMjg2LjQ5LDYzLjk4LDI4Mi40OSw2Ny45OCwyOTEuNDksNjMuOTgiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjwvZz48IS0tcmV2ZXJzZSBsaW5rIEFic3RyYWN0TGlzdCB0byBDbGllbnQtLT48ZyBpZD0ibGlua19BYnN0cmFjdExpc3RfQ2xpZW50Ij48cGF0aCBjb2RlTGluZT0iMTgiIGQ9Ik0xMjguNDIsNjMuOTggQzE0My40Myw2My45OCAxNTIuNDMsNjMuOTggMTY3LjQ0LDYzLjk4ICIgZmlsbD0ibm9uZSIgaWQ9IkFic3RyYWN0TGlzdC1iYWNrdG8tQ2xpZW50IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDsiLz48cG9seWdvbiBmaWxsPSIjMTgxODE4IiBwb2ludHM9IjEyMi40Miw2My45OCwxMzEuNDIsNjcuOTgsMTI3LjQyLDYzLjk4LDEzMS40Miw1OS45OCwxMjIuNDIsNjMuOTgiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjwvZz48IS0tcmV2ZXJzZSBsaW5rIEFic3RyYWN0TGlzdCB0byBMaXN0LS0+PGcgaWQ9ImxpbmtfQWJzdHJhY3RMaXN0X0xpc3QiPjxwYXRoIGQ9Ik01OC45Njc4LDEzOS4xNjg0IEM1Ni45MTc4LDE2Ni4xNzg0IDU1Ljk0LDE3OS4xMyA1NC4zNywxOTkuNzggIiBmaWxsPSJub25lIiBpZD0iQWJzdHJhY3RMaXN0LWJhY2t0by1MaXN0IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDsiLz48cG9seWdvbiBmaWxsPSJub25lIiBwb2ludHM9IjYwLjMzLDEyMS4yMiw1Mi45ODUsMTM4LjcxNDMsNjQuOTUwNiwxMzkuNjIyNSw2MC4zMywxMjEuMjIiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjwvZz48IS0tcmV2ZXJzZSBsaW5rIEl0ZXJhdG9yIHRvIExpc3RJdGVyYXRvci0tPjxnIGlkPSJsaW5rX0l0ZXJhdG9yX0xpc3RJdGVyYXRvciI+PHBhdGggZD0iTTM3MC41NTE2LDEzOS4xMTcxIEMzNzMuNDUxNiwxNjYuMTI3MSAzNzQuODUsMTc5LjEzIDM3Ny4wNywxOTkuNzggIiBmaWxsPSJub25lIiBpZD0iSXRlcmF0b3ItYmFja3RvLUxpc3RJdGVyYXRvciIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7Ii8+PHBvbHlnb24gZmlsbD0ibm9uZSIgcG9pbnRzPSIzNjguNjMsMTIxLjIyLDM2NC41ODU5LDEzOS43NTc3LDM3Ni41MTczLDEzOC40NzY2LDM2OC42MywxMjEuMjIiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjwvZz48IS0tU1JDPVtOTDNCMmk4bTRCcGRBX1JPN2ttN00xSUE4V1pZbUotOFRUTDBjZkhhZ3VCdXhzd0lmWnZFb1N4aXBpd2lGN2ZvaVlMZWpWR1VjaDdTQUtfbTUwMGhYdjltSS1XYU1MVUswUkEzZVZYaC1YeERnTDI0TklXRnNEYVJaa0xCMkZjaGRLTVl4YU92ZHFKcy00WVZoTHpSV3NkNXUxbVF1ZWNrQUVTRzU4RFdxYmJmblBtR3dPTVBLdlNocFBRSl9hSGVGMFZ5RXZDR25YQjJxSEJQM2ttdlltN2xXMExlUmdkLTh6VkN0Z3pBT3k2cHQ1VGJlc0xDMGo0VTNwRnB1eGlVb0llYjNFTEJ5QnFXTUNYWHVnNlBQenBfRVZxcUo5VkJaSGJ1MG0wMF0tLT48L2c+PC9zdmc+"></figure>
+<ul>
+<li>Mécanisme déjà implémenté dans la plupart des langages orienté
+objets</li>
+</ul>
+</section>
+<section id="exemple-6" class="level2 code">
+<h2 class="code">Exemple</h2>
+<div class="pygments"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Program</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Main</span><span class="p">(</span><span class="n">String</span><span class="p">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">list</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="m">6</span><span class="w"> </span><span class="p">};</span>
+
+<span class="w">        </span><span class="k">foreach</span><span class="w"> </span><span class="p">(</span><span class="kt">var</span><span class="w"> </span><span class="n">item</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">list</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">item</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="c1">// Translates to</span>
+
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">list</span><span class="p">.</span><span class="n">GetEnumerator</span><span class="p">();</span>
+<span class="w">        </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">it</span><span class="p">.</span><span class="n">MoveNext</span><span class="p">())</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="kt">var</span><span class="w"> </span><span class="n">item</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">it</span><span class="p">.</span><span class="n">Current</span><span class="p">;</span>
+<span class="w">            </span><span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">item</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+</section>
+<section id="strategy" class="level2">
+<h2>Strategy</h2>
+<ul>
+<li><em>Behavioral Pattern</em></li>
+<li>Définit une famille d’algorithme pour les encapsuler et les rendre
+interchangeable.</li>
+</ul>
+</section>
+<section id="exemple-7" class="level2 code">
+<h2 class="code">Exemple</h2>
+<div class="pygments"><pre><span></span><span class="k">interface</span><span class="w"> </span><span class="n">FilterStrategy</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="nf">RemoveValue</span><span class="p">(</span><span class="n">T</span><span class="w"> </span><span class="k">value</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">RemoveNegativeStrategy</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">FilterStrategy</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="nf">RemoveValue</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="k">value</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">value</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="m">0</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">RemoveOddStrategy</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">FilterStrategy</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="nf">RemoveValue</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="k">value</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">Math</span><span class="p">.</span><span class="n">Abs</span><span class="p">(</span><span class="k">value</span><span class="p">)</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="m">0</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Values</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="n">values</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="nf">Values</span><span class="p">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="n">values</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="n">values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">values</span><span class="p">.</span><span class="n">GetRange</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">values</span><span class="p">.</span><span class="n">Count</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">Values</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Filter</span><span class="p">(</span><span class="n">FilterStrategy</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="n">strategy</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="n">res</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="w">        </span><span class="k">foreach</span><span class="w"> </span><span class="p">(</span><span class="n">T</span><span class="w"> </span><span class="n">item</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">values</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">strategy</span><span class="p">.</span><span class="n">RemoveValue</span><span class="p">(</span><span class="n">item</span><span class="p">))</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">                </span><span class="n">res</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">item</span><span class="p">);</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Values</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">res</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="nf">ToString</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;[&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">String</span><span class="p">.</span><span class="n">Join</span><span class="p">(</span><span class="s">&quot;, &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">values</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;]&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Program</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Main</span><span class="p">(</span><span class="n">String</span><span class="p">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Values</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="o">-</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="m">6</span><span class="w"> </span><span class="p">});</span>
+
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">even</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">values</span><span class="p">.</span><span class="n">Filter</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">RemoveOddStrategy</span><span class="p">());</span>
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">positive</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">values</span><span class="p">.</span><span class="n">Filter</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">RemoveNegativeStrategy</span><span class="p">());</span>
+
+<span class="w">        </span><span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">even</span><span class="p">);</span>
+<span class="w">        </span><span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">positive</span><span class="p">);</span>
+
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>

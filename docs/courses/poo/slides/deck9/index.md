@@ -1,5 +1,5 @@
 ---
-title: PO3T - Cours 9
+title: PO3T - Cours 9 & 10
 subtitle: Design Patterns
 type: deck
 ---
@@ -74,6 +74,22 @@ class Log {
 
     public ImmutableList<string> GetLogs() {
         return logs.ToImmutableList();
+    }
+}
+
+class LogWidget : Widget
+{
+    public override void render(int left, int top, int width, int height)
+    {
+        var i = 0;
+        var logs = Log.Instance.GetLogs();
+        var count = logs.Count;
+        foreach (var log in logs.GetRange(Math.Max(0, count - height), Math.Min(count, height)))
+        {
+            Console.SetCursorPosition(left, top + i);
+            Console.Write(log.Substring(0, Math.Min(width, log.Length)));
+            i++;
+        }
     }
 }
 ```
@@ -459,6 +475,470 @@ class Border : Widget
         if (HasChildren) {
             Child.render(left+1, top+1, width-2, height-2);
         }
+    }
+}
+```
+
+## Proxy
+
+- _Structural Pattern_
+- Emballer un objet dans un autre pour en contrôler les accès.
+
+```plantuml {.build}
+abstract class Subject {
+  {abstract} Request()
+}
+
+class RealSubject extends Subject {
+  Request()
+}
+
+class Proxy extends Subject {
+  realSubject: RealSubject
+  Request()
+}
+
+RealSubject <-left-* Proxy
+
+note left of Proxy::Request
+  realSubject.Request()
+end note
+```
+
+## Exemple {.code}
+
+```cs
+using System.Collections;
+
+interface ITextFile
+{
+    string GetName();
+    string GetContent();
+}
+
+class TextFile : ITextFile
+{
+    private string name;
+    private string content;
+
+    public TextFile(string name)
+    {
+        this.name = name;
+        try
+        {
+            using (StreamReader sr = new StreamReader(name))
+            {
+                content = sr.ReadToEnd();
+            }
+            Log.Instance.Add(name + " LOADED");
+        }
+        catch (Exception e)
+        {
+            content = "The file could not be read";
+            Log.Instance.Add(e.Message);
+        }
+    }
+
+    public string GetContent()
+    {
+        return content;
+    }
+
+    public string GetName()
+    {
+        return name;
+    }
+}
+
+class TextFileProxy : ITextFile
+{
+    private TextFile? textFile = null;
+    private string name;
+
+    public TextFileProxy(string name)
+    {
+        this.name = name;
+    }
+
+    public string GetContent()
+    {
+        if (textFile == null)
+        {
+            textFile = new TextFile(name);
+        }
+        return textFile.GetContent();
+    }
+
+    public string GetName()
+    {
+        return name;
+    }
+}
+
+class TextFileWidget : Widget
+{
+    private ITextFile textFile;
+
+    public TextFileWidget(ITextFile textFile)
+    {
+        this.textFile = textFile;
+    }
+
+    public override void render(int left, int top, int width, int height)
+    {
+        Console.SetCursorPosition(left, top);
+        var content = textFile.GetContent().Replace("\n", "").Replace("\r", "");
+        if (content.Length > width)
+        {
+            content = content.Substring(0, width);
+        }
+        Console.Write(content);
+    }
+}
+
+class TextFileList : WidgetList
+{
+    public TextFileList(IEnumerable values) : base(3, values)
+    {
+    }
+
+    public override Widget CreateItem(object obj)
+    {
+        ITextFile textFile = (ITextFile)obj;
+        var widget = new Border(" " + textFile.GetName() + " ", "");
+        widget.AddChild(new TextFileWidget(textFile));
+
+        return widget;
+    }
+}
+
+class Program
+{
+    public static void Main(String[] args)
+    {
+        var content = new Split();
+
+        string[] names = Directory.GetFiles(".");
+        List<ITextFile> files = new List<ITextFile>();
+
+        foreach (string name in names)
+        {
+            files.Add(new TextFileProxy(name));
+        }
+
+        content.AddChild(new TextFileList(files));
+
+        var console = new Border(" Console ", "");
+        console.AddChild(new LogWidget());
+        content.AddChild(console);
+
+        var runner = new Runner(content);
+        runner.run(30);
+    }
+}
+```
+
+## Observer
+
+- _Behavioral Pattern_
+- Permet de notifier plusieurs _Observers_ d'un évènement sur un _Observable_.
+- Déjà abordé dans le [cours 6](../deck6/)
+
+## Exemple {.code}
+
+```cs
+using System.Collections;
+
+interface IKeyObserver
+{
+    void OnKey(ConsoleKeyInfo key);
+}
+
+abstract class KeyObservable
+{
+    private List<IKeyObserver> observers = new List<IKeyObserver>();
+
+    public void Subscribe(IKeyObserver observer)
+    {
+        observers.Add(observer);
+    }
+
+    public void UnSubscribe(IKeyObserver observer)
+    {
+        observers.Remove(observer);
+    }
+
+    public void Notify(ConsoleKeyInfo key)
+    {
+        foreach (IKeyObserver observer in observers)
+        {
+            observer.OnKey(key);
+        }
+    }
+}
+
+class Runner : KeyObservable
+{
+    private Widget root;
+    private bool running = false;
+
+    public Runner(Widget root)
+    {
+        this.root = root;
+    }
+
+    public virtual void ProcessKey(ConsoleKeyInfo key)
+    {
+        if (key.Key == ConsoleKey.Q)
+        {
+            running = false;
+        }
+    }
+
+    public void run(int fps)
+    {
+        Console.CursorVisible = false;
+        int frame_time = 1000 / fps;
+        running = true;
+        while (running)
+        {
+            int height = Console.BufferHeight;
+            int width = Console.BufferWidth;
+            while (Console.KeyAvailable)
+            {
+                ConsoleKeyInfo key = Console.ReadKey(true);
+                ProcessKey(key);
+                Notify(key);
+            }
+            Console.Clear();
+            root.render(0, 0, width, height);
+            Thread.Sleep(frame_time);
+        }
+        Console.Clear();
+    }
+}
+
+abstract class WidgetList : Widget, IKeyObserver
+{
+    private int itemHeight;
+    private int offset = 0;
+
+    public WidgetList(int itemHeight, IEnumerable values) : base(int.MaxValue)
+    {
+        this.itemHeight = itemHeight;
+        foreach (object item in values)
+        {
+            AddItem(item);
+        }
+    }
+
+    public abstract Widget CreateItem(object data);
+
+    public void AddItem(object data)
+    {
+        AddChild(CreateItem(data));
+    }
+
+    public override void render(int left, int top, int width, int height)
+    {
+        var children = Children;
+        for (int i = offset; i < children.Count; i++)
+        {
+            // Don't render items that goes outside the outer rect
+            if (top + itemHeight > height) break;
+
+            children[i].render(left, top, width, itemHeight);
+            top = top + itemHeight;
+        }
+    }
+
+    public void OnKey(ConsoleKeyInfo key)
+    {
+        if (key.Key == ConsoleKey.DownArrow)
+        {
+            offset += 1;
+            if (offset > Children.Count)
+            {
+                offset -= 1;
+            }
+        }
+
+        if (key.Key == ConsoleKey.UpArrow)
+        {
+            offset -= 1;
+            if (offset < 0)
+            {
+                offset = 0;
+            }
+        }
+    }
+}
+
+class Program
+{
+    public static void Main(String[] args)
+    {
+        var content = new Split();
+        var runner = new Runner(content);
+
+        string[] names = Directory.GetFiles(".");
+        List<ITextFile> files = new List<ITextFile>();
+
+        foreach (string name in names)
+        {
+            files.Add(new TextFileProxy(name));
+        }
+
+        var list = new TextFileList(files);
+        runner.Subscribe(list);
+
+        content.AddChild(list);
+
+        var console = new Border(" Console ", "");
+        console.AddChild(new LogWidget());
+        content.AddChild(console);
+
+
+        runner.run(30);
+    }
+}
+```
+
+## Iterator
+
+- _Behavioral Pattern_
+- Fournit un moyen d'accéder aux élément d'une collection sans exposer sa représentation interne.
+
+```plantuml {.build}
+abstract class AbstractList {
+  CreateIterator()
+  Count()
+  Append(item)
+  Remove(item)
+}
+
+abstract class Iterator {
+  First()
+  Next()
+  IsDone()
+  CurrentItem(): item
+}
+
+class Client
+
+Client -right-> Iterator
+Client -left-> AbstractList
+
+note bottom of Client
+  it = list.CreateIterator();
+  while(not it.IsDone()) {
+    item = it.CurrentItem();
+    it.Next();
+  }
+end note
+
+class List extends AbstractList
+
+class ListIterator extends Iterator
+```
+
+- Mécanisme déjà implémenté dans la plupart des langages orienté objets
+
+## Exemple {.code}
+
+```cs
+class Program
+{
+    public static void Main(String[] args)
+    {
+        var list = new List<int> { 1, 2, 3, 4, 5, 6 };
+
+        foreach (var item in list)
+        {
+            Console.WriteLine(item);
+        }
+
+        // Translates to
+
+        var it = list.GetEnumerator();
+        while (it.MoveNext())
+        {
+            var item = it.Current;
+            Console.WriteLine(item);
+        }
+    }
+}
+```
+
+## Strategy
+
+- _Behavioral Pattern_
+- Définit une famille d'algorithme pour les encapsuler et les rendre interchangeable.
+
+## Exemple {.code}
+
+```cs
+interface FilterStrategy<T>
+{
+    bool RemoveValue(T value);
+}
+
+class RemoveNegativeStrategy : FilterStrategy<int>
+{
+    public bool RemoveValue(int value)
+    {
+        return value < 0;
+    }
+}
+
+class RemoveOddStrategy : FilterStrategy<int>
+{
+    public bool RemoveValue(int value)
+    {
+        return Math.Abs(value) % 2 != 0;
+    }
+}
+
+class Values<T>
+{
+    private List<T> values;
+
+    public Values(List<T> values)
+    {
+        this.values = values.GetRange(0, values.Count);
+    }
+
+    public Values<T> Filter(FilterStrategy<T> strategy)
+    {
+        List<T> res = new List<T>();
+        foreach (T item in values)
+        {
+            if (!strategy.RemoveValue(item))
+            {
+                res.Add(item);
+            }
+        }
+        return new Values<T>(res);
+    }
+
+    public override string ToString()
+    {
+        return "[" + String.Join(", ", values) + "]";
+    }
+}
+
+class Program
+{
+    public static void Main(String[] args)
+    {
+        var values = new Values<int>(new List<int> { -1, 2, -3, -4, 5, 6 });
+
+        var even = values.Filter(new RemoveOddStrategy());
+        var positive = values.Filter(new RemoveNegativeStrategy());
+
+        Console.WriteLine(even);
+        Console.WriteLine(positive);
+
     }
 }
 ```

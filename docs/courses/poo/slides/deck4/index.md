@@ -570,11 +570,11 @@ class Border : Widget
 
 ```cs
 class Split : Widget {
-    public Split() : base(2) {}
+    public Split() : base(2) { }
     public override void render(int left, int top, int width, int height)
     {
-        Children[0].render(left, top, width/2, height);
-        Children[1].render(width/2 + 1, top, width - width/2 - 1, height);
+        Children[0].render(left, top, width / 2, height);
+        Children[1].render(width / 2, top, width - width / 2, height);
     }
 }
 ```
