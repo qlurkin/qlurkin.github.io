@@ -17,7 +17,12 @@ title: Example d'examen
 - Un programme qui ne s'exécute pas ou qui plante ne rapporte aucun point.
 - Veillez à renvoyer le bon type (`"True" != True`).
 - Les fichiers complétés doivent être remis dans une archive ZIP sur claco.
-- Vous pouvez utilisez vos notes et les sites de documentation officiels de Python des bibliothèques vues au cours.
+- Vous pouvez utilisez vos notes et les sites de documentation officiels de Python des bibliothèques vues au cours:
+  - https://docs.python.org/3/
+  - https://numpy.org/doc/stable/
+  - https://matplotlib.org/stable/index.html
+  - https://docs.scipy.org/doc/scipy/
+  - https://pandas.pydata.org/docs/
 - Toute forme de communication entre étudiants ou avec l'extérieur est interdite.
 - **Il est interdit de faire appel à des IA ou tout autres outils basés sur du Machine Learning.**
 - L'examen dure 1h30.
