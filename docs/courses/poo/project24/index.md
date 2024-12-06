@@ -39,6 +39,7 @@ On vous demande de réaliser un simulateur d'**écosystème simplifié**. Dans c
 
   - un diagramme de classes,
   - un diagramme de séquences,
+  - un diagramme d'activité,
   - Une description (avec justifications) d'au moins **deux principes SOLID** utilisés dans le projet.
 
   Le rapport sera inclus dans le dépôt Github au format **Markdown**.
