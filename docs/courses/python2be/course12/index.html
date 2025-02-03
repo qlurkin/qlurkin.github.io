@@ -799,6 +799,58 @@
         </ul>
     </section>
     <section>
+      <h2>Environnements virtuels</h2>
+      <p>Un environnement virtuel :</p>
+      <ul>
+        <li>contient une version specifique de Python,</li>
+        <li>contient un ensemble de package isolé des autres environnements virtuels et de l'installation globale de Python,</li>
+        <li>se trouve traditionellement dans un dossier nommé <code>.venv</code> ou <code>venv</code> dans le dossier du projet,</li>
+        <li>ne doit pas être sauvegardé, envoyé ou déplacé (il peut facilement être recréé à la demande).</li>
+      </ul>
+      <p>Création :</p>
+      <div class="terminal">
+        > python -m venv /path/to/new/virtual/environment
+      </div>
+      <p>Un environnement virtuel doit être activé pour être utilisé. L'activation modifie les variables d'environnement du terminal en cours d'utilisation pour que tous les appels à la commande <code>python</code> utilisent l'environnement.</p>
+      <p>L'activation passe par l'exécution d'un script qui dépend du système d'exploitation et du <code>shell</code> utilisé (<code>&lt;venv></code> représente le chemin de l'environnement) :</p>
+      <ul>
+        <li>Windows:
+          <ul>
+            <li>Avec <code>cmd</code>
+              <div class="terminal">> &lt;venv>\Scripts\activate.bat</div>
+            </li>
+            <li>Avec <code>Powershell</code>
+              <div class="terminal">> &lt;venv>\Scripts\activate.ps1</div>
+            </li>
+          </ul>
+        </li>
+        <li>MacOS / Linux:
+          <ul>
+            <li>Avec <code>bash / zsh</code>
+              <div class="terminal">> source &lt;venv>/bin/activate</div>
+            </li>
+            <li>Avec <code>fish</code>
+              <div class="terminal">> source &lt;venv>/bin/activate.fish</div>
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <p>Pendant que l'environnement est activé, tous les installations faites avec <code>pip</code> se font dans l'environnement (même celle qui installe les dépendances listée dans <code>requirements.txt</code>).</p>
+      <p>La creation de l'environnement virtuel se fait donc généralement comme suit (exemple sous Windows):</p>
+      <div class="terminal">
+        > python -m venv .venv
+        > .venv\Scripts\activate.ps1
+        > pip install -r requirements.txt
+      </div>
+
+      <p>Vous pouvez desactiver l'environnement :</p>
+      <div class="terminal">
+        > deactivate
+      </div>
+
+      
+    </section>
+    <section>
         <h1>Test unitaire</h1>
     </section>
     <section>
