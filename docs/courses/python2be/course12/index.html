@@ -802,9 +802,9 @@
       <h2>Environnements virtuels</h2>
       <p>Un environnement virtuel :</p>
       <ul>
-        <li>contient une version specifique de Python,</li>
+        <li>contient une version spécifique de Python,</li>
         <li>contient un ensemble de package isolé des autres environnements virtuels et de l'installation globale de Python,</li>
-        <li>se trouve traditionellement dans un dossier nommé <code>.venv</code> ou <code>venv</code> dans le dossier du projet,</li>
+        <li>se trouve traditionnellement dans un dossier nommé <code>.venv</code> ou <code>venv</code> dans le dossier du projet,</li>
         <li>ne doit pas être sauvegardé, envoyé ou déplacé (il peut facilement être recréé à la demande).</li>
       </ul>
       <p>Création :</p>
@@ -836,14 +836,14 @@
         </li>
       </ul>
       <p>Pendant que l'environnement est activé, tous les installations faites avec <code>pip</code> se font dans l'environnement (même celle qui installe les dépendances listée dans <code>requirements.txt</code>).</p>
-      <p>La creation de l'environnement virtuel se fait donc généralement comme suit (exemple sous Windows):</p>
+      <p>La création de l'environnement virtuel se fait donc généralement comme suit (exemple sous Windows):</p>
       <div class="terminal">
         > python -m venv .venv
         > .venv\Scripts\activate.ps1
         > pip install -r requirements.txt
       </div>
 
-      <p>Vous pouvez desactiver l'environnement :</p>
+      <p>Vous pouvez désactiver l'environnement :</p>
       <div class="terminal">
         > deactivate
       </div>
@@ -856,13 +856,13 @@
     <section>
         <h2>Testing</h2>
         <ul>
-            <li>Nécessité de tester qu’un programme fait bien ce qu’il faut
+            <li>Nécessité de tester qu'un programme fait bien ce qu'il faut
                 <ul>
                     <li>Définir ce que le programme doit faire</li>
                     <li>Écrire un jeu de tests pour vérifier le programme</li>
                 </ul>
             </li>
-            <li>Impossible de garantir l’exactitude d’un programme
+            <li>Impossible de garantir l'exactitude d’un programme
                 <small>On ne peut pas tester tous les scénarios possibles</small>
             </li>
             <li>Amélioration de la qualité de code
