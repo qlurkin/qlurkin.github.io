@@ -8,28 +8,49 @@ css: './style.css'
 
 ## _Mobile First_
 
-De nos jours, la plupart des contacts entre une société et ses clients se font via un téléphone portable. Il est donc très important de soigner l'expérience utilisateur sur les écrans de petites tailles.
+De nos jours, la plupart des contacts entre une société et ses clients se font
+via un téléphone portable. Il est donc très important de soigner l'expérience
+utilisateur sur les écrans de petites tailles.
 
-Il est cependant toujours nécessaire de supporter les utilisateurs sur ordinateurs de bureau. Et comme il est plus facile d'utiliser plus d'espace que d'en utiliser moins, il est généralement recommandé de commencer la conception d'une interface par sa version mobile. C'est dans un second temps que l'on adapte l'interface pour les écrans plus grands.
+Il est cependant toujours nécessaire de supporter les utilisateurs sur
+ordinateurs de bureau. Et comme il est plus facile d'utiliser plus d'espace que
+d'en utiliser moins, il est généralement recommandé de commencer la conception
+d'une interface par sa version mobile. C'est dans un second temps que l'on
+adapte l'interface pour les écrans plus grands.
 
 ## Le _Responsive Web Design_
 
-Lorsqu'on souhaite supporter une large gamme d'écrans, plusieurs approches sont possibles :
+Lorsqu'on souhaite supporter une large gamme d'écrans, plusieurs approches sont
+possibles :
 
-- créer des versions complètement différentes du site pour chaque type d'appareil,
+- créer des versions complètement différentes du site pour chaque type
+  d'appareil,
 - créer une seule interface capable de s'adapter à toutes les tailles d'écrans.
 
-Avoir plusieurs versions d'un site pose généralement plus de problèmes qu'autre chose : Cela multiplie le temps de développement et les différentes versions finissent souvent par diverger dans les fonctionnalités accessibles aux utilisateurs.
+Avoir plusieurs versions d'un site pose généralement plus de problèmes qu'autre
+chose : Cela multiplie le temps de développement et les différentes versions
+finissent souvent par diverger dans les fonctionnalités accessibles aux
+utilisateurs.
 
-La conception d'interfaces s'adaptant à l'écran de l'utilisateur et généralement appelée _Responsive Design_ mais ce terme a évolué avec le temps et englobe aujourd'hui le respect de certaines préférences utilisateur.
+La conception d'interfaces s'adaptant à l'écran de l'utilisateur et généralement
+appelée _Responsive Design_ mais ce terme a évolué avec le temps et englobe
+aujourd'hui le respect de certaines préférences utilisateur.
 
-En pratique, on a un seul site (un _markup_ HTML) et on utilise le CSS pour rendre le site _Responsive_.
+En pratique, on a un seul site (un _markup_ HTML) et on utilise le CSS pour
+rendre le site _Responsive_.
 
 ## Viewport
 
-Le première chose à faire pour avoir un site qui s'affiche correctement sur téléphones portables est de définir le _viewport_ dans le `<head>` de l'HTML. En effet les sites qui ne le font pas sont considérés comme des sites datant d'avant l'apparition des navigateurs mobiles et son redimensionnés pour s'afficher comme s'ils étaient sur un écran d'ordinateur plus grand. Cela conduit souvent à du texte très petit et des éléments cliquables très difficiles à viser avec le doigt.
+Le première chose à faire pour avoir un site qui s'affiche correctement sur
+téléphones portables est de définir le _viewport_ dans le `<head>` de l'HTML. En
+effet les sites qui ne le font pas sont considérés comme des sites datant
+d'avant l'apparition des navigateurs mobiles et son redimensionnés pour
+s'afficher comme s'ils étaient sur un écran d'ordinateur plus grand. Cela
+conduit souvent à du texte très petit et des éléments cliquables très difficiles
+à viser avec le doigt.
 
-Essayez d'accéder [à la page suivante](./no_viewport.html) avec votre téléphone mobile.
+Essayez d'accéder [à la page suivante](./no_viewport.html) avec votre téléphone
+mobile.
 
 la définition du _viewport_ se fait comme ceci :
 
@@ -37,11 +58,17 @@ la définition du _viewport_ se fait comme ceci :
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 ```
 
-Vous pouvez voir l'effet sur [cette version de la page précédente](./viewport.html) où le _viewport_ a été ajouté.
+Vous pouvez voir l'effet sur
+[cette version de la page précédente](./viewport.html) où le _viewport_ a été
+ajouté.
 
 ## Le CSS
 
-A l'origine, l'HTML servait essentiellement à mettre en forme une page web. De nos jours, l'HTML sert plutôt à structurer le document en y ajoutant des informations sémantiques. Le rôle de l'HTML n'est donc plus du tout graphique. C'est maintenant le CSS qui a pour objectif de spécifier comment les éléments doivent s'afficher.
+A l'origine, l'HTML servait essentiellement à mettre en forme une page web. De
+nos jours, l'HTML sert plutôt à structurer le document en y ajoutant des
+informations sémantiques. Le rôle de l'HTML n'est donc plus du tout graphique.
+C'est maintenant le CSS qui a pour objectif de spécifier comment les éléments
+doivent s'afficher.
 
 Une règles CSS prend la forme suivante :
 
@@ -52,9 +79,11 @@ selector {
 }
 ```
 
-Le sélecteur sert a spécifier quelles balises seront affectées par la règle. La propriété sert à définir quel attribut de la balise est modifié.
+Le sélecteur sert a spécifier quelles balises seront affectées par la règle. La
+propriété sert à définir quel attribut de la balise est modifié.
 
-Il existe une large gamme de sélecteurs. Imaginons la balise générique suivante :
+Il existe une large gamme de sélecteurs. Imaginons la balise générique suivante
+:
 
 ```html
 <element id="identifiant" class="classe1 classe2"></element>
@@ -67,9 +96,11 @@ Voici quelques exemples de sélecteurs :
 - `#identifiant`: sélectionne les balises ayant l'identificateur `identifiant`
 - `selecteur1, selecteur2`: les `selecteur1` et les `selecteur2`
 - `selecteur1 selecteur2`: les `selecteur2` descendant d'un `selecteur1`
-- `selecteur1 > selecteur2`: les `selecteur2` descendant direct d'un `selecteur1`
+- `selecteur1 > selecteur2`: les `selecteur2` descendant direct d'un
+  `selecteur1`
 
-Vous trouverez plus d'informations sur les sélecteurs sur [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_selectors)
+Vous trouverez plus d'informations sur les sélecteurs sur
+[MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_selectors)
 
 <!-- ## Exercice -->
 
@@ -77,11 +108,14 @@ Vous trouverez plus d'informations sur les sélecteurs sur [MDN](https://develop
 
 ## La propriété `display`
 
-Cette propriété CSS contrôle la position d'un élément par rapport aux autres. Nous allons voir quelques-unes de ses valeurs possibles.
+Cette propriété CSS contrôle la position d'un élément par rapport aux autres.
+Nous allons voir quelques-unes de ses valeurs possibles.
 
 ### `display: inline`
 
-Les éléments `inline` s'affichent comme des caractères dans une phrase. Il se place les uns à côté des autres et leur taille est essentiellement déterminée par leur contenu.
+Les éléments `inline` s'affichent comme des caractères dans une phrase. Il se
+place les uns à côté des autres et leur taille est essentiellement déterminée
+par leur contenu.
 
 Les balises `<strong>`, `<em>` et `<span>` sont `inline` par défaut. l'HTML :
 
@@ -98,7 +132,9 @@ s'affiche :
 
 ### `display: block`
 
-Les éléments `block` s'affichent les uns en dessous des autres comme des paragraphes dans un texte. Par défaut, ils prennent généralement toute la largeur disponible et leur hauteur est déterminée par le contenu.
+Les éléments `block` s'affichent les uns en dessous des autres comme des
+paragraphes dans un texte. Par défaut, ils prennent généralement toute la
+largeur disponible et leur hauteur est déterminée par le contenu.
 
 Les balises `<p>` et `<div>` sont des `block` par défaut. L'HTML :
 
@@ -119,9 +155,14 @@ s'affiche :
 
 ### `display: flex`
 
-Les éléments `flex` organisent leur contenu horizontalement ou verticalement. Il y a beaucoup de propriétés associées au mode d'affichage `flex`. Pour plus de détails vous pouvez consulter [ce site](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
+Les éléments `flex` organisent leur contenu horizontalement ou verticalement. Il
+y a beaucoup de propriétés associées au mode d'affichage `flex`. Pour plus de
+détails vous pouvez consulter
+[ce site](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
 
-A titre d'exemple, voici comment réaliser une présentation en trois colonnes en utilisant `display: flex`. Les colonnes droite et gauche ont une largeur fixe et la colonne centrale s'adapte à l'espace restant :
+A titre d'exemple, voici comment réaliser une présentation en trois colonnes en
+utilisant `display: flex`. Les colonnes droite et gauche ont une largeur fixe et
+la colonne centrale s'adapte à l'espace restant :
 
 ```html
 <div class="row">
@@ -162,7 +203,8 @@ résultat :
 </div>
 </div>
 
-Voici un autre exemple permettant de centrer un bloc verticalement et horizontalement :
+Voici un autre exemple permettant de centrer un bloc verticalement et
+horizontalement :
 
 ```html
 <html>
@@ -196,7 +238,8 @@ main {
 </div>
 </div>
 
-Le mode d'affichage `flex` est supporté par la plupart des navigateurs modernes :
+Le mode d'affichage `flex` est supporté par la plupart des navigateurs modernes
+:
 
 <p class="ciu_embed" data-feature="flexbox" data-periods="future_1,current,past_1,past_2" data-accessible-colours="false">
   <a href="http://caniuse.com/#feat=flexbox">
@@ -213,9 +256,13 @@ Le mode d'affichage `flex` est supporté par la plupart des navigateurs modernes
 
 ### `display: grid`
 
-Le mode d'affichage `grid` permet d'organiser le contenu d'un élément selon une grille à deux dimensions. C'est l'outil ultime de l'organisation des éléments d'une page web. Vous trouverez les détails sur les propriétés associées sur [cette page](https://css-tricks.com/snippets/css/complete-guide-grid/).
+Le mode d'affichage `grid` permet d'organiser le contenu d'un élément selon une
+grille à deux dimensions. C'est l'outil ultime de l'organisation des éléments
+d'une page web. Vous trouverez les détails sur les propriétés associées sur
+[cette page](https://css-tricks.com/snippets/css/complete-guide-grid/).
 
-Comme exemple, voici l'organisation d'une page avec un entête, un pied de page et deux colonnes (une à largeur fixe et l'autre variable) :
+Comme exemple, voici l'organisation d'une page avec un entête, un pied de page
+et deux colonnes (une à largeur fixe et l'autre variable) :
 
 ```html
 <body>
@@ -266,7 +313,8 @@ Résultat :
 </div>
 </div>
 
-Le mode d'affichage `grid` est supporté par la plupart des navigateurs modernes :
+Le mode d'affichage `grid` est supporté par la plupart des navigateurs modernes
+:
 
 <p class="ciu_embed" data-feature="css-grid" data-periods="future_1,current,past_1,past_2" data-accessible-colours="false">
   <a href="http://caniuse.com/#feat=css-grid">
@@ -283,20 +331,26 @@ Le mode d'affichage `grid` est supporté par la plupart des navigateurs modernes
 
 ## Les règles _Media_
 
-Les règles média permettent de spécifier des règles CSS qui ne doivent s'appliquer que pour certaines tailles d'écran. C'est l'outil indispensable du _Responsive Design_ !
+Les règles média permettent de spécifier des règles CSS qui ne doivent
+s'appliquer que pour certaines tailles d'écran. C'est l'outil indispensable du
+_Responsive Design_ !
 
-Les règles CSS contenue dans la règle média suivante ne s'appliqueront que si la largeur de la page est inférieure à 800 pixels :
+Les règles CSS contenue dans la règle média suivante ne s'appliqueront que si la
+largeur de la page est inférieure à 800 pixels :
 
 ```css
 @media (max-width: 800px) {
 }
 ```
 
-Les règles média permettent aussi de réagir à certaines préférences de l'utilisateur :
+Les règles média permettent aussi de réagir à certaines préférences de
+l'utilisateur :
 
 ### La préférence pour un affichage sombre
 
-La plupart des systèmes d'exploitation permettent de choisir entre un thème clair ou sombre. Il est possible d'adapter la page à cette préférence. Exemple : le site de [GitHub](https://github.com)
+La plupart des systèmes d'exploitation permettent de choisir entre un thème
+clair ou sombre. Il est possible d'adapter la page à cette préférence. Exemple :
+le site de [GitHub](https://github.com)
 
 ```css
 @media (prefers-color-scheme: dark) {
@@ -308,7 +362,9 @@ La plupart des systèmes d'exploitation permettent de choisir entre un thème cl
 
 ### Le préférences pour une réduction des animations
 
-Certains utilisateurs sont dérangés par le présence d'un trop grand nombre d'animations. Il est possible dans le plupart des systèmes d'exploitation de demander de diminuer les animations.
+Certains utilisateurs sont dérangés par le présence d'un trop grand nombre
+d'animations. Il est possible dans le plupart des systèmes d'exploitation de
+demander de diminuer les animations.
 
 <figure>
   <img src="./reduce_motion.png" alt="">
@@ -320,7 +376,8 @@ Certains utilisateurs sont dérangés par le présence d'un trop grand nombre d'
 }
 ```
 
-Si vous avez cette préférence activée sur votre OS, la boîte ci-dessous ne bougera pas :
+Si vous avez cette préférence activée sur votre OS, la boîte ci-dessous ne
+bougera pas :
 
 <div style="margin-bottom: 1rem;"><div class="animation">boîte animée</div></div>
 
