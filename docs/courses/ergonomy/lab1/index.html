@@ -20,39 +20,59 @@
 via un téléphone portable. Il est donc très important de soigner l&#39;expérience
 utilisateur sur les écrans de petites tailles.</p>
 <p>Il est cependant toujours nécessaire de supporter les utilisateurs sur
-ordinateurs de bureau. Et comme il est plus facile d&#39;utiliser plus d&#39;espace
-que d&#39;en utiliser moins, il est généralement recommandé de commencer la
-conception d&#39;une interface par sa version mobile. C&#39;est dans un second
-temps que l&#39;on adapte l&#39;interface pour les écrans plus grands.</p>
+ordinateurs de bureau. Et comme il est plus facile d&#39;utiliser plus d&#39;espace que
+d&#39;en utiliser moins, il est généralement recommandé de commencer la conception
+d&#39;une interface par sa version mobile. C&#39;est dans un second temps que l&#39;on
+adapte l&#39;interface pour les écrans plus grands.</p>
 <h2>Le <em>Responsive Web Design</em></h2>
 <p>Lorsqu&#39;on souhaite supporter une large gamme d&#39;écrans, plusieurs approches sont
 possibles :</p>
 <ul>
-<li>créer des versions complètement différentes du site pour chaque type d&#39;appareil,</li>
+<li>créer des versions complètement différentes du site pour chaque type
+d&#39;appareil,</li>
 <li>créer une seule interface capable de s&#39;adapter à toutes les tailles d&#39;écrans.</li>
 </ul>
 <p>Avoir plusieurs versions d&#39;un site pose généralement plus de problèmes qu&#39;autre
 chose : Cela multiplie le temps de développement et les différentes versions
-finissent souvent par diverger dans les fonctionnalités accessibles aux utilisateurs.</p>
-<p>La conception d&#39;interfaces s&#39;adaptant à l&#39;écran de l&#39;utilisateur et généralement appelée <em>Responsive Design</em> mais ce terme a évolué avec le temps et englobe aujourd&#39;hui le respect de certaines préférences utilisateur.</p>
-<p>En pratique, on a un seul site (un <em>markup</em> HTML) et on utilise le CSS pour rendre le site <em>Responsive</em>.</p>
+finissent souvent par diverger dans les fonctionnalités accessibles aux
+utilisateurs.</p>
+<p>La conception d&#39;interfaces s&#39;adaptant à l&#39;écran de l&#39;utilisateur et généralement
+appelée <em>Responsive Design</em> mais ce terme a évolué avec le temps et englobe
+aujourd&#39;hui le respect de certaines préférences utilisateur.</p>
+<p>En pratique, on a un seul site (un <em>markup</em> HTML) et on utilise le CSS pour
+rendre le site <em>Responsive</em>.</p>
 <h2>Viewport</h2>
-<p>Le première chose à faire pour avoir un site qui s&#39;affiche correctement sur téléphones portables est de définir le <em>viewport</em> dans le <code>&lt;head&gt;</code> de l&#39;HTML. En effet les sites qui ne le font pas sont considérés comme des sites datant d&#39;avant l&#39;apparition des navigateurs mobiles et son redimensionnés pour s&#39;afficher comme s&#39;ils étaient sur un écran d&#39;ordinateur plus grand. Cela conduit souvent à du texte très petit et des éléments cliquables très difficiles à viser avec le doigt.</p>
-<p>Essayez d&#39;accéder <a href="./no_viewport.html">à la page suivante</a> avec votre téléphone mobile.</p>
+<p>Le première chose à faire pour avoir un site qui s&#39;affiche correctement sur
+téléphones portables est de définir le <em>viewport</em> dans le <code>&lt;head&gt;</code> de l&#39;HTML. En
+effet les sites qui ne le font pas sont considérés comme des sites datant
+d&#39;avant l&#39;apparition des navigateurs mobiles et son redimensionnés pour
+s&#39;afficher comme s&#39;ils étaient sur un écran d&#39;ordinateur plus grand. Cela
+conduit souvent à du texte très petit et des éléments cliquables très difficiles
+à viser avec le doigt.</p>
+<p>Essayez d&#39;accéder <a href="./no_viewport.html">à la page suivante</a> avec votre téléphone
+mobile.</p>
 <p>la définition du <em>viewport</em> se fait comme ceci :</p>
 <pre><code class="language-html">&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot; /&gt;
 </code></pre>
-<p>Vous pouvez voir l&#39;effet sur <a href="./viewport.html">cette version de la page précédente</a> où le <em>viewport</em> a été ajouté.</p>
+<p>Vous pouvez voir l&#39;effet sur
+<a href="./viewport.html">cette version de la page précédente</a> où le <em>viewport</em> a été
+ajouté.</p>
 <h2>Le CSS</h2>
-<p>A l&#39;origine, l&#39;HTML servait essentiellement à mettre en forme une page web. De nos jours, l&#39;HTML sert plutôt à structurer le document en y ajoutant des informations sémantiques. Le rôle de l&#39;HTML n&#39;est donc plus du tout graphique. C&#39;est maintenant le CSS qui a pour objectif de spécifier comment les éléments doivent s&#39;afficher.</p>
+<p>A l&#39;origine, l&#39;HTML servait essentiellement à mettre en forme une page web. De
+nos jours, l&#39;HTML sert plutôt à structurer le document en y ajoutant des
+informations sémantiques. Le rôle de l&#39;HTML n&#39;est donc plus du tout graphique.
+C&#39;est maintenant le CSS qui a pour objectif de spécifier comment les éléments
+doivent s&#39;afficher.</p>
 <p>Une règles CSS prend la forme suivante :</p>
 <pre><code class="language-css">selector {
  property: value;
  ...
 }
 </code></pre>
-<p>Le sélecteur sert a spécifier quelles balises seront affectées par la règle. La propriété sert à définir quel attribut de la balise est modifié.</p>
-<p>Il existe une large gamme de sélecteurs. Imaginons la balise générique suivante :</p>
+<p>Le sélecteur sert a spécifier quelles balises seront affectées par la règle. La
+propriété sert à définir quel attribut de la balise est modifié.</p>
+<p>Il existe une large gamme de sélecteurs. Imaginons la balise générique suivante
+:</p>
 <pre><code class="language-html">&lt;element id=&quot;identifiant&quot; class=&quot;classe1 classe2&quot;&gt;&lt;/element&gt;
 </code></pre>
 <p>Voici quelques exemples de sélecteurs :</p>
@@ -62,17 +82,22 @@ finissent souvent par diverger dans les fonctionnalités accessibles aux utilisa
 <li><code>#identifiant</code>: sélectionne les balises ayant l&#39;identificateur <code>identifiant</code></li>
 <li><code>selecteur1, selecteur2</code>: les <code>selecteur1</code> et les <code>selecteur2</code></li>
 <li><code>selecteur1 selecteur2</code>: les <code>selecteur2</code> descendant d&#39;un <code>selecteur1</code></li>
-<li><code>selecteur1 &gt; selecteur2</code>: les <code>selecteur2</code> descendant direct d&#39;un <code>selecteur1</code></li>
+<li><code>selecteur1 &gt; selecteur2</code>: les <code>selecteur2</code> descendant direct d&#39;un
+<code>selecteur1</code></li>
 </ul>
-<p>Vous trouverez plus d&#39;informations sur les sélecteurs sur <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_selectors">MDN</a></p>
+<p>Vous trouverez plus d&#39;informations sur les sélecteurs sur
+<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_selectors">MDN</a></p>
 <!-- ## Exercice -->
 
 <!--Dans <a href="./title_strong_red.html" download>cette page</a>, ajoutez une règle CSS pour que toutes les balises `<strong>` se trouvant dans des balises `<h1>` ou `<h2>` aient leur texte en rouge.-->
 
 <h2>La propriété <code>display</code></h2>
-<p>Cette propriété CSS contrôle la position d&#39;un élément par rapport aux autres. Nous allons voir quelques-unes de ses valeurs possibles.</p>
+<p>Cette propriété CSS contrôle la position d&#39;un élément par rapport aux autres.
+Nous allons voir quelques-unes de ses valeurs possibles.</p>
 <h3><code>display: inline</code></h3>
-<p>Les éléments <code>inline</code> s&#39;affichent comme des caractères dans une phrase. Il se place les uns à côté des autres et leur taille est essentiellement déterminée par leur contenu.</p>
+<p>Les éléments <code>inline</code> s&#39;affichent comme des caractères dans une phrase. Il se
+place les uns à côté des autres et leur taille est essentiellement déterminée
+par leur contenu.</p>
 <p>Les balises <code>&lt;strong&gt;</code>, <code>&lt;em&gt;</code> et <code>&lt;span&gt;</code> sont <code>inline</code> par défaut. l&#39;HTML :</p>
 <pre><code class="language-html">&lt;strong&gt;hello&lt;/strong&gt; &lt;em&gt;ça va&lt;/em&gt; &lt;span class=&quot;punctuation&quot;&gt;?&lt;/span&gt;
 </code></pre>
@@ -83,7 +108,9 @@ finissent souvent par diverger dans les fonctionnalités accessibles aux utilisa
 </div>
 
 <h3><code>display: block</code></h3>
-<p>Les éléments <code>block</code> s&#39;affichent les uns en dessous des autres comme des paragraphes dans un texte. Par défaut, ils prennent généralement toute la largeur disponible et leur hauteur est déterminée par le contenu.</p>
+<p>Les éléments <code>block</code> s&#39;affichent les uns en dessous des autres comme des
+paragraphes dans un texte. Par défaut, ils prennent généralement toute la
+largeur disponible et leur hauteur est déterminée par le contenu.</p>
 <p>Les balises <code>&lt;p&gt;</code> et <code>&lt;div&gt;</code> sont des <code>block</code> par défaut. L&#39;HTML :</p>
 <pre><code class="language-html">&lt;p&gt;hello world !!&lt;/p&gt;
 &lt;div class=&quot;salutation&quot;&gt;Hi !&lt;/div&gt;
@@ -98,8 +125,13 @@ finissent souvent par diverger dans les fonctionnalités accessibles aux utilisa
 <!-- Par défaut la balise image `<img>` s'affiche en mode `inline`. Dans <a href="./pokemon.html" download>cette page</a> les images s'affichent les unes à côté des autres. Modifiez le CSS pour qu'elle s'affichent les unes en dessous des autres. -->
 
 <h3><code>display: flex</code></h3>
-<p>Les éléments <code>flex</code> organisent leur contenu horizontalement ou verticalement. Il y a beaucoup de propriétés associées au mode d&#39;affichage <code>flex</code>. Pour plus de détails vous pouvez consulter <a href="https://css-tricks.com/snippets/css/a-guide-to-flexbox/">ce site</a></p>
-<p>A titre d&#39;exemple, voici comment réaliser une présentation en trois colonnes en utilisant <code>display: flex</code>. Les colonnes droite et gauche ont une largeur fixe et la colonne centrale s&#39;adapte à l&#39;espace restant :</p>
+<p>Les éléments <code>flex</code> organisent leur contenu horizontalement ou verticalement. Il
+y a beaucoup de propriétés associées au mode d&#39;affichage <code>flex</code>. Pour plus de
+détails vous pouvez consulter
+<a href="https://css-tricks.com/snippets/css/a-guide-to-flexbox/">ce site</a></p>
+<p>A titre d&#39;exemple, voici comment réaliser une présentation en trois colonnes en
+utilisant <code>display: flex</code>. Les colonnes droite et gauche ont une largeur fixe et
+la colonne centrale s&#39;adapte à l&#39;espace restant :</p>
 <pre><code class="language-html">&lt;div class=&quot;row&quot;&gt;
   &lt;nav class=&quot;left&quot;&gt;&lt;/nav&gt;
   &lt;main&gt;&lt;/main&gt;
@@ -134,7 +166,8 @@ main {
 </div>
 </div>
 
-<p>Voici un autre exemple permettant de centrer un bloc verticalement et horizontalement :</p>
+<p>Voici un autre exemple permettant de centrer un bloc verticalement et
+horizontalement :</p>
 <pre><code class="language-html">&lt;html&gt;
   &lt;body&gt;
     &lt;main&gt;&lt;/main&gt;
@@ -163,7 +196,8 @@ main {
 </div>
 </div>
 
-<p>Le mode d&#39;affichage <code>flex</code> est supporté par la plupart des navigateurs modernes :</p>
+<p>Le mode d&#39;affichage <code>flex</code> est supporté par la plupart des navigateurs modernes
+:</p>
 <p class="ciu_embed" data-feature="flexbox" data-periods="future_1,current,past_1,past_2" data-accessible-colours="false">
   <a href="http://caniuse.com/#feat=flexbox">
   <picture>
@@ -178,8 +212,12 @@ main {
 <!-- Cette <a href="./flex.html" download>page</a> contient 2 paragraphes qui s'affichent par défaut l'un en dessous de l'autre. Utilisez l'affichage `flex` pour les afficher l'un à côté de l'autre. -->
 
 <h3><code>display: grid</code></h3>
-<p>Le mode d&#39;affichage <code>grid</code> permet d&#39;organiser le contenu d&#39;un élément selon une grille à deux dimensions. C&#39;est l&#39;outil ultime de l&#39;organisation des éléments d&#39;une page web. Vous trouverez les détails sur les propriétés associées sur <a href="https://css-tricks.com/snippets/css/complete-guide-grid/">cette page</a>.</p>
-<p>Comme exemple, voici l&#39;organisation d&#39;une page avec un entête, un pied de page et deux colonnes (une à largeur fixe et l&#39;autre variable) :</p>
+<p>Le mode d&#39;affichage <code>grid</code> permet d&#39;organiser le contenu d&#39;un élément selon une
+grille à deux dimensions. C&#39;est l&#39;outil ultime de l&#39;organisation des éléments
+d&#39;une page web. Vous trouverez les détails sur les propriétés associées sur
+<a href="https://css-tricks.com/snippets/css/complete-guide-grid/">cette page</a>.</p>
+<p>Comme exemple, voici l&#39;organisation d&#39;une page avec un entête, un pied de page
+et deux colonnes (une à largeur fixe et l&#39;autre variable) :</p>
 <pre><code class="language-html">&lt;body&gt;
   &lt;header&gt;&lt;/header&gt;
   &lt;main&gt;&lt;/main&gt;
@@ -224,7 +262,8 @@ body {
 </div>
 </div>
 
-<p>Le mode d&#39;affichage <code>grid</code> est supporté par la plupart des navigateurs modernes :</p>
+<p>Le mode d&#39;affichage <code>grid</code> est supporté par la plupart des navigateurs modernes
+:</p>
 <p class="ciu_embed" data-feature="css-grid" data-periods="future_1,current,past_1,past_2" data-accessible-colours="false">
   <a href="http://caniuse.com/#feat=css-grid">
     <picture>
@@ -239,14 +278,20 @@ body {
 <!-- <a href="./tictactoe.html" download>Cette page</a> contient un `<div class="board">` contenant 9 `<div class="cell">` qui représentent les cases d'une grille de OXO. Utilisez l'affichage `grid` pour afficher la grille correctement. -->
 
 <h2>Les règles <em>Media</em></h2>
-<p>Les règles média permettent de spécifier des règles CSS qui ne doivent s&#39;appliquer que pour certaines tailles d&#39;écran. C&#39;est l&#39;outil indispensable du <em>Responsive Design</em> !</p>
-<p>Les règles CSS contenue dans la règle média suivante ne s&#39;appliqueront que si la largeur de la page est inférieure à 800 pixels :</p>
+<p>Les règles média permettent de spécifier des règles CSS qui ne doivent
+s&#39;appliquer que pour certaines tailles d&#39;écran. C&#39;est l&#39;outil indispensable du
+<em>Responsive Design</em> !</p>
+<p>Les règles CSS contenue dans la règle média suivante ne s&#39;appliqueront que si la
+largeur de la page est inférieure à 800 pixels :</p>
 <pre><code class="language-css">@media (max-width: 800px) {
 }
 </code></pre>
-<p>Les règles média permettent aussi de réagir à certaines préférences de l&#39;utilisateur :</p>
+<p>Les règles média permettent aussi de réagir à certaines préférences de
+l&#39;utilisateur :</p>
 <h3>La préférence pour un affichage sombre</h3>
-<p>La plupart des systèmes d&#39;exploitation permettent de choisir entre un thème clair ou sombre. Il est possible d&#39;adapter la page à cette préférence. Exemple : le site de <a href="https://github.com">GitHub</a></p>
+<p>La plupart des systèmes d&#39;exploitation permettent de choisir entre un thème
+clair ou sombre. Il est possible d&#39;adapter la page à cette préférence. Exemple :
+le site de <a href="https://github.com">GitHub</a></p>
 <pre><code class="language-css">@media (prefers-color-scheme: dark) {
 }
 
@@ -254,7 +299,9 @@ body {
 }
 </code></pre>
 <h3>Le préférences pour une réduction des animations</h3>
-<p>Certains utilisateurs sont dérangés par le présence d&#39;un trop grand nombre d&#39;animations. Il est possible dans le plupart des systèmes d&#39;exploitation de demander de diminuer les animations.</p>
+<p>Certains utilisateurs sont dérangés par le présence d&#39;un trop grand nombre
+d&#39;animations. Il est possible dans le plupart des systèmes d&#39;exploitation de
+demander de diminuer les animations.</p>
 <figure>
   <img src="./reduce_motion.png" alt="">
     <figcaption>Paramètre dans MacOS</figcaption>
@@ -263,7 +310,8 @@ body {
 <pre><code class="language-css">@media (prefers-reduced-motion: reduce) {
 }
 </code></pre>
-<p>Si vous avez cette préférence activée sur votre OS, la boîte ci-dessous ne bougera pas :</p>
+<p>Si vous avez cette préférence activée sur votre OS, la boîte ci-dessous ne
+bougera pas :</p>
 <div style="margin-bottom: 1rem;"><div class="animation">boîte animée</div></div>
 
 <p><a href="../../gpu/lab3/index.html">Un autre exemple de page</a> qui suit ce paramètre.</p>
