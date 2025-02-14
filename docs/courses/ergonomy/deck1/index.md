@@ -1,22 +1,23 @@
 ---
-title: 'ER4C - Chapitre 1'
+title: 'ER4C - Cours 1'
 subtitle: 'Responsive Design'
+type: deck
 css: './style.css'
 ---
 
 <script src="https://cdn.jsdelivr.net/gh/ireade/caniuse-embed/public/caniuse-embed.min.js"></script>
 
+## Objectifs du cours
+
+Tour d'horizon du design d'interface web.
+
 ## _Mobile First_
 
-De nos jours, la plupart des contacts entre une société et ses clients se font
-via un téléphone portable. Il est donc très important de soigner l'expérience
-utilisateur sur les écrans de petites tailles.
+Un site est de plus en plus souvent consulté sur mobile.
 
-Il est cependant toujours nécessaire de supporter les utilisateurs sur
-ordinateurs de bureau. Et comme il est plus facile d'utiliser plus d'espace que
-d'en utiliser moins, il est généralement recommandé de commencer la conception
-d'une interface par sa version mobile. C'est dans un second temps que l'on
-adapte l'interface pour les écrans plus grands.
+- importance de soigner l'expérience utilisateur sur les écrans de petites
+  tailles.
+- Nécessaire de supporter les utilisateurs sur ordinateurs de bureau.
 
 ## Le _Responsive Web Design_
 
@@ -27,30 +28,12 @@ possibles :
   d'appareil,
 - créer une seule interface capable de s'adapter à toutes les tailles d'écrans.
 
-Avoir plusieurs versions d'un site pose généralement plus de problèmes qu'autre
-chose : Cela multiplie le temps de développement et les différentes versions
-finissent souvent par diverger dans les fonctionnalités accessibles aux
-utilisateurs.
-
-La conception d'interfaces s'adaptant à l'écran de l'utilisateur et généralement
-appelée _Responsive Design_ mais ce terme a évolué avec le temps et englobe
-aujourd'hui le respect de certaines préférences utilisateur.
+## Le _Responsive Web Design_
 
 En pratique, on a un seul site (un _markup_ HTML) et on utilise le CSS pour
 rendre le site _Responsive_.
 
 ## Viewport
-
-Le première chose à faire pour avoir un site qui s'affiche correctement sur
-téléphones portables est de définir le _viewport_ dans le `<head>` de l'HTML. En
-effet les sites qui ne le font pas sont considérés comme des sites datant
-d'avant l'apparition des navigateurs mobiles et son redimensionnés pour
-s'afficher comme s'ils étaient sur un écran d'ordinateur plus grand. Cela
-conduit souvent à du texte très petit et des éléments cliquables très difficiles
-à viser avec le doigt.
-
-Essayez d'accéder [à la page suivante](./no_viewport.html) avec votre téléphone
-mobile.
 
 la définition du _viewport_ se fait comme ceci :
 
@@ -58,17 +41,9 @@ la définition du _viewport_ se fait comme ceci :
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 ```
 
-Vous pouvez voir l'effet sur
-[cette version de la page précédente](./viewport.html) où le _viewport_ a été
-ajouté.
+Empêche le "dézoom" des navigateurs mobiles
 
 ## Le CSS
-
-A l'origine, l'HTML servait essentiellement à mettre en forme une page web. De
-nos jours, l'HTML sert plutôt à structurer le document en y ajoutant des
-informations sémantiques. Le rôle de l'HTML n'est donc plus du tout graphique.
-C'est maintenant le CSS qui a pour objectif de spécifier comment les éléments
-doivent s'afficher.
 
 Une règles CSS prend la forme suivante :
 
@@ -79,11 +54,7 @@ selector {
 }
 ```
 
-Le sélecteur sert a spécifier quelles balises seront affectées par la règle. La
-propriété sert à définir quel attribut de la balise est modifié.
-
-Il existe une large gamme de sélecteurs. Imaginons la balise générique suivante
-:
+## Les sélecteurs
 
 ```html
 <element id="identifiant" class="classe1 classe2"></element>
@@ -99,25 +70,17 @@ Voici quelques exemples de sélecteurs :
 - `selecteur1 > selecteur2`: les `selecteur2` descendant direct d'un
   `selecteur1`
 
-Vous trouverez plus d'informations sur les sélecteurs sur
-[MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_selectors)
-
-<!-- ## Exercice -->
-
-<!--Dans <a href="./title_strong_red.html" download>cette page</a>, ajoutez une règle CSS pour que toutes les balises `<strong>` se trouvant dans des balises `<h1>` ou `<h2>` aient leur texte en rouge.-->
-
 ## La propriété `display`
 
 Cette propriété CSS contrôle la position d'un élément par rapport aux autres.
-Nous allons voir quelques-unes de ses valeurs possibles.
 
-### `display: inline`
+## `display: inline`
 
-Les éléments `inline` s'affichent comme des caractères dans une phrase. Il se
-place les uns à côté des autres et leur taille est essentiellement déterminée
-par leur contenu.
+Les éléments `inline` s'affichent comme des caractères dans une phrase.
 
-Les balises `<strong>`, `<em>` et `<span>` sont `inline` par défaut. l'HTML :
+Les balises `<strong>`, `<em>` et `<span>` sont `inline` par défaut.
+
+L'HTML :
 
 ```html
 <strong>hello</strong> <em>ça va</em> <span class="punctuation">?</span>
@@ -130,13 +93,14 @@ s'affiche :
 <span class="punctuation">?</span>
 </div>
 
-### `display: block`
+## `display: block`
 
 Les éléments `block` s'affichent les uns en dessous des autres comme des
-paragraphes dans un texte. Par défaut, ils prennent généralement toute la
-largeur disponible et leur hauteur est déterminée par le contenu.
+paragraphes dans un texte.
 
-Les balises `<p>` et `<div>` sont des `block` par défaut. L'HTML :
+Les balises `<p>` et `<div>` sont des `block` par défaut.
+
+L'HTML :
 
 ```html
 <p>hello world !!</p>
@@ -149,20 +113,14 @@ s'affiche :
 <p>hello world !!</p><div class="salutation">Hi !</div>
 </div>
 
-<!-- ### Exercice -->
-<!---->
-<!-- Par défaut la balise image `<img>` s'affiche en mode `inline`. Dans <a href="./pokemon.html" download>cette page</a> les images s'affichent les unes à côté des autres. Modifiez le CSS pour qu'elle s'affichent les unes en dessous des autres. -->
-
-### `display: flex`
+## `display: flex`
 
 Les éléments `flex` organisent leur contenu horizontalement ou verticalement. Il
-y a beaucoup de propriétés associées au mode d'affichage `flex`. Pour plus de
-détails vous pouvez consulter
-[ce site](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
+y a
+[beaucoup de propriétés](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
+associées au mode d'affichage `flex`.
 
-A titre d'exemple, voici comment réaliser une présentation en trois colonnes en
-utilisant `display: flex`. Les colonnes droite et gauche ont une largeur fixe et
-la colonne centrale s'adapte à l'espace restant :
+## `flex` 3 colonnes
 
 ```html
 <div class="row">
@@ -203,8 +161,7 @@ résultat :
 </div>
 </div>
 
-Voici un autre exemple permettant de centrer un bloc verticalement et
-horizontalement :
+## `flex` bloc centré
 
 ```html
 <html>
@@ -238,8 +195,7 @@ main {
 </div>
 </div>
 
-Le mode d'affichage `flex` est supporté par la plupart des navigateurs modernes
-:
+## `flex` support
 
 <p class="ciu_embed" data-feature="flexbox" data-periods="future_1,current,past_1,past_2" data-accessible-colours="false">
   <a href="http://caniuse.com/#feat=flexbox">
@@ -250,19 +206,14 @@ Le mode d'affichage `flex` est supporté par la plupart des navigateurs modernes
   </a>
 </p>
 
-<!-- ### Exercice -->
-<!---->
-<!-- Cette <a href="./flex.html" download>page</a> contient 2 paragraphes qui s'affichent par défaut l'un en dessous de l'autre. Utilisez l'affichage `flex` pour les afficher l'un à côté de l'autre. -->
-
-### `display: grid`
+## `display: grid`
 
 Le mode d'affichage `grid` permet d'organiser le contenu d'un élément selon une
 grille à deux dimensions. C'est l'outil ultime de l'organisation des éléments
 d'une page web. Vous trouverez les détails sur les propriétés associées sur
 [cette page](https://css-tricks.com/snippets/css/complete-guide-grid/).
 
-Comme exemple, voici l'organisation d'une page avec un entête, un pied de page
-et deux colonnes (une à largeur fixe et l'autre variable) :
+## `grid` page layout
 
 ```html
 <body>
@@ -313,8 +264,7 @@ Résultat :
 </div>
 </div>
 
-Le mode d'affichage `grid` est supporté par la plupart des navigateurs modernes
-:
+## `grid` support
 
 <p class="ciu_embed" data-feature="css-grid" data-periods="future_1,current,past_1,past_2" data-accessible-colours="false">
   <a href="http://caniuse.com/#feat=css-grid">
@@ -325,15 +275,13 @@ Le mode d'affichage `grid` est supporté par la plupart des navigateurs modernes
   </a>
 </p>
 
-<!-- ### Exercice -->
-<!---->
-<!-- <a href="./tictactoe.html" download>Cette page</a> contient un `<div class="board">` contenant 9 `<div class="cell">` qui représentent les cases d'une grille de OXO. Utilisez l'affichage `grid` pour afficher la grille correctement. -->
-
 ## Les règles _Media_
 
 Les règles média permettent de spécifier des règles CSS qui ne doivent
 s'appliquer que pour certaines tailles d'écran. C'est l'outil indispensable du
 _Responsive Design_ !
+
+## taille d'écran
 
 Les règles CSS contenue dans la règle média suivante ne s'appliqueront que si la
 largeur de la page est inférieure à 800 pixels :
@@ -343,10 +291,7 @@ largeur de la page est inférieure à 800 pixels :
 }
 ```
 
-Les règles média permettent aussi de réagir à certaines préférences de
-l'utilisateur :
-
-### La préférence pour un affichage sombre
+## La préférence pour un affichage sombre
 
 La plupart des systèmes d'exploitation permettent de choisir entre un thème
 clair ou sombre. Il est possible d'adapter la page à cette préférence. Exemple :
@@ -360,7 +305,7 @@ le site de [GitHub](https://github.com)
 }
 ```
 
-### Le préférences pour une réduction des animations
+## Le préférences pour une réduction des animations
 
 Certains utilisateurs sont dérangés par le présence d'un trop grand nombre
 d'animations. Il est possible dans le plupart des systèmes d'exploitation de
@@ -380,13 +325,3 @@ Si vous avez cette préférence activée sur votre OS, la boîte ci-dessous ne
 bougera pas :
 
 <div style="margin-bottom: 1rem;"><div class="animation">boîte animée</div></div>
-
-[Un autre exemple de page](../../gpu/lab3/index.html) qui suit ce paramètre.
-
-<!-- ## Exercice -->
-<!---->
-<!-- Transformez <a href="./no_responsive.html" download>cette page</a> pour la rendre *Responsive*. -->
-
-<script>
-
-</script>

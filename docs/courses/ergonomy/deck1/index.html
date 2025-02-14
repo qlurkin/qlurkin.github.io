@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>ER4C - Cours 1 - Responsive Design</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="./style.css" />
+  <link rel="stylesheet" href="/deck.css" />
+  <script src="/deck_only.js" defer></script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">ER4C - Cours 1
+<small>Responsive Design</small>
+</h1>
+</header>
+<script src="https://cdn.jsdelivr.net/gh/ireade/caniuse-embed/public/caniuse-embed.min.js"></script>
+<section id="objectifs-du-cours" class="level2">
+<h2>Objectifs du cours</h2>
+<p>Tour d’horizon du design d’interface web.</p>
+</section>
+<section id="mobile-first" class="level2">
+<h2><em>Mobile First</em></h2>
+<p>Un site est de plus en plus souvent consulté sur mobile.</p>
+<ul>
+<li>importance de soigner l’expérience utilisateur sur les écrans de
+petites tailles.</li>
+<li>Nécessaire de supporter les utilisateurs sur ordinateurs de
+bureau.</li>
+</ul>
+</section>
+<section id="le-responsive-web-design" class="level2">
+<h2>Le <em>Responsive Web Design</em></h2>
+<p>Lorsqu’on souhaite supporter une large gamme d’écrans, plusieurs
+approches sont possibles :</p>
+<ul>
+<li>créer des versions complètement différentes du site pour chaque type
+d’appareil,</li>
+<li>créer une seule interface capable de s’adapter à toutes les tailles
+d’écrans.</li>
+</ul>
+</section>
+<section id="le-responsive-web-design-1" class="level2">
+<h2>Le <em>Responsive Web Design</em></h2>
+<p>En pratique, on a un seul site (un <em>markup</em> HTML) et on
+utilise le CSS pour rendre le site <em>Responsive</em>.</p>
+</section>
+<section id="viewport" class="level2">
+<h2>Viewport</h2>
+<p>la définition du <em>viewport</em> se fait comme ceci :</p>
+<div class="pygments"><pre><span></span><span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;viewport&quot;</span> <span class="na">content</span><span class="o">=</span><span class="s">&quot;width=device-width, initial-scale=1.0&quot;</span> <span class="p">/&gt;</span>
+</pre></div>
+
+<p>Empêche le “dézoom” des navigateurs mobiles</p>
+</section>
+<section id="le-css" class="level2">
+<h2>Le CSS</h2>
+<p>Une règles CSS prend la forme suivante :</p>
+<div class="pygments"><pre><span></span><span class="nt">selector</span><span class="w"> </span><span class="p">{</span>
+<span class="w"> </span><span class="n">property</span><span class="p">:</span><span class="w"> </span><span class="n">value</span><span class="p">;</span>
+<span class="w"> </span><span class="err">...</span>
+<span class="p">}</span>
+</pre></div>
+
+</section>
+<section id="les-sélecteurs" class="level2">
+<h2>Les sélecteurs</h2>
+<div class="pygments"><pre><span></span><span class="p">&lt;</span><span class="nt">element</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;identifiant&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;classe1 classe2&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">element</span><span class="p">&gt;</span>
+</pre></div>
+
+<p>Voici quelques exemples de sélecteurs :</p>
+<ul>
+<li><code>element</code>: sélectionne les balises
+<code>element</code></li>
+<li><code>.classe</code>: sélectionne les balises ayant la classe
+<code>classe</code></li>
+<li><code>#identifiant</code>: sélectionne les balises ayant
+l’identificateur <code>identifiant</code></li>
+<li><code>selecteur1, selecteur2</code>: les <code>selecteur1</code> et
+les <code>selecteur2</code></li>
+<li><code>selecteur1 selecteur2</code>: les <code>selecteur2</code>
+descendant d’un <code>selecteur1</code></li>
+<li><code>selecteur1 &gt; selecteur2</code>: les <code>selecteur2</code>
+descendant direct d’un <code>selecteur1</code></li>
+</ul>
+</section>
+<section id="la-propriété-display" class="level2">
+<h2>La propriété <code>display</code></h2>
+<p>Cette propriété CSS contrôle la position d’un élément par rapport aux
+autres.</p>
+</section>
+<section id="display-inline" class="level2">
+<h2><code>display: inline</code></h2>
+<p>Les éléments <code>inline</code> s’affichent comme des caractères
+dans une phrase.</p>
+<p>Les balises <code>&lt;strong&gt;</code>, <code>&lt;em&gt;</code> et
+<code>&lt;span&gt;</code> sont <code>inline</code> par défaut.</p>
+<p>L’HTML :</p>
+<div class="pygments"><pre><span></span><span class="p">&lt;</span><span class="nt">strong</span><span class="p">&gt;</span>hello<span class="p">&lt;/</span><span class="nt">strong</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nt">em</span><span class="p">&gt;</span>ça va<span class="p">&lt;/</span><span class="nt">em</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;punctuation&quot;</span><span class="p">&gt;</span>?<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+</pre></div>
+
+<p>s’affiche :</p>
+<div
+style="padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px;">
+<p><strong>hello</strong> <em>ça va</em> <span
+class="punctuation">?</span></p>
+</div>
+</section>
+<section id="display-block" class="level2">
+<h2><code>display: block</code></h2>
+<p>Les éléments <code>block</code> s’affichent les uns en dessous des
+autres comme des paragraphes dans un texte.</p>
+<p>Les balises <code>&lt;p&gt;</code> et <code>&lt;div&gt;</code> sont
+des <code>block</code> par défaut.</p>
+<p>L’HTML :</p>
+<div class="pygments"><pre><span></span><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>hello world !!<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;salutation&quot;</span><span class="p">&gt;</span>Hi !<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</pre></div>
+
+<p>s’affiche :</p>
+<div
+style="padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px;">
+<p>
+hello world !!
+</p>
+<div class="salutation">
+Hi !
+</div>
+</div>
+</section>
+<section id="display-flex" class="level2">
+<h2><code>display: flex</code></h2>
+<p>Les éléments <code>flex</code> organisent leur contenu
+horizontalement ou verticalement. Il y a <a
+href="https://css-tricks.com/snippets/css/a-guide-to-flexbox/">beaucoup
+de propriétés</a> associées au mode d’affichage <code>flex</code>.</p>
+</section>
+<section id="flex-3-colonnes" class="level2">
+<h2><code>flex</code> 3 colonnes</h2>
+<div class="pygments"><pre><span></span><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;row&quot;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">nav</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;left&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">nav</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">main</span><span class="p">&gt;&lt;/</span><span class="nt">main</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">nav</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;right&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">nav</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</pre></div>
+
+<div class="pygments"><pre><span></span><span class="p">.</span><span class="nc">row</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">flex</span><span class="p">;</span>
+<span class="w">  </span><span class="k">justify-content</span><span class="p">:</span><span class="w"> </span><span class="kc">space-between</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">left</span><span class="o">,</span>
+<span class="p">.</span><span class="nc">right</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">flex-grow</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">  </span><span class="k">flex-shrink</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">  </span><span class="k">width</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">  </span><span class="k">background-color</span><span class="p">:</span><span class="w"> </span><span class="kc">green</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">main</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">flex-grow</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">  </span><span class="k">flex-shrink</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">  </span><span class="k">background-color</span><span class="p">:</span><span class="w"> </span><span class="kc">red</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>résultat :</p>
+<div
+style="padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; margin-bottom: 1rem;">
+<div class="row"
+style="display: flex; justify-content: space-between; column-gap: 0">
+<nav class="left" style="flex-grow: 0; flex-shrink: 0; width: 100px; background-color: green; height: 100px; ">
+</nav>
+<div style="flex-grow: 1; flex-shrink: 0; background-color: red;">
+
+</div>
+<nav class="right" style="flex-grow: 0; flex-shrink: 0; width: 100px; background-color: green;">
+</nav>
+</div>
+</div>
+</section>
+<section id="flex-bloc-centré" class="level2">
+<h2><code>flex</code> bloc centré</h2>
+<div class="pygments"><pre><span></span><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">main</span><span class="p">&gt;&lt;/</span><span class="nt">main</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</pre></div>
+
+<div class="pygments"><pre><span></span><span class="nt">html</span><span class="o">,</span>
+<span class="nt">body</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">height</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="kt">%</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">body</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">background-color</span><span class="p">:</span><span class="w"> </span><span class="kc">green</span><span class="p">;</span>
+<span class="w">  </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">flex</span><span class="p">;</span>
+<span class="w">  </span><span class="k">justify-content</span><span class="p">:</span><span class="w"> </span><span class="kc">center</span><span class="p">;</span>
+<span class="w">  </span><span class="k">align-items</span><span class="p">:</span><span class="w"> </span><span class="kc">center</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">main</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">background-color</span><span class="p">:</span><span class="w"> </span><span class="kc">red</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+<div
+style="padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; margin-bottom: 1rem;">
+<div
+style="height: 200px; background-color: green; display: flex; justify-content: center; align-items: center;">
+<div style="background-color: red; width: 100px; height: 50px;">
+
+</div>
+</div>
+</div>
+</section>
+<section id="flex-support" class="level2">
+<h2><code>flex</code> support</h2>
+<p class="ciu_embed" data-feature="flexbox" data-periods="future_1,current,past_1,past_2" data-accessible-colours="false">
+<a href="http://caniuse.com/#feat=flexbox"> <picture>
+<source type="image/webp" srcset="https://caniuse.bitsofco.de/image/flexbox.webp">
+<img src="https://caniuse.bitsofco.de/image/flexbox.png" alt="Data on support for the flexbox feature across the major browsers from caniuse.com">
+</picture> </a>
+</p>
+</section>
+<section id="display-grid" class="level2">
+<h2><code>display: grid</code></h2>
+<p>Le mode d’affichage <code>grid</code> permet d’organiser le contenu
+d’un élément selon une grille à deux dimensions. C’est l’outil ultime de
+l’organisation des éléments d’une page web. Vous trouverez les détails
+sur les propriétés associées sur <a
+href="https://css-tricks.com/snippets/css/complete-guide-grid/">cette
+page</a>.</p>
+</section>
+<section id="grid-page-layout" class="level2">
+<h2><code>grid</code> page layout</h2>
+<div class="pygments"><pre><span></span><span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">header</span><span class="p">&gt;&lt;/</span><span class="nt">header</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">main</span><span class="p">&gt;&lt;/</span><span class="nt">main</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">nav</span><span class="p">&gt;&lt;/</span><span class="nt">nav</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">footer</span><span class="p">&gt;&lt;/</span><span class="nt">footer</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+</pre></div>
+
+<div class="pygments"><pre><span></span><span class="nt">header</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">grid-area</span><span class="p">:</span><span class="w"> </span><span class="n">header</span><span class="p">;</span>
+<span class="w">  </span><span class="k">background-color</span><span class="p">:</span><span class="w"> </span><span class="kc">red</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nt">main</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">grid-area</span><span class="p">:</span><span class="w"> </span><span class="n">main</span><span class="p">;</span>
+<span class="w">  </span><span class="k">background-color</span><span class="p">:</span><span class="w"> </span><span class="kc">green</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nt">nav</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">grid-area</span><span class="p">:</span><span class="w"> </span><span class="n">sidebar</span><span class="p">;</span>
+<span class="w">  </span><span class="k">background-color</span><span class="p">:</span><span class="w"> </span><span class="kc">blue</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nt">footer</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">grid-area</span><span class="p">:</span><span class="w"> </span><span class="n">footer</span><span class="p">;</span>
+<span class="w">  </span><span class="k">background-color</span><span class="p">:</span><span class="w"> </span><span class="kc">yellow</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">body</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="k">grid</span><span class="p">;</span>
+<span class="w">  </span><span class="k">grid-template-columns</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="n">fr</span><span class="w"> </span><span class="mi">1</span><span class="n">fr</span><span class="w"> </span><span class="mi">1</span><span class="n">fr</span><span class="w"> </span><span class="mi">100</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">  </span><span class="k">grid-template-rows</span><span class="p">:</span><span class="w"> </span><span class="kc">auto</span><span class="p">;</span>
+<span class="w">  </span><span class="k">grid-template-areas</span><span class="p">:</span>
+<span class="w">    </span><span class="s1">&#39;header header header header&#39;</span>
+<span class="w">    </span><span class="s1">&#39;main main main sidebar&#39;</span>
+<span class="w">    </span><span class="s1">&#39;footer footer footer footer&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>Résultat :</p>
+<div
+style="padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; margin-bottom: 1rem;">
+<div
+style="display: grid; grid-template-columns: 1fr 1fr 1fr 100px; grid-template-rows: auto; grid-template-areas: &quot;header header header header&quot; &quot;main main main sidebar&quot; &quot;footer footer footer footer&quot;;">
+<div style="grid-area: header; background-color: red; height: 50px;">
+
+</div>
+<div style="grid-area: main; background-color: green; height: 50px;">
+
+</div>
+<div style="grid-area: sidebar; background-color: blue; height: 50px;">
+
+</div>
+<div style="grid-area: footer; background-color: yellow; height: 50px;">
+
+</div>
+</div>
+</div>
+</section>
+<section id="grid-support" class="level2">
+<h2><code>grid</code> support</h2>
+<p class="ciu_embed" data-feature="css-grid" data-periods="future_1,current,past_1,past_2" data-accessible-colours="false">
+<a href="http://caniuse.com/#feat=css-grid"> <picture>
+<source type="image/webp" srcset="https://caniuse.bitsofco.de/image/css-grid.webp">
+<img src="https://caniuse.bitsofco.de/image/css-grid.png" alt="Data on support for the css-grid feature across the major browsers from caniuse.com">
+</picture> </a>
+</p>
+</section>
+<section id="les-règles-media" class="level2">
+<h2>Les règles <em>Media</em></h2>
+<p>Les règles média permettent de spécifier des règles CSS qui ne
+doivent s’appliquer que pour certaines tailles d’écran. C’est l’outil
+indispensable du <em>Responsive Design</em> !</p>
+</section>
+<section id="taille-décran" class="level2">
+<h2>taille d’écran</h2>
+<p>Les règles CSS contenue dans la règle média suivante ne
+s’appliqueront que si la largeur de la page est inférieure à 800 pixels
+:</p>
+<div class="pygments"><pre><span></span><span class="p">@</span><span class="k">media</span><span class="w"> </span><span class="o">(</span><span class="nt">max-width</span><span class="o">:</span><span class="w"> </span><span class="nt">800px</span><span class="o">)</span><span class="w"> </span><span class="p">{</span>
+<span class="p">}</span>
+</pre></div>
+
+</section>
+<section id="la-préférence-pour-un-affichage-sombre" class="level2">
+<h2>La préférence pour un affichage sombre</h2>
+<p>La plupart des systèmes d’exploitation permettent de choisir entre un
+thème clair ou sombre. Il est possible d’adapter la page à cette
+préférence. Exemple : le site de <a
+href="https://github.com">GitHub</a></p>
+<div class="pygments"><pre><span></span><span class="p">@</span><span class="k">media</span><span class="w"> </span><span class="o">(</span><span class="nt">prefers-color-scheme</span><span class="o">:</span><span class="w"> </span><span class="nt">dark</span><span class="o">)</span><span class="w"> </span><span class="p">{</span>
+<span class="p">}</span>
+
+<span class="p">@</span><span class="k">media</span><span class="w"> </span><span class="o">(</span><span class="nt">prefers-color-scheme</span><span class="o">:</span><span class="w"> </span><span class="nt">light</span><span class="o">)</span><span class="w"> </span><span class="p">{</span>
+<span class="p">}</span>
+</pre></div>
+
+</section>
+<section id="le-préférences-pour-une-réduction-des-animations"
+class="level2">
+<h2>Le préférences pour une réduction des animations</h2>
+<p>Certains utilisateurs sont dérangés par le présence d’un trop grand
+nombre d’animations. Il est possible dans le plupart des systèmes
+d’exploitation de demander de diminuer les animations.</p>
+<figure>
+<img src="./reduce_motion.png" alt="">
+<figcaption>
+Paramètre dans MacOS
+</figcaption>
+</figure>
+<div class="pygments"><pre><span></span><span class="p">@</span><span class="k">media</span><span class="w"> </span><span class="o">(</span><span class="nt">prefers-reduced-motion</span><span class="o">:</span><span class="w"> </span><span class="nt">reduce</span><span class="o">)</span><span class="w"> </span><span class="p">{</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>Si vous avez cette préférence activée sur votre OS, la boîte
+ci-dessous ne bougera pas :</p>
+<div style="margin-bottom: 1rem;">
+<div class="animation">
+boîte animée
+</div>
+</div>
+</section>
+</body>
+</html>
