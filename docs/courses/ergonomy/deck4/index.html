@@ -73,10 +73,23 @@
       </ul>
 
       <h3>Exercice</h3>
-      <p>Les deux boutons suivants ont des problèmes, lesquels ?</p>
-      <div class="button">OK</div>
-      <div id="laggy" class="button">OK</div>
+      <p>Les trois boutons suivants ont des problèmes, lesquels ?</p>
+      <div>
+        <div id="no-cursor" class="bad-button">OK 1</div>
+        <div id="no-feedback" class="button">OK 2</div>
+        <div id="laggy" class="button">OK 3</div>
+      </div>
       <script>
+        document
+          .getElementById('no-cursor')
+          .addEventListener('click', (event) => {
+            console.log('Button 1 pressed')
+          })
+        document
+          .getElementById('no-feedback')
+          .addEventListener('click', (event) => {
+            console.log('Button 2 pressed')
+          })
         document
           .getElementById('laggy')
           .addEventListener('mousedown', (event) => {
@@ -89,6 +102,7 @@
           .addEventListener('mouseup', (event) => {
             setTimeout(() => {
               event.target.classList.remove('down')
+              console.log('Button 3 pressed')
             }, 500)
           })
       </script>
