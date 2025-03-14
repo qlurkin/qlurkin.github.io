@@ -1,0 +1,33 @@
+.button {
+  padding: 0.5rem 1rem;
+  border: 1px solid black;
+  border-radius: 4px;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.down {
+  background-color: lightgray;
+}
+
+#div-toggle-css {
+  height: 0;
+  overflow: hidden;
+  transition: height 1s;
+}
+
+#div-toggle-css.show {
+  height: 200px;
+}
+
+#div-toggle-transform {
+  transform: scaleY(0);
+  transform-origin: top;
+  height: 200px;
+  overflow: hidden;
+  transition: transform 1s;
+}
+
+#div-toggle-transform.show {
+  transform: scaleY(1);
+}

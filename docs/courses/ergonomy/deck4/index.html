@@ -4,13 +4,13 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=1024, user-scalable=no" />
-    <title>ER4C - Chapitre 4 - Mesures</title>
-    <script src="/document.js" defer></script>
+    <title>ER4C - Cours 4 - Mesures</title>
+    <script src="/deck.js" defer></script>
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
     <section>
-      <h1>ER4C - Chapitre 4<small>Mesures</small></h1>
+      <h1>ER4C - Cours 4<small>Mesures</small></h1>
     </section>
     <section>
       <h2>Performance</h2>
@@ -20,6 +20,10 @@
         l'autre.
       </p>
       <figure><img src="./histogram.png" /></figure>
+    </section>
+    <section>
+      <h2>Performance</h2>
+
       <p>
         Il est important d'optimiser les performance pour permettre aux
         utilisateurs dans les conditions les plus difficiles d'avoir une bonne
@@ -36,17 +40,28 @@
     <section>
       <h2>Perception</h2>
       <p>Comment la rapidité est perçue ?</p>
-      <ul>
-        <li><strong>16 millisecondes:</strong> animations fluides (60fps).</li>
-        <li>
-          <strong>0.1 seconde:</strong> instantané, sensation de réactivité.
-        </li>
-        <li><strong>1 seconde:</strong> garde l'attention de l'utilisateur.</li>
-        <li>
-          <strong>10 secondes:</strong> l'utilisateur est passé à autre chose.
-        </li>
-      </ul>
-      <figure><img class="zoom" src="./temps.svg" /></figure>
+      <div class="row">
+        <div class="span5">
+          <ul>
+            <li>
+              <strong>16 millisecondes:</strong> animations fluides (60fps).
+            </li>
+            <li>
+              <strong>0.1 seconde:</strong> instantané, sensation de réactivité.
+            </li>
+            <li>
+              <strong>1 seconde:</strong> garde l'attention de l'utilisateur.
+            </li>
+            <li>
+              <strong>10 secondes:</strong> l'utilisateur est passé à autre
+              chose.
+            </li>
+          </ul>
+        </div>
+        <div class="span7">
+          <figure><img class="zoom" src="./temps.svg" /></figure>
+        </div>
+      </div>
     </section>
     <section>
       <h2>Feedback</h2>
@@ -128,68 +143,100 @@
         <li>Animations qui demandent moins de calculs: CSS transform</li>
         <li>Éviter les <em>long tasks</em></li>
       </ul>
+    </section>
 
+    <section>
+      <h2>Animations</h2>
       <h3>Exercices</h3>
-      <p>Est-ce que cette animation vous semble fluide ? Pourquoi ?</p>
-      <button id="toggle">Toggle</button>
-      <div id="div-toggle" style="height: 0; overflow: hidden">
-        <div>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil,
-          reprehenderit. Repellat sit vel minima id facere? Reiciendis earum,
-          minima debitis, nam numquam accusantium deserunt quae repudiandae,
-          quibusdam quo nobis accusamus?
+      <p>Quelle animation vous semble la plus fluide ? Pourquoi ?</p>
+      <div class="row">
+        <div class="span4">
+          <button id="toggle">Toggle</button>
+          <div id="div-toggle" style="height: 0; overflow: hidden">
+            <div>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil,
+              reprehenderit. Repellat sit vel minima id facere? Reiciendis
+              earum, minima debitis, nam numquam accusantium deserunt quae
+              repudiandae, quibusdam quo nobis accusamus?
+            </div>
+          </div>
+          <script>
+            let height = 0
+            const div = document.getElementById('div-toggle')
+
+            function open() {
+              if (height < 200) {
+                setTimeout(() => {
+                  height = height + 5
+                  div.style.height = `${height}px`
+                  open()
+                }, 16)
+              }
+            }
+
+            function close() {
+              if (height > 0) {
+                setTimeout(() => {
+                  height = height - 5
+                  div.style.height = `${height}px`
+                  close()
+                }, 16)
+              }
+            }
+
+            document.getElementById('toggle').addEventListener('click', () => {
+              console.log('Toggle JS')
+              if (height == 0) {
+                open()
+              } else {
+                close()
+              }
+            })
+          </script>
         </div>
-        <div>
-          Similique rem nihil, error officiis aperiam molestiae perferendis
-          voluptatum officia? Quis facere sint corrupti vel debitis a, atque
-          tempore dolor accusamus sequi voluptates dolores adipisci doloremque
-          facilis distinctio ipsa voluptate.
+        <div class="span4">
+          <button id="toggle-css">Toggle</button>
+          <div id="div-toggle-css">
+            <div>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil,
+              reprehenderit. Repellat sit vel minima id facere? Reiciendis
+              earum, minima debitis, nam numquam accusantium deserunt quae
+              repudiandae, quibusdam quo nobis accusamus?
+            </div>
+          </div>
+          <script>
+            const div_css = document.getElementById('div-toggle-css')
+            document
+              .getElementById('toggle-css')
+              .addEventListener('click', () => {
+                console.log('Toggle CSS')
+                div_css.classList.toggle('show')
+              })
+          </script>
         </div>
-        <div>
-          Expedita illo fugiat quos rerum voluptates perspiciatis explicabo,
-          molestiae dicta nam nihil magni harum quaerat reiciendis quis saepe
-          ipsam ullam voluptatem facere quisquam aliquam! Ea recusandae
-          explicabo eveniet sint hic.
+        <div class="span4">
+          <button id="toggle-transform">Toggle</button>
+          <div id="div-toggle-transform">
+            <div>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil,
+              reprehenderit. Repellat sit vel minima id facere? Reiciendis
+              earum, minima debitis, nam numquam accusantium deserunt quae
+              repudiandae, quibusdam quo nobis accusamus?
+            </div>
+          </div>
+          <script>
+            const div_transform = document.getElementById(
+              'div-toggle-transform',
+            )
+            document
+              .getElementById('toggle-transform')
+              .addEventListener('click', () => {
+                console.log('Toggle Transform')
+                div_transform.classList.toggle('show')
+              })
+          </script>
         </div>
       </div>
-      <p>Pouvez-vous refaire une animation similaire en CSS ?</p>
-      <script>
-        let height = 0
-        const div = document.getElementById('div-toggle')
-        console.log(div)
-
-        function open() {
-          if (height < 200) {
-            setTimeout(() => {
-              height = height + 5
-              console.log(height)
-              div.style.height = `${height}px`
-              console.log(div.style.height)
-              open()
-            }, 16)
-          }
-        }
-
-        function close() {
-          if (height > 0) {
-            setTimeout(() => {
-              height = height - 5
-              div.style.height = `${height}px`
-              console.log(height)
-              close()
-            }, 16)
-          }
-        }
-
-        document.getElementById('toggle').addEventListener('click', () => {
-          console.log('Toggle')
-          if (height == 0) {
-            open()
-          } else {
-            close()
-          }
-        })
-      </script>
     </section>
     <section>
       <h2><em>Real User Measurments (RUM)</em></h2>
@@ -218,18 +265,15 @@
         <li>Ensemble de métriques permettant d'évaluer un site</li>
         <li>
           Largest Contentful Paint (LCP): mesure les performances de chargement.
-          Pour offrir une bonne expérience utilisateur, le LCP doit se produire
-          dans les 2,5 secondes suivant le début du chargement de la page.
+          Doit se produire dans les 2,5 secondes.
         </li>
         <li>
-          Interaction to Next Paint (INP): mesure l'interactivité. Pour offrir
-          une bonne expérience utilisateur, l'INP des pages doit être inférieur
-          ou égal à 200 millisecondes.
+          Interaction to Next Paint (INP): mesure l'interactivité. Doit être
+          inférieur ou égal à 200 millisecondes.
         </li>
         <li>
-          Cumulative Layout Shift (CLS): mesure la stabilité visuelle. Pour
-          offrir une bonne expérience utilisateur, vous devez conserver un CLS
-          de 0.1. ou moins.
+          Cumulative Layout Shift (CLS): mesure la stabilité visuelle. 0.1 ou
+          moins.
         </li>
       </ul>
     </section>
@@ -244,12 +288,26 @@
         </li>
         <li>Se mesure chez le client avec <code>web-vitals</code></li>
       </ul>
-      <h3>Exercice</h3>
-      <p>
-        Dans un projet svelte, utilisez <code>web-vitals</code> pour mesurer les
-        performances chez le client et renvoyez ces mesures au serveur pour les
-        enregistrer dans une DB
-      </p>
+
+      <pre><code class="lang-js">
+        import {onLCP, onINP, onCLS} from 'web-vitals';
+
+        onCLS(console.log);
+        onINP(console.log);
+        onLCP(console.log);
+      </code></pre>
+
+      <script type="module">
+        import {
+          onLCP,
+          onINP,
+          onCLS,
+        } from 'https://cdnjs.cloudflare.com/ajax/libs/web-vitals/4.2.4/web-vitals.js'
+
+        onCLS(console.log)
+        onINP(console.log)
+        onLCP(console.log)
+      </script>
     </section>
     <section>
       <h1>Outils</h1>
@@ -285,16 +343,25 @@
         <li>Connaître l'efficacité du site et son évolution dans le temps</li>
         <li>Collecter des données de performance</li>
       </ul>
-      <p>Session d'un utilisateur divisée en 3 parties:</p>
+    </section>
+    <section>
+      <h2>Analytics</h2>
+      <p>Session d'un utilisateur divisée en 3 parties</p>
       <ul>
         <li>Acquisition: Comment l'utilisateur est arrivé sur la page</li>
         <li>Comportement: Comment l'utilisateur interagit avec le site</li>
         <li>Conversion: La visite se convertit-elle en vente, ...</li>
       </ul>
+    </section>
+    <section>
+      <h2>Analytics</h2>
       <p>
         Avec une <em>Single Page App</em>, il faut envoyer manuellement les
         changements de page.
       </p>
+    </section>
+    <section>
+      <h2>Analytics</h2>
       <p>On peut envoyer des evenements</p>
       <ul>
         <li>Metriques de performances: LCP, INP, CLS, ...</li>
@@ -303,8 +370,7 @@
       </ul>
     </section>
     <section>
-      <h2>Exercices</h2>
-      <h3>Google Analytics</h3>
+      <h2>Google Analytics</h2>
       <ul>
         <li>
           <a href="https://developers.google.com/analytics">Cours en ligne</a>
