@@ -15,7 +15,6 @@ body {
   font-weight: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
   background-color: white;
 }
 
@@ -23,8 +22,8 @@ h1,
 h2,
 h3,
 h4 {
-  font-family: 'Iowan Old Style', 'Palatino Linotype', 'URW Palladio L', P052,
-    serif;
+  font-family:
+    'Iowan Old Style', 'Palatino Linotype', 'URW Palladio L', P052, serif;
 }
 
 code {
@@ -32,8 +31,9 @@ code {
   color: #aa0000;
   white-space: pre;
   // font-family: 'Fira Code', monospace;
-  font-family: ui-monospace, 'Source Code Pro', Menlo, Consolas,
-    'DejaVu Sans Mono', monospace;
+  font-family:
+    ui-monospace, 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono',
+    monospace;
   font-weight: normal;
   // font-optical-sizing: auto;
   // font-variant-ligatures: none;
@@ -41,7 +41,8 @@ code {
 
 pre {
   // font-family: 'Fira Code', monospace;
-  font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas,
+  font-family:
+    ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas,
     'DejaVu Sans Mono', monospace;
   font-weight: normal;
   // font-optical-sizing: auto;
