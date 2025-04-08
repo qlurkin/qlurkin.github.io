@@ -1,7 +1,13 @@
-import { SVG } from 'https://cdnjs.cloudflare.com/ajax/libs/svg.js/3.1.2/svg.esm.min.js' 
+import { SVG } from 'https://cdnjs.cloudflare.com/ajax/libs/svg.js/3.1.2/svg.esm.min.js'
 import { catmullRom2bezier } from './simplify.js'
 import { brush as make_brush } from './brush.js'
 
+const cursor = document.getElementById('cursor')
+const circle = document.querySelector('#cursor > circle')
+
+cursor.style.position = 'fixed'
+cursor.style.left = '100px'
+cursor.style.top = '100px'
 
 var draw = SVG().addTo('body').size(300, 300)
 draw.addClass('drawing')
@@ -13,79 +19,87 @@ let current_width = 4
 
 function render_stroke(points, stroke) {
   stroke.clear()
-  if(points.length == 1) {
+  if (points.length == 1) {
     stroke
       .circle(current_width)
       .fill(current_color)
       .center(points[0][0], points[0][1])
-  }
-  else if(points.length == 2) {
-    stroke
-      .polyline(points)
-      .fill('none')
-      .stroke({ color: current_color, width: current_width, linecap: 'round', linejoin: 'round' })
-  }
-  else {
+  } else if (points.length == 2) {
+    stroke.polyline(points).fill('none').stroke({
+      color: current_color,
+      width: current_width,
+      linecap: 'round',
+      linejoin: 'round',
+    })
+  } else {
     const path_string = catmullRom2bezier(points)
-    stroke
-      .path(path_string)
-      .fill('none')
-      .stroke({ color: current_color, width: current_width, linecap: 'round', linejoin: 'round' })
+    stroke.path(path_string).fill('none').stroke({
+      color: current_color,
+      width: current_width,
+      linecap: 'round',
+      linejoin: 'round',
+    })
   }
 }
 
-const brush = make_brush(point => {
-  if(current_stroke) {
+const brush = make_brush((point) => {
+  if (current_stroke) {
     current_stroke_array.push(point)
     render_stroke(current_stroke_array, current_stroke)
   }
 }, 2)
 
-draw.on('pointermove', event => {
+draw.on('pointermove', (event) => {
   brush([event.offsetX, event.offsetY])
 })
 
-draw.on('pointerdown', event => {
+draw.on('pointerdown', (event) => {
+  console.log('CACA')
   current_stroke_array = []
   current_stroke = draw.group()
   brush([event.offsetX, event.offsetY], true)
 })
 
-draw.on('pointerup', event => {
+draw.on('pointerup', (event) => {
   brush([event.offsetX, event.offsetY], true)
-  
+
   current_stroke = null
   current_stroke_array = null
 })
 
 function removeSelected(selector) {
-  document.querySelectorAll(selector).forEach(elem => {
+  document.querySelectorAll(selector).forEach((elem) => {
     elem.classList.remove('selected')
   })
 }
 
-document.querySelectorAll('.size').forEach(elem => {
+document.querySelectorAll('.size').forEach((elem) => {
   elem.addEventListener('click', () => {
-    const width = parseInt(elem.querySelector('circle').getAttribute('r'), 10)*2
+    const width =
+      parseInt(elem.querySelector('circle').getAttribute('r'), 10) * 2
     current_width = width
     removeSelected('.size')
+    circle.setAttribute('r', width / 2)
     elem.classList.add('selected')
   })
 })
 
-document.querySelectorAll('.color').forEach(elem => {
+document.querySelectorAll('.color').forEach((elem) => {
   elem.addEventListener('click', () => {
     const color = elem.querySelector('circle').getAttribute('fill')
     current_color = color
     removeSelected('.color')
+    circle.setAttribute('fill', color)
     elem.classList.add('selected')
   })
 })
 
-document.querySelectorAll('img').forEach(elem => { elem.ondragstart = () => false })
+document.querySelectorAll('img').forEach((elem) => {
+  elem.ondragstart = () => false
+})
 
 document.querySelector('.undo').addEventListener('click', () => {
-  if(draw.children().length == 0) return
+  if (draw.children().length == 0) return
   draw.last().remove()
 })
 
@@ -95,7 +109,10 @@ document.querySelector('.clear').addEventListener('click', () => {
 
 function download(filename, text) {
   const element = document.createElement('a')
-  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text))
+  element.setAttribute(
+    'href',
+    'data:text/plain;charset=utf-8,' + encodeURIComponent(text),
+  )
   element.setAttribute('download', filename)
 
   element.style.display = 'none'
@@ -107,6 +124,14 @@ function download(filename, text) {
 }
 
 document.querySelector('.download').addEventListener('click', () => {
-  download('whiteboard.svg', `<?xml version="1.0" standalone="no"?><svg viewBox="0 0 ${window.innerWidth} ${window.innerHeight}" style="background-color:#ffffffff" width="${window.innerWidth}" height="${window.innerHeight}" xmlns="http://www.w3.org/2000/svg" xmlns:xlink= "http://www.w3.org/1999/xlink">${document.querySelector('svg.drawing').innerHTML}</svg>`)
+  download(
+    'whiteboard.svg',
+    `<?xml version="1.0" standalone="no"?><svg viewBox="0 0 ${window.innerWidth} ${window.innerHeight}" style="background-color:#ffffffff" width="${window.innerWidth}" height="${window.innerHeight}" xmlns="http://www.w3.org/2000/svg" xmlns:xlink= "http://www.w3.org/1999/xlink">${document.querySelector('svg.drawing').innerHTML}</svg>`,
+  )
 })
 
+document.addEventListener('mousemove', (event) => {
+  console.log(event)
+  cursor.style.left = event.clientX - 16 + 'px'
+  cursor.style.top = event.clientY - 16 + 'px'
+})

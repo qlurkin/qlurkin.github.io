@@ -1,4 +1,6 @@
-html, body, svg {
+html,
+body,
+svg.drawing {
   height: 100%;
   width: 100%;
   margin: 0;
@@ -6,6 +8,10 @@ html, body, svg {
 
 svg {
   touch-action: none;
+}
+
+#cursor {
+  pointer-events: none;
 }
 
 #tools {
