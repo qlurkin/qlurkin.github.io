@@ -64,73 +64,49 @@ Q2
 </div>
 <div class="ruler">
 </div>
-<div class="ue q1 mic">
-<div class="name">
-Architecture and software quality
-</div>
-<div class="ects">
-4 crédits
-</div>
-</div>
 <div class="ue q2 mic">
 <div class="name">
-Artificial Intelligence
+Stage
 </div>
 <div class="ects">
-6 crédits
-</div>
-</div>
-<div class="ue q2 mic">
-<div class="name">
-Mobile development
-</div>
-<div class="ects">
-3 crédits
-</div>
-</div>
-<div class="ue q2 mic">
-<div class="name">
-Web Architecture
-</div>
-<div class="ects">
-4 crédits
+10 crédits
 </div>
 </div>
 <div class="ue q1 mic">
 <div class="name">
-Database management system
-</div>
-<div class="ects">
-4 crédits
-</div>
-</div>
-<div class="ue q2 mic">
-<div class="name">
-Network management
+Electronic design
 </div>
 <div class="ects">
 5 crédits
 </div>
 </div>
-<div class="ue q2">
+<div class="ue q2 mic">
 <div class="name">
-Operating Systems
+Control Theory and applications
 </div>
 <div class="ects">
 3 crédits
 </div>
 </div>
+<div class="ue q2 mic">
+<div class="name">
+Embedded systems
+</div>
+<div class="ects">
+4 crédits
+</div>
+</div>
 <div class="ue q1 mic">
 <div class="name">
-GPU computing
+Microcontroller and logic design
 </div>
 <div class="ects">
 6 crédits
 </div>
 </div>
-<div class="ue q2">
+<div class="ue q2 mic">
 <div class="name">
-System on chip
+Fundamentals of electrical engineering
 </div>
 <div class="ects">
 3 crédits
@@ -138,15 +114,39 @@ System on chip
 </div>
 <div class="ue all">
 <div class="name">
-Embedded Project
+PCB design
+</div>
+<div class="ects">
+5 crédits
+</div>
+</div>
+<div class="ue all mic">
+<div class="name">
+Software engineering 2
+</div>
+<div class="ects">
+3 crédits
+</div>
+</div>
+<div class="ue q1">
+<div class="name">
+Software engineering 1
 </div>
 <div class="ects">
 7 crédits
 </div>
 </div>
-<div class="ue q1 mic">
+<div class="ue all">
 <div class="name">
-Computer Networks
+Comptabilité et entrepreneuriat
+</div>
+<div class="ects">
+5 crédits
+</div>
+</div>
+<div class="ue all mic">
+<div class="name">
+Signals, systems and telecommunications
 </div>
 <div class="ects">
 5 crédits
@@ -154,18 +154,10 @@ Computer Networks
 </div>
 <div class="ue q1">
 <div class="name">
-IOT and Data acquisition
+Network and web technologies
 </div>
 <div class="ects">
 4 crédits
-</div>
-</div>
-<div class="ue q1">
-<div class="name">
-Gestion
-</div>
-<div class="ects">
-6 crédits
 </div>
 </div>
 </section>
@@ -258,7 +250,7 @@ System on chip
 Embedded Project
 </div>
 <div class="ects">
-7 crédits
+9 crédits
 </div>
 </div>
 <div class="ue q1 mic">
@@ -271,10 +263,10 @@ Computer Networks
 </div>
 <div class="ue q1">
 <div class="name">
-IOT and Data acquisition
+Hardware Testing Processes
 </div>
 <div class="ects">
-4 crédits
+2 crédits
 </div>
 </div>
 <div class="ue q1">
@@ -303,7 +295,7 @@ Q2
 Distributed Systems Project
 </div>
 <div class="ects">
-5 crédits
+4 crédits
 </div>
 </div>
 <div class="ue q1">
@@ -311,7 +303,7 @@ Distributed Systems Project
 Artificial Intelligence project
 </div>
 <div class="ects">
-3 crédits
+4 crédits
 </div>
 </div>
 <div class="ue q1">
@@ -340,7 +332,7 @@ Computer security
 </div>
 <div class="ue q1">
 <div class="name">
-Seminars
+Ethical Electronics & Informatics
 </div>
 <div class="ects">
 3 crédits
@@ -399,7 +391,7 @@ Travail de Fin d’études
 1. Assurer une veille technologique
 1. Agir de manière éthique et responsable
 
-## Analyser des problèmes complexes
+## 1. Analyser des problèmes complexes
 
 1. Analyser des problèmes (complexe, interdisciplinaires, ...)
 1. Analyser l'impact environnemental d'une solution
@@ -408,7 +400,7 @@ Travail de Fin d’études
 1. Identifier la règlementation associée au projet
 1. Exploiter la documentation disponible
 
-## Concevoir et modéliser une solution logicielle et/ou matérielle
+## 2. Concevoir et modéliser une solution logicielle et/ou matérielle
 
 1. Appliquer les principes d'éco-conception
 1. Concevoir une solution répondant aux exigences
@@ -420,7 +412,7 @@ Travail de Fin d’études
    (bases de données, backups, quantités, méthodes de stockage, cloud, ...)
 1. Modéliser le comportement d’un système
 
-## Mettre en œuvre, optimiser et maintenir une solution
+## 3. Mettre en œuvre, optimiser et maintenir une solution
 
 1. Appliquer les principes d'éco-conception à la gestion du matériel
    informatique (réutilisation, recyclage, extension de la durée de vie)
@@ -434,24 +426,24 @@ Travail de Fin d’études
 1. Evaluer et optimiser les performances de la solution (efficacité énergétique,
    empreinte environnementale, temps d'exécution, ...)
 
-## Gérer un projet informatique de manière Agile
+## 4. Gérer un projet informatique de manière Agile
 
 1. Collaborer en équipe (pluridisciplinaire)
 1. Travailler par itération en lien avec les parties prenantes
 1. Maitriser les coûts, les ressources, les risques et les délais
 
-## Communiquer à l'écrit et à l'oral
+## 5. Communiquer à l'écrit et à l'oral
 
 1. Documenter une solution
 1. Présenter oralement ou par écrit une solution
 1. Communiquer en anglais (niveau B2)
 
-## Assurer une veille technologique
+## 6. Assurer une veille technologique
 
 1. Appliquer une méthodologie de recherche d’informations
 1. Essayer, synthétiser et vulgariser de nouvelles technologies
 
-## Agir de manière éthique et responsable
+## 7. Agir de manière éthique et responsable
 
 1. Identifier les impacts sociaux, (fracture numérique, accessibilité, effet
    rebond, bien-être numérique, ...)
