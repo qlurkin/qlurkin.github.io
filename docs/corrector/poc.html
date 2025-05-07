@@ -1,0 +1,42 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+<script src="https://docs.opencv.org/4.5.0/opencv.js"></script>
+
+<input type="file" id="pdf-upload" accept="application/pdf" />
+<div id="preview"></div>
+
+<script>
+  document
+    .getElementById('pdf-upload')
+    .addEventListener('change', async function (event) {
+      cv = cv instanceof Promise ? await cv : cv
+      const file = event.target.files[0]
+      if (!file) return
+
+      const arrayBuffer = await file.arrayBuffer()
+      const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise
+
+      const previewDiv = document.getElementById('preview')
+      previewDiv.innerHTML = '' // Clear previous content
+
+      for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+        const page = await pdf.getPage(pageNum)
+
+        const viewport = page.getViewport({ scale: 2 }) // adjust scale for resolution
+        const canvas = document.createElement('canvas')
+        const context = canvas.getContext('2d')
+        canvas.height = viewport.height
+        canvas.width = viewport.width
+
+        await page.render({
+          canvasContext: context,
+          viewport: viewport,
+        }).promise
+
+        const src = cv.imread(canvas)
+
+        console.log(src)
+
+        previewDiv.appendChild(canvas) // Show canvas
+      }
+    })
+</script>
