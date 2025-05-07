@@ -64,7 +64,7 @@ Q2
 </div>
 <div class="ruler">
 </div>
-<div class="ue q2 mic">
+<div class="ue q2">
 <div class="name">
 Stage
 </div>
@@ -72,7 +72,7 @@ Stage
 10 crédits
 </div>
 </div>
-<div class="ue q1 mic">
+<div class="ue q1">
 <div class="name">
 Electronic design
 </div>
@@ -80,7 +80,7 @@ Electronic design
 5 crédits
 </div>
 </div>
-<div class="ue q2 mic">
+<div class="ue q2">
 <div class="name">
 Control Theory and applications
 </div>
@@ -88,7 +88,7 @@ Control Theory and applications
 3 crédits
 </div>
 </div>
-<div class="ue q2 mic">
+<div class="ue q2">
 <div class="name">
 Embedded systems
 </div>
@@ -96,7 +96,7 @@ Embedded systems
 4 crédits
 </div>
 </div>
-<div class="ue q1 mic">
+<div class="ue q1">
 <div class="name">
 Microcontroller and logic design
 </div>
@@ -104,7 +104,7 @@ Microcontroller and logic design
 6 crédits
 </div>
 </div>
-<div class="ue q2 mic">
+<div class="ue q2">
 <div class="name">
 Fundamentals of electrical engineering
 </div>
@@ -120,7 +120,7 @@ PCB design
 5 crédits
 </div>
 </div>
-<div class="ue all mic">
+<div class="ue all">
 <div class="name">
 Software engineering 2
 </div>
@@ -144,7 +144,7 @@ Comptabilité et entrepreneuriat
 5 crédits
 </div>
 </div>
-<div class="ue all mic">
+<div class="ue all">
 <div class="name">
 Signals, systems and telecommunications
 </div>
@@ -173,7 +173,7 @@ Q2
 </div>
 <div class="ruler">
 </div>
-<div class="ue q1 mic">
+<div class="ue q1">
 <div class="name">
 Architecture and software quality
 </div>
@@ -181,7 +181,7 @@ Architecture and software quality
 4 crédits
 </div>
 </div>
-<div class="ue q2 mic">
+<div class="ue q2">
 <div class="name">
 Artificial Intelligence
 </div>
@@ -189,7 +189,7 @@ Artificial Intelligence
 6 crédits
 </div>
 </div>
-<div class="ue q2 mic">
+<div class="ue q2">
 <div class="name">
 Mobile development
 </div>
@@ -197,7 +197,7 @@ Mobile development
 3 crédits
 </div>
 </div>
-<div class="ue q2 mic">
+<div class="ue q2">
 <div class="name">
 Web Architecture
 </div>
@@ -205,7 +205,7 @@ Web Architecture
 4 crédits
 </div>
 </div>
-<div class="ue q1 mic">
+<div class="ue q1">
 <div class="name">
 Database management system
 </div>
@@ -213,7 +213,7 @@ Database management system
 4 crédits
 </div>
 </div>
-<div class="ue q2 mic">
+<div class="ue q2">
 <div class="name">
 Network management
 </div>
@@ -229,7 +229,7 @@ Operating Systems
 3 crédits
 </div>
 </div>
-<div class="ue q1 mic">
+<div class="ue q1">
 <div class="name">
 GPU computing
 </div>
@@ -253,7 +253,7 @@ Embedded Project
 9 crédits
 </div>
 </div>
-<div class="ue q1 mic">
+<div class="ue q1">
 <div class="name">
 Computer Networks
 </div>
@@ -322,7 +322,7 @@ Software licences and GDPR
 2 crédits
 </div>
 </div>
-<div class="ue q1 mic">
+<div class="ue q1">
 <div class="name">
 Computer security
 </div>
@@ -370,7 +370,7 @@ Insertion professionnelle
 10 crédits
 </div>
 </div>
-<div class="ue q2 mic" style="grid-row: span 3">
+<div class="ue q2" style="grid-row: span 3">
 <div class="name">
 Travail de Fin d’études
 </div>
