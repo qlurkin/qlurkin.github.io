@@ -23,29 +23,29 @@ css: program.css
 - **4eisa40** GPU computing
   - Programmation parallèle, OpenGL
     - devient **Parallel Programming**
-    - concentré sur Q1B
+    - concentré sur **Q1B**
 - **4eope40** Embedded Project
-  - passe de 7 à 9 ECTS
+  - passe de 7 à **9 ECTS**
   - ajout de 7h d'autonomie en Q1B et 21h en Q2B
 - **4eosi40** IOT and Data acquisition
   - devient **4eosi40 Hardware Testing Processes**
-  - passe de 4 à 2 ECTS
+  - passe de 4 à **2 ECTS**
 
 ## 5MIN
 
 - **5eiad50** Distributed Systems Project
-  - passe de 5 à 4 ECTS
+  - passe de 5 à **4 ECTS**
   - passe de 56h à 45,5h
-  - concentré en Q1A
+  - concentré en **Q1A**
 - **5eiai50** Artificial Intelligence project
-  - passe de 3 à 4 ECTS
+  - passe de 3 à **4 ECTS**
   - passe de 28h à 38,5h
-  - concentré en Q1B
+  - concentré en **Q1B**
   - **4eiai40 Artificial Intelligence** en prérequis
 - **5eisd50** Computer security
   - Labo sécurité logicielle
     - 1 labo en plus
-    - concentré sur Q1A
+    - concentré sur **Q1A**
 - **5eism50** Seminars
   - devient **5eoee50 Ethical Electronics & Informatics**
 
