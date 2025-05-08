@@ -45,7 +45,6 @@ css: program.css
 - **5eisd50** Computer security
   - Labo sécurité logicielle
     - 1 labo en plus
-    - concentré sur **Q1A**
 - **5eism50** Seminars
   - devient **5eoee50 Ethical Electronics & Informatics**
 
