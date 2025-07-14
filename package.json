@@ -15,6 +15,7 @@
   "dependencies": {
     "@rollup/plugin-commonjs": "^24.0.1",
     "@rollup/plugin-node-resolve": "^15.0.1",
+    "archiver": "^7.0.1",
     "build_lib": "file:./build_lib",
     "highlight.js": "^11.8.0",
     "hono": "^4.0.0",
