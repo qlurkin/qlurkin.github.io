@@ -12,7 +12,6 @@ import compile from './typst.mjs'
 import { exec } from 'node:child_process'
 import util from 'node:util'
 export const cmd = util.promisify(exec)
-import archiver from 'archiver'
 import AdmZip from 'adm-zip'
 
 const build_script = 'build.js'
@@ -283,6 +282,10 @@ function filenamify(s) {
 }
 
 export function make_zip(path, files) {
+  if (fs.existsSync(path)) {
+    fs.unlinkSync(path)
+  }
+
   var zip = new AdmZip()
 
   let folder = basename(path)
@@ -295,6 +298,7 @@ export function make_zip(path, files) {
   }
 
   zip.writeZip(path)
+  console.log(`\n create ZIP: ${path}`)
 }
 
 // export async function make_zip(path, files) {
