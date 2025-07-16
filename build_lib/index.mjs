@@ -13,6 +13,7 @@ import { exec } from 'node:child_process'
 import util from 'node:util'
 export const cmd = util.promisify(exec)
 import archiver from 'archiver'
+import AdmZip from 'adm-zip'
 
 const build_script = 'build.js'
 
@@ -281,42 +282,8 @@ function filenamify(s) {
   return s.replace(re, '_')
 }
 
-export async function make_zip(path, files) {
-  const output = fs.createWriteStream(path)
-  const archive = archiver('zip', {
-    zlib: { level: 9 }, // Sets the compression level.
-  })
-
-  // listen for all archive data to be written
-  // 'close' event is fired only when a file descriptor is involved
-  output.on('close', function () {
-    console.log(`\n ${resolve(path)}: ${archive.pointer()} bytes`)
-  })
-
-  // This event is fired when the data source is drained no matter what was the data source.
-  // It is not part of this library but rather from the NodeJS Stream API.
-  // @see: https://nodejs.org/api/stream.html#stream_event_end
-  output.on('end', function () {
-    console.log('Data has been drained')
-  })
-
-  // good practice to catch warnings (ie stat failures and other non-blocking errors)
-  archive.on('warning', function (err) {
-    if (err.code === 'ENOENT') {
-      // log warning
-    } else {
-      // throw error
-      throw err
-    }
-  })
-
-  // good practice to catch this error explicitly
-  archive.on('error', function (err) {
-    throw err
-  })
-
-  // pipe archive data to the file
-  archive.pipe(output)
+export function make_zip(path, files) {
+  var zip = new AdmZip()
 
   let folder = basename(path)
   if (folder.endsWith('.zip')) {
@@ -324,12 +291,67 @@ export async function make_zip(path, files) {
   }
 
   for (const file of files) {
-    // append a file
-    archive.file(file, { name: folder + '/' + basename(file) })
+    zip.addLocalFile(file, folder, basename(file))
   }
 
-  await archive.finalize()
+  zip.writeZip(path)
 }
+
+// export async function make_zip(path, files) {
+//   if (fs.existsSync(path)) {
+//     fs.unlinkSync(path)
+//   }
+//
+//   const output = fs.createWriteStream(path)
+//   const archive = archiver('zip', {
+//     zlib: { level: 9 }, // Sets the compression level.
+//   })
+//
+//   // listen for all archive data to be written
+//   // 'close' event is fired only when a file descriptor is involved
+//   output.on('close', function () {
+//     console.log(`\n ${resolve(path)}: ${archive.pointer()} bytes`)
+//   })
+//
+//   // This event is fired when the data source is drained no matter what was the data source.
+//   // It is not part of this library but rather from the NodeJS Stream API.
+//   // @see: https://nodejs.org/api/stream.html#stream_event_end
+//   output.on('end', function () {
+//     console.log('Data has been drained')
+//   })
+//
+//   // good practice to catch warnings (ie stat failures and other non-blocking errors)
+//   archive.on('warning', function (err) {
+//     if (err.code === 'ENOENT') {
+//       // log warning
+//     } else {
+//       // throw error
+//       throw err
+//     }
+//   })
+//
+//   // good practice to catch this error explicitly
+//   archive.on('error', function (err) {
+//     throw err
+//   })
+//
+//   // pipe archive data to the file
+//   archive.pipe(output)
+//
+//   let folder = basename(path)
+//   if (folder.endsWith('.zip')) {
+//     folder = folder.slice(0, folder.length - 4)
+//   }
+//
+//   for (const file of files) {
+//     // append a file
+//     const name = folder + '/' + basename(file)
+//     archive.file(file, { name: name })
+//     // archive.append(fs.createReadStream(file), { name: name })
+//   }
+//
+//   await archive.finalize()
+// }
 
 // export async function pdf(chapters, filename) {
 //   const app = express()
