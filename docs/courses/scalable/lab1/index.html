@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Lab 1 - Vertical Scalability</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="/deck.css" />
+  <script src="/deck_only.js" defer></script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Lab 1
+<small>Vertical Scalability</small>
+</h1>
+</header>
+<section id="distributed-systems" class="level2">
+<h2>Distributed Systems</h2>
+<ul>
+<li>13 labs</li>
+<li>1 project</li>
+</ul>
+</section>
+<section id="appservice-load" class="level2">
+<h2>App/service load</h2>
+<ul>
+<li>Multiple forms of app/service load:
+<ul>
+<li>Request per seconds</li>
+<li>Amount of stored data</li>
+<li>Computing time</li>
+</ul></li>
+</ul>
+</section>
+<section id="scalability" class="level2">
+<h2>Scalability</h2>
+<ul>
+<li>Two kind of scalability:
+<ul>
+<li>Vertical scalability: Upgrade the server hardware</li>
+<li>Horizontal scalability: Use more servers</li>
+</ul></li>
+</ul>
+</section>
+<section id="vertical-scalability" class="level2">
+<h2>Vertical scalability</h2>
+<ul>
+<li>for which load:
+<ul>
+<li>Request per seconds:
+<ul>
+<li>Faster CPU</li>
+<li>More cores</li>
+<li>More RAM</li>
+</ul></li>
+<li>Amount of data:
+<ul>
+<li>More storage</li>
+<li>More RAM</li>
+</ul></li>
+<li>Computing time:
+<ul>
+<li>Faster CPU</li>
+<li>More cores</li>
+<li>More RAM</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="vertical-scalability-1" class="level2">
+<h2>Vertical scalability</h2>
+<ul>
+<li>Limits:
+<ul>
+<li>No better CPU exists</li>
+<li>Amount of RAM in a single machine is limited</li>
+<li>Amount of HDD/SSD in a single machine is limited</li>
+<li>Diminishing returns:
+<ul>
+<li>Prices grows faster than performance benefits</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="application-design" class="level2">
+<h2>Application design</h2>
+<ul>
+<li>Apps must be designed to take advantage of better hardware:
+<ul>
+<li>Faster CPU: automatic gain</li>
+<li>More than 1 core: Multithreading, multiprocessing, single node
+cluster</li>
+<li>More RAM: Indexing, Cache, Dynamic Programming</li>
+</ul></li>
+</ul>
+</section>
+<section id="hands-on-multithreading" class="level2">
+<h2>Hands on : Multithreading</h2>
+<ul>
+<li><a href="./mandelbrot.html">Generating Mandelbrot Set
+representation</a></li>
+</ul>
+</section>
+<section id="hands-on-dynamic-programming" class="level2">
+<h2>Hands on : Dynamic Programming</h2>
+</section>
+</body>
+</html>

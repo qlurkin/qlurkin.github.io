@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Multithreading - Mandelbrot Set</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="/document.css" />
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Multithreading
+<small>Mandelbrot Set</small>
+</h1>
+</header>
+<p>The Mandelbrot Set is a set of complex numbers. Since complex numbers
+can be represented on a plane (the complex plane, with the real axis on
+x and the imaginary axis on y), this set can be visualized as an
+image:</p>
+<figure>
+<img src="./mandel.png"
+alt="The complex numbers of the Mandelbrot Set (in black). n_{max} = 30" />
+<figcaption aria-hidden="true">The complex numbers of the Mandelbrot Set
+(in black). <span class="math inline">\(n_{max} =
+30\)</span></figcaption>
+</figure>
+<p>A complex number <span class="math inline">\(c\)</span> belongs to
+the Mandelbrot Set if the following sequence is bounded:</p>
+<p><span class="math display">\[
+z_n = \begin{cases} 0 &amp; \text{if } n = 1 \\ z_{n-1}^2 + c &amp;
+\text{otherwise}
+\end{cases}
+\]</span></p>
+<p>Unfortunately, there is no quick way to determine whether the
+sequence is bounded for a given value of <span
+class="math inline">\(c\)</span>. However, it has been proven that if
+the modulus of <span class="math inline">\(z_n\)</span> exceeds 2, then
+the sequence diverges.</p>
+<p>The procedure to determine whether a complex number <span
+class="math inline">\(c\)</span> belongs to the Mandelbrot set is
+straightforward: compute the sequence until either</p>
+<ul>
+<li>the modulus of <span class="math inline">\(z_n\)</span> exceeds 2,
+or</li>
+<li>a maximum iteration count <span
+class="math inline">\(n_{max}\)</span> (defined in advance) is
+reached.</li>
+</ul>
+<p>In the first case, <span class="math inline">\(c\)</span> does not
+belong to the set. In the second case, <span
+class="math inline">\(c\)</span> is considered part of the set. The
+larger the maximum number of iterations, the more accurate the
+representation of the Mandelbrot set will be.</p>
+<section id="goal" class="level2">
+<h2>Goal</h2>
+<p>Create a program that generates an image of the Mandelbrot set. At
+startup, the program will receive as parameters:</p>
+<ul>
+<li>The bounds on the real and imaginary axes</li>
+<li>The image resolution</li>
+<li>The number of threads to use for the computation (note: it is
+straightforward to split the problem across multiple threads by dividing
+the image into separate chunks).</li>
+</ul>
+<p>Once this is done, for a given representation, plot a graph of
+execution time as a function of the number of threads.</p>
+</section>
+<section id="if-youre-bored" class="level2">
+<h2>If you’re bored</h2>
+<p>If you zoom in on the edges of the set and assign different colors
+depending on the number of iterations required to exceed a modulus of 2,
+you can obtain very beautiful images:</p>
+<figure>
+<img src="./mandel_waaaa.png" alt="Colored edge of the set" />
+<figcaption aria-hidden="true">Colored edge of the set</figcaption>
+</figure>
+</section>
+</body>
+</html>
