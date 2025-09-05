@@ -13,6 +13,7 @@ build_and_index(
     'python2ba',
     'python2be',
     'scalable',
+    'signalprocessing',
     'ergonomy',
   ],
   { title: 'Courses' },
