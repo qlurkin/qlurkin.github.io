@@ -2,7 +2,6 @@ import { pandoc, make_zip } from 'build_lib'
 
 make_zip('lab4.zip', [
   './12_Dynamic Systems.ipynb',
-  './12_Dynamic Systems with sympy.ipynb',
   './12_image1.png',
   './12_image2.png',
   './12_image3.png',
