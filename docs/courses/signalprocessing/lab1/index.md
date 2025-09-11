@@ -23,7 +23,7 @@ Pour commencer il faut installer JupyterLab ainsi que les packages `numpy`,
 > python -m pip install jupyterlab numpy matplotlib sympy control
 ```
 
-## lab 4
+## lab 1
 
 Une fois l'installation terminée, téléchargez [le zip du labo](./lab4.zip) et
 décompressez le où bon vous semble sur votre ordinateur. Utilisez ensuite la
