@@ -1,5 +1,5 @@
 ---
-title: Lab 4
+title: Lab 1
 subtitle: Dynamic Systems
 ---
 
