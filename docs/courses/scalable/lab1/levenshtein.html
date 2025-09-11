@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Memoization - Levenshtein Distance</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="/document.css" />
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Memoization
+<small>Levenshtein Distance</small>
+</h1>
+</header>
+<p>The <strong>Levenshtein distance</strong> (also called edit distance)
+is defined as the minimum number of edit operations required to
+transform one string into another.<br />
+The allowed operations are:</p>
+<ul>
+<li>Insertion of a character</li>
+<li>Deletion of a character</li>
+<li>Substitution of one character for another</li>
+</ul>
+<section id="recursive-definition" class="level2">
+<h2>Recursive Definition</h2>
+<p>Let <span class="math inline">\(s[1 \dots i]\)</span> and <span
+class="math inline">\(t[1 \dots j]\)</span> be prefixes of two strings
+<span class="math inline">\(s\)</span> and <span
+class="math inline">\(t\)</span>.<br />
+We define the distance function <span class="math inline">\(D(i,
+j)\)</span> as:</p>
+<p><span class="math display">\[
+D(i, j) =
+\begin{cases}
+i &amp; \text{if } j = 0 \\
+j &amp; \text{if } i = 0 \\
+D(i-1, j-1) &amp; \text{if } s[i] = t[j] \\
+1 + \min \big(D(i-1, j), D(i, j-1), D(i-1, j-1)\big) &amp;
+\text{otherwise}
+\end{cases}
+\]</span></p>
+</section>
+<section id="goals" class="level2">
+<h2>Goals</h2>
+<ol type="1">
+<li>Implement a <strong>naïve recursive solution</strong> to compute the
+Levenshtein distance between two strings.
+<ul>
+<li>Observe its execution time for strings of increasing length.</li>
+<li>You should notice that the time grows exponentially.</li>
+</ul></li>
+<li>Improve the implementation by using <strong>memoization</strong>
+(caching the results of already solved subproblems).
+<ul>
+<li>This reduces the complexity from exponential to<br />
+<span class="math display">\[O(|s| \cdot |t|)\]</span></li>
+<li>Compare the execution times with the naïve version.</li>
+</ul></li>
+<li>Plot a graph of the execution time as a function of the input size
+(length of the strings), both <strong>without memoization</strong> and
+<strong>with memoization</strong>.
+<ul>
+<li>Show the radical improvement obtained thanks to memoization.</li>
+</ul></li>
+</ol>
+</section>
+<section id="remark" class="level2">
+<h2>Remark</h2>
+<p>Unlike simpler examples (e.g., Fibonacci numbers, which can be solved
+with a simple loop), the Levenshtein distance problem truly benefits
+from memoization, because many overlapping subproblems occur and there
+is no straightforward iterative solution.</p>
+</section>
+</body>
+</html>

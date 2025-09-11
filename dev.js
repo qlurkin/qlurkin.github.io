@@ -23,6 +23,7 @@ const watcher = watch(
   server_config.root,
   { recursive: true },
   (_, filename) => {
+    if (filename.includes('.well-known')) return
     if (building) return
 
     const dir = find_buildable_dir(join(server_config.root, filename))

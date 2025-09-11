@@ -42,6 +42,8 @@ program will receive as parameters:
   to split the problem across multiple threads by dividing the image into
   separate chunks).
 
+You can use whatever language you want.
+
 Once this is done, for a given representation, plot a graph of execution time as
 a function of the number of threads.
 
