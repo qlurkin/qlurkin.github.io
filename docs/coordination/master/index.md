@@ -320,194 +320,194 @@ Q2
 <div class="ruler">
 </div>
 <div class="ue q1">
-  <div class="name">
-  Architecture and software quality
-  </div>
-  <div class="ects">
-  2 crédits
-  </div>
+<div class="name">
+Architecture and software quality
+</div>
+<div class="ects">
+2 crédits
+</div>
 </div>
 <div class="ue q2">
-  <div class="name">
-  Artificial Intelligence
-  </div>
-  <div class="ects">
-  5 crédits
-  </div>
+<div class="name">
+Artificial Intelligence
+</div>
+<div class="ects">
+5 crédits
+</div>
 </div>
 <div class="ue q2">
-  <div class="name">
-  Advanced PCB Design
-  </div>
-  <div class="ects">
-  4 crédits
-  </div>
+<div class="name">
+Advanced PCB Design
+</div>
+<div class="ects">
+4 crédits
+</div>
 </div>
 <div class="ue q2">
-  <div class="name">
-  Computer Vision
-  </div>
-  <div class="ects">
-  3 crédits
-  </div>
+<div class="name">
+Computer Vision
+</div>
+<div class="ects">
+3 crédits
+</div>
 </div>
 <div class="ue q1">
-  <div class="name">
-  Microelectronics
-  </div>
-  <div class="ects">
-  4 crédits
-  </div>
+<div class="name">
+Microelectronics
+</div>
+<div class="ects">
+4 crédits
+</div>
 </div>
 <div class="ue q2">
-  <div class="name">
-  Telecommunications
-  </div>
-  <div class="ects">
-  5 crédits
-  </div>
+<div class="name">
+Telecommunications
+</div>
+<div class="ects">
+5 crédits
+</div>
 </div>
 <div class="ue q2">
-  <div class="name">
-  Operating Systems
-  </div>
-  <div class="ects">
-  3 crédits
-  </div>
+<div class="name">
+Operating Systems
+</div>
+<div class="ects">
+3 crédits
+</div>
 </div>
 <div class="ue q1">
-  <div class="name">
-  Power Electronics
-  </div>
-  <div class="ects">
-  7 crédits
-  </div>
+<div class="name">
+Power Electronics
+</div>
+<div class="ects">
+7 crédits
+</div>
 </div>
 <div class="ue q2">
-  <div class="name">
-  System on chip
-  </div>
-  <div class="ects">
-  5 crédits
-  </div>
+<div class="name">
+System on chip
+</div>
+<div class="ects">
+5 crédits
+</div>
 </div>
 <div class="ue all">
-  <div class="name">
-  Embedded Project
-  </div>
-  <div class="ects">
-  9 crédits
-  </div>
+<div class="name">
+Embedded Project
+</div>
+<div class="ects">
+9 crédits
+</div>
 </div>
 <div class="ue q1">
-  <div class="name">
-  Computer Networks
-  </div>
-  <div class="ects">
-  5 crédits
-  </div>
+<div class="name">
+Computer Networks
+</div>
+<div class="ects">
+5 crédits
+</div>
 </div>
 <div class="ue q1">
-  <div class="name">
-  Hardware Testing Processes
-  </div>
-  <div class="ects">
-  2 crédits
-  </div>
+<div class="name">
+Hardware Testing Processes
+</div>
+<div class="ects">
+2 crédits
+</div>
 </div>
 <div class="ue q1">
-  <div class="name">
-  Gestion
-  </div>
-  <div class="ects">
-  6 crédits
-  </div>
+<div class="name">
+Gestion
+</div>
+<div class="ects">
+6 crédits
+</div>
 </div>
 </section>
 <section>
-  <div class="block">
-  5MEO (2025 - 2026)
-  </div>
-  <div class="quadrimestre">
-  Q1
-  </div>
-  <div class="quadrimestre">
-  Q2
-  </div>
-  <div class="ruler">
-  </div>
-  <div class="ue q1">
-    <div class="name">
-    Biodiversity Monitoring Project
-    </div>
-    <div class="ects">
-    4 crédits
-    </div>
-  </div>
-  <div class="ue q1">
-    <div class="name">
-    Embedded Security Project
-    </div>
-    <div class="ects">
-    4 crédits
-    </div>
-  </div>
-  <div class="ue q1">
-    <div class="name">
-    High Frequency Circuit Design
-    </div>
-    <div class="ects">
-    9 crédits
-    </div>
-  </div>
-  <div class="ue q1">
-    <div class="name">
-    Ethical Electronics & Informatics
-    </div>
-    <div class="ects">
-    3 crédits
-    </div>
-  </div>
-  <div class="ue q2">
-    <div class="name">
-    Gestion et stratégie financière
-    </div>
-    <div class="ects">
-    4 crédits
-    </div>
-  </div>
-  <div class="ue q2">
-    <div class="name">
-    Economie
-    </div>
-    <div class="ects">
-    4 crédits
-    </div>
-  </div>
-  <div class="ue q2">
-    <div class="name">
-    Langues
-    </div>
-    <div class="ects">
-    2 crédits
-    </div>
-  </div>
-  <div class="ue all">
-    <div class="name">
-    Insertion professionnelle
-    </div>
-    <div class="ects">
-    10 crédits
-    </div>
-  </div>
-  <div class="ue q2" style="grid-row: span 3">
-    <div class="name">
-    Travail de Fin d’études
-    </div>
-    <div class="ects">
-    20 crédits
-    </div>
-  </div>
+<div class="block">
+5MEO (2025 - 2026)
+</div>
+<div class="quadrimestre">
+Q1
+</div>
+<div class="quadrimestre">
+Q2
+</div>
+<div class="ruler">
+</div>
+<div class="ue q1">
+<div class="name">
+Biodiversity Monitoring Project
+</div>
+<div class="ects">
+4 crédits
+</div>
+</div>
+<div class="ue q1">
+<div class="name">
+Embedded Security Project
+</div>
+<div class="ects">
+4 crédits
+</div>
+</div>
+<div class="ue q1">
+<div class="name">
+High Frequency Circuit Design
+</div>
+<div class="ects">
+9 crédits
+</div>
+</div>
+<div class="ue q1">
+<div class="name">
+Ethical Electronics & Informatics
+</div>
+<div class="ects">
+3 crédits
+</div>
+</div>
+<div class="ue q2">
+<div class="name">
+Gestion et stratégie financière
+</div>
+<div class="ects">
+4 crédits
+</div>
+</div>
+<div class="ue q2">
+<div class="name">
+Economie
+</div>
+<div class="ects">
+4 crédits
+</div>
+</div>
+<div class="ue q2">
+<div class="name">
+Langues
+</div>
+<div class="ects">
+2 crédits
+</div>
+</div>
+<div class="ue all">
+<div class="name">
+Insertion professionnelle
+</div>
+<div class="ects">
+10 crédits
+</div>
+</div>
+<div class="ue q2">
+<div class="name">
+Travail de Fin d’études
+</div>
+<div class="ects">
+20 crédits
+</div>
+</div>
 </section>
 </div>
 
@@ -515,20 +515,34 @@ Q2
 
 - Informations stages 5MIN/5MEO sur **Claco**
   _([ECAM Informations étudiant·es > Stages et TFE > Stages 5MA](https://claco.ecam.be/#/workspace/3c0ca032-b721-11e8-b44d-0cc47a960f96/resources/Stages%205MA-11582))_
-  Prochaine échéance : **24  octobre** Vous prenez contact avec votre coordinateur pour faire le point // **17 novembre** Vous avez encodé votre proposition de stage.
+
+  Prochaines échéances :
+  - **24 octobre** Vous prenez contact avec votre coordinateur pour faire le
+    point
+  - **17 novembre** Vous avez encodé votre proposition de stage.
+
 - Informations TFEs sur **Claco**
   _([ECAM Informations étudiant·es > Stages et TFE > TFE](https://claco.ecam.be/#/workspace/3c0ca032-b721-11e8-b44d-0cc47a960f96/resources/TFE-11615))_
 - Des propositions de stages/TFEs sont publiées sur l'équipe Teams
   [**Finalités Informatique / Electronique**](https://teams.microsoft.com/l/team/19%3A51ae90943dd14492a33fd1f4a4e770f5%40thread.tacv2/conversations?groupId=004b483e-157a-4bc0-811b-d588a0821632&tenantId=e3d6f09e-9ba9-4a36-ad75-d9039be4fe29)
-- ⚠️ Attention à ne pas créer une entreprise existante ! Si soucis de coordonnées ou autre → stages@ecam.be
+- ⚠️ Attention à ne pas créer une entreprise existante ! Si soucis de
+  coordonnées ou autre → <stages@ecam.be>
 
 ## GenAI et travaux
 
-[Article 95 du règlement des études](https://claco.ecam.be/#/workspace/3c0ca032-b721-11e8-b44d-0cc47a960f96/resources/haute-ecole-ichec-ecam-isfsc-reglement-des-etudes-2025-2026-vf) :
-> Dans tous les cas, l’usage d’un logiciel tel que ChatGPT ou de tout autre logiciel d’intelligence artificielle ne peut aboutir à une substitution complète ou partielle de la production personnelle de l’étudiante ou de l’étudiant, sous peine d’une sanction académique.
-> Dans tous les cas, l’étudiante ou l’étudiant devra obligatoirement mentionner le recours à toute forme d’intelligence artificielle dans le cadre d’un travail et préciser l’usage qu’elle ou il en a fait, sous peine de s’exposer aux sanctions prévues à l’article suivant.
+[Article 95 du règlement des études](https://claco.ecam.be/#/workspace/3c0ca032-b721-11e8-b44d-0cc47a960f96/resources/haute-ecole-ichec-ecam-isfsc-reglement-des-etudes-2025-2026-vf):
 
-Un guide de rédaction avec les règles de référencement suggérées se trouve [sur Claco](https://claco.ecam.be/#/workspace/3c0ca032-b721-11e8-b44d-0cc47a960f96/resources/tfe-guideredactiontfe-versionmars-2025-3).
+> Dans tous les cas, l'usage d'un logiciel tel que ChatGPT ou de tout autre
+> logiciel d’**intelligence artificielle** ne peut aboutir à une
+> **substitution** complète ou partielle de la **production personnelle** de
+> l'étudiante ou de l'étudiant, sous peine d'une **sanction** académique. Dans
+> tous les cas, l'étudiante ou l'étudiant devra obligatoirement **mentionner**
+> le recours à toute forme d'intelligence artificielle dans le cadre d’un
+> travail et préciser l'**usage** qu'elle ou il en a fait, sous peine de
+> s’exposer aux sanctions prévues à l'article suivant.
+
+Un **guide de rédaction** avec les règles de référencement suggérées se trouve
+[sur Claco](https://claco.ecam.be/#/workspace/3c0ca032-b721-11e8-b44d-0cc47a960f96/resources/tfe-guideredactiontfe-versionmars-2025-3).
 
 ## Outils "Présences" et "Séries"
 
@@ -583,4 +597,3 @@ Un guide de rédaction avec les règles de référencement suggérées se trouve
 ## Distribution cartes étudiant·e·s
 
 Distribution cartes étudiant·e·s
-

@@ -1,4 +1,3 @@
 import { pandoc } from 'build_lib'
 
-pandoc("index.md")
-
+pandoc('index.md')
