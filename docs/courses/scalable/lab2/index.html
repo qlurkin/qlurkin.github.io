@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Lab 2 - Containers</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="/deck.css" />
+  <script src="/deck_only.js" defer></script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Lab 2
+<small>Containers</small>
+</h1>
+</header>
+<section id="what-are-containers" class="level2">
+<h2>What are containers?</h2>
+<ul>
+<li>They <strong>bundle</strong>:
+<ul>
+<li>An application</li>
+<li>Its dependencies</li>
+<li>A runtime environment to run it</li>
+</ul></li>
+<li><strong>They are not VMs</strong>!
+<ul>
+<li>VMs emulate hardware <span class="small">You must install a whole OS
+on it</span></li>
+<li>Containers provide an <strong>isolated</strong> environment on top
+of the host OS <span class="small">The kernel of the host is shared with
+the containers</span></li>
+</ul></li>
+</ul>
+</section>
+<section id="why-use-containers" class="level2">
+<h2>Why use containers?</h2>
+<ul>
+<li>Consistency: same environment everywhere</li>
+<li>Portability: run on any machine</li>
+<li>Isolation: no conflicts between apps</li>
+<li>Lightweight: faster than VMs</li>
+</ul>
+</section>
+<section id="container-runtime" class="level2">
+<h2>Container runtime</h2>
+<ul>
+<li>There is <strong>multiple</strong> container runtime:
+<ul>
+<li>Docker</li>
+<li>Podman</li>
+</ul></li>
+</ul>
+</section>
+<section id="docker-basics" class="level2">
+<h2>Docker basics</h2>
+<ul>
+<li><strong>Image</strong> = blueprint (frozen recipe)</li>
+<li><strong>Container</strong> = running instance of an image</li>
+<li><strong>Dockerfile</strong> = script to build an image</li>
+</ul>
+</section>
+<section id="dockerfile-example" class="level2">
+<h2>Dockerfile example</h2>
+<div class="pygments"><pre><span></span><span class="k">FROM</span><span class="w"> </span><span class="s">python:3.13-slim</span>
+<span class="k">WORKDIR</span><span class="w"> </span><span class="s">/app</span>
+<span class="k">COPY</span><span class="w"> </span>.<span class="w"> </span>.
+<span class="k">RUN</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+<span class="k">CMD</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;python&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;app.py&quot;</span><span class="p">]</span>
+</pre></div>
+
+<ul>
+<li>Here <code>python:3.13-slim</code> is a Image</li>
+<li>This Dockerfile create an Image based on another Image</li>
+<li>Docker’s images can be multiple of these layers deep</li>
+</ul>
+</section>
+<section id="image-repositories" class="level2">
+<h2>Image repositories</h2>
+<ul>
+<li><p>The <strong>official</strong> Docker’s repository of Images is <a
+href="https://hub.docker.com/"
+class="uri">https://hub.docker.com/</a></p></li>
+<li><p>The <code>python:3.13-slim</code> image is mentionned on</p>
+<p><a href="https://hub.docker.com/_/python"
+class="uri">https://hub.docker.com/_/python</a></p></li>
+<li><p>You can push your <strong>own Images</strong> on
+DockerHub</p></li>
+<li><p>It’s possible to use <strong>other repositories</strong></p></li>
+</ul>
+</section>
+<section id="build-and-run" class="level2">
+<h2>Build and Run</h2>
+<ul>
+<li><p>Build an <strong>Image</strong>:</p>
+<div class="terminal">docker build -t my-app .
+</div>
+<p><em>In the folder that contains your
+<strong>Dockerfile</strong></em></p></li>
+<li><p>Run a <strong>container</strong>:</p>
+<div class="terminal">docker run -p 8080:8080 my-app
+</div></li>
+</ul>
+</section>
+<section id="docker-networking" class="level2">
+<h2>Docker Networking</h2>
+<ul>
+<li><code>-p 8080:8080</code> ??</li>
+<li>By default, each container runs in its <strong>own isolated network
+namespace</strong></li>
+<li>Containers can communicate:
+<ul>
+<li>With each other (if on the <strong>same network</strong>)</li>
+<li>With the outside world (through <strong>NAT</strong>)</li>
+</ul></li>
+</ul>
+</section>
+<section id="default-bridge-network" class="level2">
+<h2>Default bridge network</h2>
+<ul>
+<li>When you run <code>docker run my-app</code>:
+<ul>
+<li>Container gets a private IP (e.g. <code>172.17.x.x</code>)</li>
+<li>Not directly accessible from your host</li>
+</ul></li>
+</ul>
+</section>
+<section id="exposing-ports" class="level2">
+<h2>Exposing ports</h2>
+<ul>
+<li><p>To access a container from your host:</p>
+<ul>
+<li>You must <strong>publish a port</strong></li>
+<li>Done with
+<code>-p &lt;host_port&gt;:&lt;container_port&gt;</code></li>
+</ul>
+<p>Example:</p>
+<div class="terminal">docker run -p 8080:8080 my-app
+</div></li>
+</ul>
+</section>
+<section id="the-expose-instruction" class="level2">
+<h2>The <code>EXPOSE</code> instruction</h2>
+<ul>
+<li><p>Defines which port(s) the container <strong>expects to listen
+on</strong></p>
+<div class="pygments"><pre><span></span><span class="k">FROM</span><span class="w"> </span><span class="s">python:3.13-slim</span>
+<span class="k">WORKDIR</span><span class="w"> </span><span class="s">/app</span>
+<span class="k">COPY</span><span class="w"> </span>.<span class="w"> </span>.
+<span class="k">RUN</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+<span class="k">EXPOSE</span><span class="w"> </span><span class="s">8080</span>
+<span class="k">CMD</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;python&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;app.py&quot;</span><span class="p">]</span>
+</pre></div>
+</li>
+<li><p>What <code>EXPOSE</code> does <strong>not do</strong>:</p>
+<ul>
+<li>Does not publish the port to the host</li>
+<li>Does not make the app accessible from outside</li>
+</ul>
+<p>Only <code>-p host:container</code> does that!</p></li>
+<li><p><strong>Why</strong> use <code>EXPOSE</code> then?</p>
+<ul>
+<li>Documentation for developers</li>
+<li>Tools like <strong>docker-compose</strong> or
+<strong>Kubernetes</strong> can use it</li>
+<li>Makes your <strong>Dockerfile</strong> self-explanatory</li>
+</ul></li>
+</ul>
+</section>
+<section id="docker-networking-modes" class="level2">
+<h2>Docker networking modes</h2>
+<p>Docker offers multiple network <strong>modes</strong> for
+containers.</p>
+<ul>
+<li><p><strong>Bridge</strong> (default)</p>
+<ul>
+<li>Each container gets a private IP</li>
+<li>Use <code>-p host:container</code> to expose to the host</li>
+<li>Good for most applications</li>
+</ul></li>
+<li><p><strong>Host</strong></p>
+<div class="terminal">docker run --network host my-app
+</div>
+<ul>
+<li>Shares the host network directly</li>
+<li>Container listens on host’s IP and ports</li>
+<li>Better performance, but no isolation <span class="small">Only
+available on Linux</span></li>
+</ul></li>
+</ul>
+</section>
+<section id="docker-networking-modes-2" class="level2">
+<h2>Docker networking modes (2)</h2>
+<ul>
+<li><p><strong>None</strong></p>
+<ul>
+<li>No network at all</li>
+</ul></li>
+<li><p><strong>User-defined bridge</strong></p>
+<div class="terminal">docker network create mynet
+docker run -d --name app1 --network mynet nginx
+docker run -d --name app2 --network mynet alpine ping app1
+</div>
+<ul>
+<li>Containers can discover each other by name</li>
+<li>Common with <strong>docker-compose</strong></li>
+</ul></li>
+<li><p><strong>Overlay</strong></p>
+<ul>
+<li>Used in <strong>Docker Swarm</strong> or
+<strong>Kubernetes</strong></li>
+</ul></li>
+</ul>
+</section>
+<section id="user-defined-bridge" class="level2">
+<h2>User-defined bridge</h2>
+<div class="terminal">docker network create mynet
+docker run -d --name app1 --network mynet nginx
+docker run -d --name app2 --network mynet alpine ping app1
+</div>
+<ul>
+<li><strong>Creation</strong> of the bridge with
+<code>docker network create</code></li>
+<li>Start a container with that <strong>bridge</strong> with
+<code>--network</code></li>
+<li>Assign a specific <strong>name</strong> to the container with
+<code>--name</code> <span class="small">User-defined bridge has DNS
+resolution (default bridge has not)</span></li>
+<li>Start a container in <strong>detach mode</strong> with
+<code>-d</code> <span class="small">Process of the container in the
+background</span></li>
+<li>Run a specific <strong>command</strong> on the container <span
+class="small">Here the container <code>app2</code> is started from the
+<code>alpine</code> image and the <code>ping app1</code> command is
+launched on it</span></li>
+</ul>
+</section>
+<section id="distributed-systems" class="level2">
+<h2>Distributed Systems</h2>
+<ul>
+<li>A service = <strong>multiple</strong> connected containers <span
+class="small">Example: Frontend and Database</span></li>
+<li>This is a <strong>distributed</strong> architecture</li>
+<li>Even if all the containers runs on the same physical server <span
+class="small">with Kubernetes, <strong>It doesn’t matter</strong> if the
+containers are on the same server or not</span></li>
+</ul>
+</section>
+<section id="hands-on-nginx" class="level2">
+<h2>Hands-on: Nginx</h2>
+<ul>
+<li>Start a container that provides a service on one of its ports</li>
+<li>Exposing that port directly to the Internet is <strong>not
+recommended</strong></li>
+<li>Add an <strong>Nginx</strong> container to expose the service in a
+more professional way</li>
+</ul>
+</section>
+<section id="simple-paas" class="level2">
+<h2>Simple PaaS</h2>
+<ul>
+<li>Goal: the app <strong>updates itself</strong> when a new version is
+pushed to <code>git</code></li>
+<li>The app is configured to <strong>reload</strong> when files change
+(e.g. with <code>nodemon</code>)</li>
+<li>A second container <strong>shares the filesystem</strong> with the
+main app and runs <code>git pull</code> periodically (e.g. via a cron
+job)</li>
+</ul>
+</section>
+</body>
+</html>
