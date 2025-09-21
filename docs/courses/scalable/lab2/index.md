@@ -195,7 +195,7 @@ docker run -d --name app2 --network mynet alpine ping app1
 - Exposing that port directly to the Internet is **not recommended**
 - Add an **Nginx** container to expose the service in a more professional way
 
-## Simple PaaS
+## Hands-on: Simple PaaS
 
 - Goal: the app **updates itself** when a new version is pushed to `git`
 - The app is configured to **reload** when files change (e.g. with `nodemon`)
