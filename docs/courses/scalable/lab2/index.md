@@ -200,4 +200,4 @@ docker run -d --name app2 --network mynet alpine ping app1
 - Goal: the app **updates itself** when a new version is pushed to `git`
 - The app is configured to **reload** when files change (e.g. with `nodemon`)
 - A second container **shares the filesystem** with the main app and runs
-  `git pull` periodically (e.g. via a cron job)
+  `git pull` periodically (e.g. via a bash loop)
