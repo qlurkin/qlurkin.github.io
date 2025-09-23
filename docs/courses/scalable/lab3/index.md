@@ -300,10 +300,10 @@ kubectl get svc myapp-service
    ```plantuml {.build}
    @startuml
    actor user as "User"
-   rectangle varnish_service as "Varnish NodePort Service"
+   rectangle varnish_service as "Varnish NodePort Service" #aliceblue;line:blue;text:blue
    rectangle varnish_rep1 as "Varnish Replica 1"
    rectangle varnish_rep2 as "Varnish Replica 2"
-   rectangle app_service as "App ClusterIP Service"
+   rectangle app_service as "App ClusterIP Service" #aliceblue;line:blue;text:blue
    rectangle app_rep1 as "App Replica 1"
    rectangle app_rep2 as "App Replica 2"
    rectangle app_rep3 as "App Replica 3"
