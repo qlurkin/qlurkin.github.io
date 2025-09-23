@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Lab 3 - Kubernetes</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="/deck.css" />
+  <script src="/deck_only.js" defer></script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Lab 3
+<small>Kubernetes</small>
+</h1>
+</header>
+<section id="what-is-kubernetes" class="level2">
+<h2>What is Kubernetes?</h2>
+<ul>
+<li>An <strong>orchestration</strong> system for containers</li>
+<li>Automates:
+<ul>
+<li>Deployment</li>
+<li>Scaling</li>
+<li>Networking</li>
+<li>Self-healing</li>
+</ul></li>
+<li>Runs on a <strong>cluster</strong> of machines (nodes)</li>
+</ul>
+</section>
+<section id="why-kubernetes" class="level2">
+<h2>Why Kubernetes?</h2>
+<ul>
+<li>Docker runs containers, but:
+<ul>
+<li>Hard to <strong>manage</strong> many containers</li>
+<li>No built-in <strong>scaling</strong> or
+<strong>failover</strong></li>
+<li>Networking &amp; service <strong>discovery</strong> are limited</li>
+</ul></li>
+<li>Kubernetes solves these challenges</li>
+</ul>
+</section>
+<section id="kubernetes-architecture" class="level2">
+<h2>Kubernetes Architecture</h2>
+<ul>
+<li><strong>Control Plane</strong> (manages the cluster):
+<ul>
+<li><strong>API Server</strong>: the front door, all
+<code>kubectl</code> and component communication goes through it</li>
+<li><strong>Scheduler</strong>: decides <em>where</em> a Pod should run
+(which Node)</li>
+<li><strong>Controller Manager</strong>: watches desired state vs actual
+state, triggers actions (e.g. restart pods)</li>
+<li><strong>etcd</strong>: distributed key-value store, holds the
+cluster state and configuration</li>
+</ul></li>
+<li><strong>Worker Nodes</strong> (run workloads):
+<ul>
+<li><strong>Kubelet</strong>: agent on each node, ensures containers run
+as defined in Pods</li>
+<li><strong>Kube-proxy</strong>: handles networking, load balancing, and
+service discovery on nodes</li>
+<li><strong>Container runtime</strong>: actually runs the containers
+(e.g. containerd, CRI-O, Docker)</li>
+</ul></li>
+</ul>
+</section>
+<section id="core-concept-pod" class="level2">
+<h2>Core Concept: Pod</h2>
+<ul>
+<li><strong>Smallest</strong> deployable unit in Kubernetes</li>
+<li>Usually runs one container</li>
+<li>Can include multiple <strong>tightly coupled</strong>
+containers</li>
+<li>Pods are <strong>ephemeral</strong> (can be
+restarted/rescheduled)</li>
+</ul>
+</section>
+<section id="core-concept-deployment" class="level2">
+<h2>Core Concept: Deployment</h2>
+<ul>
+<li>Higher-level abstraction over Pods</li>
+<li>Manages <strong>replicas</strong> of Pods</li>
+<li>Supports rolling <strong>updates</strong> and rollback</li>
+<li><strong>Declarative</strong>: “desired state”</li>
+</ul>
+</section>
+<section id="core-concept-service" class="level2">
+<h2>Core Concept: Service</h2>
+<ul>
+<li>Stable network identity for Pods
+<ul>
+<li>Pods are <strong>ephemeral</strong> → their IPs change when
+recreated</li>
+<li>Directly connecting to Pod IPs is unreliable</li>
+<li>A <strong>Service</strong> provides:
+<ul>
+<li>A stable <strong>ClusterIP</strong> inside the cluster</li>
+<li>A stable <strong>DNS name</strong>
+(e.g. <code>my-service.default.svc.cluster.local</code>)</li>
+</ul></li>
+<li>Traffic is automatically routed to the healthy Pods behind the
+Service</li>
+</ul></li>
+<li>Provides service discovery &amp; load balancing</li>
+</ul>
+</section>
+<section id="service-types" class="level2">
+<h2>Service types</h2>
+<ul>
+<li><strong>ClusterIP</strong> provides:
+<ul>
+<li>a stable network identity</li>
+<li>load balancing between Pod replicas</li>
+</ul></li>
+<li><strong>NodePort</strong> provides:
+<ul>
+<li>everything ClusterIP provides</li>
+<li>an open port on each Node of the cluster for external access</li>
+</ul></li>
+<li><strong>LoadBalancer</strong> provides:
+<ul>
+<li>everything NodePort provides</li>
+<li>a single external IP</li>
+<li>load balancing between Nodes</li>
+</ul></li>
+</ul>
+</section>
+<section id="ingress" class="level2">
+<h2>Ingress</h2>
+<ul>
+<li><strong>LoadBalancer Service</strong>
+<ul>
+<li>Exposes <strong>one Service</strong> to the Internet</li>
+<li>Each LoadBalancer → one external IP (provided by cloud)</li>
+<li>TCP/UDP traffic (Layer 4)</li>
+</ul></li>
+<li><strong>Ingress</strong>
+<ul>
+<li>Separate Kubernetes resource (not a Service)</li>
+<li>Routes HTTP/HTTPS traffic to <strong>multiple Services</strong>
+<span class="small">One IP for multiple Services</span></li>
+<li>Requires an <strong>Ingress Controller</strong> (e.g., Nginx,
+Traefik)</li>
+<li>Layer 7 routing (host/path-based)</li>
+<li>TLS termination, redirections, advanced HTTP rules</li>
+</ul></li>
+</ul>
+</section>
+<section id="namespaces" class="level2">
+<h2>Namespaces</h2>
+<ul>
+<li><strong>Logical partition</strong> inside a Kubernetes cluster</li>
+<li>Used to <strong>organize</strong> and <strong>isolate</strong>
+resources (Pods, Services, ConfigMaps, Secrets, etc.)</li>
+<li>Default namespace is <code>default</code> if none is specified</li>
+</ul>
+</section>
+<section id="why-use-namespaces" class="level2">
+<h2>Why use namespaces?</h2>
+<ul>
+<li><strong>Organization</strong>: separate teams, projects, or
+environments (dev/staging/prod)</li>
+<li><strong>Isolation</strong>: resources with the same name can exist
+in different namespaces</li>
+<li><strong>Resource management</strong>: apply quotas and limits per
+namespace</li>
+<li><strong>Security</strong>: restrict access with RBAC rules at the
+namespace level</li>
+</ul>
+</section>
+<section id="configmaps-secrets" class="level2">
+<h2>ConfigMaps &amp; Secrets</h2>
+<ul>
+<li><p>Both are Kubernetes objects used to <strong>inject
+configuration</strong> into Pods</p></li>
+<li><p>They <strong>decouple</strong> app configuration from container
+images</p></li>
+<li><p><strong>ConfigMaps</strong></p>
+<ul>
+<li>Store <strong>non-sensitive key/value pairs</strong></li>
+<li>Typical use: environment variables, API endpoints, feature
+flags</li>
+<li>Can be mounted as env variables or files in a volume</li>
+</ul></li>
+<li><p><strong>Secrets</strong></p>
+<ul>
+<li>Store <strong>sensitive data</strong>: passwords, tokens, API
+keys</li>
+<li>Encoded in base64 (not strong encryption)</li>
+<li>Can also be mounted as env variables or files</li>
+</ul></li>
+</ul>
+</section>
+<section id="volumes" class="level2">
+<h2>Volumes</h2>
+<ul>
+<li><p>Kubernetes Pods are <strong>ephemeral</strong>: when a Pod dies,
+<strong>its data is lost</strong></p></li>
+<li><p><strong>Volumes</strong> provide a way to
+<strong>persist</strong> or <strong>share</strong> data</p></li>
+<li><p>Types of volumes</p>
+<ul>
+<li><strong>emptyDir</strong>: temporary storage shared between
+containers in the same Pod, deleted when the Pod is removed</li>
+<li><strong>hostPath</strong>: mounts a directory from the Node’s
+filesystem into the Pod</li>
+<li><strong>PersistentVolume (PV) / PersistentVolumeClaim
+(PVC)</strong>:
+<ul>
+<li>Abstract storage resources in the cluster</li>
+<li>Can be backed by local disks, NFS, or cloud storage (AWS EBS, GCP
+PD, etc.)</li>
+<li>Survive Pod restarts and rescheduling</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="kubectl" class="level2">
+<h2>kubectl</h2>
+<ul>
+<li><p><strong>Command-line tool</strong> to interact with
+Kubernetes</p></li>
+<li><p>Examples:</p>
+<div class="terminal">kubectl get pods
+kubectl apply -f deployment.yaml
+kubectl describe svc my-service
+</div></li>
+</ul>
+</section>
+<section id="example-first-pod" class="level2">
+<h2>Example: First Pod</h2>
+<div class="pygments"><pre><span></span><span class="c1"># pod.yaml</span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Pod</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">myapp-pod</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">containers</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">myapp</span>
+<span class="w">      </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my_app:1.0</span>
+<span class="w">      </span><span class="nt">imagePullPolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">IfNotPresent</span>
+<span class="w">      </span><span class="nt">ports</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">containerPort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8080</span>
+</pre></div>
+
+<p>Run it:</p>
+<div class="terminal">kubectl apply -f pod.yaml
+kubectl get pods
+</div>
+</section>
+<section id="example-deployment" class="level2">
+<h2>Example: Deployment</h2>
+<div class="pygments"><pre><span></span><span class="c1"># deployment.yaml</span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apps/v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Deployment</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">myapp-deployment</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
+<span class="w">  </span><span class="nt">selector</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">matchLabels</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">myapp</span>
+<span class="w">  </span><span class="nt">template</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">metadata</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">labels</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">myapp</span>
+<span class="w">    </span><span class="nt">spec</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">containers</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">myapp</span>
+<span class="w">          </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nginx</span>
+<span class="w">          </span><span class="nt">ports</span><span class="p">:</span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">containerPort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">80</span>
+</pre></div>
+
+</section>
+<section id="example-service" class="level2">
+<h2>Example: Service</h2>
+<div class="pygments"><pre><span></span><span class="c1"># service.yaml</span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Service</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">myapp-service</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">selector</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">myapp</span>
+<span class="w">  </span><span class="nt">ports</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">80</span>
+<span class="w">      </span><span class="nt">targetPort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">80</span>
+<span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NodePort</span>
+</pre></div>
+
+<p>Access it:</p>
+<div class="terminal">kubectl get svc myapp-service
+</div>
+</section>
+</body>
+</html>
