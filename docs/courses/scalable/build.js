@@ -4,6 +4,7 @@ build_and_index(
   [
     'lab1',
     'lab2',
+    'lab3',
     // 'docker',
     // 'k8s',
     // 'project2425',

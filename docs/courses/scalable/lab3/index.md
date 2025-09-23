@@ -160,7 +160,7 @@ metadata:
 spec:
   containers:
     - name: myapp
-      image: my_app:1.0
+      image: my-app:1.0
       imagePullPolicy: IfNotPresent
       ports:
         - containerPort: 8080
@@ -172,6 +172,31 @@ Run it:
 kubectl apply -f pod.yaml
 kubectl get pods
 ```
+
+## Pod manifest
+
+- **apiVersion**: API version for this object (Pods → `v1`)
+- **kind**: type of resource (here → `Pod`)
+- **metadata**: identification data
+  - `name`: unique name of the Pod
+  - `labels`: key/value pairs for grouping and selectors
+  - `namespace`: (optional) namespace where the Pod lives
+
+## Pod Manifest (2)
+
+- **spec**: how the Pod should run
+  - **containers**:
+    - `name`: container name inside the Pod
+    - `image`: Docker image to run
+    - `ports`: declared container ports (for documentation/Services)
+    - `env`: environment variables
+    - `resources`: CPU/memory requests and limits
+    - `volumeMounts`: mount volumes into the container
+  - **volumes**: shared storage definitions (ConfigMaps, Secrets, PVs…)
+  - **restartPolicy**: what happens if a container crashes (`Always`,
+    `OnFailure`, `Never`)
+  - **nodeSelector / affinity / tolerations**: scheduling rules for where the
+    Pod runs
 
 ## Example: Deployment
 
@@ -193,10 +218,28 @@ spec:
     spec:
       containers:
         - name: myapp
-          image: nginx
+          image: my-app:1.0
+          imagePullPolicy: IfNotPresent
           ports:
-            - containerPort: 80
+            - containerPort: 8080
 ```
+
+## Deployment manifest
+
+- **apiVersion**: `apps/v1` (for Deployments)
+- **kind**: type of resource → `Deployment`
+- **metadata**: identification
+  - `name`: name of the Deployment
+  - `labels`: key/value pairs for grouping and selectors
+
+## Deployment manifest (2)
+
+- **spec**: how the Deployment should run
+  - **replicas**: number of Pod replicas to maintain
+  - **selector**: labels that Pods must match to be managed by this Deployment
+  - **template**: Pod template (same structure as a Pod manifest)
+    - `metadata`: labels for Pods
+    - `spec`: definition of containers, volumes, etc.
 
 ## Example: Service
 
@@ -210,8 +253,8 @@ spec:
   selector:
     app: myapp
   ports:
-    - port: 80
-      targetPort: 80
+    - port: 8080
+      targetPort: 8080
   type: NodePort
 ```
 
@@ -220,3 +263,58 @@ Access it:
 ```terminal
 kubectl get svc myapp-service
 ```
+
+## Service manifest
+
+- **apiVersion**: `v1` (for Services)
+- **kind**: type of resource → `Service`
+- **metadata**: identification
+  - `name`: name of the Service
+  - `labels`: optional grouping/identification
+
+## Service manifest (2)
+
+- **spec**: how the Service behaves
+  - **selector**: labels of Pods that this Service targets
+  - **ports**:
+    - `port`: port exposed by the Service (stable virtual IP, ClusterIP)
+    - `targetPort`: container port in the Pod (default = same as `port`)
+    - `nodePort`: (for NodePort services) port exposed on each Node
+  - **type**:
+    - `ClusterIP` (default): internal-only access
+    - `NodePort`: accessible via `<NodeIP>:<NodePort>`
+    - `LoadBalancer`: cloud-managed external IP
+
+## Hands-on
+
+1. Deploy an app with 3 replicas behind a NodePort Service.
+2. Use the `kubectl scale` command to modify the number of replicas on the fly.
+3. Create a new version (`2.0`) of your app’s image with some changes.
+4. Use the `kubectl set image` command to update your Deployment with the new
+   image version.
+5. Use the `kubectl get pods` command to observe each Pod being updated one by
+   one, ensuring zero downtime.
+6. Create a cache layer for your app based on
+   [Varnish](https://hub.docker.com/_/varnish)
+
+   ```plantuml {.build}
+   @startuml
+   actor user as "User"
+   rectangle varnish_service as "Varnish NodePort Service"
+   rectangle varnish_rep1 as "Varnish Replica 1"
+   rectangle varnish_rep2 as "Varnish Replica 2"
+   rectangle app_service as "App ClusterIP Service"
+   rectangle app_rep1 as "App Replica 1"
+   rectangle app_rep2 as "App Replica 2"
+   rectangle app_rep3 as "App Replica 3"
+
+   user --> varnish_service
+   varnish_service --> varnish_rep1
+   varnish_service --> varnish_rep2
+   varnish_rep1 --> app_service
+   varnish_rep2 --> app_service
+   app_service --> app_rep1
+   app_service --> app_rep2
+   app_service --> app_rep3
+   @enduml
+   ```

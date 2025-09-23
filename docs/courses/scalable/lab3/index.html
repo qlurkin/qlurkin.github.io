@@ -258,7 +258,7 @@ kubectl describe svc my-service
 <span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">containers</span><span class="p">:</span>
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">myapp</span>
-<span class="w">      </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my_app:1.0</span>
+<span class="w">      </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-app:1.0</span>
 <span class="w">      </span><span class="nt">imagePullPolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">IfNotPresent</span>
 <span class="w">      </span><span class="nt">ports</span><span class="p">:</span>
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">containerPort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8080</span>
@@ -268,6 +268,46 @@ kubectl describe svc my-service
 <div class="terminal">kubectl apply -f pod.yaml
 kubectl get pods
 </div>
+</section>
+<section id="pod-manifest" class="level2">
+<h2>Pod manifest</h2>
+<ul>
+<li><strong>apiVersion</strong>: API version for this object (Pods →
+<code>v1</code>)</li>
+<li><strong>kind</strong>: type of resource (here →
+<code>Pod</code>)</li>
+<li><strong>metadata</strong>: identification data
+<ul>
+<li><code>name</code>: unique name of the Pod</li>
+<li><code>labels</code>: key/value pairs for grouping and selectors</li>
+<li><code>namespace</code>: (optional) namespace where the Pod
+lives</li>
+</ul></li>
+</ul>
+</section>
+<section id="pod-manifest-2" class="level2">
+<h2>Pod Manifest (2)</h2>
+<ul>
+<li><strong>spec</strong>: how the Pod should run
+<ul>
+<li><strong>containers</strong>:
+<ul>
+<li><code>name</code>: container name inside the Pod</li>
+<li><code>image</code>: Docker image to run</li>
+<li><code>ports</code>: declared container ports (for
+documentation/Services)</li>
+<li><code>env</code>: environment variables</li>
+<li><code>resources</code>: CPU/memory requests and limits</li>
+<li><code>volumeMounts</code>: mount volumes into the container</li>
+</ul></li>
+<li><strong>volumes</strong>: shared storage definitions (ConfigMaps,
+Secrets, PVs…)</li>
+<li><strong>restartPolicy</strong>: what happens if a container crashes
+(<code>Always</code>, <code>OnFailure</code>, <code>Never</code>)</li>
+<li><strong>nodeSelector / affinity / tolerations</strong>: scheduling
+rules for where the Pod runs</li>
+</ul></li>
+</ul>
 </section>
 <section id="example-deployment" class="level2">
 <h2>Example: Deployment</h2>
@@ -288,11 +328,43 @@ kubectl get pods
 <span class="w">    </span><span class="nt">spec</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">containers</span><span class="p">:</span>
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">myapp</span>
-<span class="w">          </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nginx</span>
+<span class="w">          </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-app:1.0</span>
+<span class="w">          </span><span class="nt">imagePullPolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">IfNotPresent</span>
 <span class="w">          </span><span class="nt">ports</span><span class="p">:</span>
-<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">containerPort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">80</span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">containerPort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8080</span>
 </pre></div>
 
+</section>
+<section id="deployment-manifest" class="level2">
+<h2>Deployment manifest</h2>
+<ul>
+<li><strong>apiVersion</strong>: <code>apps/v1</code> (for
+Deployments)</li>
+<li><strong>kind</strong>: type of resource →
+<code>Deployment</code></li>
+<li><strong>metadata</strong>: identification
+<ul>
+<li><code>name</code>: name of the Deployment</li>
+<li><code>labels</code>: key/value pairs for grouping and selectors</li>
+</ul></li>
+</ul>
+</section>
+<section id="deployment-manifest-2" class="level2">
+<h2>Deployment manifest (2)</h2>
+<ul>
+<li><strong>spec</strong>: how the Deployment should run
+<ul>
+<li><strong>replicas</strong>: number of Pod replicas to maintain</li>
+<li><strong>selector</strong>: labels that Pods must match to be managed
+by this Deployment</li>
+<li><strong>template</strong>: Pod template (same structure as a Pod
+manifest)
+<ul>
+<li><code>metadata</code>: labels for Pods</li>
+<li><code>spec</code>: definition of containers, volumes, etc.</li>
+</ul></li>
+</ul></li>
+</ul>
 </section>
 <section id="example-service" class="level2">
 <h2>Example: Service</h2>
@@ -305,14 +377,69 @@ kubectl get pods
 <span class="w">  </span><span class="nt">selector</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">myapp</span>
 <span class="w">  </span><span class="nt">ports</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">80</span>
-<span class="w">      </span><span class="nt">targetPort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">80</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8080</span>
+<span class="w">      </span><span class="nt">targetPort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8080</span>
 <span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NodePort</span>
 </pre></div>
 
 <p>Access it:</p>
 <div class="terminal">kubectl get svc myapp-service
 </div>
+</section>
+<section id="service-manifest" class="level2">
+<h2>Service manifest</h2>
+<ul>
+<li><strong>apiVersion</strong>: <code>v1</code> (for Services)</li>
+<li><strong>kind</strong>: type of resource → <code>Service</code></li>
+<li><strong>metadata</strong>: identification
+<ul>
+<li><code>name</code>: name of the Service</li>
+<li><code>labels</code>: optional grouping/identification</li>
+</ul></li>
+</ul>
+</section>
+<section id="service-manifest-2" class="level2">
+<h2>Service manifest (2)</h2>
+<ul>
+<li><strong>spec</strong>: how the Service behaves
+<ul>
+<li><strong>selector</strong>: labels of Pods that this Service
+targets</li>
+<li><strong>ports</strong>:
+<ul>
+<li><code>port</code>: port exposed by the Service (stable virtual IP,
+ClusterIP)</li>
+<li><code>targetPort</code>: container port in the Pod (default = same
+as <code>port</code>)</li>
+<li><code>nodePort</code>: (for NodePort services) port exposed on each
+Node</li>
+</ul></li>
+<li><strong>type</strong>:
+<ul>
+<li><code>ClusterIP</code> (default): internal-only access</li>
+<li><code>NodePort</code>: accessible via
+<code>&lt;NodeIP&gt;:&lt;NodePort&gt;</code></li>
+<li><code>LoadBalancer</code>: cloud-managed external IP</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="hands-on" class="level2">
+<h2>Hands-on</h2>
+<ol type="1">
+<li><p>Deploy an app with 3 replicas behind a NodePort Service.</p></li>
+<li><p>Use the <code>kubectl scale</code> command to modify the number
+of replicas on the fly.</p></li>
+<li><p>Create a new version (<code>2.0</code>) of your app’s image with
+some changes.</p></li>
+<li><p>Use the <code>kubectl set image</code> command to update your
+Deployment with the new image version.</p></li>
+<li><p>Use the <code>kubectl get pods</code> command to observe each Pod
+being updated one by one, ensuring zero downtime.</p></li>
+<li><p>Create a cache layer for your app based on <a
+href="https://hub.docker.com/_/varnish">Varnish</a></p>
+<figure><img class="plantuml" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBjb250ZW50U3R5bGVUeXBlPSJ0ZXh0L2NzcyIgZGF0YS1kaWFncmFtLXR5cGU9IkRFU0NSSVBUSU9OIiBoZWlnaHQ9IjQ3M3B4IiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBzdHlsZT0id2lkdGg6NDIycHg7aGVpZ2h0OjQ3M3B4O2JhY2tncm91bmQ6I0ZGRkZGRjsiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDQyMiA0NzMiIHdpZHRoPSI0MjJweCIgem9vbUFuZFBhbj0ibWFnbmlmeSI+PGRlZnMvPjxnPjwhLS1lbnRpdHkgdXNlci0tPjxnIGNsYXNzPSJlbnRpdHkiIGRhdGEtZW50aXR5PSJ1c2VyIiBkYXRhLXNvdXJjZS1saW5lPSIxIiBkYXRhLXVpZD0iZW50MDAwMiIgaWQ9ImVudGl0eV91c2VyIj48ZWxsaXBzZSBjeD0iMjExLjcyMjYiIGN5PSIxNCIgZmlsbD0iI0YxRjFGMSIgcng9IjgiIHJ5PSI4IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiLz48cGF0aCBkPSJNMjExLjcyMjYsMjIgTDIxMS43MjI2LDQ5IE0xOTguNzIyNiwzMCBMMjI0LjcyMjYsMzAgTTIxMS43MjI2LDQ5IEwxOTguNzIyNiw2NCBNMjExLjcyMjYsNDkgTDIyNC43MjI2LDY0IiBmaWxsPSJub25lIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIzMC4zNjUyIiB4PSIxOTYuNTQiIHk9Ijc5LjAzNTIiPlVzZXI8L3RleHQ+PC9nPjwhLS1lbnRpdHkgdmFybmlzaF9zZXJ2aWNlLS0+PGcgY2xhc3M9ImVudGl0eSIgZGF0YS1lbnRpdHk9InZhcm5pc2hfc2VydmljZSIgZGF0YS1zb3VyY2UtbGluZT0iMiIgZGF0YS11aWQ9ImVudDAwMDMiIGlkPSJlbnRpdHlfdmFybmlzaF9zZXJ2aWNlIj48cmVjdCBmaWxsPSIjRjFGMUYxIiBoZWlnaHQ9IjM2LjQ4ODMiIHJ4PSIyLjUiIHJ5PSIyLjUiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgd2lkdGg9IjE5MC4yMjE3IiB4PSIxMTYuNjIiIHk9IjE0MS45OSIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjE3MC4yMjE3IiB4PSIxMjYuNjIiIHk9IjE2NS41MjUyIj5WYXJuaXNoIE5vZGVQb3J0IFNlcnZpY2U8L3RleHQ+PC9nPjwhLS1lbnRpdHkgdmFybmlzaF9yZXAxLS0+PGcgY2xhc3M9ImVudGl0eSIgZGF0YS1lbnRpdHk9InZhcm5pc2hfcmVwMSIgZGF0YS1zb3VyY2UtbGluZT0iMyIgZGF0YS11aWQ9ImVudDAwMDQiIGlkPSJlbnRpdHlfdmFybmlzaF9yZXAxIj48cmVjdCBmaWxsPSIjRjFGMUYxIiBoZWlnaHQ9IjM2LjQ4ODMiIHJ4PSIyLjUiIHJ5PSIyLjUiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgd2lkdGg9IjEzNy4zNDU3IiB4PSI1Ny4wNSIgeT0iMjM4LjQ4Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMTE3LjM0NTciIHg9IjY3LjA1IiB5PSIyNjIuMDE1MiI+VmFybmlzaCBSZXBsaWNhIDE8L3RleHQ+PC9nPjwhLS1lbnRpdHkgdmFybmlzaF9yZXAyLS0+PGcgY2xhc3M9ImVudGl0eSIgZGF0YS1lbnRpdHk9InZhcm5pc2hfcmVwMiIgZGF0YS1zb3VyY2UtbGluZT0iNCIgZGF0YS11aWQ9ImVudDAwMDUiIGlkPSJlbnRpdHlfdmFybmlzaF9yZXAyIj48cmVjdCBmaWxsPSIjRjFGMUYxIiBoZWlnaHQ9IjM2LjQ4ODMiIHJ4PSIyLjUiIHJ5PSIyLjUiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgd2lkdGg9IjEzNy4zNDU3IiB4PSIyMjkuMDUiIHk9IjIzOC40OCIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjExNy4zNDU3IiB4PSIyMzkuMDUiIHk9IjI2Mi4wMTUyIj5WYXJuaXNoIFJlcGxpY2EgMjwvdGV4dD48L2c+PCEtLWVudGl0eSBhcHBfc2VydmljZS0tPjxnIGNsYXNzPSJlbnRpdHkiIGRhdGEtZW50aXR5PSJhcHBfc2VydmljZSIgZGF0YS1zb3VyY2UtbGluZT0iNSIgZGF0YS11aWQ9ImVudDAwMDYiIGlkPSJlbnRpdHlfYXBwX3NlcnZpY2UiPjxyZWN0IGZpbGw9IiNGMUYxRjEiIGhlaWdodD0iMzYuNDg4MyIgcng9IjIuNSIgcnk9IjIuNSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB3aWR0aD0iMTYzLjU2ODQiIHg9IjEyOS45NCIgeT0iMzM0Ljk2Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMTQzLjU2ODQiIHg9IjEzOS45NCIgeT0iMzU4LjQ5NTIiPkFwcCBDbHVzdGVySVAgU2VydmljZTwvdGV4dD48L2c+PCEtLWVudGl0eSBhcHBfcmVwMS0tPjxnIGNsYXNzPSJlbnRpdHkiIGRhdGEtZW50aXR5PSJhcHBfcmVwMSIgZGF0YS1zb3VyY2UtbGluZT0iNiIgZGF0YS11aWQ9ImVudDAwMDciIGlkPSJlbnRpdHlfYXBwX3JlcDEiPjxyZWN0IGZpbGw9IiNGMUYxRjEiIGhlaWdodD0iMzYuNDg4MyIgcng9IjIuNSIgcnk9IjIuNSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB3aWR0aD0iMTEzLjQ1NDEiIHg9IjciIHk9IjQzMS40NSIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjkzLjQ1NDEiIHg9IjE3IiB5PSI0NTQuOTg1MiI+QXBwIFJlcGxpY2EgMTwvdGV4dD48L2c+PCEtLWVudGl0eSBhcHBfcmVwMi0tPjxnIGNsYXNzPSJlbnRpdHkiIGRhdGEtZW50aXR5PSJhcHBfcmVwMiIgZGF0YS1zb3VyY2UtbGluZT0iNyIgZGF0YS11aWQ9ImVudDAwMDgiIGlkPSJlbnRpdHlfYXBwX3JlcDIiPjxyZWN0IGZpbGw9IiNGMUYxRjEiIGhlaWdodD0iMzYuNDg4MyIgcng9IjIuNSIgcnk9IjIuNSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB3aWR0aD0iMTEzLjQ1NDEiIHg9IjE1NSIgeT0iNDMxLjQ1Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iOTMuNDU0MSIgeD0iMTY1IiB5PSI0NTQuOTg1MiI+QXBwIFJlcGxpY2EgMjwvdGV4dD48L2c+PCEtLWVudGl0eSBhcHBfcmVwMy0tPjxnIGNsYXNzPSJlbnRpdHkiIGRhdGEtZW50aXR5PSJhcHBfcmVwMyIgZGF0YS1zb3VyY2UtbGluZT0iOCIgZGF0YS11aWQ9ImVudDAwMDkiIGlkPSJlbnRpdHlfYXBwX3JlcDMiPjxyZWN0IGZpbGw9IiNGMUYxRjEiIGhlaWdodD0iMzYuNDg4MyIgcng9IjIuNSIgcnk9IjIuNSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB3aWR0aD0iMTEzLjQ1NDEiIHg9IjMwMyIgeT0iNDMxLjQ1Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iOTMuNDU0MSIgeD0iMzEzIiB5PSI0NTQuOTg1MiI+QXBwIFJlcGxpY2EgMzwvdGV4dD48L2c+PCEtLWxpbmsgdXNlciB0byB2YXJuaXNoX3NlcnZpY2UtLT48ZyBjbGFzcz0ibGluayIgZGF0YS1lbnRpdHktMT0idXNlciIgZGF0YS1lbnRpdHktMj0idmFybmlzaF9zZXJ2aWNlIiBkYXRhLXNvdXJjZS1saW5lPSIxMCIgZGF0YS11aWQ9ImxuazEwIiBpZD0ibGlua191c2VyX3Zhcm5pc2hfc2VydmljZSI+PHBhdGggZD0iTTIxMS43Myw4Mi4yMyBDMjExLjczLDEwMi4xOSAyMTEuNzMsMTE5Ljc5IDIxMS43MywxMzUuNTYiIGZpbGw9Im5vbmUiIGlkPSJ1c2VyLXRvLXZhcm5pc2hfc2VydmljZSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIvPjxwb2x5Z29uIGZpbGw9IiMxODE4MTgiIHBvaW50cz0iMjExLjczLDE0MS41NiwyMTUuNzMsMTMyLjU2LDIxMS43MywxMzYuNTYsMjA3LjczLDEzMi41NiwyMTEuNzMsMTQxLjU2IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7Ii8+PC9nPjwhLS1saW5rIHZhcm5pc2hfc2VydmljZSB0byB2YXJuaXNoX3JlcDEtLT48ZyBjbGFzcz0ibGluayIgZGF0YS1lbnRpdHktMT0idmFybmlzaF9zZXJ2aWNlIiBkYXRhLWVudGl0eS0yPSJ2YXJuaXNoX3JlcDEiIGRhdGEtc291cmNlLWxpbmU9IjExIiBkYXRhLXVpZD0ibG5rMTEiIGlkPSJsaW5rX3Zhcm5pc2hfc2VydmljZV92YXJuaXNoX3JlcDEiPjxwYXRoIGQ9Ik0xOTUuOTUsMTc4LjU2IEMxODAuNTMsMTk1LjUgMTYxLjIxODUsMjE2LjcyMjYgMTQ1LjcyODUsMjMzLjc0MjYiIGZpbGw9Im5vbmUiIGlkPSJ2YXJuaXNoX3NlcnZpY2UtdG8tdmFybmlzaF9yZXAxIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7Ii8+PHBvbHlnb24gZmlsbD0iIzE4MTgxOCIgcG9pbnRzPSIxNDEuNjksMjM4LjE4LDE1MC43MDYsMjM0LjIxNjIsMTQ1LjA1NTQsMjM0LjQ4MjIsMTQ0Ljc4OTUsMjI4LjgzMTYsMTQxLjY5LDIzOC4xOCIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIvPjwvZz48IS0tbGluayB2YXJuaXNoX3NlcnZpY2UgdG8gdmFybmlzaF9yZXAyLS0+PGcgY2xhc3M9ImxpbmsiIGRhdGEtZW50aXR5LTE9InZhcm5pc2hfc2VydmljZSIgZGF0YS1lbnRpdHktMj0idmFybmlzaF9yZXAyIiBkYXRhLXNvdXJjZS1saW5lPSIxMiIgZGF0YS11aWQ9ImxuazEyIiBpZD0ibGlua192YXJuaXNoX3NlcnZpY2VfdmFybmlzaF9yZXAyIj48cGF0aCBkPSJNMjI3LjUsMTc4LjU2IEMyNDIuOTIsMTk1LjUgMjYyLjI0MjksMjE2LjcyMTMgMjc3LjcyMjksMjMzLjc0MTMiIGZpbGw9Im5vbmUiIGlkPSJ2YXJuaXNoX3NlcnZpY2UtdG8tdmFybmlzaF9yZXAyIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7Ii8+PHBvbHlnb24gZmlsbD0iIzE4MTgxOCIgcG9pbnRzPSIyODEuNzYsMjM4LjE4LDI3OC42NjM1LDIyOC44MzA2LDI3OC4zOTU4LDIzNC40ODExLDI3Mi43NDUzLDIzNC4yMTMzLDI4MS43NiwyMzguMTgiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiLz48L2c+PCEtLWxpbmsgdmFybmlzaF9yZXAxIHRvIGFwcF9zZXJ2aWNlLS0+PGcgY2xhc3M9ImxpbmsiIGRhdGEtZW50aXR5LTE9InZhcm5pc2hfcmVwMSIgZGF0YS1lbnRpdHktMj0iYXBwX3NlcnZpY2UiIGRhdGEtc291cmNlLWxpbmU9IjEzIiBkYXRhLXVpZD0ibG5rMTMiIGlkPSJsaW5rX3Zhcm5pc2hfcmVwMV9hcHBfc2VydmljZSI+PHBhdGggZD0iTTE0MS41LDI3NS4wNSBDMTU2LjkyLDI5MS45OSAxNzYuMjQyOSwzMTMuMjExMyAxOTEuNzIyOSwzMzAuMjMxMyIgZmlsbD0ibm9uZSIgaWQ9InZhcm5pc2hfcmVwMS10by1hcHBfc2VydmljZSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIvPjxwb2x5Z29uIGZpbGw9IiMxODE4MTgiIHBvaW50cz0iMTk1Ljc2LDMzNC42NywxOTIuNjYzNSwzMjUuMzIwNiwxOTIuMzk1OCwzMzAuOTcxMSwxODYuNzQ1MywzMzAuNzAzMywxOTUuNzYsMzM0LjY3IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7Ii8+PC9nPjwhLS1saW5rIHZhcm5pc2hfcmVwMiB0byBhcHBfc2VydmljZS0tPjxnIGNsYXNzPSJsaW5rIiBkYXRhLWVudGl0eS0xPSJ2YXJuaXNoX3JlcDIiIGRhdGEtZW50aXR5LTI9ImFwcF9zZXJ2aWNlIiBkYXRhLXNvdXJjZS1saW5lPSIxNCIgZGF0YS11aWQ9ImxuazE0IiBpZD0ibGlua192YXJuaXNoX3JlcDJfYXBwX3NlcnZpY2UiPjxwYXRoIGQ9Ik0yODEuOTUsMjc1LjA1IEMyNjYuNTMsMjkxLjk5IDI0Ny4yMTg1LDMxMy4yMTI2IDIzMS43Mjg1LDMzMC4yMzI2IiBmaWxsPSJub25lIiBpZD0idmFybmlzaF9yZXAyLXRvLWFwcF9zZXJ2aWNlIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7Ii8+PHBvbHlnb24gZmlsbD0iIzE4MTgxOCIgcG9pbnRzPSIyMjcuNjksMzM0LjY3LDIzNi43MDYsMzMwLjcwNjIsMjMxLjA1NTQsMzMwLjk3MjIsMjMwLjc4OTUsMzI1LjMyMTYsMjI3LjY5LDMzNC42NyIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIvPjwvZz48IS0tbGluayBhcHBfc2VydmljZSB0byBhcHBfcmVwMS0tPjxnIGNsYXNzPSJsaW5rIiBkYXRhLWVudGl0eS0xPSJhcHBfc2VydmljZSIgZGF0YS1lbnRpdHktMj0iYXBwX3JlcDEiIGRhdGEtc291cmNlLWxpbmU9IjE1IiBkYXRhLXVpZD0ibG5rMTUiIGlkPSJsaW5rX2FwcF9zZXJ2aWNlX2FwcF9yZXAxIj48cGF0aCBkPSJNMTg0LjI0LDM3MS43NiBDMTU3Ljc0LDM4OC42OCAxMjIuOTE3Niw0MTAuOTExOCA5Ni4zNzc2LDQyNy44NTE4IiBmaWxsPSJub25lIiBpZD0iYXBwX3NlcnZpY2UtdG8tYXBwX3JlcDEiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiLz48cG9seWdvbiBmaWxsPSIjMTgxODE4IiBwb2ludHM9IjkxLjMyLDQzMS4wOCwxMDEuMDU4NSw0MjkuNjA5NSw5NS41MzQ2LDQyOC4zODk5LDk2Ljc1NDMsNDIyLjg2NjEsOTEuMzIsNDMxLjA4IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7Ii8+PC9nPjwhLS1saW5rIGFwcF9zZXJ2aWNlIHRvIGFwcF9yZXAyLS0+PGcgY2xhc3M9ImxpbmsiIGRhdGEtZW50aXR5LTE9ImFwcF9zZXJ2aWNlIiBkYXRhLWVudGl0eS0yPSJhcHBfcmVwMiIgZGF0YS1zb3VyY2UtbGluZT0iMTYiIGRhdGEtdWlkPSJsbmsxNiIgaWQ9ImxpbmtfYXBwX3NlcnZpY2VfYXBwX3JlcDIiPjxwYXRoIGQ9Ik0yMTEuNzMsMzcxLjU0IEMyMTEuNzMsMzg4LjQ4IDIxMS43Myw0MDguMTQgMjExLjczLDQyNS4xNiIgZmlsbD0ibm9uZSIgaWQ9ImFwcF9zZXJ2aWNlLXRvLWFwcF9yZXAyIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7Ii8+PHBvbHlnb24gZmlsbD0iIzE4MTgxOCIgcG9pbnRzPSIyMTEuNzMsNDMxLjE2LDIxNS43Myw0MjIuMTYsMjExLjczLDQyNi4xNiwyMDcuNzMsNDIyLjE2LDIxMS43Myw0MzEuMTYiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiLz48L2c+PCEtLWxpbmsgYXBwX3NlcnZpY2UgdG8gYXBwX3JlcDMtLT48ZyBjbGFzcz0ibGluayIgZGF0YS1lbnRpdHktMT0iYXBwX3NlcnZpY2UiIGRhdGEtZW50aXR5LTI9ImFwcF9yZXAzIiBkYXRhLXNvdXJjZS1saW5lPSIxNyIgZGF0YS11aWQ9ImxuazE3IiBpZD0ibGlua19hcHBfc2VydmljZV9hcHBfcmVwMyI+PHBhdGggZD0iTTIzOS4yMiwzNzEuNzYgQzI2NS43MiwzODguNjggMzAwLjU0Myw0MTAuOTExIDMyNy4wNzMsNDI3Ljg1MSIgZmlsbD0ibm9uZSIgaWQ9ImFwcF9zZXJ2aWNlLXRvLWFwcF9yZXAzIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7Ii8+PHBvbHlnb24gZmlsbD0iIzE4MTgxOCIgcG9pbnRzPSIzMzIuMTMsNDMxLjA4LDMyNi42OTcyLDQyMi44NjUxLDMyNy45MTU4LDQyOC4zODkyLDMyMi4zOTE4LDQyOS42MDc4LDMzMi4xMyw0MzEuMDgiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiLz48L2c+PCEtLVNSQz1bWFAybjJpOG01NE50VkNLWlV1U2NrbzFFQmI4S05JTjRYbVBBNnJ4SVZoekRndkFxMk14WHRORjl2SVpqVXVCMThPNW9tQV9KV3BEMnhMTnRSMTU2SFBybmhfanE3ZXQ2Y1JhakRwWnIzc253eWQxUG1ib0ZxRFA5d09vc0RMZjFOUTE1YlhPbmhRbkR6a29qWEtDeEU4enFSNzlaR2s0dDlEM1A0SHpBUjJZSGVVSTZhZm9uTU1ETHhUUlFzNWZacDhIYl9tMzE0ZzRYWklvbW5EeXdaN0x6aV9kRkdZMUFXTm0zXS0tPjwvZz48L3N2Zz4="></figure></li>
+</ol>
 </section>
 </body>
 </html>
