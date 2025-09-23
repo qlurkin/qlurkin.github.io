@@ -64,7 +64,7 @@ CMD ["python", "app.py"]
 - Build an **Image**:
 
   ```terminal
-  docker build -t my-app .
+  docker build -t my-app:1.0 .
   ```
 
   _In the folder that contains your **Dockerfile**_
