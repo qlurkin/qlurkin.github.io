@@ -6,6 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>Labo 1 - Ensembles, dictionnaires et annotations</title>
   <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
     div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -41,15 +44,11 @@ Code</strong> (ou dans tout autre éditeur que vous utiliseriez).</p>
 <section id="ensemble-et-dictionnaires" class="level2">
 <h2>Ensemble et dictionnaires</h2>
 <ol type="1">
-<li>Définir un ensemble qui contient:
-<ol type="a">
-<li>les caractères utilisés dans la phrase
-<code>"Je suis un as en programmation."</code>,</li>
-<li>les naturels compris entre 1 et 1000 (inclus) qui sont divisibles
-par 3 et 13,</li>
-<li>les voyelles qui sont utilisées dans la phrase
+<li>Définir un ensemble qui contient: a. les caractères utilisés dans la
+phrase <code>"Je suis un as en programmation."</code>, b. les naturels
+compris entre 1 et 1000 (inclus) qui sont divisibles par 3 et 13, c. les
+voyelles qui sont utilisées dans la phrase
 <code>"Maitriser les listes est crucial!"</code>.</li>
-</ol></li>
 <li>Définir une fonction <code>def set2list(A: set) -&gt; list</code>
 qui convertit l'ensemble <code>A</code> en une liste qui contient
 exactement les mêmes éléments, sans utiliser la fonction
@@ -68,28 +67,22 @@ qui renvoie l'union exclusive des ensembles <code>A</code> et
 <code>B</code>, c'est-à-dire l'ensemble des éléments qui se trouvent
 dans l'ensemble <code>A</code> ou dans l'ensemble <code>B</code>, mais
 pas dans les deux en même temps.</li>
-<li>Définir un dictionnaire qui contient :
-<ol type="a">
-<li>les dix premiers entiers pairs de 2 à 20 (inclus), comme clés, et la
-valeur de la clé moins un comme valeur,</li>
-<li>les dix premiers entiers de la forme <code>2n + 1</code>, pour
-<code>n</code> compris entre 1 et 10 (inclus), comme clés, et
-<code>True</code> ou <code>False</code> comme valeur selon que la clé
-est divisible par trois ou non,</li>
-<li>les mots de la liste
+<li>Définir un dictionnaire qui contient : a. les dix premiers entiers
+pairs de 2 à 20 (inclus), comme clés, et la valeur de la clé moins un
+comme valeur, b. les dix premiers entiers de la forme
+<code>2n + 1</code>, pour <code>n</code> compris entre 1 et 10 (inclus),
+comme clés, et <code>True</code> ou <code>False</code> comme valeur
+selon que la clé est divisible par trois ou non, c. les mots de la liste
 <code>['lemon', 'apple', 'banana', 'watermelon']</code> comme clé, et le
-nombre de voyelles que chaque mot contient comme valeur (vous devriez
-sans doute préalablement définir une fonction qui compte le nombre de
-voyelles présentes dans un mot).</li>
-</ol></li>
+nombre total de voyelles <em>(<code>banana</code> a 3 voyelles)</em> que
+chaque mot contient comme valeur (vous devriez sans doute préalablement
+définir une fonction qui compte le nombre de voyelles présentes dans un
+mot).</li>
 <li>Définir une fonction
 <code>def hasKey(key: Hashable, dico: dict) -&gt; bool</code> qui
 renvoie True si la clé key existe dans le dictionnaire et False sinon,
-de deux façons différentes :
-<ol type="a">
-<li>à l'aide d'une boucle <code>for</code></li>
-<li>à l'aide de l'opérateur <code>in</code></li>
-</ol></li>
+de deux façons différentes : a. à l'aide d'une boucle <code>for</code>
+b. à l'aide de l'opérateur <code>in</code></li>
 </ol>
 </section>
 <section id="réflexion" class="level2">
