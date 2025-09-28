@@ -318,8 +318,21 @@ css: style.css
 
 ## Software engineering: Projet 2BA
 
-<img src="./images/snake.gif" class="projet">
-<img src="./images/asteroid.gif" class="projet">
+:::row
+
+::::span6
+
+![Snake](./images/snake.gif)
+
+::::
+
+::::span6
+
+![Asteroïd](./images/asteroid.gif)
+
+::::
+
+:::
 
 ## Software engineering: Compétition d'IA
 
