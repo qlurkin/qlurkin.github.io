@@ -322,13 +322,13 @@ css: style.css
 
 ::::span6
 
-![Snake](./images/snake.gif)
+![Snake](./images/snake2.gif)
 
 ::::
 
 ::::span6
 
-![Asteroïd](./images/asteroid.gif)
+![Asteroïd](./images/asteroid2.gif)
 
 ::::
 
@@ -340,7 +340,7 @@ css: style.css
 
 ## Software engineering: Simulation sur GPU
 
-![Tissu](./images/cloth.gif)
+![Tissu](./images/cloth2.gif)
 
 ## Software engineering: Stéréovision
 
