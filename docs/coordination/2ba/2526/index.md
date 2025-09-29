@@ -589,6 +589,31 @@ css: style.css
 </section>
 </div>
 
+## Labos réseaux
+
+![Computer Network](./images/network.png)
+
+## Labos de sécurité
+
+:::row
+
+:::: {.span6 .middle}
+
+- Campagnes de phishing
+- Analyse de malware (virus)
+- Compétition de pénétration dans les systèmes (Raspberry PI) des autres
+  étudiant·e·s
+
+::::
+
+::::span6
+
+![ ](./images/anonymous.jpg)
+
+::::
+
+:::
+
 ## Axes techniques: Artificial Intelligence
 
 - Database
@@ -825,6 +850,17 @@ css: style.css
 </div>
 </section>
 </div>
+
+## Artificial Intelligence: Projets
+
+- Master 1:
+  - Modèle de prédictions des **revenus** d'un film au **boxoffice** sur base de
+    ses acteurs, son réalisateur, sa durée, sa langue, ...
+  - Modèle de prédictions de victoire à **league of legend** sur base des
+    statistiques des joueurs
+- Master 2:
+  - Orchestration des **LLM** et d'**AI agents** afin d'atteindre un objectif du
+    développement durable
 
 ## Axes techniques: Sustainable Developpment
 
