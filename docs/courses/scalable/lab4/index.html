@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Lab 4 - StateFullSet</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="/deck.css" />
+  <script src="/deck_only.js" defer></script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Lab 4
+<small>StateFullSet</small>
+</h1>
+</header>
+<section id="database-replication" class="level2">
+<h2>Database Replication</h2>
+<ul>
+<li>Requires <strong>inter-replica communication</strong> <span
+class="small">to sync data and resolve conflicts</span></li>
+<li>Requires a <strong>stable per-Pod network identity</strong></li>
+<li>Replicas often depend on a specific <strong>startup
+order</strong></li>
+<li>If restarted, a replica needs to access the <strong>same persistent
+volume</strong></li>
+</ul>
+</section>
+<section id="statefulsets" class="level2">
+<h2>StatefulSets</h2>
+<ul>
+<li>Like a Deployment, but for <strong>stateful
+applications</strong></li>
+<li>Ensures:
+<ul>
+<li><strong>Stable, unique Pod identities</strong> across restarts</li>
+<li><strong>Ordered</strong> deployment, scaling, and updates</li>
+<li><strong>Persistent storage</strong> association with Pods</li>
+</ul></li>
+<li>Common use cases:
+<ul>
+<li>Databases (MySQL, PostgreSQL, MongoDB…)</li>
+<li>Cluster-aware applications</li>
+</ul></li>
+</ul>
+</section>
+<section id="statefulsets-vs-deployments" class="level2">
+<h2>StatefulSets vs Deployments</h2>
+<ul>
+<li><strong>Deployment</strong>
+<ul>
+<li>For <strong>stateless apps</strong></li>
+<li>Pods are interchangeable</li>
+<li>No stable network identity or storage binding</li>
+</ul></li>
+<li><strong>StatefulSet</strong>
+<ul>
+<li>For <strong>stateful apps</strong></li>
+<li>Each Pod has a <strong>unique name</strong> (<code>pod-0</code>,
+<code>pod-1</code>, …)</li>
+<li>Each Pod can keep its own <strong>PersistentVolume</strong></li>
+<li>Supports <strong>ordered scaling</strong> and <strong>graceful
+updates</strong></li>
+</ul></li>
+</ul>
+</section>
+<section id="pod-identity-in-statefulsets" class="level2">
+<h2>Pod Identity in StatefulSets</h2>
+<ul>
+<li>Pods are not identical:
+<ul>
+<li>Named as <code>&lt;statefulset-name&gt;-&lt;ordinal&gt;</code></li>
+<li>Example: <code>db-0</code>, <code>db-1</code>,
+<code>db-2</code></li>
+</ul></li>
+<li>Each Pod gets:
+<ul>
+<li><strong>Stable hostname</strong> → <code>db-0.my-service</code></li>
+<li><strong>Stable storage</strong> → always re-attached to the same
+Pod</li>
+</ul></li>
+<li>Allows clustering and replication in databases</li>
+</ul>
+</section>
+<section id="statefulset-and-storage" class="level2">
+<h2>StatefulSet and Storage</h2>
+<ul>
+<li>Works with <strong>PersistentVolumeClaims (PVCs)</strong></li>
+<li>Each Pod gets a <strong>dedicated PVC</strong></li>
+<li>Example:
+<ul>
+<li><code>db-0</code> → <code>db-0-pvc</code></li>
+<li><code>db-1</code> → <code>db-1-pvc</code></li>
+</ul></li>
+<li>Even if Pod is rescheduled on a new Node, its PVC is reattached</li>
+</ul>
+</section>
+<section id="when-to-use-statefulsets" class="level2">
+<h2>When to Use StatefulSets?</h2>
+<p>Use a StatefulSet when:</p>
+<ul>
+<li>You need <strong>stable network IDs</strong></li>
+<li>You need <strong>persistent storage per Pod</strong></li>
+<li>You require <strong>ordered startup/shutdown</strong></li>
+</ul>
+<p>Don’t use a StatefulSet when:</p>
+<ul>
+<li>Pods are truly <strong>stateless</strong></li>
+<li>Any Pod can handle any request without identity</li>
+</ul>
+</section>
+<section id="statefullset-manifest" class="level2">
+<h2>StateFullSet Manifest</h2>
+<div class="pygments"><pre><span></span><span class="c1"># 1. Headless Service</span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Service</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mysql</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">clusterIP</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">None</span><span class="w"> </span><span class="c1"># Headless service -&gt; DNS per Pod</span>
+<span class="w">  </span><span class="nt">selector</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mysql</span>
+<span class="w">  </span><span class="nt">ports</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3306</span>
+<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mysql</span>
+<span class="nn">---</span>
+<span class="c1"># 2. StatefulSet</span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apps/v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">StatefulSet</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mysql</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">serviceName</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;mysql&#39;</span><span class="w"> </span><span class="c1"># Must match the headless service</span>
+<span class="w">  </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
+<span class="w">  </span><span class="nt">selector</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">matchLabels</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mysql</span>
+<span class="w">  </span><span class="nt">template</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">metadata</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">labels</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mysql</span>
+<span class="w">    </span><span class="nt">spec</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">containers</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mysql</span>
+<span class="w">          </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mysql:8.0</span>
+<span class="w">          </span><span class="nt">ports</span><span class="p">:</span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">containerPort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3306</span>
+<span class="w">              </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mysql</span>
+<span class="w">          </span><span class="nt">env</span><span class="p">:</span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">MYSQL_ROOT_PASSWORD</span>
+<span class="w">              </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rootpass</span>
+<span class="w">          </span><span class="nt">volumeMounts</span><span class="p">:</span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">data</span>
+<span class="w">              </span><span class="nt">mountPath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/var/lib/mysql</span>
+<span class="w">  </span><span class="nt">volumeClaimTemplates</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">metadata</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">data</span>
+<span class="w">      </span><span class="nt">spec</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">accessModes</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;ReadWriteOnce&#39;</span><span class="p p-Indicator">]</span>
+<span class="w">        </span><span class="nt">resources</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">requests</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">200Mi</span>
+</pre></div>
+
+<ul>
+<li>To give a stable DNS name to each pod of a StateFullSet</li>
+</ul>
+</section>
+<section id="master-replicas" class="level2">
+<h2>Master / Replicas</h2>
+<ul>
+<li>At this point, these are just <strong>three individual database
+servers</strong>.</li>
+<li>They must be configured to work together as a
+<strong>cluster</strong>. <span class="small">Manually or via
+ConfigMaps</span></li>
+<li>One replica acts as the <strong>master</strong>, accepting
+<strong>write operations</strong>.</li>
+<li>All replicas can handle <strong>read operations</strong>.</li>
+<li>Some databases support <strong>master election</strong>.</li>
+</ul>
+</section>
+<section id="routing" class="level2">
+<h2>Routing</h2>
+<ul>
+<li>Multiple ways to route requests:
+<ol type="1">
+<li><strong>Two separate Services:</strong>
+<ul>
+<li>One for the <strong>master</strong> → read and write</li>
+<li>One for all the <strong>replicas</strong> → read only</li>
+</ul></li>
+<li><strong>ProxySQL:</strong>
+<ul>
+<li>Runs in a <strong>separate Pod</strong></li>
+<li>Provides <strong>automatic routing</strong> of requests</li>
+</ul></li>
+</ol></li>
+</ul>
+</section>
+<section id="operators" class="level2">
+<h2>Operators</h2>
+<ul>
+<li><strong>Kubernetes extensions</strong></li>
+<li>Manage <strong>deployment, configuration, and routing</strong></li>
+<li>Can also manage <strong>users, backups, and other operational
+tasks</strong></li>
+</ul>
+</section>
+<section id="replication-vs-sharding-1" class="level2">
+<h2>Replication vs Sharding (1)</h2>
+<ul>
+<li>Replication
+<ul>
+<li><strong>Purpose:</strong> High availability &amp; read scaling</li>
+<li><strong>Data:</strong> Every replica has a <strong>full
+copy</strong> of the database</li>
+<li><strong>Writes:</strong> Usually go to a <strong>single
+master</strong></li>
+<li><strong>Reads:</strong> Can be distributed across replicas</li>
+<li><strong>Pros:</strong> Simple, fault-tolerant</li>
+<li><strong>Cons:</strong> Scaling write capacity is limited</li>
+</ul></li>
+</ul>
+</section>
+<section id="replication-vs-sharding-2" class="level2">
+<h2>Replication vs Sharding (2)</h2>
+<ul>
+<li>Sharing
+<ul>
+<li><strong>Purpose:</strong> Scale database for <strong>large data
+volumes and high write throughput</strong></li>
+<li><strong>Data:</strong> Split across multiple
+<strong>shards</strong>, each storing only a portion of the data</li>
+<li><strong>Writes &amp; Reads:</strong> Routed to the
+<strong>appropriate shard</strong></li>
+<li><strong>Pros:</strong> Handles very large datasets, scalable
+writes</li>
+<li><strong>Cons:</strong> Complex routing, cross-shard queries more
+difficult</li>
+<li><strong>Requires:</strong> A <strong>router or coordinator</strong>
+to direct requests (e.g., MongoDB mongos, Vitess vtgate)</li>
+</ul></li>
+</ul>
+</section>
+<section id="combining-replication-sharding-1" class="level2">
+<h2>Combining Replication &amp; Sharding (1)</h2>
+<ul>
+<li>Large-scale databases often combine <strong>replication</strong> and
+<strong>sharding</strong>:
+<ul>
+<li>Each <strong>shard</strong> is a subset of the total data</li>
+<li>Each shard is <strong>replicated</strong> for high availability</li>
+</ul></li>
+<li>In Kubernetes:
+<ul>
+<li>Use <strong>one StatefulSet per shard</strong></li>
+<li>Each StatefulSet manages <strong>replicas of that
+shard</strong></li>
+<li>Headless Services provide <strong>stable network IDs</strong> for
+intra-shard communication</li>
+<li>Proxies or coordinators handle <strong>routing across
+shards</strong></li>
+</ul></li>
+</ul>
+</section>
+<section id="combining-replication-sharding-2" class="level2">
+<h2>Combining Replication &amp; Sharding (2)</h2>
+<ul>
+<li>Benefits
+<ul>
+<li><strong>Fault tolerance:</strong> Replica failure in a shard →
+automatic recovery</li>
+<li><strong>Scalability:</strong> Add shards to increase data
+capacity</li>
+<li><strong>Independent scaling:</strong> Each shard can scale replicas
+independently</li>
+<li><strong>Stable identity &amp; storage:</strong> StatefulSets + PVCs
+guarantee consistent volumes</li>
+</ul></li>
+</ul>
+</section>
+<section id="hands-on" class="level2">
+<h2>Hands-on</h2>
+<ul>
+<li>Deploy a sharded and replicated database and test it</li>
+<li>Examples:
+<ul>
+<li>MySQL (MySQL Group Replication)</li>
+<li>PostgreSQL (Patroni)</li>
+<li>MongoDB</li>
+<li>Cassandra</li>
+<li>CockroachDB</li>
+<li>Vitess</li>
+</ul></li>
+</ul>
+</section>
+</body>
+</html>
