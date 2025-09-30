@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Project 2025 - Kubernetes Deployment Pipeline</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="/document.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Project 2025
+<small>Kubernetes Deployment Pipeline</small>
+</h1>
+</header>
+<figure>
+<img
+src="./DALL·E-2024-06-18-12.27.28-Create-a-clean-16_9-banner-for-an-article-titled-Kubernetes.-Ensure-the-elements-convey-the-themes-of-container-orchestration-and-cloud-computing.-I.webp"
+alt="AI generated illustration from unite.ai" />
+<figcaption aria-hidden="true">AI generated illustration from <a
+href="https://www.unite.ai/deploying-large-language-models-on-kubernetes-a-comprehensive-guide/">unite.ai</a></figcaption>
+</figure>
+<section id="project-goal" class="level2">
+<h2>Project Goal</h2>
+<p>Set up a <strong>professional-grade infrastructure</strong> on an
+<strong>on-premise Kubernetes cluster</strong> (initially running
+locally on each student’s machine).<br />
+The infrastructure must support a <strong>full Dev → Test → Production
+pipeline</strong>, including automation, scalability, monitoring, and
+documentation.</p>
+<p>The application is <strong>free to choose</strong> (students decide
+the stack and subject), but it must:</p>
+<ul>
+<li>Be accessible “online” (via browser or API)</li>
+<li>Require a <strong>database</strong> (with schema changes possible in
+updates)</li>
+<li>Be subject to <strong>regular updates and deployments</strong></li>
+</ul>
+</section>
+<section id="expected-features" class="level2">
+<h2>Expected Features</h2>
+<section id="development-test-production-pipeline" class="level3">
+<h3>Development → Test → Production Pipeline</h3>
+<ul>
+<li>Developers push changes to Git repository.</li>
+<li><strong>CI/CD pipeline</strong> runs unit tests automatically.</li>
+<li>If tests pass, deployment is triggered in the <strong>Test
+environment</strong>.</li>
+<li>Once validated, the application is deployed to
+<strong>Production</strong> with <strong>zero downtime</strong>.</li>
+</ul>
+</section>
+<section id="database-management" class="level3">
+<h3>Database Management</h3>
+<ul>
+<li>Database must be <strong>sharded and replicated</strong> for
+availability and scalability.</li>
+<li>Updates may require <strong>schema migrations</strong>.</li>
+<li>Implement a <strong>procedure to refresh the Test DB</strong> from
+Production data (anonymized if necessary).</li>
+</ul>
+</section>
+<section id="application-layer" class="level3">
+<h3>Application Layer</h3>
+<ul>
+<li>Application must be <strong>replicated</strong> across multiple
+Pods.</li>
+<li>Include a <strong>cache layer</strong> (e.g., Redis, Memcached,
+Varnish) with replication.</li>
+<li>All components exposed through a <strong>single Ingress
+controller</strong>.</li>
+</ul>
+</section>
+<section id="monitoring-scaling" class="level3">
+<h3>Monitoring &amp; Scaling</h3>
+<ul>
+<li>Provide a <strong>dashboard</strong> (e.g., Grafana, Kubernetes
+Dashboard, Lens, etc.) to:
+<ul>
+<li>Monitor system load</li>
+<li>Observe application health</li>
+<li>Scale services (automatically or manually)</li>
+</ul></li>
+</ul>
+</section>
+<section id="deployment-updates" class="level3">
+<h3>Deployment &amp; Updates</h3>
+<ul>
+<li>Application updates should be deployed via Kubernetes mechanisms
+(<strong>Deployments</strong>, <strong>Rolling Updates</strong>).</li>
+<li>Demonstrate:
+<ul>
+<li>A <strong>new version rollout</strong> with no downtime</li>
+<li>A <strong>database migration</strong> as part of the update
+process</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="infrastructure-requirements" class="level2">
+<h2>Infrastructure Requirements</h2>
+<ul>
+<li><strong>Cluster:</strong> Local Kubernetes cluster (Docker Desktop,
+Minikube, or Kubeadm).</li>
+<li><strong>CI/CD:</strong> Git-based pipeline (GitHub Actions, GitLab
+CI, ArgoCD, or equivalent).</li>
+<li><strong>Storage:</strong> Persistent volumes for DB and stateful
+components.</li>
+<li><strong>Networking:</strong> Ingress for external access; Services
+for internal routing.</li>
+<li><strong>Namespaces:</strong> Separate environments
+(<code>dev</code>, <code>test</code>, <code>prod</code>) within the same
+cluster.</li>
+<li><strong>Documentation:</strong> Complete onboarding guide for new
+developers and migration guide for Cloud environments.</li>
+</ul>
+</section>
+<section id="deliverables" class="level2">
+<h2>Deliverables</h2>
+<ol type="1">
+<li><strong>Running Infrastructure</strong>
+<ul>
+<li>All environments (Dev, Test, Prod) deployed on Kubernetes.</li>
+<li>Database replication &amp; sharding correctly configured.</li>
+<li>Monitoring and scaling tools in place.</li>
+<li>Ingress exposing the application externally.</li>
+</ul></li>
+<li><strong>Demonstration</strong>
+<ul>
+<li>Final evaluation includes a <strong>live deployment of a new
+version</strong>:
+<ul>
+<li>Push to Git → CI/CD → Test → Validation → Production.</li>
+<li>Show <strong>zero-downtime rollout</strong>.</li>
+<li>Apply a <strong>schema migration</strong>.</li>
+</ul></li>
+</ul></li>
+<li><strong>Documentation (online)</strong>
+<ul>
+<li>Accessible via a shared platform (e.g., GitHub Wiki, MkDocs,
+Notion).</li>
+<li>Must include:
+<ul>
+<li>Cluster setup instructions (local &amp; cloud migration guide)</li>
+<li>CI/CD pipeline details</li>
+<li>Database setup (replication, sharding, migration strategy)</li>
+<li>Monitoring &amp; scaling instructions</li>
+<li>Onboarding guide for new developers</li>
+</ul></li>
+</ul></li>
+</ol>
+</section>
+<section id="evaluation" class="level2">
+<h2>Evaluation</h2>
+<ul>
+<li><strong>Intermediate milestones</strong> will check progress:
+<ul>
+<li><em>8 oct 2025</em>: a simple application is replicated and
+accessible through an Ingress Controller or a manually managed reverse
+proxy <em>(no db required at this point)</em></li>
+<li><em>14 oct 2025</em>: to be announced</li>
+<li><em>22 oct 2025</em>: to be announced</li>
+</ul></li>
+<li><strong>Final evaluation</strong> (5 nov 2025) will consist of:
+<ul>
+<li>Live demonstration of the pipeline (from Git push to
+Production).</li>
+<li>Infrastructure review (DB setup, scaling, monitoring).</li>
+<li>Documentation review.</li>
+</ul></li>
+</ul>
+</section>
+</body>
+</html>
