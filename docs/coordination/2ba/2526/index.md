@@ -336,7 +336,21 @@ css: style.css
 
 ## Software engineering: Compétition d'IA
 
+:::row
+
+:::: {.span6 .middle}
+
 ![Labyrinthe](./images/board.gif)
+
+::::
+
+:::: {.span6 .middle}
+
+![Quarto](./images/compet.jpeg)
+
+::::
+
+:::
 
 ## Software engineering: Simulation sur GPU
 
@@ -591,13 +605,19 @@ css: style.css
 
 ## Labos réseaux
 
-![Computer Network](./images/network.png)
+<p style="text-align: center; margin: 0;">
+<img src="./images/cables.jpg" style="height: 40vh;">
+<img src="./images/student_patch.jpg" style="height: 40vh;">
+<img src="./images/network.png" style="height: 40vh;">
+</p>
 
-## Labos de sécurité
+## Labos de sécurité {.black}
+
+:::::view
 
 :::row
 
-:::: {.span6 .middle}
+:::: {.span5 .middle}
 
 - Campagnes de phishing
 - Analyse de malware (virus)
@@ -606,13 +626,15 @@ css: style.css
 
 ::::
 
-::::span6
+::::span7
 
-![ ](./images/anonymous.jpg)
+![ ](./images/anonymous_black.png)
 
 ::::
 
 :::
+
+:::::
 
 ## Axes techniques: Artificial Intelligence
 

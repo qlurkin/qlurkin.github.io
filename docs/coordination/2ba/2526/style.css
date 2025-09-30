@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Workbench&display=swap');
+
 .program-grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -113,4 +115,29 @@ tr:nth-child(odd) {
 
 .row li {
   text-align: left;
+}
+
+.mode-deck .deck-current.black {
+  background-color: black;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  align-items: center;
+}
+
+.mode-deck .deck-current.black .view {
+  width: 133vh;
+  display: inline-block;
+  font-weight: bold;
+  font-family: 'Workbench';
+  color: rgb(200, 255, 200);
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings:
+    'BLED' 0,
+    'SCAN' 0;
 }
