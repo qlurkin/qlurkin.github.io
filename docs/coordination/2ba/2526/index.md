@@ -617,7 +617,7 @@ css: style.css
 
 :::row
 
-:::: {.span5 .middle}
+:::: {.span7 .middle}
 
 - Campagnes de phishing
 - Analyse de malware (virus)
@@ -626,7 +626,7 @@ css: style.css
 
 ::::
 
-::::span7
+::::span5
 
 ![ ](./images/anonymous_black.png)
 
