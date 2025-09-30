@@ -141,3 +141,7 @@ tr:nth-child(odd) {
     'BLED' 0,
     'SCAN' 0;
 }
+
+.mode-deck .deck-current.black img {
+  width: 100%;
+}
