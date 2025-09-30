@@ -968,7 +968,7 @@ css: style.css
 <div class="name">Stage</div>
 <div class="ects">10 crédits</div>
 </div>
-<div class="ue q1">
+<div class="ue q1 hl">
 <div class="name">Electronic design</div>
 <div class="ects">5 crédits</div>
 </div>
@@ -1015,7 +1015,7 @@ css: style.css
 <div class="quadrimestre">Q2</div>
 <div class="ruler">
 </div>
-<div class="ue q1">
+<div class="ue q1 hl">
 <div class="name">Architecture and software quality</div>
 <div class="ects">4 crédits</div>
 </div>
@@ -1090,7 +1090,7 @@ css: style.css
 <div class="name">Software licences and GDPR</div>
 <div class="ects">2 crédits</div>
 </div>
-<div class="ue q1">
+<div class="ue q1 hl">
 <div class="name">Computer security</div>
 <div class="ects">4 crédits</div>
 </div>
