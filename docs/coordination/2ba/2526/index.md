@@ -31,7 +31,7 @@ css: style.css
 - Communique, collabore et convainc
 - Apprendre en autonomie, former et vulgariser
 
-<p style="font-size: 1.5em; font-weight: bold; text-align: center;">Comme tous les ingénieur·e·s !</p>
+<p style="font-size: 1.5em; font-weight: bold; text-align: center;">Comme n'importe quel·le ingénieur·e !</p>
 
 ## Un domaine particulier
 
