@@ -132,7 +132,7 @@ tr:nth-child(odd) {
   width: 133vh;
   display: inline-block;
   font-weight: bold;
-  font-family: 'Workbench';
+  font-family: 'Workbench', monospace;
   color: rgb(200, 255, 200);
   font-optical-sizing: auto;
   font-weight: 400;
