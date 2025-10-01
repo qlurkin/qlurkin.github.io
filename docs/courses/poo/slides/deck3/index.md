@@ -6,13 +6,12 @@ type: deck
 
 ## Héritage
 
-- Définir une classe **à partir** d\'une autre [Sous-ensemble des
-  membres communs entre les deux classes]{.small}
-- Possibilité d\'exploiter le **polymorphisme** [Un même objet peut
-  prendre plusieurs formes selon le contexte]{.small}
-- Nouveau niveau de **visibilité** pour les membres d\'une classe
-  [Membres privés à une classe, mais hérités auprès des
-  sous-classes]{.small}
+- Définir une classe **à partir** d\'une autre [Sous-ensemble des membres
+  communs entre les deux classes]{.small}
+- Possibilité d\'exploiter le **polymorphisme** [Un même objet peut prendre
+  plusieurs formes selon le contexte]{.small}
+- Nouveau niveau de **visibilité** pour les membres d\'une classe [Membres
+  privés à une classe, mais hérités auprès des sous-classes]{.small}
 
 ## Représentation d\'une paire{.code}
 
@@ -41,8 +40,8 @@ public class Pair
 
 ## Représentation d\'une paire
 
-- Une paire est composée de deux nombres réels [On renseigne les deux
-  nombres au moment de la construction]{.small}
+- Une paire est composée de deux nombres réels [On renseigne les deux nombres au
+  moment de la construction]{.small}
 - La méthode `IsOrdered()` teste si la paire est **ordonnée**
 
 ```cs
@@ -61,13 +60,13 @@ Console.WriteLine(string.Format("{0}: {1}", p2, p2.IsOrdered()));
 
 ## Paire ordonnée
 
-- La classe `OrderedPair` représente une **paire ordonnée** [Le premier
-  élément de la paire doit être ≤ au second]{.small}
+- La classe `OrderedPair` représente une **paire ordonnée** [Le premier élément
+  de la paire doit être ≤ au second]{.small}
 - **Deux manières** de définir une telle classe
   - Imposer la contrainte sur les paramètres du constructeur
   - Laisser le constructeur réordonner les éléments de la paire
-- Faire confiance à l\'utilisateur ou avoir un **code robuste** [Code
-  interne de confiance, mais code public doit être robuste]{.small}
+- Faire confiance à l\'utilisateur ou avoir un **code robuste** [Code interne de
+  confiance, mais code public doit être robuste]{.small}
 
 ## Paire ordonnée{.code}
 
@@ -96,8 +95,8 @@ public class OrderedPair
 
 ## Paire ordonnée
 
-- Une paire ordonnée ré-ordonne les nombres réels [Au moment
-  d\'appeler le constructeur de la classe]{.small}
+- Une paire ordonnée ré-ordonne les nombres réels [Au moment d\'appeler le
+  constructeur de la classe]{.small}
 - La méthode `IsOrdered()` renvoie toujours `True`
 
 ```cs
@@ -118,24 +117,23 @@ Console.WriteLine(string.Format("{0}: {1}", o2, o2.IsOrdered()));
 - Une **paire ordonnée** est en fait une paire
   - Avec des spécificités pour les paires ordonnées
   - `OrderedPair` vu comme une spécialisation de la classe `Pair`
-- On veut **hériter** une partie du comportement de la classe `Pair`
-  [Éviter de la duplication de code, réutiliser l\'existant]{.small}
-- On veut **ajouter** des comportements spécifiques à `OrderedPair`
-  [Pouvoir différencier la nouvelle classe]{.small}
+- On veut **hériter** une partie du comportement de la classe `Pair` [Éviter de
+  la duplication de code, réutiliser l\'existant]{.small}
+- On veut **ajouter** des comportements spécifiques à `OrderedPair` [Pouvoir
+  différencier la nouvelle classe]{.small}
 
 ## Extension d\'une classe
 
 - Une sous-classe **étend** une super-classe
-  - La sous-classe **hérite** d\'une série d\'éléments de la
-    super-classe
+  - La sous-classe **hérite** d\'une série d\'éléments de la super-classe
   - Il peut y avoir du code **spécifique** à la sous-classe
 
 ## Extension d\'une classe
 
-- Une sous-classe (classe dérivée, classe enfant) **étend** une autre
-  [la super-classe (classe étendue, classe parent)]{.small}
-- **Constructeur d\'une sous-classe** appelle celui de la classe
-  parent [Construire la super-classe **avant** la sous-classe !]{.small}
+- Une sous-classe (classe dérivée, classe enfant) **étend** une autre [la
+  super-classe (classe étendue, classe parent)]{.small}
+- **Constructeur d\'une sous-classe** appelle celui de la classe parent
+  [Construire la super-classe **avant** la sous-classe !]{.small}
 
 ```cs
 public class OrderedPair : Pair
@@ -167,11 +165,11 @@ class OrderedPair
 Pair <|-- OrderedPair
 ```
 
-## Et en Python\...
+## Et en Python\
 
 - Signaler la **classe étendue** entre parenthèses
-- Appel du **constructeur de la super-classe** avec `super()` [Appel
-  explicite, il faut écrire `__init__()`]{.small}
+- Appel du **constructeur de la super-classe** avec `super()` [Appel explicite,
+  il faut écrire `__init__()`]{.small}
 
 ```python
 class OrderedPair(Pair):
@@ -181,8 +179,8 @@ class OrderedPair(Pair):
 
 ## Représentation d\'une personne
 
-- Une personne a un nom et une date de naissance [Le prénom et le nom
-  sont ici stockés ensemble]{.small}
+- Une personne a un nom et une date de naissance [Le prénom et le nom sont ici
+  stockés ensemble]{.small}
 
 ```cs
 public class Person
@@ -205,8 +203,8 @@ public class Person
 
 ## Représentation d\'une personne
 
-- Création de **deux objets** dans le but de créer une personne
-  [Est-ce une agrégation ou une composition ?]{.small}
+- Création de **deux objets** dans le but de créer une personne [Est-ce une
+  agrégation ou une composition ?]{.small}
 
 ```cs
 DateTime birthday = new DateTime(1982, 8, 24);
@@ -215,8 +213,8 @@ Person lur = new Person("Q. Lurkin", birthday);
 
 ## Représentation d\'un employé
 
-- Un **employé** est une personne avec un salaire [La classe
-  `Employee` étend la classe `Person`]{.small}
+- Un **employé** est une personne avec un salaire [La classe `Employee` étend la
+  classe `Person`]{.small}
 - Ajout d\'une **variable et méthode d\'instance** dans la sous-classe
 
 ```cs
@@ -271,8 +269,8 @@ Person <|-- Employee
 - Deux missions pour le **constructeur** d\'une sous-classe
   - **Construction** de la super-classe
   - **Initialisation** de la sous-classe
-- Utilisation du mot réservé `base` après l\'entête du constructeur
-  [Invocation du constructeur de la super-classe]{.small}
+- Utilisation du mot réservé `base` après l\'entête du constructeur [Invocation
+  du constructeur de la super-classe]{.small}
 
 ```cs
 public Employee (string name, DateTime birthday, double salary) :
@@ -284,8 +282,8 @@ base (name , birthday)
 
 ## Accès à la super-classe
 
-- Accès **restreint** aux variables d\'instance de la super-classe
-  [Variables privées pas accessibles dans la sous-classe]{.small}
+- Accès **restreint** aux variables d\'instance de la super-classe [Variables
+  privées pas accessibles dans la sous-classe]{.small}
 
 ```cs
 public Employee (string name, DateTime birthday, double salary) :
@@ -303,8 +301,8 @@ inaccessible due to its protection level
 
 ## Visibilité protégée
 
-- Membre protégé public **pour les sous-classes**, privé ailleurs [Privé
-  mais avec autorisation particulière pour les sous-classes]{.small}
+- Membre protégé public **pour les sous-classes**, privé ailleurs [Privé mais
+  avec autorisation particulière pour les sous-classes]{.small}
 
 ```cs
 Bar bar = new Bar();
@@ -351,8 +349,8 @@ public class Bar : Foo
 
 ## Encapsulation et héritage
 
-- La visibilité `protected` est un **défaut d\'encapsulation** [`private`
-  est préferable à `protected`]{.small}
+- La visibilité `protected` est un **défaut d\'encapsulation** [`private` est
+  préferable à `protected`]{.small}
 
 ## Redéfinition de méthode
 
@@ -411,11 +409,11 @@ public class Employee : Person
 
 ## Redéfinition de méthode
 
-- Permet de faire une spécialisation dans la sous-classe [Peut
-  repartir du comportement de la super-classe avec `base`]{.small}
+- Permet de faire une spécialisation dans la sous-classe [Peut repartir du
+  comportement de la super-classe avec `base`]{.small}
 - Le mot réservé `override` indique une redéfinition
-- La méthode de la super-classe doit être redéfinissable (`virtual`)
-  [Les redéfinitions sont `virtual` par défaut]{.small}
+- La méthode de la super-classe doit être redéfinissable (`virtual`) [Les
+  redéfinitions sont `virtual` par défaut]{.small}
 
 ```cs
 public class Employee : Person
@@ -430,8 +428,8 @@ public class Employee : Person
 
 ## Masquage de méthode
 
-- Méthode de même entête **masque** version de super-classe [Si elle
-  n\'est pas marquée comme une redéfinition]{.small}
+- Méthode de même entête **masque** version de super-classe [Si elle n\'est pas
+  marquée comme une redéfinition]{.small}
 - Quel `nom` est affiché ? \"Q. Lurkin\" ou \"Son Goku\"
 
 ```cs
@@ -533,8 +531,8 @@ public class Point
 
 ## Point coloré
 
-- **Extension** de la classe `Point` [Ajout d'une variable d'instance
-  pour stocker la couleur]{.small}
+- **Extension** de la classe `Point` [Ajout d'une variable d'instance pour
+  stocker la couleur]{.small}
 - **Réutilisation** du code de la classe mère avec `base`
 
 ```cs
@@ -563,16 +561,16 @@ public class ColouredPoint : Point
 
 ## Hiérarchie de classe
 
-- Établissement d'une **hiérarchie de classe** [Plusieurs classes
-  liées par des relations d'héritage]{.small}
+- Établissement d'une **hiérarchie de classe** [Plusieurs classes liées par des
+  relations d'héritage]{.small}
 - Une classe peut avoir des **ancêtres et/ou des enfants**
 
 ## Méthode héritée
 
-- Méthodes publiques de la super-classe sont **héritées** [Comme si
-  elles avaient été définies dans la sous-classe]{.small}
-- Ajout d'une méthode **Translate** dans la classe `Point` [Création
-  et renvoi d'un nouvel objet `Point`]{.small}
+- Méthodes publiques de la super-classe sont **héritées** [Comme si elles
+  avaient été définies dans la sous-classe]{.small}
+- Ajout d'une méthode **Translate** dans la classe `Point` [Création et renvoi
+  d'un nouvel objet `Point`]{.small}
 
 ```cs
 public class Point
@@ -590,8 +588,8 @@ public class Point
 
 ## Méthode héritée
 
-- On peut **translater** un point coloré [Mais le résultat produit
-  sera un simple point\...]{.small}
+- On peut **translater** un point coloré [Mais le résultat produit sera un
+  simple point\...]{.small}
 
 ```cs
 public class Program
@@ -614,8 +612,8 @@ public class Program
 
 - **Redéfinition** d'une méthode [Remplacement de la version de la
   super-classe]{.small}
-- **Maintien de la couleur** lors d'une translation [Création d'un
-  nouvel objet `ColouredPoint`]{.small}
+- **Maintien de la couleur** lors d'une translation [Création d'un nouvel objet
+  `ColouredPoint`]{.small}
 
 ```cs
 public class ColouredPoint : Point
@@ -633,11 +631,10 @@ public class ColouredPoint : Point
 
 ## Autorisation de redéfinition
 
-- La super-classe doit **autoriser la redéfinition** de ses méthodes
-  [Avec visibilité ou modificateurs (`virtual` en C#, `final` en
-  Java\...)]{.small}
-- La méthode redéfinie doit garder (quasi) la **même signature** [La
-  visibilité peut être éventuellement modifiée]{.small}
+- La super-classe doit **autoriser la redéfinition** de ses méthodes [Avec
+  visibilité ou modificateurs (`virtual` en C#, `final` en Java\...)]{.small}
+- La méthode redéfinie doit garder (quasi) la **même signature** [La visibilité
+  peut être éventuellement modifiée]{.small}
 
 ```cs
 public class Point
@@ -655,10 +652,10 @@ public class Point
 
 ## Représentation en mémoire
 
-- Création de deux objets distincts de **différents types**
-  [Références stockées dans des variables de différents types]{.small}
-- **Deux instances distinctes** sont créées en mémoire [Un objet de
-  type Point et un de type ColouredPoint]{.small}
+- Création de deux objets distincts de **différents types** [Références stockées
+  dans des variables de différents types]{.small}
+- **Deux instances distinctes** sont créées en mémoire [Un objet de type Point
+  et un de type ColouredPoint]{.small}
 
 ```cs
 public class Program
@@ -674,8 +671,8 @@ public class Program
 
 ## Type d'une variable
 
-- Une variable peut avoir **plusieurs types** [Une instance d'une
-  sous-classe est aussi une de la super-classe]{.small}
+- Une variable peut avoir **plusieurs types** [Une instance d'une sous-classe
+  est aussi une de la super-classe]{.small}
 - Principale distinction entre **deux types**
   - Type de la variable (lors de sa déclaration)
   - Type de l'objet référencé par la variable
@@ -686,10 +683,10 @@ ColouredPoint cp = new ColouredPoint(1, 2, Color.Red);
 
 ## Type d'une variable
 
-- Une variable d'un type peut contenir un **objet d'un autre type**
-  [Pour autant que les types soient compatibles]{.small}
-- **Stockage** d'un objet `ColouredPoint` dans une variable `Point`
-  [Car `ColouredPoint` est une sous-classe de `Point`]{.small}
+- Une variable d'un type peut contenir un **objet d'un autre type** [Pour autant
+  que les types soient compatibles]{.small}
+- **Stockage** d'un objet `ColouredPoint` dans une variable `Point` [Car
+  `ColouredPoint` est une sous-classe de `Point`]{.small}
 
 ```cs
 Point p = new ColouredPoint(1, 2, Color.Red);
@@ -697,21 +694,24 @@ Point p = new ColouredPoint(1, 2, Color.Red);
 
 ## Polymorphisme
 
-- Un objet peut être **vu avec différents types** [En fonction du type
-  de la variable utilisée pour le référencer]{.small}
-- Le type de la variable définit les **méthodes utilisables** [Des
-  méthodes existantes peuvent donc être indisponibles]{.small}
-- Un même objet peut **\"changer de type\"** durant l'exécution [Le
-  type de l'objet ne changera jamais, seulement celui perçu]{.small}
+- Un objet peut être **vu avec différents types** [En fonction du type de la
+  variable utilisée pour le référencer]{.small}
+- Le type de la variable définit les **méthodes utilisables** [Des méthodes
+  existantes peuvent donc être indisponibles]{.small}
+- Un même objet peut **\"changer de type\"** durant l'exécution [Le type de
+  l'objet ne changera jamais, seulement celui perçu]{.small}
 
 ## Polymorphisme
 
-- Tester le type de l'**objet référencé** à partir d'une variable
-  [Test de la relation *is-a*]{.small}
-- Opérateur de test de la **compatibilité de type** [Variable contient
-  une référence vers un objet d'un type donné]{.small}
+- Tester le type de l'**objet référencé** à partir d'une variable [Test de la
+  relation *is-a*]{.small}
+- Opérateur de test de la **compatibilité de type** [Variable contient une
+  référence vers un objet d'un type donné]{.small}
 
 ```cs
+Point p = new Point(1, 2, Color.Red);
+ColouredPoint cp = new ColouredPoint(1, 2, Color.Red);
+
 Console.WriteLine(( p is Point)+" / "+( p is ColouredPoint));
 Console.WriteLine((cp is Point)+" / "+(cp is ColouredPoint));
 ```
@@ -723,8 +723,8 @@ True / True
 
 ## Conversion implicite
 
-- Une référence peut être **convertie implicitement** [D'un objet qui
-  est d'un sous-type de celui de la variable]{.small}
+- Une référence peut être **convertie implicitement** [D'un objet qui est d'un
+  sous-type de celui de la variable]{.small}
 - Conversion par **affectation** directe ou par appel de méthode
 
 ```cs
@@ -746,8 +746,8 @@ public class Program
 
 ## Conversion explicite
 
-- Une référence peut être **convertie explicitement** [Pour autant que
-  le type de l'objet soit compatible]{.small}
+- Une référence peut être **convertie explicitement** [Pour autant que le type
+  de l'objet soit compatible]{.small}
 - Conversion à l'aide de l'**opérateur de conversion**
 
 ```cs
@@ -770,12 +770,15 @@ public class Program
 
 ## Compatibilité versus type
 
-- Test du **type réel** d'un objet [L'objet est une instance de quelle
-  classe ?]{.small}
-- Test de **compatibilité du type** d'un objet [Peut-on convertir
-  implicitement l'objet vers un type ?]{.small}
+- Test du **type réel** d'un objet [L'objet est une instance de quelle classe
+  ?]{.small}
+- Test de **compatibilité du type** d'un objet [Peut-on convertir implicitement
+  l'objet vers un type ?]{.small}
 
 ```cs
+Point p = new Point(1, 2, Color.Red);
+ColouredPoint cp = new ColouredPoint(1, 2, Color.Red);
+
 Console.WriteLine((cp is Point)+" / "+(cp is ColouredPoint));
 
 Console.WriteLine(cp.GetType() == typeof(Point));
@@ -790,8 +793,8 @@ True
 
 ## Conversion explicite
 
-- **Vérification de la compatibilité** avant conversion explicite
-  [Sans quoi il y a risque d'une erreur de conversion]{.small}
+- **Vérification de la compatibilité** avant conversion explicite [Sans quoi il
+  y a risque d'une erreur de conversion]{.small}
 
 ```cs
 public class Program
@@ -832,19 +835,18 @@ public class Program
 
 ## Résolution des appels de méthode
 
-- Le type statique détermine les **méthodes accessibles** [Les seules
-  méthodes accessibles sont celles du type statique]{.small}
-- La **méthode effectivement appelée** dépend du type dynamique [En
-  cas de redéfinition, la méthode de la sous-classe est
-  appelée]{.small}
+- Le type statique détermine les **méthodes accessibles** [Les seules méthodes
+  accessibles sont celles du type statique]{.small}
+- La **méthode effectivement appelée** dépend du type dynamique [En cas de
+  redéfinition, la méthode de la sous-classe est appelée]{.small}
 - Résolution en **deux étapes**
   - Méthodes accessibles vérifiées à la compilation
   - Méthode appelée décidée à l'exécution
 
 ## Résolution des appels de méthode
 
-- Méthode de la sous-classe **non accessible** [Car le type statique
-  est celui de la super-classe]{.small}
+- Méthode de la sous-classe **non accessible** [Car le type statique est celui
+  de la super-classe]{.small}
 
 ```cs
 Point p = new ColouredPoint (7, 5, Color.Red);
@@ -861,8 +863,8 @@ missing an assembly reference ?
 
 ## Résolution des appels de méthode
 
-- Méthode redéfinie dans sous-classe **appelée** [Même si type
-  statique de la variable est de la super-classe]{.small}
+- Méthode redéfinie dans sous-classe **appelée** [Même si type statique de la
+  variable est de la super-classe]{.small}
 
 ```cs
 Point p = new ColouredPoint(7, 5, Color.Red);
@@ -876,10 +878,9 @@ Console.WriteLine(p.ToString());
 
 ## Classe `Object`
 
-- La classe `Object` est la super-classe de tout le monde [Racine de
-  toutes les hiérarchies de classe]{.small}
+- La classe `Object` est la super-classe de tout le monde [Racine de toutes les
+  hiérarchies de classe]{.small}
 - Contient plusieurs **méthodes redéfinissables** communes à tous
-
   - Représentation d'un objet sous forme de chaine de caractères
 
     ```cs
@@ -900,8 +901,8 @@ Console.WriteLine(p.ToString());
 
 ## Classe `Object`
 
-- Classe permettant de représenter des paires d'entiers [Redéfinition
-  des méthodes Equals et ToString]{.small}
+- Classe permettant de représenter des paires d'entiers [Redéfinition des
+  méthodes Equals et ToString]{.small}
 
 ```cs
 public class IntPair
@@ -934,7 +935,8 @@ public class IntPair
 
 ## L'héritage c'est mal ?
 
-- **Couplage très fort** entre classes mère et fille. [Encore plus si membres `protected`]{.small}
+- **Couplage très fort** entre classes mère et fille. [Encore plus si membres
+  `protected`]{.small}
 - Les hiérarchies de classes sont **rigides**
 
 ## Les hiérarchies de classes sont rigides
@@ -1121,7 +1123,8 @@ Robot <|-- MurderRobot
 
 ## Les hiérarchies de classes sont rigides
 
-- C'est a ce moment du projet que le client demande un `MurderRobotDog` [Il doit `drive()`, `kill()` et `bark()`]{.small}
+- C'est a ce moment du projet que le client demande un `MurderRobotDog` [Il doit
+  `drive()`, `kill()` et `bark()`]{.small}
 
 ```plantuml {.build}
 hide circle
@@ -1163,7 +1166,8 @@ Robot <|-- MurderRobot
 
 ## Sauvé par la composition
 
-- Si nous avions basé notre design sur des **compositions**, nous aurions plus de **flexibilité**
+- Si nous avions basé notre design sur des **compositions**, nous aurions plus
+  de **flexibilité**
 
 ```plantuml {.build}
 hide circle
@@ -1221,6 +1225,8 @@ Barker --* MurderRobotDog
 
 ## Composition > héritage
 
-- Design orienté **héritage**: conception des classes par rapport à ce qu'elles **sont**
-- Design orienté **composition**: conception des classes par rapport à ce qu'elles **font**
+- Design orienté **héritage**: conception des classes par rapport à ce qu'elles
+  **sont**
+- Design orienté **composition**: conception des classes par rapport à ce
+  qu'elles **font**
 - Composition plus **flexible** que l'héritage

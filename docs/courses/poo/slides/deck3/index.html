@@ -6,6 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>PO3T - Cours 3 - Héritage et polymorphisme</title>
   <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
     div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -77,8 +80,8 @@ renseigne les deux nombres au moment de la construction</span></li>
 <li>La méthode <code>IsOrdered()</code> teste si la paire est
 <strong>ordonnée</strong></li>
 </ul>
-<div class="pygments"><pre><span></span><span class="n">Pair</span><span class="w"> </span><span class="n">p1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Pair</span><span class="p">(</span><span class="m">12</span><span class="p">,</span><span class="w"> </span><span class="m">7</span><span class="p">);</span>
-<span class="n">Pair</span><span class="w"> </span><span class="n">p2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Pair</span><span class="p">(</span><span class="o">-</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">);</span>
+<div class="pygments"><pre><span></span><span class="n">Pair</span><span class="w"> </span><span class="n">p1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Pair</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">);</span>
+<span class="n">Pair</span><span class="w"> </span><span class="n">p2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Pair</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
 
 <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="kt">string</span><span class="p">.</span><span class="n">Format</span><span class="p">(</span><span class="s">&quot;{0}: {1}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">p1</span><span class="p">,</span><span class="w"> </span><span class="n">p1</span><span class="p">.</span><span class="n">IsOrdered</span><span class="p">()));</span>
 <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="kt">string</span><span class="p">.</span><span class="n">Format</span><span class="p">(</span><span class="s">&quot;{0}: {1}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">p2</span><span class="p">,</span><span class="w"> </span><span class="n">p2</span><span class="p">.</span><span class="n">IsOrdered</span><span class="p">()));</span>
@@ -138,8 +141,8 @@ classe</span></li>
 <li>La méthode <code>IsOrdered()</code> renvoie toujours
 <code>True</code></li>
 </ul>
-<div class="pygments"><pre><span></span><span class="n">Pair</span><span class="w"> </span><span class="n">o1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">OrderedPair</span><span class="p">(</span><span class="m">12</span><span class="p">,</span><span class="w"> </span><span class="m">7</span><span class="p">);</span>
-<span class="n">Pair</span><span class="w"> </span><span class="n">o2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">OrderedPair</span><span class="p">(</span><span class="o">-</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">);</span>
+<div class="pygments"><pre><span></span><span class="n">Pair</span><span class="w"> </span><span class="n">o1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">OrderedPair</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">);</span>
+<span class="n">Pair</span><span class="w"> </span><span class="n">o2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">OrderedPair</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
 
 <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="kt">string</span><span class="p">.</span><span class="n">Format</span><span class="p">(</span><span class="s">&quot;{0}: {1}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">o1</span><span class="p">,</span><span class="w"> </span><span class="n">o1</span><span class="p">.</span><span class="n">IsOrdered</span><span class="p">()));</span>
 <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="kt">string</span><span class="p">.</span><span class="n">Format</span><span class="p">(</span><span class="s">&quot;{0}: {1}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">o2</span><span class="p">,</span><span class="w"> </span><span class="n">o2</span><span class="p">.</span><span class="n">IsOrdered</span><span class="p">()));</span>
@@ -203,16 +206,17 @@ classe parent <span class="small">Construire la super-classe
 <h2>Extension d'une classe</h2>
 <figure><img class="plantuml" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBjb250ZW50U3R5bGVUeXBlPSJ0ZXh0L2NzcyIgZGF0YS1kaWFncmFtLXR5cGU9IkNMQVNTIiBoZWlnaHQ9IjI5NXB4IiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBzdHlsZT0id2lkdGg6MjQycHg7aGVpZ2h0OjI5NXB4O2JhY2tncm91bmQ6I0ZGRkZGRjsiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDI0MiAyOTUiIHdpZHRoPSIyNDJweCIgem9vbUFuZFBhbj0ibWFnbmlmeSI+PGRlZnMvPjxnPjwhLS1jbGFzcyBQYWlyLS0+PGcgY2xhc3M9ImVudGl0eSIgZGF0YS1lbnRpdHk9IlBhaXIiIGRhdGEtc291cmNlLWxpbmU9IjUiIGRhdGEtdWlkPSJlbnQwMDAyIiBpZD0iZW50aXR5X1BhaXIiPjxyZWN0IGZpbGw9IiNGMUYxRjEiIGhlaWdodD0iMTY3LjMyODEiIHJ4PSIyLjUiIHJ5PSIyLjUiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgd2lkdGg9IjIyOC4xNDA2IiB4PSI3IiB5PSI3Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iNDMuMjc3MyIgeD0iOTkuNDMxNiIgeT0iMzUuMjAzMSI+UGFpcjwvdGV4dD48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHgxPSI4IiB4Mj0iMjM0LjE0MDYiIHkxPSI0NS4yNjU2IiB5Mj0iNDUuMjY1NiIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjI0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjEyMy45NDkyIiB4PSIxMyIgeT0iNzIuNDY4OCI+LXg6IGRvdWJsZTwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIyNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxMjEuNzY5NSIgeD0iMTMiIHk9IjEwMC43MzQ0Ij4teTogZG91YmxlPC90ZXh0PjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgeDE9IjgiIHgyPSIyMzQuMTQwNiIgeTE9IjEwOS43OTY5IiB5Mj0iMTA5Ljc5NjkiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIyNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIyMTUuNzg5MSIgeD0iMTMiIHk9IjEzNyI+K0lzT3JkZXJlZCgpOiBib29sPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjI0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjIxNi4xNDA2IiB4PSIxMyIgeT0iMTY1LjI2NTYiPitUb1N0cmluZygpOiBzdHJpbmc8L3RleHQ+PC9nPjwhLS1jbGFzcyBPcmRlcmVkUGFpci0tPjxnIGNsYXNzPSJlbnRpdHkiIGRhdGEtZW50aXR5PSJPcmRlcmVkUGFpciIgZGF0YS1zb3VyY2UtbGluZT0iMTIiIGRhdGEtdWlkPSJlbnQwMDAzIiBpZD0iZW50aXR5X09yZGVyZWRQYWlyIj48cmVjdCBmaWxsPSIjRjFGMUYxIiBoZWlnaHQ9IjU0LjI2NTYiIHJ4PSIyLjUiIHJ5PSIyLjUiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgd2lkdGg9IjE0NC41MTU2IiB4PSI0OC44MSIgeT0iMjM0LjMyIi8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMTM4LjUxNTYiIHg9IjUxLjgxIiB5PSIyNjIuNTIzMSI+T3JkZXJlZFBhaXI8L3RleHQ+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB4MT0iNDkuODEiIHgyPSIxOTIuMzI1NiIgeTE9IjI3Mi41ODU2IiB5Mj0iMjcyLjU4NTYiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHgxPSI0OS44MSIgeDI9IjE5Mi4zMjU2IiB5MT0iMjgwLjU4NTYiIHkyPSIyODAuNTg1NiIvPjwvZz48IS0tcmV2ZXJzZSBsaW5rIFBhaXIgdG8gT3JkZXJlZFBhaXItLT48ZyBjbGFzcz0ibGluayIgZGF0YS1lbnRpdHktMT0iUGFpciIgZGF0YS1lbnRpdHktMj0iT3JkZXJlZFBhaXIiIGRhdGEtc291cmNlLWxpbmU9IjE0IiBkYXRhLXVpZD0ibG5rNCIgaWQ9ImxpbmtfUGFpcl9PcmRlcmVkUGFpciI+PHBhdGggY29kZUxpbmU9IjE0IiBkPSJNMTIxLjA3LDE5Mi41OCBDMTIxLjA3LDIxNC4wOSAxMjEuMDcsMjE3LjczIDEyMS4wNywyMzMuOSIgZmlsbD0ibm9uZSIgaWQ9IlBhaXItYmFja3RvLU9yZGVyZWRQYWlyIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7Ii8+PHBvbHlnb24gZmlsbD0ibm9uZSIgcG9pbnRzPSIxMjEuMDcsMTc0LjU4LDExNS4wNywxOTIuNTgsMTI3LjA3LDE5Mi41OCwxMjEuMDcsMTc0LjU4IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7Ii8+PC9nPjwhLS1TUkM9W0pPdDkyVzhuNDRKbF9ITHpMMkdXdWNkbXVhTU9heUJ1MHJiUVJPcDlhMExTX3pyOUtDWWp3ckxyck9LRGVVUVdCSzZ5aVhqYmEzVktMaVF1SkljbW9lYnd4VHQwSnk5YjRwNXFhamNjZE5VZlVnaXJHN3QzVy1JMEJxMEtVRV9HLUFvY3hnOFVaTGZXN19WMUsyMHBjdFVlbEJVTDdscW1oUmZwV1I1VXlGYU5fX0FiN3cya1JEdjJqRldCXS0tPjwvZz48L3N2Zz4="></figure>
 </section>
-<section id="et-en-python..." class="level2">
-<h2>Et en Python...</h2>
+<section id="et-en-python" class="level2">
+<h2>Et en Python<br />
+</h2>
 <ul>
 <li>Signaler la <strong>classe étendue</strong> entre parenthèses</li>
 <li>Appel du <strong>constructeur de la super-classe</strong> avec
 <code>super()</code> <span class="small">Appel explicite, il faut écrire
 <code>__init__()</code></span></li>
 </ul>
-<div class="pygments"><pre><span></span><span class="k">class</span> <span class="nc">OrderedPair</span><span class="p">(</span><span class="n">Pair</span><span class="p">):</span>
-  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<div class="pygments"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">OrderedPair</span><span class="p">(</span><span class="n">Pair</span><span class="p">):</span>
+  <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
     <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span> <span class="p">(</span><span class="n">x</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;=</span> <span class="n">y</span> <span class="k">else</span> <span class="n">y</span><span class="p">,</span> <span class="n">y</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;=</span> <span class="n">y</span> <span class="k">else</span> <span class="n">x</span><span class="p">)</span>
 </pre></div>
 
@@ -249,7 +253,7 @@ class="small">Le prénom et le nom sont ici stockés ensemble</span></li>
 personne <span class="small">Est-ce une agrégation ou une composition
 ?</span></li>
 </ul>
-<div class="pygments"><pre><span></span><span class="n">DateTime</span><span class="w"> </span><span class="n">birthday</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">DateTime</span><span class="p">(</span><span class="m">1982</span><span class="p">,</span><span class="w"> </span><span class="m">8</span><span class="p">,</span><span class="w"> </span><span class="m">24</span><span class="p">);</span>
+<div class="pygments"><pre><span></span><span class="n">DateTime</span><span class="w"> </span><span class="n">birthday</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">DateTime</span><span class="p">(</span><span class="mi">1982</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="mi">24</span><span class="p">);</span>
 <span class="n">Person</span><span class="w"> </span><span class="n">lur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Person</span><span class="p">(</span><span class="s">&quot;Q. Lurkin&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">birthday</span><span class="p">);</span>
 </pre></div>
 
@@ -282,8 +286,8 @@ sous-classe</li>
 
 <div class="pygments"><pre><span></span><span class="n">Employee</span><span class="w"> </span><span class="n">lur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Employee</span><span class="p">(</span>
 <span class="w">  </span><span class="s">&quot;Q. Lurkin&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="k">new</span><span class="w"> </span><span class="nf">DateTime</span><span class="w"> </span><span class="p">(</span><span class="m">1982</span><span class="p">,</span><span class="w"> </span><span class="m">8</span><span class="p">,</span><span class="w"> </span><span class="m">24</span><span class="p">),</span>
-<span class="w">  </span><span class="m">6000</span>
+<span class="w">  </span><span class="k">new</span><span class="w"> </span><span class="nf">DateTime</span><span class="w"> </span><span class="p">(</span><span class="mi">1982</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="mi">24</span><span class="p">),</span>
+<span class="w">  </span><span class="mi">6000</span>
 <span class="p">);</span>
 </pre></div>
 
@@ -344,14 +348,14 @@ pour les sous-classes</span></li>
 
 <span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">Foo</span>
 <span class="p">{</span>
-<span class="w">    </span><span class="k">protected</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">12</span><span class="p">;</span>
+<span class="w">    </span><span class="k">protected</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">12</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">Bar</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Foo</span>
 <span class="p">{</span>
 <span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="nf">Bar</span><span class="p">()</span>
 <span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">42</span><span class="p">;</span><span class="w"> </span><span class="c1">// Accès OK</span>
+<span class="w">        </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">42</span><span class="p">;</span><span class="w"> </span><span class="c1">// Accès OK</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -366,14 +370,14 @@ reste privé à la super-classe</span></li>
 </ul>
 <div class="pygments"><pre><span></span><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">Foo</span>
 <span class="p">{</span>
-<span class="w">    </span><span class="k">protected</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">12</span><span class="p">;</span>
+<span class="w">    </span><span class="k">protected</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">12</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">Bar</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Foo</span>
 <span class="p">{</span>
 <span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="nf">Bar</span><span class="p">()</span>
 <span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">42</span><span class="p">;</span><span class="w"> </span><span class="c1">// Accès OK (équivalent à this.x)</span>
+<span class="w">        </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">42</span><span class="p">;</span><span class="w"> </span><span class="c1">// Accès OK (équivalent à this.x)</span>
 <span class="w">    </span><span class="p">}</span>
 
 <span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Method</span><span class="w"> </span><span class="p">(</span><span class="n">Foo</span><span class="w"> </span><span class="n">f</span><span class="p">)</span>
@@ -401,8 +405,8 @@ héritée</li>
 </ul>
 <div class="pygments"><pre><span></span><span class="n">Employee</span><span class="w"> </span><span class="n">lur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Employee</span><span class="p">(</span>
 <span class="w">  </span><span class="s">&quot;Q. Lurkin&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="k">new</span><span class="w"> </span><span class="nf">DateTime</span><span class="w"> </span><span class="p">(</span><span class="m">1982</span><span class="p">,</span><span class="w"> </span><span class="m">8</span><span class="p">,</span><span class="w"> </span><span class="m">24</span><span class="p">),</span>
-<span class="w">  </span><span class="m">6000</span>
+<span class="w">  </span><span class="k">new</span><span class="w"> </span><span class="nf">DateTime</span><span class="w"> </span><span class="p">(</span><span class="mi">1982</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="mi">24</span><span class="p">),</span>
+<span class="w">  </span><span class="mi">6000</span>
 <span class="p">);</span>
 <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">lur</span><span class="p">);</span>
 
@@ -480,8 +484,8 @@ redéfinition</span></li>
 </ul>
 <div class="pygments"><pre><span></span><span class="n">Employee</span><span class="w"> </span><span class="n">lur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Employee</span><span class="p">(</span>
 <span class="w">  </span><span class="s">&quot;Q. Lurkin&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="k">new</span><span class="w"> </span><span class="nf">DateTime</span><span class="w"> </span><span class="p">(</span><span class="m">1982</span><span class="p">,</span><span class="w"> </span><span class="m">8</span><span class="p">,</span><span class="w"> </span><span class="m">24</span><span class="p">),</span>
-<span class="w">  </span><span class="m">6000</span>
+<span class="w">  </span><span class="k">new</span><span class="w"> </span><span class="nf">DateTime</span><span class="w"> </span><span class="p">(</span><span class="mi">1982</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="mi">24</span><span class="p">),</span>
+<span class="w">  </span><span class="mi">6000</span>
 <span class="p">);</span>
 <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">lur</span><span class="p">);</span>
 
@@ -523,8 +527,8 @@ obligé d'utiliser, mais warning à la compilation</span></li>
 </ul>
 <div class="pygments"><pre><span></span><span class="n">Employee</span><span class="w"> </span><span class="n">lur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Employee</span><span class="p">(</span>
 <span class="w">  </span><span class="s">&quot;Q. Lurkin&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="k">new</span><span class="w"> </span><span class="nf">DateTime</span><span class="w"> </span><span class="p">(</span><span class="m">1982</span><span class="p">,</span><span class="w"> </span><span class="m">8</span><span class="p">,</span><span class="w"> </span><span class="m">24</span><span class="p">),</span>
-<span class="w">  </span><span class="m">6000</span>
+<span class="w">  </span><span class="k">new</span><span class="w"> </span><span class="nf">DateTime</span><span class="w"> </span><span class="p">(</span><span class="mi">1982</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="mi">24</span><span class="p">),</span>
+<span class="w">  </span><span class="mi">6000</span>
 <span class="p">);</span>
 <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">lur</span><span class="p">);</span>
 </pre></div>
@@ -536,8 +540,8 @@ obligé d'utiliser, mais warning à la compilation</span></li>
 </ul>
 <div class="pygments"><pre><span></span><span class="n">Employee</span><span class="w"> </span><span class="n">lur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Employee</span><span class="p">(</span>
 <span class="w">  </span><span class="s">&quot;Q. Lurkin&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="k">new</span><span class="w"> </span><span class="nf">DateTime</span><span class="w"> </span><span class="p">(</span><span class="m">1982</span><span class="p">,</span><span class="w"> </span><span class="m">8</span><span class="p">,</span><span class="w"> </span><span class="m">24</span><span class="p">),</span>
-<span class="w">  </span><span class="m">6000</span>
+<span class="w">  </span><span class="k">new</span><span class="w"> </span><span class="nf">DateTime</span><span class="w"> </span><span class="p">(</span><span class="mi">1982</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="mi">24</span><span class="p">),</span>
+<span class="w">  </span><span class="mi">6000</span>
 <span class="p">);</span>
 <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">lur</span><span class="p">.</span><span class="n">ToString</span><span class="p">());</span>
 </pre></div>
@@ -653,9 +657,9 @@ point...</span></li>
 <span class="p">{</span>
 <span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span>
 <span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="n">ColouredPoint</span><span class="w"> </span><span class="n">cp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ColouredPoint</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">Color</span><span class="p">.</span><span class="n">Red</span><span class="p">);</span>
+<span class="w">        </span><span class="n">ColouredPoint</span><span class="w"> </span><span class="n">cp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ColouredPoint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">Color</span><span class="p">.</span><span class="n">Red</span><span class="p">);</span>
 <span class="w">        </span><span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">cp</span><span class="p">);</span>
-<span class="w">        </span><span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">cp</span><span class="p">.</span><span class="n">Translate</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">));</span>
+<span class="w">        </span><span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">cp</span><span class="p">.</span><span class="n">Translate</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">));</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -725,9 +729,9 @@ ColouredPoint</span></li>
 <span class="p">{</span>
 <span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span>
 <span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="n">Point</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Point</span><span class="p">(</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">);</span>
+<span class="w">        </span><span class="n">Point</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Point</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">);</span>
 
-<span class="w">        </span><span class="n">ColouredPoint</span><span class="w"> </span><span class="n">cp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ColouredPoint</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">Color</span><span class="p">.</span><span class="n">Red</span><span class="p">);</span>
+<span class="w">        </span><span class="n">ColouredPoint</span><span class="w"> </span><span class="n">cp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ColouredPoint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">Color</span><span class="p">.</span><span class="n">Red</span><span class="p">);</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -745,7 +749,7 @@ super-classe</span></li>
 <li>Type de l’objet référencé par la variable</li>
 </ul></li>
 </ul>
-<div class="pygments"><pre><span></span><span class="n">ColouredPoint</span><span class="w"> </span><span class="n">cp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ColouredPoint</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">Color</span><span class="p">.</span><span class="n">Red</span><span class="p">);</span>
+<div class="pygments"><pre><span></span><span class="n">ColouredPoint</span><span class="w"> </span><span class="n">cp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ColouredPoint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">Color</span><span class="p">.</span><span class="n">Red</span><span class="p">);</span>
 </pre></div>
 
 </section>
@@ -760,7 +764,7 @@ une variable <code>Point</code> <span class="small">Car
 <code>ColouredPoint</code> est une sous-classe de
 <code>Point</code></span></li>
 </ul>
-<div class="pygments"><pre><span></span><span class="n">Point</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ColouredPoint</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">Color</span><span class="p">.</span><span class="n">Red</span><span class="p">);</span>
+<div class="pygments"><pre><span></span><span class="n">Point</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ColouredPoint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">Color</span><span class="p">.</span><span class="n">Red</span><span class="p">);</span>
 </pre></div>
 
 </section>
@@ -788,7 +792,10 @@ variable <span class="small">Test de la relation
 class="small">Variable contient une référence vers un objet d’un type
 donné</span></li>
 </ul>
-<div class="pygments"><pre><span></span><span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">((</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">Point</span><span class="p">)</span><span class="o">+</span><span class="s">&quot; / &quot;</span><span class="o">+</span><span class="p">(</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">ColouredPoint</span><span class="p">));</span>
+<div class="pygments"><pre><span></span><span class="n">Point</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Point</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">Color</span><span class="p">.</span><span class="n">Red</span><span class="p">);</span>
+<span class="n">ColouredPoint</span><span class="w"> </span><span class="n">cp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ColouredPoint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">Color</span><span class="p">.</span><span class="n">Red</span><span class="p">);</span>
+
+<span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">((</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">Point</span><span class="p">)</span><span class="o">+</span><span class="s">&quot; / &quot;</span><span class="o">+</span><span class="p">(</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">ColouredPoint</span><span class="p">));</span>
 <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">((</span><span class="n">cp</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">Point</span><span class="p">)</span><span class="o">+</span><span class="s">&quot; / &quot;</span><span class="o">+</span><span class="p">(</span><span class="n">cp</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">ColouredPoint</span><span class="p">));</span>
 </pre></div>
 
@@ -837,7 +844,7 @@ conversion</strong></li>
 <span class="w">    </span><span class="p">{</span>
 <span class="w">        </span><span class="c1">// [...]</span>
 
-<span class="w">        </span><span class="n">Point</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ColouredPoint</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">Color</span><span class="p">.</span><span class="n">Red</span><span class="p">);</span>
+<span class="w">        </span><span class="n">Point</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ColouredPoint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">Color</span><span class="p">.</span><span class="n">Red</span><span class="p">);</span>
 <span class="w">        </span><span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">IsRed</span><span class="p">((</span><span class="n">ColouredPoint</span><span class="p">)</span><span class="w"> </span><span class="n">q</span><span class="p">));</span>
 <span class="w">    </span><span class="p">}</span>
 
@@ -858,7 +865,10 @@ class="small">L’objet est une instance de quelle classe ?</span></li>
 class="small">Peut-on convertir implicitement l’objet vers un type
 ?</span></li>
 </ul>
-<div class="pygments"><pre><span></span><span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">((</span><span class="n">cp</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">Point</span><span class="p">)</span><span class="o">+</span><span class="s">&quot; / &quot;</span><span class="o">+</span><span class="p">(</span><span class="n">cp</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">ColouredPoint</span><span class="p">));</span>
+<div class="pygments"><pre><span></span><span class="n">Point</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Point</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">Color</span><span class="p">.</span><span class="n">Red</span><span class="p">);</span>
+<span class="n">ColouredPoint</span><span class="w"> </span><span class="n">cp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ColouredPoint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">Color</span><span class="p">.</span><span class="n">Red</span><span class="p">);</span>
+
+<span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">((</span><span class="n">cp</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">Point</span><span class="p">)</span><span class="o">+</span><span class="s">&quot; / &quot;</span><span class="o">+</span><span class="p">(</span><span class="n">cp</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">ColouredPoint</span><span class="p">));</span>
 
 <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">cp</span><span class="p">.</span><span class="n">GetType</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="k">typeof</span><span class="p">(</span><span class="n">Point</span><span class="p">));</span>
 <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">cp</span><span class="p">.</span><span class="n">GetType</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="k">typeof</span><span class="p">(</span><span class="n">ColouredPoint</span><span class="p">));</span>
@@ -882,7 +892,7 @@ conversion</span></li>
 <span class="w">    </span><span class="p">{</span>
 <span class="w">        </span><span class="c1">// [...]</span>
 
-<span class="w">        </span><span class="n">Point</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ColouredPoint</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">Color</span><span class="p">.</span><span class="n">Red</span><span class="p">);</span>
+<span class="w">        </span><span class="n">Point</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ColouredPoint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">Color</span><span class="p">.</span><span class="n">Red</span><span class="p">);</span>
 <span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="n">q</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">ColouredPoint</span><span class="p">)</span>
 <span class="w">        </span><span class="p">{</span>
 <span class="w">            </span><span class="n">ColouredPoint</span><span class="w"> </span><span class="n">cp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">ColouredPoint</span><span class="p">)</span><span class="w"> </span><span class="n">q</span><span class="p">;</span>
@@ -951,7 +961,7 @@ sous-classe est appelée</span></li>
 class="small">Car le type statique est celui de la
 super-classe</span></li>
 </ul>
-<div class="pygments"><pre><span></span><span class="n">Point</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ColouredPoint</span><span class="w"> </span><span class="p">(</span><span class="m">7</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="n">Color</span><span class="p">.</span><span class="n">Red</span><span class="p">);</span>
+<div class="pygments"><pre><span></span><span class="n">Point</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ColouredPoint</span><span class="w"> </span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="n">Color</span><span class="p">.</span><span class="n">Red</span><span class="p">);</span>
 
 <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">Colour</span><span class="p">);</span>
 </pre></div>
@@ -969,7 +979,7 @@ missing an assembly reference ?
 class="small">Même si type statique de la variable est de la
 super-classe</span></li>
 </ul>
-<div class="pygments"><pre><span></span><span class="n">Point</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ColouredPoint</span><span class="p">(</span><span class="m">7</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="n">Color</span><span class="p">.</span><span class="n">Red</span><span class="p">);</span>
+<div class="pygments"><pre><span></span><span class="n">Point</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ColouredPoint</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="n">Color</span><span class="p">.</span><span class="n">Red</span><span class="p">);</span>
 
 <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">ToString</span><span class="p">());</span>
 </pre></div>
@@ -980,11 +990,11 @@ super-classe</span></li>
 <section id="classe-object" class="level2">
 <h2>Classe <code>Object</code></h2>
 <ul>
-<li><p>La classe <code>Object</code> est la super-classe de tout le
-monde <span class="small">Racine de toutes les hiérarchies de
-classe</span></p></li>
-<li><p>Contient plusieurs <strong>méthodes redéfinissables</strong>
-communes à tous</p>
+<li>La classe <code>Object</code> est la super-classe de tout le monde
+<span class="small">Racine de toutes les hiérarchies de
+classe</span></li>
+<li>Contient plusieurs <strong>méthodes redéfinissables</strong>
+communes à tous
 <ul>
 <li><p>Représentation d’un objet sous forme de chaine de caractères</p>
 <div class="pygments"><pre><span></span><span class="k">public</span><span class="w"> </span><span class="k">virtual</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="nf">ToString</span><span class="p">()</span>
