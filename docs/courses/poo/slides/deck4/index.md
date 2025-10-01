@@ -6,10 +6,10 @@ type: deck
 
 ## Interface
 
-- Une **interface** ne contient que des entêtes de méthode [Visibilité
-  publique forcée des méthodes]{.small}
-- Permet de définir un **contrat** avec un utilisateur [Définition
-  d'un ensemble de méthodes qui devront être présentes]{.small}
+- Une **interface** ne contient que des entêtes de méthode [Visibilité publique
+  forcée des méthodes]{.small}
+- Permet de définir un **contrat** avec un utilisateur [Définition d'un ensemble
+  de méthodes qui devront être présentes]{.small}
 
 ```cs
 public interface Complex
@@ -23,8 +23,8 @@ public interface Complex
 
 ## Relation d'implémentation
 
-- Une classe peut **implémenter** une interface [Doit fournir un corps
-  pour toutes les méthodes de l'interface]{.small}
+- Une classe peut **implémenter** une interface [Doit fournir un corps pour
+  toutes les méthodes de l'interface]{.small}
 
 ```cs
 public class CartesianComplex : Complex
@@ -69,8 +69,8 @@ public class PolarComplex : Complex
 
 ## Polymorphisme avec interface
 
-- **Somme de nombres complexes** facilitée par polymorphisme [Il
-  suffit de passer par les méthodes de l'interface]{.small}
+- **Somme de nombres complexes** facilitée par polymorphisme [Il suffit de
+  passer par les méthodes de l'interface]{.small}
 
 ```cs
 List<Complex> list = new List<Complex>();
@@ -247,8 +247,8 @@ GameLoop --> MoverKiller
 
 ## Classe abstraite
 
-- **Intermédiaire** entre l'interface et la classe concrète [Certaines
-  méthodes communes peuvent être implémentées]{.small}
+- **Intermédiaire** entre l'interface et la classe concrète [Certaines méthodes
+  communes peuvent être implémentées]{.small}
 - Une classe abstraite n'est **pas instanciable**
 
 ```cs
@@ -274,8 +274,7 @@ public abstract class Complex
 ## Classe abstraite
 
 - Deux **modificateurs** de méthode
-  - Méthode sans corps à redéfinir dans les sous-classes
-    (`abstract`)
+  - Méthode sans corps à redéfinir dans les sous-classes (`abstract`)
   - Méthode avec corps mais redéfinissable (`virtual`)
 
 ```cs
@@ -300,8 +299,8 @@ public abstract class Complex
 
 ## Classe abstraite
 
-- Une classe abstraite est **étendue** en classe concrète [Il faut
-  définir le corps des méthodes abstraites]{.small}
+- Une classe abstraite est **étendue** en classe concrète [Il faut définir le
+  corps des méthodes abstraites]{.small}
 
 ```cs
 public class CartesianComplex : Complex
@@ -327,8 +326,8 @@ public class CartesianComplex : Complex
 
 ## Classe abstraite
 
-- On peut redéfinir une méthode définie dans la classe abstraite [Il
-  s'agit d'une simple redéfinition de méthode]{.small}
+- On peut redéfinir une méthode définie dans la classe abstraite [Il s'agit
+  d'une simple redéfinition de méthode]{.small}
 
 ```cs
 public class PolarComplex : Complex
@@ -351,22 +350,22 @@ public class PolarComplex : Complex
 
 ## Hiérarchie de classe
 
-- Une interface est une **classe abstraite pure** [Et ne contenant pas
-  de constructeur, ni de variables d'instance]{.small}
-- Une sous-classe d'une classe abstraite peut être **abstraite** [Si
-  elle ne fournit pas de corps à toutes les méthodes
-  abstraites]{.small}
+- Une interface est une **classe abstraite pure** [Et ne contenant pas de
+  constructeur, ni de variables d'instance]{.small}
+- Une sous-classe d'une classe abstraite peut être **abstraite** [Si elle ne
+  fournit pas de corps à toutes les méthodes abstraites]{.small}
 
 ## Open / Closed Principle
 
-- Open: Le code doit être ouvert aux extensions [On doit pouvoir
-  ajouter des fonctionnalités]{.small}
-- Closed: le code doit être fermé aux modifications [Sans modifier le
-  code existant]{.small}
+- Open: Le code doit être ouvert aux extensions [On doit pouvoir ajouter des
+  fonctionnalités]{.small}
+- Closed: le code doit être fermé aux modifications [Sans modifier le code
+  existant]{.small}
 
 ## OCP: Exemple
 
-- Bibliothèque d'**application console riche** [Rendu de Widgets en texte dans la console]{.small}
+- Bibliothèque d'**application console riche** [Rendu de Widgets en texte dans
+  la console]{.small}
 
 ```plantuml {.build}
 hide circle
@@ -574,7 +573,7 @@ class Split : Widget {
     public override void render(int left, int top, int width, int height)
     {
         Children[0].render(left, top, width / 2, height);
-        Children[1].render(width / 2, top, width - width / 2, height);
+        Children[1].render(width / 2 + 1, top, width - width / 2, height);
     }
 }
 ```
