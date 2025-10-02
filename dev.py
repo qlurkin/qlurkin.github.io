@@ -1,7 +1,6 @@
 from subprocess import run
-import os
 
-print(os.getcwd())
-
-run(["bun", "dev"])
-
+try:
+    run(["bun", "dev"])
+except KeyboardInterrupt:
+    pass
