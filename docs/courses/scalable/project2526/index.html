@@ -62,32 +62,35 @@ updates)</li>
 <h3>Development → Test → Production Pipeline</h3>
 <ul>
 <li>Developers push changes to Git repository.</li>
-<li><strong>CI/CD pipeline</strong> runs unit tests automatically.</li>
+<li><strong>CI/CD pipeline</strong> runs unit tests automatically.
+<em>(1 point)</em></li>
 <li>If tests pass, deployment is triggered in the <strong>Test
-environment</strong>.</li>
+environment</strong>. <em>(2 points)</em></li>
 <li>Once validated, the application is deployed to
-<strong>Production</strong> with <strong>zero downtime</strong>.</li>
+<strong>Production</strong> with <strong>zero downtime</strong>. <em>(2
+points)</em></li>
 </ul>
 </section>
 <section id="database-management" class="level3">
 <h3>Database Management</h3>
 <ul>
-<li>Database must be <strong>sharded and replicated</strong> for
-availability and scalability.</li>
+<li>Database must be <strong>sharded</strong> <em>(2 points)</em> and
+<strong>replicated</strong> <em>(2 points)</em> for availability and
+scalability.</li>
 <li>Updates may require <strong>schema migrations</strong>.</li>
 <li>Implement a <strong>procedure to refresh the Test DB</strong> from
-Production data (anonymized if necessary).</li>
+Production data (anonymized if necessary). (1 point)</li>
 </ul>
 </section>
 <section id="application-layer" class="level3">
 <h3>Application Layer</h3>
 <ul>
 <li>Application must be <strong>replicated</strong> across multiple
-Pods.</li>
+Pods. <em>(1 point)</em></li>
 <li>Include a <strong>cache layer</strong> (e.g., Redis, Memcached,
-Varnish) with replication.</li>
+Varnish) with replication. <em>(2 points)</em></li>
 <li>All components exposed through a <strong>single Ingress
-controller</strong>.</li>
+controller</strong>. <em>(2 points)</em></li>
 </ul>
 </section>
 <section id="monitoring-scaling" class="level3">
@@ -96,9 +99,9 @@ controller</strong>.</li>
 <li>Provide a <strong>dashboard</strong> (e.g., Grafana, Kubernetes
 Dashboard, Lens, etc.) to:
 <ul>
-<li>Monitor system load</li>
-<li>Observe application health</li>
-<li>Scale services (automatically or manually)</li>
+<li>Monitor system load and observe application health <em>(3
+points)</em></li>
+<li>Scale services (automatically or manually) <em>(2 points)</em></li>
 </ul></li>
 </ul>
 </section>
@@ -149,9 +152,10 @@ developers and migration guide for Cloud environments.</li>
 <li>Final evaluation includes a <strong>live deployment of a new
 version</strong>:
 <ul>
-<li>Push to Git → CI/CD → Test → Validation → Production.</li>
-<li>Show <strong>zero-downtime rollout</strong>.</li>
-<li>Apply a <strong>schema migration</strong>.</li>
+<li>Push to Git → CI/CD → Test → Validation → Production. <em>(3
+points)</em></li>
+<li>Show <strong>zero-downtime rollout</strong>. <em>(1 point)</em></li>
+<li>Apply a <strong>schema migration</strong>. <em>(1 point)</em></li>
 </ul></li>
 </ul></li>
 <li><strong>Documentation (online)</strong>
@@ -160,11 +164,14 @@ version</strong>:
 Notion).</li>
 <li>Must include:
 <ul>
-<li>Cluster setup instructions (local &amp; cloud migration guide)</li>
-<li>CI/CD pipeline details</li>
-<li>Database setup (replication, sharding, migration strategy)</li>
-<li>Monitoring &amp; scaling instructions</li>
-<li>Onboarding guide for new developers</li>
+<li>Cluster setup instructions (local &amp; cloud migration guide)
+<em>(2 points)</em></li>
+<li>CI/CD pipeline details <em>(2 points)</em></li>
+<li>Database setup (replication, sharding, migration strategy) <em>(2
+points)</em></li>
+<li>Monitoring &amp; scaling instructions and setup <em>(2
+points)</em></li>
+<li>Onboarding guide for new developers <em>(2 points)</em></li>
 </ul></li>
 </ul></li>
 </ol>
@@ -174,18 +181,22 @@ Notion).</li>
 <ul>
 <li><strong>Intermediate milestones</strong> will check progress:
 <ul>
-<li><em>8 oct 2025</em>: a simple application is replicated and
-accessible through an Ingress Controller or a manually managed reverse
-proxy <em>(no db required at this point)</em></li>
-<li><em>14 oct 2025</em>: to be announced</li>
-<li><em>22 oct 2025</em>: to be announced</li>
+<li><em>8 oct 2025</em> <em>(5 points)</em>: A simple application is
+replicated and accessible through an Ingress Controller or a manually
+managed reverse proxy <em>(no db required at this point)</em></li>
+<li><em>14 oct 2025</em> <em>(5 points)</em>: Push to git trigger unit
+test execution, image build and update rollout in test environment</li>
+<li><em>22 oct 2025</em> <em>(5 points)</em>: You have a dashboard that
+can monitor your services. You can scale from the dashboard.</li>
 </ul></li>
 <li><strong>Final evaluation</strong> (5 nov 2025) will consist of:
 <ul>
-<li>Live demonstration of the pipeline (from Git push to
-Production).</li>
-<li>Infrastructure review (DB setup, scaling, monitoring).</li>
-<li>Documentation review.</li>
+<li>Milestones <em>(15 points)</em></li>
+<li>Live demonstration of the pipeline (from Git push to Production).
+<em>(5 points)</em></li>
+<li>Infrastructure review (DB setup, scaling, monitoring). <em>(20
+points)</em></li>
+<li>Documentation review. <em>(10 points)</em></li>
 </ul></li>
 </ul>
 </section>
