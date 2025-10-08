@@ -10,10 +10,10 @@ typst: true
 
 - Ouvre une **fenêtre** de l\'OS
 - Tourne **jusqu\'à ce qu\'on quitte** [boucle !]{.small}
-- Permet d\'afficher des formes, images, animation [Une animation est
-  une succession rapide d\'images]{.small}
+- Permet d\'afficher des formes, images, animation [Une animation est une
+  succession rapide d\'images]{.small}
 
-## Pygame
+## Pygame CE
 
 - Permet de créer un programme graphique
 - Non-inclus dans l\'installation de Python [Il faut installer le
@@ -21,12 +21,11 @@ typst: true
 
 ### Installation
 
-- Python peut **télécharger et installer automatiquement des
-  packages**
+- Python peut **télécharger et installer automatiquement des packages**
 - Pour installer Pygame :
 
 ```terminal
-&> python -m pip install pygame-ce
+&> python -m pip install pygame_ce
 ```
 
 ## Premier programme graphique {.code}
@@ -155,8 +154,8 @@ App().run()
 
 ## Événements
 
-- Gestion des événements lié à la souris et au clavier [Et autres
-  événements comme `pygame.QUIT`]{.small}
+- Gestion des événements lié à la souris et au clavier [Et autres événements
+  comme `pygame.QUIT`]{.small}
 
 - Fonctions dans le module `pygame.event`
 
@@ -170,23 +169,19 @@ for event in pygame.event.get():
 
 ## Clavier
 
-- Tester le type de l\'événement avec l\'attribut `event.type` [Types
-  des événements clavier: `pygame.KEYDOWN` et `pygame.KEYUP`]{.small}
+- Tester le type de l\'événement avec l\'attribut `event.type` [Types des
+  événements clavier: `pygame.KEYDOWN` et `pygame.KEYUP`]{.small}
 
 - Les événements clavier ont 4 attributs spécifiques :
-
   - `key`: un code correspondant à la touche du clavier
-  - `mod`: un code représentant la combinaison de touches de
-    modification enfoncées (SHIFT, ALT, \...)
+  - `mod`: un code représentant la combinaison de touches de modification
+    enfoncées (SHIFT, ALT, \...)
   - `unicode`: le caractère tapé
-  - `scancode`: un code indépendant du layout du clavier (AZERTY,
-    QWERTY, \...)
+  - `scancode`: un code indépendant du layout du clavier (AZERTY, QWERTY, \...)
 
-- [Les constantes contenant les `key`
-  code](https://www.pygame.org/docs/ref/key.html#key-constants-label)
+- [Les constantes contenant les `key` code](https://www.pygame.org/docs/ref/key.html#key-constants-label)
 
-- [Les constantes contenant les codes des touches de
-  modification](https://www.pygame.org/docs/ref/key.html#key-modifiers-label)
+- [Les constantes contenant les codes des touches de modification](https://www.pygame.org/docs/ref/key.html#key-modifiers-label)
 
 ## Clavier{.code}
 
@@ -268,11 +263,13 @@ if event.mod & (pygame.KMOD_SHIFT | pygame.KMOD_ALT):
 
 ## Souris
 
-- Types des événements souris: `pygame.MOUSEBUTTONDOWN`, `pygame.MOUSEBUTTONUP`, `pygame.MOUSEMOTION`, `pygame.MOUSEWHEEL`
+- Types des événements souris: `pygame.MOUSEBUTTONDOWN`, `pygame.MOUSEBUTTONUP`,
+  `pygame.MOUSEMOTION`, `pygame.MOUSEWHEEL`
 - Les attributs intéressants des événements `pygame.MOUSEMOTION` sont:
   - `pos`: les coordonnées de la souris
   - `rel`: la vitesse de la souris
-- Les attributs intéressants des événements `pygame.MOUSEBUTTONDOWN` et `pygame.MOUSEBUTTONUP` sont:
+- Les attributs intéressants des événements `pygame.MOUSEBUTTONDOWN` et
+  `pygame.MOUSEBUTTONUP` sont:
   - `button`: 1, 2 ou 3 en fonction du bouton pressé (gauche, milieu ou droit)
   - `pos`: les coordonnées de la souris
 
@@ -520,8 +517,8 @@ App().run()
 
 - Lorsqu\'on appuie sur le bouton cela déclenche un **nouveau type
   d\'événement**. [`pygame_gui.UI_BUTTON_PRESSED`]{.small}
-- Les événements `pygame_gui` ont un attribut `ui_element` qui contient
-  une référence vers **le widget qui a créé l\'événement**.
+- Les événements `pygame_gui` ont un attribut `ui_element` qui contient une
+  référence vers **le widget qui a créé l\'événement**.
 
 ## Pygame_gui events {.code}
 
@@ -700,9 +697,9 @@ App().run()
 
 ## Documentation
 
-### Pygame
+### Pygame CE
 
-[www.pygame.org/docs/](https://www.pyga.me/docs/)
+[https://pyga.me/docs/](https://www.pyga.me/docs/)
 
 ### Pygame_gui
 
