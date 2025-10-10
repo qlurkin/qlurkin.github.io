@@ -111,11 +111,9 @@ but it must:
   - Infrastructure review (DB setup, scaling, monitoring). _(20 points)_
   - Documentation review. _(10 points)_
 
-## About the ECAM Cluster:
+## About the ECAM Cluster
 
 There are some limitations on the ECAM cluster:
 
-- You only have access to a single namespace, so both the production and test
-  versions of your app must run in the same namespace.
 - You can’t use Ingress resources, so you’ll need to manage your reverse proxy
   yourself.
