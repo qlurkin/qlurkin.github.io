@@ -14,7 +14,8 @@ type: deck
 
 ## Design Pattern: Observer
 
-- Mécanisme d'inscription d'un objet (l'observateur) aux événements d'un autre objet (l'observé)
+- Mécanisme d'inscription d'un objet (l'observateur) aux événements d'un autre
+  objet (l'observé)
 
 ```plantuml {.build}
 hide circle
@@ -104,9 +105,11 @@ Temperature: 14
 - Model View ViewModel
 - Pattern d'architecture software
 - 3 parties:
-  - **Model**: stocke et gère les données, ne connait rien de la _View_ ou du _ViewModel_
+  - **Model**: stocke et gère les données, ne connait rien de la _View_ ou du
+    _ViewModel_
   - **View**: représente l'interface utilisateur, interagit avec le _ViewModel_
-  - **ViewModel**: est entre le _Model_ et la _View_, ne connait rien de la _View_, interagit avec le _Model_
+  - **ViewModel**: est entre le _Model_ et la _View_, ne connait rien de la
+    _View_, interagit avec le _Model_
 
 ```plantuml {.build}
 skinparam defaultFontSize 20
@@ -117,7 +120,7 @@ participant Model
 
 User -> View: édite une valeur
 activate View
-View -> ViewModel: `set` une propriété
+View -> ViewModel: envoie une commande
 activate ViewModel
 ViewModel -> Model: met à jour
 deactivate View
@@ -133,4 +136,11 @@ deactivate View
 ## Tutorial
 
 - [Todo App](https://github.com/AvaloniaUI/Avalonia.Samples/tree/main/src/Avalonia.Samples/CompleteApps/SimpleToDoList)
+
+  Ce tutoriel nécessite le package `CommunityToolkit.Mvvm`
+
+  ```terminal
+  > dotnet add package CommunityToolkit.Mvvm
+  ```
+
 - [Documentation](https://docs.avaloniaui.net/docs/welcome)
