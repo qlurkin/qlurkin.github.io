@@ -60,7 +60,7 @@ seront sanctionnés d'une note nulle.
 
 ## Simulation
 
-Nous avons déjà vu ensemble que pour animer un objet il suffit de changer sa
+Nous avons déjà vu ensemble que pour animer un objet, il suffit de changer sa
 position d'une image à l'autre.
 $$accent(x, arrow) arrow.l accent(x, arrow) + Delta t dot.op accent(v, arrow)_"proj"$$
 
@@ -81,8 +81,8 @@ vitesse du projectile par rapport à l'air. Dans les cas simples (vitesses pas
 trop élevées) cette est linéairement proportionnelle à la vitesse.
 $$accent(a, arrow)_"frot" arrow.l -k dot.op accent(v, arrow)_"air"$$ où
 $accent(v, arrow)_"air"$ est la vitesse du mobile par rapport à l'air. Quand il
-n'y a pas de vent cette vitesse est simplement égale à la vitesse du projectile.
-Mais en présence de vent
+n'y a pas de vent, cette vitesse est simplement égale à la vitesse du
+projectile. Mais en présence de vent
 $$accent(v, arrow)_"air" arrow.l accent(v, arrow)_"proj" -  accent(v, arrow)_"vent"$$
 
 l'accélération totale que subit le projectile est la somme de l'accélération de
@@ -116,7 +116,7 @@ Pour dessiner une `surface1` sur une `surface2` on utilise la méthode `blit()`:
 surface2.blit(surface1, (x, y))
 ```
 
-où `(x, y)` sera la position de coin supérieur gauche de la `surface1` dans la
+où `(x, y)` sera la position du coin supérieur gauche de la `surface1` dans la
 `surface2`.
 
 Sachez aussi qu'il est possible de récupérer la couleur d'un pixel d'une surface
@@ -128,7 +128,7 @@ color = surface.get_at((x, y))
 
 où `(x, y)` sont les coordonnées du pixel. Cette méthode pourrait être utilisée
 pour détecter les collisions entre vos projectile et les buildings qui seraient
-dessiner dans la surface.
+dessinés dans la surface.
 
 La documentation propre aux `pygame.Surface` se trouve sur:
 
