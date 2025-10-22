@@ -115,5 +115,7 @@ but it must:
 
 There are some limitations on the ECAM cluster:
 
-- You can’t use Ingress resources, so you’ll need to manage your reverse proxy
+- You can't use Ingress resources, so you’ll need to manage your reverse proxy
   yourself.
+- You can get **2 bonus points** if you manage to deploy your infrastructure on
+  the ECAM cluster.
