@@ -1,5 +1,6 @@
 ---
-title: Projet 2025 - Chess DB
+title: Projet 2025
+subtitle: Chess DB
 ---
 
 ## Description
@@ -13,8 +14,8 @@ organisateurs de compétitions. Cette application permettra:
 - de gérer les informations personnelles des **joueurs**,
 - de gérer les **compétitions**,
 - d'**inscrire** les joueurs aux compétitions,
-- d'encoder les **parties** jouées durant les compétitions et leurs
-  **résultats**,
+- d'encoder les **parties** jouées durant les compétitions avec leurs **coups**
+  et leurs **résultats**,
 - de calculer le **classement ELO** des joueurs,
 - de **sauvegarder** toutes ces données de façon **persistante**,
 - d'utiliser une **fonctionnalité supplémentaire** que vous pouvez choisir.
