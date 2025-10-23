@@ -15,7 +15,7 @@ def compile(formula: str, display: bool) -> str:
     if display:
         margin = "0pt"
         formula = f" {formula} "
-    content = f"#set text(16pt)\n\n#set page(width: auto, height: auto, margin: {margin})\n\n${formula}$\n"
+    content = f"#set text(16pt)\n\n#set page(width: auto, height: auto, margin: {margin}, fill: none)\n\n${formula}$\n"
     typ_filename = f"{basename}.typ"
     with open(typ_filename, "w", encoding="utf8") as file:
         file.write(content)
@@ -28,7 +28,7 @@ def compile(formula: str, display: bool) -> str:
     else:
         height = 23.562
     em = height / 15
-    style = f"display: inline-block; height: {em}em; margin: -{0.5*16/15}em 0;"
+    style = f"display: inline-block; height: {em}em; margin: -{0.5 * 16 / 15}em 0;"
     class_name = "typst-formula-inline"
     if display:
         class_name = "typst-formula-display"

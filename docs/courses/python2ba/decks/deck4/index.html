@@ -7,6 +7,9 @@
   <meta name="author" content="Quentin Lurkin" />
   <title>Cours 4 - Mécanisme d’exceptions et lecture de fichiers</title>
   <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
     div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -39,7 +42,7 @@
 <span class="small">Chemin d'exécution complet qui a provoqué
 l'erreur</span></li>
 </ul>
-<div class="pygments"><pre><span></span><span class="k">def</span> <span class="nf">percentage</span><span class="p">(</span><span class="n">score</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">total</span><span class="p">:</span><span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">percentage</span><span class="p">(</span><span class="n">score</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">total</span><span class="p">:</span><span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
   <span class="k">return</span> <span class="n">score</span> <span class="o">/</span> <span class="n">total</span> <span class="o">*</span> <span class="mi">100</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Alexis a obtenu&#39;</span><span class="p">,</span> <span class="n">percentage</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="s1">&#39;%&#39;</span><span class="p">)</span>
@@ -147,7 +150,7 @@ IndexError: list index out of range
 class="small">Aucune erreur de syntaxe ou d'exécution ne se
 produit</span></li>
 </ul>
-<div class="pygments"><pre><span></span><span class="k">def</span> <span class="nf">perimeter</span><span class="p">(</span><span class="n">length</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">width</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">perimeter</span><span class="p">(</span><span class="n">length</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">width</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
   <span class="k">return</span> <span class="n">length</span> <span class="o">+</span> <span class="n">width</span> <span class="o">*</span> <span class="mi">2</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">perimeter</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
@@ -171,7 +174,7 @@ résultat de l'appel</span></li>
 class="small">Et de la valeur de retour si elles ne sont pas
 satisfaites</span></li>
 </ul>
-<div class="pygments"><pre><span></span><span class="k">def</span> <span class="nf">percentage</span><span class="p">(</span><span class="n">score</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">total</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+<div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">percentage</span><span class="p">(</span><span class="n">score</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">total</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;Returns a grade as a percentage</span>
 
 <span class="sd">  Args:</span>
@@ -213,7 +216,7 @@ conditions sur les paramètres avec cette instruction</span></li>
 assertions <span class="small">Elles ne doivent pas faire partie du code
 fonctionnel</span></li>
 </ul>
-<div class="pygments"><pre><span></span><span class="k">def</span> <span class="nf">percentage</span><span class="p">(</span><span class="n">score</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">total</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">percentage</span><span class="p">(</span><span class="n">score</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">total</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;Returns a grade as a percentage</span>
 
 <span class="sd">  Args:</span>
@@ -268,9 +271,9 @@ contrôle</strong></li>
 d'exécution <span class="small">Utilisation de
 <code>if-else</code></span></li>
 </ul>
-<div class="pygments"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+<div class="pygments"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span>
 
-<span class="k">def</span> <span class="nf">percentage</span><span class="p">(</span><span class="n">score</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">total</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">percentage</span><span class="p">(</span><span class="n">score</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">total</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;Returns a grade as a percentage</span>
 
 <span class="sd">  Args:</span>
@@ -307,7 +310,7 @@ dépend</span></li>
 <span class="small">Y placer le code à exécuter en cas de capture d'une
 erreur</span></li>
 </ul>
-<div class="pygments"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="o">*</span>
+<div class="pygments"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
 
 <span class="n">birthyear</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;Année de naissance ? &#39;</span><span class="p">)</span>
 
@@ -344,7 +347,7 @@ Erreur
 <span class="small">Tant que la valeur demandée n'est pas du bon
 type</span></li>
 </ul>
-<div class="pygments"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="o">*</span>
+<div class="pygments"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
 
 <span class="n">valid</span> <span class="o">=</span> <span class="kc">False</span>
 <span class="k">while</span> <span class="ow">not</span> <span class="n">valid</span><span class="p">:</span>
@@ -389,7 +392,7 @@ erreur <span class="small">L'objet est généralement de type
 d'erreurs</strong> <span class="small">ZeroDivisionError,
 ValueError...</span></li>
 </ul>
-<div class="pygments"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+<div class="pygments"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 
 <span class="k">try</span><span class="p">:</span>
   <span class="n">a</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s1">&#39;a ? &#39;</span><span class="p">))</span>
@@ -429,7 +432,7 @@ d'erreur <span class="small">Il suffit de déclarer un bloc
 <span class="small">Il faut classer les erreurs de la plus à la moins
 spécificité</span></li>
 </ul>
-<div class="pygments"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+<div class="pygments"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 
 <span class="k">try</span><span class="p">:</span>
   <span class="n">a</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s1">&#39;a ? &#39;</span><span class="p">))</span>
@@ -446,7 +449,7 @@ spécificité</span></li>
 </section>
 <section id="capturer-une-erreur-spécifique-1" class="level2">
 <h2>Capturer une erreur spécifique</h2>
-<div class="pygments"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+<div class="pygments"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 
 <span class="k">try</span><span class="p">:</span>
   <span class="n">a</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s1">&#39;a ? &#39;</span><span class="p">))</span>
@@ -473,7 +476,7 @@ l'information <span class="small">On peut accéder à des propriétés ou à
 des méthodes</span></li>
 </ul>
 <div class="pygments"><pre><span></span><span class="k">try</span><span class="p">:</span>
-  <span class="kn">import</span> <span class="nn">mymod</span>
+  <span class="kn">import</span><span class="w"> </span><span class="nn">mymod</span>
 <span class="k">except</span> <span class="ne">SyntaxError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
   <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
   <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;File:&#39;</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span>
@@ -526,10 +529,10 @@ la propagation</span></li>
 <li><strong>Passage</strong> de <code class="lang-python">fun</code> à
 <code class="lang-python">compute</code> au programme principal</li>
 </ul>
-<div class="pygments"><pre><span></span><span class="k">def</span> <span class="nf">fun</span><span class="p">():</span>
+<div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">fun</span><span class="p">():</span>
   <span class="nb">print</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">0</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">compute</span><span class="p">():</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">compute</span><span class="p">():</span>
   <span class="n">fun</span><span class="p">()</span>
 
 <span class="n">compute</span><span class="p">()</span>
@@ -551,10 +554,10 @@ ZeroDivisionError: division by zero
 <li>Exception <strong>interceptée</strong> dans la fonction <code
 class="lang-python">compute</code></li>
 </ul>
-<div class="pygments"><pre><span></span><span class="k">def</span> <span class="nf">fun</span><span class="p">():</span>
+<div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">fun</span><span class="p">():</span>
   <span class="nb">print</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">0</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">compute</span><span class="p">():</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">compute</span><span class="p">():</span>
   <span class="k">try</span><span class="p">:</span>
     <span class="n">fun</span><span class="p">()</span>
   <span class="k">except</span><span class="p">:</span>
@@ -608,7 +611,7 @@ class="lang-python">raise</code></strong> permet de générer une erreur
 <span class="small">Création d'un objet du type de
 l'exception</span></li>
 </ul>
-<div class="pygments"><pre><span></span><span class="k">def</span> <span class="nf">fact</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">fact</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;Compute the factorial of `n`</span>
 
 <span class="sd">  Args:</span>
@@ -647,12 +650,12 @@ classe <span class="small">La classe est créée à partir de la classe
 <code>Exception</code></span></li>
 <li>L'<strong>instruction <code>pass</code></strong> ne fait rien</li>
 </ul>
-<div class="pygments"><pre><span></span><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">sqrt</span>
+<div class="pygments"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">sqrt</span>
 
-<span class="k">class</span> <span class="nc">NoRootException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">NoRootException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
   <span class="k">pass</span>
 
-<span class="k">def</span> <span class="nf">trinomialroots</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">trinomialroots</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;Compute the real roots of a second-degree equation</span>
 
 <span class="sd">  Args:</span>
@@ -698,13 +701,13 @@ type d'erreur est maintenant connu par Python</span></li>
 <ul>
 <li>Stockage d'un <strong>paramètre</strong> dans l'exception</li>
 </ul>
-<div class="pygments"><pre><span></span><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">sqrt</span>
+<div class="pygments"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">sqrt</span>
 
-<span class="k">class</span> <span class="nc">NoRootException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
-  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delta</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">NoRootException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+  <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delta</span><span class="p">):</span>
       <span class="bp">self</span><span class="o">.</span><span class="n">delta</span> <span class="o">=</span> <span class="n">delta</span>
 
-<span class="k">def</span> <span class="nf">trinomialroots</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">trinomialroots</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;Compute the real roots of a second-degree equation</span>
 
 <span class="sd">  Args:</span>
@@ -738,14 +741,14 @@ type d'erreur est maintenant connu par Python</span></li>
 </section>
 <section id="exception-avec-dataclass" class="level2">
 <h2>Exception avec <code>dataclass</code></h2>
-<div class="pygments"><pre><span></span><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">sqrt</span>
-<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+<div class="pygments"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">sqrt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
 
 <span class="nd">@dataclass</span>
-<span class="k">class</span> <span class="nc">NoRootException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">NoRootException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
   <span class="n">delta</span><span class="p">:</span> <span class="nb">float</span>
 
-<span class="k">def</span> <span class="nf">trinomialroots</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">trinomialroots</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;Compute the real roots of a second-degree equation</span>
 
 <span class="sd">  Args:</span>
@@ -1163,7 +1166,7 @@ ligne</span></li>
 <span class="small">Jointure des éléments d'une liste réalisée avec
 fonction <code>join</code></span></li>
 </ul>
-<div class="pygments"><pre><span></span><span class="k">def</span> <span class="nf">format</span><span class="p">(</span><span class="n">line</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">format</span><span class="p">(</span><span class="n">line</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
   <span class="n">tokens</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
   <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;Compte </span><span class="si">{</span><span class="n">tokens</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s1"> de </span><span class="si">{</span><span class="n">tokens</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="si">}</span><span class="s1"> (mode de passe : </span><span class="si">{</span><span class="n">tokens</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="si">}</span><span class="s1">)&#39;</span>
 

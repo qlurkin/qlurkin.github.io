@@ -33,6 +33,7 @@ async function create_document_inline(filename, src, font_size) {
   width: auto,
   height: auto,
   margin: (x: 0pt, y: ${font_size / 2}pt),
+  fill: none,
 )
 
 $${src}$
@@ -47,15 +48,12 @@ async function create_document_display(filename, src, font_size) {
   width: auto,
   height: auto,
   margin: 0pt,
+  fill: none,
 )
 
 $${src}$
 `
   await writeFile(filename, content)
-}
-
-async function get_svg(filename) {
-  return await readfile(filename, { encoding: 'utf8' })
 }
 
 export async function compile_inline(src, font_size) {

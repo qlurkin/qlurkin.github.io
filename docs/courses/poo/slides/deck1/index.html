@@ -6,6 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>PO3T - Cours 1 - Rappels et relations</title>
   <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
     div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -121,7 +124,7 @@ un nom et un numéro de téléphone</span></li>
 <span class="w">  </span><span class="p">{</span>
 <span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="n">firstname</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">firstname</span><span class="p">;</span>
 <span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="n">lastname</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lastname</span><span class="p">;</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="n">phonenumber</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">;</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="n">phonenumber</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
 <span class="w">  </span><span class="p">}</span>
 
 <span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">SetPhoneNumber</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">phonenumber</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
@@ -151,7 +154,7 @@ d'instance</span></li>
 <li>Destruction de l'objet (<em>finalisation</em>)</li>
 </ul>
 <div class="pygments"><pre><span></span><span class="n">Contact</span><span class="w"> </span><span class="n">lur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Contact</span><span class="p">(</span><span class="s">&quot;Quentin&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Lurkin&quot;</span><span class="p">)</span>
-<span class="n">lur</span><span class="p">.</span><span class="n">SetPhoneNumber</span><span class="p">(</span><span class="m">4242</span><span class="p">)</span>
+<span class="n">lur</span><span class="p">.</span><span class="n">SetPhoneNumber</span><span class="p">(</span><span class="mi">4242</span><span class="p">)</span>
 </pre></div>
 
 </section>
@@ -227,7 +230,7 @@ différent</span></li>
 <span class="w">  </span><span class="p">}</span>
 
 <span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="nf">Contact</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">firstname</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">lastname</span><span class="p">):</span>
-<span class="w">  </span><span class="k">this</span><span class="p">(</span><span class="n">firstname</span><span class="p">,</span><span class="w"> </span><span class="n">lastname</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">)</span>
+<span class="w">  </span><span class="k">this</span><span class="p">(</span><span class="n">firstname</span><span class="p">,</span><span class="w"> </span><span class="n">lastname</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
 <span class="w">  </span><span class="p">{}</span>
 
 <span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">SetPhoneNumber</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">phonenumber</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
@@ -278,7 +281,7 @@ entre les instances de ces classes</span></li>
 <span class="w">      </span><span class="k">get</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">visibleFace</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
 <span class="w">  </span><span class="p">}</span>
 
-<span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="nf">Die</span><span class="p">()</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="k">this</span><span class="p">(</span><span class="m">6</span><span class="p">){}</span><span class="w"> </span><span class="c1">// Appel de l&#39;autre constructeur</span>
+<span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="nf">Die</span><span class="p">()</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="k">this</span><span class="p">(</span><span class="mi">6</span><span class="p">){}</span><span class="w"> </span><span class="c1">// Appel de l&#39;autre constructeur</span>
 
 <span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="nf">Die</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">faces</span><span class="p">)</span>
 <span class="w">  </span><span class="p">{</span>
@@ -288,7 +291,7 @@ entre les instances de ces classes</span></li>
 
 <span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Roll</span><span class="p">()</span>
 <span class="w">  </span><span class="p">{</span>
-<span class="w">      </span><span class="n">visibleFace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">generator</span><span class="p">.</span><span class="n">Next</span><span class="p">(</span><span class="n">nbFaces</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">1</span><span class="p">;</span>
+<span class="w">      </span><span class="n">visibleFace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">generator</span><span class="p">.</span><span class="n">Next</span><span class="p">(</span><span class="n">nbFaces</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
 <span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -297,7 +300,7 @@ entre les instances de ces classes</span></li>
 <section id="création-de-dés" class="level2">
 <h2>Création de dés</h2>
 <div class="pygments"><pre><span></span><span class="n">Die</span><span class="w"> </span><span class="n">d1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Die</span><span class="p">();</span><span class="w"> </span><span class="c1">// Dé à 6 faces</span>
-<span class="n">Die</span><span class="w"> </span><span class="n">d2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Die</span><span class="p">(</span><span class="m">12</span><span class="p">);</span><span class="w"> </span><span class="c1">// Dé à 12 faces</span>
+<span class="n">Die</span><span class="w"> </span><span class="n">d2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Die</span><span class="p">(</span><span class="mi">12</span><span class="p">);</span><span class="w"> </span><span class="c1">// Dé à 12 faces</span>
 
 <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">d1</span><span class="p">.</span><span class="n">VisibleFace</span><span class="p">);</span>
 <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">d2</span><span class="p">.</span><span class="n">VisibleFace</span><span class="p">);</span>
@@ -317,8 +320,8 @@ entre les instances de ces classes</span></li>
 <span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="nf">PairOfDice</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">faces</span><span class="p">)</span>
 <span class="w">  </span><span class="p">{</span>
 <span class="w">      </span><span class="n">nbFaces</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">faces</span><span class="p">;</span>
-<span class="w">      </span><span class="n">visibleFace1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">generator</span><span class="p">.</span><span class="n">Next</span><span class="p">(</span><span class="n">nbFaces</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">1</span><span class="p">;</span>
-<span class="w">      </span><span class="n">visibleFace2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">generator</span><span class="p">.</span><span class="n">Next</span><span class="p">(</span><span class="n">nbFaces</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">1</span><span class="p">;</span>
+<span class="w">      </span><span class="n">visibleFace1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">generator</span><span class="p">.</span><span class="n">Next</span><span class="p">(</span><span class="n">nbFaces</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">      </span><span class="n">visibleFace2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">generator</span><span class="p">.</span><span class="n">Next</span><span class="p">(</span><span class="n">nbFaces</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
 <span class="w">  </span><span class="p">}</span>
 
 <span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">PrintFaces</span><span class="p">()</span>

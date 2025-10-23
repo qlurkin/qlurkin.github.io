@@ -8,6 +8,9 @@
   <meta name="author" content="Sébastien Combéfis" />
   <title>Cours 5 - Manipulation de documents</title>
   <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
     div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -47,7 +50,7 @@ fichiers</li>
 répertoires</li>
 </ul></li>
 </ul>
-<div class="pygments"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<div class="pygments"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Votre OS :&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Répertoire courant :&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())</span>
 </pre></div>
@@ -62,7 +65,7 @@ Répertoire courant : /Users/lur/Desktop
 <li><code>os.getcwd()</code> : renvoie le répertoire courant</li>
 <li><code>os.chdir(path)</code> : change le répertoire courant</li>
 </ul>
-<div class="pygments"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<div class="pygments"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())</span>
 <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;/Users&#39;</span><span class="p">)</span>
@@ -88,7 +91,7 @@ vide)</li>
 répertoire</li>
 </ul></li>
 </ul>
-<div class="pygments"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<div class="pygments"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 
 <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;/tmp&#39;</span><span class="p">)</span>
 <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="s1">&#39;test&#39;</span><span class="p">)</span>
@@ -107,7 +110,7 @@ répertoire</li>
 <li><code>remove(path)</code> : supprime un fichier</li>
 </ul></li>
 </ul>
-<div class="pygments"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<div class="pygments"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 
 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;hello.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
   <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;Hello World !&#39;</span><span class="p">)</span>
@@ -142,7 +145,7 @@ plusieurs</li>
 <li><code>os.path.split(path)</code> : découpe un chemin en deux</li>
 </ul></li>
 </ul>
-<div class="pygments"><pre><span></span><span class="kn">import</span> <span class="nn">os.path</span>
+<div class="pygments"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os.path</span>
 
 <span class="n">p</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;/tmp/test&#39;</span><span class="p">,</span> <span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="s1">&#39;main.cmd&#39;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
@@ -168,7 +171,7 @@ fichier/répertoire</p>
 <li><code>os.path.relpath(path)</code> : obtient le chemin relatif</li>
 </ul></li>
 </ul>
-<div class="pygments"><pre><span></span><span class="kn">import</span> <span class="nn">os.path</span>
+<div class="pygments"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os.path</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">relpath</span><span class="p">(</span><span class="s1">&#39;/tmp/test/data/main.cmd&#39;</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s1">&#39;data.txt&#39;</span><span class="p">))</span>
@@ -187,7 +190,7 @@ fichier/répertoire</p>
 <li><code>..</code> représente répertoire parent</li>
 </ul></li>
 </ul>
-<div class="pygments"><pre><span></span><span class="kn">import</span> <span class="nn">os.path</span>
+<div class="pygments"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os.path</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s1">&#39;..&#39;</span><span class="p">))</span>
@@ -214,7 +217,7 @@ fichier</p>
 l’extension</li>
 </ul></li>
 </ul>
-<div class="pygments"><pre><span></span><span class="kn">import</span> <span class="nn">os.path</span>
+<div class="pygments"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os.path</span>
 
 <span class="n">p</span> <span class="o">=</span> <span class="s1">&#39;/tmp/test/log.txt&#39;</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">p</span><span class="p">))</span>
@@ -242,7 +245,7 @@ dossier</li>
 <li><code>os.path.exists(path)</code> : teste si le chemin existe</li>
 </ul></li>
 </ul>
-<div class="pygments"><pre><span></span><span class="kn">import</span> <span class="nn">os.path</span>
+<div class="pygments"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os.path</span>
 
 <span class="n">p</span> <span class="o">=</span> <span class="s1">&#39;/tmp/test/log.txt&#39;</span>
 <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
@@ -317,7 +320,7 @@ JSON (<code>str</code>)</span></li>
 <code>json</code> <span class="small">Renvoie une chaine de
 caractères</span></li>
 </ul>
-<div class="pygments"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
+<div class="pygments"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
 
 <span class="n">bb</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;seasons&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;genre&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;crime drama&#39;</span><span class="p">,</span> <span class="s1">&#39;thriller&#39;</span><span class="p">]}</span>
 <span class="n">skins</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;seasons&#39;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span> <span class="s1">&#39;genre&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;teen drama&#39;</span><span class="p">,</span> <span class="s1">&#39;comedy drama&#39;</span><span class="p">]}</span>
@@ -337,7 +340,7 @@ Python (<code>dict</code>)</span></li>
 <code>json</code> <span class="small">Renvoie un
 dictionnaire</span></li>
 </ul>
-<div class="pygments"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
+<div class="pygments"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
 
 <span class="n">document</span> <span class="o">=</span> <span class="s1">&#39;{&quot;Belgium&quot;:{&quot;capital&quot;:&quot;Brussels&quot;,&quot;languages&quot;:[&quot;french&quot;,&quot;dutch&quot;,&#39;</span>
            <span class="s1">&#39;&quot;german&quot;]},&quot;China&quot;:{&quot;capital&quot;:&quot;Beijing&quot;,&quot;languages&quot;:&#39;</span>
@@ -353,13 +356,13 @@ dictionnaire</span></li>
 <li>Comment fait on avec des <code>dataclass</code> ?</li>
 </ul>
 <div class="pygments"><pre><span></span><span class="nd">@dataclass</span>
-<span class="k">class</span> <span class="nc">Vector</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Vector</span><span class="p">:</span>
   <span class="n">x</span><span class="p">:</span> <span class="nb">float</span>
   <span class="n">y</span><span class="p">:</span> <span class="nb">float</span>
 
 <span class="n">v</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">encoder</span><span class="p">(</span><span class="n">obj</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">encoder</span><span class="p">(</span><span class="n">obj</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Vector</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">obj</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="n">obj</span><span class="o">.</span><span class="n">y</span><span class="p">}</span>
 
@@ -399,7 +402,7 @@ converti pas tout seul.</li>
 <li>fonction <code>object_hook</code> est appelée sur tous les “objets
 JSON” <em>(aka <code>dict</code> Python)</em></li>
 </ul>
-<div class="pygments"><pre><span></span><span class="k">def</span> <span class="nf">decoder</span><span class="p">(</span><span class="n">dct</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">decoder</span><span class="p">(</span><span class="n">dct</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
     <span class="k">if</span> <span class="s1">&#39;x&#39;</span> <span class="ow">in</span> <span class="n">dct</span> <span class="ow">and</span> <span class="s1">&#39;y&#39;</span> <span class="ow">in</span> <span class="n">dct</span><span class="p">:</span>
        <span class="k">return</span> <span class="n">Vector</span><span class="p">(</span><span class="n">dct</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">],</span> <span class="n">dct</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">])</span>
 
@@ -424,21 +427,21 @@ JSON” <em>(aka <code>dict</code> Python)</em></li>
 </section>
 <section id="attention-avec-classes-imbriquées" class="level2 code">
 <h2 class="code">Attention avec classes imbriquées</h2>
-<div class="pygments"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
+<div class="pygments"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
 
 <span class="nd">@dataclass</span>
-<span class="k">class</span> <span class="nc">Vector</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Vector</span><span class="p">:</span>
   <span class="n">x</span><span class="p">:</span> <span class="nb">float</span>
   <span class="n">y</span><span class="p">:</span> <span class="nb">float</span>
 
 <span class="nd">@dataclass</span>
-<span class="k">class</span> <span class="nc">Rectangle</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Rectangle</span><span class="p">:</span>
   <span class="n">top_left</span><span class="p">:</span> <span class="n">Vector</span>
   <span class="n">bottom_right</span><span class="p">:</span> <span class="n">Vector</span>
 
-<span class="k">def</span> <span class="nf">encoder</span><span class="p">(</span><span class="n">obj</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">encoder</span><span class="p">(</span><span class="n">obj</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
   <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Vector</span><span class="p">):</span>
     <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">obj</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="n">obj</span><span class="o">.</span><span class="n">y</span><span class="p">}</span>
 
@@ -453,7 +456,7 @@ JSON” <em>(aka <code>dict</code> Python)</em></li>
   <span class="k">return</span> <span class="n">obj</span>
 
 <span class="c1"># Le décodage se fait du fond vers la surface</span>
-<span class="k">def</span> <span class="nf">decoder</span><span class="p">(</span><span class="n">dct</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">decoder</span><span class="p">(</span><span class="n">dct</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
     <span class="k">if</span> <span class="s1">&#39;x&#39;</span> <span class="ow">in</span> <span class="n">dct</span> <span class="ow">and</span> <span class="s1">&#39;y&#39;</span> <span class="ow">in</span> <span class="n">dct</span><span class="p">:</span>
        <span class="k">return</span> <span class="n">Vector</span><span class="p">(</span><span class="n">dct</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">],</span> <span class="n">dct</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">])</span>
 
@@ -492,7 +495,7 @@ Poire,7.99,170
 <ul>
 <li>Lecture avec un <code>csv.reader</code></li>
 </ul>
-<div class="pygments"><pre><span></span><span class="kn">import</span> <span class="nn">csv</span>
+<div class="pygments"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">csv</span>
 
 <span class="n">src</span> <span class="o">=</span> <span class="s2">&quot;cart.csv&quot;</span>
 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">src</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
@@ -513,7 +516,7 @@ Poire,7.99,170
 <li>Lecture avec un <code>csv.DictReader</code> <span class="small">Les
 entêtes sont utilisés pour créer des dictionnaires</span></li>
 </ul>
-<div class="pygments"><pre><span></span><span class="kn">import</span> <span class="nn">csv</span>
+<div class="pygments"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">csv</span>
 
 <span class="n">src</span> <span class="o">=</span> <span class="s2">&quot;cart.csv&quot;</span>
 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">src</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
@@ -549,7 +552,7 @@ Un défilé de robots;Asimov;J&#39;ai Lu;7,4
 <ul>
 <li>Pour lire ce fichier avec le module <code>csv</code></li>
 </ul>
-<div class="pygments"><pre><span></span><span class="kn">import</span> <span class="nn">csv</span>
+<div class="pygments"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">csv</span>
 
 <span class="n">src</span> <span class="o">=</span> <span class="s2">&quot;books.csv&quot;</span>
 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8-sig&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
@@ -576,7 +579,7 @@ décimaux</li>
 <li>Écriture avec un <code>csv.writer</code> comme
 <strong>Excel</strong></li>
 </ul>
-<div class="pygments"><pre><span></span><span class="kn">import</span> <span class="nn">csv</span>
+<div class="pygments"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">csv</span>
 
 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;result.csv&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8-sig&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
   <span class="n">csvwriter</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
@@ -612,7 +615,7 @@ formules</span></li>
 <ul>
 <li>Création d’un <strong>Workbook vide</strong> puis remplissage</li>
 </ul>
-<div class="pygments"><pre><span></span><span class="kn">import</span> <span class="nn">openpyxl</span>
+<div class="pygments"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">openpyxl</span>
 
 <span class="n">wb</span> <span class="o">=</span> <span class="n">openpyxl</span><span class="o">.</span><span class="n">Workbook</span><span class="p">()</span>
 <span class="n">sheet</span> <span class="o">=</span> <span class="n">wb</span><span class="o">.</span><span class="n">active</span>
@@ -641,7 +644,7 @@ formules</span></li>
 récupérer les résultats des formules <strong>calculés et sauvés</strong>
 par Excel</span></li>
 </ul>
-<div class="pygments"><pre><span></span><span class="kn">import</span> <span class="nn">openpyxl</span>
+<div class="pygments"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">openpyxl</span>
 
 <span class="n">wb</span> <span class="o">=</span> <span class="n">openpyxl</span><span class="o">.</span><span class="n">load_workbook</span><span class="p">(</span><span class="s1">&#39;results.xlsx&#39;</span><span class="p">,</span> <span class="n">data_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">sheet</span> <span class="o">=</span> <span class="n">wb</span><span class="o">.</span><span class="n">active</span>
@@ -677,8 +680,8 @@ des images</span></li>
 </section>
 <section id="créer-un-document-docx" class="level2 code">
 <h2 class="code">Créer un document DOCX</h2>
-<div class="pygments"><pre><span></span><span class="kn">from</span> <span class="nn">docx</span> <span class="kn">import</span> <span class="n">Document</span>
-<span class="kn">from</span> <span class="nn">docx.shared</span> <span class="kn">import</span> <span class="n">Cm</span>
+<div class="pygments"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">docx</span><span class="w"> </span><span class="kn">import</span> <span class="n">Document</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">docx.shared</span><span class="w"> </span><span class="kn">import</span> <span class="n">Cm</span>
 
 <span class="n">document</span> <span class="o">=</span> <span class="n">Document</span><span class="p">()</span>
 
@@ -749,7 +752,7 @@ parfaite</span></li>
 <span class="small">Récupération de page, rotation,
 recouvrement</span></li>
 </ul>
-<div class="pygments"><pre><span></span><span class="kn">import</span> <span class="nn">pypdf</span>
+<div class="pygments"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pypdf</span>
 
 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;apprendre_python3_5.pdf&quot;</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
   <span class="n">pdfreader</span> <span class="o">=</span> <span class="n">pypdf</span><span class="o">.</span><span class="n">PdfReader</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
@@ -763,8 +766,8 @@ recouvrement</span></li>
 </section>
 <section id="ajout-dun-filigrane-top-secret" class="level2 code">
 <h2 class="code">Ajout d’un filigrane <em>Top Secret</em></h2>
-<div class="pygments"><pre><span></span><span class="kn">import</span> <span class="nn">os.path</span>
-<span class="kn">import</span> <span class="nn">pypdf</span>
+<div class="pygments"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os.path</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pypdf</span>
 
 <span class="n">src</span> <span class="o">=</span> <span class="s2">&quot;summary.pdf&quot;</span>
 <span class="c1"># Adds a &#39;Top Secret&#39; watermark to all the pages</span>
@@ -798,7 +801,7 @@ insérer</span></li>
 <li>Ajout des éléments dans la page (texte, image…)</li>
 </ul></li>
 </ul>
-<div class="pygments"><pre><span></span><span class="kn">from</span> <span class="nn">fpdf</span> <span class="kn">import</span> <span class="n">FPDF</span>
+<div class="pygments"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">fpdf</span><span class="w"> </span><span class="kn">import</span> <span class="n">FPDF</span>
 
 <span class="n">pdf</span> <span class="o">=</span> <span class="n">FPDF</span><span class="p">()</span>
 <span class="n">pdf</span><span class="o">.</span><span class="n">add_page</span><span class="p">()</span>
@@ -818,7 +821,7 @@ d’images</span></li>
 <li><strong>Découpe sous-image</strong> avec
 <code>crop(left, upper, right, lower)</code></li>
 </ul>
-<div class="pygments"><pre><span></span><span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<div class="pygments"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">PIL</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span>
 
 <span class="n">image</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;cute-cat.jpg&quot;</span><span class="p">)</span>
 <span class="n">cropped</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">crop</span><span class="p">((</span><span class="mi">100</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">150</span><span class="p">))</span>
@@ -847,7 +850,7 @@ d’images</span></li>
 <code>paste</code> <span class="small">Découpe d’une sous-image pour
 création d’une mosaique</span></li>
 </ul>
-<div class="pygments"><pre><span></span><span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<div class="pygments"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">PIL</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span>
 
 <span class="n">image</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;cute-cat.jpg&quot;</span><span class="p">)</span>
 <span class="n">cropped</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">crop</span><span class="p">((</span><span class="mi">100</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">150</span><span class="p">))</span>
