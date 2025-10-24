@@ -16,7 +16,9 @@ organisateurs de compétitions. Cette application permettra:
 - d'**inscrire** les joueurs aux compétitions,
 - d'encoder les **parties** jouées durant les compétitions avec leurs **coups**
   et leurs **résultats**,
-- de calculer le **classement ELO** des joueurs,
+- de calculer le
+  [**classement ELO**](https://fr.wikipedia.org/wiki/Classement_Elo) des
+  joueurs,
 - de **sauvegarder** toutes ces données de façon **persistante**,
 - d'utiliser une **fonctionnalité supplémentaire** que vous pouvez choisir.
 
