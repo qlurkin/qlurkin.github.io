@@ -26,6 +26,7 @@ make_zip('lab1.zip', [
   './bode_diagram_2.svg',
   './current_inrush_response.svg',
   './step_response.svg',
+  './nyquist_plot.svg',
 ])
 
 pandoc('index.md')
