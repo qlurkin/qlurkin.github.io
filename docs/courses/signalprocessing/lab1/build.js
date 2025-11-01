@@ -15,6 +15,8 @@ make_zip('lab1.zip', [
   './1_4.png',
   './1_5_Nyquist.ipynb',
   './data_system_ok.npz',
+  './linear_sim_result.svg',
+  './pole_zero_map.svg',
 ])
 
 pandoc('index.md')
