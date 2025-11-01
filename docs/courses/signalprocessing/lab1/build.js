@@ -23,6 +23,9 @@ make_zip('lab1.zip', [
   './steady_state_response.svg',
   './linear_sim_result_2.svg',
   './steady_state_response_one_period.svg',
+  './bode_diagram_2.svg',
+  './current_inrush_response.svg',
+  './step_response.svg',
 ])
 
 pandoc('index.md')
