@@ -12,7 +12,6 @@ for (const file of files) {
 }
 
 make_zip("lab2.zip", imgs.concat([
-    './expected_result_1.svg',
     './2_1_sin_waves.ipynb',
     './2_Digital Signal Processing.ipynb',
 ]))
