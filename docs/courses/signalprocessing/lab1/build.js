@@ -19,6 +19,10 @@ make_zip('lab1.zip', [
   './pole_zero_map.svg',
   './pole_zero_map_2.svg',
   './step_response_model_system.svg',
+  './bode_diagram.svg',
+  './steady_state_response.svg',
+  './linear_sim_result_2.svg',
+  './steady_state_response_one_period.svg',
 ])
 
 pandoc('index.md')
