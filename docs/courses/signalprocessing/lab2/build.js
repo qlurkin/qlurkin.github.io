@@ -12,8 +12,11 @@ for (const file of files) {
 }
 
 make_zip("lab2.zip", imgs.concat([
-    './2_1_sin_waves.ipynb',
     './2_Digital Signal Processing.ipynb',
+    './2_1_sin_waves.ipynb',
+    './2_2_TL.ipynb',
+    'data_DSP_exercise_1_v2.npz',
+    'data_TL.npz',
 ]))
 
 pandoc('index.md')
