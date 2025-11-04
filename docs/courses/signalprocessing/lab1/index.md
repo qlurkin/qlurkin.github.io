@@ -14,13 +14,15 @@ résultats de calculs effectués avec `numpy` et `matplotlib`.
 Comme nous somme dans un labo sur les systèmes dynamiques, nous utiliserons
 aussi les package `control` et `sympy`.
 
+Pour finir, nous aurons besoin de `scipy` pour minimiser une fonction.
+
 ### Installation
 
 Pour commencer il faut installer JupyterLab ainsi que les packages `numpy`,
-`matplotlib`, `sympy` et `control`.
+`matplotlib`, `sympy`, `control` et `scipy`.
 
 ```terminal
-> python -m pip install jupyterlab numpy matplotlib sympy control
+> python -m pip install jupyterlab numpy matplotlib sympy control scipy
 ```
 
 ## lab 1
