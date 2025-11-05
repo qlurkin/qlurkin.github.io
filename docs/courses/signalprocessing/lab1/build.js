@@ -27,6 +27,8 @@ make_zip('lab1.zip', [
   './current_inrush_response.svg',
   './step_response.svg',
   './nyquist_plot.svg',
+  './presentation.ipynb',
+  './convolution_and_laplace.png',
 ])
 
 pandoc('index.md')
