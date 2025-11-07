@@ -43,3 +43,5 @@ css: style.css
 
    Vous pouvez ensuite essayer votre programme sur
    [ce fichier Excel](./dog.xlsx) avec un taille d'image de 1280x960.
+   Pourriez-vous refaire ce fichier Excel à partir du fichier pgm de la séance 4
+   ?
