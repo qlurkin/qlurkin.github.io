@@ -5,12 +5,11 @@ typst: true
 css: style.css
 ---
 
-1.  Créez un fichier texte contenant un document JSON, comme l'exemple
-    minimal ci-dessous. Chargez ensuite le fichier et récupérez son
-    contenu comme un dictionnaire Python. Pour chaque pays, ajoutez une
-    entrée `nblang` qui contient le nombre de langues
-    officielles. Sauvegardez ensuite le dictionnaire mis à jour dans le
-    même fichier.
+1. Créez un fichier texte contenant un document JSON, comme l'exemple minimal
+    ci-dessous. Chargez ensuite le fichier et récupérez son contenu comme un
+    dictionnaire Python. Pour chaque pays, ajoutez une entrée `nblang` qui
+    contient le nombre de langues officielles. Sauvegardez ensuite le
+    dictionnaire mis à jour dans le même fichier.
 
     ```json
     {
@@ -25,8 +24,8 @@ css: style.css
     }
     ```
 
-2.  Créez une fonction qui reçoit un chemin vers un [fichier Excel](./circles.xlsx). Le fichier
-    aura la structure suivante:
+2. Créez une fonction qui reçoit un chemin vers un
+    [fichier Excel](./circles.xlsx). Le fichier aura la structure suivante:
 
     |     | A   | B   | C      | D   | E     | F    |
     | --- | --- | --- | ------ | --- | ----- | ---- |
@@ -36,6 +35,10 @@ css: style.css
     | 4   | 300 | 40  | 40     | 255 | 0     | 255  |
 
     La fonction recevra aussi les dimensions d'une image qu'elle devra créer et
-    dans laquelle elle devra [dessiner les cercles](https://pillow.readthedocs.io/en/stable/reference/ImageDraw.html#PIL.ImageDraw.ImageDraw.circle) décrits dans le fichier Excel.
-    L'image devra être sauvée dans un fichier ayant le même nom que le fichier Excel
-    (mais avec l'extension `.jpg`) et dans le même dossier que celui-ci.
+    dans laquelle elle devra
+    [dessiner les cercles](https://pillow.readthedocs.io/en/stable/reference/ImageDraw.html#PIL.ImageDraw.ImageDraw.circle)
+    décrits dans le fichier Excel. L'image devra être sauvée dans un fichier
+    ayant le même nom que le fichier Excel (mais avec l'extension `.jpg`) et
+    dans le même dossier que celui-ci. Vous pouvez ensuite essayer votre
+    programme sur [ce fichier Excel](./dog.xlsx) avec un taille d'image de
+    1280x960.
