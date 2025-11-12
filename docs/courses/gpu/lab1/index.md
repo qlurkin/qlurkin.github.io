@@ -249,3 +249,7 @@ out: memoryview = device.queue.read_buffer(buffer1)
 result = np.frombuffer(out.cast("i"), dtype=np.int32)
 print(result)
 ```
+
+## Hands-on
+
+[Game of Life](./game_of_life.html)
