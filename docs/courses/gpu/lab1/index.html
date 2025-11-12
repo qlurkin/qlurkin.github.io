@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Lab 1 - Compute Pipeline</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="/deck.css" />
+  <script src="/deck_only.js" defer></script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Lab 1
+<small>Compute Pipeline</small>
+</h1>
+</header>
+<section id="what-is-a-gpu" class="level2">
+<h2>What is a GPU</h2>
+<ul>
+<li><strong>Graphics Processing Unit</strong></li>
+<li><strong>Help</strong> the Central Processing Unit (CPU)</li>
+<li>Initially for the calculation of <strong>graphisms</strong></li>
+<li>More and more for <strong>other things</strong>.</li>
+</ul>
+</section>
+<section id="why-a-gpu" class="level2">
+<h2>Why a GPU ?</h2>
+<ul>
+<li>Optimized for parallel computing:
+<ul>
+<li>Max cores in a CPU: 128 (very expensive)</li>
+<li>cores in a GPU: thousands</li>
+</ul></li>
+<li>The same processing on a large number of data</li>
+</ul>
+</section>
+<section id="how-to-use-the-gpu" class="level2">
+<h2>How to use the GPU?</h2>
+<ul>
+<li>3 <strong>manufacturers</strong> for computers:
+<ul>
+<li>Intel</li>
+<li>AMD</li>
+<li>NVidia</li>
+</ul></li>
+<li>Many <strong>API</strong>:
+<ul>
+<li>DirectX: Microsoft</li>
+<li>Metal: Apple</li>
+<li>OpenGL/Vulkan: Open</li>
+<li>CUDA: NVidia Compute API</li>
+<li>OpenCL: Open Compute API</li>
+<li>WebGPU</li>
+</ul></li>
+</ul>
+</section>
+<section id="vulkan" class="level2">
+<h2>Vulkan</h2>
+<ul>
+<li>Modern API: Successor of OpenGL</li>
+<li>Open and “Cross-plateform” (not so much on MacOS)</li>
+<li>Highly explicit API</li>
+<li>Graphics and Compute</li>
+</ul>
+<figure>
+<img src="./vulkan.svg" class="half" alt="Vulkan Logo" />
+<figcaption aria-hidden="true">Vulkan Logo</figcaption>
+</figure>
+</section>
+<section id="webgpu" class="level2">
+<h2>WebGPU</h2>
+<ul>
+<li>One API to Rule them All</li>
+<li>Designed for the Web and for Standalone Application</li>
+<li>Use preferred API on each platform</li>
+<li>More learnable than Vulkan</li>
+</ul>
+<figure>
+<img src="./webgpu.png" class="third" alt="WebGPU Logo" />
+<figcaption aria-hidden="true">WebGPU Logo</figcaption>
+</figure>
+</section>
+<section id="without-gpu-python-loop" class="level2">
+<h2>Without GPU: Python Loop</h2>
+<div class="pygments"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+
+<span class="c1"># Helper class to measure execution time</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Timer</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">msg</span> <span class="o">=</span> <span class="n">msg</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exc_type</span><span class="p">,</span> <span class="n">exc_value</span><span class="p">,</span> <span class="n">traceback</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Input Data</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">4194240</span>
+<span class="n">numpy_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">Timer</span><span class="p">(</span><span class="s2">&quot;for in range loop&quot;</span><span class="p">):</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">numpy_data</span><span class="p">:</span>
+        <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span>
+</pre></div>
+
+</section>
+<section id="without-gpu-numpy" class="level2">
+<h2>Without GPU: numpy</h2>
+<div class="pygments"><pre><span></span><span class="k">with</span> <span class="n">Timer</span><span class="p">(</span><span class="s2">&quot;numpy operation&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">rep</span><span class="p">:</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">numpy_data</span> <span class="o">*</span> <span class="n">numpy_data</span>
+</pre></div>
+
+</section>
+<section id="compute-pipeline" class="level2">
+<h2>Compute Pipeline</h2>
+<figure>
+<img src="./compute.svg" alt="Compute Pipeline" />
+<figcaption aria-hidden="true">Compute Pipeline</figcaption>
+</figure>
+</section>
+<section id="use-webgpu-with-python" class="level2">
+<h2>Use WebGPU with python</h2>
+<div class="terminal">pip install wgpu
+</div>
+<ul>
+<li><p>Get a Logical Device</p>
+<div class="pygments"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">wgpu</span><span class="w"> </span><span class="kn">import</span> <span class="n">gpu</span>
+
+<span class="n">adapter</span> <span class="o">=</span> <span class="n">gpu</span><span class="o">.</span><span class="n">request_adapter_sync</span><span class="p">(</span><span class="n">power_preference</span><span class="o">=</span><span class="s2">&quot;high-performance&quot;</span><span class="p">)</span>
+<span class="n">device</span> <span class="o">=</span> <span class="n">adapter</span><span class="o">.</span><span class="n">request_device_sync</span><span class="p">()</span>
+</pre></div>
+</li>
+</ul>
+</section>
+<section id="buffers" class="level2">
+<h2>Buffers</h2>
+<ul>
+<li><p>Create Buffer</p>
+<div class="pygments"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">wgpu</span><span class="w"> </span><span class="kn">import</span> <span class="n">BufferUsage</span>
+
+<span class="c1"># input data</span>
+<span class="n">buffer0</span> <span class="o">=</span> <span class="n">device</span><span class="o">.</span><span class="n">create_buffer_with_data</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">numpy_data</span><span class="p">,</span> <span class="n">usage</span><span class="o">=</span><span class="n">BufferUsage</span><span class="o">.</span><span class="n">STORAGE</span><span class="p">)</span>
+
+<span class="c1"># for the output</span>
+<span class="n">buffer1</span> <span class="o">=</span> <span class="n">device</span><span class="o">.</span><span class="n">create_buffer</span><span class="p">(</span>
+      <span class="n">size</span><span class="o">=</span><span class="n">numpy_data</span><span class="o">.</span><span class="n">nbytes</span><span class="p">,</span>
+      <span class="n">usage</span><span class="o">=</span><span class="n">BufferUsage</span><span class="o">.</span><span class="n">STORAGE</span> <span class="o">|</span> <span class="n">BufferUsage</span><span class="o">.</span><span class="n">COPY_SRC</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</li>
+<li><p>Buffer contains only bytes <span class="small">No info on how to
+interpret them</span></p></li>
+</ul>
+</section>
+<section id="bind-group-layout" class="level2">
+<h2>Bind Group Layout</h2>
+<div class="pygments"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">wgpu</span><span class="w"> </span><span class="kn">import</span> <span class="n">ShaderStage</span><span class="p">,</span> <span class="n">BufferBindingType</span>
+
+<span class="n">bind_group_layout</span> <span class="o">=</span> <span class="n">device</span><span class="o">.</span><span class="n">create_bind_group_layout</span><span class="p">(</span>
+    <span class="n">entries</span><span class="o">=</span><span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;binding&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">&quot;visibility&quot;</span><span class="p">:</span> <span class="n">ShaderStage</span><span class="o">.</span><span class="n">COMPUTE</span><span class="p">,</span>
+            <span class="s2">&quot;buffer&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="n">BufferBindingType</span><span class="o">.</span><span class="n">read_only_storage</span><span class="p">},</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;binding&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="s2">&quot;visibility&quot;</span><span class="p">:</span> <span class="n">ShaderStage</span><span class="o">.</span><span class="n">COMPUTE</span><span class="p">,</span>
+            <span class="s2">&quot;buffer&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="n">BufferBindingType</span><span class="o">.</span><span class="n">storage</span><span class="p">},</span>
+        <span class="p">},</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+
+<ul>
+<li>Describe the bindings needed in the Bind Group used by the compute
+operation</li>
+</ul>
+</section>
+<section id="compute-pipeline-1" class="level2">
+<h2>Compute Pipeline</h2>
+<div class="pygments"><pre><span></span><span class="c1"># Load the source code to execute on the GPU</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;compute.wgsl&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="n">shader_source</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+<span class="n">shader_module</span> <span class="o">=</span> <span class="n">device</span><span class="o">.</span><span class="n">create_shader_module</span><span class="p">(</span><span class="n">code</span><span class="o">=</span><span class="n">shader_source</span><span class="p">)</span>
+
+<span class="c1"># A Pipeline may use multiple Bind Group</span>
+<span class="n">pipeline_layout</span> <span class="o">=</span> <span class="n">device</span><span class="o">.</span><span class="n">create_pipeline_layout</span><span class="p">(</span>
+    <span class="n">bind_group_layouts</span><span class="o">=</span><span class="p">[</span><span class="n">bind_group_layout</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="n">pipeline</span> <span class="o">=</span> <span class="n">device</span><span class="o">.</span><span class="n">create_compute_pipeline</span><span class="p">(</span>
+    <span class="n">layout</span><span class="o">=</span><span class="n">pipeline_layout</span><span class="p">,</span>
+    <span class="n">compute</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="n">shader_module</span><span class="p">,</span>
+        <span class="s2">&quot;entry_point&quot;</span><span class="p">:</span> <span class="s2">&quot;main&quot;</span><span class="p">,</span>
+    <span class="p">},</span>
+<span class="p">)</span>
+</pre></div>
+
+</section>
+<section id="wgsl-language" class="level2">
+<h2>WGSL Language</h2>
+<div class="pygments"><pre><span></span><span class="nd">@group</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="nd">@binding</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="kd">var</span><span class="o">&lt;</span><span class="nb">storage</span><span class="p">,</span><span class="nb">read</span><span class="o">&gt;</span><span class="w"> </span><span class="n">data0</span><span class="p">:</span><span class="w"> </span><span class="nb">array</span><span class="o">&lt;</span><span class="nb">i32</span><span class="o">&gt;</span><span class="p">;</span>
+
+<span class="nd">@group</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="nd">@binding</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="kd">var</span><span class="o">&lt;</span><span class="nb">storage</span><span class="p">,</span><span class="nb">read_write</span><span class="o">&gt;</span><span class="w"> </span><span class="n">data1</span><span class="p">:</span><span class="w"> </span><span class="nb">array</span><span class="o">&lt;</span><span class="nb">i32</span><span class="o">&gt;</span><span class="p">;</span>
+
+<span class="nd">@compute</span>
+<span class="nd">@workgroup_size</span><span class="p">(</span><span class="mi">64</span><span class="p">)</span>
+<span class="k">fn</span><span class="w"> </span><span class="n">main</span><span class="p">(</span><span class="nd">@builtin</span><span class="p">(</span><span class="nb">global_invocation_id</span><span class="p">)</span><span class="w"> </span><span class="n">index</span><span class="p">:</span><span class="w"> </span><span class="nb">vec3</span><span class="o">&lt;</span><span class="nb">u32</span><span class="o">&gt;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">i</span><span class="p">:</span><span class="w"> </span><span class="nb">u32</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">index</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
+<span class="w">    </span><span class="n">data1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data0</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">data0</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+<span class="p">}</span>
+</pre></div>
+
+<ul>
+<li><p><code>index</code> is marked with
+<code>@builtin(global_invocation_id)</code> so it will receive the 3
+ints thread ID</p></li>
+<li><p>Here we define how to interpret buffer’s bytes</p></li>
+<li><p>WGSL syntax is close to the Rust syntax</p></li>
+</ul>
+</section>
+<section id="bind-group" class="level2">
+<h2>Bind Group</h2>
+<ul>
+<li>We must create the Bind Group now</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="n">bind_group</span> <span class="o">=</span> <span class="n">device</span><span class="o">.</span><span class="n">create_bind_group</span><span class="p">(</span>
+    <span class="n">layout</span><span class="o">=</span><span class="n">bind_group_layout</span><span class="p">,</span>
+    <span class="n">entries</span><span class="o">=</span><span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;binding&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">&quot;resource&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;buffer&quot;</span><span class="p">:</span> <span class="n">buffer0</span><span class="p">,</span>
+                <span class="s2">&quot;offset&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="n">buffer0</span><span class="o">.</span><span class="n">size</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;binding&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="s2">&quot;resource&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;buffer&quot;</span><span class="p">:</span> <span class="n">buffer1</span><span class="p">,</span>
+                <span class="s2">&quot;offset&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="n">buffer1</span><span class="o">.</span><span class="n">size</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">},</span>
+    <span class="p">],</span>
+<span class="p">)</span>
+</pre></div>
+
+</section>
+<section id="run-the-pipeline" class="level2">
+<h2>Run the pipeline</h2>
+<ul>
+<li>We must create and send Commands to the GPU</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">wgpu</span><span class="w"> </span><span class="kn">import</span> <span class="n">GPUCommandEncoder</span><span class="p">,</span> <span class="n">GPUComputePassEncoder</span>
+
+<span class="k">with</span> <span class="n">Timer</span><span class="p">(</span><span class="s2">&quot;Compute Pipeline&quot;</span><span class="p">):</span>
+    <span class="n">command_encoder</span><span class="p">:</span> <span class="n">GPUCommandEncoder</span> <span class="o">=</span> <span class="n">device</span><span class="o">.</span><span class="n">create_command_encoder</span><span class="p">()</span>
+
+    <span class="n">compute_pass</span><span class="p">:</span> <span class="n">GPUComputePassEncoder</span> <span class="o">=</span> <span class="n">command_encoder</span><span class="o">.</span><span class="n">begin_compute_pass</span><span class="p">()</span>
+
+    <span class="n">compute_pass</span><span class="o">.</span><span class="n">set_pipeline</span><span class="p">(</span><span class="n">pipeline</span><span class="p">)</span>
+    <span class="n">compute_pass</span><span class="o">.</span><span class="n">set_bind_group</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">bind_group</span><span class="p">)</span>
+    <span class="n">compute_pass</span><span class="o">.</span><span class="n">dispatch_workgroups</span><span class="p">(</span><span class="n">n</span> <span class="o">//</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">compute_pass</span><span class="o">.</span><span class="n">end</span><span class="p">()</span>
+
+    <span class="n">device</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">submit</span><span class="p">([</span><span class="n">command_encoder</span><span class="o">.</span><span class="n">finish</span><span class="p">()])</span>
+</pre></div>
+
+</section>
+<section id="get-data-back" class="level2">
+<h2>Get data back</h2>
+<div class="pygments"><pre><span></span><span class="n">out</span><span class="p">:</span> <span class="nb">memoryview</span> <span class="o">=</span> <span class="n">device</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">read_buffer</span><span class="p">(</span><span class="n">buffer1</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">out</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="s2">&quot;i&quot;</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</pre></div>
+
+</section>
+</body>
+</html>
