@@ -97,12 +97,6 @@ fn main(@builtin(local_invocation_id) local_id: vec3<u32>,
     workgroupBarrier();
 
     // Reduction loop
-    // Each iteration, the number of active thread is divided by 2
-    // This naïve version use only half the thread in the first iteration
-    // because we allocate 64 threads to sum 64 values (32 of them do
-    // nothing usefull). We could sum 128 values with 64 threads in an
-    // optimized version.
-    // This version is easier to understand
     var stride = 1u;
     while (stride < 64u) {
         let index = 2u * stride * local_index;
@@ -235,7 +229,19 @@ print(f"Total = {total}")
 
 ## Exercise
 
-Implement a compute shader that:
+1. In the parallel sum computation above, the number of active threads is
+   divided by two at each iteration. This is expected, since the amount of
+   remaining work decreases as values are reduced.
 
-1. Computes the **maximum value** collaboratively
-2. **Sort** a buffer collaboratively (bitonic sort)
+   However, in the very first iteration only 32 threads perform useful work to
+   reduce the 64 values in the workgroup. The other 32 threads become idle
+   immediately after copying their values into shared memory.
+
+   In an optimized version, the same 64 threads could process 128 values,
+   increasing the amount of useful work performed per thread.
+
+   Adapt the program to sum 128 values per workgroup of 64 thread.
+
+2. Computes the **maximum value** collaboratively
+
+3. Bonus: **Sort** a buffer collaboratively (bitonic sort)

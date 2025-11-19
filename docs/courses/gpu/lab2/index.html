@@ -153,12 +153,6 @@ Wikipedia</a>)</em></figcaption>
 <span class="w">    </span><span class="n">workgroupBarrier</span><span class="p">();</span>
 
 <span class="w">    </span><span class="c1">// Reduction loop</span>
-<span class="w">    </span><span class="c1">// Each iteration, the number of active thread is divided by 2</span>
-<span class="w">    </span><span class="c1">// This naïve version use only half the thread in the first iteration</span>
-<span class="w">    </span><span class="c1">// because we allocate 64 threads to sum 64 values (32 of them do</span>
-<span class="w">    </span><span class="c1">// nothing usefull). We could sum 128 values with 64 threads in an</span>
-<span class="w">    </span><span class="c1">// optimized version.</span>
-<span class="w">    </span><span class="c1">// This version is easier to understand</span>
 <span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="n">stride</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1u</span><span class="p">;</span>
 <span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">stride</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">64u</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2u</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">stride</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">local_index</span><span class="p">;</span>
@@ -302,10 +296,22 @@ of the warp/wavefront size</strong></li>
 </section>
 <section id="exercise" class="level2">
 <h2>Exercise</h2>
-<p>Implement a compute shader that:</p>
 <ol type="1">
-<li>Computes the <strong>maximum value</strong> collaboratively</li>
-<li><strong>Sort</strong> a buffer collaboratively (bitonic sort)</li>
+<li><p>In the parallel sum computation above, the number of active
+threads is divided by two at each iteration. This is expected, since the
+amount of remaining work decreases as values are reduced.</p>
+<p>However, in the very first iteration only 32 threads perform useful
+work to reduce the 64 values in the workgroup. The other 32 threads
+become idle immediately after copying their values into shared
+memory.</p>
+<p>In an optimized version, the same 64 threads could process 128
+values, increasing the amount of useful work performed per thread.</p>
+<p>Adapt the program to sum 128 values per workgroup of 64
+thread.</p></li>
+<li><p>Computes the <strong>maximum value</strong>
+collaboratively</p></li>
+<li><p>Bonus: <strong>Sort</strong> a buffer collaboratively (bitonic
+sort)</p></li>
 </ol>
 </section>
 </body>
