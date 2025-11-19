@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Lab 2 - Parallel Computing</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="/deck.css" />
+  <script src="/deck_only.js" defer></script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Lab 2
+<small>Parallel Computing</small>
+</h1>
+</header>
+<section id="workgroup-memory-in-webgpu" class="level2">
+<h2>Workgroup Memory in WebGPU</h2>
+<ul>
+<li><code>var&lt;workgroup&gt;</code></li>
+<li>A memory space <strong>shared between all threads in the same
+workgroup</strong></li>
+<li>Much faster than global/storage buffers</li>
+<li>Comparable to:
+<ul>
+<li>CUDA: <code>__shared__</code></li>
+<li>OpenCL: <code>__local</code></li>
+<li>HLSL: <code>groupshared</code></li>
+</ul></li>
+</ul>
+</section>
+<section id="why-use-workgroup-memory" class="level2">
+<h2>Why Use Workgroup Memory?</h2>
+<section id="benefits" class="level3">
+<h3>Benefits</h3>
+<ul>
+<li><strong>Low latency</strong> compared to global memory</li>
+<li>Allows threads to <strong>collaborate efficiently</strong></li>
+<li>Prevents repeated reads from slow device memory</li>
+</ul>
+</section>
+<section id="typical-workflow" class="level3">
+<h3>Typical workflow</h3>
+<ol type="1">
+<li>Threads load data into workgroup memory</li>
+<li>Perform collaborative computation</li>
+<li>Write results back to global memory</li>
+</ol>
+</section>
+</section>
+<section id="declaring-workgroup-memory-wgsl" class="level2">
+<h2>Declaring Workgroup Memory (WGSL)</h2>
+<div class="pygments"><pre><span></span><span class="kd">var</span><span class="o">&lt;</span><span class="nb">workgroup</span><span class="o">&gt;</span><span class="w"> </span><span class="n">sharedData</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="nb">array</span><span class="o">&lt;</span><span class="nb">u32</span><span class="p">,</span><span class="w"> </span><span class="mi">256</span><span class="o">&gt;</span><span class="p">;</span>
+</pre></div>
+
+<ul>
+<li>Allocated once per workgroup</li>
+<li>Accessible to all threads in the group</li>
+<li>Lifetime = duration of the compute shader dispatch</li>
+<li>Programmer <strong>must ensure synchronization</strong> <span
+class="small">All threads in a workgroup may not run
+simultaneously</span></li>
+</ul>
+</section>
+<section id="synchronization" class="level2">
+<h2>Synchronization</h2>
+<ul>
+<li><code>workgroupBarrier()</code></li>
+<li>Ensures all threads reach the same point</li>
+<li>Guarantees visibility of all shared memory writes</li>
+<li>Rules
+<ul>
+<li><strong>All threads</strong> must execute the barrier</li>
+<li>Cannot appear inside <strong>divergent branches</strong></li>
+</ul></li>
+</ul>
+</section>
+<section id="hardware-limits" class="level2">
+<h2>Hardware Limits</h2>
+<ul>
+<li><p>Workgroup memory is limited.</p></li>
+<li><p>Typical device limits:</p>
+<ul>
+<li>32 KB – 64 KB of shared memory per workgroup</li>
+</ul></li>
+<li><p>Can be queried (Python example):</p></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="n">device</span><span class="o">.</span><span class="n">limits</span><span class="p">[</span><span class="s2">&quot;max_compute_workgroup_storage_size&quot;</span><span class="p">]</span>
+</pre></div>
+
+<ul>
+<li>If exceeded:
+<ul>
+<li>Shader compilation fails</li>
+<li>The pipeline is not created</li>
+</ul></li>
+</ul>
+</section>
+<section id="example-parallel-sum" class="level2">
+<h2>Example: Parallel Sum</h2>
+<ul>
+<li>Goal: compute the sum of a buffer</li>
+<li>Partition the buffer. Each part will be summed by a workgroup</li>
+<li>Each workgroup will load its part in its shared memory</li>
+<li>Each workgroup will compute its partial sum <span class="small">With
+multiple threads</span></li>
+<li>All partial sums will be saved in an output buffer</li>
+</ul>
+<figure>
+<img src="./binomial_tree.gif" class="third"
+alt="Sum in a workgroup (source Wikipedia)" />
+<figcaption aria-hidden="true">Sum in a workgroup <em>(<a
+href="https://en.wikipedia.org/wiki/Reduction_operator#">source
+Wikipedia</a>)</em></figcaption>
+</figure>
+</section>
+<section id="parallel-sum-shader" class="level2">
+<h2>Parallel Sum: Shader</h2>
+<div class="pygments"><pre><span></span><span class="nd">@group</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="nd">@binding</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="kd">var</span><span class="o">&lt;</span><span class="nb">storage</span><span class="p">,</span><span class="w"> </span><span class="nb">read</span><span class="o">&gt;</span><span class="w"> </span><span class="n">input</span><span class="p">:</span><span class="w"> </span><span class="nb">array</span><span class="o">&lt;</span><span class="nb">u32</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="nd">@group</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="nd">@binding</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="kd">var</span><span class="o">&lt;</span><span class="nb">storage</span><span class="p">,</span><span class="w"> </span><span class="nb">read_write</span><span class="o">&gt;</span><span class="w"> </span><span class="n">partial_sums</span><span class="p">:</span><span class="w"> </span><span class="nb">array</span><span class="o">&lt;</span><span class="nb">u32</span><span class="o">&gt;</span><span class="p">;</span>
+
+<span class="kd">var</span><span class="o">&lt;</span><span class="nb">workgroup</span><span class="o">&gt;</span><span class="w"> </span><span class="n">shared_data</span><span class="p">:</span><span class="w"> </span><span class="nb">array</span><span class="o">&lt;</span><span class="nb">u32</span><span class="p">,</span><span class="w"> </span><span class="mi">64</span><span class="o">&gt;</span><span class="p">;</span>
+
+<span class="nd">@compute</span><span class="w"> </span><span class="nd">@workgroup_size</span><span class="p">(</span><span class="mi">64</span><span class="p">)</span>
+<span class="k">fn</span><span class="w"> </span><span class="n">main</span><span class="p">(</span><span class="nd">@builtin</span><span class="p">(</span><span class="nb">local_invocation_id</span><span class="p">)</span><span class="w"> </span><span class="n">local_id</span><span class="p">:</span><span class="w"> </span><span class="nb">vec3</span><span class="o">&lt;</span><span class="nb">u32</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="w">        </span><span class="nd">@builtin</span><span class="p">(</span><span class="nb">global_invocation_id</span><span class="p">)</span><span class="w"> </span><span class="n">global_id</span><span class="p">:</span><span class="w"> </span><span class="nb">vec3</span><span class="o">&lt;</span><span class="nb">u32</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="w">        </span><span class="nd">@builtin</span><span class="p">(</span><span class="nb">workgroup_id</span><span class="p">)</span><span class="w"> </span><span class="n">group_id</span><span class="p">:</span><span class="w"> </span><span class="nb">vec3</span><span class="o">&lt;</span><span class="nb">u32</span><span class="o">&gt;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">idx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">global_id</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">local_index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">local_id</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">// Load data into shared memory</span>
+<span class="w">    </span><span class="n">shared_data</span><span class="p">[</span><span class="n">local_index</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">input</span><span class="p">[</span><span class="n">idx</span><span class="p">];</span>
+<span class="w">    </span><span class="n">workgroupBarrier</span><span class="p">();</span>
+
+<span class="w">    </span><span class="c1">// Reduction loop</span>
+<span class="w">    </span><span class="c1">// Each iteration, the number of active thread is divided by 2</span>
+<span class="w">    </span><span class="c1">// This naïve version use only half the thread in the first iteration</span>
+<span class="w">    </span><span class="c1">// because we allocate 64 threads to sum 64 values (32 of them do</span>
+<span class="w">    </span><span class="c1">// nothing usefull). We could sum 128 values with 64 threads in an</span>
+<span class="w">    </span><span class="c1">// optimized version.</span>
+<span class="w">    </span><span class="c1">// This version is easier to understand</span>
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="n">stride</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1u</span><span class="p">;</span>
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">stride</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">64u</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2u</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">stride</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">local_index</span><span class="p">;</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">index</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">stride</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">64u</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">shared_data</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">shared_data</span><span class="p">[</span><span class="n">index</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">stride</span><span class="p">];</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="n">workgroupBarrier</span><span class="p">();</span>
+<span class="w">        </span><span class="n">stride</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">stride</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2u</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Write result of this workgroup</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">local_index</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0u</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">partial_sums</span><span class="p">[</span><span class="n">group_id</span><span class="p">.</span><span class="n">x</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">shared_data</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+</section>
+<section id="partial-sum-python-code" class="level2">
+<h2>Partial Sum: Python Code</h2>
+<div class="pygments"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">wgpu</span>
+
+<span class="c1"># Initialize WebGPU</span>
+<span class="n">adapter</span> <span class="o">=</span> <span class="n">wgpu</span><span class="o">.</span><span class="n">gpu</span><span class="o">.</span><span class="n">request_adapter_sync</span><span class="p">(</span>
+    <span class="n">canvas</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">power_preference</span><span class="o">=</span><span class="s2">&quot;high-performance&quot;</span>
+<span class="p">)</span>
+<span class="n">device</span> <span class="o">=</span> <span class="n">adapter</span><span class="o">.</span><span class="n">request_device_sync</span><span class="p">()</span>
+<span class="n">queue</span> <span class="o">=</span> <span class="n">device</span><span class="o">.</span><span class="n">queue</span>
+
+<span class="c1"># Create input data</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">1024</span>  <span class="c1"># Must be divisible by workgroup size (e.g., 64)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">N</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint32</span><span class="p">)</span>  <span class="c1"># sum = 1024 * 1025 / 2 = 524800</span>
+
+<span class="c1"># Create buffer for input data</span>
+<span class="n">input_buffer</span> <span class="o">=</span> <span class="n">device</span><span class="o">.</span><span class="n">create_buffer_with_data</span><span class="p">(</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">usage</span><span class="o">=</span><span class="n">wgpu</span><span class="o">.</span><span class="n">BufferUsage</span><span class="o">.</span><span class="n">STORAGE</span>
+<span class="p">)</span>
+
+<span class="c1"># Create buffer to store partial sums (one per workgroup)</span>
+<span class="n">num_groups</span> <span class="o">=</span> <span class="n">N</span> <span class="o">//</span> <span class="mi">64</span>  <span class="c1"># workgroup_size = 64</span>
+<span class="n">partial_sums_buffer</span> <span class="o">=</span> <span class="n">device</span><span class="o">.</span><span class="n">create_buffer</span><span class="p">(</span>
+    <span class="n">size</span><span class="o">=</span><span class="n">num_groups</span> <span class="o">*</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="n">usage</span><span class="o">=</span><span class="n">wgpu</span><span class="o">.</span><span class="n">BufferUsage</span><span class="o">.</span><span class="n">STORAGE</span>
+    <span class="o">|</span> <span class="n">wgpu</span><span class="o">.</span><span class="n">BufferUsage</span><span class="o">.</span><span class="n">COPY_SRC</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># Shader code: parallel reduction with workgroup shared memory</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;shader.wgsl&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="n">shader_code</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+<span class="c1"># Create the shader module</span>
+<span class="n">shader_module</span> <span class="o">=</span> <span class="n">device</span><span class="o">.</span><span class="n">create_shader_module</span><span class="p">(</span><span class="n">code</span><span class="o">=</span><span class="n">shader_code</span><span class="p">)</span>
+
+<span class="c1"># Bind group layout and pipeline</span>
+<span class="n">bgl</span> <span class="o">=</span> <span class="n">device</span><span class="o">.</span><span class="n">create_bind_group_layout</span><span class="p">(</span>
+    <span class="n">entries</span><span class="o">=</span><span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;binding&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">&quot;visibility&quot;</span><span class="p">:</span> <span class="n">wgpu</span><span class="o">.</span><span class="n">ShaderStage</span><span class="o">.</span><span class="n">COMPUTE</span><span class="p">,</span>
+            <span class="s2">&quot;buffer&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;read-only-storage&quot;</span><span class="p">},</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;binding&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="s2">&quot;visibility&quot;</span><span class="p">:</span> <span class="n">wgpu</span><span class="o">.</span><span class="n">ShaderStage</span><span class="o">.</span><span class="n">COMPUTE</span><span class="p">,</span>
+            <span class="s2">&quot;buffer&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;storage&quot;</span><span class="p">},</span>
+        <span class="p">},</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+<span class="n">pipeline_layout</span> <span class="o">=</span> <span class="n">device</span><span class="o">.</span><span class="n">create_pipeline_layout</span><span class="p">(</span><span class="n">bind_group_layouts</span><span class="o">=</span><span class="p">[</span><span class="n">bgl</span><span class="p">])</span>
+
+<span class="n">pipeline</span> <span class="o">=</span> <span class="n">device</span><span class="o">.</span><span class="n">create_compute_pipeline</span><span class="p">(</span>
+    <span class="n">layout</span><span class="o">=</span><span class="n">pipeline_layout</span><span class="p">,</span>
+    <span class="n">compute</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="n">shader_module</span><span class="p">,</span> <span class="s2">&quot;entry_point&quot;</span><span class="p">:</span> <span class="s2">&quot;main&quot;</span><span class="p">},</span>
+<span class="p">)</span>
+
+<span class="c1"># Create bind group</span>
+<span class="n">bind_group</span> <span class="o">=</span> <span class="n">device</span><span class="o">.</span><span class="n">create_bind_group</span><span class="p">(</span>
+    <span class="n">layout</span><span class="o">=</span><span class="n">bgl</span><span class="p">,</span>
+    <span class="n">entries</span><span class="o">=</span><span class="p">[</span>
+        <span class="p">{</span><span class="s2">&quot;binding&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;resource&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;buffer&quot;</span><span class="p">:</span> <span class="n">input_buffer</span><span class="p">}},</span>
+        <span class="p">{</span><span class="s2">&quot;binding&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;resource&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;buffer&quot;</span><span class="p">:</span> <span class="n">partial_sums_buffer</span><span class="p">}},</span>
+    <span class="p">],</span>
+<span class="p">)</span>
+
+<span class="c1"># Encode and submit commands</span>
+<span class="n">encoder</span> <span class="o">=</span> <span class="n">device</span><span class="o">.</span><span class="n">create_command_encoder</span><span class="p">()</span>
+<span class="n">pass_enc</span> <span class="o">=</span> <span class="n">encoder</span><span class="o">.</span><span class="n">begin_compute_pass</span><span class="p">()</span>
+<span class="n">pass_enc</span><span class="o">.</span><span class="n">set_pipeline</span><span class="p">(</span><span class="n">pipeline</span><span class="p">)</span>
+<span class="n">pass_enc</span><span class="o">.</span><span class="n">set_bind_group</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">bind_group</span><span class="p">)</span>
+<span class="n">pass_enc</span><span class="o">.</span><span class="n">dispatch_workgroups</span><span class="p">(</span><span class="n">num_groups</span><span class="p">)</span>
+<span class="n">pass_enc</span><span class="o">.</span><span class="n">end</span><span class="p">()</span>
+<span class="n">queue</span><span class="o">.</span><span class="n">submit</span><span class="p">([</span><span class="n">encoder</span><span class="o">.</span><span class="n">finish</span><span class="p">()])</span>
+
+<span class="n">out</span><span class="p">:</span> <span class="nb">memoryview</span> <span class="o">=</span> <span class="n">device</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">read_buffer</span><span class="p">(</span><span class="n">partial_sums_buffer</span><span class="p">)</span><span class="c1"># type: ignore</span>
+<span class="n">partial_sums</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">out</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="s2">&quot;I&quot;</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint32</span><span class="p">)</span>
+<span class="n">total</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">partial_sums</span><span class="p">)</span> <span class="c1"># final sum on CPU</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Partial sums = </span><span class="si">{</span><span class="n">partial_sums</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total = </span><span class="si">{</span><span class="n">total</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+
+</section>
+<section id="choosing-the-workgroup-size" class="level2">
+<h2>Choosing the Workgroup Size</h2>
+<ol type="1">
+<li><p>Hardware Limits</p>
+<ul>
+<li><code>max_compute_workgroup_size_x</code></li>
+<li><code>max_compute_invocations_per_workgroup</code></li>
+<li><code>max_compute_workgroup_storage_size</code></li>
+</ul></li>
+<li><p>Warp/Wavefront Alignment</p>
+<ul>
+<li>GPUs execute threads in fixed-sized groups:
+<ul>
+<li>NVIDIA: 32 threads (warp)</li>
+<li>AMD: 64 threads (wavefront)</li>
+</ul></li>
+<li>To avoid wasted execution: Choose a size that is a <strong>multiple
+of the warp/wavefront size</strong></li>
+</ul></li>
+<li><p>Do not exceed shared memory limit</p></li>
+<li><p>Occupancy and Performance</p>
+<ul>
+<li>A very large workgroup:
+<ul>
+<li>May not use all compute units</li>
+</ul></li>
+<li>A too small workgroup:
+<ul>
+<li>Each compute unit has not enough to do</li>
+</ul></li>
+</ul></li>
+<li><p>Typical practical ranges:</p>
+<ul>
+<li>64 to 256 threads per workgroup</li>
+</ul></li>
+<li><p>Adjust experimentally for best performance</p></li>
+</ol>
+</section>
+<section id="exercise" class="level2">
+<h2>Exercise</h2>
+<p>Implement a compute shader that:</p>
+<ol type="1">
+<li>Computes the <strong>maximum value</strong> collaboratively</li>
+<li><strong>Sort</strong> a buffer collaboratively (bitonic sort)</li>
+</ol>
+</section>
+</body>
+</html>

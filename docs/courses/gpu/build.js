@@ -9,6 +9,7 @@ build_and_index(
     // 'labo5',
     // 'cloth',
     'lab1',
+    'lab2',
   ],
   { title: 'GPU Computing' },
 )
