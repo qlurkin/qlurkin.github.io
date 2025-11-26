@@ -416,7 +416,321 @@ vectors.</p>
 </section>
 <section id="cube" class="level2 code">
 <h2 class="code">Cube</h2>
-<div class="pygments"><pre><span></span>
+<div class="pygments"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">rendercanvas.auto</span><span class="w"> </span><span class="kn">import</span> <span class="n">RenderCanvas</span><span class="p">,</span> <span class="n">loop</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">wgpu</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">numpy.typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">NDArray</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">PIL.Image</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">Image</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">look_at</span><span class="p">(</span><span class="n">eye</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">target</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">up</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert world coordinates to camera coordinates where the camera point</span>
+<span class="sd">    in the direction of -z axis.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">eye</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">eye</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+    <span class="n">target</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+    <span class="n">up</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">up</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">target</span> <span class="o">-</span> <span class="n">eye</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">f</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">up</span><span class="p">)</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">s</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+
+    <span class="c1"># fmt: off</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>  <span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>  <span class="n">s</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="o">-</span><span class="n">eye</span> <span class="o">@</span> <span class="n">s</span><span class="p">],</span>
+                     <span class="p">[</span> <span class="n">u</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>  <span class="n">u</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>  <span class="n">u</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="o">-</span><span class="n">eye</span> <span class="o">@</span> <span class="n">u</span><span class="p">],</span>
+                     <span class="p">[</span><span class="o">-</span><span class="n">f</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="n">f</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="o">-</span><span class="n">f</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>  <span class="n">eye</span> <span class="o">@</span> <span class="n">f</span><span class="p">],</span>
+                     <span class="p">[</span>    <span class="mi">0</span><span class="p">,</span>     <span class="mi">0</span><span class="p">,</span>     <span class="mi">0</span><span class="p">,</span>        <span class="mi">1</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+    <span class="c1"># fmt: on</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">perspective</span><span class="p">(</span><span class="n">fovy_deg</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">aspect</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">near</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">far</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert camera coordinates to wgpu clip coordinates where x and y goes</span>
+<span class="sd">    from -1.0 to 1.0 and z goes from 0.0 to 1.0.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">angle</span> <span class="o">=</span> <span class="n">fovy_deg</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">180</span>
+
+    <span class="n">yspan</span> <span class="o">=</span> <span class="n">near</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">tan</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span>
+    <span class="n">xspan</span> <span class="o">=</span> <span class="n">yspan</span> <span class="o">*</span> <span class="n">aspect</span>
+
+    <span class="n">c0r0</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">near</span> <span class="o">/</span> <span class="n">xspan</span>
+    <span class="n">c1r1</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">near</span> <span class="o">/</span> <span class="n">yspan</span>
+    <span class="n">c2r2</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="n">far</span> <span class="o">+</span> <span class="n">near</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">far</span> <span class="o">-</span> <span class="n">near</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">-</span> <span class="mf">0.5</span>
+    <span class="n">c3r2</span> <span class="o">=</span> <span class="o">-</span><span class="n">far</span> <span class="o">*</span> <span class="n">near</span> <span class="o">/</span> <span class="p">(</span><span class="n">far</span> <span class="o">-</span> <span class="n">near</span><span class="p">)</span>
+
+    <span class="c1"># fmt: off</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">c0r0</span><span class="p">,</span>    <span class="mi">0</span><span class="p">,</span>    <span class="mi">0</span><span class="p">,</span>    <span class="mi">0</span><span class="p">],</span>
+                     <span class="p">[</span>   <span class="mi">0</span><span class="p">,</span> <span class="n">c1r1</span><span class="p">,</span>    <span class="mi">0</span><span class="p">,</span>    <span class="mi">0</span><span class="p">],</span>
+                     <span class="p">[</span>   <span class="mi">0</span><span class="p">,</span>    <span class="mi">0</span><span class="p">,</span> <span class="n">c2r2</span><span class="p">,</span> <span class="n">c3r2</span><span class="p">],</span>
+                     <span class="p">[</span>   <span class="mi">0</span><span class="p">,</span>    <span class="mi">0</span><span class="p">,</span>   <span class="o">-</span><span class="mi">1</span><span class="p">,</span>    <span class="mi">0</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+    <span class="c1"># fmt: on</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">App</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">adapter</span> <span class="o">=</span> <span class="n">wgpu</span><span class="o">.</span><span class="n">gpu</span><span class="o">.</span><span class="n">request_adapter_sync</span><span class="p">(</span><span class="n">power_preference</span><span class="o">=</span><span class="s2">&quot;high-performance&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">adapter</span><span class="o">.</span><span class="n">request_device_sync</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span> <span class="o">=</span> <span class="n">RenderCanvas</span><span class="p">(</span>
+            <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">640</span><span class="p">,</span> <span class="mi">480</span><span class="p">),</span>
+            <span class="n">title</span><span class="o">=</span><span class="s2">&quot;WebGPU Example&quot;</span><span class="p">,</span>
+            <span class="n">update_mode</span><span class="o">=</span><span class="s2">&quot;continuous&quot;</span><span class="p">,</span>
+            <span class="n">max_fps</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">context</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">get_wgpu_context</span><span class="p">()</span>
+
+        <span class="n">render_texture_format</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">get_preferred_format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">adapter</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="n">render_texture_format</span><span class="p">)</span>
+
+        <span class="c1"># fmt: off</span>
+        <span class="n">vertex_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="c1">#   x,    y,    z,   xn,   yn,   zn,    u,    v</span>
+                <span class="p">[</span> <span class="mf">0.5</span><span class="p">,</span>  <span class="mf">0.5</span><span class="p">,</span>  <span class="mf">0.5</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">1.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">],</span>
+                <span class="p">[</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>  <span class="mf">0.5</span><span class="p">,</span>  <span class="mf">0.5</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">1.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">1.0</span><span class="p">],</span>
+                <span class="p">[</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>  <span class="mf">0.5</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">1.0</span><span class="p">,</span>  <span class="mf">1.0</span><span class="p">,</span>  <span class="mf">1.0</span><span class="p">],</span>
+                <span class="p">[</span> <span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>  <span class="mf">0.5</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">1.0</span><span class="p">,</span>  <span class="mf">1.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">],</span>
+
+                <span class="p">[</span> <span class="mf">0.5</span><span class="p">,</span>  <span class="mf">0.5</span><span class="p">,</span>  <span class="mf">0.5</span><span class="p">,</span>  <span class="mf">1.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">],</span>
+                <span class="p">[</span> <span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>  <span class="mf">0.5</span><span class="p">,</span>  <span class="mf">1.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">1.0</span><span class="p">],</span>
+                <span class="p">[</span> <span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>  <span class="mf">1.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">1.0</span><span class="p">,</span>  <span class="mf">1.0</span><span class="p">],</span>
+                <span class="p">[</span> <span class="mf">0.5</span><span class="p">,</span>  <span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>  <span class="mf">1.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">1.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">],</span>
+
+                <span class="p">[</span> <span class="mf">0.5</span><span class="p">,</span>  <span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">],</span>
+                <span class="p">[</span> <span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">1.0</span><span class="p">],</span>
+                <span class="p">[</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">,</span>  <span class="mf">1.0</span><span class="p">,</span>  <span class="mf">1.0</span><span class="p">],</span>
+                <span class="p">[</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>  <span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">,</span>  <span class="mf">1.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">],</span>
+
+                <span class="p">[</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>  <span class="mf">0.5</span><span class="p">,</span>  <span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">],</span>
+                <span class="p">[</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>  <span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">1.0</span><span class="p">],</span>
+                <span class="p">[</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">1.0</span><span class="p">,</span>  <span class="mf">1.0</span><span class="p">],</span>
+                <span class="p">[</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>  <span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">1.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">],</span>
+
+                <span class="p">[</span> <span class="mf">0.5</span><span class="p">,</span>  <span class="mf">0.5</span><span class="p">,</span>  <span class="mf">0.5</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">1.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">],</span>
+                <span class="p">[</span> <span class="mf">0.5</span><span class="p">,</span>  <span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">1.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">1.0</span><span class="p">],</span>
+                <span class="p">[</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>  <span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">1.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">1.0</span><span class="p">,</span>  <span class="mf">1.0</span><span class="p">],</span>
+                <span class="p">[</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>  <span class="mf">0.5</span><span class="p">,</span>  <span class="mf">0.5</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">1.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">1.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">],</span>
+
+                <span class="p">[</span> <span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>  <span class="mf">0.5</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">],</span>
+                <span class="p">[</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>  <span class="mf">0.5</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">1.0</span><span class="p">],</span>
+                <span class="p">[</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">1.0</span><span class="p">,</span>  <span class="mf">1.0</span><span class="p">],</span>
+                <span class="p">[</span> <span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">1.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">],</span>
+            <span class="p">],</span>
+            <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">index_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="mi">0</span><span class="p">,</span>  <span class="mi">1</span><span class="p">,</span>  <span class="mi">2</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">2</span><span class="p">,</span>  <span class="mi">3</span><span class="p">,</span>
+                <span class="mi">4</span><span class="p">,</span>  <span class="mi">5</span><span class="p">,</span>  <span class="mi">6</span><span class="p">,</span>  <span class="mi">4</span><span class="p">,</span>  <span class="mi">6</span><span class="p">,</span>  <span class="mi">7</span><span class="p">,</span>
+                <span class="mi">8</span><span class="p">,</span>  <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span>  <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span>
+                <span class="mi">12</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span>
+                <span class="mi">16</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span>
+                <span class="mi">20</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span>
+            <span class="p">],</span>
+            <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint32</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="c1"># fmt: on</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">vertex_buffer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">create_buffer_with_data</span><span class="p">(</span>
+            <span class="n">data</span><span class="o">=</span><span class="n">vertex_data</span><span class="p">,</span> <span class="n">usage</span><span class="o">=</span><span class="n">wgpu</span><span class="o">.</span><span class="n">BufferUsage</span><span class="o">.</span><span class="n">VERTEX</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">index_buffer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">create_buffer_with_data</span><span class="p">(</span>
+            <span class="n">data</span><span class="o">=</span><span class="n">index_data</span><span class="p">,</span> <span class="n">usage</span><span class="o">=</span><span class="n">wgpu</span><span class="o">.</span><span class="n">BufferUsage</span><span class="o">.</span><span class="n">INDEX</span>
+        <span class="p">)</span>
+
+        <span class="n">bg_layout</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">create_bind_group_layout</span><span class="p">(</span>
+            <span class="n">entries</span><span class="o">=</span><span class="p">[</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;binding&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                    <span class="s2">&quot;visibility&quot;</span><span class="p">:</span> <span class="n">wgpu</span><span class="o">.</span><span class="n">ShaderStage</span><span class="o">.</span><span class="n">VERTEX</span> <span class="o">|</span> <span class="n">wgpu</span><span class="o">.</span><span class="n">ShaderStage</span><span class="o">.</span><span class="n">FRAGMENT</span><span class="p">,</span>
+                    <span class="s2">&quot;buffer&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="n">wgpu</span><span class="o">.</span><span class="n">BufferBindingType</span><span class="o">.</span><span class="n">uniform</span><span class="p">},</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;binding&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                    <span class="s2">&quot;visibility&quot;</span><span class="p">:</span> <span class="n">wgpu</span><span class="o">.</span><span class="n">ShaderStage</span><span class="o">.</span><span class="n">FRAGMENT</span><span class="p">,</span>
+                    <span class="s2">&quot;texture&quot;</span><span class="p">:</span> <span class="p">{},</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;binding&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+                    <span class="s2">&quot;visibility&quot;</span><span class="p">:</span> <span class="n">wgpu</span><span class="o">.</span><span class="n">ShaderStage</span><span class="o">.</span><span class="n">FRAGMENT</span><span class="p">,</span>
+                    <span class="s2">&quot;sampler&quot;</span><span class="p">:</span> <span class="p">{},</span>
+                <span class="p">},</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+
+        <span class="n">p_layout</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">create_pipeline_layout</span><span class="p">(</span><span class="n">bind_group_layouts</span><span class="o">=</span><span class="p">[</span><span class="n">bg_layout</span><span class="p">])</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">render_params_buffer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">create_buffer</span><span class="p">(</span>
+            <span class="n">size</span><span class="o">=</span><span class="mi">4</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">*</span> <span class="mi">4</span><span class="p">,</span>
+            <span class="n">usage</span><span class="o">=</span><span class="n">wgpu</span><span class="o">.</span><span class="n">BufferUsage</span><span class="o">.</span><span class="n">UNIFORM</span> <span class="o">|</span> <span class="n">wgpu</span><span class="o">.</span><span class="n">BufferUsage</span><span class="o">.</span><span class="n">COPY_DST</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;./texel_checker.png&quot;</span><span class="p">)</span>
+        <span class="n">texture_size</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="p">,)</span>
+        <span class="n">texture</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">create_texture</span><span class="p">(</span>
+            <span class="n">size</span><span class="o">=</span><span class="n">texture_size</span><span class="p">,</span>
+            <span class="nb">format</span><span class="o">=</span><span class="n">wgpu</span><span class="o">.</span><span class="n">TextureFormat</span><span class="o">.</span><span class="n">rgba8unorm_srgb</span><span class="p">,</span>
+            <span class="n">usage</span><span class="o">=</span><span class="n">wgpu</span><span class="o">.</span><span class="n">TextureUsage</span><span class="o">.</span><span class="n">TEXTURE_BINDING</span> <span class="o">|</span> <span class="n">wgpu</span><span class="o">.</span><span class="n">TextureUsage</span><span class="o">.</span><span class="n">COPY_DST</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">write_texture</span><span class="p">(</span>
+            <span class="n">destination</span><span class="o">=</span><span class="p">{</span>
+                <span class="s2">&quot;texture&quot;</span><span class="p">:</span> <span class="n">texture</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="n">data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">img</span><span class="p">),</span>
+            <span class="n">data_layout</span><span class="o">=</span><span class="p">{</span>
+                <span class="s2">&quot;bytes_per_row&quot;</span><span class="p">:</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">4</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="n">size</span><span class="o">=</span><span class="n">texture_size</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">sampler</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">create_sampler</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">render_params_bind_group</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">create_bind_group</span><span class="p">(</span>
+            <span class="n">layout</span><span class="o">=</span><span class="n">bg_layout</span><span class="p">,</span>
+            <span class="n">entries</span><span class="o">=</span><span class="p">[</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;binding&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                    <span class="s2">&quot;resource&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s2">&quot;buffer&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">render_params_buffer</span><span class="p">,</span>
+                        <span class="s2">&quot;offset&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                        <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">render_params_buffer</span><span class="o">.</span><span class="n">size</span><span class="p">,</span>
+                    <span class="p">},</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;binding&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                    <span class="s2">&quot;resource&quot;</span><span class="p">:</span> <span class="n">texture</span><span class="o">.</span><span class="n">create_view</span><span class="p">(),</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;binding&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+                    <span class="s2">&quot;resource&quot;</span><span class="p">:</span> <span class="n">sampler</span><span class="p">,</span>
+                <span class="p">},</span>
+            <span class="p">],</span>
+        <span class="p">)</span>
+
+        <span class="n">vertex_buffer_descriptor</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;array_stride&quot;</span><span class="p">:</span> <span class="mi">8</span> <span class="o">*</span> <span class="mi">4</span><span class="p">,</span>
+            <span class="s2">&quot;step_mode&quot;</span><span class="p">:</span> <span class="n">wgpu</span><span class="o">.</span><span class="n">VertexStepMode</span><span class="o">.</span><span class="n">vertex</span><span class="p">,</span>
+            <span class="s2">&quot;attributes&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="n">wgpu</span><span class="o">.</span><span class="n">VertexFormat</span><span class="o">.</span><span class="n">float32x3</span><span class="p">,</span>
+                    <span class="s2">&quot;offset&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                    <span class="s2">&quot;shader_location&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="n">wgpu</span><span class="o">.</span><span class="n">VertexFormat</span><span class="o">.</span><span class="n">float32x3</span><span class="p">,</span>
+                    <span class="s2">&quot;offset&quot;</span><span class="p">:</span> <span class="mi">3</span> <span class="o">*</span> <span class="mi">4</span><span class="p">,</span>
+                    <span class="s2">&quot;shader_location&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="n">wgpu</span><span class="o">.</span><span class="n">VertexFormat</span><span class="o">.</span><span class="n">float32x2</span><span class="p">,</span>
+                    <span class="s2">&quot;offset&quot;</span><span class="p">:</span> <span class="mi">6</span> <span class="o">*</span> <span class="mi">4</span><span class="p">,</span>
+                    <span class="s2">&quot;shader_location&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+                <span class="p">},</span>
+            <span class="p">],</span>
+        <span class="p">}</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;./render.wgsl&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+            <span class="n">shader_module</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">create_shader_module</span><span class="p">(</span><span class="n">code</span><span class="o">=</span><span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">pipeline</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">create_render_pipeline</span><span class="p">(</span>
+            <span class="n">layout</span><span class="o">=</span><span class="n">p_layout</span><span class="p">,</span>
+            <span class="n">vertex</span><span class="o">=</span><span class="p">{</span>
+                <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="n">shader_module</span><span class="p">,</span>
+                <span class="s2">&quot;entry_point&quot;</span><span class="p">:</span> <span class="s2">&quot;vs_main&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;buffers&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">vertex_buffer_descriptor</span><span class="p">],</span>
+            <span class="p">},</span>
+            <span class="n">primitive</span><span class="o">=</span><span class="p">{</span>
+                <span class="s2">&quot;topology&quot;</span><span class="p">:</span> <span class="n">wgpu</span><span class="o">.</span><span class="n">PrimitiveTopology</span><span class="o">.</span><span class="n">triangle_list</span><span class="p">,</span>
+                <span class="s2">&quot;front_face&quot;</span><span class="p">:</span> <span class="n">wgpu</span><span class="o">.</span><span class="n">FrontFace</span><span class="o">.</span><span class="n">ccw</span><span class="p">,</span>
+                <span class="s2">&quot;cull_mode&quot;</span><span class="p">:</span> <span class="n">wgpu</span><span class="o">.</span><span class="n">CullMode</span><span class="o">.</span><span class="n">back</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="n">depth_stencil</span><span class="o">=</span><span class="p">{</span>
+                <span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="n">wgpu</span><span class="o">.</span><span class="n">TextureFormat</span><span class="o">.</span><span class="n">depth32float</span><span class="p">,</span>
+                <span class="s2">&quot;depth_write_enabled&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                <span class="s2">&quot;depth_compare&quot;</span><span class="p">:</span> <span class="n">wgpu</span><span class="o">.</span><span class="n">CompareFunction</span><span class="o">.</span><span class="n">less</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="n">multisample</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">fragment</span><span class="o">=</span><span class="p">{</span>
+                <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="n">shader_module</span><span class="p">,</span>
+                <span class="s2">&quot;entry_point&quot;</span><span class="p">:</span> <span class="s2">&quot;fs_main&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;targets&quot;</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="p">{</span>
+                        <span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="n">render_texture_format</span><span class="p">,</span>
+                        <span class="s2">&quot;blend&quot;</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="p">{},</span>
+                            <span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="p">{},</span>
+                        <span class="p">},</span>
+                    <span class="p">},</span>
+                <span class="p">],</span>
+            <span class="p">},</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">loop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">screen_texture</span><span class="p">:</span> <span class="n">wgpu</span><span class="o">.</span><span class="n">GPUTexture</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">get_current_texture</span><span class="p">()</span>  <span class="c1"># type: ignore</span>
+        <span class="n">size</span> <span class="o">=</span> <span class="n">screen_texture</span><span class="o">.</span><span class="n">size</span>
+        <span class="k">if</span> <span class="n">size</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">depth_texture</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">create_texture</span><span class="p">(</span>
+                <span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">,</span>
+                <span class="nb">format</span><span class="o">=</span><span class="n">wgpu</span><span class="o">.</span><span class="n">TextureFormat</span><span class="o">.</span><span class="n">depth32float</span><span class="p">,</span>
+                <span class="n">usage</span><span class="o">=</span><span class="n">wgpu</span><span class="o">.</span><span class="n">TextureUsage</span><span class="o">.</span><span class="n">RENDER_ATTACHMENT</span>
+                <span class="o">|</span> <span class="n">wgpu</span><span class="o">.</span><span class="n">TextureUsage</span><span class="o">.</span><span class="n">TEXTURE_BINDING</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="n">light_position</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+        <span class="n">view_matrix</span> <span class="o">=</span> <span class="n">look_at</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+        <span class="n">proj_matrix</span> <span class="o">=</span> <span class="n">perspective</span><span class="p">(</span><span class="mi">45</span><span class="p">,</span> <span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">size</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+        <span class="n">render_params_data</span> <span class="o">=</span> <span class="n">light_position</span><span class="o">.</span><span class="n">tobytes</span><span class="p">()</span>
+        <span class="c1"># Must send transpose version of matrices, because GPU expect matrices</span>
+        <span class="c1"># in column major order</span>
+        <span class="n">render_params_data</span> <span class="o">+=</span> <span class="n">view_matrix</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">tobytes</span><span class="p">()</span>
+        <span class="n">render_params_data</span> <span class="o">+=</span> <span class="n">proj_matrix</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">tobytes</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">write_buffer</span><span class="p">(</span>
+            <span class="n">buffer</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">render_params_buffer</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">render_params_data</span><span class="p">,</span> <span class="n">buffer_offset</span><span class="o">=</span><span class="mi">0</span>
+        <span class="p">)</span>
+
+        <span class="n">command_encoder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">create_command_encoder</span><span class="p">()</span>
+
+        <span class="n">render_pass</span> <span class="o">=</span> <span class="n">command_encoder</span><span class="o">.</span><span class="n">begin_render_pass</span><span class="p">(</span>
+            <span class="n">color_attachments</span><span class="o">=</span><span class="p">[</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;view&quot;</span><span class="p">:</span> <span class="n">screen_texture</span><span class="o">.</span><span class="n">create_view</span><span class="p">(),</span>
+                    <span class="s2">&quot;resolve_target&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                    <span class="s2">&quot;clear_value&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span>
+                    <span class="s2">&quot;load_op&quot;</span><span class="p">:</span> <span class="n">wgpu</span><span class="o">.</span><span class="n">LoadOp</span><span class="o">.</span><span class="n">clear</span><span class="p">,</span>
+                    <span class="s2">&quot;store_op&quot;</span><span class="p">:</span> <span class="n">wgpu</span><span class="o">.</span><span class="n">StoreOp</span><span class="o">.</span><span class="n">store</span><span class="p">,</span>
+                <span class="p">}</span>
+            <span class="p">],</span>
+            <span class="n">depth_stencil_attachment</span><span class="o">=</span><span class="p">{</span>
+                <span class="s2">&quot;view&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">depth_texture</span><span class="o">.</span><span class="n">create_view</span><span class="p">(),</span>
+                <span class="s2">&quot;depth_clear_value&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
+                <span class="s2">&quot;depth_load_op&quot;</span><span class="p">:</span> <span class="n">wgpu</span><span class="o">.</span><span class="n">LoadOp</span><span class="o">.</span><span class="n">clear</span><span class="p">,</span>
+                <span class="s2">&quot;depth_store_op&quot;</span><span class="p">:</span> <span class="n">wgpu</span><span class="o">.</span><span class="n">StoreOp</span><span class="o">.</span><span class="n">store</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">)</span>
+
+        <span class="n">render_pass</span><span class="o">.</span><span class="n">set_pipeline</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pipeline</span><span class="p">)</span>
+        <span class="n">render_pass</span><span class="o">.</span><span class="n">set_vertex_buffer</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vertex_buffer</span><span class="p">)</span>
+        <span class="n">render_pass</span><span class="o">.</span><span class="n">set_index_buffer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index_buffer</span><span class="p">,</span> <span class="n">wgpu</span><span class="o">.</span><span class="n">IndexFormat</span><span class="o">.</span><span class="n">uint32</span><span class="p">)</span>
+        <span class="n">render_pass</span><span class="o">.</span><span class="n">set_bind_group</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">render_params_bind_group</span><span class="p">)</span>
+        <span class="n">render_pass</span><span class="o">.</span><span class="n">draw_indexed</span><span class="p">(</span><span class="mi">36</span><span class="p">)</span>
+        <span class="n">render_pass</span><span class="o">.</span><span class="n">end</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">submit</span><span class="p">([</span><span class="n">command_encoder</span><span class="o">.</span><span class="n">finish</span><span class="p">()])</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">request_draw</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">loop</span><span class="p">)</span>
+        <span class="n">loop</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+
+<span class="n">App</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 </pre></div>
 
 </section>
