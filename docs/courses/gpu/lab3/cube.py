@@ -2,6 +2,7 @@ from rendercanvas.auto import RenderCanvas, loop
 import wgpu
 import numpy as np
 from numpy.typing import ArrayLike, NDArray
+import PIL.Image as Image
 
 
 def look_at(eye: ArrayLike, target: ArrayLike, up: ArrayLike) -> NDArray:
@@ -128,29 +129,66 @@ class App:
             entries=[
                 {
                     "binding": 0,
-                    "visibility": wgpu.ShaderStage.VERTEX,
+                    "visibility": wgpu.ShaderStage.VERTEX | wgpu.ShaderStage.FRAGMENT,
                     "buffer": {"type": wgpu.BufferBindingType.uniform},
+                },
+                {
+                    "binding": 1,
+                    "visibility": wgpu.ShaderStage.FRAGMENT,
+                    "texture": {},
+                },
+                {
+                    "binding": 2,
+                    "visibility": wgpu.ShaderStage.FRAGMENT,
+                    "sampler": {},
                 },
             ]
         )
 
         p_layout = self.device.create_pipeline_layout(bind_group_layouts=[bg_layout])
 
-        self.camera_buffer = self.device.create_buffer(
-            size=2 * 4 * 4 * 4,
+        self.render_params_buffer = self.device.create_buffer(
+            size=4 * 4 + 2 * 4 * 4 * 4,
             usage=wgpu.BufferUsage.UNIFORM | wgpu.BufferUsage.COPY_DST,
         )
 
-        self.camera_bind_group = self.device.create_bind_group(
+        img = Image.open("./texel_checker.png")
+        texture_size = img.size + (1,)
+        texture = self.device.create_texture(
+            size=texture_size,
+            format=wgpu.TextureFormat.rgba8unorm_srgb,
+            usage=wgpu.TextureUsage.TEXTURE_BINDING | wgpu.TextureUsage.COPY_DST,
+        )
+        self.device.queue.write_texture(
+            destination={
+                "texture": texture,
+            },
+            data=np.asarray(img),
+            data_layout={
+                "bytes_per_row": img.size[0] * 4,
+            },
+            size=texture_size,
+        )
+        sampler = self.device.create_sampler()
+
+        self.render_params_bind_group = self.device.create_bind_group(
             layout=bg_layout,
             entries=[
                 {
                     "binding": 0,
                     "resource": {
-                        "buffer": self.camera_buffer,
+                        "buffer": self.render_params_buffer,
                         "offset": 0,
-                        "size": self.camera_buffer.size,
+                        "size": self.render_params_buffer.size,
                     },
+                },
+                {
+                    "binding": 1,
+                    "resource": texture.create_view(),
+                },
+                {
+                    "binding": 2,
+                    "resource": sampler,
                 },
             ],
         )
@@ -219,19 +257,22 @@ class App:
         if size[:2] != self.size:
             self.depth_texture = self.device.create_texture(
                 size=size,
-                format=wgpu.TextureFormat.depth32float,  # type: ignore
+                format=wgpu.TextureFormat.depth32float,
                 usage=wgpu.TextureUsage.RENDER_ATTACHMENT
-                | wgpu.TextureUsage.TEXTURE_BINDING,  # type: ignore
+                | wgpu.TextureUsage.TEXTURE_BINDING,
             )
 
+        light_position = np.array([-10, 10, 10, 0], dtype=np.float32)
         view_matrix = look_at([3, 2, 4], [0, 0, 0], [0, 1, 0])
         proj_matrix = perspective(45, size[0] / size[1], 0.1, 100)
 
+        render_params_data = light_position.tobytes()
         # Must send transpose version of matrices, because GPU expect matrices in column major order
-        camera_data = np.array([view_matrix.T, proj_matrix.T])
+        render_params_data += view_matrix.T.tobytes()
+        render_params_data += proj_matrix.T.tobytes()
 
         self.device.queue.write_buffer(
-            buffer=self.camera_buffer, data=camera_data, buffer_offset=0
+            buffer=self.render_params_buffer, data=render_params_data, buffer_offset=0
         )
 
         command_encoder = self.device.create_command_encoder()
@@ -256,8 +297,8 @@ class App:
 
         render_pass.set_pipeline(self.pipeline)
         render_pass.set_vertex_buffer(0, self.vertex_buffer)
-        render_pass.set_index_buffer(self.index_buffer, wgpu.IndexFormat.uint32)  # type: ignore
-        render_pass.set_bind_group(0, self.camera_bind_group)
+        render_pass.set_index_buffer(self.index_buffer, wgpu.IndexFormat.uint32)
+        render_pass.set_bind_group(0, self.render_params_bind_group)
         render_pass.draw_indexed(36)
         render_pass.end()
 
