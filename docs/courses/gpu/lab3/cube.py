@@ -193,6 +193,16 @@ class App:
             ],
         )
 
+        self.canvas.add_event_handler(
+            self.process_event, "pointer_up", "pointer_down", "pointer_move", "wheel"
+        )  # type: ignore
+
+        self.pointer_down = False
+        self.last_pointer_pos = np.array([0.0, 0.0])
+        self.camera_radius = 3
+        self.camera_longitude = np.pi / 4
+        self.camera_latitude = np.pi / 4
+
         vertex_buffer_descriptor = {
             "array_stride": 8 * 4,
             "step_mode": wgpu.VertexStepMode.vertex,
@@ -251,6 +261,26 @@ class App:
             },
         )
 
+    def process_event(self, event):
+        if event["event_type"] == "pointer_down":
+            self.pointer_down = True
+        elif event["event_type"] == "pointer_up":
+            self.pointer_down = False
+        elif event["event_type"] == "pointer_move":
+            pointer_pos = np.array([event["x"], event["y"]])
+            delta = pointer_pos - self.last_pointer_pos
+            self.last_pointer_pos = pointer_pos
+            if self.pointer_down:
+                self.camera_longitude = (self.camera_longitude + delta[0] * 0.01) % (
+                    2 * np.pi
+                )
+                self.camera_latitude = np.clip(
+                    self.camera_latitude + delta[1] * 0.01, -np.pi / 2, np.pi / 2
+                )
+
+        elif event["event_type"] == "wheel":
+            self.camera_radius = max(0.1, self.camera_radius + event["dy"] * 0.001)
+
     def loop(self):
         screen_texture: wgpu.GPUTexture = self.context.get_current_texture()  # type: ignore
         size = screen_texture.size
@@ -262,8 +292,17 @@ class App:
                 | wgpu.TextureUsage.TEXTURE_BINDING,
             )
 
+        camera_position = [
+            np.cos(self.camera_latitude)
+            * np.cos(self.camera_longitude)
+            * self.camera_radius,
+            np.sin(self.camera_latitude) * self.camera_radius,
+            np.cos(self.camera_latitude)
+            * np.sin(self.camera_longitude)
+            * self.camera_radius,
+        ]
         light_position = np.array([-10, 10, 10, 0], dtype=np.float32)
-        view_matrix = look_at([3, 2, 4], [0, 0, 0], [0, 1, 0])
+        view_matrix = look_at(camera_position, [0, 0, 0], [0, 1, 0])
         proj_matrix = perspective(45, size[0] / size[1], 0.1, 100)
 
         render_params_data = light_position.tobytes()

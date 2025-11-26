@@ -539,6 +539,16 @@ class App:
             ],
         )
 
+        self.canvas.add_event_handler(
+            self.process_event, "pointer_up", "pointer_down", "pointer_move", "wheel"
+        )  # type: ignore
+
+        self.pointer_down = False
+        self.last_pointer_pos = np.array([0.0, 0.0])
+        self.camera_radius = 3
+        self.camera_longitude = np.pi / 4
+        self.camera_latitude = np.pi / 4
+
         vertex_buffer_descriptor = {
             "array_stride": 8 * 4,
             "step_mode": wgpu.VertexStepMode.vertex,
@@ -597,6 +607,26 @@ class App:
             },
         )
 
+    def process_event(self, event):
+        if event["event_type"] == "pointer_down":
+            self.pointer_down = True
+        elif event["event_type"] == "pointer_up":
+            self.pointer_down = False
+        elif event["event_type"] == "pointer_move":
+            pointer_pos = np.array([event["x"], event["y"]])
+            delta = pointer_pos - self.last_pointer_pos
+            self.last_pointer_pos = pointer_pos
+            if self.pointer_down:
+                self.camera_longitude = (self.camera_longitude + delta[0] * 0.01) % (
+                    2 * np.pi
+                )
+                self.camera_latitude = np.clip(
+                    self.camera_latitude + delta[1] * 0.01, -np.pi / 2, np.pi / 2
+                )
+
+        elif event["event_type"] == "wheel":
+            self.camera_radius = max(0.1, self.camera_radius + event["dy"] * 0.001)
+
     def loop(self):
         screen_texture: wgpu.GPUTexture = self.context.get_current_texture()  # type: ignore
         size = screen_texture.size
@@ -608,8 +638,17 @@ class App:
                 | wgpu.TextureUsage.TEXTURE_BINDING,
             )
 
+        camera_position = [
+            np.cos(self.camera_latitude)
+            * np.cos(self.camera_longitude)
+            * self.camera_radius,
+            np.sin(self.camera_latitude) * self.camera_radius,
+            np.cos(self.camera_latitude)
+            * np.sin(self.camera_longitude)
+            * self.camera_radius,
+        ]
         light_position = np.array([-10, 10, 10, 0], dtype=np.float32)
-        view_matrix = look_at([3, 2, 4], [0, 0, 0], [0, 1, 0])
+        view_matrix = look_at(camera_position, [0, 0, 0], [0, 1, 0])
         proj_matrix = perspective(45, size[0] / size[1], 0.1, 100)
 
         render_params_data = light_position.tobytes()
@@ -657,4 +696,48 @@ class App:
 
 
 App().run()
+```
+
+## Shader{.code}
+
+```wgsl
+struct CameraUniform {
+    light: vec4<f32>,
+    view: mat4x4<f32>,
+    proj: mat4x4<f32>,
+};
+@group(0) @binding(0) var<uniform> params: CameraUniform;
+@group(0) @binding(1) var texture: texture_2d<f32>;
+@group(0) @binding(2) var samplr: sampler;
+
+struct VertexInput {
+    @location(0) position: vec3<f32>,
+    @location(1) normal: vec3<f32>,
+    @location(2) uv: vec2<f32>,
+};
+
+struct VertexOutput {
+    @builtin(position) clip: vec4<f32>,
+    @location(0) position: vec3<f32>,
+    @location(1) normal: vec3<f32>,
+    @location(2) uv: vec2<f32>,
+};
+
+@vertex
+fn vs_main(in: VertexInput) -> VertexOutput {
+    var out: VertexOutput;
+    out.clip = params.proj * params.view * vec4<f32>(in.position, 1.0);
+    out.position = in.position;
+    out.normal = in.normal;
+    out.uv = in.uv;
+    return out;
+}
+
+@fragment
+fn fs_main(in: VertexOutput) -> @location(0) vec4<f32> {
+    let light_dir = params.light.xyz - in.position;
+    let shading = clamp(dot(light_dir, in.normal), 0.4, 1.0);
+    let color = textureSample(texture, samplr, in.uv);
+    return vec4<f32>(color.xyz * shading, 1.0);
+}
 ```
