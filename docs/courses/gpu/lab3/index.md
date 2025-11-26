@@ -698,6 +698,8 @@ class App:
 App().run()
 ```
 
+[The texture `texel_checker.png`](./texel_checker.png)
+
 ## Shader{.code}
 
 ```wgsl
@@ -741,3 +743,7 @@ fn fs_main(in: VertexOutput) -> @location(0) vec4<f32> {
     return vec4<f32>(color.xyz * shading, 1.0);
 }
 ```
+
+## Exercices
+
+[Exercices](../lab3_exo/)

@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lab 3 - Shaders</title>
+    <script src="https://quentin.lurkin.xyz/document.js" defer></script>
+  </head>
+  <body>
+    <h1>Lab 3 - Shaders</h1>
+    <h2>Mesh creation</h2>
+    <p>Generate the vertex data for a sphere.</p>
+
+    <figure>
+      <img src="./images/sphere.webp" alt="" />
+    </figure>
+
+    <h2>Diffuse lighting</h2>
+    <p>Use diffuse lighting and apply this texture</p>
+    <figure>
+      <img src="./images/diffuse.png" alt="" style="width: 50%" />
+      <figcaption>Diffuse Texture</figcaption>
+    </figure>
+
+    <h2>Specular lighting</h2>
+    <p>
+      The specular lighting corresponds to the reflection of the light source on
+      the surface. It depends on the point of view.
+    </p>
+    <figure>
+      <img src="images/Specular.svg" alt="" />
+    </figure>
+    <p>Vectors:</p>
+    <ul>
+      <li>\(\vec{N}\) is the normal vector to the surface.</li>
+      <li>\(\vec{L}\) is the vector directed towards the light.</li>
+      <li>\(\vec{R}\) is the reflected vector.</li>
+      <li>\(\vec{V}\) is the vector directed towards the camera.</li>
+    </ul>
+    <p>All these vectors are normalized.</p>
+    <p>
+      The reflected specular intensity \(\vec{I_s}\) is calculated by
+      \[\vec{I_s} = (\vec{R} \cdot{} \vec{V})^{\alpha}\vec{C_l}\] where
+      \(\vec{C_l}\) is the color of the light and \(\alpha\) is the brightness
+      of the material.
+    </p>
+    <p>
+      To calculate \(\vec{R}\) we use \[\vec{R} = 2(\vec{N} \cdot{}
+      \vec{L})\vec{N}-\vec{L}\]
+    </p>
+    <p>
+      <strong>Modify your shaders to account for specular lighting.</strong>
+    </p>
+
+    <h2>Normal Mapping</h2>
+    <p>
+      Normal mapping consists in using a texture containing the normals to the
+      surface. This allows to vary the normal with more details without adding
+      these details to the 3D geometry of the object.
+    </p>
+    <p>
+      The components \((r, g, b)\) of the normal texture must be converted. the
+      components of colors are included between 0 and 1 whereas the coordinates
+      of a unit vector are between -1 and 1. one thus applies to each component
+      the following transformation: \[ N_i = 2C_i - 1 \]
+    </p>
+    <p>
+      The normals contained in the texture are given in a reference frame
+      tangent to the surface. This reference frame is composed of the three
+      vectors:
+    </p>
+    <figure>
+      <img src="images/Tangent Frame.svg" alt="" style="width: 75%" />
+    </figure>
+    <ul>
+      <li>\(\vec{N}\) is the normal vector to the surface.</li>
+      <li>
+        \(\vec{T}\) is the tangent vector that follows the texture coordinates
+        \(u\).
+      </li>
+      <li>
+        \(\vec{B}\) is the bitangent vector that is perpendicular to the other
+        two.
+      </li>
+    </ul>
+    <p>
+      \(\vec{N}\) and \(\vec{T}\) are part of the Vertex Data. \(\vec{B}\) can
+      be computed by \[\vec{B} = \vec{N} \times{} \vec{T}\]
+    </p>
+    <p>
+      These vectors are in general known in the model space. To pass from the
+      tangent space to the model space we use the matrix:\[ \left (
+      \begin{matrix} T_x & B_x & N_x \\ T_y & B_y & N_y \\ T_z & B_z & N_z
+      \end{matrix} \right ) \]
+    </p>
+    <p>
+      To perform the inverse transformation, this matrix must be inverted. For
+      an orthogonal matrix, this corresponds to doing the transpose: \[ \left (
+      \begin{matrix} T_x & B_x & N_x \\ T_y & B_y & N_y \\ T_z & B_z & N_z
+      \end{matrix} \right )^{-1} = \left ( \begin{matrix} T_x & B_x & N_x \\ T_y
+      & B_y & N_y \\ T_z & B_z & N_z \end{matrix} \right )^T = \left (
+      \begin{matrix} T_x & T_y & T_z \\ B_x & B_y & B_z \\ N_x & N_y & N_z
+      \end{matrix} \right ) \]
+    </p>
+    <p>
+      <strong
+        >Modify your shaders and C++ to use an additional texture that contains
+        the normals.</strong
+      >
+    </p>
+    <figure>
+      <img src="./images/normal.png" alt="" style="width: 50%" />
+      <figcaption>Normal Texture</figcaption>
+    </figure>
+
+    <h2 class="nocount">Fonctions WGSL utiles:</h2>
+    <ul>
+      <li><code class="lang-cpp">normalize()</code> to normalize a vector</li>
+      <li>
+        <code class="lang-cpp">dot()</code> for the scalar product of vectors
+      </li>
+      <li>
+        <code class="lang-cpp">cross()</code> for the cross product of vectors
+      </li>
+      <li><code class="lang-cpp">length()</code> gives the norm of a vector</li>
+      <li><code class="lang-cpp">pow(x, n)</code> for \(x^n\)</li>
+      <li>
+        <code class="lang-cpp">max(x, y)</code> returns the greater of the two
+        values
+      </li>
+      <li>
+        <code class="lang-cpp">clamp(vec, min, max)</code> constrains the
+        components of <code>vec</code> between <code>min</code> and
+        <code>max</code>
+      </li>
+      <li><code class="lang-cpp">transpose(mat)</code> transpose a matrix</li>
+      <li><code class="lang-cpp">inverse(mat)</code> inverts a matrix</li>
+      <li>
+        <code class="lang-cpp">reflect(I, N)</code> computes the reflected
+        vector based on the incident and normal vector (I - 2.0 * dot(N, I) *
+        N).
+      </li>
+    </ul>
+
+    <h2 class="nocount">Bonus:</h2>
+    <p>
+      Use the <em>Height Map</em> to apply a
+      <a href="https://learnopengl.com/Advanced-Lighting/Parallax-Mapping"
+        ><em>Parallax Mapping</em></a
+      >
+    </p>
+    <figure>
+      <img src="./images/height.png" alt="" style="width: 50%" />
+      <figcaption>Height Map</figcaption>
+    </figure>
+  </body>
+</html>
