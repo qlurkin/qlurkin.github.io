@@ -432,8 +432,9 @@ vectors.</p>
 <span class="kn">import</span><span class="w"> </span><span class="nn">wgpu</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">PIL.Image</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">Image</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">cgmath</span><span class="w"> </span><span class="kn">import</span> <span class="n">look_at</span><span class="p">,</span> <span class="n">perspective</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">primitives</span><span class="w"> </span><span class="kn">import</span> <span class="n">cube</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">camera</span><span class="w"> </span><span class="kn">import</span> <span class="n">Camera</span>
+
 
 <span class="k">class</span><span class="w"> </span><span class="nc">App</span><span class="p">:</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -535,11 +536,7 @@ vectors.</p>
             <span class="bp">self</span><span class="o">.</span><span class="n">process_event</span><span class="p">,</span> <span class="s2">&quot;pointer_up&quot;</span><span class="p">,</span> <span class="s2">&quot;pointer_down&quot;</span><span class="p">,</span> <span class="s2">&quot;pointer_move&quot;</span><span class="p">,</span> <span class="s2">&quot;wheel&quot;</span>
         <span class="p">)</span>  <span class="c1"># type: ignore</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">pointer_down</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">last_pointer_pos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">camera_radius</span> <span class="o">=</span> <span class="mi">3</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">camera_longitude</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">4</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">camera_latitude</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">4</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">camera</span> <span class="o">=</span> <span class="n">Camera</span><span class="p">(</span><span class="mi">45</span><span class="p">,</span> <span class="mi">640</span> <span class="o">/</span> <span class="mi">480</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">4</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)</span>
 
         <span class="n">vertex_buffer_descriptor</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">&quot;array_stride&quot;</span><span class="p">:</span> <span class="mi">8</span> <span class="o">*</span> <span class="mi">4</span><span class="p">,</span>
@@ -600,24 +597,7 @@ vectors.</p>
         <span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">process_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;event_type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;pointer_down&quot;</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">pointer_down</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="k">elif</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;event_type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;pointer_up&quot;</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">pointer_down</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="k">elif</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;event_type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;pointer_move&quot;</span><span class="p">:</span>
-            <span class="n">pointer_pos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">event</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">],</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">]])</span>
-            <span class="n">delta</span> <span class="o">=</span> <span class="n">pointer_pos</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_pointer_pos</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">last_pointer_pos</span> <span class="o">=</span> <span class="n">pointer_pos</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pointer_down</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">camera_longitude</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">camera_longitude</span> <span class="o">+</span> <span class="n">delta</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.01</span><span class="p">)</span> <span class="o">%</span> <span class="p">(</span>
-                    <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span>
-                <span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">camera_latitude</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">camera_latitude</span> <span class="o">+</span> <span class="n">delta</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.01</span><span class="p">,</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span>
-                <span class="p">)</span>
-
-        <span class="k">elif</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;event_type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;wheel&quot;</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">camera_radius</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">camera_radius</span> <span class="o">+</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;dy&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.001</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">process_event</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">loop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">screen_texture</span><span class="p">:</span> <span class="n">wgpu</span><span class="o">.</span><span class="n">GPUTexture</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">get_current_texture</span><span class="p">()</span>  <span class="c1"># type: ignore</span>
@@ -630,22 +610,12 @@ vectors.</p>
                 <span class="o">|</span> <span class="n">wgpu</span><span class="o">.</span><span class="n">TextureUsage</span><span class="o">.</span><span class="n">TEXTURE_BINDING</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="n">size</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
-
-        <span class="n">camera_position</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">camera_latitude</span><span class="p">)</span>
-            <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">camera_longitude</span><span class="p">)</span>
-            <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">camera_radius</span><span class="p">,</span>
-            <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">camera_latitude</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">camera_radius</span><span class="p">,</span>
-            <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">camera_latitude</span><span class="p">)</span>
-            <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">camera_longitude</span><span class="p">)</span>
-            <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">camera_radius</span><span class="p">,</span>
-        <span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">aspect</span> <span class="o">=</span> <span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">size</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
         <span class="c1"># light_position must be vec4 for memory alignement</span>
         <span class="n">light_position</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
 
-        <span class="n">view_matrix</span> <span class="o">=</span> <span class="n">look_at</span><span class="p">(</span><span class="n">camera_position</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
-        <span class="n">proj_matrix</span> <span class="o">=</span> <span class="n">perspective</span><span class="p">(</span><span class="mi">45</span><span class="p">,</span> <span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">size</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+        <span class="n">proj_matrix</span><span class="p">,</span> <span class="n">view_matrix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">get_matrices</span><span class="p">()</span>
 
         <span class="n">render_params_data</span> <span class="o">=</span> <span class="n">light_position</span><span class="o">.</span><span class="n">tobytes</span><span class="p">()</span>
         <span class="c1"># Must send transpose version of matrices, because GPU expect matrices</span>
@@ -689,6 +659,7 @@ vectors.</p>
     <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">request_draw</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">loop</span><span class="p">)</span>
         <span class="n">loop</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
 
 <span class="n">App</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 </pre></div>
@@ -735,6 +706,75 @@ vectors.</p>
 <span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">textureSample</span><span class="p">(</span><span class="n">texture</span><span class="p">,</span><span class="w"> </span><span class="n">samplr</span><span class="p">,</span><span class="w"> </span><span class="n">in</span><span class="p">.</span><span class="n">uv</span><span class="p">);</span>
 <span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">vec4</span><span class="o">&lt;</span><span class="nb">f32</span><span class="o">&gt;</span><span class="p">(</span><span class="n">color</span><span class="p">.</span><span class="n">xyz</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">shading</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span>
 <span class="p">}</span>
+</pre></div>
+
+</section>
+<section id="camera.py" class="level2 code">
+<h2 class="code">camera.py</h2>
+<div class="pygments"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">numpy.typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">NDArray</span><span class="p">,</span> <span class="n">ArrayLike</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">cgmath</span><span class="w"> </span><span class="kn">import</span> <span class="n">look_at</span><span class="p">,</span> <span class="n">perspective</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Camera</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">fovy_deg</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">aspect</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">near</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">far</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">radius</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">longitude</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">latitude</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">target</span><span class="p">:</span> <span class="n">ArrayLike</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pointer_down</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_pointer_pos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="mi">3</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">longitude</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">4</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">latitude</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">4</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fovy_deg</span> <span class="o">=</span> <span class="n">fovy_deg</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">aspect</span> <span class="o">=</span> <span class="n">aspect</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">near</span> <span class="o">=</span> <span class="n">near</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">far</span> <span class="o">=</span> <span class="n">far</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="n">radius</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">longitude</span> <span class="o">=</span> <span class="n">longitude</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">latitude</span> <span class="o">=</span> <span class="n">latitude</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_matrices</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">NDArray</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">]:</span>
+        <span class="n">camera_position</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">latitude</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">longitude</span><span class="p">),</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">latitude</span><span class="p">),</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">latitude</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">longitude</span><span class="p">),</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+
+        <span class="n">camera_position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="o">+</span> <span class="n">camera_position</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span>
+
+        <span class="n">view_matrix</span> <span class="o">=</span> <span class="n">look_at</span><span class="p">(</span><span class="n">camera_position</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+        <span class="n">proj_matrix</span> <span class="o">=</span> <span class="n">perspective</span><span class="p">(</span><span class="mi">45</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">aspect</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">proj_matrix</span><span class="p">,</span> <span class="n">view_matrix</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">process_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;event_type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;pointer_down&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pointer_down</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">elif</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;event_type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;pointer_up&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pointer_down</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">elif</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;event_type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;pointer_move&quot;</span><span class="p">:</span>
+            <span class="n">pointer_pos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">event</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">],</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">]])</span>
+            <span class="n">delta</span> <span class="o">=</span> <span class="n">pointer_pos</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_pointer_pos</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">last_pointer_pos</span> <span class="o">=</span> <span class="n">pointer_pos</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pointer_down</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">longitude</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">longitude</span> <span class="o">+</span> <span class="n">delta</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.01</span><span class="p">)</span> <span class="o">%</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">latitude</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">latitude</span> <span class="o">+</span> <span class="n">delta</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.01</span><span class="p">,</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span>
+                <span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;event_type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;wheel&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">+</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;dy&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.001</span><span class="p">)</span>
 </pre></div>
 
 </section>

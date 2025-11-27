@@ -2,8 +2,8 @@ from rendercanvas.auto import RenderCanvas, loop
 import wgpu
 import numpy as np
 import PIL.Image as Image
-from cgmath import look_at, perspective
 from primitives import cube
+from camera import Camera
 
 
 class App:
@@ -106,11 +106,7 @@ class App:
             self.process_event, "pointer_up", "pointer_down", "pointer_move", "wheel"
         )  # type: ignore
 
-        self.pointer_down = False
-        self.last_pointer_pos = np.array([0.0, 0.0])
-        self.camera_radius = 3
-        self.camera_longitude = np.pi / 4
-        self.camera_latitude = np.pi / 4
+        self.camera = Camera(45, 640 / 480, 0.1, 100, 3, np.pi / 4, np.pi / 4)
 
         vertex_buffer_descriptor = {
             "array_stride": 8 * 4,
@@ -171,24 +167,7 @@ class App:
         )
 
     def process_event(self, event):
-        if event["event_type"] == "pointer_down":
-            self.pointer_down = True
-        elif event["event_type"] == "pointer_up":
-            self.pointer_down = False
-        elif event["event_type"] == "pointer_move":
-            pointer_pos = np.array([event["x"], event["y"]])
-            delta = pointer_pos - self.last_pointer_pos
-            self.last_pointer_pos = pointer_pos
-            if self.pointer_down:
-                self.camera_longitude = (self.camera_longitude + delta[0] * 0.01) % (
-                    2 * np.pi
-                )
-                self.camera_latitude = np.clip(
-                    self.camera_latitude + delta[1] * 0.01, -np.pi / 2, np.pi / 2
-                )
-
-        elif event["event_type"] == "wheel":
-            self.camera_radius = max(0.1, self.camera_radius + event["dy"] * 0.001)
+        self.camera.process_event(event)
 
     def loop(self):
         screen_texture: wgpu.GPUTexture = self.context.get_current_texture()  # type: ignore
@@ -201,25 +180,16 @@ class App:
                 | wgpu.TextureUsage.TEXTURE_BINDING,
             )
             self.size = size[:2]
-
-        camera_position = [
-            np.cos(self.camera_latitude)
-            * np.cos(self.camera_longitude)
-            * self.camera_radius,
-            np.sin(self.camera_latitude) * self.camera_radius,
-            np.cos(self.camera_latitude)
-            * np.sin(self.camera_longitude)
-            * self.camera_radius,
-        ]
+            self.camera.aspect = size[0] / size[1]
 
         # light_position must be vec4 for memory alignement
         light_position = np.array([-10, 10, 10, 0], dtype=np.float32)
 
-        view_matrix = look_at(camera_position, [0, 0, 0], [0, 1, 0])
-        proj_matrix = perspective(45, size[0] / size[1], 0.1, 100)
+        proj_matrix, view_matrix = self.camera.get_matrices()
 
         render_params_data = light_position.tobytes()
-        # Must send transpose version of matrices, because GPU expect matrices in column major order
+        # Must send transpose version of matrices, because GPU expect matrices
+        # in column major order
         render_params_data += view_matrix.T.tobytes()
         render_params_data += proj_matrix.T.tobytes()
 
