@@ -200,6 +200,7 @@ class App:
                 usage=wgpu.TextureUsage.RENDER_ATTACHMENT
                 | wgpu.TextureUsage.TEXTURE_BINDING,
             )
+            self.size = size[:2]
 
         camera_position = [
             np.cos(self.camera_latitude)

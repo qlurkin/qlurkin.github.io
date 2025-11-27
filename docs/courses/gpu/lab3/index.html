@@ -629,6 +629,7 @@ vectors.</p>
                 <span class="n">usage</span><span class="o">=</span><span class="n">wgpu</span><span class="o">.</span><span class="n">TextureUsage</span><span class="o">.</span><span class="n">RENDER_ATTACHMENT</span>
                 <span class="o">|</span> <span class="n">wgpu</span><span class="o">.</span><span class="n">TextureUsage</span><span class="o">.</span><span class="n">TEXTURE_BINDING</span><span class="p">,</span>
             <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="n">size</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
 
         <span class="n">camera_position</span> <span class="o">=</span> <span class="p">[</span>
             <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">camera_latitude</span><span class="p">)</span>
