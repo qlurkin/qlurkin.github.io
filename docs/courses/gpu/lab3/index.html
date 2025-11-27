@@ -435,7 +435,6 @@ vectors.</p>
 <span class="kn">from</span><span class="w"> </span><span class="nn">primitives</span><span class="w"> </span><span class="kn">import</span> <span class="n">cube</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">camera</span><span class="w"> </span><span class="kn">import</span> <span class="n">Camera</span>
 
-
 <span class="k">class</span><span class="w"> </span><span class="nc">App</span><span class="p">:</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">adapter</span> <span class="o">=</span> <span class="n">wgpu</span><span class="o">.</span><span class="n">gpu</span><span class="o">.</span><span class="n">request_adapter_sync</span><span class="p">(</span><span class="n">power_preference</span><span class="o">=</span><span class="s2">&quot;high-performance&quot;</span><span class="p">)</span>
@@ -660,19 +659,19 @@ vectors.</p>
         <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">request_draw</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">loop</span><span class="p">)</span>
         <span class="n">loop</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 
-
 <span class="n">App</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 </pre></div>
 
 </section>
 <section id="shader" class="level2 code">
 <h2 class="code">Shader</h2>
-<div class="pygments"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="n">CameraUniform</span><span class="w"> </span><span class="p">{</span>
+<div class="pygments"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="n">RenderParams</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="n">light</span><span class="p">:</span><span class="w"> </span><span class="nb">vec4</span><span class="o">&lt;</span><span class="nb">f32</span><span class="o">&gt;</span><span class="p">,</span>
 <span class="w">    </span><span class="n">view</span><span class="p">:</span><span class="w"> </span><span class="nb">mat4x4</span><span class="o">&lt;</span><span class="nb">f32</span><span class="o">&gt;</span><span class="p">,</span>
 <span class="w">    </span><span class="n">proj</span><span class="p">:</span><span class="w"> </span><span class="nb">mat4x4</span><span class="o">&lt;</span><span class="nb">f32</span><span class="o">&gt;</span><span class="p">,</span>
 <span class="p">};</span>
-<span class="nd">@group</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="nd">@binding</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="kd">var</span><span class="o">&lt;</span><span class="nb">uniform</span><span class="o">&gt;</span><span class="w"> </span><span class="n">params</span><span class="p">:</span><span class="w"> </span><span class="n">CameraUniform</span><span class="p">;</span>
+
+<span class="nd">@group</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="nd">@binding</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="kd">var</span><span class="o">&lt;</span><span class="nb">uniform</span><span class="o">&gt;</span><span class="w"> </span><span class="n">params</span><span class="p">:</span><span class="w"> </span><span class="n">RenderParams</span><span class="p">;</span>
 <span class="nd">@group</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="nd">@binding</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="kd">var</span><span class="w"> </span><span class="n">texture</span><span class="p">:</span><span class="w"> </span><span class="nb">texture_2d</span><span class="o">&lt;</span><span class="nb">f32</span><span class="o">&gt;</span><span class="p">;</span>
 <span class="nd">@group</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="nd">@binding</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="kd">var</span><span class="w"> </span><span class="n">samplr</span><span class="p">:</span><span class="w"> </span><span class="nb">sampler</span><span class="p">;</span>
 
@@ -714,7 +713,6 @@ vectors.</p>
 <div class="pygments"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">numpy.typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">NDArray</span><span class="p">,</span> <span class="n">ArrayLike</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">cgmath</span><span class="w"> </span><span class="kn">import</span> <span class="n">look_at</span><span class="p">,</span> <span class="n">perspective</span>
-
 
 <span class="k">class</span><span class="w"> </span><span class="nc">Camera</span><span class="p">:</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>

@@ -361,7 +361,6 @@ import PIL.Image as Image
 from primitives import cube
 from camera import Camera
 
-
 class App:
     def __init__(self):
         adapter = wgpu.gpu.request_adapter_sync(power_preference="high-performance")
@@ -586,19 +585,19 @@ class App:
         self.canvas.request_draw(self.loop)
         loop.run()
 
-
 App().run()
 ```
 
 ## Shader{.code}
 
 ```wgsl
-struct CameraUniform {
+struct RenderParams {
     light: vec4<f32>,
     view: mat4x4<f32>,
     proj: mat4x4<f32>,
 };
-@group(0) @binding(0) var<uniform> params: CameraUniform;
+
+@group(0) @binding(0) var<uniform> params: RenderParams;
 @group(0) @binding(1) var texture: texture_2d<f32>;
 @group(0) @binding(2) var samplr: sampler;
 
@@ -640,7 +639,6 @@ fn fs_main(in: VertexOutput) -> @location(0) vec4<f32> {
 import numpy as np
 from numpy.typing import NDArray, ArrayLike
 from cgmath import look_at, perspective
-
 
 class Camera:
     def __init__(
