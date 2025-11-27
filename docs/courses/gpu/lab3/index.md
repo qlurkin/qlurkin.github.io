@@ -628,7 +628,7 @@ fn vs_main(in: VertexInput) -> VertexOutput {
 @fragment
 fn fs_main(in: VertexOutput) -> @location(0) vec4<f32> {
     let light_dir = params.light.xyz - in.position;
-    let shading = clamp(dot(light_dir, in.normal), 0.4, 1.0);
+    let shading = clamp(dot(light_dir, normalize(in.normal)), 0.4, 1.0);
     let color = textureSample(texture, samplr, in.uv);
     return vec4<f32>(color.xyz * shading, 1.0);
 }
@@ -653,12 +653,10 @@ class Camera:
         longitude: float,
         latitude: float,
         target: ArrayLike = [0.0, 0.0, 0.0],
+        up: ArrayLike = [0.0, 1.0, 0.0],
     ):
         self.pointer_down = False
         self.last_pointer_pos = np.array([0.0, 0.0])
-        self.radius = 3
-        self.longitude = np.pi / 4
-        self.latitude = np.pi / 4
         self.fovy_deg = fovy_deg
         self.aspect = aspect
         self.near = near
@@ -667,6 +665,7 @@ class Camera:
         self.longitude = longitude
         self.latitude = latitude
         self.target = np.array(target)
+        self.up = np.array(up)
 
     def get_matrices(self) -> tuple[NDArray, NDArray]:
         camera_position = np.array(
@@ -679,8 +678,8 @@ class Camera:
 
         camera_position = self.target + camera_position * self.radius
 
-        view_matrix = look_at(camera_position, [0, 0, 0], [0, 1, 0])
-        proj_matrix = perspective(45, self.aspect, 0.1, 100)
+        view_matrix = look_at(camera_position, self.target, self.up)
+        proj_matrix = perspective(self.fovy_deg, self.aspect, self.near, self.far)
 
         return proj_matrix, view_matrix
 
@@ -701,7 +700,6 @@ class Camera:
 
         elif event["event_type"] == "wheel":
             self.radius = max(0.1, self.radius + event["dy"] * 0.001)
-
 ```
 
 ## Exercices
