@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Lab 4 - Instances and Imgui</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="/deck.css" />
+  <script src="/deck_only.js" defer></script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Lab 4
+<small>Instances and Imgui</small>
+</h1>
+</header>
+<section id="instances" class="level2 code">
+<h2 class="code">Instances</h2>
+<div class="pygments"><pre><span></span><span class="c1"># ...</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.spatial.transform</span><span class="w"> </span><span class="kn">import</span> <span class="n">Rotation</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">App</span><span class="p">:</span>
+
+  <span class="c1"># ...</span>
+
+  <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c1"># ...</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">instance_count</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="c1"># ...</span>
+    <span class="n">instance_data</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">instance_count</span><span class="p">):</span>
+        <span class="n">trans</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+        <span class="n">trans</span><span class="p">[:</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+
+        <span class="n">rot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+        <span class="n">rot</span><span class="p">[:</span><span class="mi">3</span><span class="p">,</span> <span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">Rotation</span><span class="o">.</span><span class="n">random</span><span class="p">()</span><span class="o">.</span><span class="n">as_matrix</span><span class="p">()</span>
+
+        <span class="n">instance_data</span> <span class="o">+=</span> <span class="p">(</span><span class="n">trans</span> <span class="o">@</span> <span class="n">rot</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span><span class="o">.</span><span class="n">tobytes</span><span class="p">()</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">instance_buffer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">create_buffer_with_data</span><span class="p">(</span>
+        <span class="n">data</span><span class="o">=</span><span class="n">instance_data</span><span class="p">,</span> <span class="n">usage</span><span class="o">=</span><span class="n">wgpu</span><span class="o">.</span><span class="n">BufferUsage</span><span class="o">.</span><span class="n">VERTEX</span>
+    <span class="p">)</span>
+    <span class="c1"># ...</span>
+    <span class="n">instance_buffer_descriptor</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;array_stride&quot;</span><span class="p">:</span> <span class="mi">4</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">*</span> <span class="mi">4</span><span class="p">,</span>
+        <span class="s2">&quot;step_mode&quot;</span><span class="p">:</span> <span class="n">wgpu</span><span class="o">.</span><span class="n">VertexStepMode</span><span class="o">.</span><span class="n">instance</span><span class="p">,</span>
+        <span class="s2">&quot;attributes&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="n">wgpu</span><span class="o">.</span><span class="n">VertexFormat</span><span class="o">.</span><span class="n">float32x4</span><span class="p">,</span>
+                <span class="s2">&quot;offset&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s2">&quot;shader_location&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="n">wgpu</span><span class="o">.</span><span class="n">VertexFormat</span><span class="o">.</span><span class="n">float32x4</span><span class="p">,</span>
+                <span class="s2">&quot;offset&quot;</span><span class="p">:</span> <span class="mi">4</span> <span class="o">*</span> <span class="mi">4</span><span class="p">,</span>
+                <span class="s2">&quot;shader_location&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="n">wgpu</span><span class="o">.</span><span class="n">VertexFormat</span><span class="o">.</span><span class="n">float32x4</span><span class="p">,</span>
+                <span class="s2">&quot;offset&quot;</span><span class="p">:</span> <span class="mi">8</span> <span class="o">*</span> <span class="mi">4</span><span class="p">,</span>
+                <span class="s2">&quot;shader_location&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="n">wgpu</span><span class="o">.</span><span class="n">VertexFormat</span><span class="o">.</span><span class="n">float32x4</span><span class="p">,</span>
+                <span class="s2">&quot;offset&quot;</span><span class="p">:</span> <span class="mi">12</span> <span class="o">*</span> <span class="mi">4</span><span class="p">,</span>
+                <span class="s2">&quot;shader_location&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">],</span>
+    <span class="p">}</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">pipeline</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">create_render_pipeline</span><span class="p">(</span>
+        <span class="c1"># ...</span>
+        <span class="n">vertex</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="n">shader_module</span><span class="p">,</span>
+            <span class="s2">&quot;entry_point&quot;</span><span class="p">:</span> <span class="s2">&quot;vs_main&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;buffers&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">vertex_buffer_descriptor</span><span class="p">,</span> <span class="n">instance_buffer_descriptor</span><span class="p">],</span>
+        <span class="p">},</span>
+        <span class="c1"># ...</span>
+    <span class="p">)</span>
+
+  <span class="k">def</span><span class="w"> </span><span class="nf">loop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c1"># ...</span>
+    <span class="n">render_pass</span><span class="o">.</span><span class="n">set_vertex_buffer</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">instance_buffer</span><span class="p">)</span>
+    <span class="c1"># ...</span>
+    <span class="n">render_pass</span><span class="o">.</span><span class="n">draw_indexed</span><span class="p">(</span><span class="mi">36</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">instance_count</span><span class="p">)</span>
+</pre></div>
+
+</section>
+<section id="instances-shader" class="level2 code">
+<h2 class="code">Instances Shader</h2>
+<div class="pygments"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="n">RenderParams</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">light</span><span class="p">:</span><span class="w"> </span><span class="nb">vec4</span><span class="o">&lt;</span><span class="nb">f32</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">view</span><span class="p">:</span><span class="w"> </span><span class="nb">mat4x4</span><span class="o">&lt;</span><span class="nb">f32</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">proj</span><span class="p">:</span><span class="w"> </span><span class="nb">mat4x4</span><span class="o">&lt;</span><span class="nb">f32</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="nd">@group</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="nd">@binding</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="kd">var</span><span class="o">&lt;</span><span class="nb">uniform</span><span class="o">&gt;</span><span class="w"> </span><span class="n">params</span><span class="p">:</span><span class="w"> </span><span class="n">RenderParams</span><span class="p">;</span>
+<span class="nd">@group</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="nd">@binding</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="kd">var</span><span class="w"> </span><span class="n">texture</span><span class="p">:</span><span class="w"> </span><span class="nb">texture_2d</span><span class="o">&lt;</span><span class="nb">f32</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="nd">@group</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="nd">@binding</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="kd">var</span><span class="w"> </span><span class="n">samplr</span><span class="p">:</span><span class="w"> </span><span class="nb">sampler</span><span class="p">;</span>
+
+<span class="k">struct</span><span class="w"> </span><span class="n">VertexInput</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nd">@location</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="nb">position</span><span class="p">:</span><span class="w"> </span><span class="nb">vec3</span><span class="o">&lt;</span><span class="nb">f32</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="w">    </span><span class="nd">@location</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="n">normal</span><span class="p">:</span><span class="w"> </span><span class="nb">vec3</span><span class="o">&lt;</span><span class="nb">f32</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="w">    </span><span class="nd">@location</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="n">uv</span><span class="p">:</span><span class="w"> </span><span class="nb">vec2</span><span class="o">&lt;</span><span class="nb">f32</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="k">struct</span><span class="w"> </span><span class="n">InstanceInput</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nd">@location</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="n">c0</span><span class="p">:</span><span class="w"> </span><span class="nb">vec4</span><span class="o">&lt;</span><span class="nb">f32</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="w">    </span><span class="nd">@location</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="n">c1</span><span class="p">:</span><span class="w"> </span><span class="nb">vec4</span><span class="o">&lt;</span><span class="nb">f32</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="w">    </span><span class="nd">@location</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="n">c2</span><span class="p">:</span><span class="w"> </span><span class="nb">vec4</span><span class="o">&lt;</span><span class="nb">f32</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="w">    </span><span class="nd">@location</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span><span class="w"> </span><span class="n">c3</span><span class="p">:</span><span class="w"> </span><span class="nb">vec4</span><span class="o">&lt;</span><span class="nb">f32</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">struct</span><span class="w"> </span><span class="n">VertexOutput</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nd">@builtin</span><span class="p">(</span><span class="nb">position</span><span class="p">)</span><span class="w"> </span><span class="n">clip</span><span class="p">:</span><span class="w"> </span><span class="nb">vec4</span><span class="o">&lt;</span><span class="nb">f32</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="w">    </span><span class="nd">@location</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="nb">position</span><span class="p">:</span><span class="w"> </span><span class="nb">vec3</span><span class="o">&lt;</span><span class="nb">f32</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="w">    </span><span class="nd">@location</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="n">normal</span><span class="p">:</span><span class="w"> </span><span class="nb">vec3</span><span class="o">&lt;</span><span class="nb">f32</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="w">    </span><span class="nd">@location</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="n">uv</span><span class="p">:</span><span class="w"> </span><span class="nb">vec2</span><span class="o">&lt;</span><span class="nb">f32</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="nd">@vertex</span>
+<span class="k">fn</span><span class="w"> </span><span class="n">vs_main</span><span class="p">(</span><span class="n">in</span><span class="p">:</span><span class="w"> </span><span class="n">VertexInput</span><span class="p">,</span><span class="w"> </span><span class="n">instance</span><span class="p">:</span><span class="w"> </span><span class="n">InstanceInput</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="n">VertexOutput</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">mat4x4</span><span class="o">&lt;</span><span class="nb">f32</span><span class="o">&gt;</span><span class="p">(</span><span class="n">instance</span><span class="p">.</span><span class="n">c0</span><span class="p">,</span><span class="w"> </span><span class="n">instance</span><span class="p">.</span><span class="n">c1</span><span class="p">,</span><span class="w"> </span><span class="n">instance</span><span class="p">.</span><span class="n">c2</span><span class="p">,</span><span class="w"> </span><span class="n">instance</span><span class="p">.</span><span class="n">c3</span><span class="p">);</span>
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="n">out</span><span class="p">:</span><span class="w"> </span><span class="n">VertexOutput</span><span class="p">;</span>
+<span class="w">    </span><span class="n">out</span><span class="p">.</span><span class="n">clip</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">params</span><span class="p">.</span><span class="n">proj</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">params</span><span class="p">.</span><span class="n">view</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">model</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">vec4</span><span class="o">&lt;</span><span class="nb">f32</span><span class="o">&gt;</span><span class="p">(</span><span class="n">in</span><span class="p">.</span><span class="nb">position</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span>
+<span class="w">    </span><span class="n">out</span><span class="p">.</span><span class="nb">position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">in</span><span class="p">.</span><span class="nb">position</span><span class="p">;</span>
+<span class="w">    </span><span class="n">out</span><span class="p">.</span><span class="n">normal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">in</span><span class="p">.</span><span class="n">normal</span><span class="p">;</span>
+<span class="w">    </span><span class="n">out</span><span class="p">.</span><span class="n">uv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">in</span><span class="p">.</span><span class="n">uv</span><span class="p">;</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">out</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nd">@fragment</span>
+<span class="k">fn</span><span class="w"> </span><span class="n">fs_main</span><span class="p">(</span><span class="n">in</span><span class="p">:</span><span class="w"> </span><span class="n">VertexOutput</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nd">@location</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="nb">vec4</span><span class="o">&lt;</span><span class="nb">f32</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">light_dir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">normalize</span><span class="p">(</span><span class="n">params</span><span class="p">.</span><span class="n">light</span><span class="p">.</span><span class="n">xyz</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">in</span><span class="p">.</span><span class="nb">position</span><span class="p">);</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">shading</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">clamp</span><span class="p">(</span><span class="n">dot</span><span class="p">(</span><span class="n">light_dir</span><span class="p">,</span><span class="w"> </span><span class="n">normalize</span><span class="p">(</span><span class="n">in</span><span class="p">.</span><span class="n">normal</span><span class="p">)),</span><span class="w"> </span><span class="mf">0.1</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">textureSample</span><span class="p">(</span><span class="n">texture</span><span class="p">,</span><span class="w"> </span><span class="n">samplr</span><span class="p">,</span><span class="w"> </span><span class="n">in</span><span class="p">.</span><span class="n">uv</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">vec4</span><span class="o">&lt;</span><span class="nb">f32</span><span class="o">&gt;</span><span class="p">(</span><span class="n">color</span><span class="p">.</span><span class="n">xyz</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">shading</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+
+</section>
+<section id="imgui" class="level2">
+<h2>Imgui</h2>
+<div class="terminal">&gt; pip install imgui-bundle
+</div>
+</section>
+<section id="imgui-1" class="level2 code">
+<h2 class="code">Imgui</h2>
+<div class="pygments"><pre><span></span><span class="c1"># ...</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">imgui_bundle</span><span class="w"> </span><span class="kn">import</span> <span class="n">imgui</span>  <span class="c1"># Before rendercanvas</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rendercanvas.auto</span><span class="w"> </span><span class="kn">import</span> <span class="n">RenderCanvas</span><span class="p">,</span> <span class="n">loop</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">wgpu.utils.imgui</span><span class="w"> </span><span class="kn">import</span> <span class="n">ImguiRenderer</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">App</span><span class="p">:</span>
+
+  <span class="c1"># ...</span>
+
+  <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c1"># ...</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">imgui_renderer</span> <span class="o">=</span> <span class="n">ImguiRenderer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="p">)</span>
+
+  <span class="k">def</span><span class="w"> </span><span class="nf">loop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c1"># ...</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">imgui_renderer</span><span class="o">.</span><span class="n">render</span><span class="p">()</span>
+
+  <span class="k">def</span><span class="w"> </span><span class="nf">update_gui</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">imgui</span><span class="o">.</span><span class="n">begin</span><span class="p">(</span><span class="s2">&quot;Window&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="n">imgui</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;Example Text&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">imgui</span><span class="o">.</span><span class="n">button</span><span class="p">(</span><span class="s2">&quot;Hello&quot;</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;World&quot;</span><span class="p">)</span>
+    <span class="n">imgui</span><span class="o">.</span><span class="n">end</span><span class="p">()</span>
+
+  <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">request_draw</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">loop</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">imgui_renderer</span><span class="o">.</span><span class="n">set_gui</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">update_gui</span><span class="p">)</span>
+    <span class="n">loop</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+
+</section>
+<section id="exercices" class="level2">
+<h2>Exercices</h2>
+<p><a href="../lab4_exo/">Exercices</a></p>
+</section>
+</body>
+</html>

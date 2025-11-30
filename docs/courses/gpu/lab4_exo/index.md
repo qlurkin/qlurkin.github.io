@@ -1,17 +1,12 @@
 ---
-title: Lab 5
-subtitle: Simulation on CPU
+title: Lab 4
+subtitle: Simulation
 typst: true
 ---
 
-In this session we will start simulating some particles. We will start by doing
-it on the CPU to understand how these simulations work. At the end you will try
-to do it on the GPU.
+In this session we will start simulating some particles.
 
-To help us, we will use the
-[`wgpu-bootstrap`](https://github.com/qlurkin/wgpu-bootstrap) library.
-
-## Animate a particle
+## Frame time
 
 A particle is simply a point which has a position $(x, y, z)$ and a velocity
 $(v_x, v_y, v_z)$. To animate it, you just have to update its position at each
@@ -19,30 +14,25 @@ _frame_.
 
 $$x &= x + Delta t dot v_x \ y &= y + Delta t dot v_y \ z &= z + Delta t dot v_z$$
 
-In `wgpu-bootstrap`, You can update the state of the App by implementing the
-`update` method of the `App` trait. This method receive the $Delta t$ as
-parameter.
-
-You can create a `Particle` struct that contains the position and the speed of a
-particle.
+You can see that you need to get the $Delta t$ between two frames. You can
+measure it with the function `perf_counter()` from the module time.
 
 ### Exercice
 
-To draw multiple particles we will use wgpu instances. It is possible to draw
-multiple instances of the same vertex buffer in one draw call. In order to draw
-each instance at its own position we add an instance buffer that contains data
-for each instance such position or any other meaningfull data.
+Show the measured frame time in an `imgui` window.
 
-In `wgpu-bootstrap`, there is an example of instances usage. You can start from
-it to make an instance buffer from a vector of `Particle`.
+## Animate some particles
 
-Make a program that update the Particle Instance Buffer at each frame.
+You can create a `particles` buffer that contains the position and the velocity
+of each particle.
 
-To write in an already existing buffer, we must send the new data with the
-[`Queue`](https://docs.rs/wgpu/latest/wgpu/struct.Queue.html#method.write_buffer).
-There is an example of that in the
-[`OrbitCamera`](https://github.com/qlurkin/wgpu-bootstrap/blob/main/src/util/orbit_camera.rs)
-of `wgpu-bootstrap`.
+To draw multiple particles we will use wgpu instances. In order to draw each
+instance at its own position we will use the particles buffer as an instance
+buffer.
+
+### Exercice
+
+Make a program that update the **Particle Instance Buffer** at each frame.
 
 ## Collision
 
@@ -85,9 +75,3 @@ Update your program to add gravity.
 
 <figure id="cube3"></figure>
 <script type='module' src='exercice4.js'> </script>
-
-## Compute shader
-
-Use a Compute Shader to run the simulation. You must create a Compute Pipeline
-and the associated Bind Groups. Get inspired by your Game of Life project where
-you already created a Compute Pipeline.
