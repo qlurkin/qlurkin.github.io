@@ -31,10 +31,12 @@ struct VertexOutput {
 @vertex
 fn vs_main(in: VertexInput, instance: InstanceInput) -> VertexOutput {
     let model = mat4x4<f32>(instance.c0, instance.c1, instance.c2, instance.c3);
+    let rot = mat3x3<f32>(instance.c0.xyz, instance.c1.xyz, instance.c2.xyz);
     var out: VertexOutput;
-    out.clip = params.proj * params.view * model * vec4<f32>(in.position, 1.0);
-    out.position = in.position;
-    out.normal = in.normal;
+    let world_pos = model * vec4<f32>(in.position, 1.0);
+    out.clip = params.proj * params.view * world_pos;
+    out.position = world_pos.xyz / world_pos.w;
+    out.normal = rot * in.normal;
     out.uv = in.uv;
     return out;
 }
