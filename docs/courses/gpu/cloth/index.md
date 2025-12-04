@@ -56,13 +56,18 @@ The stiffness constants of these three types of springs are generally different.
 
 The problem with springs is that they have an annoying tendency to oscillate. To
 reduce this problem, a damping force is added. This force resists the movement
-of the vertex and is proportional to the velocity.
-$$arrow(F_d) = - c_d thick arrow(v)$$
+of the spring and is proportional to the extension rate.
+$$arrow(F_d) = - c_d thick arrow(v_s)$$
 
 Where $c_d$ is the damping coefficient.
 
 For the cloth to fall, gravity must obviously be taken into account.
-$$F_g = m thick arrow(g)$$
+$$arrow(F_g) = m thick arrow(g)$$
+
+The contact with the sphere will also be modelised by an elastic force:
+$$arrow(F_c) = k_c thick arrow(d) thick$$
+
+Where $arrow(d)$ is the penetration depth and $k_c$ the stiffness of collisions.
 
 During the contact between the cloth and the sphere, it is possible to take into
 account frictional forces. The friction is tangent to the friction surface and
@@ -76,19 +81,6 @@ unit vector normal to the surface. $arrow(1_t)$ is the unit vector tangent to
 the surface in the same direction as $arrow(R_(o_t))$. $c_f$ is the coefficient
 of friction. In short, the frictional force cancels out the tangential component
 of the other forces up to a certain point which depends on the normal component.
-
-After calculating the new vertex positions, we need to check for collisions with
-the sphere. The detection of collisions between a point and a sphere is
-extremely simple. If the distance between the point and the center of the sphere
-is smaller than the radius of the sphere, the point is in the sphere. In this
-case it must be repositioned on the surface.
-
-$$arrow(C S) &= arrow(x_s) - arrow(x_c) \ arrow(1_(c s)) &= arrow(C S)/(|arrow(C S)|) \ arrow(x_(s_r)) &= arrow(x_c) + r thick arrow(1_(c s))$$
-
-Where $x_s$ is the position of the vertex, $x_c$ the position of the centre et
-$x_(s_r)$ the position of the top after repositioning. Once the repositioning is
-done, the speed must be updated.
-$$arrow(v) = (arrow(x_(s_r)) - arrow(x_s))/(Delta t)$$
 
 ## Grading Grid
 
