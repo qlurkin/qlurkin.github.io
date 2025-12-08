@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Navigation Avalonia</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="/document.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Navigation Avalonia
+</h1>
+</header>
+<section id="introduction" class="level2">
+<h2>Introduction</h2>
+<p>Ce tutoriel vous guidera à travers les étapes de création d’une
+application de bureau moderne avec <a
+href="https://avaloniaui.net/">Avalonia UI</a> en utilisant le pattern
+d’architecture <strong>MVVM (Model-View-ViewModel)</strong>.</p>
+<p>Nous allons créer une application simple avec deux écrans (“Accueil”
+et “Paramètres”) et mettre en place un système de navigation complet
+:</p>
+<ol type="1">
+<li>Un menu principal pour changer d’écran.</li>
+<li>Un bouton dans un écran pour naviguer vers un autre.</li>
+</ol>
+</section>
+<section id="initialisation-du-projet" class="level2">
+<h2>Initialisation du Projet</h2>
+<section id="prérequis" class="level3 nocount">
+<h3 class="nocount">Prérequis</h3>
+<p>Assurez-vous d’avoir le SDK .NET installé.</p>
+<ol type="1">
+<li><p><strong>Installer les templates Avalonia :</strong></p>
+<div class="terminal">dotnet new install Avalonia.Templates
+</div></li>
+<li><p><strong>Créer un nouveau projet Avalonia :</strong></p>
+<div class="terminal">dotnet new avalonia.app -o ChessDB
+cd ChessDB
+</div></li>
+<li><p><strong>Ajouter le MVVM Toolkit :</strong> Cette bibliothèque
+simplifie grandement l’implémentation de MVVM.</p>
+<div class="terminal">dotnet add package CommunityToolkit.Mvvm
+</div></li>
+</ol>
+</section>
+</section>
+<section id="larchitecture-de-base-views-viewmodels" class="level2">
+<h2>L’Architecture de Base (<code>Views</code> &amp;
+<code>ViewModels</code>)</h2>
+<p>L’idée de MVVM est de séparer la logique (<code>ViewModel</code>) de
+l’interface utilisateur (<code>View</code>).</p>
+<section id="créer-la-structure-des-dossiers" class="level3">
+<h3>Créer la structure des dossiers</h3>
+<p>Pour garder notre projet organisé, créons deux dossiers :</p>
+<ul>
+<li><code>Views/</code> : pour nos écrans
+(<code>UserControl</code>).</li>
+<li><code>ViewModels/</code> : pour la logique de nos écrans.</li>
+</ul>
+<div class="terminal">mkdir -p Views ViewModels
+</div>
+</section>
+<section id="créer-le-viewmodelbase" class="level3">
+<h3>Créer le <code>ViewModelBase</code></h3>
+<p>Tous nos ViewModels hériteront d’une classe de base qui implémente
+<code>INotifyPropertyChanged</code>. <code>ObservableObject</code> du
+MVVM Toolkit s’en charge pour nous.</p>
+<p>Créez <code>ViewModels/ViewModelBase.cs</code> :</p>
+<div class="pygments"><pre><span></span><span class="c1">// ViewModels/ViewModelBase.cs</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">CommunityToolkit.Mvvm.ComponentModel</span><span class="p">;</span>
+
+<span class="k">namespace</span><span class="w"> </span><span class="nn">ChessDB.ViewModels</span><span class="p">;</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">ViewModelBase</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">ObservableObject</span>
+<span class="p">{</span>
+<span class="p">}</span>
+</pre></div>
+
+</section>
+<section id="créer-les-viewmodels-des-écrans" class="level3">
+<h3>Créer les ViewModels des écrans</h3>
+<p>Créez <code>ViewModels/HomeViewModel.cs</code> et
+<code>ViewModels/SettingsViewModel.cs</code>.</p>
+<div class="pygments"><pre><span></span><span class="c1">// ViewModels/HomeViewModel.cs</span>
+<span class="k">namespace</span><span class="w"> </span><span class="nn">ChessDB.ViewModels</span><span class="p">;</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">HomeViewModel</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">ViewModelBase</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">Greeting</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s">&quot;Bienvenue sur l&#39;écran d&#39;accueil !&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+<div class="pygments"><pre><span></span><span class="c1">// ViewModels/SettingsViewModel.cs</span>
+<span class="k">namespace</span><span class="w"> </span><span class="nn">ChessDB.ViewModels</span><span class="p">;</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">SettingsViewModel</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">ViewModelBase</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">InfoText</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s">&quot;Ceci est la page des paramètres.&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+</section>
+<section id="créer-les-vues" class="level3">
+<h3>Créer les Vues</h3>
+<p>Maintenant, créons les <code>UserControl</code> qui seront
+l’interface de nos ViewModels.</p>
+<p>Créez <code>Views/HomeView.axaml</code> et son code-behind
+<code>Views/HomeView.axaml.cs</code>.</p>
+<div class="pygments"><pre><span></span><span class="cm">&lt;!-- Views/HomeView.axaml --&gt;</span>
+<span class="nt">&lt;UserControl</span><span class="w"> </span><span class="na">xmlns=</span><span class="s">&quot;https://github.com/avaloniaui&quot;</span>
+<span class="w">             </span><span class="na">xmlns:x=</span><span class="s">&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;</span>
+<span class="w">             </span><span class="na">xmlns:vm=</span><span class="s">&quot;using:ChessDB.ViewModels&quot;</span>
+<span class="w">             </span><span class="na">x:Class=</span><span class="s">&quot;ChessDB.Views.HomeView&quot;</span>
+<span class="w">             </span><span class="na">x:DataType=</span><span class="s">&quot;vm:HomeViewModel&quot;</span><span class="nt">&gt;</span>
+<span class="w">  </span><span class="nt">&lt;StackPanel</span><span class="w"> </span><span class="na">HorizontalAlignment=</span><span class="s">&quot;Center&quot;</span><span class="w"> </span><span class="na">VerticalAlignment=</span><span class="s">&quot;Center&quot;</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nt">&lt;TextBlock</span><span class="w"> </span><span class="na">Text=</span><span class="s">&quot;{Binding Greeting}&quot;</span><span class="w"> </span><span class="na">FontSize=</span><span class="s">&quot;24&quot;</span><span class="w"> </span><span class="na">FontWeight=</span><span class="s">&quot;Bold&quot;</span><span class="nt">/&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/StackPanel&gt;</span>
+<span class="nt">&lt;/UserControl&gt;</span>
+</pre></div>
+
+<div class="pygments"><pre><span></span><span class="c1">// Views/HomeView.axaml.cs</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">Avalonia.Controls</span><span class="p">;</span>
+
+<span class="k">namespace</span><span class="w"> </span><span class="nn">ChessDB.Views</span><span class="p">;</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">partial</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">HomeView</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">UserControl</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="nf">HomeView</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">InitializeComponent</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>Faites de même pour <code>Views/SettingsView.axaml</code>.</p>
+<div class="pygments"><pre><span></span><span class="cm">&lt;!-- Views/SettingsView.axaml --&gt;</span>
+<span class="nt">&lt;UserControl</span><span class="w"> </span><span class="na">xmlns=</span><span class="s">&quot;https://github.com/avaloniaui&quot;</span>
+<span class="w">             </span><span class="na">xmlns:x=</span><span class="s">&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;</span>
+<span class="w">             </span><span class="na">xmlns:vm=</span><span class="s">&quot;using:ChessDB.ViewModels&quot;</span>
+<span class="w">             </span><span class="na">x:Class=</span><span class="s">&quot;ChessDB.Views.SettingsView&quot;</span>
+<span class="w">             </span><span class="na">x:DataType=</span><span class="s">&quot;vm:SettingsViewModel&quot;</span><span class="nt">&gt;</span>
+<span class="w">  </span><span class="nt">&lt;StackPanel</span><span class="w"> </span><span class="na">HorizontalAlignment=</span><span class="s">&quot;Center&quot;</span><span class="w"> </span><span class="na">VerticalAlignment=</span><span class="s">&quot;Center&quot;</span><span class="w"> </span><span class="na">Spacing=</span><span class="s">&quot;10&quot;</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nt">&lt;TextBlock</span><span class="w"> </span><span class="na">Text=</span><span class="s">&quot;{Binding InfoText}&quot;</span><span class="w"> </span><span class="na">FontSize=</span><span class="s">&quot;20&quot;</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;CheckBox</span><span class="w"> </span><span class="na">Content=</span><span class="s">&quot;Activer une option&quot;</span><span class="nt">/&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/StackPanel&gt;</span>
+<span class="nt">&lt;/UserControl&gt;</span>
+</pre></div>
+
+<div class="pygments"><pre><span></span><span class="c1">// Views/SettingsView.axaml.cs</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">Avalonia.Controls</span><span class="p">;</span>
+
+<span class="k">namespace</span><span class="w"> </span><span class="nn">ChessDB.Views</span><span class="p">;</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">partial</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">SettingsView</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">UserControl</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="nf">SettingsView</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">InitializeComponent</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+</section>
+</section>
+<section id="mettre-en-place-la-navigation-principale" class="level2">
+<h2>Mettre en Place la Navigation Principale</h2>
+<section id="le-chef-dorchestre-mainwindowviewmodel" class="level3">
+<h3>Le “Chef d’Orchestre” : <code>MainWindowViewModel</code></h3>
+<p>Ce ViewModel principal contiendra une référence à l’écran
+actuellement affiché.</p>
+<p>Créez <code>ViewModels/MainWindowViewModel.cs</code> :</p>
+<div class="pygments"><pre><span></span><span class="c1">// ViewModels/MainWindowViewModel.cs</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">CommunityToolkit.Mvvm.ComponentModel</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">CommunityToolkit.Mvvm.Input</span><span class="p">;</span>
+
+<span class="k">namespace</span><span class="w"> </span><span class="nn">ChessDB.ViewModels</span><span class="p">;</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">partial</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">MainWindowViewModel</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">ViewModelBase</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="na">[ObservableProperty]</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">ViewModelBase</span><span class="w"> </span><span class="n">_currentViewModel</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">readonly</span><span class="w"> </span><span class="n">HomeViewModel</span><span class="w"> </span><span class="n">_homeViewModel</span><span class="p">;</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">readonly</span><span class="w"> </span><span class="n">SettingsViewModel</span><span class="w"> </span><span class="n">_settingsViewModel</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="nf">MainWindowViewModel</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">_homeViewModel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HomeViewModel</span><span class="p">();</span>
+<span class="w">        </span><span class="n">_settingsViewModel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SettingsViewModel</span><span class="p">();</span>
+<span class="w">        </span><span class="n">_currentViewModel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_homeViewModel</span><span class="p">;</span><span class="w"> </span><span class="c1">// Écran par défaut</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="na">[RelayCommand]</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">NavigateToHome</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">CurrentViewModel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_homeViewModel</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="na">[RelayCommand]</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">NavigateToSettings</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">CurrentViewModel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_settingsViewModel</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+</section>
+<section id="la-fenêtre-principale-mainwindow" class="level3">
+<h3>La Fenêtre Principale (<code>MainWindow</code>)</h3>
+<p>Nous allons modifier <code>MainWindow.axaml</code> pour qu’elle
+contienne le menu et une zone (<code>ContentControl</code>) qui
+affichera la vue active.</p>
+<p>Modifiez <code>Views/MainWindow.axaml</code> :</p>
+<div class="pygments"><pre><span></span><span class="cm">&lt;!-- Views/MainWindow.axaml --&gt;</span>
+<span class="nt">&lt;Window</span><span class="w"> </span><span class="na">xmlns=</span><span class="s">&quot;https://github.com/avaloniaui&quot;</span>
+<span class="w">        </span><span class="na">xmlns:x=</span><span class="s">&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;</span>
+<span class="w">        </span><span class="na">xmlns:vm=</span><span class="s">&quot;using:ChessDB.ViewModels&quot;</span>
+<span class="w">        </span><span class="na">x:Class=</span><span class="s">&quot;ChessDB.Views.MainWindow&quot;</span>
+<span class="w">        </span><span class="na">x:DataType=</span><span class="s">&quot;vm:MainWindowViewModel&quot;</span>
+<span class="w">        </span><span class="na">Title=</span><span class="s">&quot;ChessDB&quot;</span><span class="nt">&gt;</span>
+
+<span class="w">    </span><span class="nt">&lt;DockPanel&gt;</span>
+<span class="w">      </span><span class="cm">&lt;!-- Menu de Navigation --&gt;</span>
+<span class="w">      </span><span class="nt">&lt;StackPanel</span><span class="w"> </span><span class="na">DockPanel.Dock=</span><span class="s">&quot;Left&quot;</span><span class="w"> </span><span class="na">Width=</span><span class="s">&quot;150&quot;</span><span class="w"> </span><span class="na">Spacing=</span><span class="s">&quot;5&quot;</span><span class="nt">&gt;</span>
+<span class="w">        </span><span class="nt">&lt;Button</span><span class="w"> </span><span class="na">Content=</span><span class="s">&quot;Accueil&quot;</span><span class="w"> </span><span class="na">Command=</span><span class="s">&quot;{Binding NavigateToHomeCommand}&quot;</span><span class="w"> </span><span class="na">Margin=</span><span class="s">&quot;5&quot;</span><span class="nt">/&gt;</span>
+<span class="w">        </span><span class="nt">&lt;Button</span><span class="w"> </span><span class="na">Content=</span><span class="s">&quot;Paramètres&quot;</span><span class="w"> </span><span class="na">Command=</span><span class="s">&quot;{Binding NavigateToSettingsCommand}&quot;</span><span class="w"> </span><span class="na">Margin=</span><span class="s">&quot;5&quot;</span><span class="nt">/&gt;</span>
+<span class="w">      </span><span class="nt">&lt;/StackPanel&gt;</span>
+
+<span class="w">      </span><span class="cm">&lt;!-- Zone de contenu principale --&gt;</span>
+<span class="w">      </span><span class="nt">&lt;ContentControl</span><span class="w"> </span><span class="na">Content=</span><span class="s">&quot;{Binding CurrentViewModel}&quot;</span><span class="w"> </span><span class="na">Margin=</span><span class="s">&quot;10&quot;</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/DockPanel&gt;</span>
+<span class="nt">&lt;/Window&gt;</span>
+</pre></div>
+
+<p>Et son code-behind <code>Views/MainWindow.axaml.cs</code> pour lier
+le <code>DataContext</code>.</p>
+<div class="pygments"><pre><span></span><span class="c1">// Views/MainWindow.axaml.cs</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">Avalonia.Controls</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">ChessDB.ViewModels</span><span class="p">;</span>
+
+<span class="k">namespace</span><span class="w"> </span><span class="nn">ChessDB.Views</span><span class="p">;</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">partial</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">MainWindow</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Window</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="nf">MainWindow</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">InitializeComponent</span><span class="p">();</span>
+<span class="w">        </span><span class="n">DataContext</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">MainWindowViewModel</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<p><em>Note : Nous déplacerons plus tard l’instanciation du ViewModel
+pour la gestion du Messenger.</em></p>
+</section>
+<section id="le-viewlocator-la-colle-magique" class="level3">
+<h3>Le <code>ViewLocator</code> : La Colle Magique</h3>
+<p>Comment <code>ContentControl</code> sait-il quelle Vue afficher pour
+un ViewModel donné ? Grâce au <code>ViewLocator</code>.</p>
+<p>Créez <code>ViewLocator.cs</code> à la racine du projet :</p>
+<div class="pygments"><pre><span></span><span class="c1">// ViewLocator.cs</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">Avalonia.Controls</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">Avalonia.Controls.Templates</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">ChessDB.ViewModels</span><span class="p">;</span>
+
+<span class="k">namespace</span><span class="w"> </span><span class="nn">ChessDB</span><span class="p">;</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">ViewLocator</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">IDataTemplate</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">Control</span><span class="w"> </span><span class="nf">Build</span><span class="p">(</span><span class="kt">object?</span><span class="w"> </span><span class="n">data</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="k">null</span><span class="p">)</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TextBlock</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">Text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;data was null&quot;</span><span class="w"> </span><span class="p">};</span>
+
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="p">.</span><span class="n">GetType</span><span class="p">().</span><span class="n">FullName</span><span class="o">!</span><span class="p">.</span><span class="n">Replace</span><span class="p">(</span><span class="s">&quot;ViewModel&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;View&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Type</span><span class="p">.</span><span class="n">GetType</span><span class="p">(</span><span class="n">name</span><span class="p">);</span>
+
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">type</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">null</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="n">Control</span><span class="p">)</span><span class="n">Activator</span><span class="p">.</span><span class="n">CreateInstance</span><span class="p">(</span><span class="n">type</span><span class="p">)</span><span class="o">!</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TextBlock</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">Text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Not Found: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="p">};</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="nf">Match</span><span class="p">(</span><span class="kt">object?</span><span class="w"> </span><span class="n">data</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">ViewModelBase</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+</section>
+<section id="enregistrer-le-viewlocator" class="level3">
+<h3>Enregistrer le <code>ViewLocator</code></h3>
+<p>Enfin, déclarez le <code>ViewLocator</code> dans
+<code>App.axaml</code>.</p>
+<div class="pygments"><pre><span></span><span class="cm">&lt;!-- App.axaml --&gt;</span>
+<span class="nt">&lt;Application</span><span class="w"> </span><span class="na">xmlns=</span><span class="s">&quot;https://github.com/avaloniaui&quot;</span>
+<span class="w">             </span><span class="na">xmlns:x=</span><span class="s">&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;</span>
+<span class="w">             </span><span class="na">xmlns:local=</span><span class="s">&quot;using:ChessDB&quot;</span>
+<span class="w">             </span><span class="na">x:Class=</span><span class="s">&quot;ChessDB.App&quot;</span>
+<span class="w">             </span><span class="na">RequestedThemeVariant=</span><span class="s">&quot;Default&quot;</span><span class="nt">&gt;</span>
+
+<span class="w">    </span><span class="nt">&lt;Application.DataTemplates&gt;</span>
+<span class="w">        </span><span class="nt">&lt;local:ViewLocator/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/Application.DataTemplates&gt;</span>
+
+<span class="w">    </span><span class="nt">&lt;Application.Styles&gt;</span>
+<span class="w">        </span><span class="nt">&lt;FluentTheme</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/Application.Styles&gt;</span>
+<span class="nt">&lt;/Application&gt;</span>
+</pre></div>
+
+<p>À ce stade, l’application est fonctionnelle avec une navigation par
+menu !</p>
+</section>
+</section>
+<section id="navigation-depuis-une-vue-enfant" class="level2">
+<h2>Navigation depuis une Vue Enfant</h2>
+<p>Pour déclencher une navigation depuis un bouton situé dans
+<code>HomeView</code>, nous ne pouvons pas appeler directement une
+méthode de <code>MainWindowViewModel</code>. Nous utiliserons un
+<strong>Messenger</strong> pour une communication découplée.</p>
+<section id="créer-un-dossier-et-un-message-de-navigation"
+class="level3">
+<h3>Créer un dossier et un message de navigation</h3>
+<p>Créez le dossier <code>Messages</code>.</p>
+<div class="terminal">mkdir -p Messages
+</div>
+<p>Créez <code>Messages/NavigationMessage.cs</code>. Ce message
+transportera la “cible” de notre navigation.</p>
+<div class="pygments"><pre><span></span><span class="c1">// Messages/NavigationMessage.cs</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">CommunityToolkit.Mvvm.Messaging.Messages</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">ChessDB.ViewModels</span><span class="p">;</span>
+
+<span class="k">namespace</span><span class="w"> </span><span class="nn">ChessDB.Messages</span><span class="p">;</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">NavigationMessage</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">ValueChangedMessage</span><span class="o">&lt;</span><span class="n">ViewModelBase</span><span class="o">&gt;</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="nf">NavigationMessage</span><span class="p">(</span><span class="n">ViewModelBase</span><span class="w"> </span><span class="n">viewModel</span><span class="p">)</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="k">base</span><span class="p">(</span><span class="n">viewModel</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+</section>
+<section id="mettre-à-jour-le-mainwindowviewmodel-le-receveur"
+class="level3">
+<h3>Mettre à jour le <code>MainWindowViewModel</code> (le Receveur)</h3>
+<p>Il doit maintenant écouter les <code>NavigationMessage</code>. Pour
+que le système soit cohérent, ses propres boutons de menu utiliseront
+aussi le messenger.</p>
+<p>Modifiez <code>ViewModels/MainWindowViewModel.cs</code> :</p>
+<div class="pygments"><pre><span></span><span class="c1">// ViewModels/MainWindowViewModel.cs</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">CommunityToolkit.Mvvm.ComponentModel</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">CommunityToolkit.Mvvm.Input</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">CommunityToolkit.Mvvm.Messaging</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">ChessDB.Messages</span><span class="p">;</span>
+
+<span class="k">namespace</span><span class="w"> </span><span class="nn">ChessDB.ViewModels</span><span class="p">;</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">partial</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">MainWindowViewModel</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">ViewModelBase</span><span class="p">,</span><span class="w"> </span><span class="n">IRecipient</span><span class="o">&lt;</span><span class="n">NavigationMessage</span><span class="o">&gt;</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="na">[ObservableProperty]</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">ViewModelBase</span><span class="w"> </span><span class="n">_currentViewModel</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">readonly</span><span class="w"> </span><span class="n">HomeViewModel</span><span class="w"> </span><span class="n">_homeViewModel</span><span class="p">;</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">readonly</span><span class="w"> </span><span class="n">SettingsViewModel</span><span class="w"> </span><span class="n">_settingsViewModel</span><span class="p">;</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">readonly</span><span class="w"> </span><span class="n">IMessenger</span><span class="w"> </span><span class="n">_messenger</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="nf">MainWindowViewModel</span><span class="p">(</span><span class="n">IMessenger</span><span class="w"> </span><span class="n">messenger</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">_messenger</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">messenger</span><span class="p">;</span>
+<span class="w">        </span><span class="n">_messenger</span><span class="p">.</span><span class="n">Register</span><span class="o">&lt;</span><span class="n">NavigationMessage</span><span class="o">&gt;</span><span class="p">(</span><span class="k">this</span><span class="p">);</span><span class="w"> </span><span class="c1">// S&#39;abonner aux messages</span>
+
+<span class="w">        </span><span class="c1">// Passer le messenger aux ViewModels qui en ont besoin</span>
+<span class="w">        </span><span class="n">_homeViewModel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HomeViewModel</span><span class="p">(</span><span class="n">_messenger</span><span class="p">);</span>
+<span class="w">        </span><span class="n">_settingsViewModel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SettingsViewModel</span><span class="p">();</span>
+
+<span class="w">        </span><span class="n">_currentViewModel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_homeViewModel</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Méthode appelée quand un NavigationMessage est reçu</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Receive</span><span class="p">(</span><span class="n">NavigationMessage</span><span class="w"> </span><span class="n">message</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">CurrentViewModel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">message</span><span class="p">.</span><span class="n">Value</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="na">[RelayCommand]</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">NavigateToHome</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">_messenger</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">NavigationMessage</span><span class="p">(</span><span class="n">_homeViewModel</span><span class="p">));</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="na">[RelayCommand]</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">NavigateToSettings</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">_messenger</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">NavigationMessage</span><span class="p">(</span><span class="n">_settingsViewModel</span><span class="p">));</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+</section>
+<section id="mettre-à-jour-linstanciation-du-mainwindowviewmodel"
+class="level3">
+<h3>Mettre à jour l’instanciation du
+<code>MainWindowViewModel</code></h3>
+<p>Nous devons maintenant fournir une instance du messenger. Mettons à
+jour <code>Views/MainWindow.axaml.cs</code> pour utiliser l’instance par
+défaut.</p>
+<div class="pygments"><pre><span></span><span class="c1">// Views/MainWindow.axaml.cs</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">Avalonia.Controls</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">ChessDB.ViewModels</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">CommunityToolkit.Mvvm.Messaging</span><span class="p">;</span><span class="w"> </span><span class="c1">// N&#39;oubliez pas ce using</span>
+
+<span class="k">namespace</span><span class="w"> </span><span class="nn">ChessDB.Views</span><span class="p">;</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">partial</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">MainWindow</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Window</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="nf">MainWindow</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">InitializeComponent</span><span class="p">();</span>
+<span class="w">        </span><span class="c1">// On passe l&#39;instance par défaut du messenger au ViewModel principal</span>
+<span class="w">        </span><span class="n">DataContext</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">MainWindowViewModel</span><span class="p">(</span><span class="n">WeakReferenceMessenger</span><span class="p">.</span><span class="n">Default</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+</section>
+<section id="mettre-à-jour-le-homeviewmodel-lenvoyeur" class="level3">
+<h3>Mettre à jour le <code>HomeViewModel</code> (l’Envoyeur)</h3>
+<p>Il doit maintenant pouvoir envoyer un message.</p>
+<p>Modifiez <code>ViewModels/HomeViewModel.cs</code> :</p>
+<div class="pygments"><pre><span></span><span class="c1">// ViewModels/HomeViewModel.cs</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">CommunityToolkit.Mvvm.Input</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">CommunityToolkit.Mvvm.Messaging</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">ChessDB.Messages</span><span class="p">;</span>
+
+<span class="k">namespace</span><span class="w"> </span><span class="nn">ChessDB.ViewModels</span><span class="p">;</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">partial</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">HomeViewModel</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">ViewModelBase</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">readonly</span><span class="w"> </span><span class="n">IMessenger</span><span class="w"> </span><span class="n">_messenger</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">Greeting</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s">&quot;Bienvenue sur l&#39;écran d&#39;accueil !&quot;</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="nf">HomeViewModel</span><span class="p">(</span><span class="n">IMessenger</span><span class="w"> </span><span class="n">messenger</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">_messenger</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">messenger</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="na">[RelayCommand]</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">NavigateToSettings</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Envoi d&#39;un message demandant la navigation</span>
+<span class="w">        </span><span class="n">_messenger</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">NavigationMessage</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">SettingsViewModel</span><span class="p">()));</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+</section>
+<section id="ajouter-le-bouton-dans-la-homeview" class="level3">
+<h3>Ajouter le bouton dans la <code>HomeView</code></h3>
+<p>Enfin, ajoutons le bouton dans <code>Views/HomeView.axaml</code>.</p>
+<div class="pygments"><pre><span></span><span class="cm">&lt;!-- Views/HomeView.axaml --&gt;</span>
+<span class="nt">&lt;UserControl</span><span class="w"> </span><span class="err">...</span><span class="nt">&gt;</span>
+<span class="w">  </span><span class="nt">&lt;StackPanel</span><span class="w"> </span><span class="na">HorizontalAlignment=</span><span class="s">&quot;Center&quot;</span><span class="w"> </span><span class="na">VerticalAlignment=</span><span class="s">&quot;Center&quot;</span><span class="w"> </span><span class="na">Spacing=</span><span class="s">&quot;20&quot;</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nt">&lt;TextBlock</span><span class="w"> </span><span class="na">Text=</span><span class="s">&quot;{Binding Greeting}&quot;</span><span class="w"> </span><span class="na">FontSize=</span><span class="s">&quot;24&quot;</span><span class="w"> </span><span class="na">FontWeight=</span><span class="s">&quot;Bold&quot;</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;Button</span><span class="w"> </span><span class="na">Content=</span><span class="s">&quot;Aller aux Paramètres&quot;</span><span class="w"> </span><span class="na">Command=</span><span class="s">&quot;{Binding NavigateToSettingsCommand}&quot;</span><span class="nt">/&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/StackPanel&gt;</span>
+<span class="nt">&lt;/UserControl&gt;</span>
+</pre></div>
+
+</section>
+</section>
+<section id="conclusion-et-exécution" class="level2">
+<h2>Conclusion et Exécution</h2>
+<p>Vous avez maintenant une application Avalonia structurée en MVVM avec
+deux types de navigation découplée !</p>
+<p>Pour lancer l’application, exécutez simplement :</p>
+<div class="terminal">dotnet run
+</div>
+<p>Vous pouvez maintenant naviguer en utilisant le menu principal, ou le
+bouton sur la page d’accueil.</p>
+</section>
+<section id="crédits" class="level2">
+<h2>Crédits</h2>
+<ul>
+<li><strong>LUR</strong> &amp; <strong>Gemini CLI 0.19.1</strong></li>
+</ul>
+</section>
+</body>
+</html>
