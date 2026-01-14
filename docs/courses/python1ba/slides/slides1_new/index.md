@@ -15,6 +15,10 @@ css: style.css
 - Évaluation :
   - Examen écrit de type **QCM (100%)**
 
+```python {.build}
+cacaprout = 69
+```
+
 ## Recette du cuisine
 
 :::row
@@ -538,3 +542,11 @@ x1: 2 x2: 3
 ::::
 
 :::
+
+## test python build
+
+```python {.build}
+from script import ram, hl
+print(ram({"a": 42}))
+print(hl("print('hello')\nprint('caca')", lines=[2]))
+```
