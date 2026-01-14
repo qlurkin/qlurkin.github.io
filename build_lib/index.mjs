@@ -169,6 +169,7 @@ export async function pandoc(path) {
       .join(' ')
     const child = exec(
       `pandoc -f markdown -t html -s --template ${join(root, 'pandoc', 'template.html')}  --section-divs -M document-css=false ${filter_args}  --mathjax`,
+      { maxBuffer: 10 * 1024 * 1024 },
       (error, stdout, stderr) => {
         if (stderr.length > 0) {
           console.log(`stderr while building "${path}": ${stderr}`)

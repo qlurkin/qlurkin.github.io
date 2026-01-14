@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Cours 1 - Introduction</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="/deck.css" />
+  <script src="/deck_only.js" defer></script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Cours 1
+<small>Introduction</small>
+</h1>
+</header>
+<section id="informations-générales" class="level2">
+<h2>Informations générales</h2>
+<ul>
+<li><p>7h30 de <strong>théorie</strong>, 7h30
+d’<strong>exercices</strong></p></li>
+<li><p>Les documents utilisés sont sur</p>
+<p><strong><a href="https://quentin.lurkin.xyz/courses/python1ba/"
+class="uri">https://quentin.lurkin.xyz/courses/python1ba/</a></strong></p></li>
+<li><p>Évaluation :</p>
+<ul>
+<li>Examen écrit de type <strong>QCM (100%)</strong></li>
+</ul></li>
+</ul>
+</section>
+<section id="recette-du-cuisine" class="level2">
+<h2>Recette du cuisine</h2>
+<div class="row">
+<div id="second1" class="span6">
+<div class="pygments"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">sqrt</span>
+<span class="c1"># xx - 5x + 6 = 0</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">b</span> <span class="o">=</span> <span class="o">-</span><span class="mi">5</span>
+<span class="n">c</span> <span class="o">=</span> <span class="mi">6</span>
+
+<span class="n">delta</span> <span class="o">=</span> <span class="n">b</span><span class="o">*</span><span class="n">b</span> <span class="o">-</span> <span class="mi">4</span><span class="o">*</span><span class="n">a</span><span class="o">*</span><span class="n">c</span>
+
+<span class="k">if</span> <span class="n">delta</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+  <span class="n">x1</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">b</span> <span class="o">-</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">delta</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="p">)</span>
+  <span class="n">x2</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">b</span> <span class="o">+</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">delta</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;x1:&quot;</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="s2">&quot;x2:&quot;</span><span class="p">,</span> <span class="n">x2</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Pas de solution réeles&quot;</span><span class="p">)</span>
+</pre></div>
+
+<div id="js-script-0"></div><script type="module">
+const id="js-script-0"
+const elem = document.getElementById('second1').querySelector('pre')
+console.log(elem)
+const box = document.createElement('div')
+box.innerHTML = '&nbsp;'
+box.classList.add('box')
+box.style.top = '4.45em'
+elem.appendChild(box)
+</script>
+</div>
+<div class="span6">
+<div class="ram" style="height: 15em">
+<h5>
+RAM
+</h5>
+<div class="var">
+<div class="name">
+a
+</div>
+<div class="content">
+1
+</div>
+</div>
+</div>
+<div class="terminal">
+</div>
+</div>
+</div>
+</section>
+<section id="recette-du-cuisine-1" class="level2">
+<h2>Recette du cuisine</h2>
+<div class="row">
+<div id="second2" class="span6">
+<div class="pygments"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">sqrt</span>
+<span class="c1"># xx - 5x + 6 = 0</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">b</span> <span class="o">=</span> <span class="o">-</span><span class="mi">5</span>
+<span class="n">c</span> <span class="o">=</span> <span class="mi">6</span>
+
+<span class="n">delta</span> <span class="o">=</span> <span class="n">b</span><span class="o">*</span><span class="n">b</span> <span class="o">-</span> <span class="mi">4</span><span class="o">*</span><span class="n">a</span><span class="o">*</span><span class="n">c</span>
+
+<span class="k">if</span> <span class="n">delta</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+  <span class="n">x1</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">b</span> <span class="o">-</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">delta</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="p">)</span>
+  <span class="n">x2</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">b</span> <span class="o">+</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">delta</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;x1:&quot;</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="s2">&quot;x2:&quot;</span><span class="p">,</span> <span class="n">x2</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Pas de solution réeles&quot;</span><span class="p">)</span>
+</pre></div>
+
+<div id="js-script-1"></div><script type="module">
+const id="js-script-1"
+const elem = document.getElementById('second2').querySelector('pre')
+console.log(elem)
+const box = document.createElement('div')
+box.innerHTML = '&nbsp;'
+box.classList.add('box')
+box.style.top = '5.70em'
+elem.appendChild(box)
+</script>
+</div>
+<div class="span6">
+<div class="ram" style="height: 15em">
+<h5>
+RAM
+</h5>
+<div class="var">
+<div class="name">
+a
+</div>
+<div class="content">
+1
+</div>
+</div>
+<div class="var">
+<div class="name">
+b
+</div>
+<div class="content">
+-5
+</div>
+</div>
+</div>
+<div class="terminal">
+</div>
+</div>
+</div>
+</section>
+<section id="recette-du-cuisine-2" class="level2">
+<h2>Recette du cuisine</h2>
+<div class="row">
+<div id="second3" class="span6">
+<div class="pygments"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">sqrt</span>
+<span class="c1"># xx - 5x + 6 = 0</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">b</span> <span class="o">=</span> <span class="o">-</span><span class="mi">5</span>
+<span class="n">c</span> <span class="o">=</span> <span class="mi">6</span>
+
+<span class="n">delta</span> <span class="o">=</span> <span class="n">b</span><span class="o">*</span><span class="n">b</span> <span class="o">-</span> <span class="mi">4</span><span class="o">*</span><span class="n">a</span><span class="o">*</span><span class="n">c</span>
+
+<span class="k">if</span> <span class="n">delta</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+  <span class="n">x1</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">b</span> <span class="o">-</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">delta</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="p">)</span>
+  <span class="n">x2</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">b</span> <span class="o">+</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">delta</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;x1:&quot;</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="s2">&quot;x2:&quot;</span><span class="p">,</span> <span class="n">x2</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Pas de solution réeles&quot;</span><span class="p">)</span>
+</pre></div>
+
+<div id="js-script-2"></div><script type="module">
+const id="js-script-2"
+const elem = document.getElementById('second3').querySelector('pre')
+console.log(elem)
+const box = document.createElement('div')
+box.innerHTML = '&nbsp;'
+box.classList.add('box')
+box.style.top = '6.95em'
+elem.appendChild(box)
+</script>
+</div>
+<div class="span6">
+<div class="ram" style="height: 15em">
+<h5>
+RAM
+</h5>
+<div class="var">
+<div class="name">
+a
+</div>
+<div class="content">
+1
+</div>
+</div>
+<div class="var">
+<div class="name">
+b
+</div>
+<div class="content">
+-5
+</div>
+</div>
+<div class="var">
+<div class="name">
+c
+</div>
+<div class="content">
+6
+</div>
+</div>
+</div>
+<div class="terminal">
+</div>
+</div>
+</div>
+</section>
+<section id="recette-du-cuisine-3" class="level2">
+<h2>Recette du cuisine</h2>
+<div class="row">
+<div id="second4" class="span6">
+<div class="pygments"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">sqrt</span>
+<span class="c1"># xx - 5x + 6 = 0</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">b</span> <span class="o">=</span> <span class="o">-</span><span class="mi">5</span>
+<span class="n">c</span> <span class="o">=</span> <span class="mi">6</span>
+
+<span class="n">delta</span> <span class="o">=</span> <span class="n">b</span><span class="o">*</span><span class="n">b</span> <span class="o">-</span> <span class="mi">4</span><span class="o">*</span><span class="n">a</span><span class="o">*</span><span class="n">c</span>
+
+<span class="k">if</span> <span class="n">delta</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+  <span class="n">x1</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">b</span> <span class="o">-</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">delta</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="p">)</span>
+  <span class="n">x2</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">b</span> <span class="o">+</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">delta</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;x1:&quot;</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="s2">&quot;x2:&quot;</span><span class="p">,</span> <span class="n">x2</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Pas de solution réeles&quot;</span><span class="p">)</span>
+</pre></div>
+
+<div id="js-script-3"></div><script type="module">
+const id="js-script-3"
+const elem = document.getElementById('second4').querySelector('pre')
+console.log(elem)
+const box = document.createElement('div')
+box.innerHTML = '&nbsp;'
+box.classList.add('box')
+box.style.top = '9.60em'
+elem.appendChild(box)
+</script>
+</div>
+<div class="span6">
+<div class="ram" style="height: 15em">
+<h5>
+RAM
+</h5>
+<div class="var">
+<div class="name">
+a
+</div>
+<div class="content">
+1
+</div>
+</div>
+<div class="var">
+<div class="name">
+b
+</div>
+<div class="content">
+-5
+</div>
+</div>
+<div class="var">
+<div class="name">
+c
+</div>
+<div class="content">
+6
+</div>
+</div>
+<div class="var">
+<div class="name">
+delta
+</div>
+<div class="content">
+1
+</div>
+</div>
+</div>
+<div class="terminal">
+</div>
+</div>
+</div>
+</section>
+<section id="recette-du-cuisine-4" class="level2">
+<h2>Recette du cuisine</h2>
+<div class="row">
+<div id="second5" class="span6">
+<div class="pygments"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">sqrt</span>
+<span class="c1"># xx - 5x + 6 = 0</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">b</span> <span class="o">=</span> <span class="o">-</span><span class="mi">5</span>
+<span class="n">c</span> <span class="o">=</span> <span class="mi">6</span>
+
+<span class="n">delta</span> <span class="o">=</span> <span class="n">b</span><span class="o">*</span><span class="n">b</span> <span class="o">-</span> <span class="mi">4</span><span class="o">*</span><span class="n">a</span><span class="o">*</span><span class="n">c</span>
+
+<span class="k">if</span> <span class="n">delta</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+  <span class="n">x1</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">b</span> <span class="o">-</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">delta</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="p">)</span>
+  <span class="n">x2</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">b</span> <span class="o">+</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">delta</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;x1:&quot;</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="s2">&quot;x2:&quot;</span><span class="p">,</span> <span class="n">x2</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Pas de solution réeles&quot;</span><span class="p">)</span>
+</pre></div>
+
+<div id="js-script-4"></div><script type="module">
+const id="js-script-4"
+const elem = document.getElementById('second5').querySelector('pre')
+console.log(elem)
+const box = document.createElement('div')
+box.innerHTML = '&nbsp;'
+box.classList.add('box')
+box.style.top = '12em'
+elem.appendChild(box)
+</script>
+</div>
+<div class="span6">
+<div class="ram" style="height: 15em">
+<h5>
+RAM
+</h5>
+<div class="var">
+<div class="name">
+a
+</div>
+<div class="content">
+1
+</div>
+</div>
+<div class="var">
+<div class="name">
+b
+</div>
+<div class="content">
+-5
+</div>
+</div>
+<div class="var">
+<div class="name">
+c
+</div>
+<div class="content">
+6
+</div>
+</div>
+<div class="var">
+<div class="name">
+delta
+</div>
+<div class="content">
+1
+</div>
+</div>
+</div>
+<div class="terminal">
+</div>
+</div>
+</div>
+</section>
+<section id="recette-du-cuisine-5" class="level2">
+<h2>Recette du cuisine</h2>
+<div class="row">
+<div id="second6" class="span6">
+<div class="pygments"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">sqrt</span>
+<span class="c1"># xx - 5x + 6 = 0</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">b</span> <span class="o">=</span> <span class="o">-</span><span class="mi">5</span>
+<span class="n">c</span> <span class="o">=</span> <span class="mi">6</span>
+
+<span class="n">delta</span> <span class="o">=</span> <span class="n">b</span><span class="o">*</span><span class="n">b</span> <span class="o">-</span> <span class="mi">4</span><span class="o">*</span><span class="n">a</span><span class="o">*</span><span class="n">c</span>
+
+<span class="k">if</span> <span class="n">delta</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+  <span class="n">x1</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">b</span> <span class="o">-</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">delta</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="p">)</span>
+  <span class="n">x2</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">b</span> <span class="o">+</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">delta</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;x1:&quot;</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="s2">&quot;x2:&quot;</span><span class="p">,</span> <span class="n">x2</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Pas de solution réeles&quot;</span><span class="p">)</span>
+</pre></div>
+
+<div id="js-script-5"></div><script type="module">
+const id="js-script-5"
+const elem = document.getElementById('second6').querySelector('pre')
+console.log(elem)
+const box = document.createElement('div')
+box.innerHTML = '&nbsp;'
+box.classList.add('box')
+box.style.top = '13.25em'
+elem.appendChild(box)
+</script>
+</div>
+<div class="span6">
+<div class="ram" style="height: 15em">
+<h5>
+RAM
+</h5>
+<div class="var">
+<div class="name">
+a
+</div>
+<div class="content">
+1
+</div>
+</div>
+<div class="var">
+<div class="name">
+b
+</div>
+<div class="content">
+-5
+</div>
+</div>
+<div class="var">
+<div class="name">
+c
+</div>
+<div class="content">
+6
+</div>
+</div>
+<div class="var">
+<div class="name">
+delta
+</div>
+<div class="content">
+1
+</div>
+</div>
+<div class="var">
+<div class="name">
+x1
+</div>
+<div class="content">
+2
+</div>
+</div>
+</div>
+<div class="terminal">
+</div>
+</div>
+</div>
+</section>
+<section id="recette-du-cuisine-6" class="level2">
+<h2>Recette du cuisine</h2>
+<div class="row">
+<div id="second7" class="span6">
+<div class="pygments"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">sqrt</span>
+<span class="c1"># xx - 5x + 6 = 0</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">b</span> <span class="o">=</span> <span class="o">-</span><span class="mi">5</span>
+<span class="n">c</span> <span class="o">=</span> <span class="mi">6</span>
+
+<span class="n">delta</span> <span class="o">=</span> <span class="n">b</span><span class="o">*</span><span class="n">b</span> <span class="o">-</span> <span class="mi">4</span><span class="o">*</span><span class="n">a</span><span class="o">*</span><span class="n">c</span>
+
+<span class="k">if</span> <span class="n">delta</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+  <span class="n">x1</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">b</span> <span class="o">-</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">delta</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="p">)</span>
+  <span class="n">x2</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">b</span> <span class="o">+</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">delta</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;x1:&quot;</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="s2">&quot;x2:&quot;</span><span class="p">,</span> <span class="n">x2</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Pas de solution réeles&quot;</span><span class="p">)</span>
+</pre></div>
+
+<div id="js-script-6"></div><script type="module">
+const id="js-script-6"
+const elem = document.getElementById('second7').querySelector('pre')
+console.log(elem)
+const box = document.createElement('div')
+box.innerHTML = '&nbsp;'
+box.classList.add('box')
+box.style.top = '14.5em'
+elem.appendChild(box)
+</script>
+</div>
+<div class="span6">
+<div class="ram" style="height: 15em">
+<h5>
+RAM
+</h5>
+<div class="var">
+<div class="name">
+a
+</div>
+<div class="content">
+1
+</div>
+</div>
+<div class="var">
+<div class="name">
+b
+</div>
+<div class="content">
+-5
+</div>
+</div>
+<div class="var">
+<div class="name">
+c
+</div>
+<div class="content">
+6
+</div>
+</div>
+<div class="var">
+<div class="name">
+delta
+</div>
+<div class="content">
+1
+</div>
+</div>
+<div class="var">
+<div class="name">
+x1
+</div>
+<div class="content">
+2
+</div>
+</div>
+<div class="var">
+<div class="name">
+x2
+</div>
+<div class="content">
+3
+</div>
+</div>
+</div>
+<div class="terminal">
+</div>
+</div>
+</div>
+</section>
+<section id="recette-du-cuisine-7" class="level2">
+<h2>Recette du cuisine</h2>
+<div class="row">
+<div id="second8" class="span6">
+<div class="pygments"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">sqrt</span>
+<span class="c1"># xx - 5x + 6 = 0</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">b</span> <span class="o">=</span> <span class="o">-</span><span class="mi">5</span>
+<span class="n">c</span> <span class="o">=</span> <span class="mi">6</span>
+
+<span class="n">delta</span> <span class="o">=</span> <span class="n">b</span><span class="o">*</span><span class="n">b</span> <span class="o">-</span> <span class="mi">4</span><span class="o">*</span><span class="n">a</span><span class="o">*</span><span class="n">c</span>
+
+<span class="k">if</span> <span class="n">delta</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+  <span class="n">x1</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">b</span> <span class="o">-</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">delta</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="p">)</span>
+  <span class="n">x2</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">b</span> <span class="o">+</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">delta</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;x1:&quot;</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="s2">&quot;x2:&quot;</span><span class="p">,</span> <span class="n">x2</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Pas de solution réeles&quot;</span><span class="p">)</span>
+</pre></div>
+
+<div id="js-script-7"></div><script type="module">
+const id="js-script-7"
+const elem = document.getElementById('second8').querySelector('pre')
+console.log(elem)
+const box = document.createElement('div')
+box.innerHTML = '&nbsp;'
+box.classList.add('box')
+box.style.top = '15.75em'
+elem.appendChild(box)
+</script>
+</div>
+<div class="span6">
+<div class="ram" style="height: 15em">
+<h5>
+RAM
+</h5>
+<div class="var">
+<div class="name">
+a
+</div>
+<div class="content">
+1
+</div>
+</div>
+<div class="var">
+<div class="name">
+b
+</div>
+<div class="content">
+-5
+</div>
+</div>
+<div class="var">
+<div class="name">
+c
+</div>
+<div class="content">
+6
+</div>
+</div>
+<div class="var">
+<div class="name">
+delta
+</div>
+<div class="content">
+1
+</div>
+</div>
+<div class="var">
+<div class="name">
+x1
+</div>
+<div class="content">
+2
+</div>
+</div>
+<div class="var">
+<div class="name">
+x2
+</div>
+<div class="content">
+3
+</div>
+</div>
+</div>
+<div class="terminal">x1: 2 x2: 3
+</div>
+</div>
+</div>
+</section>
+</body>
+</html>

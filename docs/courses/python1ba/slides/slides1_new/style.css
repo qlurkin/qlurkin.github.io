@@ -1,0 +1,43 @@
+.box {
+  border: 2px solid red;
+  border-radius: 8px;
+  position: absolute;
+  left: 0.5em;
+  right: 0.5em;
+  padding: 0.2em 0;
+}
+
+pre {
+  position: relative;
+}
+
+.ram {
+  border: 3px solid black;
+  border-radius: 8px;
+  background-color: #fee;
+}
+
+.ram h5 {
+  padding: 0.2em;
+  margin: 0;
+}
+
+.var {
+  display: inline-flex;
+  border: 3px solid black;
+  border-radius: 8px;
+  margin: 5px;
+}
+
+.var .content {
+  border-left: 3px solid black;
+  padding: 5px;
+}
+
+.var .name {
+  padding: 5px;
+  font-weight: bold;
+  font-family:
+    ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas,
+    'DejaVu Sans Mono', monospace;
+}
