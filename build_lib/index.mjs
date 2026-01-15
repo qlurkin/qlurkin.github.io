@@ -9,6 +9,7 @@ import puppeteer from 'puppeteer'
 // import express from 'express'
 // import { PDFDocument } from 'pdf-lib'
 import compile from './typst.mjs'
+import strip_ipynb from './ipynb.mjs'
 import { exec } from 'node:child_process'
 import util from 'node:util'
 export const cmd = util.promisify(exec)
@@ -338,6 +339,9 @@ export function make_zip(path, files) {
 //     srv.emit('close')
 //   })
 // }
+//
+
+export { strip_ipynb }
 
 export default {
   build,
@@ -353,4 +357,5 @@ export default {
   update,
   dir,
   make_zip,
+  strip_ipynb,
 }
