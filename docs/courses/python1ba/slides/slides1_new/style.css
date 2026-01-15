@@ -15,6 +15,7 @@ pre {
   border: 3px solid black;
   border-radius: 8px;
   background-color: #fee;
+  min-height: 10em;
 }
 
 .ram h5 {
@@ -32,6 +33,9 @@ pre {
 .var .content {
   border-left: 3px solid black;
   padding: 5px;
+  background-color: white;
+  border-bottom-right-radius: 5px;
+  border-top-right-radius: 5px;
 }
 
 .var .name {
@@ -40,4 +44,7 @@ pre {
   font-family:
     ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas,
     'DejaVu Sans Mono', monospace;
+  background-color: #eee;
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
 }

@@ -44,15 +44,23 @@ def build_python(elem, doc):
         dir_added = True
         sys.path.insert(0, current_dir)
 
+    ns = {}
+
     with contextlib.redirect_stdout(buffer):
-        exec(src)
+        exec(src, ns)
 
     if dir_added:
         sys.path.remove(current_dir)
 
-    output = buffer.getvalue()
+    if "__output__" in ns:
+        output = ns["__output__"]
+    else:
+        output = buffer.getvalue()
 
-    return pf.RawBlock(output, format="html")
+    if isinstance(output, str):
+        return pf.RawBlock(output, format="html")
+    else:
+        return output
 
 
 def action(elem, doc):
