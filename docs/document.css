@@ -195,7 +195,7 @@ h1,
 h2,
 h3,
 h4 {
-  font-family: "Iowan Old Style", "Palatino Linotype", "URW Palladio L", P052, serif;
+  font-family: "Iowan Old Style", "Palatino Linotype", "URW Palladio L", P052, serif; /* https://modernfontstacks.com/  */
 }
 
 code {
@@ -601,14 +601,19 @@ body.chapter h4:before {
   background-color: #ffffc0;
 }
 .pygments .hll {
+  display: block;
   background-color: #ffffcc;
+  border: 3px solid #aa0000;
+  border-radius: 0.3em;
+  padding: 2px 6px;
+  margin: -5px -9px;
 }
 .pygments .c {
-  color: #3D7B7B;
+  color: #3d7b7b;
   font-style: italic;
 }
 .pygments .err {
-  border: 1px solid #FF0000;
+  border: 1px solid #ff0000;
 }
 .pygments .k {
   color: #008000;
@@ -618,30 +623,30 @@ body.chapter h4:before {
   color: #666666;
 }
 .pygments .ch {
-  color: #3D7B7B;
+  color: #3d7b7b;
   font-style: italic;
 }
 .pygments .cm {
-  color: #3D7B7B;
+  color: #3d7b7b;
   font-style: italic;
 }
 .pygments .cp {
-  color: #9C6500;
+  color: #9c6500;
 }
 .pygments .cpf {
-  color: #3D7B7B;
+  color: #3d7b7b;
   font-style: italic;
 }
 .pygments .c1 {
-  color: #3D7B7B;
+  color: #3d7b7b;
   font-style: italic;
 }
 .pygments .cs {
-  color: #3D7B7B;
+  color: #3d7b7b;
   font-style: italic;
 }
 .pygments .gd {
-  color: #A00000;
+  color: #a00000;
 }
 .pygments .ge {
   font-style: italic;
@@ -651,7 +656,7 @@ body.chapter h4:before {
   font-style: italic;
 }
 .pygments .gr {
-  color: #E40000;
+  color: #e40000;
 }
 .pygments .gh {
   color: #000080;
@@ -675,7 +680,7 @@ body.chapter h4:before {
   font-weight: bold;
 }
 .pygments .gt {
-  color: #0044DD;
+  color: #0044dd;
 }
 .pygments .kc {
   color: #008000;
@@ -697,13 +702,13 @@ body.chapter h4:before {
   font-weight: bold;
 }
 .pygments .kt {
-  color: #B00040;
+  color: #b00040;
 }
 .pygments .m {
   color: #666666;
 }
 .pygments .s {
-  color: #BA2121;
+  color: #aa0000;
 }
 .pygments .na {
   color: #687822;
@@ -712,31 +717,31 @@ body.chapter h4:before {
   color: #008000;
 }
 .pygments .nc {
-  color: #0000FF;
+  color: #0000ff;
   font-weight: bold;
 }
 .pygments .no {
   color: #880000;
 }
 .pygments .nd {
-  color: #AA22FF;
+  color: #aa22ff;
 }
 .pygments .ni {
   color: #717171;
   font-weight: bold;
 }
 .pygments .ne {
-  color: #CB3F38;
+  color: #cb3f38;
   font-weight: bold;
 }
 .pygments .nf {
-  color: #0000FF;
+  color: #0000ff;
 }
 .pygments .nl {
   color: #767600;
 }
 .pygments .nn {
-  color: #0000FF;
+  color: #0000ff;
   font-weight: bold;
 }
 .pygments .nt {
@@ -744,10 +749,10 @@ body.chapter h4:before {
   font-weight: bold;
 }
 .pygments .nv {
-  color: #19177C;
+  color: #19177c;
 }
 .pygments .ow {
-  color: #AA22FF;
+  color: #aa22ff;
   font-weight: bold;
 }
 .pygments .w {
@@ -769,64 +774,64 @@ body.chapter h4:before {
   color: #666666;
 }
 .pygments .sa {
-  color: #BA2121;
+  color: #aa0000;
 }
 .pygments .sb {
-  color: #BA2121;
+  color: #aa0000;
 }
 .pygments .sc {
-  color: #BA2121;
+  color: #aa0000;
 }
 .pygments .dl {
-  color: #BA2121;
+  color: #aa0000;
 }
 .pygments .sd {
-  color: #BA2121;
+  color: #aa0000;
   font-style: italic;
 }
 .pygments .s2 {
-  color: #BA2121;
+  color: #aa0000;
 }
 .pygments .se {
-  color: #AA5D1F;
+  color: #aa5d1f;
   font-weight: bold;
 }
 .pygments .sh {
-  color: #BA2121;
+  color: #aa0000;
 }
 .pygments .si {
-  color: #A45A77;
+  color: #a45a77;
   font-weight: bold;
 }
 .pygments .sx {
   color: #008000;
 }
 .pygments .sr {
-  color: #A45A77;
+  color: #a45a77;
 }
 .pygments .s1 {
-  color: #BA2121;
+  color: #aa0000;
 }
 .pygments .ss {
-  color: #19177C;
+  color: #19177c;
 }
 .pygments .bp {
   color: #008000;
 }
 .pygments .fm {
-  color: #0000FF;
+  color: #0000ff;
 }
 .pygments .vc {
-  color: #19177C;
+  color: #19177c;
 }
 .pygments .vg {
-  color: #19177C;
+  color: #19177c;
 }
 .pygments .vi {
-  color: #19177C;
+  color: #19177c;
 }
 .pygments .vm {
-  color: #19177C;
+  color: #19177c;
 }
 .pygments .il {
   color: #666666;
