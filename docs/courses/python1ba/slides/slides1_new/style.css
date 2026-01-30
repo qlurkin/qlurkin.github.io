@@ -48,3 +48,66 @@ pre {
   border-bottom-left-radius: 5px;
   border-top-left-radius: 5px;
 }
+
+.recipe {
+  font-size: 0.7em;
+}
+
+.recipe .hl {
+  background-color: #ffffcc;
+  border: 3px solid #aa0000;
+  border-radius: 0.3em;
+}
+
+.work-plan {
+  border: 3px solid black;
+  border-radius: 8px;
+  background-color: #fee;
+  min-height: 10em;
+}
+
+.work-plan h5 {
+  padding: 0.2em;
+  margin: 0;
+}
+
+.work-plan .big {
+  height: 8em;
+  display: block;
+}
+
+.work-plan .small {
+  height: 3em;
+}
+
+.eat-table {
+  border: 3px solid black;
+  border-radius: 8px;
+  min-height: 5em;
+  margin-top: 0.5em;
+  background:
+    repeating-linear-gradient(
+      45deg,
+      rgba(255, 0, 0, 0.5) 0,
+      rgba(255, 0, 0, 0.5) 20px,
+      transparent 20px,
+      transparent 40px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      rgba(255, 0, 0, 0.5) 0,
+      rgba(255, 0, 0, 0.5) 20px,
+      transparent 20px,
+      transparent 40px
+    ),
+    white;
+}
+
+.eat-table h5 {
+  padding: 0.2em;
+  margin: 0;
+}
+
+.eat-table img {
+  height: 4em;
+}

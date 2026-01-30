@@ -38,6 +38,60 @@ css: style.css
 10. Assaisonnez de sel et de poivre.
 11. Servez avec une salade.
 
+```python {.build}
+from script import recipe_step, slide
+
+steps = [
+  "Épluchez les pommes de terre.",
+  "Coupez les en tranches.",
+  "Mettez les à cuire dans de l'eau bouillante légèrement salée pour 10 à 15 min.",
+  "Détaillez l'oignon en fines rondelles",
+  "Coupez le reblochon en tranche.",
+  "Faites chauffer l'huile dans une poêle.",
+  "Mettez l'oignon et les lardons à cuire pour 5 min.",
+  "Intégrez les pommes de terre, le fromage, la crème et le vin blanc.",
+  "Poursuivez la cuisson ± 5 min à feu modéré.",
+  "Assaisonnez de sel et de poivre.",
+  "Servez avec une salade.",
+]
+
+wp = ["./img/Taques_Seule.png", "./img/Patates.png", "./img/Oignons.png", "./img/Lardons.png", "./img/Reblochon.png"]
+
+tbl = []
+
+title = "Recette de cuisine"
+
+__output__ = []
+__output__ += slide(title, recipe_step(steps, [], wp, tbl))
+wp[1] = "./img/Patates_Épluchées.png"
+__output__ += slide(title, recipe_step(steps, [0], wp, tbl))
+wp[1] = "./img/Patates_En_Tranches.png"
+__output__ += slide(title, recipe_step(steps, [1], wp, tbl))
+del(wp[1])
+wp[0] = "./img/Cuisson_Patates.png"
+__output__ += slide(title, recipe_step(steps, [2], wp, tbl))
+wp[1] = "./img/Oignons_En_Tranches.png"
+__output__ += slide(title, recipe_step(steps, [3], wp, tbl))
+wp[3] = "./img/Reblochon_En_Tranches.png"
+__output__ += slide(title, recipe_step(steps, [4], wp, tbl))
+wp[0] = "./img/Poêle_Chauffe.png"
+__output__ += slide(title, recipe_step(steps, [5], wp, tbl))
+wp[0] = "./img/Cuisson_Lardons_Oignons.png"
+del(wp[1])
+del(wp[1])
+__output__ += slide(title, recipe_step(steps, [6], wp, tbl))
+wp[0] = "./img/Cuisson_Lardons_Oignons_Patates_Reblochon.png"
+del(wp[1])
+__output__ += slide(title, recipe_step(steps, [7], wp, tbl))
+wp[0] = "./img/Tartiflette_Cuite.png"
+__output__ += slide(title, recipe_step(steps, [8], wp, tbl))
+__output__ += slide(title, recipe_step(steps, [9], wp, tbl))
+wp[0] = "./img/Taques_Seule.png"
+tbl.append("./img/Plat_Tartiflette.png")
+tbl.append("./img/Salade.png")
+__output__ += slide(title, recipe_step(steps, [10], wp, tbl))
+```
+
 ## Représentation graphique (Recette)
 
 ## Représentation graphique (équation second degré)

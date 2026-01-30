@@ -37,3 +37,42 @@ def slide(title, content):
     title_block = pf.Header(pf.Str(title), level=2)
     content_block = pf.RawBlock(text=content, format="html")
     return [title_block, content_block]
+
+
+def recipe(steps: list[str], hl_lines: list[int] = []) -> str:
+    res = ""
+    for i, step in enumerate(steps):
+        cl = ""
+        if i in hl_lines:
+            cl = 'class="hl"'
+        res += f"<li {cl}>{step}</li>"
+    return f'<ol class="recipe">{res}</ol>'
+
+
+def work_plan(imgs: list[str]):
+    res = ""
+    for i, img in enumerate(imgs):
+        cls = "small"
+        if i == 0:
+            cls = "big"
+        res += f'<img src="{img}" class="{cls}">'
+
+    res = f'<div class="work-plan"><h5>Plan de travail</h5>{res}</div>'
+
+    return res
+
+
+def table(imgs: list[str]):
+    res = ""
+    for img in imgs:
+        res += f'<img src="{img}">'
+
+    res = f'<div class="eat-table"><h5>Table</h5>{res}</div>'
+
+    return res
+
+
+def recipe_step(steps: list[str], hl_lines: list[int], wp: list[str], tbl: list[str]):
+    left = recipe(steps, hl_lines=hl_lines)
+    right = work_plan(wp) + table(tbl)
+    return f'<div class="row"><div class="span6 middle">{left}</div><div class="span6 middle">{right}</div></div>'
