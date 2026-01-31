@@ -18,25 +18,10 @@ css: style.css
 ## Qu'est ce qu'un programme ?
 
 - Une suite d'opérations pour obtenir un résultat
-- comme une recette de cuisine
 - les opérations sont exécutées
   - une à la fois,
   - l'une après l'autre.
-
-## Recette de cuisine
-
-1. Épluchez les pommes de terre.
-2. Coupez les en tranches.
-3. Mettez les à cuire dans de l'eau bouillante légèrement salée pour 10 à 15
-   min.
-4. Détaillez l'oignon en fines rondelles.
-5. Coupez le reblochon en tranches.
-6. Faites chauffer l'huile dans une poêle.
-7. Mettez l'oignon et les lardons à cuire pour 5 min.
-8. Intégrez les pommes de terre, le fromage, la crème et le vin blanc.
-9. Poursuivez la cuisson ± 5 min à feu modéré
-10. Assaisonnez de sel et de poivre.
-11. Servez avec une salade.
+- Comme une recette de cuisine
 
 ```python {.build}
 from script import recipe_step, slide
@@ -45,7 +30,7 @@ steps = [
   "Épluchez les pommes de terre.",
   "Coupez les en tranches.",
   "Mettez les à cuire dans de l'eau bouillante légèrement salée pour 10 à 15 min.",
-  "Détaillez l'oignon en fines rondelles",
+  "Détaillez l'oignon en fines rondelles.",
   "Coupez le reblochon en tranche.",
   "Faites chauffer l'huile dans une poêle.",
   "Mettez l'oignon et les lardons à cuire pour 5 min.",
@@ -92,17 +77,171 @@ tbl.append("./img/Salade.png")
 __output__ += slide(title, recipe_step(steps, [10], wp, tbl))
 ```
 
-## Représentation graphique (Recette)
+## Recette de cuisine
 
-## Représentation graphique (équation second degré)
+- Chaque opération **modifie l'état** de l'espace de travail
+- Le résultat de chaque opération **dépend de l'état** de l'espace de travail
 
-## Scratch (second degré) ?
+## Diagramme d'activité
 
-## Variable
+:::row
 
-## if
+::::span6
 
-## while
+```plantuml {.build}
+@startuml
+start
+:Épluchez les pommes de terre.;
+:Coupez les en tranches.;
+:Mettez les à cuire dans de l'eau bouillante légèrement salée;
+:Détaillez l'oignon en fines rondelles.;
+:Coupez le reblochon en tranche.;
+:Faites chauffer l'huile dans une poêle.;
+:Mettez l'oignon et les lardons à cuire;
+repeat
+  if (Les patates sont cuites ?) then (oui)
+    :Arrêter la cuisson des patates;
+  else (non)
+  endif
+  if (Les lardons sont cuits ?) then (oui)
+    :Arrêter la cuisson des lardons;
+  else (non)
+  endif
+repeat while (tout est cuit ?) is (non)
+:Intégrez les pommes de terre, le fromage, la crème et le vin blanc.;
+:Poursuivez la cuisson;
+:Assaisonnez de sel et de poivre.;
+:Servez avec une salade.;
+stop
+@enduml
+```
+
+::::
+
+::::{.span6}
+
+- Un diagramme d'activité est une représentation graphique d'une séquence
+  d'opérations.
+
+- Il peut contenir des embranchements et des boucles
+
+- Il est très utile pour représenter un programme
+
+- C'est un support intéressant pour parler d'un programme avec quelqu'un d'autre
+
+::::
+
+:::
+
+## Diagramme d'un programme
+
+```plantuml {.build}
+@startuml
+start
+
+:Donner une valeur à **a**;
+:Donner une valeur à **b**;
+:Donner une valeur à **c**;
+:Donner la valeur **b² - 4ac** à **delta**;
+
+if (delta est différent de 0) then (oui)
+  :Donner la valeur **(-b + √(delta))/(2a)** à **x1**;
+  :Donner la valeur **(-b - √(delta))/(2a)** à **x2**;
+  :Afficher **x1** et **x2**;
+else (non)
+  :Afficher "Pas de solution réelle";
+endif
+
+stop
+@enduml
+
+```
+
+## RAM _(Random Access Memory)_
+
+- **RAM** ⇒ L'**espace de travail** pour un programme informatique
+- **Variable** ⇒ Morceau de mémoire (RAM)
+  - Auquel on a donné un **nom**
+  - Pouvant sauver une **valeur**
+- Le signe `=` sert à **assigner** une valeur à une variable
+  - ⚠️ Il **ne** définit **pas** une identité comme en mathématiques ⚠️
+  - Il donne l'**instruction** de **stocker** la **valeur** de l'expression se
+    trouvant à sa droite dans la **variable** dont le nom est à sa gauche
+- Une **expression** est un morceau de code qui produit une **valeur**
+
+```python {.build}
+# Ce script génère plusieurs slides
+from script import code_step, loadfile, slide
+title = "Variables, expressions et valeurs"
+src = """
+a = 42     # expression littérale
+b = a      # lecture d'une variable
+a = 3 + 4  # calcul
+b = a
+a = a + 1
+print(a)   # Affiche la valeur de a
+"""
+ram = {"a": 42}
+__output__ = []
+__output__ += slide(title, code_step(src, [1], ram))
+ram["b"] = 42
+__output__ += slide(title, code_step(src, [2], ram))
+ram["a"] = 7
+__output__ += slide(title, code_step(src, [3], ram))
+ram["b"] = 7
+__output__ += slide(title, code_step(src, [4], ram))
+ram["a"] = 8
+__output__ += slide(title, code_step(src, [5], ram))
+__output__ += slide(title, code_step(src, [6], ram, "8"))
+```
+
+## `if` en Python
+
+:::row
+
+::::span6
+
+En C (Arduino)
+
+```c
+if(delta >= 0) {
+    digitalWrite(13, HIGH);
+}
+else {
+    digitalWrite(13, LOW);
+}
+```
+
+::::
+
+::::span6
+
+En Python
+
+```python
+if delta >= 0:
+    print("Des solutions")
+else:
+    print("Pas de solutions")
+```
+
+::::
+
+:::
+
+```plantuml {.build}
+@startuml
+start
+if (delta >= 0 ?) then (oui)
+  :Afficher "Des solutions";
+else (non)
+  :Afficher "Pas de solutions";
+endif
+stop
+@enduml
+```
+
+La partie `else` est optionnelle
 
 ```python {.build}
 # Ce script génère plusieurs slides
@@ -127,6 +266,8 @@ ram["x2"] = 3
 __output__ += slide(title, code_step(src, [12], ram))
 __output__ += slide(title, code_step(src, [13], ram, "x1: 2 x2: 3"))
 ```
+
+## while
 
 ## Essaie - Erreur
 

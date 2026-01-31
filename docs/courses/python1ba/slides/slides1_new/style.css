@@ -63,7 +63,7 @@ pre {
   border: 3px solid black;
   border-radius: 8px;
   background-color: #fee;
-  min-height: 10em;
+  min-height: 17em;
 }
 
 .work-plan h5 {
@@ -83,7 +83,7 @@ pre {
 .eat-table {
   border: 3px solid black;
   border-radius: 8px;
-  min-height: 5em;
+  min-height: 6em;
   margin-top: 0.5em;
   background:
     repeating-linear-gradient(
