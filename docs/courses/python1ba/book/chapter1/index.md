@@ -1,5 +1,5 @@
 ---
-title: "Chapitre 1"
+title: 'Chapitre 1'
 subtitle: La programmation
 ---
 
@@ -9,7 +9,11 @@ Doc.setChapterNb(1)
 
 ## Qu'est-ce qu'un programme?
 
-De manière générale, un programme est une suite d'actions à entreprendre visant à atteindre un but. On peut par exemple dire d'une recette de cuisine que c'est un programme pour réaliser un plat (cf <span data-link='oeuf'>figure</span>). On parle également de programme pour un lave-linge où, suivant le type de linge, la suite d'actions (rotations du tambour) est différente.
+De manière générale, un programme est une suite d'actions à entreprendre visant
+à atteindre un but. On peut par exemple dire d'une recette de cuisine que c'est
+un programme pour réaliser un plat (cf <span data-link='oeuf'>figure</span>). On
+parle également de programme pour un lave-linge où, suivant le type de linge, la
+suite d'actions (rotations du tambour) est différente.
 
 <figure id='oeuf' data-ref='figure'>
     <div></div>
@@ -37,9 +41,13 @@ De manière générale, un programme est une suite d'actions à entreprendre vis
     draw.done()
 </script>
 
-Un programme est donc constitué d'une suite d'instructions à exécuter dans un certain ordre.
+Un programme est donc constitué d'une suite d'instructions à exécuter dans un
+certain ordre.
 
-Dans le domaine de l'informatique, un programme est une suite d'instructions visant à la résolution d'un problème. La résolution d'une équation du deuxième degré que vous avez apprise en secondaire ressemble déjà beaucoup à un programme informatique (cf <span data-link='d2deg'>figure</span>).
+Dans le domaine de l'informatique, un programme est une suite d'instructions
+visant à la résolution d'un problème. La résolution d'une équation du deuxième
+degré que vous avez apprise en secondaire ressemble déjà beaucoup à un programme
+informatique (cf <span data-link='d2deg'>figure</span>).
 
 <figure id='d2deg' data-ref='figure'>
     <div></div>
@@ -71,9 +79,14 @@ Dans le domaine de l'informatique, un programme est une suite d'instructions vis
 
 ### Code et langage de programmation
 
-Les figures <span data-link='oeuf'></span> et <span data-link='d2deg'></span> sont des représentations graphiques de programmes. On les appelle organigrammes ou encore diagrammes d'activité. Un vrai programme se fait dans un langage de programmation. Un programme écrit dans un langage de programmation se présente donc comme du texte. Ce texte est appelé le code source du programme.
+Les figures <span data-link='oeuf'></span> et <span data-link='d2deg'></span>
+sont des représentations graphiques de programmes. On les appelle organigrammes
+ou encore diagrammes d'activité. Un vrai programme se fait dans un langage de
+programmation. Un programme écrit dans un langage de programmation se présente
+donc comme du texte. Ce texte est appelé le code source du programme.
 
-Une façon d'écrire en texte le programme de résolution d'une équation du second degré pourrait être la suivante :
+Une façon d'écrire en texte le programme de résolution d'une équation du second
+degré pourrait être la suivante :
 
 <figure id="code_2deg" data-ref='code'>
 
@@ -92,9 +105,13 @@ b*b-4*a*c <strong>&#8594;</strong> D
 <figcaption>Pseudo code, second degré</figcaption>
 </figure>
 
-Le texte ci-dessus est souvent appelé "pseudo-code" car il a une structure très proche d'un vrai code de programme mais il n'est écrit dans aucun langage de programmation particulier.
+Le texte ci-dessus est souvent appelé "pseudo-code" car il a une structure très
+proche d'un vrai code de programme mais il n'est écrit dans aucun langage de
+programmation particulier.
 
-Pour écrire un vrai programme, il faut choisir un langage de programmation et respecter sa syntaxe. Le langage que nous allons utiliser dans ce cours est le **Python**. Voici la version Python du précédent pseudo-code:
+Pour écrire un vrai programme, il faut choisir un langage de programmation et
+respecter sa syntaxe. Le langage que nous allons utiliser dans ce cours est le
+**Python**. Voici la version Python du précédent pseudo-code:
 
 <figure id='python_2deg' data-ref='code'>
 
@@ -109,20 +126,28 @@ else:
         print("La 1re racine est", (-b-sqrt(D))/(2*a))
         print("La 2e racine est", (-b+sqrt(D))/(2*a))
 ```
+
 <figcaption>Python, second degré</figcaption>
 </figure>
 
-Dans un programme, chaque ligne du code est une instruction. Les instructions sont exécutées dans l'ordre où elles apparaissent dans le code du programme.
+Dans un programme, chaque ligne du code est une instruction. Les instructions
+sont exécutées dans l'ordre où elles apparaissent dans le code du programme.
 
-"Les instructions sont exécutées...", mais comment sont-elles exécutées et par quoi&nbsp;? Où se trouve ce fameux code du programme&nbsp;?
+"Les instructions sont exécutées...", mais comment sont-elles exécutées et par
+quoi&nbsp;? Où se trouve ce fameux code du programme&nbsp;?
 
-Pour bien comprendre tout cela, nous allons devoir nous intéresser au fonctionnement d'un ordinateur.
+Pour bien comprendre tout cela, nous allons devoir nous intéresser au
+fonctionnement d'un ordinateur.
 
 ## Qu'est-ce qu'un ordinateur ?
 
-Nous allons ici essayer de comprendre comment un ordinateur fait pour exécuter du code. Pour pouvoir programmer, nous n'avons pas besoin de tout connaître dans les détails. Mais comprendre les bases du fonctionnement d'un ordinateur nous aidera pour le programmer et pour l'utiliser correctement.
+Nous allons ici essayer de comprendre comment un ordinateur fait pour exécuter
+du code. Pour pouvoir programmer, nous n'avons pas besoin de tout connaître dans
+les détails. Mais comprendre les bases du fonctionnement d'un ordinateur nous
+aidera pour le programmer et pour l'utiliser correctement.
 
-Un ordinateur est, avant tout, un système composé de plusieurs éléments: processeur, mémoire, stockage, périphériques, ...
+Un ordinateur est, avant tout, un système composé de plusieurs éléments:
+processeur, mémoire, stockage, périphériques, ...
 
 <figure id="system" data-ref="figure">
 <img src="./system.svg">
@@ -131,79 +156,153 @@ Un ordinateur est, avant tout, un système composé de plusieurs éléments: pro
 
 ### Le processeur
 
-Le processeur *(**CPU**: Central Processing Unit)* exécute les instructions d'un programme une par une. Ces instructions proviennent de **la mémoire**. Après avoir exécuté une instruction, il passe automatiquement à celle qui suit dans la mémoire. Certaines instructions peuvent cependant le faire sauter à un tout autre endroit de la mémoire pour continuer l'exécution.
+Le processeur _(**CPU**: Central Processing Unit)_ exécute les instructions d'un
+programme une par une. Ces instructions proviennent de **la mémoire**. Après
+avoir exécuté une instruction, il passe automatiquement à celle qui suit dans la
+mémoire. Certaines instructions peuvent cependant le faire sauter à un tout
+autre endroit de la mémoire pour continuer l'exécution.
 
-Les instructions manipulent généralement **des données**. Par exemple, l'instruction permettant d'additionner va nécessiter d'aller chercher les valeurs à additionner. Les données sont elles aussi en mémoire. Et **les résultats** des calculs sont eux aussi sauvés en mémoire une fois qu'ils ont été calculés.
+Les instructions manipulent généralement **des données**. Par exemple,
+l'instruction permettant d'additionner va nécessiter d'aller chercher les
+valeurs à additionner. Les données sont elles aussi en mémoire. Et **les
+résultats** des calculs sont eux aussi sauvés en mémoire une fois qu'ils ont été
+calculés.
 
-En bref, le processeur est donc grosso-modo capable de deux choses: calculer et sauver/lire des valeurs en mémoire.
+En bref, le processeur est donc grosso-modo capable de deux choses: calculer et
+sauver/lire des valeurs en mémoire.
 
-Encore une petite remarque à propos du processeur : il ne comprend que le langage pour lequel il a été conçu. On appelle ce langage **le jeu d'instructions du processeur** ou encore **langage machine**. Il existe des jeux d'instructions différents pour chaque architecture de processeur (x86, ARM, ...).
+Encore une petite remarque à propos du processeur : il ne comprend que le
+langage pour lequel il a été conçu. On appelle ce langage **le jeu
+d'instructions du processeur** ou encore **langage machine**. Il existe des jeux
+d'instructions différents pour chaque architecture de processeur (x86, ARM,
+...).
 
 ### La mémoire
 
-La mémoire *(**RAM**: Random Access Memory)* contient **les instructions** du programme et **les données** qu'il manipule. Sa taille ne dépasse généralement pas quelques giga-octets (Go).
+La mémoire _(**RAM**: Random Access Memory)_ contient **les instructions** du
+programme et **les données** qu'il manipule. Sa taille ne dépasse généralement
+pas quelques giga-octets (Go).
 
-On peut se représenter la mémoire comme une longue liste de cases ayant chacune un numéro. Lorsque le processeur veut obtenir une instruction ou une donnée en mémoire, il doit mentionner le numéro de la case qu'il souhaite consulter.
+On peut se représenter la mémoire comme une longue liste de cases ayant chacune
+un numéro. Lorsque le processeur veut obtenir une instruction ou une donnée en
+mémoire, il doit mentionner le numéro de la case qu'il souhaite consulter.
 
-Pour garder ses données, la mémoire a besoin d'être alimentée ce qui veut dire que le contenu de la mémoire est perdu si on lui coupe le courant. On dit que la mémoire est **volatile**.
+Pour garder ses données, la mémoire a besoin d'être alimentée ce qui veut dire
+que le contenu de la mémoire est perdu si on lui coupe le courant. On dit que la
+mémoire est **volatile**.
 
-Quand nous écrirons des programmes, nous manipulerons beaucoup la mémoire par l'intermédiaire **des variables**.
+Quand nous écrirons des programmes, nous manipulerons beaucoup la mémoire par
+l'intermédiaire **des variables**.
 
 ### Le stockage
 
-Puisque la mémoire est volatile et limitée en taille, comment stocke-t-on de grandes quantités de données et comment fait-on quand on éteint l'ordinateur ? On utilise un **stockage de masse**.
+Puisque la mémoire est volatile et limitée en taille, comment stocke-t-on de
+grandes quantités de données et comment fait-on quand on éteint l'ordinateur ?
+On utilise un **stockage de masse**.
 
 Il en existe plusieurs sortes&nbsp;:
+
 - disque **SSD** (Solid State Drive)
 - disque dur (**HDD**: Hard Disk Drive)
 - clé **USB** (Universal Serial Bus)
 - carte **SD** (Secure Digital)
 - ...
 
-Le stockage de masse contient **des fichiers** et **des répertoires**. Un répertoire peut contenir plusieurs fichiers et plusieurs autres répertoires. Le contenu du stockage de masse est donc organisé en une **hiérarchie** de répertoires et chaque élément dans cette hiérarchie peut être localisé par son **chemin d'accès**. Le chemin d'accès est constitué de la suite de répertoires à ouvrir pour atteindre l'élément.
+Le stockage de masse contient **des fichiers** et **des répertoires**. Un
+répertoire peut contenir plusieurs fichiers et plusieurs autres répertoires. Le
+contenu du stockage de masse est donc organisé en une **hiérarchie** de
+répertoires et chaque élément dans cette hiérarchie peut être localisé par son
+**chemin d'accès**. Le chemin d'accès est constitué de la suite de répertoires à
+ouvrir pour atteindre l'élément.
 
 Exemple:
+
 - sous Windows: C:\Users\lur\Documents\note.txt
 - sous MacOS: /Users/lur/note.txt
 
-Lorsqu'un programme doit être exécuté, ses instructions se trouvent initialement dans un fichier dans le stockage de masse. Les fichiers contenant des instructions pour le processeur sont appelés des **fichiers exécutables** (sous Windows, on les reconnaît car leurs noms finissent par ".exe"). Pour exécuter un de ces fichiers, le **système d'exploitation** (**OS**: Operating System) va d'abord le **copier** dans la mémoire. Le processeur pourra alors commencer à en exécuter les instructions.
+Lorsqu'un programme doit être exécuté, ses instructions se trouvent initialement
+dans un fichier dans le stockage de masse. Les fichiers contenant des
+instructions pour le processeur sont appelés des **fichiers exécutables** (sous
+Windows, on les reconnaît car leurs noms finissent par ".exe"). Pour exécuter un
+de ces fichiers, le **système d'exploitation** (**OS**: Operating System) va
+d'abord le **copier** dans la mémoire. Le processeur pourra alors commencer à en
+exécuter les instructions.
 
-De même, pour qu'un programme en cours d'exécution puisse accéder au contenu d'un fichier, il devra d'abord le **charger** en mémoire.
+De même, pour qu'un programme en cours d'exécution puisse accéder au contenu
+d'un fichier, il devra d'abord le **charger** en mémoire.
 
-Les opérations d'écriture et de lecture de fichiers sont beaucoup plus **lentes** que les accès à des données en RAM. Les stockages de masse n'ont pas besoin d'être alimentés pour conserver les données (ils sont **persistants**) et peuvent contenir jusqu'à plusieurs tera-octets (**To**&nbsp;:&nbsp;~1000 Go).
+Les opérations d'écriture et de lecture de fichiers sont beaucoup plus
+**lentes** que les accès à des données en RAM. Les stockages de masse n'ont pas
+besoin d'être alimentés pour conserver les données (ils sont **persistants**) et
+peuvent contenir jusqu'à plusieurs tera-octets (**To**&nbsp;:&nbsp;~1000 Go).
 
-Comme nous l'avons vu, un programme se présente en pratique comme un simple texte et nous sauverons ce texte dans un fichier.
+Comme nous l'avons vu, un programme se présente en pratique comme un simple
+texte et nous sauverons ce texte dans un fichier.
 
 ## Langage de programmation
 
-Les fichiers contenant des programmes contiennent les instructions du programme dans **le langage propre au processeur**. Par exemple, le jeu d'instructions des processeurs x86 *(i3, i5, i7, amd ryzen, ...)* est complètement différent de celui des processeurs ARM *(Apple Silicon, Snapdragon, ...)*.
+Les fichiers contenant des programmes contiennent les instructions du programme
+dans **le langage propre au processeur**. Par exemple, le jeu d'instructions des
+processeurs x86 _(i3, i5, i7, amd ryzen, ...)_ est complètement différent de
+celui des processeurs ARM _(Apple Silicon, Snapdragon, ...)_.
 
-Ces jeux d'instructions sont faits pour s'exécuter aussi efficacement que possible par le processeur. Mais ils sont particulièrement difficiles à lire et à écrire par un être humain.
+Ces jeux d'instructions sont faits pour s'exécuter aussi efficacement que
+possible par le processeur. Mais ils sont particulièrement difficiles à lire et
+à écrire par un être humain.
 
-Pour créer un programme, on passe donc généralement par **un langage de programmation**.
+Pour créer un programme, on passe donc généralement par **un langage de
+programmation**.
 
-Un langage de programmation est fait pour être **écrit** et **lu** par un être humain. Le code source d'un programme est un **simple fichier texte**. Le code source doit ensuite être traduit en langage machine pour pouvoir être exécuté par le processeur. En fonction du moment où cette traduction a lieu, on distingue deux grandes familles de langage de programmation: les langages compilés et les langages interprétés.
+Un langage de programmation est fait pour être **écrit** et **lu** par un être
+humain. Le code source d'un programme est un **simple fichier texte**. Le code
+source doit ensuite être traduit en langage machine pour pouvoir être exécuté
+par le processeur. En fonction du moment où cette traduction a lieu, on
+distingue deux grandes familles de langage de programmation: les langages
+compilés et les langages interprétés.
 
-Dans un **langage compilé**, la traduction se fait par un programme appelé **compilateur**. Le compilateur génère un fichier exécutable à partir du fichier de code source. Le contenu de ce fichier exécutable peut ensuite être exécuté directement par le processeur et le compilateur **n'est plus nécessaire**.
+Dans un **langage compilé**, la traduction se fait par un programme appelé
+**compilateur**. Le compilateur génère un fichier exécutable à partir du fichier
+de code source. Le contenu de ce fichier exécutable peut ensuite être exécuté
+directement par le processeur et le compilateur **n'est plus nécessaire**.
 
-Dans un **langage interprété**, la traduction se fait par un programme appelé **interpréteur**. L'interpréteur ne produit pas de fichier exécutable. Il exécute directement chaque instruction qu'il rencontre dans le code source. On a donc le processeur qui exécute l'interpréteur et l'interpréteur qui exécute notre code source. Dans ce cas, l'interpréteur est nécessaire pour **chaque exécution** du code source.
+Dans un **langage interprété**, la traduction se fait par un programme appelé
+**interpréteur**. L'interpréteur ne produit pas de fichier exécutable. Il
+exécute directement chaque instruction qu'il rencontre dans le code source. On a
+donc le processeur qui exécute l'interpréteur et l'interpréteur qui exécute
+notre code source. Dans ce cas, l'interpréteur est nécessaire pour **chaque
+exécution** du code source.
 
-Le langage que nous allons utiliser dans ce cours est un langage interprété nommé **Python**. Pour exécuter un programme Python, il est nécessaire d'installer l'interpréteur Python.
+Le langage que nous allons utiliser dans ce cours est un langage interprété
+nommé **Python**. Pour exécuter un programme Python, il est nécessaire
+d'installer l'interpréteur Python.
 
 ## Exécuter mon premier programme Python !
 
-La première chose à faire est d'installer l'interpréteur Python. Pour cela, il faut commencer par le télécharger sur <https://python.org>. **Attention&nbsp;: sous Windows, cochez la case "Add Python to PATH" durant l'installation&nbsp;!**
+La première chose à faire est d'installer l'interpréteur Python. Pour cela, il
+faut commencer par le télécharger sur <https://python.org>. **Attention&nbsp;:
+sous Windows, cochez la case "Add Python to PATH" durant l'installation&nbsp;!**
 
 <figure id="python_org" data-ref="figure">
 <img src="./python.org.webp">
 <figcaption>Site de Python</figcaption>
 </figure>
 
-Cela fait, nous avons l'interpréteur Python installé. Cet interpréteur va nous permettre d'exécuter nos programmes. Il ne va par contre pas nous aider à écrire notre programme.
+Cela fait, nous avons l'interpréteur Python installé. Cet interpréteur va nous
+permettre d'exécuter nos programmes. Il ne va par contre pas nous aider à écrire
+notre programme.
 
-Comme le code d'un programme est un simple texte, la seule chose dont on a besoin pour écrire un programme est un **éditeur de texte** (Bloc-note sous Windows, TextEdit sous MacOS, ...). Il est cependant plus pratique d'utiliser un éditeur **spécialisé** pour écrire le code. Ces éditeurs facilitent fortement l'écriture et la lisibilité du code (Visual Studio Code, Notepad++, Sublime Text, ...). Dans ce cours, nous utiliserons **Visual Studio Code** comme éditeur.
+Comme le code d'un programme est un simple texte, la seule chose dont on a
+besoin pour écrire un programme est un **éditeur de texte** (Bloc-note sous
+Windows, TextEdit sous MacOS, ...). Il est cependant plus pratique d'utiliser un
+éditeur **spécialisé** pour écrire le code. Ces éditeurs facilitent fortement
+l'écriture et la lisibilité du code (Visual Studio Code, Notepad++, Sublime
+Text, ...). Dans ce cours, nous utiliserons **Visual Studio Code** comme
+éditeur.
 
-Pour installer Visual Studio Code, il faut le télécharger sur le site <https://code.visualstudio.com/>. **Sous Windows, durant l'installation, cochez les cases&nbsp;:**
+Pour installer Visual Studio Code, il faut le télécharger sur le site
+<https://code.visualstudio.com/>. **Sous Windows, durant l'installation, cochez
+les cases&nbsp;:**
+
 - **Ajouter l'action "Ouvrir avec Code" au menu contextuel de fichier...**
 - **Ajouter l'action "Ouvrir avec Code" au menu contextuel de répertoire...**
 - **Ajouter à PATH...**
@@ -213,8 +312,12 @@ Pour installer Visual Studio Code, il faut le télécharger sur le site <https:/
 <figcaption>Site de Visual Studio Code</figcaption>
 </figure>
 
-Visual Studio Code *(VSCode)* est un éditeur open source qui supporte plusieurs langages. On peut lui ajouter des fonctionnalités en installant des extensions. Il existe une **extension Python** qui ajoute pas mal de fonctionnalités utiles lorsqu'on développe des programmes en Python. Pour installer cette extension, il suffit de cliquer sur l'icône extensions (<svg width="0.9em" height="0.9em" viewBox="0 0 50 50">
-    <rect
+Visual Studio Code _(VSCode)_ est un éditeur open source qui supporte plusieurs
+langages. On peut lui ajouter des fonctionnalités en installant des extensions.
+Il existe une **extension Python** qui ajoute pas mal de fonctionnalités utiles
+lorsqu'on développe des programmes en Python. Pour installer cette extension, il
+suffit de cliquer sur l'icône extensions
+(<svg width="0.9em" height="0.9em" viewBox="0 0 50 50"> <rect
         x="2"
         y="8"
         width="20"
@@ -222,8 +325,7 @@ Visual Studio Code *(VSCode)* est un éditeur open source qui supporte plusieurs
         ry="3"
         rx="3"
         style="fill: none; stroke: #000; stroke-width: 3px"
-    />
-    <rect
+    /> <rect
         x="22"
         y="28"
         width="20"
@@ -231,8 +333,7 @@ Visual Studio Code *(VSCode)* est un éditeur open source qui supporte plusieurs
         ry="3"
         rx="3"
         style="fill: none; stroke: #000; stroke-width: 3px"
-    />
-    <rect
+    /> <rect
         x="2"
         y="28"
         width="20"
@@ -240,8 +341,7 @@ Visual Studio Code *(VSCode)* est un éditeur open source qui supporte plusieurs
         ry="3"
         rx="3"
         style="fill: none; stroke: #000; stroke-width: 3px"
-    />
-    <rect
+    /> <rect
         x="28"
         y="2"
         width="20"
@@ -249,26 +349,51 @@ Visual Studio Code *(VSCode)* est un éditeur open source qui supporte plusieurs
         ry="3"
         rx="3"
         style="fill: none; stroke: #000; stroke-width: 3px"
-    />
-    </svg>), taper "python" dans le champ de recherche et cliquer sur installer.
+    /> </svg>), taper "python" dans le champ de recherche et cliquer sur
+installer.
 
-Une fois VSCode installé, nous pouvons créer un **nouveau fichier** avec le contenu suivant&nbsp;:
+Une fois VSCode installé, nous pouvons créer un **nouveau fichier** avec le
+contenu suivant&nbsp;:
 
 <figure id="helloworld" data-ref="code">
 
 ```python
 print('Hello World !')
 ```
+
 <figcaption>Le fichier <code>hello.py</code></figcaption>
 </figure>
 
-Une fois le code écrit, **enregistrez** le fichier sous le nom `hello.py`. Faites attention au **répertoire** dans lequel vous sauvez votre fichier. Nous aurons en effet besoin de connaître **le chemin d'accès** de notre fichier pour l'exécuter avec l'interpréteur Python. Le fait de faire terminer le nom du fichier par l'extension `.py` est une **convention** qui aide à identifier le **type de contenu** d'un fichier sans avoir nécessairement besoin de l'ouvrir.
+Une fois le code écrit, **enregistrez** le fichier sous le nom `hello.py`.
+Faites attention au **répertoire** dans lequel vous sauvez votre fichier. Nous
+aurons en effet besoin de connaître **le chemin d'accès** de notre fichier pour
+l'exécuter avec l'interpréteur Python. Le fait de faire terminer le nom du
+fichier par l'extension `.py` est une **convention** qui aide à identifier le
+**type de contenu** d'un fichier sans avoir nécessairement besoin de l'ouvrir.
 
-Maintenant que notre fichier est créé, nous allons pouvoir l'exécuter avec l'interpréteur Python. Le problème, c'est que l'interpréteur n'a **pas d'interface graphique**&nbsp;!
+Maintenant que notre fichier est créé, nous allons pouvoir l'exécuter avec
+l'interpréteur Python. Le problème, c'est que l'interpréteur n'a **pas
+d'interface graphique**&nbsp;!
 
-Il est probable que la plupart des programmes que vous avez eu l'habitude d'utiliser par le passé soient des programmes ayant une interface graphique. On interagit généralement avec ce genre de programme en cliquant sur l'interface graphique avec la souris de l'ordinateur. L'interpréteur Python, lui, n'a pas d'interface graphique et les programmes que nous allons créer dans un premier temps n'en auront pas non plus. Il va donc falloir que nous apprenions à utiliser le **terminal** pour interagir avec des programmes en **ligne de commande**.
+Il est probable que la plupart des programmes que vous avez eu l'habitude
+d'utiliser par le passé soient des programmes ayant une interface graphique. On
+interagit généralement avec ce genre de programme en cliquant sur l'interface
+graphique avec la souris de l'ordinateur. L'interpréteur Python, lui, n'a pas
+d'interface graphique et les programmes que nous allons créer dans un premier
+temps n'en auront pas non plus. Il va donc falloir que nous apprenions à
+utiliser le **terminal** pour interagir avec des programmes en **ligne de
+commande**.
 
-Nous nous pencherons sur l'utilisation du terminal dans la section suivante. Pour le moment, nous allons essayer de lancer rapidement notre premier programme. Lancez un terminal (Application "Powershell" sous Windows et "Terminal" sous MacOS) et tapez **la commande** qui suit pour démarrer l'interpréteur avec notre fichier `hello.py`. Le chemin d'accès mentionné est **un exemple**. Vous devez utiliser le chemin d'accès du fichier que **vous avez créé précédemment**. **Attention: le premier caractère `>` représente l'invite de commande. Vous ne devez pas le taper**. Sous MacOS, vous devrez sans doute utiliser la commande `python3` à la place de `python`. Prenez garde aussi au format du chemin d'accès; il est différent entre Windows et MacOS.
+Nous nous pencherons sur l'utilisation du terminal dans la section suivante.
+Pour le moment, nous allons essayer de lancer rapidement notre premier
+programme. Lancez un terminal (Application "Powershell" sous Windows et
+"Terminal" sous MacOS) et tapez **la commande** qui suit pour démarrer
+l'interpréteur avec notre fichier `hello.py`. Le chemin d'accès mentionné est
+**un exemple**. Vous devez utiliser le chemin d'accès du fichier que **vous avez
+créé précédemment**. **Attention: le premier caractère `>` représente l'invite
+de commande. Vous ne devez pas le taper**. Sous MacOS, vous devrez sans doute
+utiliser la commande `python3` à la place de `python`. Prenez garde aussi au
+format du chemin d'accès; il est différent entre Windows et MacOS.
 
 **Sous Windows&nbsp;:**
 
@@ -282,25 +407,40 @@ Nous nous pencherons sur l'utilisation du terminal dans la section suivante. Pou
 <b>> python3 /Users/lur/Documents/Programmation/hello.py</b>
 </pre>
 
-Validez avec la touche **Enter**. Vous devriez maintenant voir apparaître le message **"Hello World !"** dans le terminal en dessous de la commande que vous avez tapée.
+Validez avec la touche **Enter**. Vous devriez maintenant voir apparaître le
+message **"Hello World !"** dans le terminal en dessous de la commande que vous
+avez tapée.
 
 **Félicitations vous venez d'exécuter votre premier programme&nbsp;!**
 
-Il faut bien avouer que taper le chemin complet du fichier est un petit peu fastidieux. Nous allons donc essayer d'en apprendre un peu plus sur le terminal pour pouvoir l'utiliser plus efficacement.
+Il faut bien avouer que taper le chemin complet du fichier est un petit peu
+fastidieux. Nous allons donc essayer d'en apprendre un peu plus sur le terminal
+pour pouvoir l'utiliser plus efficacement.
 
 ### Terminal
 
-Une bonne partie de l'utilisation d'un ordinateur passe par la création, l'édition et la gestion de fichiers dans l'arborescence de dossiers du stockage de masse. Bien que de nos jours la plupart des gens fassent ces opérations en utilisant une interface graphique, il est aussi possible de les réaliser en **ligne de commande dans un terminal**.
+Une bonne partie de l'utilisation d'un ordinateur passe par la création,
+l'édition et la gestion de fichiers dans l'arborescence de dossiers du stockage
+de masse. Bien que de nos jours la plupart des gens fassent ces opérations en
+utilisant une interface graphique, il est aussi possible de les réaliser en
+**ligne de commande dans un terminal**.
 
-Sous Windows, il y a plusieurs programmes permettant d'utiliser les lignes de commande&nbsp;:
+Sous Windows, il y a plusieurs programmes permettant d'utiliser les lignes de
+commande&nbsp;:
+
 - cmd: invite de commande
 - Powershell
 
 Sous MacOS, le programme s'appelle simplement "Terminal".
 
-Les développeurs et les ingénieurs sont **régulièrement** amenés à utiliser le terminal. Il est donc important d'apprendre les bases de son utilisation.
+Les développeurs et les ingénieurs sont **régulièrement** amenés à utiliser le
+terminal. Il est donc important d'apprendre les bases de son utilisation.
 
-La première notion à intégrer est la notion de **répertoire courant**. Lorsqu'on utilise le terminal, il y a toujours un dossier de l'arborescence qui est considéré comme notre position actuelle. On peut afficher le chemin de ce dossier avec la commande `pwd` pour *print working directory*. Beaucoup de commandes agissent directement sur le répertoire courant.
+La première notion à intégrer est la notion de **répertoire courant**. Lorsqu'on
+utilise le terminal, il y a toujours un dossier de l'arborescence qui est
+considéré comme notre position actuelle. On peut afficher le chemin de ce
+dossier avec la commande `pwd` pour _print working directory_. Beaucoup de
+commandes agissent directement sur le répertoire courant.
 
 <pre class="terminal">
 <b>> pwd</b>
@@ -314,7 +454,8 @@ La commande `ls` permet de **lister** le contenu du répertoire courant.
 Desktop Documents
 </pre>
 
-La commande `cd` (*change directory*) permet de **changer le répertoire courant**. 
+La commande `cd` (_change directory_) permet de **changer le répertoire
+courant**.
 
 <pre class="terminal">
 <b>> cd Documents</b>
@@ -322,27 +463,40 @@ La commande `cd` (*change directory*) permet de **changer le répertoire courant
 C:\Users\lur\Documents
 </pre>
 
-On indique le **nouveau répertoire courant** par son chemin relatif ou absolu&nbsp;:
+On indique le **nouveau répertoire courant** par son chemin relatif ou
+absolu&nbsp;:
 
-- **Un chemin absolu** indique un élément de l'arborescence de fichiers en partant de **la racine** de celle-ci&nbsp;:
+- **Un chemin absolu** indique un élément de l'arborescence de fichiers en
+  partant de **la racine** de celle-ci&nbsp;:
   - Sous Windows&nbsp;: `C:\Users\lur`
   - Sous MacOS ou Linux&nbsp;: `/Users/lur`
-- **Un chemin relatif** l'indique en partant du répertoire courant. Si le répertoire courant est `C:\Users` alors le chemin relatif `lur\Documents\hello.py` correspond au chemin absolu `C:\Users\lur\Documents\hello.py`.
+- **Un chemin relatif** l'indique en partant du répertoire courant. Si le
+  répertoire courant est `C:\Users` alors le chemin relatif
+  `lur\Documents\hello.py` correspond au chemin absolu
+  `C:\Users\lur\Documents\hello.py`.
 
 **Remarques&nbsp;:**
 
-- Dans un chemin, l'utilisation de `..` permet de **remonter** d'un repertoire. La commande `cd ..` permet donc de passer au répertoire **parent**. Un `.` seul représente le répertoire **courant**. Le chemin relatif mentionné plus haut peut donc aussi s'écrire `.\lur\Documents\hello.py`.
-- Windows utilise des **anti-slashs** (`\`) pour séparer les différentes parties du chemin alors que MacOS et Linux utilisent des **slashs** (`/`).
-- Dans la plupart des terminaux, la **touche tabulation** (`Tab ↹`) permet d'**auto-compléter** les éléments des chemins.
+- Dans un chemin, l'utilisation de `..` permet de **remonter** d'un repertoire.
+  La commande `cd ..` permet donc de passer au répertoire **parent**. Un `.`
+  seul représente le répertoire **courant**. Le chemin relatif mentionné plus
+  haut peut donc aussi s'écrire `.\lur\Documents\hello.py`.
+- Windows utilise des **anti-slashs** (`\`) pour séparer les différentes parties
+  du chemin alors que MacOS et Linux utilisent des **slashs** (`/`).
+- Dans la plupart des terminaux, la **touche tabulation** (`Tab ↹`) permet
+  d'**auto-compléter** les éléments des chemins.
 
 <figure id="tab" data-ref="figure">
 <img src='./keyboard.svg' class="half">
 <figcaption>La touche <code>Tab</code></figcaption>
 </figure>
 
-- La **touche <code>&#8593;</code>** permet de reprendre des **commandes précédentes**.
+- La **touche <code>&#8593;</code>** permet de reprendre des **commandes
+  précédentes**.
 
-Du coup, pour pouvoir démarrer notre programme Python plus facilement, il suffit de mettre le répertoire contenant le fichier `.py`  comme répertoire courant&nbsp;:
+Du coup, pour pouvoir démarrer notre programme Python plus facilement, il suffit
+de mettre le répertoire contenant le fichier `.py` comme répertoire
+courant&nbsp;:
 
 <pre class='terminal'>
 <b>> pwd</b>
@@ -353,19 +507,30 @@ C:\Users\lur\Documents\Programmation
 <b>> python hello.py</b>
 </pre>
 
-De plus, si on souhaite relancer le programme, il suffit d'appuyer sur <code>&#8593;</code> pour récupérer la dernière commande et puis de valider avec `Enter`.
+De plus, si on souhaite relancer le programme, il suffit d'appuyer sur
+<code>&#8593;</code> pour récupérer la dernière commande et puis de valider avec
+`Enter`.
 
-Sachez aussi qu'il est possible d'ouvrir un terminal **dans l'interface de VSCode**. Si vous ouvrez votre répertoire de travail dans VSCode *(File &#8594; Open Folder...)*, tous les terminaux que vous ouvrirez commenceront automatiquement avec votre répertoire de travail comme répertoire courant! 
+Sachez aussi qu'il est possible d'ouvrir un terminal **dans l'interface de
+VSCode**. Si vous ouvrez votre répertoire de travail dans VSCode _(File &#8594;
+Open Folder...)_, tous les terminaux que vous ouvrirez commenceront
+automatiquement avec votre répertoire de travail comme répertoire courant!
 
 ### La variable d'environnement `PATH`
 
-Nous avons vu plus haut que l'interpréteur Python était un programme dont les instructions en langage machine se trouvent dans un **fichier exécutable** nommé `python.exe` (sous Windows). Mais comment fait le terminal pour savoir **où se trouve** ce fichier exécutable lorsqu'on tape la commande `python`?
+Nous avons vu plus haut que l'interpréteur Python était un programme dont les
+instructions en langage machine se trouvent dans un **fichier exécutable** nommé
+`python.exe` (sous Windows). Mais comment fait le terminal pour savoir **où se
+trouve** ce fichier exécutable lorsqu'on tape la commande `python`?
 
-En réalité, le fichier `python.exe` peut se trouver à plusieurs endroits. Si vous avez fait une installation simple sous Windows, il se trouve normalement dans&nbsp;:
+En réalité, le fichier `python.exe` peut se trouver à plusieurs endroits. Si
+vous avez fait une installation simple sous Windows, il se trouve normalement
+dans&nbsp;:
 
 <p class='center'><code>C:\Users\lur\AppData\Local\Programs\Python\Python<span class="pypathversion">3XX</span>\python.exe</code></p>
 
-Et on peut démarrer un programme dans le terminal en utilisant ce chemin complet&nbsp;:
+Et on peut démarrer un programme dans le terminal en utilisant ce chemin
+complet&nbsp;:
 
 <pre class='terminal' style='font-size: 50%'>
 <b>> C:\Users\lur\AppData\Local\Programs\Python\Python311\python.exe C:\Users\lur\Documents\Programmation\hello.py</b>
@@ -373,11 +538,21 @@ Et on peut démarrer un programme dans le terminal en utilisant ce chemin comple
 
 Mais ce n'est pas très pratique.
 
-Pour éviter d'avoir à taper les chemins entiers des fichiers exécutables, **la variable `PATH`** contient une **liste de dossiers** dans laquelle le système d'exploitation va pouvoir chercher.
+Pour éviter d'avoir à taper les chemins entiers des fichiers exécutables, **la
+variable `PATH`** contient une **liste de dossiers** dans laquelle le système
+d'exploitation va pouvoir chercher.
 
-Lors de l'installation de l'interpréteur Python, vous avez normalement coché la case **"Add Python to PATH"**. Cela a fait en sorte que le programme d'installation ajoute le répertoire <code>C:\\...\Python<span class="pypathversion">3XX</span></code> à la liste de dossiers de la variable `PATH`. Et maintenant, à chaque fois que l'on utilise la commande `python`, le système d'exploitation **cherche** un programme nommé `python.exe` dans les dossiers listés **dans `PATH`** et il le trouve dans <code>C:\\...\Python<span class="pypathversion">3XX</span></code>.
+Lors de l'installation de l'interpréteur Python, vous avez normalement coché la
+case **"Add Python to PATH"**. Cela a fait en sorte que le programme
+d'installation ajoute le répertoire
+<code>C:\\...\Python<span class="pypathversion">3XX</span></code> à la liste de
+dossiers de la variable `PATH`. Et maintenant, à chaque fois que l'on utilise la
+commande `python`, le système d'exploitation **cherche** un programme nommé
+`python.exe` dans les dossiers listés **dans `PATH`** et il le trouve dans
+<code>C:\\...\Python<span class="pypathversion">3XX</span></code>.
 
-Pour finir, voici un schéma qui récapitule les opérations qui ont lieu quand on lance une commande (`python`) dans le terminal&nbsp;:
+Pour finir, voici un schéma qui récapitule les opérations qui ont lieu quand on
+lance une commande (`python`) dans le terminal&nbsp;:
 
 <figure id="command" data-ref="figure">
     <div></div>
@@ -411,7 +586,8 @@ Pour finir, voici un schéma qui récapitule les opérations qui ont lieu quand 
 
 ## Erreurs et débuggage
 
-Nous avions vu, plus haut, un exemple de programme pour résoudre les équations du second degré&nbsp;:
+Nous avions vu, plus haut, un exemple de programme pour résoudre les équations
+du second degré&nbsp;:
 
 <figure id='python_2deg' data-ref='code'>
 
@@ -426,10 +602,12 @@ else:
         print("La 1re racine est", (-b-sqrt(D))/(2*a))
         print("La 2e racine est", (-b+sqrt(D))/(2*a))
 ```
+
 <figcaption>Python, second degré</figcaption>
 </figure>
 
-Il est maintenant temps d'essayer de l'exécuter. Sauvez ce programme **dans un nouveau fichier**, `2nd_order.py` et essayez de le lancer&nbsp;:
+Il est maintenant temps d'essayer de l'exécuter. Sauvez ce programme **dans un
+nouveau fichier**, `2nd_order.py` et essayez de le lancer&nbsp;:
 
 <pre class="terminal" style="font-size: 85%">
 <b>> python 2nd_order.py</b>
@@ -440,11 +618,22 @@ Traceback (most recent call last):
 NameError: name 'b' is not defined
 </pre>
 
-Il semblerait que quelque chose se soit mal passé. Ce que nous avons là est **un message d'erreur**. C'est un des grands avantages de la programmation. Lorsqu'on fait une erreur, il y a généralement un message d'erreur pour nous aider à la corriger. Il est important d'apprendre à lire ces messages car **toute l'information** dont on a besoin pour **corriger** l'erreur se trouve généralement **dans le message**.
+Il semblerait que quelque chose se soit mal passé. Ce que nous avons là est **un
+message d'erreur**. C'est un des grands avantages de la programmation. Lorsqu'on
+fait une erreur, il y a généralement un message d'erreur pour nous aider à la
+corriger. Il est important d'apprendre à lire ces messages car **toute
+l'information** dont on a besoin pour **corriger** l'erreur se trouve
+généralement **dans le message**.
 
-Ici le message d'erreur nous indique que le problème se trouve dans le fichier `2nd_order.py` à la **ligne 1**. Le caractère `^` indique à quel endroit de la ligne se trouve l'erreur. Et la dernière ligne du message est **une description de l'erreur**. Ici, on nous dit que le nom `b` n'est pas défini.
+Ici le message d'erreur nous indique que le problème se trouve dans le fichier
+`2nd_order.py` à la **ligne 1**. Le caractère `^` indique à quel endroit de la
+ligne se trouve l'erreur. Et la dernière ligne du message est **une description
+de l'erreur**. Ici, on nous dit que le nom `b` n'est pas défini.
 
-En effet, nous n'avons, dans ce programme, pas défini **les valeurs** de `a`, `b` et `c`. Python ne peut donc pas effectuer le calcul `b*b-4*a*c`. Le message d'erreur nous parle de `b` car c'est la première variable non définie qu'il rencontre.
+En effet, nous n'avons, dans ce programme, pas défini **les valeurs** de `a`,
+`b` et `c`. Python ne peut donc pas effectuer le calcul `b*b-4*a*c`. Le message
+d'erreur nous parle de `b` car c'est la première variable non définie qu'il
+rencontre.
 
 Ajoutons des définitions pour ces 3 variables&nbsp;:
 
@@ -464,6 +653,7 @@ else:
         print("La 1re racine est", (-b-sqrt(D))/(2*a))
         print("La 2e racine est", (-b+sqrt(D))/(2*a))
 ```
+
 <figcaption>définitions des valeurs <code>a</code>, <code>b</code> et <code>c</code></figcaption>
 </figure>
 
@@ -478,7 +668,10 @@ Traceback (most recent call last):
 NameError: name 'sqrt' is not defined
 </pre>
 
-Encore une erreur, la fonction `sqrt()` qui permet de calculer les racines carrées n'est pas chargée par défaut en Python. Comme nous ne l'avons pas chargée, le nom `sqrt` n'est pas défini. Ajoutons **l'importation** de la fonction `sqrt`&nbsp;:
+Encore une erreur, la fonction `sqrt()` qui permet de calculer les racines
+carrées n'est pas chargée par défaut en Python. Comme nous ne l'avons pas
+chargée, le nom `sqrt` n'est pas défini. Ajoutons **l'importation** de la
+fonction `sqrt`&nbsp;:
 
 <figure id='python_2deg_corrected_2' data-ref='code'>
 
@@ -498,6 +691,7 @@ else:
         print("La 1re racine est", (-b-sqrt(D))/(2*a))
         print("La 2e racine est", (-b+sqrt(D))/(2*a))
 ```
+
 <figcaption>Importation de la fonction <code>sqrt</code></figcaption>
 </figure>
 
@@ -511,8 +705,8 @@ La 2e racine est 2.0
 
 **Et voilà !** Ça marche.
 
-Nous avons eu ici un exemple classique de rédaction de programme. **On écrit du code, on teste, on lit les messages d'erreur, on corrige et on recommence.**
-
+Nous avons eu ici un exemple classique de rédaction de programme. **On écrit du
+code, on teste, on lit les messages d'erreur, on corrige et on recommence.**
 
 <script type="module" defer>
   fetch("https://endoflife.date/api/python.json")

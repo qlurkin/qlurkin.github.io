@@ -1,0 +1,2898 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cours 1 - Introduction</title>
+    <script src="/deck.js" defer></script>
+    <style>
+      .terminal {
+        background-color: darkslategray;
+        color: white;
+        font-family: consolas, monospace;
+        white-space: pre;
+        padding: 1rem;
+        font-size: 0.9em;
+        margin-bottom: 1em;
+      }
+
+      .terminal::before {
+        content: "Terminal";
+        display: block;
+        background-color: black;
+        text-align: center;
+        margin: -1rem;
+        padding: 0.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .file-title {
+        margin-bottom: -1.2em;
+        font-family: consolas, monospace;
+        font-size: 0.9em;
+        color: white;
+        padding: 0.5rem;
+        text-align: center;
+        background-color: #686868;
+      }
+
+      .middle {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      table {
+        border: 2px solid black;
+        border-collapse: collapse;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      td,
+      th {
+        border: 1px solid #666;
+        text-align: center;
+        padding: 0.2em 1em;
+      }
+
+      th {
+        border-bottom: 2px solid black;
+      }
+
+      #keyboard text {
+        writing-mode: lr-tb;
+        font-weight: bold;
+        font-family: consolas, monospace;
+      }
+      #keyboard #T_others {
+        font-size: 16px;
+        text-align: start;
+        text-anchor: start;
+      }
+      #keyboard #T_alterninsc {
+        font-size: 14px;
+        fill: dimgray;
+        fill-opacity: 1;
+        stroke: none;
+        text-align: start;
+        text-anchor: start;
+      }
+      #keyboard #T_stdletters {
+        font-size: 21px;
+        fill: black;
+        fill-opacity: 1;
+        stroke: none;
+        text-align: center;
+        text-anchor: middle;
+      }
+      #keyboard #T_stdspecial {
+        font-size: 18px;
+        fill: black;
+        fill-opacity: 1;
+        stroke: none;
+        text-align: center;
+        text-anchor: middle;
+      }
+      #keyboard #T_intodisuse {
+        font-size: 18px;
+        fill: dimgray;
+        fill-opacity: 1;
+        stroke: none;
+        text-align: center;
+        text-anchor: middle;
+      }
+      #keyboard #T_AltGr {
+        font-size: 18px;
+        fill: dimgray;
+        fill-opacity: 1;
+        stroke: none;
+        text-align: center;
+        text-anchor: middle;
+      }
+      #keyboard #T_AltGrSh {
+        font-size: 18px;
+        fill: dodgerblue;
+        fill-opacity: 1;
+        stroke: none;
+        text-align: center;
+        text-anchor: middle;
+      }
+      #keyboard .T_UpAltGr {
+        font-size: 18px;
+        fill: skyblue;
+      }
+      #keyboard .T_DeadKey {
+        font-size: 21px;
+        fill: red;
+      }
+
+      #keyboard #T_Lx_AltGr {
+        font-size: 18px;
+        fill: purple;
+        fill-opacity: 1;
+        stroke: none;
+        text-align: center;
+        text-anchor: middle;
+      }
+      #keyboard #T_Lx_AltGrSh {
+        font-size: 18px;
+        fill: blueviolet;
+        fill-opacity: 1;
+        stroke: none;
+        text-align: center;
+        text-anchor: middle;
+      }
+      #keyboard .T_Lx_UpAltGr {
+        font-size: 18px;
+        fill: violet;
+        font-family: Sans;
+      }
+      #keyboard .T_Lx_DeadKey {
+        font-size: 21px;
+        fill: darkorange;
+        fill-opacity: 1;
+        stroke: darkorange;
+        stroke-width: 0.6;
+      }
+
+      #keyboard .T_size_s {
+        font-size: 12px;
+        fill: black;
+        fill-opacity: 1;
+        stroke: none;
+        text-align: start;
+        text-anchor: start;
+      }
+      #keyboard .T_size_L {
+        font-size: 21px;
+      }
+
+      #keyboard #GlyphKey {
+        fill: white;
+        stroke: grey;
+        stroke-width: 1;
+      }
+      #keyboard #ModifKey {
+        fill: gainsboro;
+        stroke: grey;
+        stroke-width: 1;
+      }
+      #keyboard #OtherKey {
+        fill: silver;
+        stroke: grey;
+        stroke-width: 1;
+      }
+      #keyboard .K_AltGr {
+        fill: #d5eef8;
+        stroke: grey;
+        stroke-width: 1;
+      }
+      #keyboard #OtherKey #K_kb3a {
+        fill: pink;
+      }
+    </style>
+  </head>
+  <body>
+    <section>
+      <h1>IC1T - Programmation <small>Introduction</small></h1>
+      <p>Quentin Lurkin</p>
+    </section>
+    <section>
+      <h2>Informations générales</h2>
+      <ul>
+        <li>
+          7h30 de <strong>présentiel</strong>,
+          7h30 d'<strong>exercices</strong>
+        </li>
+        <li>
+          Les documents utilisés sont sur
+          <a href="https://quentin.lurkin.xyz/courses/python1ba/index.html">
+          <strong>quentin.lurkin.xyz/courses/python1ba/</strong></a>
+        </li>
+        <li>
+          Évaluation :
+          <ul>
+            <li>Examen écrit de type QCM(100%)</li>
+          </ul>
+        </li>
+        <li><strong>Toutes les communications passent par Teams</strong></li>
+      </ul>
+    </section>
+    <section>
+      <h2>Qu'est-ce qu'un ordinateur ?</h2>
+      <p>Un ordinateur est un système composé de plusieurs éléments</p>
+      <p>Processeur, Mémoire, Stockage, périphériques, ...</p>
+    </section>
+    <section>
+      <h2>Processeur</h2>
+      <figure>
+        <svg width="80%" viewBox="0 0 2045 1534" version="1.1">
+          <g id="CPU">
+            <rect
+              x="2.275"
+              y="622.022"
+              width="288.161"
+              height="288.161"
+              style="fill: #ebebeb; stroke: #000; stroke-width: 4.17px"
+            />
+            <text x="94.341px" y="783.998px" style="font-size: 50px">CPU</text>
+          </g>
+        </svg>
+      </figure>
+    </section>
+    <section>
+      <h2 class="deck-only">Processeur</h2>
+      <ul>
+        <li>Central Processing Unit (CPU)</li>
+        <li>Exécute des instructions</li>
+        <li>Programme = suite d'instructions</li>
+        <li>Un programme manipule des données</li>
+      </ul>
+      <p class="document-only">
+        Le processeur (CPU) exécute les instructions d'un programme une par une.
+        Ces instructions proviennent de la mémoire et manipulent généralement
+        des données se trouvant également dans la mémoire.
+      </p>
+    </section>
+    <section>
+      <h2>Mémoire</h2>
+      <figure>
+        <svg width="80%" viewBox="0 0 2045 1534" version="1.1">
+          <g id="CPU-RAM">
+            <path
+              id="CPU-to-RAM"
+              d="M338.718,783.001l0,31.384l-48.282,-48.283l48.282,-48.282l0,31.383l145.121,0l-0,-31.383l48.282,48.282l-48.282,48.283l-0,-31.384l-145.121,0Z"
+              style="fill: #ffe077; stroke: #000; stroke-width: 4.17px"
+            />
+            <g id="RAM">
+              <text x="528.191px" y="175.554px" style="font-size: 50px">
+                RAM
+              </text>
+              <rect
+                x="532.121"
+                y="207.464"
+                width="431.648"
+                height="1184.98"
+                style="fill: #ebebeb; stroke: #000; stroke-width: 4.17px"
+              />
+              <rect
+                x="583.818"
+                y="252.526"
+                width="332.517"
+                height="258.514"
+                style="fill: #ff9494; stroke: #000; stroke-width: 4.17px"
+              />
+              <rect
+                x="583.818"
+                y="761.972"
+                width="332.517"
+                height="306.416"
+                style="fill: #b3ffa6; stroke: #000; stroke-width: 4.17px"
+              />
+              <rect
+                x="583.818"
+                y="555.635"
+                width="332.517"
+                height="164.114"
+                style="fill: #b4b4b4; stroke: #000; stroke-width: 4.17px"
+              />
+              <rect
+                x="583.818"
+                y="1115.35"
+                width="332.517"
+                height="64.503"
+                style="fill: #b4b4b4; stroke: #000; stroke-width: 4.17px"
+              />
+              <rect
+                x="583.818"
+                y="1226.82"
+                width="332.517"
+                height="34.09"
+                style="fill: #b4b4b4; stroke: #000; stroke-width: 4.17px"
+              />
+              <rect
+                x="583.818"
+                y="1307.61"
+                width="332.517"
+                height="16.507"
+                style="fill: #b4b4b4; stroke: #000; stroke-width: 4.17px"
+              />
+              <text x="653.898px" y="394.417px" style="font-size: 50px">
+                Program
+              </text>
+              <text x="696.402px" y="932.782px" style="font-size: 50px">
+                Data
+              </text>
+            </g>
+            <g id="CPU">
+              <rect
+                x="2.275"
+                y="622.022"
+                width="288.161"
+                height="288.161"
+                style="fill: #ebebeb; stroke: #000; stroke-width: 4.17px"
+              />
+              <text x="94.341px" y="783.998px" style="font-size: 50px">
+                CPU
+              </text>
+            </g>
+          </g>
+        </svg>
+      </figure>
+    </section>
+    <section>
+      <h2 class="deck-only">Mémoire</h2>
+      <ul>
+        <li>Random Access Memory (RAM)</li>
+        <li>Contient le programme et les données utilisée par le processeur</li>
+        <li>Rapide</li>
+        <li>Taille limitée</li>
+        <li>Volatile</li>
+      </ul>
+      <p class="document-only">
+        La mémoire (RAM) contient les instructions du programme et les données
+        qu'il manipule. Sa taille ne dépasse généralement pas quelques
+        giga-octet (Go) et son contenu est temporaire.
+      </p>
+    </section>
+    <section>
+      <h2>Stockage</h2>
+      <figure>
+        <svg width="80%" viewBox="0 0 2045 1534" version="1.1">
+          <g id="All">
+            <g id="CPU-RAM">
+              <path
+                id="CPU-to-RAM"
+                d="M338.718,783.001l0,31.384l-48.282,-48.283l48.282,-48.282l0,31.383l145.121,0l-0,-31.383l48.282,48.282l-48.282,48.283l-0,-31.384l-145.121,0Z"
+                style="fill: #ffe077; stroke: #000; stroke-width: 4.17px"
+              />
+              <g id="RAM">
+                <text x="528.191px" y="175.554px" style="font-size: 50px">
+                  RAM
+                </text>
+                <rect
+                  x="532.121"
+                  y="207.464"
+                  width="431.648"
+                  height="1184.98"
+                  style="fill: #ebebeb; stroke: #000; stroke-width: 4.17px"
+                />
+                <rect
+                  x="583.818"
+                  y="252.526"
+                  width="332.517"
+                  height="258.514"
+                  style="fill: #ff9494; stroke: #000; stroke-width: 4.17px"
+                />
+                <rect
+                  x="583.818"
+                  y="761.972"
+                  width="332.517"
+                  height="306.416"
+                  style="fill: #b3ffa6; stroke: #000; stroke-width: 4.17px"
+                />
+                <rect
+                  x="583.818"
+                  y="555.635"
+                  width="332.517"
+                  height="164.114"
+                  style="fill: #b4b4b4; stroke: #000; stroke-width: 4.17px"
+                />
+                <rect
+                  x="583.818"
+                  y="1115.35"
+                  width="332.517"
+                  height="64.503"
+                  style="fill: #b4b4b4; stroke: #000; stroke-width: 4.17px"
+                />
+                <rect
+                  x="583.818"
+                  y="1226.82"
+                  width="332.517"
+                  height="34.09"
+                  style="fill: #b4b4b4; stroke: #000; stroke-width: 4.17px"
+                />
+                <rect
+                  x="583.818"
+                  y="1307.61"
+                  width="332.517"
+                  height="16.507"
+                  style="fill: #b4b4b4; stroke: #000; stroke-width: 4.17px"
+                />
+                <text x="653.898px" y="394.417px" style="font-size: 50px">
+                  Program
+                </text>
+                <text x="696.402px" y="932.782px" style="font-size: 50px">
+                  Data
+                </text>
+              </g>
+              <g id="CPU">
+                <rect
+                  x="2.275"
+                  y="622.022"
+                  width="288.161"
+                  height="288.161"
+                  style="fill: #ebebeb; stroke: #000; stroke-width: 4.17px"
+                />
+                <text x="94.341px" y="783.998px" style="font-size: 50px">
+                  CPU
+                </text>
+              </g>
+            </g>
+            <path
+              id="RAM-to-Storage"
+              d="M1012.05,783.001l-0,31.384l-48.283,-48.283l48.283,-48.282l-0,31.383l177.592,0l-0,-31.383l48.282,48.282l-48.282,48.283l-0,-31.384l-177.592,0Z"
+              style="fill: #ffe077; stroke: #000; stroke-width: 4.17px"
+            />
+            <g id="Storage">
+              <rect
+                x="1237.93"
+                y="63.338"
+                width="804.003"
+                height="1468.08"
+                style="fill: #ebebeb; stroke: #000; stroke-width: 4.17px"
+              />
+              <g>
+                <path
+                  d="M1367.2,170.51l-0,381.195"
+                  style="fill: none; stroke: #000; stroke-width: 4.17px"
+                />
+                <text x="1512.38px" y="274.44px" style="font-size: 50px">
+                  bin
+                </text>
+                <text x="1583.66px" y="369.202px" style="font-size: 50px">
+                  python.exe
+                </text>
+                <text x="1583.66px" y="458.996px" style="font-size: 50px">
+                  word.exe
+                </text>
+                <text x="1583.66px" y="553.758px" style="font-size: 50px">
+                  vscode.exe
+                </text>
+                <g transform="matrix(1,0,0,1,1277.92,-1283.8)">
+                  <text
+                    x="161.868px"
+                    y="1465.7px"
+                    style="
+                      font-family: monospace;
+                      font-weight: 700;
+                      font-size: 50px;
+                    "
+                  >
+                    C:
+                  </text>
+                  <text
+                    x="237.298px"
+                    y="1465.7px"
+                    style="font-style: italic; font-size: 50px"
+                  >
+                    or
+                  </text>
+                  <text
+                    x="315.648px"
+                    y="1465.7px"
+                    style="
+                      font-family: monospace;
+                      font-weight: 700;
+                      font-size: 50px;
+                    "
+                  >
+                    /
+                  </text>
+                </g>
+                <path
+                  d="M1438.48,256.837l-71.281,0"
+                  style="fill: none; stroke: #000; stroke-width: 4.17px"
+                />
+                <path
+                  d="M1438.48,256.837l0,94.762l71.281,0"
+                  style="fill: none; stroke: #000; stroke-width: 4.17px"
+                />
+                <path
+                  d="M1367.2,551.705l-0,98.368l71.281,0"
+                  style="fill: none; stroke: #000; stroke-width: 4.17px"
+                />
+                <path
+                  d="M1367.2,650.073l-0,98.369l71.281,-0"
+                  style="fill: none; stroke: #000; stroke-width: 4.17px"
+                />
+                <g>
+                  <path
+                    d="M1581.05,1134.23l-0,98.368l71.281,0"
+                    style="fill: none; stroke: #000; stroke-width: 4.17px"
+                  />
+                  <path
+                    d="M1581.05,1233.96l-0,98.369l71.281,-0"
+                    style="fill: none; stroke: #000; stroke-width: 4.17px"
+                  />
+                  <path
+                    d="M1581.05,1332.33l-0,98.368l71.281,-0"
+                    style="fill: none; stroke: #000; stroke-width: 4.17px"
+                  />
+                  <text x="1511.72px" y="765.558px" style="font-size: 50px">
+                    Users
+                  </text>
+                  <text x="1583px" y="860.32px" style="font-size: 50px">
+                    jarvis
+                  </text>
+                  <text x="1583px" y="953.732px" style="font-size: 50px">
+                    lur
+                  </text>
+                  <text x="1655.01px" y="1053.46px" style="font-size: 50px">
+                    Desktop
+                  </text>
+                  <text x="1655.01px" y="1151.83px" style="font-size: 50px">
+                    Documents
+                  </text>
+                  <text x="1726.37px" y="1246.59px" style="font-size: 50px">
+                    lettre.docx
+                  </text>
+                  <text x="1726.37px" y="1344.96px" style="font-size: 50px">
+                    hello.py
+                  </text>
+                  <text x="1726.27px" y="1438.36px" style="font-size: 50px">
+                    logo.jpg
+                  </text>
+                  <text x="1515.04px" y="667.439px" style="font-size: 50px">
+                    Windows
+                  </text>
+                  <path
+                    d="M1509.77,844.533l-71.281,-0"
+                    style="fill: none; stroke: #000; stroke-width: 4.17px"
+                  />
+                  <path
+                    d="M1509.77,941.098l0,193.13"
+                    style="fill: none; stroke: #000; stroke-width: 4.17px"
+                  />
+                  <path
+                    d="M1581.05,1134.23l-71.282,0"
+                    style="fill: none; stroke: #000; stroke-width: 4.17px"
+                  />
+                  <path
+                    d="M1581.05,1035.86l-71.282,-0"
+                    style="fill: none; stroke: #000; stroke-width: 4.17px"
+                  />
+                  <path
+                    d="M1438.48,747.968l0,193.13l71.281,-0"
+                    style="fill: none; stroke: #000; stroke-width: 4.17px"
+                  />
+                  <g>
+                    <path
+                      d="M1465.75,812.376l0,60.708l75.083,-0l0,-53.224l-51.204,0l0,-7.484l-23.879,-0Z"
+                      style="fill: #ffe077; stroke: #000; stroke-width: 4.17px"
+                    />
+                    <path
+                      d="M1553.78,829.246l-75.915,-0l-12.118,43.838l75.915,-0l12.118,-43.838Z"
+                      style="fill: #ffe077; stroke: #000; stroke-width: 4.17px"
+                    />
+                  </g>
+                  <g>
+                    <path
+                      d="M1465.75,910.744l0,60.708l75.083,-0l0,-53.224l-51.204,0l0,-7.484l-23.879,-0Z"
+                      style="fill: #ffe077; stroke: #000; stroke-width: 4.17px"
+                    />
+                    <path
+                      d="M1553.78,927.614l-75.915,-0l-12.118,43.838l75.915,-0l12.118,-43.838Z"
+                      style="fill: #ffe077; stroke: #000; stroke-width: 4.17px"
+                    />
+                  </g>
+                  <g>
+                    <path
+                      d="M1537.03,1005.51l0,60.708l75.084,-0l-0,-53.224l-51.204,0l-0,-7.484l-23.88,-0Z"
+                      style="fill: #ffe077; stroke: #000; stroke-width: 4.17px"
+                    />
+                    <path
+                      d="M1625.06,1022.38l-75.915,-0l-12.118,43.838l75.915,-0l12.118,-43.838Z"
+                      style="fill: #ffe077; stroke: #000; stroke-width: 4.17px"
+                    />
+                  </g>
+                  <g>
+                    <path
+                      d="M1537.03,1103.87l0,60.708l75.084,0l-0,-53.223l-51.204,-0l-0,-7.485l-23.88,0Z"
+                      style="fill: #ffe077; stroke: #000; stroke-width: 4.17px"
+                    />
+                    <path
+                      d="M1625.06,1120.74l-75.915,0l-12.118,43.838l75.915,0l12.118,-43.838Z"
+                      style="fill: #ffe077; stroke: #000; stroke-width: 4.17px"
+                    />
+                  </g>
+                  <g>
+                    <path
+                      d="M1394.47,619.482l-0,60.708l75.083,0l-0,-53.223l-51.204,-0l0,-7.485l-23.879,0Z"
+                      style="fill: #ffe077; stroke: #000; stroke-width: 4.17px"
+                    />
+                    <path
+                      d="M1482.5,636.352l-75.914,0l-12.118,43.838l75.915,0l12.117,-43.838Z"
+                      style="fill: #ffe077; stroke: #000; stroke-width: 4.17px"
+                    />
+                  </g>
+                  <g>
+                    <path
+                      d="M1394.47,717.614l-0,60.708l75.083,-0l-0,-53.224l-51.204,0l0,-7.484l-23.879,-0Z"
+                      style="fill: #ffe077; stroke: #000; stroke-width: 4.17px"
+                    />
+                    <path
+                      d="M1482.5,734.484l-75.914,-0l-12.118,43.838l75.915,-0l12.117,-43.838Z"
+                      style="fill: #ffe077; stroke: #000; stroke-width: 4.17px"
+                    />
+                  </g>
+                  <g>
+                    <rect
+                      x="1623.82"
+                      y="1191.69"
+                      width="57.025"
+                      height="74.608"
+                      style="fill: #dffffc; stroke: #000; stroke-width: 4.17px"
+                    />
+                    <path
+                      d="M1670.39,1205.11l-36.116,-0"
+                      style="fill: none; stroke: #000; stroke-width: 4.17px"
+                    />
+                    <path
+                      d="M1670.39,1217.47l-36.116,0"
+                      style="fill: none; stroke: #000; stroke-width: 4.17px"
+                    />
+                    <path
+                      d="M1670.39,1229.11l-36.116,-0"
+                      style="fill: none; stroke: #000; stroke-width: 4.17px"
+                    />
+                    <path
+                      d="M1670.39,1240.99l-36.116,0"
+                      style="fill: none; stroke: #000; stroke-width: 4.17px"
+                    />
+                    <path
+                      d="M1670.39,1252.87l-36.116,0"
+                      style="fill: none; stroke: #000; stroke-width: 4.17px"
+                    />
+                  </g>
+                  <g>
+                    <rect
+                      x="1623.82"
+                      y="1290.06"
+                      width="57.025"
+                      height="74.608"
+                      style="fill: #dffffc; stroke: #000; stroke-width: 4.17px"
+                    />
+                    <path
+                      d="M1670.39,1303.48l-36.116,0"
+                      style="fill: none; stroke: #000; stroke-width: 4.17px"
+                    />
+                    <path
+                      d="M1670.39,1315.84l-36.116,-0"
+                      style="fill: none; stroke: #000; stroke-width: 4.17px"
+                    />
+                    <path
+                      d="M1670.39,1327.48l-36.116,0"
+                      style="fill: none; stroke: #000; stroke-width: 4.17px"
+                    />
+                    <path
+                      d="M1670.39,1339.36l-36.116,-0"
+                      style="fill: none; stroke: #000; stroke-width: 4.17px"
+                    />
+                    <path
+                      d="M1670.39,1351.24l-36.116,-0"
+                      style="fill: none; stroke: #000; stroke-width: 4.17px"
+                    />
+                  </g>
+                  <g>
+                    <rect
+                      x="1623.82"
+                      y="1388.42"
+                      width="57.025"
+                      height="74.608"
+                      style="fill: #dffffc; stroke: #000; stroke-width: 4.17px"
+                    />
+                    <path
+                      d="M1670.39,1401.85l-36.116,0"
+                      style="fill: none; stroke: #000; stroke-width: 4.17px"
+                    />
+                    <path
+                      d="M1670.39,1414.2l-36.116,-0"
+                      style="fill: none; stroke: #000; stroke-width: 4.17px"
+                    />
+                    <path
+                      d="M1670.39,1425.85l-36.116,-0"
+                      style="fill: none; stroke: #000; stroke-width: 4.17px"
+                    />
+                    <path
+                      d="M1670.39,1437.73l-36.116,-0"
+                      style="fill: none; stroke: #000; stroke-width: 4.17px"
+                    />
+                    <path
+                      d="M1670.39,1449.61l-36.116,-0"
+                      style="fill: none; stroke: #000; stroke-width: 4.17px"
+                    />
+                  </g>
+                </g>
+                <g>
+                  <path
+                    d="M1323.19,131.721l-0,60.708l75.083,0l-0,-53.223l-51.204,-0l-0,-7.485l-23.879,0Z"
+                    style="fill: #ffe077; stroke: #000; stroke-width: 4.17px"
+                  />
+                  <path
+                    d="M1411.22,148.591l-75.915,0l-12.117,43.838l75.914,0l12.118,-43.838Z"
+                    style="fill: #ffe077; stroke: #000; stroke-width: 4.17px"
+                  />
+                </g>
+                <g>
+                  <path
+                    d="M1394.47,226.483l-0,60.708l75.083,0l-0,-53.223l-51.204,-0l0,-7.485l-23.879,0Z"
+                    style="fill: #ffe077; stroke: #000; stroke-width: 4.17px"
+                  />
+                  <path
+                    d="M1482.5,243.353l-75.914,0l-12.118,43.838l75.915,0l12.117,-43.838Z"
+                    style="fill: #ffe077; stroke: #000; stroke-width: 4.17px"
+                  />
+                </g>
+                <g>
+                  <rect
+                    x="1481.25"
+                    y="314.296"
+                    width="57.025"
+                    height="74.608"
+                    style="fill: #dffffc; stroke: #000; stroke-width: 4.17px"
+                  />
+                  <path
+                    d="M1511.87,329.961c-1.398,-0.136 -2.807,-0.136 -4.205,-0l-0.779,4.326c-1.119,0.186 -2.217,0.48 -3.279,0.878l-2.838,-3.357c-1.279,0.582 -2.499,1.286 -3.642,2.103l1.488,4.136c-0.875,0.721 -1.679,1.525 -2.4,2.4l-4.136,-1.488c-0.817,1.143 -1.521,2.363 -2.103,3.642l3.357,2.838c-0.398,1.062 -0.692,2.16 -0.878,3.279l-4.326,0.779c-0.136,1.398 -0.136,2.807 -0,4.205l4.326,0.779c0.186,1.119 0.48,2.217 0.878,3.279l-3.357,2.838c0.582,1.279 1.286,2.499 2.103,3.642l4.136,-1.489c0.721,0.876 1.525,1.68 2.4,2.401l-1.488,4.136c1.143,0.817 2.363,1.521 3.642,2.103l2.838,-3.357c1.062,0.398 2.16,0.692 3.279,0.878l0.779,4.326c1.398,0.136 2.807,0.136 4.205,0l0.779,-4.326c1.119,-0.186 2.217,-0.48 3.279,-0.878l2.838,3.357c1.279,-0.582 2.499,-1.286 3.642,-2.103l-1.489,-4.136c0.876,-0.721 1.68,-1.525 2.401,-2.401l4.136,1.489c0.817,-1.143 1.521,-2.363 2.103,-3.642l-3.357,-2.838c0.398,-1.062 0.692,-2.16 0.878,-3.279l4.326,-0.779c0.136,-1.398 0.136,-2.807 0,-4.205l-4.326,-0.779c-0.186,-1.119 -0.48,-2.217 -0.878,-3.279l3.357,-2.838c-0.582,-1.279 -1.286,-2.499 -2.103,-3.642l-4.136,1.488c-0.721,-0.875 -1.525,-1.679 -2.401,-2.4l1.489,-4.136c-1.143,-0.817 -2.363,-1.521 -3.642,-2.103l-2.838,3.357c-1.062,-0.398 -2.16,-0.692 -3.279,-0.878l-0.779,-4.326Zm-2.103,14.079c4.172,0 7.559,3.388 7.559,7.559c0,4.172 -3.387,7.559 -7.559,7.559c-4.171,0 -7.559,-3.387 -7.559,-7.559c0,-4.171 3.388,-7.559 7.559,-7.559Z"
+                    style="fill: #6191ff; stroke: #000; stroke-width: 4.17px"
+                  />
+                </g>
+                <path
+                  d="M1438.13,351.599l-0,94.762l71.281,0"
+                  style="fill: none; stroke: #000; stroke-width: 4.17px"
+                />
+                <g>
+                  <rect
+                    x="1480.9"
+                    y="409.058"
+                    width="57.025"
+                    height="74.608"
+                    style="fill: #dffffc; stroke: #000; stroke-width: 4.17px"
+                  />
+                  <path
+                    d="M1511.51,424.723c-1.399,-0.136 -2.807,-0.136 -4.206,-0l-0.779,4.326c-1.119,0.186 -2.217,0.48 -3.279,0.878l-2.837,-3.357c-1.28,0.582 -2.499,1.286 -3.642,2.103l1.488,4.136c-0.876,0.721 -1.68,1.525 -2.401,2.4l-4.135,-1.488c-0.817,1.143 -1.522,2.363 -2.103,3.642l3.357,2.838c-0.398,1.062 -0.693,2.16 -0.879,3.279l-4.326,0.779c-0.136,1.398 -0.136,2.807 0,4.205l4.326,0.779c0.186,1.119 0.481,2.217 0.879,3.279l-3.357,2.838c0.581,1.279 1.286,2.499 2.103,3.642l4.135,-1.489c0.721,0.876 1.525,1.68 2.401,2.401l-1.488,4.136c1.143,0.817 2.362,1.521 3.642,2.103l2.837,-3.357c1.062,0.398 2.16,0.692 3.279,0.878l0.779,4.326c1.399,0.136 2.807,0.136 4.206,0l0.779,-4.326c1.119,-0.186 2.217,-0.48 3.279,-0.878l2.838,3.357c1.279,-0.582 2.498,-1.286 3.641,-2.103l-1.488,-4.136c0.876,-0.721 1.68,-1.525 2.401,-2.401l4.136,1.489c0.816,-1.143 1.521,-2.363 2.102,-3.642l-3.357,-2.838c0.398,-1.062 0.693,-2.16 0.879,-3.279l4.326,-0.779c0.136,-1.398 0.136,-2.807 -0,-4.205l-4.326,-0.779c-0.186,-1.119 -0.481,-2.217 -0.879,-3.279l3.357,-2.838c-0.581,-1.279 -1.286,-2.499 -2.102,-3.642l-4.136,1.488c-0.721,-0.875 -1.525,-1.679 -2.401,-2.4l1.488,-4.136c-1.143,-0.817 -2.362,-1.521 -3.641,-2.103l-2.838,3.357c-1.062,-0.398 -2.16,-0.692 -3.279,-0.878l-0.779,-4.326Zm-2.103,14.079c4.172,0 7.559,3.388 7.559,7.559c-0,4.172 -3.387,7.559 -7.559,7.559c-4.172,0 -7.559,-3.387 -7.559,-7.559c0,-4.171 3.387,-7.559 7.559,-7.559Z"
+                    style="fill: #6191ff; stroke: #000; stroke-width: 4.17px"
+                  />
+                </g>
+                <path
+                  d="M1438.13,446.361l-0,94.762l71.281,0"
+                  style="fill: none; stroke: #000; stroke-width: 4.17px"
+                />
+                <g>
+                  <rect
+                    x="1480.9"
+                    y="503.82"
+                    width="57.025"
+                    height="74.608"
+                    style="fill: #dffffc; stroke: #000; stroke-width: 4.17px"
+                  />
+                  <path
+                    d="M1511.51,519.485c-1.399,-0.136 -2.807,-0.136 -4.206,-0l-0.779,4.326c-1.119,0.186 -2.217,0.48 -3.279,0.878l-2.837,-3.357c-1.28,0.582 -2.499,1.286 -3.642,2.103l1.488,4.136c-0.876,0.721 -1.68,1.525 -2.401,2.4l-4.135,-1.488c-0.817,1.143 -1.522,2.363 -2.103,3.642l3.357,2.838c-0.398,1.062 -0.693,2.16 -0.879,3.279l-4.326,0.779c-0.136,1.398 -0.136,2.807 0,4.205l4.326,0.779c0.186,1.119 0.481,2.217 0.879,3.279l-3.357,2.838c0.581,1.279 1.286,2.499 2.103,3.642l4.135,-1.488c0.721,0.875 1.525,1.679 2.401,2.4l-1.488,4.136c1.143,0.817 2.362,1.521 3.642,2.103l2.837,-3.357c1.062,0.398 2.16,0.692 3.279,0.878l0.779,4.326c1.399,0.136 2.807,0.136 4.206,0l0.779,-4.326c1.119,-0.186 2.217,-0.48 3.279,-0.878l2.838,3.357c1.279,-0.582 2.498,-1.286 3.641,-2.103l-1.488,-4.136c0.876,-0.721 1.68,-1.525 2.401,-2.4l4.136,1.488c0.816,-1.143 1.521,-2.363 2.102,-3.642l-3.357,-2.838c0.398,-1.062 0.693,-2.16 0.879,-3.279l4.326,-0.779c0.136,-1.398 0.136,-2.807 -0,-4.205l-4.326,-0.779c-0.186,-1.119 -0.481,-2.217 -0.879,-3.279l3.357,-2.838c-0.581,-1.279 -1.286,-2.499 -2.102,-3.642l-4.136,1.488c-0.721,-0.875 -1.525,-1.679 -2.401,-2.4l1.488,-4.136c-1.143,-0.817 -2.362,-1.521 -3.641,-2.103l-2.838,3.357c-1.062,-0.398 -2.16,-0.692 -3.279,-0.878l-0.779,-4.326Zm-2.103,14.08c4.172,-0 7.559,3.387 7.559,7.558c-0,4.172 -3.387,7.559 -7.559,7.559c-4.172,0 -7.559,-3.387 -7.559,-7.559c0,-4.171 3.387,-7.558 7.559,-7.558Z"
+                    style="fill: #6191ff; stroke: #000; stroke-width: 4.17px"
+                  />
+                </g>
+              </g>
+              <text x="1235.44px" y="37.192px" style="font-size: 50px">
+                Storage
+              </text>
+            </g>
+          </g>
+        </svg>
+      </figure>
+    </section>
+    <section>
+      <h2 class="deck-only">Stockage</h2>
+      <ul>
+        <li>Solid State Drive (SSD) ou Hard Disk Drive (HDD) "disque dur"</li>
+        <li>Contient des programmes et des données</li>
+        <li>Lent</li>
+        <li>Taille importante</li>
+        <li>Persistant</li>
+        <li>Organisé en fichiers et répertoires</li>
+      </ul>
+      <p class="document-only">
+        Le stockage de masse (SSD, HDD, Clé USB, carte SD, ...) contient des
+        fichiers organisés dans une hiérarchie de dossiers. Les opérations
+        d'écriture et de lecture de fichiers sont beaucoup plus lentes que les
+        accès à des données en RAM. Les stockages de masse n'ont pas besoin
+        d'être alimenté pour conserver les données et peuvent contenir jusqu'à
+        plusieurs tera-octet (To).
+      </p>
+    </section>
+    <section>
+      <h2>Terminal</h2>
+      <p class="document-only">
+        Une bonne partie de l'utilisation d'un ordinateur passe par la création,
+        l'édition et la gestion de fichiers dans l'arborescence de dossiers du
+        stockage de masse. Bien que de nos jour la plupart des gens fasse ces
+        opérations en utilisant une interface graphique, il est aussi possible
+        de les réaliser en ligne de commande dans un terminal.
+      </p>
+
+      <p class="document-only">
+        Sous Windows, il y a plusieurs programme permettant d'utiliser les
+        lignes de commande :
+      </p>
+      <ul class="document-only">
+        <li>cmd: invite de commande</li>
+        <li>Powershell</li>
+        <li>Windows Terminal</li>
+      </ul>
+
+      <p class="document-only">
+        Sous MacOS, le programme s'appelle simplement "terminal"
+      </p>
+
+      <pre class="terminal">
+        <b>&gt; pwd</b>
+        C:\Users\lur
+        <b>&gt; ls</b>
+        Desktop Documents
+        <b>&gt; cd Documents</b>
+        <b>&gt; pwd</b>
+        C:\Users\lur\Documents
+      </pre>
+
+      <p class="document-only">
+        Les développeurs et les ingénieurs sont régulièrement amenés à utiliser
+        le terminal. Il est donc important d'apprendre les bases de son
+        utilisation.
+      </p>
+
+      <p class="document-only">
+        La première notion à intégré est la notion de répertoire courant.
+        Lorsqu'on utilise le terminal, il y a toujours un dossier de
+        l'arborescence qui est considéré comme notre position actuelle. On peut
+        afficher le chemin de ce dossier avec la commande <code>pwd</code> pour
+        <em>print working directory</em>. Beaucoup de commandes agissent
+        directement sur le répertoire courant.
+      </p>
+
+      <p class="document-only">
+        La commande <code>ls</code> permet de lister le contenu du répertoire
+        courant
+      </p>
+
+      <p class="document-only">
+        La commande <code>cd</code> (<em>change directory</em>) permet de
+        changer le répertoire courant. On indique le nouveau répertoire courant
+        par son chemin relatif ou absolu
+      </p>
+
+      <ul class="document-only">
+        <li>
+          Un chemin absolu indique un éléments de l'arborescence de fichiers en
+          partant de la racine de celle-ci :
+          <ul>
+            <li>Sous Windows: <code>C:\Users\lur</code></li>
+            <li>Sous MacOS ou Linux: <code>/Users/lur</code></li>
+          </ul>
+        </li>
+        <li>
+          Un chemin relatif l'indique en partant du répertoire courant. Si le
+          répertoire courant est <code>C:\Users</code> alors le chemin relatif
+          <code>lur\Documents\hello.py</code> correspond au chemin absolu
+          <code>C:\Users\lur\Documents\hello.py</code>
+        </li>
+      </ul>
+
+      <p class="document-only">Remarques:</p>
+      <ul class="document-only">
+        <li>
+          Dans un chemin, l'utilisation de <code>..</code> permet de remonter
+          d'un repertoire. La commande <code>cd ..</code> permet donc de passer
+          au répertoire parent. Un <code>.</code> seul représente le répertoire
+          courant. Le chemin relatif mentionné plus haut peut donc aussi
+          s'écrire <code>.\lur\Documents\hello.py</code>.
+        </li>
+        <li>
+          Windows utilise des anti-slash (<code>\</code>) pour séparer les
+          différentes parties du chemin alors que MacOS et Linux utilisent des
+          slash (<code>/</code>)
+        </li>
+        <li>
+          <p>
+            Dans la plupart des terminaux, la touche tabulation (<code
+              >Tab ↹</code
+            >) permet d'auto-compléter les éléments des chemins
+          </p>
+          <figure id="keyboard">
+            <svg
+              id="svg2"
+              xmlns:dc="http://purl.org/dc/elements/1.1/"
+              xmlns:cc="http://creativecommons.org/ns#"
+              xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+              xmlns:svg="http://www.w3.org/2000/svg"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+              xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+              version="1.0"
+              sodipodi:version="0.32"
+              inkscape:version="0.48.0 r9654"
+              inkscape:output_extension="org.inkscape.output.svg.inkscape"
+              xml:space="preserve"
+              sodipodi:docname="KB_Belgique 800px.svg"
+              viewBox="0 0 200 150"
+              width="50%"
+              style="display: inline"
+            >
+              <defs id="defs4">
+                <linearGradient
+                  id="linearGradient1035"
+                  inkscape:collect="always"
+                >
+                  <stop
+                    id="stop1031"
+                    offset="0"
+                    style="stop-color: #181818; stop-opacity: 1"
+                  />
+                  <stop
+                    id="stop1033"
+                    offset="1"
+                    style="stop-color: #e7e7e7; stop-opacity: 0"
+                  />
+                </linearGradient>
+                <linearGradient
+                  id="linearGradient1037"
+                  xlink:href="#linearGradient1035"
+                  gradientUnits="userSpaceOnUse"
+                  inkscape:collect="always"
+                  x1="79.152"
+                  y1="184.48"
+                  x2="104.15"
+                  y2="204.48"
+                  gradientTransform="translate(4.348,21.516)"
+                />
+
+                <marker
+                  id="TriangleOutM"
+                  inkscape:stockid="TriangleOutM"
+                  style="overflow: visible"
+                  orient="auto"
+                  refX="0"
+                  refY="0"
+                >
+                  <path
+                    id="path4356"
+                    style="
+                      fill-rule: evenodd;
+                      stroke: black;
+                      stroke-width: 1pt;
+                      marker-start: none;
+                    "
+                    d="M 5.77,0 -2.88,5 -2.88,-5 5.77,0 z"
+                    transform="scale(0.4,0.4)"
+                    inkscape:connector-curvature="0"
+                  />
+                </marker>
+              </defs>
+              <!-- ========  Keyboard background ======== -->
+              <g
+                inkscape:groupmode="layer"
+                id="layer1"
+                inkscape:label="Background"
+                style="display: inline"
+                sodipodi:insensitive="true"
+              >
+                <rect
+                  id="Bckgrd"
+                  x="0"
+                  y="0"
+                  width="800"
+                  height="247"
+                  style="fill: white; stroke: none"
+                />
+              </g>
+
+              <!-- ========     Keys      ======== -->
+              <g
+                inkscape:groupmode="layer"
+                id="layer2"
+                inkscape:label="Keys"
+                style="display: inline"
+                sodipodi:insensitive="true"
+              >
+                <g id="GlyphKey">
+                  <!-- Num keys -->
+                  <!-- Standard letters keys -->
+                  <!-- Specials glyphs keys -->
+                  <!-- Ponctuation keys -->
+                  <rect
+                    id="K_kb2a"
+                    x="2"
+                    y="2"
+                    width="48"
+                    height="44"
+                    rx="6"
+                    ry="6"
+                  />
+                  <use
+                    id="K_kb2b"
+                    xlink:href="#K_kb2a"
+                    transform="translate(54,0)"
+                  />
+                  <use
+                    id="K_kb2c"
+                    xlink:href="#K_kb2a"
+                    transform="translate(108,0)"
+                  />
+                  <use
+                    id="K_kb2d"
+                    xlink:href="#K_kb2a"
+                    transform="translate(162,0)"
+                  />
+                  <use
+                    id="K_kb2e"
+                    xlink:href="#K_kb2a"
+                    transform="translate(216,0)"
+                  />
+                  <use
+                    id="K_kb2f"
+                    xlink:href="#K_kb2a"
+                    transform="translate(270,0)"
+                  />
+                  <use
+                    id="K_kb2g"
+                    xlink:href="#K_kb2a"
+                    transform="translate(324,0)"
+                  />
+                  <use
+                    id="K_kb2h"
+                    xlink:href="#K_kb2a"
+                    transform="translate(378,0)"
+                  />
+                  <use
+                    id="K_kb2i"
+                    xlink:href="#K_kb2a"
+                    transform="translate(432,0)"
+                  />
+                  <use
+                    id="K_kb2j"
+                    xlink:href="#K_kb2a"
+                    transform="translate(486,0)"
+                  />
+                  <use
+                    id="K_kb2k"
+                    xlink:href="#K_kb2a"
+                    transform="translate(540,0)"
+                  />
+                  <use
+                    id="K_kb2l"
+                    xlink:href="#K_kb2a"
+                    transform="translate(594,0)"
+                  />
+                  <use
+                    id="K_kb2m"
+                    xlink:href="#K_kb2a"
+                    transform="translate(648,0)"
+                  />
+
+                  <use
+                    id="K_kb3b"
+                    xlink:href="#K_kb2a"
+                    transform="translate(80,50)"
+                  />
+                  <use
+                    id="K_kb3c"
+                    xlink:href="#K_kb2a"
+                    transform="translate(134,50)"
+                  />
+                  <use
+                    id="K_kb3d"
+                    xlink:href="#K_kb2a"
+                    transform="translate(188,50)"
+                  />
+                  <use
+                    id="K_kb3e"
+                    xlink:href="#K_kb2a"
+                    transform="translate(242,50)"
+                  />
+                  <use
+                    id="K_kb3f"
+                    xlink:href="#K_kb2a"
+                    transform="translate(296,50)"
+                  />
+                  <use
+                    id="K_kb3g"
+                    xlink:href="#K_kb2a"
+                    transform="translate(350,50)"
+                  />
+                  <use
+                    id="K_kb3h"
+                    xlink:href="#K_kb2a"
+                    transform="translate(404,50)"
+                  />
+                  <use
+                    id="K_kb3i"
+                    xlink:href="#K_kb2a"
+                    transform="translate(458,50)"
+                  />
+                  <use
+                    id="K_kb3j"
+                    xlink:href="#K_kb2a"
+                    transform="translate(512,50)"
+                  />
+                  <use
+                    id="K_kb3k"
+                    xlink:href="#K_kb2a"
+                    transform="translate(566,50)"
+                  />
+                  <use
+                    id="K_kb3l"
+                    xlink:href="#K_kb2a"
+                    transform="translate(620,50)"
+                  />
+                  <use
+                    id="K_kb3m"
+                    xlink:href="#K_kb2a"
+                    transform="translate(674,50)"
+                  />
+
+                  <use
+                    id="K_kb4b"
+                    xlink:href="#K_kb2a"
+                    transform="translate(96,100)"
+                  />
+                  <use
+                    id="K_kb4c"
+                    xlink:href="#K_kb2a"
+                    transform="translate(150,100)"
+                  />
+                  <use
+                    id="K_kb4d"
+                    xlink:href="#K_kb2a"
+                    transform="translate(204,100)"
+                  />
+                  <use
+                    id="K_kb4e"
+                    xlink:href="#K_kb2a"
+                    transform="translate(258,100)"
+                  />
+                  <use
+                    id="K_kb4f"
+                    xlink:href="#K_kb2a"
+                    transform="translate(312,100)"
+                  />
+                  <use
+                    id="K_kb4g"
+                    xlink:href="#K_kb2a"
+                    transform="translate(366,100)"
+                  />
+                  <use
+                    id="K_kb4h"
+                    xlink:href="#K_kb2a"
+                    transform="translate(420,100)"
+                  />
+                  <use
+                    id="K_kb4i"
+                    xlink:href="#K_kb2a"
+                    transform="translate(474,100)"
+                  />
+                  <use
+                    id="K_kb4j"
+                    xlink:href="#K_kb2a"
+                    transform="translate(528,100)"
+                  />
+                  <use
+                    id="K_kb4k"
+                    xlink:href="#K_kb2a"
+                    transform="translate(582,100)"
+                  />
+                  <use
+                    id="K_kb4l"
+                    xlink:href="#K_kb2a"
+                    transform="translate(636,100)"
+                  />
+                  <use
+                    id="K_kb4m"
+                    xlink:href="#K_kb2a"
+                    transform="translate(690,100)"
+                  />
+
+                  <use
+                    id="K_kb5b"
+                    xlink:href="#K_kb2a"
+                    transform="translate(62,150)"
+                  />
+                  <use
+                    id="K_kb5c"
+                    xlink:href="#K_kb2a"
+                    transform="translate(116,150)"
+                  />
+                  <use
+                    id="K_kb5d"
+                    xlink:href="#K_kb2a"
+                    transform="translate(170,150)"
+                  />
+                  <use
+                    id="K_kb5e"
+                    xlink:href="#K_kb2a"
+                    transform="translate(224,150)"
+                  />
+                  <use
+                    id="K_kb5f"
+                    xlink:href="#K_kb2a"
+                    transform="translate(278,150)"
+                  />
+                  <use
+                    id="K_kb5g"
+                    xlink:href="#K_kb2a"
+                    transform="translate(332,150)"
+                  />
+                  <use
+                    id="K_kb5h"
+                    xlink:href="#K_kb2a"
+                    transform="translate(386,150)"
+                  />
+                  <use
+                    id="K_kb5i"
+                    xlink:href="#K_kb2a"
+                    transform="translate(440,150)"
+                  />
+                  <use
+                    id="K_kb5j"
+                    xlink:href="#K_kb2a"
+                    transform="translate(494,150)"
+                  />
+                  <use
+                    id="K_kb5k"
+                    xlink:href="#K_kb2a"
+                    transform="translate(548,150)"
+                  />
+                  <use
+                    id="K_kb5l"
+                    xlink:href="#K_kb2a"
+                    transform="translate(602,150)"
+                  />
+
+                  <rect
+                    id="K_kb6d"
+                    x="188"
+                    y="202"
+                    width="364"
+                    height="44"
+                    rx="6"
+                    ry="6"
+                  />
+                </g>
+
+                <!-- Modification keys -->
+                <g id="ModifKey">
+                  <rect
+                    id="K_kb4a"
+                    x="2"
+                    y="102"
+                    width="90"
+                    height="44"
+                    rx="6"
+                    ry="6"
+                  />
+                  <rect
+                    id="K_kb5a"
+                    x="2"
+                    y="152"
+                    width="56"
+                    height="44"
+                    rx="6"
+                    ry="6"
+                  />
+                  <rect
+                    id="K_kb5m"
+                    x="658"
+                    y="152"
+                    width="142"
+                    height="44"
+                    rx="6"
+                    ry="6"
+                  />
+                  <rect
+                    id="K_kb6k"
+                    x="558"
+                    y="202"
+                    width="56"
+                    height="44"
+                    rx="6"
+                    ry="6"
+                    class="K_AltGr"
+                  />
+                </g>
+
+                <!-- Others keys  -->
+                <g id="OtherKey">
+                  <!-- Backspace  -->
+                  <rect
+                    id="K_kb2n"
+                    x="704"
+                    y="2"
+                    width="96"
+                    height="44"
+                    rx="6"
+                    ry="6"
+                  />
+
+                  <!-- Tabulation -->
+                  <rect
+                    id="K_kb3a"
+                    x="2"
+                    y="52"
+                    width="74"
+                    height="44"
+                    rx="6"
+                    ry="6"
+                  />
+                  <!-- Enter key -->
+                  <path
+                    id="K_kb3n"
+                    sodipodi:nodetypes="ssssssssccss"
+                    d="M 736.16,51.79 C 732.72,51.79 730.23,54.35 730.22,57.03 L 730.16,89.63 C 730.15,92.94 732.85,96 736.16,96
+                        L 740.15,96 C 743.231,96 745.85,99.04 745.85,101.59 745.85,104.14 746.09,126.16 746.09,139.44 746.09,141.43
+                           748.11,145.41 752.09,145.41 766.03,145.41 779.97,145.41 793.91,145.41 797.89,145.41 799.88,141.43 799.88,139.44
+                           799.88,112.22 799.88,85 799.88,57.78 799.88,55.79 797.89,51.78 793.91,51.78 z"
+                  />
+
+                  <!-- Ctrl 1 -->
+                  <rect
+                    id="K_kb6a"
+                    x="2"
+                    y="202"
+                    width="56"
+                    height="44"
+                    rx="6"
+                    ry="6"
+                  />
+                  <!-- Win  1 -->
+                  <rect
+                    id="K_kb6b"
+                    x="64"
+                    y="202"
+                    width="56"
+                    height="44"
+                    rx="6"
+                    ry="6"
+                  />
+                  <!-- Alt    -->
+                  <rect
+                    id="K_kb6c"
+                    x="126"
+                    y="202"
+                    width="56"
+                    height="44"
+                    rx="6"
+                    ry="6"
+                  />
+                  <!-- Win  2 -->
+                  <rect
+                    id="K_kb6l"
+                    x="620"
+                    y="202"
+                    width="56"
+                    height="44"
+                    rx="6"
+                    ry="6"
+                  />
+                  <!-- Menu   -->
+                  <rect
+                    id="K_kb6m"
+                    x="682"
+                    y="202"
+                    width="56"
+                    height="44"
+                    rx="6"
+                    ry="6"
+                  />
+                  <!-- Ctrl 2 -->
+                  <rect
+                    id="K_kb6n"
+                    x="744"
+                    y="202"
+                    width="56"
+                    height="44"
+                    rx="6"
+                    ry="6"
+                  />
+                </g>
+              </g>
+              <!-- ========     Key signs    ======== -->
+              <g
+                inkscape:groupmode="layer"
+                id="DrawedInscr"
+                inkscape:label="DrawedInscr"
+                style="display: inline"
+              >
+                <!--  Logo keys : neutral window -->
+                <rect
+                  id="S_kb6b"
+                  x="80"
+                  y="214"
+                  width="25"
+                  height="20"
+                  style="
+                    fill: url(#linearGradient1037);
+                    fill-opacity: 1;
+                    stroke: White;
+                    stroke-width: 1;
+                    stroke-linecap: round;
+                    stroke-linejoin: round;
+                  "
+                />
+
+                <!-- Windows keys - - >
+                  <g id="S_kb6b" style="stroke:white;stroke-width:0.4">
+                     <path id="WinLogo-1" style="fill:#666"
+                           d="M 75.38,223.05 C 78.27,222 81.28,222.2 84.41,223.34 L 86.84,216.82 C 83.92,215.72 80.95,215.23 77.75,216.6 L 75.38,223.05 z"
+                           sodipodi:nodetypes="ccccc" inkscape:connector-curvature="0" />
+                     <path id="WinLogo-2" style="fill:#9b9b9b"
+                           d="M 87.6,216.98 C 91.71,218.37 94.64,217.9 96.86,217.44 L 94.48,223.7 C 90.21,225.27 87.64,224.25 85.14,223.55 L 87.6,216.98 z"
+                           sodipodi:nodetypes="ccccc" inkscape:connector-curvature="0" />
+                     <path id="WinLogo-3" style="fill:#c1c1c1"
+                           d="M 84.94,224.13 C 87.69,225.01 90.58,225.56 94.22,224.43 L 91.29,231.55 C 87.82,232.87 85.18,232.42 82.23,231.37 L 84.94,224.13 z"
+                           sodipodi:nodetypes="ccccc" inkscape:connector-curvature="0" />
+                     <path id="WinLogo-4" style="fill:#555"
+                           d="M 72.38,230.91 C 75.31,229.76 78.33,230 81.41,231.16 L 84.14,223.9 C 82.86,223.47 80,222.29 75,223.82 L 72.38,230.91 z"
+                           sodipodi:nodetypes="ccccc" inkscape:connector-curvature="0" />
+                     <text id="WinLogo-5" x="94" y="235" class="T_size_s">™</text>
+                  </g> -->
+
+                <use
+                  id="S_kb6l"
+                  xlink:href="#S_kb6b"
+                  transform="translate(556,0)"
+                  x="0"
+                  y="0"
+                  width="1"
+                  height="1"
+                />
+                <!--   Menu key     -->
+                <g id="S_kb6m">
+                  <rect
+                    id="Menu-1"
+                    x="690"
+                    y="214"
+                    width="16"
+                    height="20"
+                    style="
+                      fill: #d2cfcf;
+                      stroke: black;
+                      stroke-width: 1;
+                      stroke-linecap: round;
+                      stroke-linejoin: round;
+                    "
+                  />
+                  <path
+                    id="Menu-2"
+                    style="
+                      fill: none;
+                      stroke: black;
+                      stroke-width: 4;
+                      stroke-linecap: square;
+                      stroke-linejoin: miter;
+                    "
+                    d="M 691.5,214 704.5,214 M 691.5,219 704.5,219"
+                  />
+                  <path
+                    id="Menu-3"
+                    style="
+                      fill: none;
+                      stroke: black;
+                      stroke-width: 2;
+                      stroke-linecap: square;
+                      stroke-linejoin: miter;
+                    "
+                    d="M 693,223 703,223 M 693,227 703,227 M 693,231 703,231"
+                  />
+                  <path
+                    id="Menu-4"
+                    style="
+                      fill: none;
+                      stroke: #d2cfcf;
+                      stroke-width: 2;
+                      stroke-linecap: square;
+                      stroke-linejoin: miter;
+                    "
+                    d="M 693,219 703,219"
+                  />
+                  <path
+                    id="Menu-arrow"
+                    style="
+                      fill: #d2cfcf;
+                      stroke: black;
+                      stroke-width: 1.4;
+                      stroke-linecap: butt;
+                      stroke-linejoin: round;
+                    "
+                    d="M 706,231 708,228 712,232 714,230 710,226 712,224 701,219 706,231 z"
+                    sodipodi:nodetypes="cccccccc"
+                  />
+                </g>
+                <!--    Backspace     -->
+                <path
+                  id="S_kb2n"
+                  style="
+                    fill: none;
+                    stroke: black;
+                    stroke-width: 2;
+                    marker-end: url(#TriangleOutM);
+                  "
+                  d="M 738,24 718,24"
+                  sodipodi:nodetypes="cc"
+                />
+
+                <!-- ========     Alternates signs    ======== -->
+                <g
+                  inkscape:groupmode="layer"
+                  id="sublayer3a"
+                  inkscape:label="alternative signs"
+                  sodipodi:insensitive="true"
+                  style="display: inline"
+                >
+                  <!-- Tabulations  -->
+                  <path
+                    id="S_kb3a-l1"
+                    style="
+                      fill: none;
+                      stroke: black;
+                      stroke-width: 2;
+                      marker-end: url(#TriangleOutM);
+                    "
+                    d="M 34,66 14,66"
+                  />
+                  <path
+                    id="S_kb3a-l2"
+                    style="fill: none; stroke: black; stroke-width: 2"
+                    d="M 10,60 10,72"
+                  />
+                  <path
+                    id="S_kb3a-r1"
+                    style="
+                      fill: none;
+                      stroke: black;
+                      stroke-width: 2;
+                      marker-end: url(#TriangleOutM);
+                    "
+                    d="M 10,82 30,82"
+                  />
+                  <path
+                    id="S_kb3a-r2"
+                    style="fill: none; stroke: black; stroke-width: 2"
+                    d="M 34,76 34,88"
+                  />
+                  <!-- Shift  -->
+                  <path
+                    id="S_kb5a"
+                    style="fill: none; stroke: black; stroke-width: 2"
+                    d="M 18,166 10,174 14,174 14,180 22,180 22,174 26,174 z"
+                    inkscape:connector-curvature="0"
+                  />
+                  <use
+                    id="S_kb5n"
+                    xlink:href="#S_kb5a"
+                    transform="translate(660,0)"
+                    x="0"
+                    y="0"
+                    width="1"
+                    height="1"
+                  />
+                  <!-- Enter  -->
+                  <path
+                    id="S_kb3n"
+                    style="
+                      fill: none;
+                      stroke: black;
+                      stroke-width: 2;
+                      marker-end: url(#TriangleOutM);
+                    "
+                    d="M 784,110 784,118 766,118"
+                    inkscape:connector-curvature="0"
+                  />
+                  <!-- Caps Lock  -->
+                  <g id="S_kb4a">
+                    <rect
+                      id="CapsLock-1"
+                      x="10"
+                      y="120"
+                      width="18"
+                      height="14"
+                      ry="1"
+                      rx="1"
+                      style="fill: none; stroke: black; stroke-width: 1.6"
+                    />
+                    <path
+                      id="CapsLock-2"
+                      style="fill: none; stroke: black; stroke-width: 1.4"
+                      d="M 12,120 v-3 a7,6 0 0,1 14,0 v3 m-12,0 v-3 a5,4 0 0,1 10,0 v3"
+                    />
+                    <ellipse
+                      id="CapsLock-3"
+                      cx="19"
+                      cy="125"
+                      rx="1"
+                      ry="2"
+                      sodipodi:cx="19"
+                      sodipodi:cy="125"
+                      sodipodi:rx="1"
+                      sodipodi:ry="2"
+                      style="fill: none; stroke: black; stroke-width: 1.2"
+                    />
+                  </g>
+                </g>
+              </g>
+              <!-- ========     Inscriptions layer    ======== -->
+              <g
+                inkscape:groupmode="layer"
+                id="fr-be"
+                inkscape:label="incriptions"
+                sodipodi:insensitive="true"
+                style="display: inline"
+              >
+                <g id="T_stdspecial">
+                  <text id="T_kb2a2" x="14" y="40">²</text>
+                  <text id="T_kb2a3" x="14" y="22">³</text>
+                  <text id="T_kb2b2" x="68" y="40">&amp;</text>
+                  <text id="T_kb2c2" x="122" y="40">é</text>
+                  <text id="T_kb2d2" x="176" y="40">&quot;</text>
+                  <text id="T_kb2e2" x="230" y="40">'</text>
+                  <text id="T_kb2f2" x="284" y="40">(</text>
+                  <text id="T_kb2g2" x="338" y="40">§</text>
+                  <text id="T_kb2h2" x="392" y="40">è</text>
+                  <text id="T_kb2i2" x="446" y="40">!</text>
+                  <text id="T_kb2j2" x="500" y="40">ç</text>
+                  <text id="T_kb2k2" x="554" y="40">à</text>
+                  <text id="T_kb2l2" x="610" y="40">)</text>
+                  <text id="T_kb2m1" x="610" y="20">°</text>
+                  <text id="T_kb2n1" x="664" y="18">_</text>
+                  <text id="T_kb2n2" x="664" y="40">-</text>
+
+                  <text id="T_kb3l1" x="636" y="72" class="T_DeadKey">¨</text>
+                  <text id="T_kb3l2" x="636" y="92" class="T_DeadKey">^</text>
+                  <text id="T_kb3m1" x="689" y="68">∗</text>
+                  <text id="T_kb3m2" x="690" y="92">$</text>
+
+                  <text id="T_kb4l1" x="650" y="120">%</text>
+                  <text id="T_kb4l2" x="650" y="142">ù</text>
+                  <text id="T_kb4m1" x="704" y="120">£</text>
+                  <text id="T_kb4m2" x="704" y="142">µ</text>
+
+                  <text id="T_kb5b1" x="78" y="170">&gt;</text>
+                  <text id="T_kb5b2" x="78" y="188">&lt;</text>
+
+                  <text id="T_kb5i1" x="454" y="172">?</text>
+                  <text id="T_kb5i2" x="454" y="190">,</text>
+                  <text id="T_kb5j1" x="508" y="170">.</text>
+                  <text id="T_kb5j2" x="508" y="190">;</text>
+                  <text id="T_kb5k1" x="562" y="172">/</text>
+                  <text id="T_kb5k2" x="562" y="190">:</text>
+                  <text id="T_kb5l1" x="616" y="170">+</text>
+                  <text id="T_kb5l2" x="616" y="192">=</text>
+                </g>
+                <g id="T_intodisuse">
+                  <text id="T_kb1b2" x="68" y="20">1</text>
+                  <text id="T_kb1c2" x="122" y="20">2</text>
+                  <text id="T_kb1d2" x="176" y="20">3</text>
+                  <text id="T_kb1e2" x="230" y="20">4</text>
+                  <text id="T_kb1f2" x="284" y="20">5</text>
+                  <text id="T_kb1g2" x="338" y="20">6</text>
+                  <text id="T_kb1h2" x="392" y="20">7</text>
+                  <text id="T_kb1i2" x="446" y="20">8</text>
+                  <text id="T_kb1k2" x="500" y="20">9</text>
+                  <text id="T_kb1l2" x="554" y="20">0</text>
+                </g>
+                <g id="T_stdletters">
+                  <text id="T_kb3b" x="96" y="72">A</text>
+                  <text id="T_kb3c" x="150" y="72">Z</text>
+                  <text id="T_kb3d" x="204" y="72">E</text>
+                  <text id="T_kb3e" x="258" y="72">R</text>
+                  <text id="T_kb3f" x="312" y="72">T</text>
+                  <text id="T_kb3g" x="366" y="72">Y</text>
+                  <text id="T_kb3h" x="420" y="72">U</text>
+                  <text id="T_kb3i" x="474" y="72">I</text>
+                  <text id="T_kb3j" x="528" y="72">O</text>
+                  <text id="T_kb3k" x="582" y="72">P</text>
+
+                  <text id="T_kb4b" x="112" y="122">Q</text>
+                  <text id="T_kb4c" x="166" y="122">S</text>
+                  <text id="T_kb4d" x="220" y="122">D</text>
+                  <text id="T_kb4e" x="274" y="122">F</text>
+                  <text id="T_kb4f" x="328" y="122">G</text>
+                  <text id="T_kb4g" x="382" y="122">H</text>
+                  <text id="T_kb4h" x="436" y="122">J</text>
+                  <text id="T_kb4i" x="490" y="122">K</text>
+                  <text id="T_kb4j" x="544" y="122">L</text>
+                  <text id="T_kb4k" x="598" y="122">M</text>
+
+                  <text id="T_kb5c" x="132" y="172">W</text>
+                  <text id="T_kb5d" x="186" y="172">X</text>
+                  <text id="T_kb5e" x="240" y="172">C</text>
+                  <text id="T_kb5f" x="294" y="172">V</text>
+                  <text id="T_kb5g" x="348" y="172">B</text>
+                  <text id="T_kb5h" x="402" y="172">N</text>
+                </g>
+
+                <g id="T_others">
+                  <text id="T_kb6a" x="10" y="230">Ctrl</text>
+                  <text id="T_kb6c" x="134" y="230">Alt</text>
+                  <text id="T_kb6k" x="564" y="230">Alt Gr</text>
+                  <text id="T_kb6n" x="750" y="230">Ctrl</text>
+                </g>
+
+                <g id="T_AltGr">
+                  <text id="T_kb2b3" x="94" y="40">|</text>
+                  <text id="T_kb2c3" x="148" y="40">@</text>
+                  <text id="T_kb2d3" x="202" y="40">#</text>
+                  <text id="T_kb2g3" x="364" y="42">^</text>
+                  <text id="T_kb2j3" x="526" y="40">{</text>
+                  <text id="T_kb2k3" x="580" y="40">}</text>
+                  <text id="T_kb2m3" x="662" y="90">[</text>
+
+                  <text id="T_kb3d2" x="228" y="92">€</text>
+                  <text id="T_kb3m3" x="716" y="90">]</text>
+
+                  <text id="T_kb4l3" x="674" y="144" class="T_DeadKey">´</text>
+                  <text id="T_kb4m3" x="728" y="144" class="T_DeadKey">`</text>
+
+                  <text id="T_kb5b3" x="102" y="190">\</text>
+                  <text id="T_kb5l3" x="640" y="188" class="T_DeadKey">~</text>
+                </g>
+                <!-- ========     alternates inscriptions    ======== -->
+                <g
+                  inkscape:groupmode="layer"
+                  id="sublayer4a"
+                  inkscape:label="alternative inscriptions"
+                  style="display: inline"
+                >
+                  <g id="T_alterninsc">
+                    <text id="T_kb2n1" x="748" y="20">Suppr</text>
+                    <text id="T_kb2n2" x="748" y="38">arrière</text>
+
+                    <text id="T_kb3a" x="38" y="80">Tab</text>
+                    <text id="T_kb3n" x="746" y="78">Entrée</text>
+
+                    <text id="T_kb4a1" x="36" y="120">Verr</text>
+                    <text id="T_kb4a2" x="36" y="136">Maj</text>
+
+                    <text id="T_kb5a" x="32" y="180">Maj</text>
+                    <text id="T_kb5m" x="696" y="180">Maj</text>
+                  </g>
+                </g>
+                <!-- ========        Linux Keys     ======== -->
+                <g
+                  inkscape:groupmode="layer"
+                  id="sublayer4b"
+                  inkscape:label="inscriptions linux"
+                  style="display: none"
+                >
+                  <!-- ========        with AltGr     ======== -->
+                  <g id="T_Lx_AltGr">
+                    <text id="T_kb2a3" x="32" y="40">¬</text>
+                    <text id="T_kb2a3" x="256" y="40">¼</text>
+                    <text id="T_kb2a3" x="310" y="40">½</text>
+                    <text id="T_kb2a3" x="418" y="40">{</text>
+                    <text id="T_kb2a3" x="472" y="40">[</text>
+                    <text id="T_kb2a3" x="634" y="40">\</text>
+                    <text id="T_kb2a3" x="688" y="38" class="T_Lx_DeadKey">
+                      ¸
+                    </text>
+
+                    <text id="T_kb3b3" x="120" y="92">@</text>
+                    <text id="T_kb3c3" x="174" y="92">ł</text>
+                    <text id="T_kb3e3" x="282" y="92">¶</text>
+                    <text id="T_kb3f3" x="336" y="92">ŧ</text>
+                    <text id="T_kb3g3" x="390" y="90">←</text>
+                    <text id="T_kb3h3" x="444" y="90">↓</text>
+                    <text id="T_kb3i3" x="498" y="90">→</text>
+                    <text id="T_kb3j3" x="550" y="92">œ</text>
+                    <text id="T_kb3k3" x="606" y="92">þ</text>
+
+                    <text id="T_kb4b3" x="134" y="142">æ</text>
+                    <text id="T_kb4c3" x="190" y="142">ß</text>
+                    <text id="T_kb4d3" x="244" y="142">ð</text>
+                    <text id="T_kb4g3" x="298" y="142">đ</text>
+                    <text id="T_kb4h3" x="352" y="142">ŋ</text>
+                    <text id="T_kb4i3" x="406" y="142">ħ</text>
+                    <text id="T_kb4j3" x="514" y="142">ĸ</text>
+                    <text id="T_kb4j3" x="568" y="142">ł</text>
+                    <text id="T_kb4k3" x="622" y="142" class="T_Lx_DeadKey">
+                      ´
+                    </text>
+
+                    <text id="T_kb5b3" x="102" y="170">\</text>
+                    <text id="T_kb5c3" x="156" y="192" class="T_size_L">«</text>
+                    <text id="T_kb5d3" x="210" y="192" class="T_size_L">»</text>
+                    <text id="T_kb5e3" x="264" y="192">¢</text>
+                    <text id="T_kb5f3" x="318" y="190">“</text>
+                    <text id="T_kb5g3" x="372" y="192">”</text>
+                    <text id="T_kb5i3" x="478" y="188" class="T_Lx_DeadKey">
+                      ¸
+                    </text>
+                    <text id="T_kb5k3" x="586" y="192">⋅</text>
+                  </g>
+                  <!-- ======== with AltGr & Maj   ======== -->
+                  <g id="T_Lx_AltGrSh">
+                    <text id="T_kb2a4" x="32" y="20">¬</text>
+                    <text id="T_kb2b4" x="94" y="18">¡</text>
+                    <text id="T_kb2c4" x="148" y="20">⅛</text>
+                    <text id="T_kb2d4" x="202" y="20">£</text>
+                    <text id="T_kb2e4" x="256" y="20">$</text>
+                    <text id="T_kb2f4" x="310" y="20">⅜</text>
+                    <text id="T_kb2g4" x="364" y="20">⅝</text>
+                    <text id="T_kb2h4" x="418" y="20">⅞</text>
+                    <text id="T_kb2i4" x="472" y="20">™</text>
+                    <text id="T_kb2j4" x="526" y="20">±</text>
+                    <text id="T_kb2k4" x="580" y="20">°</text>
+                    <text id="T_kb2l4" x="634" y="18">¿</text>
+                    <text id="T_kb2m4" x="688" y="18" class="T_Lx_DeadKey">
+                      ˛
+                    </text>
+
+                    <text id="T_kb3b4" x="120" y="72">Ω</text>
+                    <text id="T_kb3c4" x="174" y="72" class="T_Lx_UpAltGr">
+                      Ł
+                    </text>
+                    <text id="T_kb3d4" x="228" y="72">¢</text>
+                    <text id="T_kb3e4" x="282" y="72">®</text>
+                    <text id="T_kb3f4" x="336" y="72" class="T_Lx_UpAltGr">
+                      Ŧ
+                    </text>
+                    <text id="T_kb3g4" x="390" y="72">¥</text>
+                    <text id="T_kb3h4" x="444" y="68">↑</text>
+                    <text id="T_kb3i4" x="498" y="72">ı</text>
+                    <text id="T_kb3j4" x="550" y="72" class="T_Lx_UpAltGr">
+                      Œ
+                    </text>
+                    <text id="T_kb3k4" x="606" y="72" class="T_Lx_UpAltGr">
+                      Þ
+                    </text>
+                    <text id="T_kb3m4" x="660" y="72" class="T_Lx_DeadKey">
+                      °
+                    </text>
+                    <text id="T_kb3m4" x="714" y="74" class="T_Lx_DeadKey">
+                      ¯
+                    </text>
+
+                    <text id="T_kb4b4" x="134" y="122" class="T_Lx_UpAltGr">
+                      Æ
+                    </text>
+                    <text id="T_kb4c4" x="190" y="118">§</text>
+                    <text id="T_kb4d4" x="244" y="122" class="T_Lx_UpAltGr">
+                      Ð
+                    </text>
+                    <text id="T_kb4e4" x="298" y="122">ª</text>
+                    <text id="T_kb4f4" x="352" y="122" class="T_Lx_UpAltGr">
+                      Ŋ
+                    </text>
+                    <text id="T_kb4g4" x="406" y="122" class="T_Lx_UpAltGr">
+                      Ħ
+                    </text>
+                    <text id="T_kb4h4" x="514" y="122">&amp;</text>
+                    <text id="T_kb4j4" x="568" y="122" class="T_Lx_UpAltGr">
+                      Ł
+                    </text>
+                    <text id="T_kb4k4" x="622" y="124" class="T_Lx_DeadKey">
+                      ˝
+                    </text>
+                    <text id="T_kb4l4" x="676" y="124" class="T_Lx_DeadKey">
+                      ˇ
+                    </text>
+                    <text id="T_kb4m4" x="730" y="124" class="T_Lx_DeadKey">
+                      ˘
+                    </text>
+
+                    <text id="T_kb5c4" x="102" y="172">\</text>
+                    <text id="T_kb5c4" x="156" y="172">&lt;</text>
+                    <text id="T_kb5d4" x="210" y="172">&gt;</text>
+                    <text id="T_kb5e4" x="264" y="172">©</text>
+                    <text id="T_kb5f4" x="318" y="170">‘</text>
+                    <text id="T_kb5g4" x="372" y="170">’</text>
+                    <text id="T_kb5i4" x="478" y="170">º</text>
+                    <text id="T_kb5j4" x="532" y="170">×</text>
+                    <text id="T_kb5k4" x="586" y="170">÷</text>
+                    <text id="T_kb5l4" x="640" y="174" class="T_Lx_DeadKey">
+                      ¯
+                    </text>
+                  </g>
+                </g>
+              </g>
+            </svg>
+          </figure>
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Langage machine</h2>
+      <ul>
+        <li>Ensemble des instructions exécutables par le processeur</li>
+        <li>Conçu pour s'exécuter rapidement</li>
+        <li>Pas conçu pour les humains</li>
+      </ul>
+
+      <p class="document-only">
+        Les fichiers contenant des programmes contiennent les instructions du
+        programme dans un langage propre au processeur. Par exemple, le jeu
+        d'instructions des processeurs x86 (i3, i5, i7, amd ryzen, ...) est
+        complètement différent de celui des processeurs ARM (Apple Silicon,
+        Snapdragon, ...). Ces jeux d'instructions sont fait pour s'exécuter
+        efficacement mais sont particulièrement difficile à lire et à écrire par
+        un être humain. Pour créer un programme on passe généralement par un
+        langage de programmation.
+      </p>
+    </section>
+
+    <section>
+      <h2>Langage de programmation</h2>
+      <ul>
+        <li>Conçu pour les humains</li>
+        <li>code source = texte brut</li>
+        <li>Peut être compilé ou interprété</li>
+      </ul>
+
+      <p class="document-only">
+        Un langage de programmation est fait pour être écrit et lu par un être
+        humain. Le code source d'un programme est un simple fichier texte brut,
+        c'est-à-dire qu'il ne contient que le texte du programme et pas
+        d'information de formatage. La code source doit ensuite être traduit en
+        langage machine pour s'exécuter sur le processeur.
+      </p>
+
+      <p class="document-only">
+        Dans un langage compilé, la traduction se fait par un programme appelé
+        compilateur. Le compilateur génère un fichier exécutable à partir du
+        code source. Ce fichier peut ensuite être exécuter directement sur le
+        processeur et le compilateur n'est plus nécessaire.
+      </p>
+
+      <p class="document-only">
+        Dans un langage interprété, la traduction se fait par un programme
+        appelé interpréteur en temps réel. L'interpréteur ne produit pas de
+        fichier exécutable. L'interpréteur est nécessaire pour chaque exécution
+        du code source.
+      </p>
+    </section>
+
+    <section>
+      <h2>Python</h2>
+      <div class="row">
+        <div class="span6 middle">
+          <ul>
+            <li>Langage interprété</li>
+            <li>L'interpréteur = <code>python.exe</code></li>
+          </ul>
+        </div>
+        <div class="span6 middle">
+          <figure>
+            <svg width="80%" viewBox="0 0 1000 1534" version="1.1">
+              <g id="CPU-RAM">
+                <path
+                  id="CPU-to-RAM"
+                  d="M338.718,783.001l0,31.384l-48.282,-48.283l48.282,-48.282l0,31.383l145.121,0l-0,-31.383l48.282,48.282l-48.282,48.283l-0,-31.384l-145.121,0Z"
+                  style="fill: #ffe077; stroke: #000; stroke-width: 4.17px"
+                />
+                <g id="RAM">
+                  <text x="528.191px" y="175.554px" style="font-size: 50px">
+                    RAM
+                  </text>
+                  <rect
+                    x="532.121"
+                    y="207.464"
+                    width="431.648"
+                    height="1184.98"
+                    style="fill: #ebebeb; stroke: #000; stroke-width: 4.17px"
+                  />
+                  <rect
+                    x="583.818"
+                    y="252.526"
+                    width="332.517"
+                    height="258.514"
+                    style="fill: #ff9494; stroke: #000; stroke-width: 4.17px"
+                  >
+                    yop
+                  </rect>
+                  <rect
+                    x="583.818"
+                    y="761.972"
+                    width="332.517"
+                    height="306.416"
+                    style="fill: #b3ffa6; stroke: #000; stroke-width: 4.17px"
+                  />
+                  <rect
+                    x="583.818"
+                    y="555.635"
+                    width="332.517"
+                    height="164.114"
+                    style="fill: #b4b4b4; stroke: #000; stroke-width: 4.17px"
+                  />
+                  <rect
+                    x="583.818"
+                    y="1115.35"
+                    width="332.517"
+                    height="64.503"
+                    style="fill: #b4b4b4; stroke: #000; stroke-width: 4.17px"
+                  />
+                  <rect
+                    x="583.818"
+                    y="1226.82"
+                    width="332.517"
+                    height="34.09"
+                    style="fill: #b4b4b4; stroke: #000; stroke-width: 4.17px"
+                  />
+                  <rect
+                    x="583.818"
+                    y="1307.61"
+                    width="332.517"
+                    height="16.507"
+                    style="fill: #b4b4b4; stroke: #000; stroke-width: 4.17px"
+                  />
+                  <text x="653.898px" y="354.417px" style="font-size: 50px">
+                    Program :
+                  </text>
+                  <text x="633.898px" y="424.417px" style="font-size: 50px">
+                    python.exe
+                  </text>
+                  <text x="696.402px" y="902.782px" style="font-size: 50px">
+                    Data :
+                  </text>
+                  <text x="606.402px" y="972.782px" style="font-size: 50px">
+                    Code Python
+                  </text>
+                </g>
+                <g id="CPU">
+                  <rect
+                    x="2.275"
+                    y="622.022"
+                    width="288.161"
+                    height="288.161"
+                    style="fill: #ebebeb; stroke: #000; stroke-width: 4.17px"
+                  />
+                  <text x="94.341px" y="783.998px" style="font-size: 50px">
+                    CPU
+                  </text>
+                </g>
+              </g>
+            </svg>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Installation</h2>
+      <ul>
+        <li>Version actuelle: <span class="pyversion">3.X.X</span></li>
+        <li>
+          Télécharger sur
+          <a href="https://www.python.org/downloads">python.org</a>
+        </li>
+        <li>
+          Cocher la case
+          <em>"Add Python <span class="pyshortversion">3.X</span> to PATH"</em>
+        </li>
+      </ul>
+      <p class="document-only">
+        Le fait d'ajouter Python à la variable PATH permet de faciliter son
+        utilisation dans le terminal. Pour démarrer un programme à partir du
+        terminal, il faut écrire le chemin vers son fichier exécutable. La
+        variable PATH contient une liste de dossiers dans lesquels on peut
+        chercher des fichiers exécutables. Si le programme qu'on souhaite
+        démarrer se trouve dans un de ces dossiers, il suffit d'écrire son nom,
+        le chemin n'est plus nécessaire.
+      </p>
+    </section>
+
+    <section>
+      <h2>Utilisation</h2>
+      <p>Mode interactif</p>
+      <pre class="terminal">
+        <b>> python --version</b>
+        Python <span class="pyversion">3.X.X</span>
+        <b>> python</b>
+        Python <span class="pyversion">3.X.X</span> ...
+        Type "help", "copyright", "credits" or "license" for more
+        information.
+        >>> 1 + 1
+        2
+        >>> exit()
+        <b>></b>
+        &nbsp; &nbsp;
+      </pre>
+      <p>
+        <strong>
+          Attention: sur les Macs, la commande <code>python</code> lance la
+          version 2 de Python. Il faut utiliser la commande
+          <code>python3</code>.
+        </strong>
+      </p>
+      <p class="document-only">
+        Ce qu'on ajoute après le chemin de l'exécutable est considéré comme des
+        arguments. Les arguments permette de passer des paramètres au programme
+        que l'on démarre. Les différents arguments sont séparés par des espaces.
+        Exemple: l'argument <code>--version</code> permet d'afficher le version
+        de l'exécutable Python.
+      </p>
+      <p class="document-only">
+        Le mode interactif permet d'utiliser Python comme une calculette. Chaque
+        ligne de code écrite est directement évaluée et la valeur est affichée.
+        Pour lancer le mode interactif, il suffit de démarrer Python sans
+        argument.
+      </p>
+      <p class="document-only">Remarque:</p>
+      <ul class="document-only">
+        <li>sous Windows, le <code>.exe</code> peut être omis.</li>
+        <li>
+          Si un chemin contient des espaces, il faut le mettre entre guillemets.
+        </li>
+      </ul>
+    </section>
+    <section>
+      <h2>Utilisation</h2>
+      <p>Mode script</p>
+
+      <p class="file-title"><em style>hello.py</em></p>
+      <pre><code class='lang-python'>
+         print('Hello World')
+      </code></pre>
+
+      <pre class="terminal">
+        <b>> python hello.py</b>
+        Hello World
+        <b>> &nbsp; &nbsp; &nbsp; &nbsp;</b>
+      </pre>
+      <p class="document-only">
+        Le mode script permet d'exécuter le code se trouvant dans un fichier. Il
+        suffit d'écrire le chemin du fichier en argument.
+      </p>
+    </section>
+    <section>
+      <h2>Écrire des fichiers Python</h2>
+      <ul>
+        <li>Texte Brut</li>
+        <li>N'importe quel éditeur de texte</li>
+        <li>Nous utiliserons <strong>Visual Studio Code</strong></li>
+        <li>
+          Télécharger:
+          <a href="https://code.visualstudio.com">code.visualstudio.com</a>
+          <ul style="font-size: 80%">
+            <li>
+              Cocher Ajouter l'action "Ouvrir avec Code" au menu contextuel de
+              fichier...
+            </li>
+            <li>
+              Cocher Ajouter l'action "Ouvrir avec Code" au menu contextuel de
+              répertoire...
+            </li>
+            <li>Cocher Ajouter à PATH...</li>
+          </ul>
+        </li>
+        <li>
+          Ajouter l'extension ( icône
+          <svg width="0.9em" height="0.9em" viewBox="0 0 50 50">
+            <rect
+              x="2"
+              y="8"
+              width="20"
+              height="20"
+              ry="3"
+              rx="3"
+              style="fill: none; stroke: #000; stroke-width: 3px"
+            />
+            <rect
+              x="22"
+              y="28"
+              width="20"
+              height="20"
+              ry="3"
+              rx="3"
+              style="fill: none; stroke: #000; stroke-width: 3px"
+            />
+            <rect
+              x="2"
+              y="28"
+              width="20"
+              height="20"
+              ry="3"
+              rx="3"
+              style="fill: none; stroke: #000; stroke-width: 3px"
+            />
+            <rect
+              x="28"
+              y="2"
+              width="20"
+              height="20"
+              ry="3"
+              rx="3"
+              style="fill: none; stroke: #000; stroke-width: 3px"
+            />
+          </svg>
+          ) Python de Microsoft
+        </li>
+      </ul>
+      <p class="document-only">
+        Les fichiers sources Python peuvent être écrit avec n'importe quel
+        éditeur de fichier texte brut. Il est cependant plus simple d'utiliser
+        un éditeur spécialisé dans le code.
+      </p>
+
+      <p class="document-only">
+        Visual Studio Code (VSCode) est un éditeur open source qui supporte
+        plusieurs langages. Une fois VSCode installé, on peut lui ajouter des
+        fonctionnalités en installant des extensions. L'extension Python ajoute
+        pas mal de fonctionnalités utiles lorsqu'on développe un programme en
+        Python. Pour installer cette extension il suffit de cliquer sur l'icône
+        extensions (<svg width="0.9em" height="0.9em" viewBox="0 0 50 50">
+          <rect
+            x="2"
+            y="8"
+            width="20"
+            height="20"
+            ry="3"
+            rx="3"
+            style="fill: none; stroke: #000; stroke-width: 3px"
+          />
+          <rect
+            x="22"
+            y="28"
+            width="20"
+            height="20"
+            ry="3"
+            rx="3"
+            style="fill: none; stroke: #000; stroke-width: 3px"
+          />
+          <rect
+            x="2"
+            y="28"
+            width="20"
+            height="20"
+            ry="3"
+            rx="3"
+            style="fill: none; stroke: #000; stroke-width: 3px"
+          />
+          <rect
+            x="28"
+            y="2"
+            width="20"
+            height="20"
+            ry="3"
+            rx="3"
+            style="fill: none; stroke: #000; stroke-width: 3px"
+          /></svg>), taper "python" dans le champ de recherche et cliquer sur installer.
+      </p>
+    </section>
+
+    <section class="code">
+      <h2>Exemple de programme</h2>
+      <pre><code class='lang-python'>
+        D = b*b-4*a*c
+        if D &lt; 0:
+          print("Pas de solution réelle")
+        else:
+          if D == 0:
+            print("La racine double est", -b/(2*a))
+          else:
+            print("La 1re racine est", (-b-sqrt(D))/(2*a))
+            print("La 2e racine est", (-b+sqrt(D))/(2*a))
+      </code></pre>
+    </section>
+
+    <section>
+      <h2>Valeurs et variables</h2>
+      <ul>
+        <li><strong>Une variable contient une valeur</strong></li>
+        <li>Une variable a un <strong>nom</strong></li>
+        <li>
+          Le signe <strong>=</strong> sert à assigner une valeur à une variable
+        </li>
+      </ul>
+      <pre><code class="lang-python">
+         a = 42
+      </code></pre>
+      <figure>
+        <svg width="50%" viewBox="0 0 1780 941" version="1.1">
+          <g>
+            <rect
+              x="718.473"
+              y="186.234"
+              width="511.1"
+              height="511.1"
+              style="fill: none; stroke: #000; stroke-width: 15.66px"
+            />
+            <text
+              x="435.195px"
+              y="507.148px"
+              style="
+                font-family: 'Consolas', monospace;
+                font-size: 266.667px;
+                fill: #008802;
+              "
+            >
+              a
+            </text>
+            <text
+              x="832.291px"
+              y="528.046px"
+              style="
+                font-family: 'Consolas', monospace;
+                font-size: 266.667px;
+                fill: #0053d8;
+              "
+            >
+              42
+            </text>
+            <ellipse
+              cx="916.27"
+              cy="448.593"
+              rx="556.47"
+              ry="374.94"
+              style="fill: none; stroke: #de0000; stroke-width: 15.66px"
+            />
+            <text
+              x="1207.1px"
+              y="72.482px"
+              style="font-size: 100px; fill: #de0000"
+            >
+              La variable
+            </text>
+            <text
+              x="1366.77px"
+              y="895.116px"
+              style="font-size: 100px; fill: #0053d8"
+            >
+              La valeur
+            </text>
+            <text
+              x="-6.862px"
+              y="728.803px"
+              style="font-size: 100px; fill: #008802"
+            >
+              Le nom
+            </text>
+            <path
+              d="M483.334,598.628l23.199,-35.414l23.767,35.035"
+              style="
+                fill: none;
+                stroke: #008802;
+                stroke-width: 15.66px;
+                stroke-linejoin: miter;
+                stroke-miterlimit: 10;
+              "
+            />
+            <path
+              d="M359.8,693.598c138.621,-3.775 147.112,-42.337 146.733,-130.384"
+              style="fill: none; stroke: #008802; stroke-width: 15.66px"
+            />
+            <path
+              d="M950.341,624.014l24.803,-34.31l22.13,36.091"
+              style="
+                fill: none;
+                stroke: #0053d8;
+                stroke-width: 15.66px;
+                stroke-linejoin: miter;
+                stroke-miterlimit: 10;
+              "
+            />
+            <path
+              d="M1333.51,859.91c-199.807,-4.867 -365.219,-12.486 -358.367,-270.206"
+              style="fill: none; stroke: #0053d8; stroke-width: 15.66px"
+            />
+          </g>
+        </svg>
+      </figure>
+
+      <p class="document-only">
+        Une variable est une sorte de boite possédant un nom et pouvant contenir
+        une valeur. Pour mettre une valeur dans la variable, on utilise le signe
+        <code>=</code>. Une fois la valeur de la variable définie son contenu
+        peut être utiliser dans le code en utilisant sont nom.
+      </p>
+
+      <pre class="document-only"><code class="lang-python">
+         a = 42
+         print(a)
+         # affiche 42
+      </code></pre>
+
+      <p class="document-only">
+        La valeur de la variable peut être modifiée en lui assignant une autre
+        valeur.
+      </p>
+
+      <pre class="document-only"><code class="lang-python">
+         a = 42
+         print(a) # affiche 42
+         a = 0
+         print(a) # affiche 0
+      </code></pre>
+    </section>
+
+    <section>
+      <h2>Types de valeurs</h2>
+      <p class="document-only">
+        Les valeurs peuvent être de différents types :
+      </p>
+      <ul>
+        <li>
+          Les entiers (<code>int</code>)
+          <pre><code class="lang-python">
+               a = 42 # littéral
+               a = 2 * 21 # expression
+            </code></pre>
+        </li>
+        <li>
+          Les nombre à virgule flottante (<code>float</code>)
+          <pre><code class="lang-python">
+               a = 0.42 # littéral
+               a = 42e-2 # littéral en notation scientifique
+               a = 1 / 2 # expression
+            </code></pre>
+        </li>
+        <li>
+          Les chaînes de caractères (<code>string</code>)
+          <pre><code class="lang-python">
+               a = "hello" # littéral
+               b = 2 * a + "!!" # expression
+            </code></pre>
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h2 class="deck-only">Types de valeurs</h2>
+      <ul>
+        <li>
+          Les listes (<code>list</code>)
+          <pre><code class="lang-python">
+               a = [1, 2, 3] # littéral
+               b = [1, 2] + [3] # expression
+            </code></pre>
+        </li>
+        <li>
+          Les booléens (<code>bool</code>)
+          <pre><code class="lang-python">
+               a = True # littéral
+               b = a or 5 &lt; 0 # expression
+            </code></pre>
+        </li>
+        <li><strong>Et bien d'autres...</strong></li>
+      </ul>
+
+      <p class="document-only">
+        Le type d'une valeur est très important car certaines opération agissent
+        différemment en fonction du type.
+      </p>
+
+      <pre class="document-only"><code class="lang-python">
+         i = 21
+         print(i + i) # affiche 42
+         s = "21"
+         print(s + s) # affiche 2121
+         print(i + s) # plante
+      </code></pre>
+    </section>
+
+    <section>
+      <h2>Opérations sur les nombres</h2>
+      <ul>
+        <li>
+          Les opérateurs suivants sont définis pour
+          <strong>les valeurs numériques</strong>
+        </li>
+      </ul>
+      <pre><code class="lang-python">
+         a = 1 + 2 # somme de deux nombres
+         a = 1 - 2 # différence de deux nombres
+         a = 2 * 2 # produit de deux nombres
+         a = 4 ** 2 # puissance de deux nombres
+         a = 4 / 2 # quotient de deux nombre
+         a = 5 // 2 # division entière
+         a = 5 % 2 # modulo, reste de la division entière
+      </code></pre>
+
+      <pre><code class="lang-python">
+         seconds = 265
+         print(seconds, 'secondes correspond à', seconds//60,
+            'minutes et', seconds%60, 'secondes')
+      </code></pre>
+    </section>
+
+    <!--<section>
+      <h2>Opérations sur les séquences</h2>
+      <ul>
+        <li>Les chaînes de caractères et les listes sont des séquences.</li>
+        <li>
+          L’opérateur <code>+</code> entre deux séquence permet de créer une
+          nouvelle séquence contenant les deux opérandes bout-à-bout
+          <small>On appelle cette opération la concaténation</small>
+        </li>
+        <li>
+          L’opérateur <code>*</code> entre un entier <code>n</code> et une
+          séquence permet de créer une nouvelle séquence contenant
+          <code>n</code> fois la séquence de départ.
+        </li>
+      </ul>
+      <pre><code class="lang-python">
+         f = [1, 2] + [3, 4] # [1, 2, 3, 4]
+         g = 3 * "hello" # "hellohellohello"
+      </code></pre>
+    </section>-->
+
+    <section>
+      <h2>Conditions</h2>
+      <ul>
+        <li>
+          Le <code>if</code> permet d'exécuter un bloc seulement si une
+          condition est remplie
+          <pre><code class="lang-python">
+               note = -5
+               if note &lt; 0:
+                  print("notes négatives interdite !")
+                  note = 0
+               if note > 20:
+                  print("notes limitée à 20 !")
+                  note = 20
+               print('note =', note)
+            </code></pre>
+        </li>
+        <li>
+          <strong>Instruction bloc</strong> : L'entête fini par
+          <code>:</code> et le bloc est <strong>indenté</strong> à droite
+        </li>
+        <li>
+          tabulations ou espaces pour l'indentation,
+          <strong>doit être identique pour toutes les lignes du bloc</strong>
+        </li>
+      </ul>
+
+      <p class="document-only">
+        Il arrive régulièrement qu'on se retrouve avec un mélange de tabulations
+        et d'espaces dans les indentations ce qui provoque une erreur de syntaxe
+        et empêche le programme de se lancer. Dans VSCode, il est possible
+        d'activé l'affichage des caractères blancs pour identifier plus
+        facilement les espaces et les tabulations
+      </p>
+
+      <figure class="document-only">
+        <img
+          style="width: 30%"
+          src="./indentation.png"
+          alt="des points pour les espaces et une flèche pour la tabulation"
+        />
+      </figure>
+    </section>
+
+    <section>
+      <h2>Écrire la condition</h2>
+      <ul>
+        <li>
+          Une condition est une expression <strong>à valeur booléenne</strong>
+        </li>
+        <li>
+          <strong>Comparaison</strong> de deux valeurs :
+          <ul>
+            <li>Égalité (<code>==</code>) et différence (<code>!=</code>)</li>
+            <li>
+              Strictement plus grand/petit (<code>></code>, <code>&lt;</code>)
+            </li>
+            <li>Plus grand/petit ou égal (<code>>=</code>, <code><=</code>)</li>
+          </ul>
+        </li>
+      </ul>
+      <pre><code class="lang-python">
+         a = 12 == 3 * 4 # a vaut True
+         b = "Eat" > "Drink" # b vaut True
+         c = a != b # c vaut False
+      </code></pre>
+
+      <p class="document-only">
+        Attention à ne pas confondre le <code>=</code> et le <code>==</code>.
+        <code>=</code> sert à assigner une valeur à une variable et
+        <code>==</code> sert à tester l'égalité de deux valeurs.
+      </p>
+    </section>
+
+    <section>
+      <h2>Sinon</h2>
+      <ul>
+      <li>Il est possible de définir un bloc à exécuter si la condition est fausse avec l'instruction <code>else</code> (sinon)</li>
+      </ul>
+      <pre><code class="lang-python">
+        a = −5
+        if a < 0:
+           print("a est négatif")
+        else:
+           print("a est positif")
+      </code></pre>
+    </section>
+
+    <section>
+      <h2>Erreurs</h2>
+      <p>Écrivons le programme dans un fichier nommé <code>2nd_order.py</code> et exécutons le:</p>
+      <div class='terminal'>
+        > python 2nd_order.py
+        Traceback (most recent call last):
+          File "C:\Users\lur\2nd_order.py", line 1, in &lt;module>
+            D = b*b-4*a*c
+                ^
+        NameError: name 'b' is not defined
+      </div>
+      <p>Il faut définir <code>a</code>, <code>b</code> et <code>c</code></p>
+    </section>
+
+    <section>
+      <h2>Erreurs (2)</h2>
+      <p>Réessayons !</p>
+      <div class='terminal'>
+        > python 2nd_order.py
+        Traceback (most recent call last):
+          File "C:\Users\lur\2nd_order.py", line 11, in &lt;module>
+            print("La 1re racine est", (-b-sqrt(D))/(2*a))
+                                           ^^^^
+        NameError: name 'sqrt' is not defined
+      </div>
+      <p>Il faut importer <code>sqrt</code></p>
+    </section>
+
+    <section>
+      <h2>Demander des valeurs</h2>
+      <ul>
+        <li>Hardcoder les valeurs dans le programme n'est pas idéal</li>
+        <li>Utilisons la fonction <code>input()</code></li>
+        <li>Elle renvoie toujours des <code>str</code></li>
+        <li>Conversion des <code>str</code> en flottants avec la fonction <code>float</code></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Et voila !</h2>
+      <pre><code class="lang-python">
+        from math import sqrt
+
+        a = float(input('entrez la valeur de a : '))
+        b = float(input('entrez la valeur de b : '))
+        c = float(input('entrez la valeur de c : '))
+        D = b*b-4*a*c
+        if D &lt; 0:
+            print("Pas de solution réelle")
+        else:
+            if D == 0:
+                print("La racine double est", -b/(2*a))
+            else:
+                print("La 1re racine est", (-b-sqrt(D))/(2*a))
+                print("La 2e racine est", (-b+sqrt(D))/(2*a))
+      </code></pre>
+    </section>
+
+    <!-- <section> -->
+    <!--   <h2>Opérateurs logique</h2> -->
+    <!--   <ul> -->
+    <!--     <li>Opérations sur des <strong>valeurs booléenne</strong></li> -->
+    <!--     <li>NON logique (<code>not</code>) inverse une valeur</li> -->
+    <!--     <li> -->
+    <!--       ET logique (<code>and</code>) impose les deux expressions à -->
+    <!--       <code>True</code> -->
+    <!--     </li> -->
+    <!--     <li> -->
+    <!--       OU logique (<code>or</code>) nécessite une seule expression à -->
+    <!--       <code>True</code> -->
+    <!--     </li> -->
+    <!--   </ul> -->
+    <!--   <table> -->
+    <!--     <tr> -->
+    <!--       <th><code>a</code></th> -->
+    <!--       <th><code>b</code></th> -->
+    <!--       <th><code>not a</code></th> -->
+    <!--       <th><code>a and b</code></th> -->
+    <!--       <th><code>a or b</code></th> -->
+    <!--     </tr> -->
+    <!--     <tr> -->
+    <!--       <td><code>False</code></td> -->
+    <!--       <td><code>False</code></td> -->
+    <!--       <td><code>True</code></td> -->
+    <!--       <td><code>False</code></td> -->
+    <!--       <td><code>False</code></td> -->
+    <!--     </tr> -->
+    <!--     <tr> -->
+    <!--       <td><code>False</code></td> -->
+    <!--       <td><code>True</code></td> -->
+    <!--       <td></td> -->
+    <!--       <td><code>False</code></td> -->
+    <!--       <td><code>True</code></td> -->
+    <!--     </tr> -->
+    <!--     <tr> -->
+    <!--       <td><code>True</code></td> -->
+    <!--       <td><code>False</code></td> -->
+    <!--       <td><code>False</code></td> -->
+    <!--       <td><code>False</code></td> -->
+    <!--       <td><code>True</code></td> -->
+    <!--     </tr> -->
+    <!--     <tr> -->
+    <!--       <td><code>True</code></td> -->
+    <!--       <td><code>True</code></td> -->
+    <!--       <td></td> -->
+    <!--       <td><code>True</code></td> -->
+    <!--       <td><code>True</code></td> -->
+    <!--     </tr> -->
+    <!--   </table> -->
+    <!--   <pre><code class="lang-python"> -->
+    <!--      a = 8 > 2 and 12 <= 4 # a vaut False -->
+    <!--      b = 5 != 5 or 'PY' == 'P' + 'Y' # b vaut True -->
+    <!--   </code></pre> -->
+    <!-- </section> -->
+
+    <!-- <section> -->
+    <!--   <h2>Fonctions</h2> -->
+    <!--   <ul> -->
+    <!--     <li> -->
+    <!--       Qu’est-ce que c’est ? -->
+    <!--       <small>C’est un sous-programme réutilisable</small> -->
+    <!--     </li> -->
+    <!--     <li> -->
+    <!--       Comment les reconnaître ? -->
+    <!--       <small>Grâce aux () qui suivent son nom</small> -->
+    <!--     </li> -->
+    <!--     <li> -->
+    <!--       Un appel à une fonction <strong>a une valeur</strong> -->
+    <!--       <small>Elles peuvent être utilisée dans des expressions</small> -->
+    <!--     </li> -->
+    <!--   </ul> -->
+    <!--   <pre><code class="lang-python"> -->
+    <!--      from math import cos -->
+    <!--      from cmath import sqrt -->
+    <!---->
+    <!--      x = cos(0) -->
+    <!--      y = sqrt(4) # racine carrée (complexe) -->
+    <!---->
+    <!--      # on peut entrer un string -->
+    <!--      s = input("Entrez un nombre: ") -->
+    <!--      v = int(s) # conversion de valeur -->
+    <!---->
+    <!--      # print vaut None -->
+    <!--      a = print("La réponse est " + str(42)) -->
+    <!--      print(a) -->
+    <!--   </code></pre> -->
+    <!-- </section> -->
+    <!---->
+    <!-- <section> -->
+    <!--   <h2>Nos fonctions</h2> -->
+    <!--   <ul> -->
+    <!--     <li> -->
+    <!--       On peut définir nos propres fonctions -->
+    <!--       <pre><code class="lang-python"> -->
+    <!--            def one(): -->
+    <!--               return 1 -->
+    <!--         </code></pre> -->
+    <!--     </li> -->
+    <!--     <li>Le mot <code>def</code> sert à définir une fonction</li> -->
+    <!--     <li> -->
+    <!--       Le mot <code>return</code> sert à indiquer la -->
+    <!--       <strong>valeur</strong> de la fonction -->
+    <!--     </li> -->
+    <!--     <li> -->
+    <!--       La définition de fonction est une <strong>instruction bloc</strong> -->
+    <!--     </li> -->
+    <!--   </ul> -->
+    <!---->
+    <!--   <p class="document-only"> -->
+    <!--     Il peut y avoir plusieurs <code>return</code> dans une fonction mais -->
+    <!--     l'exécution du code d'une fonction s'arrête au premier -->
+    <!--     <code>return</code> rencontré. -->
+    <!--   </p> -->
+    <!-- </section> -->
+    <!---->
+    <!-- <section> -->
+    <!--   <h2>Paramètres de fonction</h2> -->
+    <!--   <ul> -->
+    <!--     <li> -->
+    <!--       Une fonction peut prendre des <strong>paramètres</strong> -->
+    <!--       <pre><code class="lang-python"> -->
+    <!--            def somme(a, b): -->
+    <!--               return a + b -->
+    <!---->
+    <!--            print(somme(40, 2)) # affiche 42 -->
+    <!--         </code></pre> -->
+    <!--     </li> -->
+    <!--     <li> -->
+    <!--       les valeurs de l'appel sont <strong>assignées</strong> aux paramètres -->
+    <!--       <small>Comme s'il y avait un <code>=</code></small> -->
+    <!--     </li> -->
+    <!--   </ul> -->
+    <!-- </section> -->
+    <!---->
+    <!-- <section> -->
+    <!--   <h2>Paramètres de fonction</h2> -->
+    <!--   <ul> -->
+    <!--     <li> -->
+    <!--       Certaines fonctions peuvent prendre un nombre quelconque de paramètres -->
+    <!--       <pre><code class="lang-python"> -->
+    <!--         # print affiche tous ses paramètres séparés par des espaces et  -->
+    <!--         # retourne à la ligne -->
+    <!--         print('Hello', 'World', '!!!') -->
+    <!--       </code></pre> -->
+    <!--     </li> -->
+    <!--     <li> -->
+    <!--       Les fonctions peuvent prendre des paramètres nommés -->
+    <!--       <pre><code class="lang-python"> -->
+    <!--         # la valeur de sep est utilisé entre les différentes valeurs -->
+    <!--         # affichées (espace par défaut) -->
+    <!--         print(21, 'juillet', 1831, sep='/') -->
+    <!---->
+    <!--         # la valeur de end est utilisé à la fin de l'affichage -->
+    <!--         # (passage à la ligne par défaut) -->
+    <!--         print('Hello', end=' ') -->
+    <!--         print('World') -->
+    <!--       </code></pre> -->
+    <!--     </li> -->
+    <!--   </ul> -->
+    <!-- </section> -->
+
+    <!-- <section class="code deck-only"> -->
+    <!--   <h2>Bazooka</h2> -->
+    <!--   <pre><code class="lang-python"> -->
+    <!--      from math import sqrt -->
+    <!---->
+    <!--      def bazooka(a, b, c): -->
+    <!--         delta = b**2 - 4*a*c -->
+    <!--         if delta &lt; 0: -->
+    <!--            return [] -->
+    <!--         if delta == 0: -->
+    <!--            return [ -b/(2*a) ] -->
+    <!--         return [ -->
+    <!--            (-b - sqrt(delta))/(2*a), -->
+    <!--            (-b + sqrt(delta))/(2*a) -->
+    <!--         ] -->
+    <!---->
+    <!--      print(bazooka(1, -1, -2)) -->
+    <!--      # [-1.0, 2.0] -->
+    <!--   </code></pre> -->
+    <!-- </section> -->
+
+    <section>
+      <h2>Documentation</h2>
+      <p>
+        La documentation officielle de Python se trouve sur
+        <a href="https://docs.python.org/3/">docs.python.org/3/</a>
+      </p>
+    </section>
+
+    <!-- <section class="deck-only"> -->
+    <!--   <p class="center big"> -->
+    <!--     N'oubliez pas de faire vos <a href="exercices1.zip">exercices</a> ! -->
+    <!--   </p> -->
+    <!--   <p class="center">A remettre sur claco</p> -->
+    <!-- </section> -->
+
+    <script>
+      fetch("https://endoflife.date/api/python.json")
+        .then((response) => response.json())
+        .then((data) => {
+          const version = data[0].latest;
+          const shortVersion = version.split(".").slice(0, 2).join(".");
+          document.querySelectorAll(".pyversion").forEach((elem) => {
+            elem.innerHTML = version;
+          });
+          document.querySelectorAll(".pyshortversion").forEach((elem) => {
+            elem.innerHTML = shortVersion;
+          });
+        });
+    </script>
+  </body>
+</html>
