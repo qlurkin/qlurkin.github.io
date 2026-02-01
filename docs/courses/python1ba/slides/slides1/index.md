@@ -59,7 +59,7 @@ wp[1] = "./img/Oignons_En_Tranches.png"
 __output__ += slide(title, recipe_step(steps, [3], wp, tbl))
 wp[3] = "./img/Reblochon_En_Tranches.png"
 __output__ += slide(title, recipe_step(steps, [4], wp, tbl))
-wp[0] = "./img/Poêle_Chauffe.png"
+wp[0] = "./img/Poele_Chauffe.png"
 __output__ += slide(title, recipe_step(steps, [5], wp, tbl))
 wp[0] = "./img/Cuisson_Lardons_Oignons.png"
 del(wp[1])
