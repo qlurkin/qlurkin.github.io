@@ -598,7 +598,7 @@ stop
 ```plantuml {.build}
 @startuml
 
-|#pink|ko| l'illusion de l'apprentissage
+|#pink|ko| L'illusion de l'apprentissage
 
 |  |
 
