@@ -276,7 +276,7 @@ Le langage que nous allons utiliser dans ce cours est un langage interprété
 nommé **Python**. Pour exécuter un programme Python, il est nécessaire
 d'installer l'interpréteur Python.
 
-## Exécuter mon premier programme Python !
+## Exécuter mon premier programme Python
 
 La première chose à faire est d'installer l'interpréteur Python. Pour cela, il
 faut commencer par le télécharger sur <https://python.org>. **Attention&nbsp;:
@@ -295,65 +295,18 @@ Comme le code d'un programme est un simple texte, la seule chose dont on a
 besoin pour écrire un programme est un **éditeur de texte** (Bloc-note sous
 Windows, TextEdit sous MacOS, ...). Il est cependant plus pratique d'utiliser un
 éditeur **spécialisé** pour écrire le code. Ces éditeurs facilitent fortement
-l'écriture et la lisibilité du code (Visual Studio Code, Notepad++, Sublime
-Text, ...). Dans ce cours, nous utiliserons **Visual Studio Code** comme
-éditeur.
+l'écriture et la lisibilité du code (Zed, Visual Studio Code, Notepad++, Sublime
+Text, ...). Dans ce cours, nous utiliserons **Zed** comme éditeur.
 
-Pour installer Visual Studio Code, il faut le télécharger sur le site
-<https://code.visualstudio.com/>. **Sous Windows, durant l'installation, cochez
-les cases&nbsp;:**
+Pour installer Zed, il faut le télécharger sur le site <https://zed.dev/>.
 
-- **Ajouter l'action "Ouvrir avec Code" au menu contextuel de fichier...**
-- **Ajouter l'action "Ouvrir avec Code" au menu contextuel de répertoire...**
-- **Ajouter à PATH...**
-
-<figure id="code_visualstudio_com" data-ref="figure">
-<img src="./code_visualstudio_com.webp">
-<figcaption>Site de Visual Studio Code</figcaption>
+<figure id="zed_dev" data-ref="figure">
+<img src="./zed_dev.webp">
+<figcaption>Site de Zed</figcaption>
 </figure>
 
-Visual Studio Code _(VSCode)_ est un éditeur open source qui supporte plusieurs
-langages. On peut lui ajouter des fonctionnalités en installant des extensions.
-Il existe une **extension Python** qui ajoute pas mal de fonctionnalités utiles
-lorsqu'on développe des programmes en Python. Pour installer cette extension, il
-suffit de cliquer sur l'icône extensions
-(<svg width="0.9em" height="0.9em" viewBox="0 0 50 50"> <rect
-        x="2"
-        y="8"
-        width="20"
-        height="20"
-        ry="3"
-        rx="3"
-        style="fill: none; stroke: #000; stroke-width: 3px"
-    /> <rect
-        x="22"
-        y="28"
-        width="20"
-        height="20"
-        ry="3"
-        rx="3"
-        style="fill: none; stroke: #000; stroke-width: 3px"
-    /> <rect
-        x="2"
-        y="28"
-        width="20"
-        height="20"
-        ry="3"
-        rx="3"
-        style="fill: none; stroke: #000; stroke-width: 3px"
-    /> <rect
-        x="28"
-        y="2"
-        width="20"
-        height="20"
-        ry="3"
-        rx="3"
-        style="fill: none; stroke: #000; stroke-width: 3px"
-    /> </svg>), taper "python" dans le champ de recherche et cliquer sur
-installer.
-
-Une fois VSCode installé, nous pouvons créer un **nouveau fichier** avec le
-contenu suivant&nbsp;:
+Une fois Zed installé, nous pouvons créer un **nouveau fichier** avec le contenu
+suivant&nbsp;:
 
 <figure id="helloworld" data-ref="code">
 
@@ -512,9 +465,9 @@ De plus, si on souhaite relancer le programme, il suffit d'appuyer sur
 `Enter`.
 
 Sachez aussi qu'il est possible d'ouvrir un terminal **dans l'interface de
-VSCode**. Si vous ouvrez votre répertoire de travail dans VSCode _(File &#8594;
-Open Folder...)_, tous les terminaux que vous ouvrirez commenceront
-automatiquement avec votre répertoire de travail comme répertoire courant!
+Zed**. Si vous ouvrez votre répertoire de travail dans Zed _(File &#8594;
+Open...)_, tous les terminaux que vous ouvrirez commenceront automatiquement
+avec votre répertoire de travail comme répertoire courant!
 
 ### La variable d'environnement `PATH`
 
