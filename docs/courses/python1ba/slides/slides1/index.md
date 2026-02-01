@@ -48,7 +48,7 @@ title = "Recette de cuisine"
 
 __output__ = []
 __output__ += slide(title, recipe_step(steps, [], wp, tbl))
-wp[1] = "./img/Patates_Épluchées.png"
+wp[1] = "./img/Patates_Epluchees.png"
 __output__ += slide(title, recipe_step(steps, [0], wp, tbl))
 wp[1] = "./img/Patates_En_Tranches.png"
 __output__ += slide(title, recipe_step(steps, [1], wp, tbl))
