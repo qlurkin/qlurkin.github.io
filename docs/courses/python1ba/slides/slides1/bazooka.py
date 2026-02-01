@@ -12,4 +12,4 @@ if delta >= 0:
     x2 = (-b + sqrt(delta)) / (2 * a)
     print("x1:", x1, "x2:", x2)
 else:
-    print("Pas de solution réeles")
+    print("Pas de solutions réelles")

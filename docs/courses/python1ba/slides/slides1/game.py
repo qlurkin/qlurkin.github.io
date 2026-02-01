@@ -5,7 +5,7 @@ secret = randint(1, 100)
 attempt = int(input("Entrez un entier entre 1 et 100: "))
 
 while secret != attempt:
-    print("Valeur Incorrecte")
+    print("Valeur incorrecte")
 
     if secret < attempt:
         print("La valeur correcte est plus petite")

@@ -15,10 +15,10 @@ css: style.css
 - Évaluation :
   - Examen écrit de type **QCM (100%)**
 
-## Qu'est ce qu'un programme ?
+## Qu'est-ce qu'un programme ?
 
 - Une **suite d'opérations** pour obtenir un **résultat**
-- les opérations sont exécutées
+- Les opérations sont exécutées
   - **une à la fois**,
   - **l'une après l'autre**.
 - Comme une recette de cuisine
@@ -31,7 +31,7 @@ steps = [
   "Coupez les en tranches.",
   "Mettez les à cuire dans de l'eau bouillante légèrement salée pour 10 à 15 min.",
   "Détaillez l'oignon en fines rondelles.",
-  "Coupez le reblochon en tranche.",
+  "Coupez le reblochon en tranches.",
   "Faites chauffer l'huile dans une poêle.",
   "Mettez l'oignon et les lardons à cuire pour 5 min.",
   "Intégrez les pommes de terre, le fromage, la crème et le vin blanc.",
@@ -82,7 +82,7 @@ __output__ += slide(title, recipe_step(steps, [10], wp, tbl))
 - Chaque opération **modifie l'état** de l'espace de travail
 - Le résultat de chaque opération **dépend de l'état** de l'espace de travail
 
-## Diagramme d'activité
+## Diagramme d'activités
 
 :::row
 
@@ -95,19 +95,19 @@ start
 :Coupez les en tranches.;
 :Mettez les à cuire dans de l'eau bouillante légèrement salée;
 :Détaillez l'oignon en fines rondelles.;
-:Coupez le reblochon en tranche.;
+:Coupez le reblochon en tranches.;
 :Faites chauffer l'huile dans une poêle.;
 :Mettez l'oignon et les lardons à cuire;
 repeat
   if (Les patates sont cuites ?) then (oui)
-    :Arrêter la cuisson des patates;
+    :Arrêtez la cuisson des patates;
   else (non)
   endif
   if (Les lardons sont cuits ?) then (oui)
-    :Arrêter la cuisson des lardons;
+    :Arrêtez la cuisson des lardons;
   else (non)
   endif
-repeat while (tout est cuit ?) is (non)
+repeat while (Tout est cuit ?) is (non)
 :Intégrez les pommes de terre, le fromage, la crème et le vin blanc.;
 :Poursuivez la cuisson;
 :Assaisonnez de sel et de poivre.;
@@ -120,14 +120,15 @@ stop
 
 ::::{.span6}
 
-- Un diagramme d'activité est une représentation graphique d'une séquence
+- Un diagramme d'activités est une représentation graphique d'une séquence
   d'opérations.
 
-- Il peut contenir des embranchements et des boucles
+- Il peut contenir des embranchements et des boucles.
 
-- Il est très utile pour représenter un programme
+- Il est très utile pour représenter un programme.
 
-- C'est un support intéressant pour parler d'un programme avec quelqu'un d'autre
+- C'est un support intéressant pour parler d'un programme avec quelqu'un
+  d'autre.
 
 ::::
 
@@ -180,7 +181,7 @@ stop
   a = 2 * 21       # expression arithmétique
   ```
 
-- Les nombre à virgule flottante (`float`)
+- Les nombres à virgule flottante (`float`)
 
   ```python
   a = 0.42         # littéral
@@ -241,7 +242,7 @@ __output__ += slide(title, code_step(src, [6], ram, "8"))
   a = 1 - 2    # différence de deux nombres
   a = 2 * 2    # produit de deux nombres
   a = 4 ** 2   # puissance de deux nombres
-  a = 4 / 2    # quotient de deux nombre
+  a = 4 / 2    # quotient de deux nombres
   a = 5 // 2   # division entière
   a = 5 % 2    # modulo, reste de la division entière
   ```
@@ -299,10 +300,10 @@ stop
   ```python
   note = -5
   if note < 0:
-    print("notes négatives interdite !")
+    print("notes négatives interdites !")
     note = 0
   if note > 20:
-    print("notes limitée à 20 !")
+    print("notes limitées à 20 !")
     note = 20
   print('note =', note)
   ```
@@ -366,10 +367,10 @@ __output__ += slide(title, code_step(src, [13], ram, "x1: 2 x2: 3"))
 
 ## Jeu: deviner un entier
 
-Le jeux consiste à deviner un nombre secret. À chaque tentative, on nous indique
+Le jeu consiste à deviner un nombre secret. À chaque tentative, on nous indique
 si on est trop bas ou trop haut.
 
-## Deviner en entier: diagramme d'activité
+## Deviner un entier: diagramme d'activités
 
 ```plantuml {.build}
 @startuml
@@ -550,7 +551,7 @@ __output__ += slide(title, code_step(src, [17], ram, stdout, 0.6))
 
 ```
 
-## Essaie - Erreur
+## Essai - Erreur
 
 :::row
 
