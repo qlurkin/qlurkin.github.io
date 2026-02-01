@@ -111,3 +111,7 @@ pre {
 .eat-table img {
   height: 4em;
 }
+
+.mode-document .code-step {
+  font-size: 0.8em;
+}

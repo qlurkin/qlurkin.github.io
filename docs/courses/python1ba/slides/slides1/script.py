@@ -30,7 +30,7 @@ def ram(vars, title="RAM"):
 def code_step(src, lines, vars, terminal=" ", code_size=0.9):
     left = hl(src, lines=lines)
     right = ram(vars) + f'<div class="terminal">{terminal}</div>'
-    return f'<div class="row"><div class="span6 middle" style="font-size: {code_size}em;">{left}</div><div class="span6 middle">{right}</div></div>'
+    return f'<div class="row code-step"><div class="span6 middle" style="font-size: {code_size}em;">{left}</div><div class="span6 middle">{right}</div></div>'
 
 
 def slide(title, content):
