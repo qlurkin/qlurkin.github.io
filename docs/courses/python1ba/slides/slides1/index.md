@@ -147,7 +147,7 @@ start
 :Donner une valeur à **c**;
 :Donner la valeur **b² - 4ac** à **delta**;
 
-if (delta est différent de 0) then (oui)
+if (delta est supérieur ou égal à **0**) then (oui)
   :Donner la valeur **(-b + √(delta))/(2a)** à **x1**;
   :Donner la valeur **(-b - √(delta))/(2a)** à **x2**;
   :Afficher **x1** et **x2**;
