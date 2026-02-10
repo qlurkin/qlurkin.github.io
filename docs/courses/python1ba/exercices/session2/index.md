@@ -60,3 +60,7 @@ typst: true
    seconde ceux d'indices pairs. Les deux listes seront renvoyées sous forme
    d'une liste de 2 listes.
 
+1. Écrire un programme qui demande d'entrer les coordonnées GPS de plusieurs
+   lieux les unes après les autres et qui affiche la longueur du chemin ainsi
+   formé. Les fonctions des exercices précédents peuvent vous aider.
+
