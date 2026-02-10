@@ -55,3 +55,8 @@ typst: true
    ['Tigre', 'Gorille', 'Velociraptor']
    ```
 
+1. Écrire une fonction qui reçois une liste en paramètre et qui la divisera en
+   deux listes. La première contiendra tous les éléments d'indices impairs et la
+   seconde ceux d'indices pairs. Les deux listes seront renvoyées sous forme
+   d'une liste de 2 listes.
+
