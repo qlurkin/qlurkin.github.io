@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -18,7 +18,7 @@
       }
 
       .terminal::before {
-        content: "Terminal";
+        content: 'Terminal';
         display: block;
         background-color: black;
         text-align: center;
@@ -203,13 +203,13 @@
       <h2>Informations générales</h2>
       <ul>
         <li>
-          7h30 de <strong>présentiel</strong>,
-          7h30 d'<strong>exercices</strong>
+          7h30 de <strong>présentiel</strong>, 7h30 d'<strong>exercices</strong>
         </li>
         <li>
           Les documents utilisés sont sur
           <a href="https://quentin.lurkin.xyz/courses/python1ba/index.html">
-          <strong>quentin.lurkin.xyz/courses/python1ba/</strong></a>
+            <strong>quentin.lurkin.xyz/courses/python1ba/</strong></a
+          >
         </li>
         <li>
           Évaluation :
@@ -2275,7 +2275,8 @@
             ry="3"
             rx="3"
             style="fill: none; stroke: #000; stroke-width: 3px"
-          /></svg>), taper "python" dans le champ de recherche et cliquer sur installer.
+          /></svg
+        >), taper "python" dans le champ de recherche et cliquer sur installer.
       </p>
     </section>
 
@@ -2612,7 +2613,10 @@
     <section>
       <h2>Sinon</h2>
       <ul>
-      <li>Il est possible de définir un bloc à exécuter si la condition est fausse avec l'instruction <code>else</code> (sinon)</li>
+        <li>
+          Il est possible de définir un bloc à exécuter si la condition est
+          fausse avec l'instruction <code>else</code> (sinon)
+        </li>
       </ul>
       <pre><code class="lang-python">
         a = −5
@@ -2625,13 +2629,13 @@
 
     <section>
       <h2>Erreurs</h2>
-      <p>Écrivons le programme dans un fichier nommé <code>2nd_order.py</code> et exécutons le:</p>
-      <div class='terminal'>
-        > python 2nd_order.py
-        Traceback (most recent call last):
-          File "C:\Users\lur\2nd_order.py", line 1, in &lt;module>
-            D = b*b-4*a*c
-                ^
+      <p>
+        Écrivons le programme dans un fichier nommé <code>2nd_order.py</code> et
+        exécutons le:
+      </p>
+      <div class="terminal">
+        > python 2nd_order.py Traceback (most recent call last): File
+        "C:\Users\lur\2nd_order.py", line 1, in &lt;module> D = b*b-4*a*c ^
         NameError: name 'b' is not defined
       </div>
       <p>Il faut définir <code>a</code>, <code>b</code> et <code>c</code></p>
@@ -2640,13 +2644,11 @@
     <section>
       <h2>Erreurs (2)</h2>
       <p>Réessayons !</p>
-      <div class='terminal'>
-        > python 2nd_order.py
-        Traceback (most recent call last):
-          File "C:\Users\lur\2nd_order.py", line 11, in &lt;module>
-            print("La 1re racine est", (-b-sqrt(D))/(2*a))
-                                           ^^^^
-        NameError: name 'sqrt' is not defined
+      <div class="terminal">
+        > python 2nd_order.py Traceback (most recent call last): File
+        "C:\Users\lur\2nd_order.py", line 11, in &lt;module> print("La 1re
+        racine est", (-b-sqrt(D))/(2*a)) ^^^^ NameError: name 'sqrt' is not
+        defined
       </div>
       <p>Il faut importer <code>sqrt</code></p>
     </section>
@@ -2657,7 +2659,10 @@
         <li>Hardcoder les valeurs dans le programme n'est pas idéal</li>
         <li>Utilisons la fonction <code>input()</code></li>
         <li>Elle renvoie toujours des <code>str</code></li>
-        <li>Conversion des <code>str</code> en flottants avec la fonction <code>float</code></li>
+        <li>
+          Conversion des <code>str</code> en flottants avec la fonction
+          <code>float</code>
+        </li>
       </ul>
     </section>
 
@@ -2881,18 +2886,18 @@
     <!-- </section> -->
 
     <script>
-      fetch("https://endoflife.date/api/python.json")
+      fetch('https://endoflife.date/api/python.json')
         .then((response) => response.json())
         .then((data) => {
-          const version = data[0].latest;
-          const shortVersion = version.split(".").slice(0, 2).join(".");
-          document.querySelectorAll(".pyversion").forEach((elem) => {
-            elem.innerHTML = version;
-          });
-          document.querySelectorAll(".pyshortversion").forEach((elem) => {
-            elem.innerHTML = shortVersion;
-          });
-        });
+          const version = data[0].latest
+          const shortVersion = version.split('.').slice(0, 2).join('.')
+          document.querySelectorAll('.pyversion').forEach((elem) => {
+            elem.innerHTML = version
+          })
+          document.querySelectorAll('.pyshortversion').forEach((elem) => {
+            elem.innerHTML = shortVersion
+          })
+        })
     </script>
   </body>
 </html>

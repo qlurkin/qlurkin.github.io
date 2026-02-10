@@ -1,0 +1,117 @@
+.box {
+  border: 2px solid red;
+  border-radius: 8px;
+  position: absolute;
+  left: 0.5em;
+  right: 0.5em;
+  padding: 0.2em 0;
+}
+
+pre {
+  position: relative;
+}
+
+.ram {
+  border: 3px solid black;
+  border-radius: 8px;
+  background-color: #fee;
+  min-height: 10em;
+}
+
+.ram h5 {
+  padding: 0.2em;
+  margin: 0;
+}
+
+.var {
+  display: inline-flex;
+  border: 3px solid black;
+  border-radius: 8px;
+  margin: 5px;
+}
+
+.var .content {
+  border-left: 3px solid black;
+  padding: 5px;
+  background-color: white;
+  border-bottom-right-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.var .name {
+  padding: 5px;
+  font-weight: bold;
+  font-family:
+    ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas,
+    'DejaVu Sans Mono', monospace;
+  background-color: #eee;
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
+}
+
+.recipe {
+  font-size: 0.7em;
+}
+
+.recipe .hl {
+  background-color: #ffffcc;
+  border: 3px solid #aa0000;
+  border-radius: 0.3em;
+}
+
+.work-plan {
+  border: 3px solid black;
+  border-radius: 8px;
+  background-color: #fee;
+  min-height: 17em;
+}
+
+.work-plan h5 {
+  padding: 0.2em;
+  margin: 0;
+}
+
+.work-plan .big {
+  height: 8em;
+  display: block;
+}
+
+.work-plan .small {
+  height: 3em;
+}
+
+.eat-table {
+  border: 3px solid black;
+  border-radius: 8px;
+  min-height: 6em;
+  margin-top: 0.5em;
+  background:
+    repeating-linear-gradient(
+      45deg,
+      rgba(255, 0, 0, 0.5) 0,
+      rgba(255, 0, 0, 0.5) 20px,
+      transparent 20px,
+      transparent 40px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      rgba(255, 0, 0, 0.5) 0,
+      rgba(255, 0, 0, 0.5) 20px,
+      transparent 20px,
+      transparent 40px
+    ),
+    white;
+}
+
+.eat-table h5 {
+  padding: 0.2em;
+  margin: 0;
+}
+
+.eat-table img {
+  height: 4em;
+}
+
+.mode-document .code-step {
+  font-size: 0.8em;
+}

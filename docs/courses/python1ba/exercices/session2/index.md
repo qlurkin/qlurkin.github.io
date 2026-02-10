@@ -3,24 +3,55 @@ title: Exercices 2
 typst: true
 ---
 
-1. Écrire un programme qui demande un nombre et qui affiche s'il est pair ou impair.
+1. Écrire une fonction qui reçoit un angle en degré et renvoie sa valeur en
+   radians.
 
-1. Écrire un programme qui demande un nombre et affiche sa valeur absolue.
+1. Écrire une fonction qui calcule la distance orthodromique entre deux points
+   sur une sphère.
 
-1. Écrire un programme qui demande une année en paramètre et qui affiche si elle est bissextile ou non.
-   
-    Une année est bissextile si:
-    - elle est divisible par 4 et non divisible par 100, ou
-    - si elle est divisible par 400. 
+   La distance orthodromique est la plus courte distance entre deux points
+   situés à la surface d’une sphère, mesurée le long de la surface. Elle
+   correspond à la longueur de l'arc du grand cercle reliant ces deux points.
 
-1. Écrire un programme qui demande un entier et qui affiche sa factorielle.
+   Elle se calcule par la formule suivante:
 
-    La factorielle de $n$ se note $n!$ et se calcule comme suit: $$ n! = 1 times 2 times 3 times 4 times ... times n $$ *il est interdit d'importer le module `math`*
+   $$
+   D = R arccos(sin(phi_A) sin(phi_B) + cos(phi_A) cos(phi_B) cos(lambda_B -
+   lambda_A))
+   $$
 
-1. Écrire un programme qui demande un entier et qui affiche s'il est premier ou non.
+   où les $phi$ représentent des latitudes et les $lambda$ représentent des
+   longitudes
 
-    Un nombre premier est un nombre entier positif qui a exactement 2 diviseurs (1 et lui-même).
+   _Remarques: Les fonction `sin()` et `cos()` de Python attendent des angles en
+   radians. Alors que les coordonnées GPS sont traditionnellement exprimées en
+   degrés._
 
-    Exemple&nbsp;:
-    - 5 est premier car il n’est divisible que par 1 et 5.
-    - 1 n'est pas premier car il n'a qu'un diviseur.
+1. Écrire une fonction qui reçoit une liste et qui renvoie la liste de ses
+   valeurs converties en flottants. On suppose que toutes les valeurs de la
+   liste d’entrée sont convertibles en flottants.
+
+1. Écrire une fonction qui permettra de demander à l'utilisateur d’entrer une
+   liste de `str`. La fonction prendra en paramètre le message à afficher à
+   l'utilisateur _(comme le fait la fonction `input()`)_. Elle demandera ensuite
+   d’entrer chaque valeur individuellement jusqu'à ce que l'utilisateur valide
+   une chaîne vide _(de longueur `0`)_. La fonction renverra la liste produite.
+
+   **Exemple d'utilisation:**
+
+   ```python
+   # exo1.py
+   L = input_list("Entrez vos animaux préférés")
+   print(L)
+   ```
+
+   ```terminal
+   > python exo1.py
+   Entrez vos animaux préférés:
+   élément 1: Tigre
+   élément 2: Gorille
+   élément 3: Velociraptor
+   élément 4:
+   ['Tigre', 'Gorille', 'Velociraptor']
+   ```
+
