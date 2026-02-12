@@ -696,5 +696,1199 @@ fetch('https://endoflife.date/api/python.json')
   })
 </script>
 </section>
+<section id="fonctions" class="level2">
+<h2>Fonctions</h2>
+<ul>
+<li><p>Nous avons déjà vu plusieurs fonctions prédéfinies :</p>
+<p><code>print()</code>, <code>sqrt()</code>, <code>input()</code>,
+<code>int()</code>, …</p></li>
+<li><p>Une fonction est une “<strong>boite noire</strong>” qui
+<strong>peut</strong> recevoir une ou plusieurs <strong>valeurs</strong>
+en arguments et <strong>peut</strong> renvoyer une valeur de
+<strong>sortie</strong>.</p></li>
+<li><p>Définir ses propres fonctions sert à deux choses :</p>
+<ul>
+<li><strong>Eviter de répéter</strong> plusieurs fois le même code.</li>
+<li><strong>Structurer</strong> les longs programmes en les découpant en
+<strong>petites parties simples</strong>.</li>
+</ul></li>
+</ul>
+</section>
+<section id="fonctions-sans-argument-ni-valeur-de-retour"
+class="level2">
+<h2>Fonctions sans argument ni valeur de retour</h2>
+<ul>
+<li>Voici la <strong>définition</strong> d’une fonction qui affiche la
+table de 7 :</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">table7</span><span class="p">():</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">while</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">10</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="s2">&quot;x 7 =&quot;</span><span class="p">,</span> <span class="n">n</span> <span class="o">*</span> <span class="mi">7</span><span class="p">)</span>
+        <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
+</pre></div>
+
+<ul>
+<li><dl>
+<dt>Une fois la fonction définie, on peut l’<strong>appeler</strong>
+autant de fois qu’on veut</dt>
+<dd>
+
+</dd>
+</dl></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="c1"># affichons 2 fois la table de 7</span>
+<span class="n">table7</span><span class="p">()</span>
+<span class="n">table7</span><span class="p">()</span>
+</pre></div>
+
+<p><strong>Une fonction n’est exécutée que lorsqu’on
+l’appelle</strong></p>
+</section>
+<section id="fonctions-sans-argument-ni-valeur-de-retour-1"
+class="level2">
+<h2>Fonctions sans argument ni valeur de retour</h2>
+<ul>
+<li>La fonction <code>table7()</code> ne retourne rien :</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">table7</span><span class="p">()</span> <span class="c1"># affiche la table de 7</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>     <span class="c1"># affiche None</span>
+</pre></div>
+
+<ul>
+<li>Comme elle ne prend pas de paramètre, elle fait toujours <strong>la
+même chose</strong>.</li>
+</ul>
+</section>
+<section id="fonctions-avec-arguments" class="level2">
+<h2>Fonctions avec arguments</h2>
+<ul>
+<li>Les <strong>valeur(s)</strong> reçue(s) en paramètre(s) sont
+utilisée(s) lors de l’exécution de la fonction :</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="c1"># définition de la fonction table().</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">table</span><span class="p">(</span><span class="n">base</span><span class="p">):</span>
+    <span class="n">n</span><span class="o">=</span><span class="mi">1</span>
+    <span class="k">while</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">10</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">base</span><span class="p">,</span> <span class="s2">&quot;=&quot;</span><span class="p">,</span> <span class="n">n</span> <span class="o">*</span> <span class="n">base</span><span class="p">)</span>
+        <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="c1"># appels à la fonction table()</span>
+<span class="n">table</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>       <span class="c1"># affiche la table de 3</span>
+<span class="n">table</span><span class="p">(</span><span class="n">base</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>  <span class="c1"># affiche la table de 8</span>
+<span class="n">a</span> <span class="o">=</span> <span class="mi">42</span>
+<span class="n">table</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>       <span class="c1"># affiche la table de 42</span>
+</pre></div>
+
+</section>
+<section id="fonctions-avec-arguments-1" class="level2">
+<h2>Fonctions avec arguments</h2>
+<ul>
+<li>On peut aussi avoir plusieurs arguments :</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="c1"># définition de la fonction table().</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">table</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">length</span><span class="p">):</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">start</span>
+    <span class="k">while</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="n">start</span> <span class="o">+</span> <span class="n">length</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">base</span><span class="p">,</span> <span class="s2">&quot;=&quot;</span><span class="p">,</span> <span class="n">n</span> <span class="o">*</span> <span class="n">base</span><span class="p">)</span>
+        <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="c1"># appels à la fonction table()</span>
+<span class="n">table</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">table</span><span class="p">(</span><span class="n">base</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+
+</section>
+<section id="fonctions-avec-arguments-2" class="level2">
+<h2>Fonctions avec arguments</h2>
+<ul>
+<li>On peut aussi avoir des valeurs par défaut pour les arguments :</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="c1"># définition de la fonction table().</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">table</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">start</span>
+    <span class="k">while</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="n">start</span> <span class="o">+</span> <span class="n">length</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">base</span><span class="p">,</span> <span class="s2">&quot;=&quot;</span><span class="p">,</span> <span class="n">n</span> <span class="o">*</span> <span class="n">base</span><span class="p">)</span>
+        <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="c1"># appels à la fonction table()</span>
+<span class="n">table</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">table</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">table</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">table</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+
+</section>
+<section id="fonctions-avec-valeur-de-retour" class="level2">
+<h2>Fonctions avec valeur de retour</h2>
+<ul>
+<li>Le mot-clé <code>return</code> permet de définir la valeur de retour
+:</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="c1"># définition de la fonction multiply()</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">multiply</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span>
+
+<span class="n">res</span> <span class="o">=</span> <span class="n">multiply</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>   <span class="c1"># appel à la fonction. N&#39;affiche rien.</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>             <span class="c1"># affiche 63</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">multiply</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>  <span class="c1"># affiche 42</span>
+</pre></div>
+
+</section>
+<section id="fonctions-avec-valeur-de-retour-1" class="level2">
+<h2>Fonctions avec valeur de retour</h2>
+<ul>
+<li>On peut utiliser une fonction dans le corps d’une autre :</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="c1"># définition de multiply()</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">multiply</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span>
+
+<span class="c1"># définition de table()</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">table</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">start</span>
+    <span class="k">while</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="n">start</span> <span class="o">+</span> <span class="n">length</span><span class="p">:</span>
+        <span class="c1"># utilisation de multiply()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">base</span><span class="p">,</span> <span class="s2">&quot;=&quot;</span><span class="p">,</span> <span class="n">multiply</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">base</span><span class="p">))</span>
+        <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="c1"># appel à la fonction table()</span>
+<span class="n">table</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+
+</section>
+<section id="fonctions-avec-valeur-de-retour-2" class="level2">
+<h2>Fonctions avec valeur de retour</h2>
+<ul>
+<li>Lorsque le mot-clé <code>return</code> est rencontré, la fonction
+<strong>s’arrête</strong> et le programme se poursuit après l’appel.
+<span class="small">Cela permet quelques simplifications</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">abs</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="o">-</span><span class="n">x</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">x</span>
+</pre></div>
+
+<div class="pygments"><pre><span></span><span class="c1"># version simplifiée</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">abs</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="o">-</span><span class="n">x</span>
+    <span class="k">return</span> <span class="n">x</span>
+</pre></div>
+
+</section>
+<section id="variables-locales-et-globales" class="level2">
+<h2>Variables locales et globales</h2>
+<ul>
+<li>Dès que l’on a des fonctions, il faut comprendre la différence entre
+variables locales et globales.</li>
+<li>Une variable globale est définie <strong>en dehors de toute
+fonction</strong>. Elle est accessible dans <strong>l’ensemble du
+programme</strong>.</li>
+<li>Une variable locale est définie <strong>dans une fonction</strong>.
+Elle est accessible uniquement <strong>dans cette
+fonction</strong>.</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">tvac</span><span class="p">(</span><span class="n">amount</span><span class="p">):</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">interest</span> <span class="o">/</span> <span class="mi">100</span>
+    <span class="k">return</span> <span class="n">amount</span> <span class="o">*</span> <span class="n">n</span>
+
+<span class="n">interest</span> <span class="o">=</span> <span class="mi">21</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">25</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">tvac</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+</pre></div>
+
+</section>
+<section class="level2">
+<h2>Variables locales et globales</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">tvac</span><span class="p">(</span><span class="n">amount</span><span class="p">):</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">interest</span> <span class="o">/</span> <span class="mi">100</span>
+    <span class="k">return</span> <span class="n">amount</span> <span class="o">*</span> <span class="n">n</span>
+
+<span class="n">interest</span> <span class="o">=</span> <span class="mi">21</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">25</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">tvac</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Variables locales et globales</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="hll"><span class="k">def</span><span class="w"> </span><span class="nf">tvac</span><span class="p">(</span><span class="n">amount</span><span class="p">):</span>
+</span>    <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">interest</span> <span class="o">/</span> <span class="mi">100</span>
+    <span class="k">return</span> <span class="n">amount</span> <span class="o">*</span> <span class="n">n</span>
+
+<span class="n">interest</span> <span class="o">=</span> <span class="mi">21</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">25</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">tvac</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5><div class="var"><div class="name">tvac</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Variables locales et globales</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">tvac</span><span class="p">(</span><span class="n">amount</span><span class="p">):</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">interest</span> <span class="o">/</span> <span class="mi">100</span>
+    <span class="k">return</span> <span class="n">amount</span> <span class="o">*</span> <span class="n">n</span>
+
+<span class="hll"><span class="n">interest</span> <span class="o">=</span> <span class="mi">21</span>
+</span><span class="n">n</span> <span class="o">=</span> <span class="mi">25</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">tvac</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5><div class="var"><div class="name">tvac</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div><div class="var"><div class="name">interest</div><div class="content">21</div></div></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Variables locales et globales</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">tvac</span><span class="p">(</span><span class="n">amount</span><span class="p">):</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">interest</span> <span class="o">/</span> <span class="mi">100</span>
+    <span class="k">return</span> <span class="n">amount</span> <span class="o">*</span> <span class="n">n</span>
+
+<span class="n">interest</span> <span class="o">=</span> <span class="mi">21</span>
+<span class="hll"><span class="n">n</span> <span class="o">=</span> <span class="mi">25</span>
+</span><span class="n">r</span> <span class="o">=</span> <span class="n">tvac</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5><div class="var"><div class="name">tvac</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div><div class="var"><div class="name">interest</div><div class="content">21</div></div><div class="var"><div class="name">n</div><div class="content">25</div></div></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Variables locales et globales</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">tvac</span><span class="p">(</span><span class="n">amount</span><span class="p">):</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">interest</span> <span class="o">/</span> <span class="mi">100</span>
+    <span class="k">return</span> <span class="n">amount</span> <span class="o">*</span> <span class="n">n</span>
+
+<span class="n">interest</span> <span class="o">=</span> <span class="mi">21</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">25</span>
+<span class="hll"><span class="n">r</span> <span class="o">=</span> <span class="n">tvac</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+</span><span class="nb">print</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5><div class="var"><div class="name">tvac</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div><div class="var"><div class="name">interest</div><div class="content">21</div></div><div class="var"><div class="name">n</div><div class="content">25</div></div><div class="ram"><h5><em>function tvac</em></h5><div class="var"><div class="name">amount</div><div class="content">25</div></div></div></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Variables locales et globales</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">tvac</span><span class="p">(</span><span class="n">amount</span><span class="p">):</span>
+<span class="hll">    <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">interest</span> <span class="o">/</span> <span class="mi">100</span>
+</span>    <span class="k">return</span> <span class="n">amount</span> <span class="o">*</span> <span class="n">n</span>
+
+<span class="n">interest</span> <span class="o">=</span> <span class="mi">21</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">25</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">tvac</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5><div class="var"><div class="name">tvac</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div><div class="var"><div class="name">interest</div><div class="content">21</div></div><div class="var"><div class="name">n</div><div class="content">25</div></div><div class="ram"><h5><em>function tvac</em></h5><div class="var"><div class="name">amount</div><div class="content">25</div></div><div class="var"><div class="name">n</div><div class="content">1.21</div></div></div></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Variables locales et globales</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">tvac</span><span class="p">(</span><span class="n">amount</span><span class="p">):</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">interest</span> <span class="o">/</span> <span class="mi">100</span>
+<span class="hll">    <span class="k">return</span> <span class="n">amount</span> <span class="o">*</span> <span class="n">n</span>
+</span>
+<span class="n">interest</span> <span class="o">=</span> <span class="mi">21</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">25</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">tvac</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5><div class="var"><div class="name">tvac</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div><div class="var"><div class="name">interest</div><div class="content">21</div></div><div class="var"><div class="name">n</div><div class="content">25</div></div><div class="ram"><h5><em>function tvac</em></h5><div class="var"><div class="name">amount</div><div class="content">25</div></div><div class="var"><div class="name">n</div><div class="content">1.21</div></div><div class="var"><div class="name"><em class="ref">&lt;return&gt;</em></div><div class="content">30.25</div></div></div></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Variables locales et globales</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">tvac</span><span class="p">(</span><span class="n">amount</span><span class="p">):</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">interest</span> <span class="o">/</span> <span class="mi">100</span>
+    <span class="k">return</span> <span class="n">amount</span> <span class="o">*</span> <span class="n">n</span>
+
+<span class="n">interest</span> <span class="o">=</span> <span class="mi">21</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">25</span>
+<span class="hll"><span class="n">r</span> <span class="o">=</span> <span class="n">tvac</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+</span><span class="nb">print</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5><div class="var"><div class="name">tvac</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div><div class="var"><div class="name">interest</div><div class="content">21</div></div><div class="var"><div class="name">n</div><div class="content">25</div></div><div class="ram"><h5><em>function tvac</em></h5><div class="var"><div class="name">amount</div><div class="content">25</div></div><div class="var"><div class="name">n</div><div class="content">1.21</div></div><div class="var"><div class="name"><em class="ref">&lt;return&gt;</em></div><div class="content">30.25</div></div></div><div class="var"><div class="name">r</div><div class="content">30.25</div></div></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Variables locales et globales</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">tvac</span><span class="p">(</span><span class="n">amount</span><span class="p">):</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">interest</span> <span class="o">/</span> <span class="mi">100</span>
+    <span class="k">return</span> <span class="n">amount</span> <span class="o">*</span> <span class="n">n</span>
+
+<span class="n">interest</span> <span class="o">=</span> <span class="mi">21</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">25</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">tvac</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="hll"><span class="nb">print</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+</span></pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5><div class="var"><div class="name">tvac</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div><div class="var"><div class="name">interest</div><div class="content">21</div></div><div class="var"><div class="name">n</div><div class="content">25</div></div><div class="var"><div class="name">r</div><div class="content">30.25</div></div></div><div class="terminal" style="font-size: 1.0em">30.25</div></div></div>
+</section>
+<section id="que-va-t-il-safficher" class="level2">
+<h2>Que va-t-il s’afficher ?</h2>
+<div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">fun</span><span class="p">():</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="mi">12</span>
+
+<span class="n">fun</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+
+</section>
+<section class="level2">
+<h2>Que va-t-il s'afficher ?</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">fun</span><span class="p">():</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="mi">12</span>
+
+<span class="n">fun</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Que va-t-il s'afficher ?</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="hll"><span class="k">def</span><span class="w"> </span><span class="nf">fun</span><span class="p">():</span>
+</span>    <span class="n">a</span> <span class="o">=</span> <span class="mi">12</span>
+
+<span class="n">fun</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5><div class="var"><div class="name">fun</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Que va-t-il s'afficher ?</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">fun</span><span class="p">():</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="mi">12</span>
+
+<span class="hll"><span class="n">fun</span><span class="p">()</span>
+</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5><div class="var"><div class="name">fun</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div><div class="ram"><h5><em>function fun</em></h5></div></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Que va-t-il s'afficher ?</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">fun</span><span class="p">():</span>
+<span class="hll">    <span class="n">a</span> <span class="o">=</span> <span class="mi">12</span>
+</span>
+<span class="n">fun</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5><div class="var"><div class="name">fun</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div><div class="ram"><h5><em>function fun</em></h5><div class="var"><div class="name">a</div><div class="content">12</div></div></div></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Que va-t-il s'afficher ?</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">fun</span><span class="p">():</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="mi">12</span>
+
+<span class="n">fun</span><span class="p">()</span>
+<span class="hll">
+</span><span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5><div class="var"><div class="name">fun</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Que va-t-il s'afficher ?</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">fun</span><span class="p">():</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="mi">12</span>
+
+<span class="n">fun</span><span class="p">()</span>
+
+<span class="hll"><span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</span></pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5><div class="var"><div class="name">fun</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div></div><div class="terminal" style="font-size: 0.8em">Traceback (most recent call last):
+  File "example.py", line 6, in <module>
+    print(a)
+          ^
+NameError: name 'a' is not defined
+</div></div></div>
+</section>
+<section id="variables-locales-et-globales-1" class="level2">
+<h2>Variables locales et globales</h2>
+<ul>
+<li>Une variable locale est <strong>inaccessible</strong> hors de la
+fonction où elle est définie</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">fun</span><span class="p">():</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="mi">12</span> <span class="c1"># variable locale à fun</span>
+
+<span class="n">fun</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="c1"># inaccessible ici</span>
+</pre></div>
+
+</section>
+<section id="que-va-t-il-safficher-1" class="level2">
+<h2>Que va-t-il s’afficher ?</h2>
+<div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">fun</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="mi">12</span>
+<span class="n">fun</span><span class="p">()</span>
+</pre></div>
+
+</section>
+<section class="level2">
+<h2>Que va-t-il s'afficher ?</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">fun</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="mi">12</span>
+<span class="n">fun</span><span class="p">()</span>
+</pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Que va-t-il s'afficher ?</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="hll"><span class="k">def</span><span class="w"> </span><span class="nf">fun</span><span class="p">():</span>
+</span>    <span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="mi">12</span>
+<span class="n">fun</span><span class="p">()</span>
+</pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5><div class="var"><div class="name">fun</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Que va-t-il s'afficher ?</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">fun</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+
+<span class="hll"><span class="n">a</span> <span class="o">=</span> <span class="mi">12</span>
+</span><span class="n">fun</span><span class="p">()</span>
+</pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5><div class="var"><div class="name">fun</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div><div class="var"><div class="name">a</div><div class="content">12</div></div></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Que va-t-il s'afficher ?</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">fun</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="mi">12</span>
+<span class="hll"><span class="n">fun</span><span class="p">()</span>
+</span></pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5><div class="var"><div class="name">fun</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div><div class="var"><div class="name">a</div><div class="content">12</div></div><div class="ram"><h5><em>function fun</em></h5></div></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Que va-t-il s'afficher ?</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">fun</span><span class="p">():</span>
+<span class="hll">    <span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</span>
+<span class="n">a</span> <span class="o">=</span> <span class="mi">12</span>
+<span class="n">fun</span><span class="p">()</span>
+</pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5><div class="var"><div class="name">fun</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div><div class="var"><div class="name">a</div><div class="content">12</div></div><div class="ram"><h5><em>function fun</em></h5></div></div><div class="terminal" style="font-size: 1.0em">12</div></div></div>
+</section>
+<section class="level2">
+<h2>Que va-t-il s'afficher ?</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">fun</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="mi">12</span>
+<span class="n">fun</span><span class="p">()</span>
+</pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5><div class="var"><div class="name">fun</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div><div class="var"><div class="name">a</div><div class="content">12</div></div></div><div class="terminal" style="font-size: 1.0em">12</div></div></div>
+</section>
+<section id="variables-locales-et-globales-2" class="level2">
+<h2>Variables locales et globales</h2>
+<ul>
+<li>Une variable globale est accessible <strong>partout</strong> :</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">fun</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="c1"># accès à la variable &#39;a&#39; globale</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="mi">12</span>
+<span class="n">fun</span><span class="p">()</span>
+</pre></div>
+
+</section>
+<section id="que-va-t-il-safficher-2" class="level2">
+<h2>Que va-t-il s’afficher ?</h2>
+<div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">fun</span><span class="p">():</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="mi">42</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;dans fun :&quot;</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="mi">12</span>
+<span class="n">fun</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;en dehors de fun :&quot;</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+</pre></div>
+
+</section>
+<section class="level2">
+<h2>Que va-t-il s'afficher ?</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">fun</span><span class="p">():</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="mi">42</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;dans fun :&quot;</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="mi">12</span>
+<span class="n">fun</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;en dehors de fun :&quot;</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Que va-t-il s'afficher ?</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="hll"><span class="k">def</span><span class="w"> </span><span class="nf">fun</span><span class="p">():</span>
+</span>    <span class="n">a</span> <span class="o">=</span> <span class="mi">42</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;dans fun :&quot;</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="mi">12</span>
+<span class="n">fun</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;en dehors de fun :&quot;</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5><div class="var"><div class="name">fun</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Que va-t-il s'afficher ?</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">fun</span><span class="p">():</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="mi">42</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;dans fun :&quot;</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+
+<span class="hll"><span class="n">a</span> <span class="o">=</span> <span class="mi">12</span>
+</span><span class="n">fun</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;en dehors de fun :&quot;</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5><div class="var"><div class="name">fun</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div><div class="var"><div class="name">a</div><div class="content">12</div></div></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Que va-t-il s'afficher ?</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">fun</span><span class="p">():</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="mi">42</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;dans fun :&quot;</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="mi">12</span>
+<span class="hll"><span class="n">fun</span><span class="p">()</span>
+</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;en dehors de fun :&quot;</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5><div class="var"><div class="name">fun</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div><div class="var"><div class="name">a</div><div class="content">12</div></div><div class="ram"><h5><em>function fun</em></h5></div></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Que va-t-il s'afficher ?</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">fun</span><span class="p">():</span>
+<span class="hll">    <span class="n">a</span> <span class="o">=</span> <span class="mi">42</span>
+</span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;dans fun :&quot;</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="mi">12</span>
+<span class="n">fun</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;en dehors de fun :&quot;</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5><div class="var"><div class="name">fun</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div><div class="var"><div class="name">a</div><div class="content">12</div></div><div class="ram"><h5><em>function fun</em></h5><div class="var"><div class="name">a</div><div class="content">42</div></div></div></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Que va-t-il s'afficher ?</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">fun</span><span class="p">():</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="mi">42</span>
+<span class="hll">    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;dans fun :&quot;</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+</span>
+<span class="n">a</span> <span class="o">=</span> <span class="mi">12</span>
+<span class="n">fun</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;en dehors de fun :&quot;</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5><div class="var"><div class="name">fun</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div><div class="var"><div class="name">a</div><div class="content">12</div></div><div class="ram"><h5><em>function fun</em></h5><div class="var"><div class="name">a</div><div class="content">42</div></div></div></div><div class="terminal" style="font-size: 1.0em">dans fun : 42</div></div></div>
+</section>
+<section class="level2">
+<h2>Que va-t-il s'afficher ?</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">fun</span><span class="p">():</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="mi">42</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;dans fun :&quot;</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="mi">12</span>
+<span class="n">fun</span><span class="p">()</span>
+<span class="hll">
+</span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;en dehors de fun :&quot;</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5><div class="var"><div class="name">fun</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div><div class="var"><div class="name">a</div><div class="content">12</div></div></div><div class="terminal" style="font-size: 1.0em">dans fun : 42</div></div></div>
+</section>
+<section class="level2">
+<h2>Que va-t-il s'afficher ?</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">fun</span><span class="p">():</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="mi">42</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;dans fun :&quot;</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="mi">12</span>
+<span class="n">fun</span><span class="p">()</span>
+
+<span class="hll"><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;en dehors de fun :&quot;</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+</span></pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5><div class="var"><div class="name">fun</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div><div class="var"><div class="name">a</div><div class="content">12</div></div></div><div class="terminal" style="font-size: 1.0em">dans fun : 42
+en dehors de fun : 12</div></div></div>
+</section>
+<section id="variables-locales-et-globales-3" class="level2">
+<h2>Variables locales et globales</h2>
+<ul>
+<li>Lorsqu’une variable locale porte le même nom qu’une globale,
+<strong>priorité à la locale</strong></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">fun</span><span class="p">():</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="mi">42</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;dans fun :&quot;</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>     <span class="c1"># &#39;a&#39; locale masque &#39;a&#39; globale</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="mi">12</span>
+<span class="n">fun</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;en dehors de fun :&quot;</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span> <span class="c1"># seule &#39;a&#39; globale accessible ici</span>
+</pre></div>
+
+</section>
+<section id="que-va-t-il-safficher-3" class="level2">
+<h2>Que va-t-il s’afficher ?</h2>
+<div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">fun</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;globale? :&quot;</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="mi">42</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="mi">12</span>
+<span class="n">fun</span><span class="p">()</span>
+</pre></div>
+
+</section>
+<section class="level2">
+<h2>Que va-t-il s'afficher ?</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">fun</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;globale? :&quot;</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="mi">42</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="mi">12</span>
+<span class="n">fun</span><span class="p">()</span>
+</pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Que va-t-il s'afficher ?</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="hll"><span class="k">def</span><span class="w"> </span><span class="nf">fun</span><span class="p">():</span>
+</span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;globale? :&quot;</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="mi">42</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="mi">12</span>
+<span class="n">fun</span><span class="p">()</span>
+</pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5><div class="var"><div class="name">fun</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Que va-t-il s'afficher ?</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">fun</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;globale? :&quot;</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="mi">42</span>
+
+<span class="hll"><span class="n">a</span> <span class="o">=</span> <span class="mi">12</span>
+</span><span class="n">fun</span><span class="p">()</span>
+</pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5><div class="var"><div class="name">fun</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div><div class="var"><div class="name">a</div><div class="content">12</div></div></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Que va-t-il s'afficher ?</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">fun</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;globale? :&quot;</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="mi">42</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="mi">12</span>
+<span class="hll"><span class="n">fun</span><span class="p">()</span>
+</span></pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5><div class="var"><div class="name">fun</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div><div class="var"><div class="name">a</div><div class="content">12</div></div><div class="ram"><h5><em>function fun</em></h5><div class="var"><div class="name">a</div><div class="content"><em class="ref">&lt;unbound&gt;</em></div></div></div></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Que va-t-il s'afficher ?</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">fun</span><span class="p">():</span>
+<span class="hll">    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;globale? :&quot;</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+</span>    <span class="n">a</span> <span class="o">=</span> <span class="mi">42</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="mi">12</span>
+<span class="n">fun</span><span class="p">()</span>
+</pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5><div class="var"><div class="name">fun</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div><div class="var"><div class="name">a</div><div class="content">12</div></div><div class="ram"><h5><em>function fun</em></h5><div class="var"><div class="name">a</div><div class="content"><em class="ref">&lt;unbound&gt;</em></div></div></div></div><div class="terminal" style="font-size: 0.5em">Traceback (most recent call last):
+  File "example.py", line 6, in <module>
+    fun()
+    ~~~^^
+  File "/Users/lur/Desktop/expr.py", line 2, in fun
+    print("globale? :", a)
+                        ^
+UnboundLocalError: cannot access local variable 'a'
+where it is not associated with a value
+</div></div></div>
+</section>
+<section id="variables-locales-et-globales-4" class="level2">
+<h2>Variables locales et globales</h2>
+<ul>
+<li>Priorité à la locale <strong>même avant sa définition dans la
+fonction</strong></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">fun</span><span class="p">():</span>
+    <span class="c1"># ici &#39;a&#39; local existe déjà mais n&#39;a pas encore de valeur</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;globale? :&quot;</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>  <span class="c1"># erreur: accès à &#39;a&#39; local sans valeur</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="mi">42</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="mi">12</span>
+<span class="n">fun</span><span class="p">()</span>
+</pre></div>
+
+</section>
+<section id="les-séquences" class="level2">
+<h2>Les séquences</h2>
+<ul>
+<li>Les séquences sont des <strong>types</strong> de valeur :
+<ul>
+<li><p>Les chainés de caractères (<code>str</code>)</p>
+<div class="pygments"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="s2">&quot;hello&quot;</span>      <span class="c1"># littéral</span>
+<span class="n">b</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">a</span> <span class="o">+</span> <span class="s2">&quot;!!&quot;</span> <span class="c1"># expression</span>
+<span class="n">c</span> <span class="o">=</span> <span class="s1">&#39;6&#39;</span> <span class="o">+</span> <span class="s1">&#39;7&#39;</span>    <span class="c1"># &#39;67&#39;</span>
+</pre></div>
+</li>
+<li><p>Les listes (<code>list</code>)</p>
+<div class="pygments"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>    <span class="c1"># littéral</span>
+<span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span> <span class="c1"># expression</span>
+</pre></div>
+</li>
+</ul></li>
+</ul>
+</section>
+<section id="les-séquences-1" class="level2">
+<h2>Les séquences</h2>
+<ul>
+<li>Les chaînes de caractères et les listes sont des séquences <span
+class="small">représente une suite ordonnée de valeurs</span></li>
+<li>Une séquence stocke <strong>zéro</strong>, <strong>une</strong> ou
+<strong>plusieurs</strong> valeurs</li>
+<li>Les valeurs d’une séquence possèdent un numéro
+d’<strong>ordre</strong> dans la séquence <span class="small">l’indice
+de l’élément</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">42</span><span class="p">,</span> <span class="mf">3.1416</span><span class="p">,</span> <span class="mi">34</span><span class="p">]</span>       <span class="c1"># &#39;l&#39; est une séquence de valeurs</span>
+<span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;Le Python, c&#39;est bon !&quot;</span>  <span class="c1"># &#39;s&#39; est une séquence de caractères</span>
+</pre></div>
+
+</section>
+<section id="opérations-sur-les-séquences" class="level2">
+<h2>Opérations sur les séquences</h2>
+<ul>
+<li><p>L’opérateur <code>+</code> entre deux séquences permet de créer
+une <strong>nouvelle séquence</strong> contenant les deux opérandes
+bout-à-bout <span class="small">On appelle cette opération la
+concaténation</span></p></li>
+<li><p>L’opérateur <code>*</code> entre un entier <code>n</code> et une
+séquence permet de créer une <strong>nouvelle séquence</strong>
+contenant <code>n</code> fois la séquence de départ.</p></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>  <span class="c1"># [1, 2, 3, 4]</span>
+<span class="n">g</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">*</span> <span class="s2">&quot;hello&quot;</span>      <span class="c1"># &quot;hellohellohello&quot;</span>
+</pre></div>
+
+</section>
+<section id="test-dappartenance" class="level2">
+<h2>Test d’appartenance</h2>
+<ul>
+<li>L’opérateur <code>in</code> permet de vérifier si une valeur se
+trouve dans une séquence. <span class="small">Ou si une sous-chaine est
+dans une chaine de caractères</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="n">L</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">42</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="k">if</span> <span class="mi">42</span> <span class="ow">in</span> <span class="n">L</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;OK&quot;</span><span class="p">)</span>
+
+<span class="n">S</span> <span class="o">=</span> <span class="s1">&#39;Python&#39;</span>
+<span class="k">if</span> <span class="s1">&#39;hon&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">S</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;KO&quot;</span><span class="p">)</span>
+</pre></div>
+
+</section>
+<section id="accès-aux-éléments" class="level2">
+<h2>Accès aux éléments</h2>
+<ul>
+<li>Il est possible d’accéder aux éléments individuels <span
+class="small">Pour cela, on utilise les crochets
+<code>[]</code></span></li>
+<li>Chaque éléments est repéré par son numéro d’ordre <span
+class="small">Le numéro d’ordre est appelé
+<strong>indice</strong></span></li>
+<li>Les indices commencent à <strong>zéro</strong> <span
+class="small">Les indices négatifs permettent d’indiquer un élément en
+partant de la fin de la séquence</span></li>
+</ul>
+</section>
+<section id="le-slicing" class="level2">
+<h2>Le <em>slicing</em></h2>
+<ul>
+<li>Il est possible de référencer une sous-séquence c-à-d une “tranche”
+de la séquence. On sépare les deux indices délimitant la tranche par un
+“<code>:</code>”</li>
+<li>La tranche <code>[m:n]</code> référence la sous-séquence qui va du
+<code>m</code><span style="font-size: 0.5em">ième</span> élément
+(<strong>compris</strong>) au <code>n</code><span
+style="font-size: 0.5em">ième</span> élément
+(<strong>non-compris</strong>).</li>
+<li>Si on omet le premier indice, la tranche démarre au début de la
+séquence <span class="small">Idem avec le deuxième indice et la fin de
+la séquence</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;Le Python, c&#39;est bon !&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">9</span><span class="p">])</span>   <span class="c1"># affiche &#39;Python&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">17</span><span class="p">:</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span> <span class="c1"># affiche &#39;bon&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">17</span><span class="p">:])</span>   <span class="c1"># affiche &#39;bon !&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">[:</span><span class="mi">9</span><span class="p">])</span>    <span class="c1"># affiche &#39;Le Python&#39;</span>
+</pre></div>
+
+<ul>
+<li>Un <em>slice</em> produit une <strong>nouvelle
+séquence</strong></li>
+</ul>
+</section>
+<section id="la-longueur-dune-séquence" class="level2">
+<h2>La longueur d’une séquence</h2>
+<ul>
+<li>Il est possible de connaitre le nombre d’éléments contenus dans une
+séquence grâce à la fonction <code>len()</code></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;Le Python, c&#39;est bon !&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">))</span> <span class="c1"># affiche 22</span>
+</pre></div>
+
+</section>
+<section id="un-str-est-immuable" class="level2">
+<h2>Un <code>str</code> est immuable</h2>
+<ul>
+<li>On peut modifier un élément d’une liste</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">42</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="n">s</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>   <span class="c1"># affiche [1, 2, 3, 4, 5]</span>
+</pre></div>
+
+<ul>
+<li>Une fois créée, une chaine de caractères ne peut plus être
+modifiée</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;Le Python, c&#39;est bon !&quot;</span>
+<span class="n">s</span><span class="p">[</span><span class="mi">17</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;c&quot;</span>     <span class="c1"># provoque une erreur !</span>
+</pre></div>
+
+</section>
+<section id="liste" class="level2">
+<h2>Liste</h2>
+<ul>
+<li>Une liste est une séquence permettant de stocker tous types de
+valeurs</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;I&quot;</span><span class="p">,</span> <span class="s2">&quot;love&quot;</span><span class="p">,</span> <span class="s2">&quot;Python&quot;</span><span class="p">]</span>
+<span class="n">mixed</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;duck-billed platypus&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">]</span>
+<span class="n">nested</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]]</span>
+</pre></div>
+
+<ul>
+<li>On peut supprimer un élément d’une liste.</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="k">del</span><span class="p">(</span><span class="n">numbers</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">numbers</span><span class="p">)</span> <span class="c1"># affiche [1, 2, 3, 4, 5]</span>
+</pre></div>
+
+</section>
+<section id="ajout-déléments" class="level2">
+<h2>Ajout d’éléments</h2>
+<ul>
+<li>On peut ajouter un élément à la <strong>fin</strong> d’une
+liste.</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="n">numbers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">numbers</span><span class="p">)</span>  <span class="c1"># affiche [1, 2, 3, 4, 5, 6]</span>
+</pre></div>
+
+<ul>
+<li>On peut insérer un élément à un <strong>indice</strong> précis.</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="n">numbers</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>  <span class="c1"># insère 3 à l&#39;indice 2</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">numbers</span><span class="p">)</span>        <span class="c1"># affiche [1, 2, 3, 4, 5]</span>
+</pre></div>
+
+</section>
+<section id="attention-aux-copies" class="level2">
+<h2>Attention aux copies</h2>
+<ul>
+<li>Que va-t-il s’afficher ?</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="s1">&#39;like&#39;</span><span class="p">,</span> <span class="s1">&#39;Python&#39;</span><span class="p">]</span>
+<span class="n">mots</span> <span class="o">=</span> <span class="n">words</span>
+<span class="n">mots</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;love&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mots</span><span class="p">)</span>
+</pre></div>
+
+</section>
+<section class="level2">
+<h2>Que va-t-il s'afficher ?</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="s1">&#39;like&#39;</span><span class="p">,</span> <span class="s1">&#39;Python&#39;</span><span class="p">]</span>
+<span class="n">mots</span> <span class="o">=</span> <span class="n">words</span>
+<span class="n">mots</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;love&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mots</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Que va-t-il s'afficher ?</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="hll"><span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="s1">&#39;like&#39;</span><span class="p">,</span> <span class="s1">&#39;Python&#39;</span><span class="p">]</span>
+</span><span class="n">mots</span> <span class="o">=</span> <span class="n">words</span>
+<span class="n">mots</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;love&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mots</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5><div class="var"><div class="name">words</div><div class="content"><em class="ref">&lt;ref1&gt;</em></div></div><div class="var"><div class="name"><em class="ref">&lt;ref1&gt;</em></div><div class="content">"I"<div class="index">0</div></div><div class="content">"like"<div class="index">1</div></div><div class="content">"Python"<div class="index">2</div></div></div></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Que va-t-il s'afficher ?</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="s1">&#39;like&#39;</span><span class="p">,</span> <span class="s1">&#39;Python&#39;</span><span class="p">]</span>
+<span class="hll"><span class="n">mots</span> <span class="o">=</span> <span class="n">words</span>
+</span><span class="n">mots</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;love&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mots</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5><div class="var"><div class="name">words</div><div class="content"><em class="ref">&lt;ref1&gt;</em></div></div><div class="var"><div class="name"><em class="ref">&lt;ref1&gt;</em></div><div class="content">"I"<div class="index">0</div></div><div class="content">"like"<div class="index">1</div></div><div class="content">"Python"<div class="index">2</div></div></div><div class="var"><div class="name">mots</div><div class="content"><em class="ref">&lt;ref1&gt;</em></div></div></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Que va-t-il s'afficher ?</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="s1">&#39;like&#39;</span><span class="p">,</span> <span class="s1">&#39;Python&#39;</span><span class="p">]</span>
+<span class="n">mots</span> <span class="o">=</span> <span class="n">words</span>
+<span class="hll"><span class="n">mots</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;love&#39;</span>
+</span><span class="nb">print</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mots</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5><div class="var"><div class="name">words</div><div class="content"><em class="ref">&lt;ref1&gt;</em></div></div><div class="var"><div class="name"><em class="ref">&lt;ref1&gt;</em></div><div class="content">"I"<div class="index">0</div></div><div class="content">"love"<div class="index">1</div></div><div class="content">"Python"<div class="index">2</div></div></div><div class="var"><div class="name">mots</div><div class="content"><em class="ref">&lt;ref1&gt;</em></div></div></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Que va-t-il s'afficher ?</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="s1">&#39;like&#39;</span><span class="p">,</span> <span class="s1">&#39;Python&#39;</span><span class="p">]</span>
+<span class="n">mots</span> <span class="o">=</span> <span class="n">words</span>
+<span class="n">mots</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;love&#39;</span>
+<span class="hll"><span class="nb">print</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+</span><span class="nb">print</span><span class="p">(</span><span class="n">mots</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5><div class="var"><div class="name">words</div><div class="content"><em class="ref">&lt;ref1&gt;</em></div></div><div class="var"><div class="name"><em class="ref">&lt;ref1&gt;</em></div><div class="content">"I"<div class="index">0</div></div><div class="content">"love"<div class="index">1</div></div><div class="content">"Python"<div class="index">2</div></div></div><div class="var"><div class="name">mots</div><div class="content"><em class="ref">&lt;ref1&gt;</em></div></div></div><div class="terminal" style="font-size: 1.0em">['I', 'love', 'Python']</div></div></div>
+</section>
+<section class="level2">
+<h2>Que va-t-il s'afficher ?</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="s1">&#39;like&#39;</span><span class="p">,</span> <span class="s1">&#39;Python&#39;</span><span class="p">]</span>
+<span class="n">mots</span> <span class="o">=</span> <span class="n">words</span>
+<span class="n">mots</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;love&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+<span class="hll"><span class="nb">print</span><span class="p">(</span><span class="n">mots</span><span class="p">)</span>
+</span></pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5><div class="var"><div class="name">words</div><div class="content"><em class="ref">&lt;ref1&gt;</em></div></div><div class="var"><div class="name"><em class="ref">&lt;ref1&gt;</em></div><div class="content">"I"<div class="index">0</div></div><div class="content">"love"<div class="index">1</div></div><div class="content">"Python"<div class="index">2</div></div></div><div class="var"><div class="name">mots</div><div class="content"><em class="ref">&lt;ref1&gt;</em></div></div></div><div class="terminal" style="font-size: 1.0em">['I', 'love', 'Python']
+['I', 'love', 'Python']</div></div></div>
+</section>
+<section id="attention-aux-copies-1" class="level2">
+<h2>Attention aux copies</h2>
+<ul>
+<li>Les listes sont manipulées via des références</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="s1">&#39;like&#39;</span><span class="p">,</span> <span class="s1">&#39;Python&#39;</span><span class="p">]</span>
+<span class="n">mots</span> <span class="o">=</span> <span class="n">words</span>     <span class="c1"># ici on ne copie que la référence</span>
+<span class="n">mots</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;love&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mots</span><span class="p">)</span>
+</pre></div>
+
+</section>
+<section id="attention-aux-copies-2" class="level2">
+<h2>Attention aux copies</h2>
+<ul>
+<li>Il explicitement créer une <strong>nouvelle liste</strong></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="s1">&#39;like&#39;</span><span class="p">,</span> <span class="s1">&#39;Python&#39;</span><span class="p">]</span>
+<span class="n">mots</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+<span class="n">mots</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;love&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mots</span><span class="p">)</span>
+</pre></div>
+
+</section>
+<section class="level2">
+<h2>Que va-t-il s'afficher ?</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="s1">&#39;like&#39;</span><span class="p">,</span> <span class="s1">&#39;Python&#39;</span><span class="p">]</span>
+<span class="n">mots</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+<span class="n">mots</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;love&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mots</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Que va-t-il s'afficher ?</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="hll"><span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="s1">&#39;like&#39;</span><span class="p">,</span> <span class="s1">&#39;Python&#39;</span><span class="p">]</span>
+</span><span class="n">mots</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+<span class="n">mots</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;love&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mots</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5><div class="var"><div class="name">words</div><div class="content"><em class="ref">&lt;ref1&gt;</em></div></div><div class="var"><div class="name"><em class="ref">&lt;ref1&gt;</em></div><div class="content">"I"<div class="index">0</div></div><div class="content">"like"<div class="index">1</div></div><div class="content">"Python"<div class="index">2</div></div></div></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Que va-t-il s'afficher ?</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="s1">&#39;like&#39;</span><span class="p">,</span> <span class="s1">&#39;Python&#39;</span><span class="p">]</span>
+<span class="hll"><span class="n">mots</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+</span><span class="n">mots</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;love&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mots</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5><div class="var"><div class="name">words</div><div class="content"><em class="ref">&lt;ref1&gt;</em></div></div><div class="var"><div class="name"><em class="ref">&lt;ref1&gt;</em></div><div class="content">"I"<div class="index">0</div></div><div class="content">"like"<div class="index">1</div></div><div class="content">"Python"<div class="index">2</div></div></div><div class="var"><div class="name"><em class="ref">&lt;ref2&gt;</em></div><div class="content">"I"<div class="index">0</div></div><div class="content">"like"<div class="index">1</div></div><div class="content">"Python"<div class="index">2</div></div></div></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Que va-t-il s'afficher ?</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="s1">&#39;like&#39;</span><span class="p">,</span> <span class="s1">&#39;Python&#39;</span><span class="p">]</span>
+<span class="hll"><span class="n">mots</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+</span><span class="n">mots</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;love&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mots</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5><div class="var"><div class="name">words</div><div class="content"><em class="ref">&lt;ref1&gt;</em></div></div><div class="var"><div class="name"><em class="ref">&lt;ref1&gt;</em></div><div class="content">"I"<div class="index">0</div></div><div class="content">"like"<div class="index">1</div></div><div class="content">"Python"<div class="index">2</div></div></div><div class="var"><div class="name"><em class="ref">&lt;ref2&gt;</em></div><div class="content">"I"<div class="index">0</div></div><div class="content">"like"<div class="index">1</div></div><div class="content">"Python"<div class="index">2</div></div></div><div class="var"><div class="name">mots</div><div class="content"><em class="ref">&lt;ref2&gt;</em></div></div></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Que va-t-il s'afficher ?</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="s1">&#39;like&#39;</span><span class="p">,</span> <span class="s1">&#39;Python&#39;</span><span class="p">]</span>
+<span class="n">mots</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+<span class="hll"><span class="n">mots</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;love&#39;</span>
+</span><span class="nb">print</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mots</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5><div class="var"><div class="name">words</div><div class="content"><em class="ref">&lt;ref1&gt;</em></div></div><div class="var"><div class="name"><em class="ref">&lt;ref1&gt;</em></div><div class="content">"I"<div class="index">0</div></div><div class="content">"like"<div class="index">1</div></div><div class="content">"Python"<div class="index">2</div></div></div><div class="var"><div class="name"><em class="ref">&lt;ref2&gt;</em></div><div class="content">"I"<div class="index">0</div></div><div class="content">"love"<div class="index">1</div></div><div class="content">"Python"<div class="index">2</div></div></div><div class="var"><div class="name">mots</div><div class="content"><em class="ref">&lt;ref2&gt;</em></div></div></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Que va-t-il s'afficher ?</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="s1">&#39;like&#39;</span><span class="p">,</span> <span class="s1">&#39;Python&#39;</span><span class="p">]</span>
+<span class="n">mots</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+<span class="n">mots</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;love&#39;</span>
+<span class="hll"><span class="nb">print</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+</span><span class="nb">print</span><span class="p">(</span><span class="n">mots</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5><div class="var"><div class="name">words</div><div class="content"><em class="ref">&lt;ref1&gt;</em></div></div><div class="var"><div class="name"><em class="ref">&lt;ref1&gt;</em></div><div class="content">"I"<div class="index">0</div></div><div class="content">"like"<div class="index">1</div></div><div class="content">"Python"<div class="index">2</div></div></div><div class="var"><div class="name"><em class="ref">&lt;ref2&gt;</em></div><div class="content">"I"<div class="index">0</div></div><div class="content">"love"<div class="index">1</div></div><div class="content">"Python"<div class="index">2</div></div></div><div class="var"><div class="name">mots</div><div class="content"><em class="ref">&lt;ref2&gt;</em></div></div></div><div class="terminal" style="font-size: 1.0em">['I', 'like', 'Python']</div></div></div>
+</section>
+<section class="level2">
+<h2>Que va-t-il s'afficher ?</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="s1">&#39;like&#39;</span><span class="p">,</span> <span class="s1">&#39;Python&#39;</span><span class="p">]</span>
+<span class="n">mots</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+<span class="n">mots</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;love&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+<span class="hll"><span class="nb">print</span><span class="p">(</span><span class="n">mots</span><span class="p">)</span>
+</span></pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5><div class="var"><div class="name">words</div><div class="content"><em class="ref">&lt;ref1&gt;</em></div></div><div class="var"><div class="name"><em class="ref">&lt;ref1&gt;</em></div><div class="content">"I"<div class="index">0</div></div><div class="content">"like"<div class="index">1</div></div><div class="content">"Python"<div class="index">2</div></div></div><div class="var"><div class="name"><em class="ref">&lt;ref2&gt;</em></div><div class="content">"I"<div class="index">0</div></div><div class="content">"love"<div class="index">1</div></div><div class="content">"Python"<div class="index">2</div></div></div><div class="var"><div class="name">mots</div><div class="content"><em class="ref">&lt;ref2&gt;</em></div></div></div><div class="terminal" style="font-size: 1.0em">['I', 'like', 'Python']
+['I', 'love', 'Python']</div></div></div>
+</section>
+<section id="créer-une-copie-dune-liste" class="level2">
+<h2>Créer une copie d’une liste</h2>
+<ul>
+<li>On peut imaginer plusieurs moyen de créer explicitement une nouvelle
+liste</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="n">copy1</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">numbers</span><span class="p">)</span>  <span class="c1"># la fonction &#39;list()&#39; crée une liste</span>
+<span class="n">copy2</span> <span class="o">=</span> <span class="n">numbers</span> <span class="o">*</span> <span class="mi">1</span>    <span class="c1"># le &#39;*&#39; crée une liste</span>
+<span class="n">copy3</span> <span class="o">=</span> <span class="n">numbers</span> <span class="o">+</span> <span class="p">[]</span>   <span class="c1"># le &#39;+&#39; crée une liste</span>
+<span class="n">copy4</span> <span class="o">=</span> <span class="n">numbers</span><span class="p">[:]</span>     <span class="c1"># le slice crée une liste</span>
+</pre></div>
+
+</section>
+<section id="passage-par-référence" class="level2">
+<h2>Passage par référence</h2>
+<ul>
+<li>Le même phénomène se produit lors du passage d’une liste à une
+fonction</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">more_love</span><span class="p">(</span><span class="n">l</span><span class="p">):</span>
+  <span class="n">l</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;love&quot;</span>
+
+<span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="s1">&#39;like&#39;</span><span class="p">,</span> <span class="s1">&#39;Python&#39;</span><span class="p">]</span>
+<span class="n">fun</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+</pre></div>
+
+</section>
+<section class="level2">
+<h2>Passage par référence</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">more_love</span><span class="p">(</span><span class="n">l</span><span class="p">):</span>
+  <span class="n">l</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;love&quot;</span>
+
+<span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="s1">&#39;like&#39;</span><span class="p">,</span> <span class="s1">&#39;Python&#39;</span><span class="p">]</span>
+<span class="n">fun</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Passage par référence</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="hll"><span class="k">def</span><span class="w"> </span><span class="nf">more_love</span><span class="p">(</span><span class="n">l</span><span class="p">):</span>
+</span>  <span class="n">l</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;love&quot;</span>
+
+<span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="s1">&#39;like&#39;</span><span class="p">,</span> <span class="s1">&#39;Python&#39;</span><span class="p">]</span>
+<span class="n">fun</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5><div class="var"><div class="name">more_love</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Passage par référence</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">more_love</span><span class="p">(</span><span class="n">l</span><span class="p">):</span>
+  <span class="n">l</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;love&quot;</span>
+
+<span class="hll"><span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="s1">&#39;like&#39;</span><span class="p">,</span> <span class="s1">&#39;Python&#39;</span><span class="p">]</span>
+</span><span class="n">fun</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5><div class="var"><div class="name">more_love</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div><div class="var"><div class="name">words</div><div class="content"><em class="ref">&lt;ref1&gt;</em></div></div><div class="var"><div class="name"><em class="ref">&lt;ref1&gt;</em></div><div class="content">"I"<div class="index">0</div></div><div class="content">"like"<div class="index">1</div></div><div class="content">"Python"<div class="index">2</div></div></div></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Passage par référence</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">more_love</span><span class="p">(</span><span class="n">l</span><span class="p">):</span>
+  <span class="n">l</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;love&quot;</span>
+
+<span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="s1">&#39;like&#39;</span><span class="p">,</span> <span class="s1">&#39;Python&#39;</span><span class="p">]</span>
+<span class="hll"><span class="n">fun</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5><div class="var"><div class="name">more_love</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div><div class="var"><div class="name">words</div><div class="content"><em class="ref">&lt;ref1&gt;</em></div></div><div class="var"><div class="name"><em class="ref">&lt;ref1&gt;</em></div><div class="content">"I"<div class="index">0</div></div><div class="content">"like"<div class="index">1</div></div><div class="content">"Python"<div class="index">2</div></div></div><div class="ram"><h5><em>function more_love</em></h5><div class="var"><div class="name">l</div><div class="content"><em class="ref">&lt;ref1&gt;</em></div></div></div></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Passage par référence</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">more_love</span><span class="p">(</span><span class="n">l</span><span class="p">):</span>
+<span class="hll">  <span class="n">l</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;love&quot;</span>
+</span>
+<span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="s1">&#39;like&#39;</span><span class="p">,</span> <span class="s1">&#39;Python&#39;</span><span class="p">]</span>
+<span class="n">fun</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5><div class="var"><div class="name">more_love</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div><div class="var"><div class="name">words</div><div class="content"><em class="ref">&lt;ref1&gt;</em></div></div><div class="var"><div class="name"><em class="ref">&lt;ref1&gt;</em></div><div class="content">"I"<div class="index">0</div></div><div class="content">"love"<div class="index">1</div></div><div class="content">"Python"<div class="index">2</div></div></div><div class="ram"><h5><em>function more_love</em></h5><div class="var"><div class="name">l</div><div class="content"><em class="ref">&lt;ref1&gt;</em></div></div></div></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Passage par référence</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">more_love</span><span class="p">(</span><span class="n">l</span><span class="p">):</span>
+  <span class="n">l</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;love&quot;</span>
+
+<span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="s1">&#39;like&#39;</span><span class="p">,</span> <span class="s1">&#39;Python&#39;</span><span class="p">]</span>
+<span class="n">fun</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+<span class="hll">
+</span><span class="nb">print</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5><div class="var"><div class="name">more_love</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div><div class="var"><div class="name">words</div><div class="content"><em class="ref">&lt;ref1&gt;</em></div></div><div class="var"><div class="name"><em class="ref">&lt;ref1&gt;</em></div><div class="content">"I"<div class="index">0</div></div><div class="content">"love"<div class="index">1</div></div><div class="content">"Python"<div class="index">2</div></div></div></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Passage par référence</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">more_love</span><span class="p">(</span><span class="n">l</span><span class="p">):</span>
+  <span class="n">l</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;love&quot;</span>
+
+<span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="s1">&#39;like&#39;</span><span class="p">,</span> <span class="s1">&#39;Python&#39;</span><span class="p">]</span>
+<span class="n">fun</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+
+<span class="hll"><span class="nb">print</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+</span></pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5><div class="var"><div class="name">more_love</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div><div class="var"><div class="name">words</div><div class="content"><em class="ref">&lt;ref1&gt;</em></div></div><div class="var"><div class="name"><em class="ref">&lt;ref1&gt;</em></div><div class="content">"I"<div class="index">0</div></div><div class="content">"love"<div class="index">1</div></div><div class="content">"Python"<div class="index">2</div></div></div></div><div class="terminal" style="font-size: 1.0em">['I', 'love', 'Python']</div></div></div>
+</section>
 </body>
 </html>

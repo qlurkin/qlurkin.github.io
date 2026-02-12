@@ -4,6 +4,10 @@ from pygments.lexers import get_lexer_by_name
 import panflute as pf
 
 
+def ref(name):
+    return f'<em class="ref">&lt;{name}&gt;</em>'
+
+
 def loadfile(path):
     with open(path) as file:
         content = file.read()
@@ -20,16 +24,27 @@ def hl(src, lines=[]):
 def ram(vars, title="RAM"):
     res = ""
     for key, value in vars.items():
-        res += f'<div class="var"><div class="name">{key}</div><div class="content">{value}</div></div>'
+        if isinstance(value, dict):
+            res += ram(value, f"<em>{key}</em>")
+        elif isinstance(value, list):
+            s = f'<div class="name">{key}</div>'
+            for i, item in enumerate(value):
+                s += f'<div class="content">{item}<div class="index">{i}</div></div>'
+            res += f'<div class="var">{s}</div>'
+        else:
+            res += f'<div class="var"><div class="name">{key}</div><div class="content">{value}</div></div>'
 
     res = f'<div class="ram"><h5>{title}</h5>{res}</div>'
 
     return res
 
 
-def code_step(src, lines, vars, terminal=" ", code_size=0.9):
+def code_step(src, lines, vars, terminal=" ", code_size=0.9, term_size=1.0):
     left = hl(src, lines=lines)
-    right = ram(vars) + f'<div class="terminal">{terminal}</div>'
+    right = (
+        ram(vars)
+        + f'<div class="terminal" style="font-size: {term_size}em">{terminal}</div>'
+    )
     return f'<div class="row code-step"><div class="span6 middle" style="font-size: {code_size}em;">{left}</div><div class="span6 middle">{right}</div></div>'
 
 

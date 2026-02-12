@@ -61,6 +61,7 @@ typst: true
    d'une liste de 2 listes.
 
 1. Écrire un programme qui demande d'entrer les coordonnées GPS de plusieurs
-   lieux les unes après les autres et qui affiche la longueur du chemin ainsi
-   formé. Les fonctions des exercices précédents peuvent vous aider.
+   lieux les unes après les autres _(jusqu'à ce qu'on valide une chaîne vide)_
+   et qui affiche la longueur du chemin ainsi formé. Les fonctions des exercices
+   précédents peuvent vous aider.
 

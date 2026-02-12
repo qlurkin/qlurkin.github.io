@@ -18,9 +18,19 @@ pre {
   min-height: 10em;
 }
 
+.ram .ram {
+  margin: 5px;
+  min-height: auto;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
 .ram h5 {
   padding: 0.2em;
   margin: 0;
+}
+
+.ram .ram h5 {
+  font-size: 0.7em;
 }
 
 .var {
@@ -47,6 +57,10 @@ pre {
   background-color: #eee;
   border-bottom-left-radius: 5px;
   border-top-left-radius: 5px;
+}
+
+em.ref {
+  color: gray;
 }
 
 .recipe {

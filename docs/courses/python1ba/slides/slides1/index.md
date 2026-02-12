@@ -209,7 +209,7 @@ stop
 
 ```python {.build}
 # Ce script génère plusieurs slides
-from script import code_step, loadfile, slide
+from script import code_step, slide
 title = "Variables, expressions et valeurs"
 src = """
 a = 42     # expression littérale
@@ -343,7 +343,7 @@ else:
 
 ```python {.build}
 # Ce script génère plusieurs slides
-from script import code_step, loadfile, slide
+from script import code_step, loadfile, slide, ref
 title = "Second degré en Python"
 src = loadfile("./bazooka.py")
 ram = {"a": 1}
@@ -355,9 +355,9 @@ ram["c"] = 6
 __output__ += slide(title, code_step(src, [6], ram))
 ram["delta"] = 1
 __output__ += slide(title, code_step(src, [8], ram))
-ram["&lt;tmp&gt;"] = True
+ram[ref("tmp")] = True
 __output__ += slide(title, code_step(src, [10], ram))
-del(ram["&lt;tmp&gt;"])
+del(ram[ref("tmp")])
 ram["x1"] = 2
 __output__ += slide(title, code_step(src, [11], ram))
 ram["x2"] = 3
@@ -454,7 +454,7 @@ stop
 
 ```python {.build}
 # Ce script génère plusieurs slides
-from script import code_step, loadfile, slide
+from script import code_step, ref, slide
 title = "Boucle <code>while</code>"
 src = """
 i = 0
@@ -468,42 +468,42 @@ __output__ = []
 __output__ += slide(title, code_step(src, [], ram, stdout))
 ram["i"] = 0
 __output__ += slide(title, code_step(src, [1], ram, stdout))
-ram["&lt;tmp&gt;"] = True
+ram[ref("tmp")] = True
 __output__ += slide(title, code_step(src, [2], ram, stdout))
-del(ram["&lt;tmp&gt;"])
+del(ram[ref("tmp")])
 ram["i"] = ram["i"] + 1
 __output__ += slide(title, code_step(src, [3], ram, stdout))
 stdout += str(ram["i"]) + "\n"
 __output__ += slide(title, code_step(src, [4], ram, stdout))
-ram["&lt;tmp&gt;"] = True
+ram[ref("tmp")] = True
 __output__ += slide(title, code_step(src, [2], ram, stdout))
-del(ram["&lt;tmp&gt;"])
+del(ram[ref("tmp")])
 ram["i"] = ram["i"] + 1
 __output__ += slide(title, code_step(src, [3], ram, stdout))
 stdout += str(ram["i"]) + "\n"
 __output__ += slide(title, code_step(src, [4], ram, stdout))
-ram["&lt;tmp&gt;"] = True
+ram[ref("tmp")] = True
 __output__ += slide(title, code_step(src, [2], ram, stdout))
-del(ram["&lt;tmp&gt;"])
+del(ram[ref("tmp")])
 ram["i"] = ram["i"] + 1
 __output__ += slide(title, code_step(src, [3], ram, stdout))
 stdout += str(ram["i"]) + "\n"
 __output__ += slide(title, code_step(src, [4], ram, stdout))
-ram["&lt;tmp&gt;"] = True
+ram[ref("tmp")] = True
 __output__ += slide(title, code_step(src, [2], ram, stdout))
-del(ram["&lt;tmp&gt;"])
+del(ram[ref("tmp")])
 ram["i"] = ram["i"] + 1
 __output__ += slide(title, code_step(src, [3], ram, stdout))
 stdout += str(ram["i"]) + "\n"
 __output__ += slide(title, code_step(src, [4], ram, stdout))
-ram["&lt;tmp&gt;"] = True
+ram[ref("tmp")] = True
 __output__ += slide(title, code_step(src, [2], ram, stdout))
-del(ram["&lt;tmp&gt;"])
+del(ram[ref("tmp")])
 ram["i"] = ram["i"] + 1
 __output__ += slide(title, code_step(src, [3], ram, stdout))
 stdout += str(ram["i"]) + "\n"
 __output__ += slide(title, code_step(src, [4], ram, stdout))
-ram["&lt;tmp&gt;"] = False
+ram[ref("tmp")] = False
 __output__ += slide(title, code_step(src, [2], ram, stdout))
 ```
 
@@ -516,7 +516,7 @@ __output__ = hl(loadfile("./game.py"))
 
 ```python {.build}
 # Ce script génère plusieurs slides
-from script import code_step, loadfile, slide
+from script import code_step, loadfile, slide, ref
 title = "Devinette en Python"
 src = loadfile("./game.py")
 ram = {}
@@ -525,30 +525,29 @@ stdout = ""
 __output__ += slide(title, code_step(src, [], ram, stdout, 0.6))
 ram["secret"] = 42
 __output__ += slide(title, code_step(src, [3], ram, stdout, 0.6))
-ram["&lt;tmp&gt;"] = "\"50\""
+ram[ref("tmp")] = "\"50\""
 ram["attempt"] = 50
 stdout += "Entrez un entier entre 1 et\n100: 50\n"
 __output__ += slide(title, code_step(src, [5], ram, stdout, 0.6))
-ram["&lt;tmp&gt;"] = True
+ram[ref("tmp")] = True
 __output__ += slide(title, code_step(src, [7], ram, stdout, 0.6))
 stdout += "Valeur incorrecte\n"
-del(ram["&lt;tmp&gt;"])
+del(ram[ref("tmp")])
 __output__ += slide(title, code_step(src, [8], ram, stdout, 0.6))
-ram["&lt;tmp&gt;"] = True
+ram[ref("tmp")] = True
 __output__ += slide(title, code_step(src, [10], ram, stdout, 0.6))
-del(ram["&lt;tmp&gt;"])
+del(ram[ref("tmp")])
 stdout += "La valeur correcte est plus\npetite\n"
 __output__ += slide(title, code_step(src, [11], ram, stdout, 0.6))
-ram["&lt;tmp&gt;"] = "\"42\""
+ram[ref("tmp")] = "\"42\""
 ram["attempt"] = 42
 stdout += "Entrez un entier entre 1 et\n100: 42\n"
 __output__ += slide(title, code_step(src, [15], ram, stdout, 0.6))
-ram["&lt;tmp&gt;"] = False
+ram[ref("tmp")] = False
 __output__ += slide(title, code_step(src, [7], ram, stdout, 0.6))
 stdout += "Félicitations !"
-del(ram["&lt;tmp&gt;"])
+del(ram[ref("tmp")])
 __output__ += slide(title, code_step(src, [17], ram, stdout, 0.6))
-
 ```
 
 ## Essai - Erreur

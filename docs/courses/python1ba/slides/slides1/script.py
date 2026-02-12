@@ -4,6 +4,10 @@ from pygments.lexers import get_lexer_by_name
 import panflute as pf
 
 
+def ref(name):
+    return f'<em class="ref">&lt;{name}&gt;</em>'
+
+
 def loadfile(path):
     with open(path) as file:
         content = file.read()
@@ -20,7 +24,10 @@ def hl(src, lines=[]):
 def ram(vars, title="RAM"):
     res = ""
     for key, value in vars.items():
-        res += f'<div class="var"><div class="name">{key}</div><div class="content">{value}</div></div>'
+        if isinstance(value, dict):
+            res += ram(value, f"<em>{key}</em>")
+        else:
+            res += f'<div class="var"><div class="name">{key}</div><div class="content">{value}</div></div>'
 
     res = f'<div class="ram"><h5>{title}</h5>{res}</div>'
 
