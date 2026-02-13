@@ -1890,5 +1890,78 @@ fonction</li>
 </span></pre></div>
 </div><div class="span6 middle"><div class="ram"><h5>RAM</h5><div class="var"><div class="name">more_love</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div><div class="var"><div class="name">words</div><div class="content"><em class="ref">&lt;ref1&gt;</em></div></div><div class="var"><div class="name"><em class="ref">&lt;ref1&gt;</em></div><div class="content">"I"<div class="index">0</div></div><div class="content">"love"<div class="index">1</div></div><div class="content">"Python"<div class="index">2</div></div></div></div><div class="terminal" style="font-size: 1.0em">['I', 'love', 'Python']</div></div></div>
 </section>
+<section id="boucler-dans-une-séquence" class="level2">
+<h2>Boucler dans une séquence</h2>
+<ul>
+<li>Pour parcourir les éléments d’une séquence, on peut utiliser une
+boucle <code>while</code>.</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">numbers</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">numbers</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>     <span class="c1"># raccourci pour i = i + 1</span>
+</pre></div>
+
+<ul>
+<li>On peut aussi utiliser la boucle <code>for ... in</code> <span
+class="small">Où <code>n</code> prendra successivement chaque valeur de
+<code>numbers</code></span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">numbers</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+</pre></div>
+
+<ul>
+<li>Cela marche aussi avec les chaines de caractères.</li>
+</ul>
+</section>
+<section id="intervalles" class="level2">
+<h2>Intervalles</h2>
+<ul>
+<li><p>Un intervalle est une séquence numérique logique.</p></li>
+<li><p>Créé avec la fonction <code>range()</code></p></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>         <span class="c1"># [0, 1, 2, 3, 4]</span>
+<span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>      <span class="c1"># [1, 2, 3, 4]</span>
+<span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>   <span class="c1"># [1, 3, 5, 7]</span>
+<span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># ???</span>
+</pre></div>
+
+<ul>
+<li>Souvent utilisé dans les boucles <code>for</code></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</pre></div>
+
+<ul>
+<li><strong>Un intervalle n’est pas une liste</strong> <span
+class="small">Mais on peut créer une liste à partir d’un intervalle avec
+la fonction <code>list()</code></span></li>
+</ul>
+</section>
+<section id="example" class="level2">
+<h2>Example</h2>
+<ul>
+<li><code>squares()</code> est une fonction qui retourne une liste
+contenant les <code>n</code> premiers nombres naturels au carré.</li>
+</ul>
+<div class="row">
+<div class="span6">
+<div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">squares</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">res</span>
+</pre></div>
+
+</div>
+<div class="span6">
+<figure><img class="plantuml" src="data:image/svg+xml;base64,PD9wbGFudHVtbCAxLjIwMjYuMT8+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBjb250ZW50U3R5bGVUeXBlPSJ0ZXh0L2NzcyIgZGF0YS1kaWFncmFtLXR5cGU9IkFDVElWSVRZIiBoZWlnaHQ9IjQwOHB4IiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBzdHlsZT0id2lkdGg6MzEwcHg7aGVpZ2h0OjQwOHB4O2JhY2tncm91bmQ6I0ZGRkZGRjsiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDMxMCA0MDgiIHdpZHRoPSIzMTBweCIgem9vbUFuZFBhbj0ibWFnbmlmeSI+PGRlZnMvPjxnPjxyZWN0IGZpbGw9Im5vbmUiIGhlaWdodD0iMzg2LjAxOTUiIHN0eWxlPSJzdHJva2U6IzAwMDAwMDtzdHJva2Utd2lkdGg6MS41OyIgd2lkdGg9IjI4OC4wOTgxIiB4PSIxMSIgeT0iMTEiLz48cGF0aCBkPSJNNzQuMDMzMiwxMSBMNzQuMDMzMiwyMC40ODgzIEw2NC4wMzMyLDMwLjQ4ODMgTDExLDMwLjQ4ODMiIGZpbGw9Im5vbmUiIHN0eWxlPSJzdHJva2U6IzAwMDAwMDtzdHJva2Utd2lkdGg6MS41OyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjUzLjAzMzIiIHg9IjE0IiB5PSIyNS41MzUyIj5zcXVhcmVzPC90ZXh0PjxlbGxpcHNlIGN4PSIxNTUuNjY0MyIgY3k9IjUwLjQ4ODMiIGZpbGw9IiMyMjIyMjIiIHJ4PSIxMCIgcnk9IjEwIiBzdHlsZT0ic3Ryb2tlOiMyMjIyMjI7c3Ryb2tlLXdpZHRoOjE7Ii8+PHJlY3QgZmlsbD0iI0YxRjFGMSIgaGVpZ2h0PSIzNC4xMzI4IiByeD0iMTIuNSIgcnk9IjEyLjUiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgd2lkdGg9IjE0OC44NDE4IiB4PSI4MS4yNDM0IiB5PSI4MC40ODgzIi8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMzUuNzQ4IiB4PSI5MS4yNDM0IiB5PSIxMDIuMDg5OCI+UmUmIzIzMTtvaXQ8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGZvbnQtd2VpZ2h0PSJib2xkIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjcuODgwOSIgeD0iMTMwLjc4ODMiIHk9IjEwMi4wODk4Ij5uPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9Ijc3LjYxOTEiIHg9IjE0Mi40NjYxIiB5PSIxMDIuMDg5OCI+ZW4gcGFyYW0mIzIzMjt0cmU8L3RleHQ+PHJlY3QgZmlsbD0iI0YxRjFGMSIgaGVpZ2h0PSIzNC4xMzI4IiByeD0iMTIuNSIgcnk9IjEyLjUiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgd2lkdGg9IjExMC44MDg2IiB4PSIxMDAuMjYiIHk9IjEzNC42MjExIi8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGZvbnQtd2VpZ2h0PSJib2xkIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjE5LjI3MTUiIHg9IjExMC4yNiIgeT0iMTU2LjIyMjciPnJlczwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI2Ny43NDAyIiB4PSIxMzMuMzI4NCIgeT0iMTU2LjIyMjciPiYjODU5MjsgbGlzdGUgdmlkZTwvdGV4dD48cmVjdCBmaWxsPSIjRjFGMUYxIiBoZWlnaHQ9IjM0LjEzMjgiIHJ4PSIxMi41IiByeT0iMTIuNSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB3aWR0aD0iMTg3LjIxNDgiIHg9IjYyLjA1NjkiIHk9IjIzMi43NTM5Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iNDIuODMyIiB4PSI3Mi4wNTY5IiB5PSIyNTQuMzU1NSI+QWpvdXRlcjwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgZm9udC13ZWlnaHQ9ImJvbGQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMzYuMDQxIiB4PSIxMTguNjg1OCIgeT0iMjU0LjM1NTUiPihpKzEpJiMxNzg7PC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjU3LjY3OTciIHg9IjE1OC41MjM3IiB5PSIyNTQuMzU1NSI+JiMyMjQ7IGxhIGZpbiBkZTwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgZm9udC13ZWlnaHQ9ImJvbGQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMTkuMjcxNSIgeD0iMjIwLjAwMDIiIHk9IjI1NC4zNTU1Ij5yZXM8L3RleHQ+PHBvbHlnb24gZmlsbD0iI0YxRjFGMSIgcG9pbnRzPSI1Mi4yMzA1LDE4OC43NTM5LDI1OS4wOTgxLDE4OC43NTM5LDI3MS4wOTgxLDIwMC43NTM5LDI1OS4wOTgxLDIxMi43NTM5LDUyLjIzMDUsMjEyLjc1MzksNDAuMjMwNSwyMDAuNzUzOSw1Mi4yMzA1LDE4OC43NTM5IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxMDEuOTQzNCIgeD0iNTIuMjMwNSIgeT0iMjA0LjkxMTEiPlBvdXIgY2hhcXVlIHZhbGV1cjwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSIgZm9udC13ZWlnaHQ9ImJvbGQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMy41NzcxIiB4PSIxNTcuNjU0MyIgeT0iMjA0LjkxMTEiPmk8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iNjEuOTI4NyIgeD0iMTY0LjcxMTkiIHk9IjIwNC45MTExIj5kZSBsJ2ludGVydmFsPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjExIiBmb250LXdlaWdodD0iYm9sZCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIyOC45NzcxIiB4PSIyMzAuMTIxMSIgeT0iMjA0LjkxMTEiPlswLCBuWzwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxNy4yMzA1IiB4PSIyMyIgeT0iMTk4LjQzMzYiPmZpbmk8L3RleHQ+PHJlY3QgZmlsbD0iI0YxRjFGMSIgaGVpZ2h0PSIzNC4xMzI4IiByeD0iMTIuNSIgcnk9IjEyLjUiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgd2lkdGg9IjkzLjU1ODYiIHg9IjEwOC44ODUiIHk9IjMwOC44ODY3Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iNTAuNDkwMiIgeD0iMTE4Ljg4NSIgeT0iMzMwLjQ4ODMiPnJlbnZveWVyPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBmb250LXdlaWdodD0iYm9sZCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxOS4yNzE1IiB4PSIxNzMuMTcyMSIgeT0iMzMwLjQ4ODMiPnJlczwvdGV4dD48ZWxsaXBzZSBjeD0iMTU1LjY2NDMiIGN5PSIzNzQuMDE5NSIgZmlsbD0ibm9uZSIgcng9IjExIiByeT0iMTEiIHN0eWxlPSJzdHJva2U6IzIyMjIyMjtzdHJva2Utd2lkdGg6MTsiLz48ZWxsaXBzZSBjeD0iMTU1LjY2NDMiIGN5PSIzNzQuMDE5NSIgZmlsbD0iIzIyMjIyMiIgcng9IjYiIHJ5PSI2IiBzdHlsZT0ic3Ryb2tlOiMyMjIyMjI7c3Ryb2tlLXdpZHRoOjE7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIgeDE9IjE1NS42NjQzIiB4Mj0iMTU1LjY2NDMiIHkxPSI2MC40ODgzIiB5Mj0iODAuNDg4MyIvPjxwb2x5Z29uIGZpbGw9IiMxODE4MTgiIHBvaW50cz0iMTUxLjY2NDMsNzAuNDg4MywxNTUuNjY0Myw4MC40ODgzLDE1OS42NjQzLDcwLjQ4ODMsMTU1LjY2NDMsNzQuNDg4MyIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiIHgxPSIxNTUuNjY0MyIgeDI9IjE1NS42NjQzIiB5MT0iMTE0LjYyMTEiIHkyPSIxMzQuNjIxMSIvPjxwb2x5Z29uIGZpbGw9IiMxODE4MTgiIHBvaW50cz0iMTUxLjY2NDMsMTI0LjYyMTEsMTU1LjY2NDMsMTM0LjYyMTEsMTU5LjY2NDMsMTI0LjYyMTEsMTU1LjY2NDMsMTI4LjYyMTEiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7IiB4MT0iMTU1LjY2NDMiIHgyPSIxNTUuNjY0MyIgeTE9IjIxMi43NTM5IiB5Mj0iMjMyLjc1MzkiLz48cG9seWdvbiBmaWxsPSIjMTgxODE4IiBwb2ludHM9IjE1MS42NjQzLDIyMi43NTM5LDE1NS42NjQzLDIzMi43NTM5LDE1OS42NjQzLDIyMi43NTM5LDE1NS42NjQzLDIyNi43NTM5IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIgeDE9IjE1NS42NjQzIiB4Mj0iMTU1LjY2NDMiIHkxPSIyNjYuODg2NyIgeTI9IjI3Ni44ODY3Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIgeDE9IjE1NS42NjQzIiB4Mj0iMjgzLjA5ODEiIHkxPSIyNzYuODg2NyIgeTI9IjI3Ni44ODY3Ii8+PHBvbHlnb24gZmlsbD0iIzE4MTgxOCIgcG9pbnRzPSIyNzkuMDk4MSwyNDcuODIwMywyODMuMDk4MSwyMzcuODIwMywyODcuMDk4MSwyNDcuODIwMywyODMuMDk4MSwyNDMuODIwMyIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiIHgxPSIyODMuMDk4MSIgeDI9IjI4My4wOTgxIiB5MT0iMjAwLjc1MzkiIHkyPSIyNzYuODg2NyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiIHgxPSIyODMuMDk4MSIgeDI9IjI3MS4wOTgxIiB5MT0iMjAwLjc1MzkiIHkyPSIyMDAuNzUzOSIvPjxwb2x5Z29uIGZpbGw9IiMxODE4MTgiIHBvaW50cz0iMjgxLjA5ODEsMTk2Ljc1MzksMjcxLjA5ODEsMjAwLjc1MzksMjgxLjA5ODEsMjA0Ljc1MzksMjc3LjA5ODEsMjAwLjc1MzkiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7IiB4MT0iNDAuMjMwNSIgeDI9IjI4LjIzMDUiIHkxPSIyMDAuNzUzOSIgeTI9IjIwMC43NTM5Ii8+PHBvbHlnb24gZmlsbD0iIzE4MTgxOCIgcG9pbnRzPSIyNC4yMzA1LDIzMy44MjAzLDI4LjIzMDUsMjQzLjgyMDMsMzIuMjMwNSwyMzMuODIwMywyOC4yMzA1LDIzNy44MjAzIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIgeDE9IjI4LjIzMDUiIHgyPSIyOC4yMzA1IiB5MT0iMjAwLjc1MzkiIHkyPSIyODguODg2NyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiIHgxPSIyOC4yMzA1IiB4Mj0iMTU1LjY2NDMiIHkxPSIyODguODg2NyIgeTI9IjI4OC44ODY3Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIgeDE9IjE1NS42NjQzIiB4Mj0iMTU1LjY2NDMiIHkxPSIyODguODg2NyIgeTI9IjMwOC44ODY3Ii8+PHBvbHlnb24gZmlsbD0iIzE4MTgxOCIgcG9pbnRzPSIxNTEuNjY0MywyOTguODg2NywxNTUuNjY0MywzMDguODg2NywxNTkuNjY0MywyOTguODg2NywxNTUuNjY0MywzMDIuODg2NyIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiIHgxPSIxNTUuNjY0MyIgeDI9IjE1NS42NjQzIiB5MT0iMTY4Ljc1MzkiIHkyPSIxODguNzUzOSIvPjxwb2x5Z29uIGZpbGw9IiMxODE4MTgiIHBvaW50cz0iMTUxLjY2NDMsMTc4Ljc1MzksMTU1LjY2NDMsMTg4Ljc1MzksMTU5LjY2NDMsMTc4Ljc1MzksMTU1LjY2NDMsMTgyLjc1MzkiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7IiB4MT0iMTU1LjY2NDMiIHgyPSIxNTUuNjY0MyIgeTE9IjM0My4wMTk1IiB5Mj0iMzYzLjAxOTUiLz48cG9seWdvbiBmaWxsPSIjMTgxODE4IiBwb2ludHM9IjE1MS42NjQzLDM1My4wMTk1LDE1NS42NjQzLDM2My4wMTk1LDE1OS42NjQzLDM1My4wMTk1LDE1NS42NjQzLDM1Ny4wMTk1IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7Ii8+PD9wbGFudHVtbC1zcmMgRk9zejNTOTAzNFJ4SjY2YjhKNEtxOFFBM0gxamdYQ25ZajVuNS11ZDIyNVFRYVFXV3ZlSG8yUENXWEQ1TDlRX3YtVWxLSXZtTzZpV3pTVWU3RmFLQldjMDNtOWE1WGxnZGZPMzgxZjQ4MEVEU2toR2xPQVpQU3lIbkg3b2xUcjFpbXk0QkxTM0VqTWkyUkFyWkd3c2pKZjZHS2dKUjhXaUhhTVc5c20yRU9hYkEtU3BDMkxZQmd1eU5rcmo1Mk9XdS1hWV94bjV3SHdXNVVwT3pGQk90NVVIZ1NPc09UbV9BMW9QcmZ1N190X2NXc3NJUV84Mz8+PC9nPjwvc3ZnPg=="></figure>
+</div>
+</div>
+</section>
 </body>
 </html>

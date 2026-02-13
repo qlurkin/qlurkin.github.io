@@ -890,3 +890,91 @@ del(ram["function more_love"])
 __output__ += slide(title, code_step(src, [6], ram))
 __output__ += slide(title, code_step(src, [7], ram, "['I', 'love', 'Python']"))
 ```
+
+## Boucler dans une séquence
+
+- Pour parcourir les éléments d'une séquence, on peut utiliser une boucle
+  `while`.
+
+```python
+numbers = [2, 5, 7, 2, 1]
+i = 0
+while i < len(numbers):
+    print(numbers[i])
+    i += 1     # raccourci pour i = i + 1
+```
+
+- On peut aussi utiliser la boucle `for ... in` [Où `n` prendra successivement
+  chaque valeur de `numbers`]{.small}
+
+```python
+numbers = [2, 5, 7, 2, 1]
+for n in numbers:
+    print(n)
+```
+
+- Cela marche aussi avec les chaines de caractères.
+
+## Intervalles
+
+- Un intervalle est une séquence numérique logique.
+
+- Créé avec la fonction `range()`
+
+```python
+range(5)         # [0, 1, 2, 3, 4]
+range(1, 5)      # [1, 2, 3, 4]
+range(1, 8, 2)   # [1, 3, 5, 7]
+range(5, 0, -1)  # ???
+```
+
+- Souvent utilisé dans les boucles `for`
+
+```python
+for i in range(5):
+    print(i)
+```
+
+- **Un intervalle n'est pas une liste** [Mais on peut créer une liste à partir
+  d'un intervalle avec la fonction `list()`]{.small}
+
+## Example
+
+- `squares()` est une fonction qui retourne une liste contenant les `n` premiers
+  nombres naturels au carré.
+
+:::row
+
+::::span6
+
+```python
+def squares(n):
+    res = []
+    for i in range(n):
+        res.append((i+1)**2)
+    return res
+```
+
+::::
+
+::::span6
+
+```plantuml {.build}
+@startuml
+partition "squares" {
+  start
+  :Reçoit **n** en paramètre;
+  :**res** ← liste vide;
+  while (Pour chaque valeur **i** de l'interval **[0, n[**)
+    :Ajouter **(i+1)²** à la fin de **res**;
+  endwhile (fini)
+  :renvoyer **res**;
+  stop
+}
+
+@enduml
+```
+
+::::
+
+:::
