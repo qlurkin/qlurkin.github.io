@@ -961,11 +961,10 @@ def squares(n):
 
 ```plantuml {.build}
 @startuml
-partition "squares" {
+partition "squares ( **n** ) " {
   start
-  :Reçoit **n** en paramètre;
   :**res** ← liste vide;
-  while (Pour chaque valeur **i** de l'interval **[0, n[**)
+  while (Pour chaque valeur **i** de l'interval **[0, n[**) is (**i**)
     :Ajouter **(i+1)²** à la fin de **res**;
   endwhile (fini)
   :renvoyer **res**;
