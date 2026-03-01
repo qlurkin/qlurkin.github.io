@@ -157,7 +157,6 @@ endif
 
 stop
 @enduml
-
 ```
 
 ## RAM _(Random Access Memory)_
