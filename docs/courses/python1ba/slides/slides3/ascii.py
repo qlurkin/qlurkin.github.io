@@ -33,14 +33,17 @@ if IS_WINDOWS:
                 b"M": "RIGHT",
             }.get(b, "")
 
-        return {
-            b"\r": "ENTER",
-            b"\n": "ENTER",
-            b"\t": "TAB",
-            b"\x1b": "",
-            b"\x08": "BACKSPACE",
-            b" ": "SPACE",
-        }.get(b, b.decode("latin1"))
+        try:
+            return {
+                b"\r": "ENTER",
+                b"\n": "ENTER",
+                b"\t": "TAB",
+                b"\x1b": "",
+                b"\x08": "BACKSPACE",
+                b" ": "SPACE",
+            }.get(b, b.decode("ascii"))
+        except UnicodeDecodeError:
+            return ""
 
 
 else:
