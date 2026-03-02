@@ -5,7 +5,9 @@ import time
 import threading
 import queue
 
-char_queue = queue.Queue()
+_char_queue = queue.Queue()
+_running = False
+
 
 IS_WINDOWS = platform.system() == "Windows"
 
@@ -77,17 +79,28 @@ else:
 
 
 def input_thread():
-    while True:
+    global _running
+    while _running:
         ch = getch()
+        if ch in ("q", "Q"):
+            _running = False
         if len(ch) > 0:
-            char_queue.put(ch)
+            _char_queue.put(ch)
 
 
 def read_key():
     try:
-        return char_queue.get_nowait()
+        return _char_queue.get_nowait()
     except queue.Empty:
         return ""
+
+
+def flush():
+    sys.stdout.flush()
+
+
+def write(msg):
+    sys.stdout.write(msg)
 
 
 def footer():
@@ -96,7 +109,7 @@ def footer():
 
 
 def clear():
-    sys.stdout.write("\033[2J\033[H")
+    write("\033[2J\033[H")
 
 
 def size():
@@ -105,59 +118,59 @@ def size():
 
 
 def move(column, row):
-    sys.stdout.write(f"\033[{row + 1};{column + 1}H")
+    write(f"\033[{row + 1};{column + 1}H")
 
 
 def set_fg(red, green, blue):
-    sys.stdout.write(f"\033[38;2;{red};{green};{blue}m")
+    write(f"\033[38;2;{red};{green};{blue}m")
 
 
 def reset_fg():
-    sys.stdout.write("\033[39m")
+    write("\033[39m")
 
 
 def set_bg(red, green, blue):
-    sys.stdout.write(f"\033[48;2;{red};{green};{blue}m")
+    write(f"\033[48;2;{red};{green};{blue}m")
 
 
 def reset_bg():
-    sys.stdout.write("\033[49m")
+    write("\033[49m")
 
 
 def set_bold():
-    sys.stdout.write("\033[1m")
+    write("\033[1m")
 
 
 def set_italic():
-    sys.stdout.write("\033[3m")
+    write("\033[3m")
 
 
 def set_underline():
-    sys.stdout.write("\033[4m")
+    write("\033[4m")
 
 
 def set_strikethrough():
-    sys.stdout.write("\033[9m")
+    write("\033[9m")
 
 
 def reset_bold():
-    sys.stdout.write("\033[22m")
+    write("\033[22m")
 
 
 def reset_italic():
-    sys.stdout.write("\033[23m")
+    write("\033[23m")
 
 
 def reset_underline():
-    sys.stdout.write("\033[24m")
+    write("\033[24m")
 
 
 def reset_strikethrough():
-    sys.stdout.write("\033[29m")
+    write("\033[29m")
 
 
 def reset():
-    sys.stdout.write("\033[0m")
+    write("\033[0m")
 
 
 def write_at(
@@ -184,7 +197,7 @@ def write_at(
         set_underline()
     if strikethrough:
         set_strikethrough()
-    sys.stdout.write(str(string))
+    write(str(string))
     reset()
 
 
@@ -194,44 +207,62 @@ def pixels(rows, column=0, row=0):
         for j in range(len(rows[i])):
             set_fg(*rows[i][j])
             set_bg(*rows[i + 1][j])
-            sys.stdout.write("▀")
+            write("▀")
         row += 1
         move(column, row)
     if len(rows) % 2 == 1:
         reset_bg()
         for j in range(len(rows[-1])):
             set_fg(*rows[-1][j])
-            sys.stdout.write("▀")
+            write("▀")
     reset()
 
 
-def run(render, fps=30):
+def init():
     threading.Thread(target=input_thread, daemon=True).start()
-    sys.stdout.write("\033[?25l")
+    write("\033[?25l")
     enter_raw()
-    sys.stdout.flush()
-    while True:
-        keys = []
-        key = read_key()
-        while len(key) > 0:
-            if key in ("q", "Q"):
-                exit_raw()
-                sys.stdout.write("\033[?25h")
-                sys.stdout.flush()
-                sys.exit()
-            keys.append(key)
-            key = read_key()
+    flush()
 
+
+def restore():
+    exit_raw()
+    write("\033[?25h")
+    flush()
+
+
+def exit():
+    restore()
+    sys.exit()
+
+
+def keypresses():
+    res = []
+    key = read_key()
+    while len(key) > 0:
+        res.append(key)
+        key = read_key()
+    return res
+
+
+def run(render, *state, fps=30):
+    global _running
+    _running = True
+    init()
+    while _running:
         clear()
-        render(keys)
-        sys.stdout.flush()
+        state = render(*state)
+        flush()
+        if not isinstance(state, tuple):
+            state = (state,)
         time.sleep(1 / fps)
+    restore()
 
 
 if __name__ == "__main__":
-    out = []
 
-    def render(keys):
+    def render(out):
+        keys = keypresses()
         if len(keys) > 0:
             out.extend(keys)
         width, height = size()
@@ -244,5 +275,6 @@ if __name__ == "__main__":
             ],
         )
         footer()
+        return out
 
-    run(render)
+    run(render, [])
