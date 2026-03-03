@@ -3,11 +3,11 @@ title: Exercices 2
 typst: true
 ---
 
-1. Écrire une fonction qui reçoit un angle en degré et renvoie sa valeur en
-   radians.
+1. Écrire une fonction nommée `radians()` qui reçoit un angle en degré et
+   renvoie sa valeur en radians.
 
-1. Écrire une fonction qui calcule la distance orthodromique entre deux points
-   sur une sphère.
+1. Écrire une fonction nommée `orthodromic(R, lat1, long1, lat2, long2)` qui
+   calcule la distance orthodromique entre deux points sur une sphère.
 
    La distance orthodromique est la plus courte distance entre deux points
    situés à la surface d’une sphère, mesurée le long de la surface. Elle
@@ -27,15 +27,16 @@ typst: true
    radians. Alors que les coordonnées GPS sont traditionnellement exprimées en
    degrés._
 
-1. Écrire une fonction qui reçoit une liste et qui renvoie la liste de ses
-   valeurs converties en flottants. On suppose que toutes les valeurs de la
-   liste d’entrée sont convertibles en flottants.
+1. Écrire une fonction nommée `float_list()` qui reçoit une liste et qui renvoie
+   la liste de ses valeurs converties en flottants. On suppose que toutes les
+   valeurs de la liste d’entrée sont convertibles en flottants.
 
-1. Écrire une fonction qui permettra de demander à l'utilisateur d’entrer une
-   liste de `str`. La fonction prendra en paramètre le message à afficher à
-   l'utilisateur _(comme le fait la fonction `input()`)_. Elle demandera ensuite
-   d’entrer chaque valeur individuellement jusqu'à ce que l'utilisateur valide
-   une chaîne vide _(de longueur `0`)_. La fonction renverra la liste produite.
+1. Écrire une fonction nommée `input_list()` qui permettra de demander à
+   l'utilisateur d’entrer une liste de `str`. La fonction prendra en paramètre
+   le message à afficher à l'utilisateur _(comme le fait la fonction
+   `input()`)_. Elle demandera ensuite d’entrer chaque valeur individuellement
+   jusqu'à ce que l'utilisateur valide une chaîne vide _(de longueur `0`)_. La
+   fonction renverra la liste produite.
 
    **Exemple d'utilisation:**
 
@@ -55,13 +56,12 @@ typst: true
    ['Tigre', 'Gorille', 'Velociraptor']
    ```
 
-1. Écrire une fonction qui reçois une liste en paramètre et qui la divisera en
-   deux listes. La première contiendra tous les éléments d'indices impairs et la
-   seconde ceux d'indices pairs. Les deux listes seront renvoyées sous forme
-   d'une liste de 2 listes.
+1. Écrire une fonction nommée `unzip()` qui reçois une liste en paramètre et qui
+   la divisera en deux listes. La première contiendra tous les éléments
+   d'indices pairs et la seconde ceux d'indices impairs. Les deux listes seront
+   renvoyées sous forme d'une liste de 2 listes.
 
 1. Écrire un programme qui demande d'entrer les coordonnées GPS de plusieurs
    lieux les unes après les autres _(jusqu'à ce qu'on valide une chaîne vide)_
    et qui affiche la longueur du chemin ainsi formé. Les fonctions des exercices
    précédents peuvent vous aider.
-
