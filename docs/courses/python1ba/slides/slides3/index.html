@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Cours 3 - Travailler avec des listes</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="/deck.css" />
+  <script src="/deck_only.js" defer></script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Cours 3
+<small>Travailler avec des listes</small>
+</h1>
+</header>
+<section id="traitement-de-linformation" class="level2">
+<h2>Traitement de l’information</h2>
+<ul>
+<li><strong>Informatique</strong> = traitement de l’information</li>
+<li>L’information prend souvent la forme de <strong>listes</strong></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="n">profs</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">[</span><span class="s1">&#39;LUR&#39;</span><span class="p">,</span> <span class="s1">&#39;Quentin Lurkin&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;LRG&#39;</span><span class="p">,</span> <span class="s1">&#39;André Lorge&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;FKY&#39;</span><span class="p">,</span> <span class="s1">&#39;Martin Fockedey&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;FLE&#39;</span><span class="p">,</span> <span class="s1">&#39;Clémence Flémal&#39;</span><span class="p">],</span>
+<span class="p">]</span>
+</pre></div>
+
+<ul>
+<li>les traitements que l’on peut faire sur des listes tombent souvent
+dans l’une de ces <strong>4 catégories</strong>:
+<ul>
+<li>transformation,</li>
+<li>filtrage,</li>
+<li>accumulation,</li>
+<li>tri.</li>
+</ul></li>
+</ul>
+</section>
+<section id="transformation" class="level2">
+<h2>Transformation</h2>
+<ul>
+<li><em><strong>Mapping</strong></em> en anglais</li>
+<li>Il s’agit d’appliquer le <strong>même traitement</strong> à tous les
+éléments d’une liste</li>
+<li>On obtient la <strong>liste des résultats</strong></li>
+<li><strong>Exemple</strong></li>
+</ul>
+<div class="row">
+<div class="span6">
+<div class="pygments"><pre><span></span><span class="c1"># Transforme une liste de profs</span>
+<span class="n">profs</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">[</span><span class="s1">&#39;LUR&#39;</span><span class="p">,</span> <span class="s1">&#39;Quentin Lurkin&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;LRG&#39;</span><span class="p">,</span> <span class="s1">&#39;André Lorge&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;FKY&#39;</span><span class="p">,</span> <span class="s1">&#39;Martin Fockedey&#39;</span><span class="p">],</span>
+<span class="p">]</span>
+</pre></div>
+
+</div>
+<div class="span6">
+<div class="pygments"><pre><span></span><span class="c1"># En une liste de trigrammes</span>
+<span class="n">trigrams</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="s1">&#39;LUR&#39;</span>
+  <span class="s1">&#39;LRG&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;FKY&#39;</span><span class="p">,</span>
+<span class="p">]</span>
+</pre></div>
+
+</div>
+</div>
+</section>
+<section id="mapping-diagramme" class="level2">
+<h2>Mapping: diagramme</h2>
+<ul>
+<li>Mapping des profs en trigrammes:</li>
+</ul>
+<figure><img class="plantuml" src="data:image/svg+xml;base64,PD9wbGFudHVtbCAxLjIwMjYuMT8+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBjb250ZW50U3R5bGVUeXBlPSJ0ZXh0L2NzcyIgZGF0YS1kaWFncmFtLXR5cGU9IkFDVElWSVRZIiBoZWlnaHQ9IjM2NnB4IiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBzdHlsZT0id2lkdGg6MzIxcHg7aGVpZ2h0OjM2NnB4O2JhY2tncm91bmQ6I0ZGRkZGRjsiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDMyMSAzNjYiIHdpZHRoPSIzMjFweCIgem9vbUFuZFBhbj0ibWFnbmlmeSI+PGRlZnMvPjxnPjxyZWN0IGZpbGw9Im5vbmUiIGhlaWdodD0iMzQ0LjAyMTUiIHN0eWxlPSJzdHJva2U6IzAwMDAwMDtzdHJva2Utd2lkdGg6MS41OyIgd2lkdGg9IjI5OS4wNjA1IiB4PSIxMSIgeT0iMTEiLz48cGF0aCBkPSJNMjAwLjk4MzQsMTEgTDIwMC45ODM0LDIwLjQ4ODMgTDE5MC45ODM0LDMwLjQ4ODMgTDExLDMwLjQ4ODMiIGZpbGw9Im5vbmUiIHN0eWxlPSJzdHJva2U6IzAwMDAwMDtzdHJva2Utd2lkdGg6MS41OyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjEyMy44Mzk4IiB4PSIxNCIgeT0iMjUuNTM1MiI+bWFwX3RvX3RyaWdyYW1zICg8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZvbnQtd2VpZ2h0PSJib2xkIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjM4LjMwMTgiIHg9IjE0Mi4yNjk1IiB5PSIyNS41MzUyIj5wcm9mczwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI0LjU1MjciIHg9IjE4NS4wMDEiIHk9IjI1LjUzNTIiPik8L3RleHQ+PGVsbGlwc2UgY3g9IjE2MS4xNDU1IiBjeT0iNTAuNDg4MyIgZmlsbD0iIzIyMjIyMiIgcng9IjEwIiByeT0iMTAiIHN0eWxlPSJzdHJva2U6IzIyMjIyMjtzdHJva2Utd2lkdGg6MTsiLz48cmVjdCBmaWxsPSIjRjFGMUYxIiBoZWlnaHQ9IjM0LjEzMjgiIHJ4PSIxMi41IiByeT0iMTIuNSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB3aWR0aD0iMTM0LjI0MDIiIHg9Ijk0LjAyNTQiIHk9IjgwLjQ4ODMiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgZm9udC13ZWlnaHQ9ImJvbGQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iNDIuNzAzMSIgeD0iMTA0LjAyNTQiIHk9IjEwMi4wODk4Ij5yZXN1bHRzPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjY3Ljc0MDIiIHg9IjE1MC41MjU0IiB5PSIxMDIuMDg5OCI+JiM4NTkyOyBsaXN0ZSB2aWRlPC90ZXh0PjxyZWN0IGZpbGw9IiNGMUYxRjEiIGhlaWdodD0iMzQuMTMyOCIgcng9IjEyLjUiIHJ5PSIxMi41IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHdpZHRoPSIyMTcuNDYwOSIgeD0iNTIuNDE1IiB5PSIxOTAuNzU1OSIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjQyLjgzMiIgeD0iNjIuNDE1IiB5PSIyMTIuMzU3NCI+QWpvdXRlcjwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgZm9udC13ZWlnaHQ9ImJvbGQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iNDIuODU1NSIgeD0iMTA5LjA0MzkiIHk9IjIxMi4zNTc0Ij5wcm9mWzBdPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjU3LjY3OTciIHg9IjE1NS42OTYzIiB5PSIyMTIuMzU3NCI+JiMyMjQ7IGxhIGZpbiBkZTwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgZm9udC13ZWlnaHQ9ImJvbGQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iNDIuNzAzMSIgeD0iMjE3LjE3MjkiIHk9IjIxMi4zNTc0Ij5yZXN1bHRzPC90ZXh0Pjxwb2x5Z29uIGZpbGw9IiNGMUYxRjEiIHBvaW50cz0iNTIuMjMwNSwxMzQuNjIxMSwyNzAuMDYwNSwxMzQuNjIxMSwyODIuMDYwNSwxNDYuNjIxMSwyNzAuMDYwNSwxNTguNjIxMSw1Mi4yMzA1LDE1OC42MjExLDQwLjIzMDUsMTQ2LjYyMTEsNTIuMjMwNSwxMzQuNjIxMSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGZvbnQtd2VpZ2h0PSJib2xkIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjIzLjg3NDUiIHg9IjE2NS4xNDU1IiB5PSIxNjkuMjU1OSI+cHJvZjwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxMDEuOTQzNCIgeD0iNTIuMjMwNSIgeT0iMTUwLjc3ODMiPlBvdXIgY2hhcXVlIHZhbGV1cjwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSIgZm9udC13ZWlnaHQ9ImJvbGQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMjMuODc0NSIgeD0iMTU3LjY1NDMiIHk9IjE1MC43NzgzIj5wcm9mPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjExIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjUxLjQ3NjYiIHg9IjE4NS4wMDkzIiB5PSIxNTAuNzc4MyI+ZGUgbGEgbGlzdGU8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGZvbnQtd2VpZ2h0PSJib2xkIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjMwLjA5NDIiIHg9IjIzOS45NjYzIiB5PSIxNTAuNzc4MyI+cHJvZnM8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMTcuMjMwNSIgeD0iMjMiIHk9IjE0NC4zMDA4Ij5maW5pPC90ZXh0PjxyZWN0IGZpbGw9IiNGMUYxRjEiIGhlaWdodD0iMzQuMTMyOCIgcng9IjEyLjUiIHJ5PSIxMi41IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHdpZHRoPSIxMTYuOTkwMiIgeD0iMTAyLjY1MDQiIHk9IjI2Ni44ODg3Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iNTAuNDkwMiIgeD0iMTEyLjY1MDQiIHk9IjI4OC40OTAyIj5yZW52b3llcjwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgZm9udC13ZWlnaHQ9ImJvbGQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iNDIuNzAzMSIgeD0iMTY2LjkzNzUiIHk9IjI4OC40OTAyIj5yZXN1bHRzPC90ZXh0PjxlbGxpcHNlIGN4PSIxNjEuMTQ1NSIgY3k9IjMzMi4wMjE1IiBmaWxsPSJub25lIiByeD0iMTEiIHJ5PSIxMSIgc3R5bGU9InN0cm9rZTojMjIyMjIyO3N0cm9rZS13aWR0aDoxOyIvPjxlbGxpcHNlIGN4PSIxNjEuMTQ1NSIgY3k9IjMzMi4wMjE1IiBmaWxsPSIjMjIyMjIyIiByeD0iNiIgcnk9IjYiIHN0eWxlPSJzdHJva2U6IzIyMjIyMjtzdHJva2Utd2lkdGg6MTsiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7IiB4MT0iMTYxLjE0NTUiIHgyPSIxNjEuMTQ1NSIgeTE9IjYwLjQ4ODMiIHkyPSI4MC40ODgzIi8+PHBvbHlnb24gZmlsbD0iIzE4MTgxOCIgcG9pbnRzPSIxNTcuMTQ1NSw3MC40ODgzLDE2MS4xNDU1LDgwLjQ4ODMsMTY1LjE0NTUsNzAuNDg4MywxNjEuMTQ1NSw3NC40ODgzIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIgeDE9IjE2MS4xNDU1IiB4Mj0iMTYxLjE0NTUiIHkxPSIxNTguNjIxMSIgeTI9IjE5MC43NTU5Ii8+PHBvbHlnb24gZmlsbD0iIzE4MTgxOCIgcG9pbnRzPSIxNTcuMTQ1NSwxODAuNzU1OSwxNjEuMTQ1NSwxOTAuNzU1OSwxNjUuMTQ1NSwxODAuNzU1OSwxNjEuMTQ1NSwxODQuNzU1OSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiIHgxPSIxNjEuMTQ1NSIgeDI9IjE2MS4xNDU1IiB5MT0iMjI0Ljg4ODciIHkyPSIyMzQuODg4NyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiIHgxPSIxNjEuMTQ1NSIgeDI9IjI5NC4wNjA1IiB5MT0iMjM0Ljg4ODciIHkyPSIyMzQuODg4NyIvPjxwb2x5Z29uIGZpbGw9IiMxODE4MTgiIHBvaW50cz0iMjkwLjA2MDUsMTk5LjM0NDcsMjk0LjA2MDUsMTg5LjM0NDcsMjk4LjA2MDUsMTk5LjM0NDcsMjk0LjA2MDUsMTk1LjM0NDciIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7IiB4MT0iMjk0LjA2MDUiIHgyPSIyOTQuMDYwNSIgeTE9IjE0Ni42MjExIiB5Mj0iMjM0Ljg4ODciLz48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7IiB4MT0iMjk0LjA2MDUiIHgyPSIyODIuMDYwNSIgeTE9IjE0Ni42MjExIiB5Mj0iMTQ2LjYyMTEiLz48cG9seWdvbiBmaWxsPSIjMTgxODE4IiBwb2ludHM9IjI5Mi4wNjA1LDE0Mi42MjExLDI4Mi4wNjA1LDE0Ni42MjExLDI5Mi4wNjA1LDE1MC42MjExLDI4OC4wNjA1LDE0Ni42MjExIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIgeDE9IjQwLjIzMDUiIHgyPSIyOC4yMzA1IiB5MT0iMTQ2LjYyMTEiIHkyPSIxNDYuNjIxMSIvPjxwb2x5Z29uIGZpbGw9IiMxODE4MTgiIHBvaW50cz0iMjQuMjMwNSwxODUuMzQ0NywyOC4yMzA1LDE5NS4zNDQ3LDMyLjIzMDUsMTg1LjM0NDcsMjguMjMwNSwxODkuMzQ0NyIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiIHgxPSIyOC4yMzA1IiB4Mj0iMjguMjMwNSIgeTE9IjE0Ni42MjExIiB5Mj0iMjQ2Ljg4ODciLz48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7IiB4MT0iMjguMjMwNSIgeDI9IjE2MS4xNDU1IiB5MT0iMjQ2Ljg4ODciIHkyPSIyNDYuODg4NyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiIHgxPSIxNjEuMTQ1NSIgeDI9IjE2MS4xNDU1IiB5MT0iMjQ2Ljg4ODciIHkyPSIyNjYuODg4NyIvPjxwb2x5Z29uIGZpbGw9IiMxODE4MTgiIHBvaW50cz0iMTU3LjE0NTUsMjU2Ljg4ODcsMTYxLjE0NTUsMjY2Ljg4ODcsMTY1LjE0NTUsMjU2Ljg4ODcsMTYxLjE0NTUsMjYwLjg4ODciIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7IiB4MT0iMTYxLjE0NTUiIHgyPSIxNjEuMTQ1NSIgeTE9IjExNC42MjExIiB5Mj0iMTM0LjYyMTEiLz48cG9seWdvbiBmaWxsPSIjMTgxODE4IiBwb2ludHM9IjE1Ny4xNDU1LDEyNC42MjExLDE2MS4xNDU1LDEzNC42MjExLDE2NS4xNDU1LDEyNC42MjExLDE2MS4xNDU1LDEyOC42MjExIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIgeDE9IjE2MS4xNDU1IiB4Mj0iMTYxLjE0NTUiIHkxPSIzMDEuMDIxNSIgeTI9IjMyMS4wMjE1Ii8+PHBvbHlnb24gZmlsbD0iIzE4MTgxOCIgcG9pbnRzPSIxNTcuMTQ1NSwzMTEuMDIxNSwxNjEuMTQ1NSwzMjEuMDIxNSwxNjUuMTQ1NSwzMTEuMDIxNSwxNjEuMTQ1NSwzMTUuMDIxNSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIvPjw/cGxhbnR1bWwtc3JjIExPd24zUzhtNDROeEo3NllJYm5IWHVlRHcxNkFCNzhYWG5teHNFU1dYNllmNk81VHM4SDlFNEUyZUJBaV9fenhyc2xGbkVHaXAzaFRMLW1nemhKcGtXa0dXckF6VHFyRzJXZ09tSmEzMjJuelVLa2JGOFBlRThORndtcUMxS09PZ0NRNW5DVU0zNEEtU2o3M2pqTTdBOTRzQUJ5RkthT3JXajdaeEVpZldDR3hUR2VYWU1ndlR2NW5jZ3hkNnJhX3hjZFRhNHNTZHJrSTc2cXotWU1kMTJhenNpNlR0ZW9fUWMzTlB2VmkxRzAwPz48L2c+PC9zdmc+"></figure>
+</section>
+<section class="level2">
+<h2>Mapping: code</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">map_to_trigrams</span><span class="p">(</span><span class="n">profs</span><span class="p">):</span>
+  <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">prof</span> <span class="ow">in</span> <span class="n">profs</span><span class="p">:</span>
+    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prof</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+  <span class="k">return</span> <span class="n">results</span>
+
+<span class="n">profs</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">[</span><span class="s1">&#39;LUR&#39;</span><span class="p">,</span> <span class="s1">&#39;Quentin Lurkin&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;LRG&#39;</span><span class="p">,</span> <span class="s1">&#39;André Lorge&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;FKY&#39;</span><span class="p">,</span> <span class="s1">&#39;Martin Fockedey&#39;</span><span class="p">],</span>
+<span class="p">]</span>
+
+<span class="n">trigrams</span> <span class="o">=</span> <span class="n">map_to_trigrams</span><span class="p">(</span><span class="n">profs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">trigrams</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Mapping: code</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="hll"><span class="k">def</span><span class="w"> </span><span class="nf">map_to_trigrams</span><span class="p">(</span><span class="n">profs</span><span class="p">):</span>
+</span>  <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">prof</span> <span class="ow">in</span> <span class="n">profs</span><span class="p">:</span>
+    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prof</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+  <span class="k">return</span> <span class="n">results</span>
+
+<span class="n">profs</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">[</span><span class="s1">&#39;LUR&#39;</span><span class="p">,</span> <span class="s1">&#39;Quentin Lurkin&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;LRG&#39;</span><span class="p">,</span> <span class="s1">&#39;André Lorge&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;FKY&#39;</span><span class="p">,</span> <span class="s1">&#39;Martin Fockedey&#39;</span><span class="p">],</span>
+<span class="p">]</span>
+
+<span class="n">trigrams</span> <span class="o">=</span> <span class="n">map_to_trigrams</span><span class="p">(</span><span class="n">profs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">trigrams</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5><div class="var"><div class="name">map_to_trigrams</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Mapping: code</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">map_to_trigrams</span><span class="p">(</span><span class="n">profs</span><span class="p">):</span>
+  <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">prof</span> <span class="ow">in</span> <span class="n">profs</span><span class="p">:</span>
+    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prof</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+  <span class="k">return</span> <span class="n">results</span>
+
+<span class="hll"><span class="n">profs</span> <span class="o">=</span> <span class="p">[</span>
+</span><span class="hll">  <span class="p">[</span><span class="s1">&#39;LUR&#39;</span><span class="p">,</span> <span class="s1">&#39;Quentin Lurkin&#39;</span><span class="p">],</span>
+</span><span class="hll">  <span class="p">[</span><span class="s1">&#39;LRG&#39;</span><span class="p">,</span> <span class="s1">&#39;André Lorge&#39;</span><span class="p">],</span>
+</span><span class="hll">  <span class="p">[</span><span class="s1">&#39;FKY&#39;</span><span class="p">,</span> <span class="s1">&#39;Martin Fockedey&#39;</span><span class="p">],</span>
+</span><span class="hll"><span class="p">]</span>
+</span>
+<span class="n">trigrams</span> <span class="o">=</span> <span class="n">map_to_trigrams</span><span class="p">(</span><span class="n">profs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">trigrams</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5><div class="var"><div class="name">map_to_trigrams</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div><div class="var"><div class="name">profs</div><div class="content"><em class="ref">&lt;r1&gt;</em></div></div><div class="var"><div class="name"><em class="ref">&lt;r1&gt;</em></div><div class="content"><em class="ref">&lt;r2&gt;</em><div class="index">0</div></div><div class="content"><em class="ref">&lt;r3&gt;</em><div class="index">1</div></div><div class="content"><em class="ref">&lt;r4&gt;</em><div class="index">2</div></div></div><div class="var"><div class="name"><em class="ref">&lt;r2&gt;</em></div><div class="content">'LUR'<div class="index">0</div></div><div class="content">'Quentin Lurkin'<div class="index">1</div></div></div><div class="var"><div class="name"><em class="ref">&lt;r3&gt;</em></div><div class="content">'LRG'<div class="index">0</div></div><div class="content">'André Lorge'<div class="index">1</div></div></div><div class="var"><div class="name"><em class="ref">&lt;r4&gt;</em></div><div class="content">'FKY'<div class="index">0</div></div><div class="content">'Martin Fockedey'<div class="index">1</div></div></div></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Mapping: code</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">map_to_trigrams</span><span class="p">(</span><span class="n">profs</span><span class="p">):</span>
+  <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">prof</span> <span class="ow">in</span> <span class="n">profs</span><span class="p">:</span>
+    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prof</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+  <span class="k">return</span> <span class="n">results</span>
+
+<span class="n">profs</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">[</span><span class="s1">&#39;LUR&#39;</span><span class="p">,</span> <span class="s1">&#39;Quentin Lurkin&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;LRG&#39;</span><span class="p">,</span> <span class="s1">&#39;André Lorge&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;FKY&#39;</span><span class="p">,</span> <span class="s1">&#39;Martin Fockedey&#39;</span><span class="p">],</span>
+<span class="p">]</span>
+
+<span class="hll"><span class="n">trigrams</span> <span class="o">=</span> <span class="n">map_to_trigrams</span><span class="p">(</span><span class="n">profs</span><span class="p">)</span>
+</span><span class="nb">print</span><span class="p">(</span><span class="n">trigrams</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5><div class="var"><div class="name">map_to_trigrams</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div><div class="var"><div class="name">profs</div><div class="content"><em class="ref">&lt;r1&gt;</em></div></div><div class="var"><div class="name"><em class="ref">&lt;r1&gt;</em></div><div class="content"><em class="ref">&lt;r2&gt;</em><div class="index">0</div></div><div class="content"><em class="ref">&lt;r3&gt;</em><div class="index">1</div></div><div class="content"><em class="ref">&lt;r4&gt;</em><div class="index">2</div></div></div><div class="var"><div class="name"><em class="ref">&lt;r2&gt;</em></div><div class="content">'LUR'<div class="index">0</div></div><div class="content">'Quentin Lurkin'<div class="index">1</div></div></div><div class="var"><div class="name"><em class="ref">&lt;r3&gt;</em></div><div class="content">'LRG'<div class="index">0</div></div><div class="content">'André Lorge'<div class="index">1</div></div></div><div class="var"><div class="name"><em class="ref">&lt;r4&gt;</em></div><div class="content">'FKY'<div class="index">0</div></div><div class="content">'Martin Fockedey'<div class="index">1</div></div></div><div class="ram"><h5><em>map_to_trigrams function</em></h5><div class="var"><div class="name">profs</div><div class="content"><em class="ref">&lt;r1&gt;</em></div></div></div></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Mapping: code</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">map_to_trigrams</span><span class="p">(</span><span class="n">profs</span><span class="p">):</span>
+<span class="hll">  <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+</span>  <span class="k">for</span> <span class="n">prof</span> <span class="ow">in</span> <span class="n">profs</span><span class="p">:</span>
+    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prof</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+  <span class="k">return</span> <span class="n">results</span>
+
+<span class="n">profs</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">[</span><span class="s1">&#39;LUR&#39;</span><span class="p">,</span> <span class="s1">&#39;Quentin Lurkin&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;LRG&#39;</span><span class="p">,</span> <span class="s1">&#39;André Lorge&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;FKY&#39;</span><span class="p">,</span> <span class="s1">&#39;Martin Fockedey&#39;</span><span class="p">],</span>
+<span class="p">]</span>
+
+<span class="n">trigrams</span> <span class="o">=</span> <span class="n">map_to_trigrams</span><span class="p">(</span><span class="n">profs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">trigrams</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5><div class="var"><div class="name">map_to_trigrams</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div><div class="var"><div class="name">profs</div><div class="content"><em class="ref">&lt;r1&gt;</em></div></div><div class="var"><div class="name"><em class="ref">&lt;r1&gt;</em></div><div class="content"><em class="ref">&lt;r2&gt;</em><div class="index">0</div></div><div class="content"><em class="ref">&lt;r3&gt;</em><div class="index">1</div></div><div class="content"><em class="ref">&lt;r4&gt;</em><div class="index">2</div></div></div><div class="var"><div class="name"><em class="ref">&lt;r2&gt;</em></div><div class="content">'LUR'<div class="index">0</div></div><div class="content">'Quentin Lurkin'<div class="index">1</div></div></div><div class="var"><div class="name"><em class="ref">&lt;r3&gt;</em></div><div class="content">'LRG'<div class="index">0</div></div><div class="content">'André Lorge'<div class="index">1</div></div></div><div class="var"><div class="name"><em class="ref">&lt;r4&gt;</em></div><div class="content">'FKY'<div class="index">0</div></div><div class="content">'Martin Fockedey'<div class="index">1</div></div></div><div class="ram"><h5><em>map_to_trigrams function</em></h5><div class="var"><div class="name">profs</div><div class="content"><em class="ref">&lt;r1&gt;</em></div></div><div class="var"><div class="name">results</div><div class="content"><em class="ref">&lt;r5&gt;</em></div></div></div><div class="var"><div class="name"><em class="ref">&lt;r5&gt;</em></div><div class="content">[]</div></div></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Mapping: code</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">map_to_trigrams</span><span class="p">(</span><span class="n">profs</span><span class="p">):</span>
+  <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="hll">  <span class="k">for</span> <span class="n">prof</span> <span class="ow">in</span> <span class="n">profs</span><span class="p">:</span>
+</span>    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prof</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+  <span class="k">return</span> <span class="n">results</span>
+
+<span class="n">profs</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">[</span><span class="s1">&#39;LUR&#39;</span><span class="p">,</span> <span class="s1">&#39;Quentin Lurkin&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;LRG&#39;</span><span class="p">,</span> <span class="s1">&#39;André Lorge&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;FKY&#39;</span><span class="p">,</span> <span class="s1">&#39;Martin Fockedey&#39;</span><span class="p">],</span>
+<span class="p">]</span>
+
+<span class="n">trigrams</span> <span class="o">=</span> <span class="n">map_to_trigrams</span><span class="p">(</span><span class="n">profs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">trigrams</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5><div class="var"><div class="name">map_to_trigrams</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div><div class="var"><div class="name">profs</div><div class="content"><em class="ref">&lt;r1&gt;</em></div></div><div class="var"><div class="name"><em class="ref">&lt;r1&gt;</em></div><div class="content"><em class="ref">&lt;r2&gt;</em><div class="index">0</div></div><div class="content"><em class="ref">&lt;r3&gt;</em><div class="index">1</div></div><div class="content"><em class="ref">&lt;r4&gt;</em><div class="index">2</div></div></div><div class="var"><div class="name"><em class="ref">&lt;r2&gt;</em></div><div class="content">'LUR'<div class="index">0</div></div><div class="content">'Quentin Lurkin'<div class="index">1</div></div></div><div class="var"><div class="name"><em class="ref">&lt;r3&gt;</em></div><div class="content">'LRG'<div class="index">0</div></div><div class="content">'André Lorge'<div class="index">1</div></div></div><div class="var"><div class="name"><em class="ref">&lt;r4&gt;</em></div><div class="content">'FKY'<div class="index">0</div></div><div class="content">'Martin Fockedey'<div class="index">1</div></div></div><div class="ram"><h5><em>map_to_trigrams function</em></h5><div class="var"><div class="name">profs</div><div class="content"><em class="ref">&lt;r1&gt;</em></div></div><div class="var"><div class="name">results</div><div class="content"><em class="ref">&lt;r5&gt;</em></div></div><div class="var"><div class="name">prof</div><div class="content"><em class="ref">&lt;r2&gt;</em></div></div></div><div class="var"><div class="name"><em class="ref">&lt;r5&gt;</em></div><div class="content">[]</div></div></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Mapping: code</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">map_to_trigrams</span><span class="p">(</span><span class="n">profs</span><span class="p">):</span>
+  <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">prof</span> <span class="ow">in</span> <span class="n">profs</span><span class="p">:</span>
+<span class="hll">    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prof</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</span>  <span class="k">return</span> <span class="n">results</span>
+
+<span class="n">profs</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">[</span><span class="s1">&#39;LUR&#39;</span><span class="p">,</span> <span class="s1">&#39;Quentin Lurkin&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;LRG&#39;</span><span class="p">,</span> <span class="s1">&#39;André Lorge&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;FKY&#39;</span><span class="p">,</span> <span class="s1">&#39;Martin Fockedey&#39;</span><span class="p">],</span>
+<span class="p">]</span>
+
+<span class="n">trigrams</span> <span class="o">=</span> <span class="n">map_to_trigrams</span><span class="p">(</span><span class="n">profs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">trigrams</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5><div class="var"><div class="name">map_to_trigrams</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div><div class="var"><div class="name">profs</div><div class="content"><em class="ref">&lt;r1&gt;</em></div></div><div class="var"><div class="name"><em class="ref">&lt;r1&gt;</em></div><div class="content"><em class="ref">&lt;r2&gt;</em><div class="index">0</div></div><div class="content"><em class="ref">&lt;r3&gt;</em><div class="index">1</div></div><div class="content"><em class="ref">&lt;r4&gt;</em><div class="index">2</div></div></div><div class="var"><div class="name"><em class="ref">&lt;r2&gt;</em></div><div class="content">'LUR'<div class="index">0</div></div><div class="content">'Quentin Lurkin'<div class="index">1</div></div></div><div class="var"><div class="name"><em class="ref">&lt;r3&gt;</em></div><div class="content">'LRG'<div class="index">0</div></div><div class="content">'André Lorge'<div class="index">1</div></div></div><div class="var"><div class="name"><em class="ref">&lt;r4&gt;</em></div><div class="content">'FKY'<div class="index">0</div></div><div class="content">'Martin Fockedey'<div class="index">1</div></div></div><div class="ram"><h5><em>map_to_trigrams function</em></h5><div class="var"><div class="name">profs</div><div class="content"><em class="ref">&lt;r1&gt;</em></div></div><div class="var"><div class="name">results</div><div class="content"><em class="ref">&lt;r5&gt;</em></div></div><div class="var"><div class="name">prof</div><div class="content"><em class="ref">&lt;r2&gt;</em></div></div></div><div class="var"><div class="name"><em class="ref">&lt;r5&gt;</em></div><div class="content">'LUR'<div class="index">0</div></div></div></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Mapping: code</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">map_to_trigrams</span><span class="p">(</span><span class="n">profs</span><span class="p">):</span>
+  <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="hll">  <span class="k">for</span> <span class="n">prof</span> <span class="ow">in</span> <span class="n">profs</span><span class="p">:</span>
+</span>    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prof</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+  <span class="k">return</span> <span class="n">results</span>
+
+<span class="n">profs</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">[</span><span class="s1">&#39;LUR&#39;</span><span class="p">,</span> <span class="s1">&#39;Quentin Lurkin&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;LRG&#39;</span><span class="p">,</span> <span class="s1">&#39;André Lorge&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;FKY&#39;</span><span class="p">,</span> <span class="s1">&#39;Martin Fockedey&#39;</span><span class="p">],</span>
+<span class="p">]</span>
+
+<span class="n">trigrams</span> <span class="o">=</span> <span class="n">map_to_trigrams</span><span class="p">(</span><span class="n">profs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">trigrams</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5><div class="var"><div class="name">map_to_trigrams</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div><div class="var"><div class="name">profs</div><div class="content"><em class="ref">&lt;r1&gt;</em></div></div><div class="var"><div class="name"><em class="ref">&lt;r1&gt;</em></div><div class="content"><em class="ref">&lt;r2&gt;</em><div class="index">0</div></div><div class="content"><em class="ref">&lt;r3&gt;</em><div class="index">1</div></div><div class="content"><em class="ref">&lt;r4&gt;</em><div class="index">2</div></div></div><div class="var"><div class="name"><em class="ref">&lt;r2&gt;</em></div><div class="content">'LUR'<div class="index">0</div></div><div class="content">'Quentin Lurkin'<div class="index">1</div></div></div><div class="var"><div class="name"><em class="ref">&lt;r3&gt;</em></div><div class="content">'LRG'<div class="index">0</div></div><div class="content">'André Lorge'<div class="index">1</div></div></div><div class="var"><div class="name"><em class="ref">&lt;r4&gt;</em></div><div class="content">'FKY'<div class="index">0</div></div><div class="content">'Martin Fockedey'<div class="index">1</div></div></div><div class="ram"><h5><em>map_to_trigrams function</em></h5><div class="var"><div class="name">profs</div><div class="content"><em class="ref">&lt;r1&gt;</em></div></div><div class="var"><div class="name">results</div><div class="content"><em class="ref">&lt;r5&gt;</em></div></div><div class="var"><div class="name">prof</div><div class="content"><em class="ref">&lt;r3&gt;</em></div></div></div><div class="var"><div class="name"><em class="ref">&lt;r5&gt;</em></div><div class="content">'LUR'<div class="index">0</div></div></div></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Mapping: code</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">map_to_trigrams</span><span class="p">(</span><span class="n">profs</span><span class="p">):</span>
+  <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">prof</span> <span class="ow">in</span> <span class="n">profs</span><span class="p">:</span>
+<span class="hll">    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prof</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</span>  <span class="k">return</span> <span class="n">results</span>
+
+<span class="n">profs</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">[</span><span class="s1">&#39;LUR&#39;</span><span class="p">,</span> <span class="s1">&#39;Quentin Lurkin&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;LRG&#39;</span><span class="p">,</span> <span class="s1">&#39;André Lorge&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;FKY&#39;</span><span class="p">,</span> <span class="s1">&#39;Martin Fockedey&#39;</span><span class="p">],</span>
+<span class="p">]</span>
+
+<span class="n">trigrams</span> <span class="o">=</span> <span class="n">map_to_trigrams</span><span class="p">(</span><span class="n">profs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">trigrams</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5><div class="var"><div class="name">map_to_trigrams</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div><div class="var"><div class="name">profs</div><div class="content"><em class="ref">&lt;r1&gt;</em></div></div><div class="var"><div class="name"><em class="ref">&lt;r1&gt;</em></div><div class="content"><em class="ref">&lt;r2&gt;</em><div class="index">0</div></div><div class="content"><em class="ref">&lt;r3&gt;</em><div class="index">1</div></div><div class="content"><em class="ref">&lt;r4&gt;</em><div class="index">2</div></div></div><div class="var"><div class="name"><em class="ref">&lt;r2&gt;</em></div><div class="content">'LUR'<div class="index">0</div></div><div class="content">'Quentin Lurkin'<div class="index">1</div></div></div><div class="var"><div class="name"><em class="ref">&lt;r3&gt;</em></div><div class="content">'LRG'<div class="index">0</div></div><div class="content">'André Lorge'<div class="index">1</div></div></div><div class="var"><div class="name"><em class="ref">&lt;r4&gt;</em></div><div class="content">'FKY'<div class="index">0</div></div><div class="content">'Martin Fockedey'<div class="index">1</div></div></div><div class="ram"><h5><em>map_to_trigrams function</em></h5><div class="var"><div class="name">profs</div><div class="content"><em class="ref">&lt;r1&gt;</em></div></div><div class="var"><div class="name">results</div><div class="content"><em class="ref">&lt;r5&gt;</em></div></div><div class="var"><div class="name">prof</div><div class="content"><em class="ref">&lt;r3&gt;</em></div></div></div><div class="var"><div class="name"><em class="ref">&lt;r5&gt;</em></div><div class="content">'LUR'<div class="index">0</div></div><div class="content">'LRG'<div class="index">1</div></div></div></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Mapping: code</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">map_to_trigrams</span><span class="p">(</span><span class="n">profs</span><span class="p">):</span>
+  <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="hll">  <span class="k">for</span> <span class="n">prof</span> <span class="ow">in</span> <span class="n">profs</span><span class="p">:</span>
+</span>    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prof</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+  <span class="k">return</span> <span class="n">results</span>
+
+<span class="n">profs</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">[</span><span class="s1">&#39;LUR&#39;</span><span class="p">,</span> <span class="s1">&#39;Quentin Lurkin&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;LRG&#39;</span><span class="p">,</span> <span class="s1">&#39;André Lorge&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;FKY&#39;</span><span class="p">,</span> <span class="s1">&#39;Martin Fockedey&#39;</span><span class="p">],</span>
+<span class="p">]</span>
+
+<span class="n">trigrams</span> <span class="o">=</span> <span class="n">map_to_trigrams</span><span class="p">(</span><span class="n">profs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">trigrams</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5><div class="var"><div class="name">map_to_trigrams</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div><div class="var"><div class="name">profs</div><div class="content"><em class="ref">&lt;r1&gt;</em></div></div><div class="var"><div class="name"><em class="ref">&lt;r1&gt;</em></div><div class="content"><em class="ref">&lt;r2&gt;</em><div class="index">0</div></div><div class="content"><em class="ref">&lt;r3&gt;</em><div class="index">1</div></div><div class="content"><em class="ref">&lt;r4&gt;</em><div class="index">2</div></div></div><div class="var"><div class="name"><em class="ref">&lt;r2&gt;</em></div><div class="content">'LUR'<div class="index">0</div></div><div class="content">'Quentin Lurkin'<div class="index">1</div></div></div><div class="var"><div class="name"><em class="ref">&lt;r3&gt;</em></div><div class="content">'LRG'<div class="index">0</div></div><div class="content">'André Lorge'<div class="index">1</div></div></div><div class="var"><div class="name"><em class="ref">&lt;r4&gt;</em></div><div class="content">'FKY'<div class="index">0</div></div><div class="content">'Martin Fockedey'<div class="index">1</div></div></div><div class="ram"><h5><em>map_to_trigrams function</em></h5><div class="var"><div class="name">profs</div><div class="content"><em class="ref">&lt;r1&gt;</em></div></div><div class="var"><div class="name">results</div><div class="content"><em class="ref">&lt;r5&gt;</em></div></div><div class="var"><div class="name">prof</div><div class="content"><em class="ref">&lt;r4&gt;</em></div></div></div><div class="var"><div class="name"><em class="ref">&lt;r5&gt;</em></div><div class="content">'LUR'<div class="index">0</div></div><div class="content">'LRG'<div class="index">1</div></div></div></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Mapping: code</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">map_to_trigrams</span><span class="p">(</span><span class="n">profs</span><span class="p">):</span>
+  <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">prof</span> <span class="ow">in</span> <span class="n">profs</span><span class="p">:</span>
+<span class="hll">    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prof</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</span>  <span class="k">return</span> <span class="n">results</span>
+
+<span class="n">profs</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">[</span><span class="s1">&#39;LUR&#39;</span><span class="p">,</span> <span class="s1">&#39;Quentin Lurkin&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;LRG&#39;</span><span class="p">,</span> <span class="s1">&#39;André Lorge&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;FKY&#39;</span><span class="p">,</span> <span class="s1">&#39;Martin Fockedey&#39;</span><span class="p">],</span>
+<span class="p">]</span>
+
+<span class="n">trigrams</span> <span class="o">=</span> <span class="n">map_to_trigrams</span><span class="p">(</span><span class="n">profs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">trigrams</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5><div class="var"><div class="name">map_to_trigrams</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div><div class="var"><div class="name">profs</div><div class="content"><em class="ref">&lt;r1&gt;</em></div></div><div class="var"><div class="name"><em class="ref">&lt;r1&gt;</em></div><div class="content"><em class="ref">&lt;r2&gt;</em><div class="index">0</div></div><div class="content"><em class="ref">&lt;r3&gt;</em><div class="index">1</div></div><div class="content"><em class="ref">&lt;r4&gt;</em><div class="index">2</div></div></div><div class="var"><div class="name"><em class="ref">&lt;r2&gt;</em></div><div class="content">'LUR'<div class="index">0</div></div><div class="content">'Quentin Lurkin'<div class="index">1</div></div></div><div class="var"><div class="name"><em class="ref">&lt;r3&gt;</em></div><div class="content">'LRG'<div class="index">0</div></div><div class="content">'André Lorge'<div class="index">1</div></div></div><div class="var"><div class="name"><em class="ref">&lt;r4&gt;</em></div><div class="content">'FKY'<div class="index">0</div></div><div class="content">'Martin Fockedey'<div class="index">1</div></div></div><div class="ram"><h5><em>map_to_trigrams function</em></h5><div class="var"><div class="name">profs</div><div class="content"><em class="ref">&lt;r1&gt;</em></div></div><div class="var"><div class="name">results</div><div class="content"><em class="ref">&lt;r5&gt;</em></div></div><div class="var"><div class="name">prof</div><div class="content"><em class="ref">&lt;r4&gt;</em></div></div></div><div class="var"><div class="name"><em class="ref">&lt;r5&gt;</em></div><div class="content">'LUR'<div class="index">0</div></div><div class="content">'LRG'<div class="index">1</div></div><div class="content">'FKY'<div class="index">2</div></div></div></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Mapping: code</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">map_to_trigrams</span><span class="p">(</span><span class="n">profs</span><span class="p">):</span>
+  <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">prof</span> <span class="ow">in</span> <span class="n">profs</span><span class="p">:</span>
+    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prof</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="hll">  <span class="k">return</span> <span class="n">results</span>
+</span>
+<span class="n">profs</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">[</span><span class="s1">&#39;LUR&#39;</span><span class="p">,</span> <span class="s1">&#39;Quentin Lurkin&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;LRG&#39;</span><span class="p">,</span> <span class="s1">&#39;André Lorge&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;FKY&#39;</span><span class="p">,</span> <span class="s1">&#39;Martin Fockedey&#39;</span><span class="p">],</span>
+<span class="p">]</span>
+
+<span class="n">trigrams</span> <span class="o">=</span> <span class="n">map_to_trigrams</span><span class="p">(</span><span class="n">profs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">trigrams</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5><div class="var"><div class="name">map_to_trigrams</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div><div class="var"><div class="name">profs</div><div class="content"><em class="ref">&lt;r1&gt;</em></div></div><div class="var"><div class="name"><em class="ref">&lt;r1&gt;</em></div><div class="content"><em class="ref">&lt;r2&gt;</em><div class="index">0</div></div><div class="content"><em class="ref">&lt;r3&gt;</em><div class="index">1</div></div><div class="content"><em class="ref">&lt;r4&gt;</em><div class="index">2</div></div></div><div class="var"><div class="name"><em class="ref">&lt;r2&gt;</em></div><div class="content">'LUR'<div class="index">0</div></div><div class="content">'Quentin Lurkin'<div class="index">1</div></div></div><div class="var"><div class="name"><em class="ref">&lt;r3&gt;</em></div><div class="content">'LRG'<div class="index">0</div></div><div class="content">'André Lorge'<div class="index">1</div></div></div><div class="var"><div class="name"><em class="ref">&lt;r4&gt;</em></div><div class="content">'FKY'<div class="index">0</div></div><div class="content">'Martin Fockedey'<div class="index">1</div></div></div><div class="ram"><h5><em>map_to_trigrams function</em></h5><div class="var"><div class="name">profs</div><div class="content"><em class="ref">&lt;r1&gt;</em></div></div><div class="var"><div class="name">results</div><div class="content"><em class="ref">&lt;r5&gt;</em></div></div><div class="var"><div class="name">prof</div><div class="content"><em class="ref">&lt;r4&gt;</em></div></div><div class="var"><div class="name"><em class="ref">&lt;return&gt;</em></div><div class="content"><em class="ref">&lt;r5&gt;</em></div></div></div><div class="var"><div class="name"><em class="ref">&lt;r5&gt;</em></div><div class="content">'LUR'<div class="index">0</div></div><div class="content">'LRG'<div class="index">1</div></div><div class="content">'FKY'<div class="index">2</div></div></div></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Mapping: code</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">map_to_trigrams</span><span class="p">(</span><span class="n">profs</span><span class="p">):</span>
+  <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">prof</span> <span class="ow">in</span> <span class="n">profs</span><span class="p">:</span>
+    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prof</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+  <span class="k">return</span> <span class="n">results</span>
+
+<span class="n">profs</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">[</span><span class="s1">&#39;LUR&#39;</span><span class="p">,</span> <span class="s1">&#39;Quentin Lurkin&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;LRG&#39;</span><span class="p">,</span> <span class="s1">&#39;André Lorge&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;FKY&#39;</span><span class="p">,</span> <span class="s1">&#39;Martin Fockedey&#39;</span><span class="p">],</span>
+<span class="p">]</span>
+
+<span class="hll"><span class="n">trigrams</span> <span class="o">=</span> <span class="n">map_to_trigrams</span><span class="p">(</span><span class="n">profs</span><span class="p">)</span>
+</span><span class="nb">print</span><span class="p">(</span><span class="n">trigrams</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5><div class="var"><div class="name">map_to_trigrams</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div><div class="var"><div class="name">profs</div><div class="content"><em class="ref">&lt;r1&gt;</em></div></div><div class="var"><div class="name"><em class="ref">&lt;r1&gt;</em></div><div class="content"><em class="ref">&lt;r2&gt;</em><div class="index">0</div></div><div class="content"><em class="ref">&lt;r3&gt;</em><div class="index">1</div></div><div class="content"><em class="ref">&lt;r4&gt;</em><div class="index">2</div></div></div><div class="var"><div class="name"><em class="ref">&lt;r2&gt;</em></div><div class="content">'LUR'<div class="index">0</div></div><div class="content">'Quentin Lurkin'<div class="index">1</div></div></div><div class="var"><div class="name"><em class="ref">&lt;r3&gt;</em></div><div class="content">'LRG'<div class="index">0</div></div><div class="content">'André Lorge'<div class="index">1</div></div></div><div class="var"><div class="name"><em class="ref">&lt;r4&gt;</em></div><div class="content">'FKY'<div class="index">0</div></div><div class="content">'Martin Fockedey'<div class="index">1</div></div></div><div class="var"><div class="name"><em class="ref">&lt;r5&gt;</em></div><div class="content">'LUR'<div class="index">0</div></div><div class="content">'LRG'<div class="index">1</div></div><div class="content">'FKY'<div class="index">2</div></div></div><div class="var"><div class="name">trigrams</div><div class="content"><em class="ref">&lt;r5&gt;</em></div></div></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Mapping: code</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">map_to_trigrams</span><span class="p">(</span><span class="n">profs</span><span class="p">):</span>
+  <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">prof</span> <span class="ow">in</span> <span class="n">profs</span><span class="p">:</span>
+    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prof</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+  <span class="k">return</span> <span class="n">results</span>
+
+<span class="n">profs</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">[</span><span class="s1">&#39;LUR&#39;</span><span class="p">,</span> <span class="s1">&#39;Quentin Lurkin&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;LRG&#39;</span><span class="p">,</span> <span class="s1">&#39;André Lorge&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;FKY&#39;</span><span class="p">,</span> <span class="s1">&#39;Martin Fockedey&#39;</span><span class="p">],</span>
+<span class="p">]</span>
+
+<span class="n">trigrams</span> <span class="o">=</span> <span class="n">map_to_trigrams</span><span class="p">(</span><span class="n">profs</span><span class="p">)</span>
+<span class="hll"><span class="nb">print</span><span class="p">(</span><span class="n">trigrams</span><span class="p">)</span>
+</span></pre></div>
+</div><div class="span6 middle"><div class="ram"><h5>RAM</h5><div class="var"><div class="name">map_to_trigrams</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div><div class="var"><div class="name">profs</div><div class="content"><em class="ref">&lt;r1&gt;</em></div></div><div class="var"><div class="name"><em class="ref">&lt;r1&gt;</em></div><div class="content"><em class="ref">&lt;r2&gt;</em><div class="index">0</div></div><div class="content"><em class="ref">&lt;r3&gt;</em><div class="index">1</div></div><div class="content"><em class="ref">&lt;r4&gt;</em><div class="index">2</div></div></div><div class="var"><div class="name"><em class="ref">&lt;r2&gt;</em></div><div class="content">'LUR'<div class="index">0</div></div><div class="content">'Quentin Lurkin'<div class="index">1</div></div></div><div class="var"><div class="name"><em class="ref">&lt;r3&gt;</em></div><div class="content">'LRG'<div class="index">0</div></div><div class="content">'André Lorge'<div class="index">1</div></div></div><div class="var"><div class="name"><em class="ref">&lt;r4&gt;</em></div><div class="content">'FKY'<div class="index">0</div></div><div class="content">'Martin Fockedey'<div class="index">1</div></div></div><div class="var"><div class="name"><em class="ref">&lt;r5&gt;</em></div><div class="content">'LUR'<div class="index">0</div></div><div class="content">'LRG'<div class="index">1</div></div><div class="content">'FKY'<div class="index">2</div></div></div><div class="var"><div class="name">trigrams</div><div class="content"><em class="ref">&lt;r5&gt;</em></div></div></div><div class="terminal" style="font-size: 1.0em">['LUR', 'LRG', 'FKY']</div></div></div>
+</section>
+<section id="transformation-structure" class="level2">
+<h2>Transformation structure</h2>
+<ul>
+<li>Un <em>mapping</em> suit toujours la <strong>même
+structure</strong>:
+<ul>
+<li>création de la <strong>nouvelle liste</strong> initialement
+vide</li>
+<li><strong>parcours</strong> des éléments de la liste d’entrée</li>
+<li><strong>ajout</strong> des résultats à la fin de la nouvelle
+liste</li>
+</ul></li>
+<li>Autre exemple:</li>
+</ul>
+<div class="row">
+<div class="span6">
+<div class="pygments"><pre><span></span><span class="c1"># Transforme une liste de profs</span>
+
+<span class="n">profs</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">[</span><span class="s1">&#39;LUR&#39;</span><span class="p">,</span> <span class="s1">&#39;Quentin Lurkin&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;LRG&#39;</span><span class="p">,</span> <span class="s1">&#39;André Lorge&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;FKY&#39;</span><span class="p">,</span> <span class="s1">&#39;Martin Fockedey&#39;</span><span class="p">],</span>
+<span class="p">]</span>
+</pre></div>
+
+</div>
+<div class="span6">
+<div class="pygments"><pre><span></span><span class="c1"># En une liste de descriptions</span>
+<span class="c1"># prêtes à être affichées</span>
+<span class="n">trigrams</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="s1">&#39;Quentin Lurkin (LUR)&#39;</span>
+  <span class="s1">&#39;André Lorge (LRG)&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;Martin Fockedey (FKY)&#39;</span><span class="p">,</span>
+<span class="p">]</span>
+</pre></div>
+
+</div>
+</div>
+</section>
+<section id="mapping-diagramme-1" class="level2">
+<h2>Mapping: diagramme</h2>
+<figure><img class="plantuml" src="data:image/svg+xml;base64,PD9wbGFudHVtbCAxLjIwMjYuMT8+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBjb250ZW50U3R5bGVUeXBlPSJ0ZXh0L2NzcyIgZGF0YS1kaWFncmFtLXR5cGU9IkFDVElWSVRZIiBoZWlnaHQ9IjM2NnB4IiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBzdHlsZT0id2lkdGg6Mzc5cHg7aGVpZ2h0OjM2NnB4O2JhY2tncm91bmQ6I0ZGRkZGRjsiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDM3OSAzNjYiIHdpZHRoPSIzNzlweCIgem9vbUFuZFBhbj0ibWFnbmlmeSI+PGRlZnMvPjxnPjxyZWN0IGZpbGw9Im5vbmUiIGhlaWdodD0iMzQ0LjAyMTUiIHN0eWxlPSJzdHJva2U6IzAwMDAwMDtzdHJva2Utd2lkdGg6MS41OyIgd2lkdGg9IjM1Ny43OTQ5IiB4PSIxMSIgeT0iMTEiLz48cGF0aCBkPSJNMTc0LjQ5NDEsMTEgTDE3NC40OTQxLDIwLjQ4ODMgTDE2NC40OTQxLDMwLjQ4ODMgTDExLDMwLjQ4ODMiIGZpbGw9Im5vbmUiIHN0eWxlPSJzdHJva2U6IzAwMDAwMDtzdHJva2Utd2lkdGg6MS41OyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9Ijk3LjM1MDYiIHg9IjE0IiB5PSIyNS41MzUyIj5tYXBfdG9fZGVzYyAoPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmb250LXdlaWdodD0iYm9sZCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIzOC4zMDE4IiB4PSIxMTUuNzgwMyIgeT0iMjUuNTM1MiI+cHJvZnM8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iNC41NTI3IiB4PSIxNTguNTExNyIgeT0iMjUuNTM1MiI+KTwvdGV4dD48ZWxsaXBzZSBjeD0iMTg5Ljg5NzUiIGN5PSI1MC40ODgzIiBmaWxsPSIjMjIyMjIyIiByeD0iMTAiIHJ5PSIxMCIgc3R5bGU9InN0cm9rZTojMjIyMjIyO3N0cm9rZS13aWR0aDoxOyIvPjxyZWN0IGZpbGw9IiNGMUYxRjEiIGhlaWdodD0iMzQuMTMyOCIgcng9IjEyLjUiIHJ5PSIxMi41IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHdpZHRoPSIxMzQuMjQwMiIgeD0iMTIyLjc3NzMiIHk9IjgwLjQ4ODMiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgZm9udC13ZWlnaHQ9ImJvbGQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iNDIuNzAzMSIgeD0iMTMyLjc3NzMiIHk9IjEwMi4wODk4Ij5yZXN1bHRzPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjY3Ljc0MDIiIHg9IjE3OS4yNzczIiB5PSIxMDIuMDg5OCI+JiM4NTkyOyBsaXN0ZSB2aWRlPC90ZXh0PjxyZWN0IGZpbGw9IiNGMUYxRjEiIGhlaWdodD0iMzQuMTMyOCIgcng9IjEyLjUiIHJ5PSIxMi41IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHdpZHRoPSIzMDEuNzk0OSIgeD0iMzkiIHk9IjE5MC43NTU5Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iNDIuODMyIiB4PSI0OSIgeT0iMjEyLjM1NzQiPkFqb3V0ZXI8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGZvbnQtd2VpZ2h0PSJib2xkIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjEyNy4xODk1IiB4PSI5NS42Mjg5IiB5PSIyMTIuMzU3NCI+Intwcm9mWzFdfSAoe3Byb2ZbMF19KSI8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iNTcuNjc5NyIgeD0iMjI2LjYxNTIiIHk9IjIxMi4zNTc0Ij4mIzIyNDsgbGEgZmluIGRlPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBmb250LXdlaWdodD0iYm9sZCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI0Mi43MDMxIiB4PSIyODguMDkxOCIgeT0iMjEyLjM1NzQiPnJlc3VsdHM8L3RleHQ+PHBvbHlnb24gZmlsbD0iI0YxRjFGMSIgcG9pbnRzPSI4MC45ODI0LDEzNC42MjExLDI5OC44MTI1LDEzNC42MjExLDMxMC44MTI1LDE0Ni42MjExLDI5OC44MTI1LDE1OC42MjExLDgwLjk4MjQsMTU4LjYyMTEsNjguOTgyNCwxNDYuNjIxMSw4MC45ODI0LDEzNC42MjExIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSIgZm9udC13ZWlnaHQ9ImJvbGQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMjMuODc0NSIgeD0iMTkzLjg5NzUiIHk9IjE2OS4yNTU5Ij5wcm9mPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjExIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjEwMS45NDM0IiB4PSI4MC45ODI0IiB5PSIxNTAuNzc4MyI+UG91ciBjaGFxdWUgdmFsZXVyPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjExIiBmb250LXdlaWdodD0iYm9sZCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIyMy44NzQ1IiB4PSIxODYuNDA2MyIgeT0iMTUwLjc3ODMiPnByb2Y8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iNTEuNDc2NiIgeD0iMjEzLjc2MTIiIHk9IjE1MC43NzgzIj5kZSBsYSBsaXN0ZTwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSIgZm9udC13ZWlnaHQ9ImJvbGQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMzAuMDk0MiIgeD0iMjY4LjcxODMiIHk9IjE1MC43NzgzIj5wcm9mczwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxNy4yMzA1IiB4PSI1MS43NTIiIHk9IjE0NC4zMDA4Ij5maW5pPC90ZXh0PjxyZWN0IGZpbGw9IiNGMUYxRjEiIGhlaWdodD0iMzQuMTMyOCIgcng9IjEyLjUiIHJ5PSIxMi41IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHdpZHRoPSIxMTYuOTkwMiIgeD0iMTMxLjQwMjMiIHk9IjI2Ni44ODg3Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iNTAuNDkwMiIgeD0iMTQxLjQwMjMiIHk9IjI4OC40OTAyIj5yZW52b3llcjwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgZm9udC13ZWlnaHQ9ImJvbGQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iNDIuNzAzMSIgeD0iMTk1LjY4OTUiIHk9IjI4OC40OTAyIj5yZXN1bHRzPC90ZXh0PjxlbGxpcHNlIGN4PSIxODkuODk3NSIgY3k9IjMzMi4wMjE1IiBmaWxsPSJub25lIiByeD0iMTEiIHJ5PSIxMSIgc3R5bGU9InN0cm9rZTojMjIyMjIyO3N0cm9rZS13aWR0aDoxOyIvPjxlbGxpcHNlIGN4PSIxODkuODk3NSIgY3k9IjMzMi4wMjE1IiBmaWxsPSIjMjIyMjIyIiByeD0iNiIgcnk9IjYiIHN0eWxlPSJzdHJva2U6IzIyMjIyMjtzdHJva2Utd2lkdGg6MTsiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7IiB4MT0iMTg5Ljg5NzUiIHgyPSIxODkuODk3NSIgeTE9IjYwLjQ4ODMiIHkyPSI4MC40ODgzIi8+PHBvbHlnb24gZmlsbD0iIzE4MTgxOCIgcG9pbnRzPSIxODUuODk3NSw3MC40ODgzLDE4OS44OTc1LDgwLjQ4ODMsMTkzLjg5NzUsNzAuNDg4MywxODkuODk3NSw3NC40ODgzIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIgeDE9IjE4OS44OTc1IiB4Mj0iMTg5Ljg5NzUiIHkxPSIxNTguNjIxMSIgeTI9IjE5MC43NTU5Ii8+PHBvbHlnb24gZmlsbD0iIzE4MTgxOCIgcG9pbnRzPSIxODUuODk3NSwxODAuNzU1OSwxODkuODk3NSwxOTAuNzU1OSwxOTMuODk3NSwxODAuNzU1OSwxODkuODk3NSwxODQuNzU1OSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiIHgxPSIxODkuODk3NSIgeDI9IjE4OS44OTc1IiB5MT0iMjI0Ljg4ODciIHkyPSIyMzQuODg4NyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiIHgxPSIxODkuODk3NSIgeDI9IjM1Mi43OTQ5IiB5MT0iMjM0Ljg4ODciIHkyPSIyMzQuODg4NyIvPjxwb2x5Z29uIGZpbGw9IiMxODE4MTgiIHBvaW50cz0iMzQ4Ljc5NDksMTk5LjM0NDcsMzUyLjc5NDksMTg5LjM0NDcsMzU2Ljc5NDksMTk5LjM0NDcsMzUyLjc5NDksMTk1LjM0NDciIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7IiB4MT0iMzUyLjc5NDkiIHgyPSIzNTIuNzk0OSIgeTE9IjE0Ni42MjExIiB5Mj0iMjM0Ljg4ODciLz48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7IiB4MT0iMzUyLjc5NDkiIHgyPSIzMTAuODEyNSIgeTE9IjE0Ni42MjExIiB5Mj0iMTQ2LjYyMTEiLz48cG9seWdvbiBmaWxsPSIjMTgxODE4IiBwb2ludHM9IjMyMC44MTI1LDE0Mi42MjExLDMxMC44MTI1LDE0Ni42MjExLDMyMC44MTI1LDE1MC42MjExLDMxNi44MTI1LDE0Ni42MjExIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIgeDE9IjY4Ljk4MjQiIHgyPSIyNyIgeTE9IjE0Ni42MjExIiB5Mj0iMTQ2LjYyMTEiLz48cG9seWdvbiBmaWxsPSIjMTgxODE4IiBwb2ludHM9IjIzLDE4NS4zNDQ3LDI3LDE5NS4zNDQ3LDMxLDE4NS4zNDQ3LDI3LDE4OS4zNDQ3IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIgeDE9IjI3IiB4Mj0iMjciIHkxPSIxNDYuNjIxMSIgeTI9IjI0Ni44ODg3Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIgeDE9IjI3IiB4Mj0iMTg5Ljg5NzUiIHkxPSIyNDYuODg4NyIgeTI9IjI0Ni44ODg3Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIgeDE9IjE4OS44OTc1IiB4Mj0iMTg5Ljg5NzUiIHkxPSIyNDYuODg4NyIgeTI9IjI2Ni44ODg3Ii8+PHBvbHlnb24gZmlsbD0iIzE4MTgxOCIgcG9pbnRzPSIxODUuODk3NSwyNTYuODg4NywxODkuODk3NSwyNjYuODg4NywxOTMuODk3NSwyNTYuODg4NywxODkuODk3NSwyNjAuODg4NyIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiIHgxPSIxODkuODk3NSIgeDI9IjE4OS44OTc1IiB5MT0iMTE0LjYyMTEiIHkyPSIxMzQuNjIxMSIvPjxwb2x5Z29uIGZpbGw9IiMxODE4MTgiIHBvaW50cz0iMTg1Ljg5NzUsMTI0LjYyMTEsMTg5Ljg5NzUsMTM0LjYyMTEsMTkzLjg5NzUsMTI0LjYyMTEsMTg5Ljg5NzUsMTI4LjYyMTEiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7IiB4MT0iMTg5Ljg5NzUiIHgyPSIxODkuODk3NSIgeTE9IjMwMS4wMjE1IiB5Mj0iMzIxLjAyMTUiLz48cG9seWdvbiBmaWxsPSIjMTgxODE4IiBwb2ludHM9IjE4NS44OTc1LDMxMS4wMjE1LDE4OS44OTc1LDMyMS4wMjE1LDE5My44OTc1LDMxMS4wMjE1LDE4OS44OTc1LDMxNS4wMjE1IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7Ii8+PD9wbGFudHVtbC1zcmMgTE91ejNpOG0zOE50ZGlCZ2I2STJqS3BTVzFyTExUSXVRYjFlSWR3QUtETUxjSURtNXN4MklOMWVHSjNQcmRsbHkta2IycGZlc3E1LWI3cUxSQU5HcnkxMFlEeFBuV2kxNzc4T0NtMFZvNGtwNENBWFpvT2F5TmN6V1Q0LTgwblF1T1JhU3dpRDBqbFB3QTFrdkljSTkwdElESUNmZjEyQ042QlZGbm9xMV9SblMyQkhnLXQxbmUwZmNlejlzQV9CMlRZeWhpZzl2cUh4dDFFanFMdFlfZEhCUFIxSkluX0lUTzhNM2hsMU5qeENGd2lGamktY3gwSzA/PjwvZz48L3N2Zz4="></figure>
+</section>
+<section class="level2">
+<h2>Mapping: code</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">map_to_desc</span><span class="p">(</span><span class="n">profs</span><span class="p">):</span>
+  <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">prof</span> <span class="ow">in</span> <span class="n">profs</span><span class="p">:</span>
+    <span class="n">desc</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prof</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">prof</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">)&quot;</span>
+    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">desc</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">results</span>
+
+<span class="n">profs</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">[</span><span class="s1">&#39;LUR&#39;</span><span class="p">,</span> <span class="s1">&#39;Quentin Lurkin&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;LRG&#39;</span><span class="p">,</span> <span class="s1">&#39;André Lorge&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;FKY&#39;</span><span class="p">,</span> <span class="s1">&#39;Martin Fockedey&#39;</span><span class="p">],</span>
+<span class="p">]</span>
+
+<span class="n">desc</span> <span class="o">=</span> <span class="n">map_to_trigrams</span><span class="p">(</span><span class="n">profs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">desc</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><p class="disclaimer">Toutes les références ne sont pas représentées</p><div class="ram"><h5>RAM</h5></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Mapping: code</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="hll"><span class="k">def</span><span class="w"> </span><span class="nf">map_to_desc</span><span class="p">(</span><span class="n">profs</span><span class="p">):</span>
+</span>  <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">prof</span> <span class="ow">in</span> <span class="n">profs</span><span class="p">:</span>
+    <span class="n">desc</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prof</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">prof</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">)&quot;</span>
+    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">desc</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">results</span>
+
+<span class="n">profs</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">[</span><span class="s1">&#39;LUR&#39;</span><span class="p">,</span> <span class="s1">&#39;Quentin Lurkin&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;LRG&#39;</span><span class="p">,</span> <span class="s1">&#39;André Lorge&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;FKY&#39;</span><span class="p">,</span> <span class="s1">&#39;Martin Fockedey&#39;</span><span class="p">],</span>
+<span class="p">]</span>
+
+<span class="n">desc</span> <span class="o">=</span> <span class="n">map_to_trigrams</span><span class="p">(</span><span class="n">profs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">desc</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><p class="disclaimer">Toutes les références ne sont pas représentées</p><div class="ram"><h5>RAM</h5><div class="var"><div class="name">map_to_desc</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Mapping: code</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">map_to_desc</span><span class="p">(</span><span class="n">profs</span><span class="p">):</span>
+  <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">prof</span> <span class="ow">in</span> <span class="n">profs</span><span class="p">:</span>
+    <span class="n">desc</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prof</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">prof</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">)&quot;</span>
+    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">desc</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">results</span>
+
+<span class="hll"><span class="n">profs</span> <span class="o">=</span> <span class="p">[</span>
+</span><span class="hll">  <span class="p">[</span><span class="s1">&#39;LUR&#39;</span><span class="p">,</span> <span class="s1">&#39;Quentin Lurkin&#39;</span><span class="p">],</span>
+</span><span class="hll">  <span class="p">[</span><span class="s1">&#39;LRG&#39;</span><span class="p">,</span> <span class="s1">&#39;André Lorge&#39;</span><span class="p">],</span>
+</span><span class="hll">  <span class="p">[</span><span class="s1">&#39;FKY&#39;</span><span class="p">,</span> <span class="s1">&#39;Martin Fockedey&#39;</span><span class="p">],</span>
+</span><span class="hll"><span class="p">]</span>
+</span>
+<span class="n">desc</span> <span class="o">=</span> <span class="n">map_to_trigrams</span><span class="p">(</span><span class="n">profs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">desc</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><p class="disclaimer">Toutes les références ne sont pas représentées</p><div class="ram"><h5>RAM</h5><div class="var"><div class="name">map_to_desc</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div><div class="var"><div class="name">profs</div><div class="content">[...]</div></div></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Mapping: code</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">map_to_desc</span><span class="p">(</span><span class="n">profs</span><span class="p">):</span>
+  <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">prof</span> <span class="ow">in</span> <span class="n">profs</span><span class="p">:</span>
+    <span class="n">desc</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prof</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">prof</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">)&quot;</span>
+    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">desc</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">results</span>
+
+<span class="n">profs</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">[</span><span class="s1">&#39;LUR&#39;</span><span class="p">,</span> <span class="s1">&#39;Quentin Lurkin&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;LRG&#39;</span><span class="p">,</span> <span class="s1">&#39;André Lorge&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;FKY&#39;</span><span class="p">,</span> <span class="s1">&#39;Martin Fockedey&#39;</span><span class="p">],</span>
+<span class="p">]</span>
+
+<span class="hll"><span class="n">desc</span> <span class="o">=</span> <span class="n">map_to_trigrams</span><span class="p">(</span><span class="n">profs</span><span class="p">)</span>
+</span><span class="nb">print</span><span class="p">(</span><span class="n">desc</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><p class="disclaimer">Toutes les références ne sont pas représentées</p><div class="ram"><h5>RAM</h5><div class="var"><div class="name">map_to_desc</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div><div class="var"><div class="name">profs</div><div class="content">[...]</div></div><div class="ram"><h5><em>map_to_trigrams function</em></h5><div class="var"><div class="name">profs</div><div class="content"><em class="ref">&lt;ref global profs&gt;</em></div></div></div></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Mapping: code</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">map_to_desc</span><span class="p">(</span><span class="n">profs</span><span class="p">):</span>
+<span class="hll">  <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+</span>  <span class="k">for</span> <span class="n">prof</span> <span class="ow">in</span> <span class="n">profs</span><span class="p">:</span>
+    <span class="n">desc</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prof</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">prof</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">)&quot;</span>
+    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">desc</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">results</span>
+
+<span class="n">profs</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">[</span><span class="s1">&#39;LUR&#39;</span><span class="p">,</span> <span class="s1">&#39;Quentin Lurkin&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;LRG&#39;</span><span class="p">,</span> <span class="s1">&#39;André Lorge&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;FKY&#39;</span><span class="p">,</span> <span class="s1">&#39;Martin Fockedey&#39;</span><span class="p">],</span>
+<span class="p">]</span>
+
+<span class="n">desc</span> <span class="o">=</span> <span class="n">map_to_trigrams</span><span class="p">(</span><span class="n">profs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">desc</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><p class="disclaimer">Toutes les références ne sont pas représentées</p><div class="ram"><h5>RAM</h5><div class="var"><div class="name">map_to_desc</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div><div class="var"><div class="name">profs</div><div class="content">[...]</div></div><div class="ram"><h5><em>map_to_trigrams function</em></h5><div class="var"><div class="name">profs</div><div class="content"><em class="ref">&lt;ref global profs&gt;</em></div></div><div class="var"><div class="name">results</div><div class="content">[]</div></div></div></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Mapping: code</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">map_to_desc</span><span class="p">(</span><span class="n">profs</span><span class="p">):</span>
+  <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="hll">  <span class="k">for</span> <span class="n">prof</span> <span class="ow">in</span> <span class="n">profs</span><span class="p">:</span>
+</span>    <span class="n">desc</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prof</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">prof</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">)&quot;</span>
+    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">desc</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">results</span>
+
+<span class="n">profs</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">[</span><span class="s1">&#39;LUR&#39;</span><span class="p">,</span> <span class="s1">&#39;Quentin Lurkin&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;LRG&#39;</span><span class="p">,</span> <span class="s1">&#39;André Lorge&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;FKY&#39;</span><span class="p">,</span> <span class="s1">&#39;Martin Fockedey&#39;</span><span class="p">],</span>
+<span class="p">]</span>
+
+<span class="n">desc</span> <span class="o">=</span> <span class="n">map_to_trigrams</span><span class="p">(</span><span class="n">profs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">desc</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><p class="disclaimer">Toutes les références ne sont pas représentées</p><div class="ram"><h5>RAM</h5><div class="var"><div class="name">map_to_desc</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div><div class="var"><div class="name">profs</div><div class="content">[...]</div></div><div class="ram"><h5><em>map_to_trigrams function</em></h5><div class="var"><div class="name">profs</div><div class="content"><em class="ref">&lt;ref global profs&gt;</em></div></div><div class="var"><div class="name">results</div><div class="content">[]</div></div><div class="var"><div class="name">prof</div><div class="content">'LUR'<div class="index">0</div></div><div class="content">'Quentin Lurkin'<div class="index">1</div></div></div></div></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Mapping: code</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">map_to_desc</span><span class="p">(</span><span class="n">profs</span><span class="p">):</span>
+  <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">prof</span> <span class="ow">in</span> <span class="n">profs</span><span class="p">:</span>
+<span class="hll">    <span class="n">desc</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prof</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">prof</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">)&quot;</span>
+</span>    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">desc</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">results</span>
+
+<span class="n">profs</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">[</span><span class="s1">&#39;LUR&#39;</span><span class="p">,</span> <span class="s1">&#39;Quentin Lurkin&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;LRG&#39;</span><span class="p">,</span> <span class="s1">&#39;André Lorge&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;FKY&#39;</span><span class="p">,</span> <span class="s1">&#39;Martin Fockedey&#39;</span><span class="p">],</span>
+<span class="p">]</span>
+
+<span class="n">desc</span> <span class="o">=</span> <span class="n">map_to_trigrams</span><span class="p">(</span><span class="n">profs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">desc</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><p class="disclaimer">Toutes les références ne sont pas représentées</p><div class="ram"><h5>RAM</h5><div class="var"><div class="name">map_to_desc</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div><div class="var"><div class="name">profs</div><div class="content">[...]</div></div><div class="ram"><h5><em>map_to_trigrams function</em></h5><div class="var"><div class="name">profs</div><div class="content"><em class="ref">&lt;ref global profs&gt;</em></div></div><div class="var"><div class="name">results</div><div class="content">[]</div></div><div class="var"><div class="name">prof</div><div class="content">'LUR'<div class="index">0</div></div><div class="content">'Quentin Lurkin'<div class="index">1</div></div></div><div class="var"><div class="name">desc</div><div class="content">'Quentin Lurkin (LUR)'</div></div></div></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Mapping: code</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">map_to_desc</span><span class="p">(</span><span class="n">profs</span><span class="p">):</span>
+  <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">prof</span> <span class="ow">in</span> <span class="n">profs</span><span class="p">:</span>
+    <span class="n">desc</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prof</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">prof</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">)&quot;</span>
+<span class="hll">    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">desc</span><span class="p">)</span>
+</span>  <span class="k">return</span> <span class="n">results</span>
+
+<span class="n">profs</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">[</span><span class="s1">&#39;LUR&#39;</span><span class="p">,</span> <span class="s1">&#39;Quentin Lurkin&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;LRG&#39;</span><span class="p">,</span> <span class="s1">&#39;André Lorge&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;FKY&#39;</span><span class="p">,</span> <span class="s1">&#39;Martin Fockedey&#39;</span><span class="p">],</span>
+<span class="p">]</span>
+
+<span class="n">desc</span> <span class="o">=</span> <span class="n">map_to_trigrams</span><span class="p">(</span><span class="n">profs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">desc</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><p class="disclaimer">Toutes les références ne sont pas représentées</p><div class="ram"><h5>RAM</h5><div class="var"><div class="name">map_to_desc</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div><div class="var"><div class="name">profs</div><div class="content">[...]</div></div><div class="ram"><h5><em>map_to_trigrams function</em></h5><div class="var"><div class="name">profs</div><div class="content"><em class="ref">&lt;ref global profs&gt;</em></div></div><div class="var"><div class="name">results</div><div class="content">'Quentin Lurkin (LUR)'<div class="index">0</div></div></div><div class="var"><div class="name">prof</div><div class="content">'LUR'<div class="index">0</div></div><div class="content">'Quentin Lurkin'<div class="index">1</div></div></div><div class="var"><div class="name">desc</div><div class="content">'Quentin Lurkin (LUR)'</div></div></div></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Mapping: code</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">map_to_desc</span><span class="p">(</span><span class="n">profs</span><span class="p">):</span>
+  <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="hll">  <span class="k">for</span> <span class="n">prof</span> <span class="ow">in</span> <span class="n">profs</span><span class="p">:</span>
+</span>    <span class="n">desc</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prof</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">prof</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">)&quot;</span>
+    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">desc</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">results</span>
+
+<span class="n">profs</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">[</span><span class="s1">&#39;LUR&#39;</span><span class="p">,</span> <span class="s1">&#39;Quentin Lurkin&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;LRG&#39;</span><span class="p">,</span> <span class="s1">&#39;André Lorge&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;FKY&#39;</span><span class="p">,</span> <span class="s1">&#39;Martin Fockedey&#39;</span><span class="p">],</span>
+<span class="p">]</span>
+
+<span class="n">desc</span> <span class="o">=</span> <span class="n">map_to_trigrams</span><span class="p">(</span><span class="n">profs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">desc</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><p class="disclaimer">Toutes les références ne sont pas représentées</p><div class="ram"><h5>RAM</h5><div class="var"><div class="name">map_to_desc</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div><div class="var"><div class="name">profs</div><div class="content">[...]</div></div><div class="ram"><h5><em>map_to_trigrams function</em></h5><div class="var"><div class="name">profs</div><div class="content"><em class="ref">&lt;ref global profs&gt;</em></div></div><div class="var"><div class="name">results</div><div class="content">'Quentin Lurkin (LUR)'<div class="index">0</div></div></div><div class="var"><div class="name">prof</div><div class="content">'LRG'<div class="index">0</div></div><div class="content">'André Lorge'<div class="index">1</div></div></div><div class="var"><div class="name">desc</div><div class="content">'Quentin Lurkin (LUR)'</div></div></div></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Mapping: code</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">map_to_desc</span><span class="p">(</span><span class="n">profs</span><span class="p">):</span>
+  <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">prof</span> <span class="ow">in</span> <span class="n">profs</span><span class="p">:</span>
+<span class="hll">    <span class="n">desc</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prof</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">prof</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">)&quot;</span>
+</span>    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">desc</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">results</span>
+
+<span class="n">profs</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">[</span><span class="s1">&#39;LUR&#39;</span><span class="p">,</span> <span class="s1">&#39;Quentin Lurkin&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;LRG&#39;</span><span class="p">,</span> <span class="s1">&#39;André Lorge&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;FKY&#39;</span><span class="p">,</span> <span class="s1">&#39;Martin Fockedey&#39;</span><span class="p">],</span>
+<span class="p">]</span>
+
+<span class="n">desc</span> <span class="o">=</span> <span class="n">map_to_trigrams</span><span class="p">(</span><span class="n">profs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">desc</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><p class="disclaimer">Toutes les références ne sont pas représentées</p><div class="ram"><h5>RAM</h5><div class="var"><div class="name">map_to_desc</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div><div class="var"><div class="name">profs</div><div class="content">[...]</div></div><div class="ram"><h5><em>map_to_trigrams function</em></h5><div class="var"><div class="name">profs</div><div class="content"><em class="ref">&lt;ref global profs&gt;</em></div></div><div class="var"><div class="name">results</div><div class="content">'Quentin Lurkin (LUR)'<div class="index">0</div></div></div><div class="var"><div class="name">prof</div><div class="content">'LRG'<div class="index">0</div></div><div class="content">'André Lorge'<div class="index">1</div></div></div><div class="var"><div class="name">desc</div><div class="content">'André Lorge (LRG)'</div></div></div></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Mapping: code</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">map_to_desc</span><span class="p">(</span><span class="n">profs</span><span class="p">):</span>
+  <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">prof</span> <span class="ow">in</span> <span class="n">profs</span><span class="p">:</span>
+    <span class="n">desc</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prof</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">prof</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">)&quot;</span>
+<span class="hll">    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">desc</span><span class="p">)</span>
+</span>  <span class="k">return</span> <span class="n">results</span>
+
+<span class="n">profs</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">[</span><span class="s1">&#39;LUR&#39;</span><span class="p">,</span> <span class="s1">&#39;Quentin Lurkin&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;LRG&#39;</span><span class="p">,</span> <span class="s1">&#39;André Lorge&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;FKY&#39;</span><span class="p">,</span> <span class="s1">&#39;Martin Fockedey&#39;</span><span class="p">],</span>
+<span class="p">]</span>
+
+<span class="n">desc</span> <span class="o">=</span> <span class="n">map_to_trigrams</span><span class="p">(</span><span class="n">profs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">desc</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><p class="disclaimer">Toutes les références ne sont pas représentées</p><div class="ram"><h5>RAM</h5><div class="var"><div class="name">map_to_desc</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div><div class="var"><div class="name">profs</div><div class="content">[...]</div></div><div class="ram"><h5><em>map_to_trigrams function</em></h5><div class="var"><div class="name">profs</div><div class="content"><em class="ref">&lt;ref global profs&gt;</em></div></div><div class="var"><div class="name">results</div><div class="content">'Quentin Lurkin (LUR)'<div class="index">0</div></div><div class="content">'André Lorge (LRG)'<div class="index">1</div></div></div><div class="var"><div class="name">prof</div><div class="content">'LRG'<div class="index">0</div></div><div class="content">'André Lorge'<div class="index">1</div></div></div><div class="var"><div class="name">desc</div><div class="content">'André Lorge (LRG)'</div></div></div></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Mapping: code</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">map_to_desc</span><span class="p">(</span><span class="n">profs</span><span class="p">):</span>
+  <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="hll">  <span class="k">for</span> <span class="n">prof</span> <span class="ow">in</span> <span class="n">profs</span><span class="p">:</span>
+</span>    <span class="n">desc</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prof</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">prof</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">)&quot;</span>
+    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">desc</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">results</span>
+
+<span class="n">profs</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">[</span><span class="s1">&#39;LUR&#39;</span><span class="p">,</span> <span class="s1">&#39;Quentin Lurkin&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;LRG&#39;</span><span class="p">,</span> <span class="s1">&#39;André Lorge&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;FKY&#39;</span><span class="p">,</span> <span class="s1">&#39;Martin Fockedey&#39;</span><span class="p">],</span>
+<span class="p">]</span>
+
+<span class="n">desc</span> <span class="o">=</span> <span class="n">map_to_trigrams</span><span class="p">(</span><span class="n">profs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">desc</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><p class="disclaimer">Toutes les références ne sont pas représentées</p><div class="ram"><h5>RAM</h5><div class="var"><div class="name">map_to_desc</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div><div class="var"><div class="name">profs</div><div class="content">[...]</div></div><div class="ram"><h5><em>map_to_trigrams function</em></h5><div class="var"><div class="name">profs</div><div class="content"><em class="ref">&lt;ref global profs&gt;</em></div></div><div class="var"><div class="name">results</div><div class="content">'Quentin Lurkin (LUR)'<div class="index">0</div></div><div class="content">'André Lorge (LRG)'<div class="index">1</div></div></div><div class="var"><div class="name">prof</div><div class="content">'FKY'<div class="index">0</div></div><div class="content">'Martin Fockedey'<div class="index">1</div></div></div><div class="var"><div class="name">desc</div><div class="content">'André Lorge (LRG)'</div></div></div></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Mapping: code</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">map_to_desc</span><span class="p">(</span><span class="n">profs</span><span class="p">):</span>
+  <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">prof</span> <span class="ow">in</span> <span class="n">profs</span><span class="p">:</span>
+<span class="hll">    <span class="n">desc</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prof</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">prof</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">)&quot;</span>
+</span>    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">desc</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">results</span>
+
+<span class="n">profs</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">[</span><span class="s1">&#39;LUR&#39;</span><span class="p">,</span> <span class="s1">&#39;Quentin Lurkin&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;LRG&#39;</span><span class="p">,</span> <span class="s1">&#39;André Lorge&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;FKY&#39;</span><span class="p">,</span> <span class="s1">&#39;Martin Fockedey&#39;</span><span class="p">],</span>
+<span class="p">]</span>
+
+<span class="n">desc</span> <span class="o">=</span> <span class="n">map_to_trigrams</span><span class="p">(</span><span class="n">profs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">desc</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><p class="disclaimer">Toutes les références ne sont pas représentées</p><div class="ram"><h5>RAM</h5><div class="var"><div class="name">map_to_desc</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div><div class="var"><div class="name">profs</div><div class="content">[...]</div></div><div class="ram"><h5><em>map_to_trigrams function</em></h5><div class="var"><div class="name">profs</div><div class="content"><em class="ref">&lt;ref global profs&gt;</em></div></div><div class="var"><div class="name">results</div><div class="content">'Quentin Lurkin (LUR)'<div class="index">0</div></div><div class="content">'André Lorge (LRG)'<div class="index">1</div></div></div><div class="var"><div class="name">prof</div><div class="content">'FKY'<div class="index">0</div></div><div class="content">'Martin Fockedey'<div class="index">1</div></div></div><div class="var"><div class="name">desc</div><div class="content">'Martin Fockedey (FKY)'</div></div></div></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Mapping: code</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">map_to_desc</span><span class="p">(</span><span class="n">profs</span><span class="p">):</span>
+  <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">prof</span> <span class="ow">in</span> <span class="n">profs</span><span class="p">:</span>
+    <span class="n">desc</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prof</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">prof</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">)&quot;</span>
+<span class="hll">    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">desc</span><span class="p">)</span>
+</span>  <span class="k">return</span> <span class="n">results</span>
+
+<span class="n">profs</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">[</span><span class="s1">&#39;LUR&#39;</span><span class="p">,</span> <span class="s1">&#39;Quentin Lurkin&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;LRG&#39;</span><span class="p">,</span> <span class="s1">&#39;André Lorge&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;FKY&#39;</span><span class="p">,</span> <span class="s1">&#39;Martin Fockedey&#39;</span><span class="p">],</span>
+<span class="p">]</span>
+
+<span class="n">desc</span> <span class="o">=</span> <span class="n">map_to_trigrams</span><span class="p">(</span><span class="n">profs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">desc</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><p class="disclaimer">Toutes les références ne sont pas représentées</p><div class="ram"><h5>RAM</h5><div class="var"><div class="name">map_to_desc</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div><div class="var"><div class="name">profs</div><div class="content">[...]</div></div><div class="ram"><h5><em>map_to_trigrams function</em></h5><div class="var"><div class="name">profs</div><div class="content"><em class="ref">&lt;ref global profs&gt;</em></div></div><div class="var"><div class="name">results</div><div class="content">'Quentin Lurkin (LUR)'<div class="index">0</div></div><div class="content">'André Lorge (LRG)'<div class="index">1</div></div><div class="content">'Martin Fockedey (FKY)'<div class="index">2</div></div></div><div class="var"><div class="name">prof</div><div class="content">'FKY'<div class="index">0</div></div><div class="content">'Martin Fockedey'<div class="index">1</div></div></div><div class="var"><div class="name">desc</div><div class="content">'Martin Fockedey (FKY)'</div></div></div></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Mapping: code</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">map_to_desc</span><span class="p">(</span><span class="n">profs</span><span class="p">):</span>
+  <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">prof</span> <span class="ow">in</span> <span class="n">profs</span><span class="p">:</span>
+    <span class="n">desc</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prof</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">prof</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">)&quot;</span>
+    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">desc</span><span class="p">)</span>
+<span class="hll">  <span class="k">return</span> <span class="n">results</span>
+</span>
+<span class="n">profs</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">[</span><span class="s1">&#39;LUR&#39;</span><span class="p">,</span> <span class="s1">&#39;Quentin Lurkin&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;LRG&#39;</span><span class="p">,</span> <span class="s1">&#39;André Lorge&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;FKY&#39;</span><span class="p">,</span> <span class="s1">&#39;Martin Fockedey&#39;</span><span class="p">],</span>
+<span class="p">]</span>
+
+<span class="n">desc</span> <span class="o">=</span> <span class="n">map_to_trigrams</span><span class="p">(</span><span class="n">profs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">desc</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><p class="disclaimer">Toutes les références ne sont pas représentées</p><div class="ram"><h5>RAM</h5><div class="var"><div class="name">map_to_desc</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div><div class="var"><div class="name">profs</div><div class="content">[...]</div></div><div class="ram"><h5><em>map_to_trigrams function</em></h5><div class="var"><div class="name">profs</div><div class="content"><em class="ref">&lt;ref global profs&gt;</em></div></div><div class="var"><div class="name">results</div><div class="content">'Quentin Lurkin (LUR)'<div class="index">0</div></div><div class="content">'André Lorge (LRG)'<div class="index">1</div></div><div class="content">'Martin Fockedey (FKY)'<div class="index">2</div></div></div><div class="var"><div class="name">prof</div><div class="content">'FKY'<div class="index">0</div></div><div class="content">'Martin Fockedey'<div class="index">1</div></div></div><div class="var"><div class="name">desc</div><div class="content">'Martin Fockedey (FKY)'</div></div><div class="var"><div class="name"><em class="ref">&lt;return&gt;</em></div><div class="content"><em class="ref">&lt;ref results&gt;</em></div></div></div></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Mapping: code</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">map_to_desc</span><span class="p">(</span><span class="n">profs</span><span class="p">):</span>
+  <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">prof</span> <span class="ow">in</span> <span class="n">profs</span><span class="p">:</span>
+    <span class="n">desc</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prof</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">prof</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">)&quot;</span>
+    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">desc</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">results</span>
+
+<span class="n">profs</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">[</span><span class="s1">&#39;LUR&#39;</span><span class="p">,</span> <span class="s1">&#39;Quentin Lurkin&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;LRG&#39;</span><span class="p">,</span> <span class="s1">&#39;André Lorge&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;FKY&#39;</span><span class="p">,</span> <span class="s1">&#39;Martin Fockedey&#39;</span><span class="p">],</span>
+<span class="p">]</span>
+
+<span class="hll"><span class="n">desc</span> <span class="o">=</span> <span class="n">map_to_trigrams</span><span class="p">(</span><span class="n">profs</span><span class="p">)</span>
+</span><span class="nb">print</span><span class="p">(</span><span class="n">desc</span><span class="p">)</span>
+</pre></div>
+</div><div class="span6 middle"><p class="disclaimer">Toutes les références ne sont pas représentées</p><div class="ram"><h5>RAM</h5><div class="var"><div class="name">map_to_desc</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div><div class="var"><div class="name">profs</div><div class="content">[...]</div></div><div class="var"><div class="name">desc</div><div class="content">'Quentin Lurkin (LUR)'<div class="index">0</div></div><div class="content">'André Lorge (LRG)'<div class="index">1</div></div><div class="content">'Martin Fockedey (FKY)'<div class="index">2</div></div></div></div><div class="terminal" style="font-size: 1.0em"> </div></div></div>
+</section>
+<section class="level2">
+<h2>Mapping: code</h2>
+<div class="row code-step"><div class="span6 middle" style="font-size: 0.9em;"><div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">map_to_desc</span><span class="p">(</span><span class="n">profs</span><span class="p">):</span>
+  <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">prof</span> <span class="ow">in</span> <span class="n">profs</span><span class="p">:</span>
+    <span class="n">desc</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prof</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">prof</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">)&quot;</span>
+    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">desc</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">results</span>
+
+<span class="n">profs</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">[</span><span class="s1">&#39;LUR&#39;</span><span class="p">,</span> <span class="s1">&#39;Quentin Lurkin&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;LRG&#39;</span><span class="p">,</span> <span class="s1">&#39;André Lorge&#39;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s1">&#39;FKY&#39;</span><span class="p">,</span> <span class="s1">&#39;Martin Fockedey&#39;</span><span class="p">],</span>
+<span class="p">]</span>
+
+<span class="n">desc</span> <span class="o">=</span> <span class="n">map_to_trigrams</span><span class="p">(</span><span class="n">profs</span><span class="p">)</span>
+<span class="hll"><span class="nb">print</span><span class="p">(</span><span class="n">desc</span><span class="p">)</span>
+</span></pre></div>
+</div><div class="span6 middle"><p class="disclaimer">Toutes les références ne sont pas représentées</p><div class="ram"><h5>RAM</h5><div class="var"><div class="name">map_to_desc</div><div class="content"><em class="ref">&lt;function&gt;</em></div></div><div class="var"><div class="name">profs</div><div class="content">[...]</div></div><div class="var"><div class="name">desc</div><div class="content">'Quentin Lurkin (LUR)'<div class="index">0</div></div><div class="content">'André Lorge (LRG)'<div class="index">1</div></div><div class="content">'Martin Fockedey (FKY)'<div class="index">2</div></div></div></div><div class="terminal" style="font-size: 0.38em">['Quentin Lurkin (LUR)', 'André Lorge (LRG)', 'Martin Fockedey (FKY)']</div></div></div>
+</section>
+<section id="mapping" class="level2">
+<h2>Mapping</h2>
+<ul>
+<li>Ces deux derniers exemples ont la <strong>même
+structure</strong></li>
+<li>Seul le <strong>contenu</strong> de la boucle est différent</li>
+<li>Ce sont des <em><strong>mappings</strong></em></li>
+<li>Il est possible de créer une fonction qui ne contient que la
+structure d’un <em>mapping</em>.</li>
+<li>Il nous faudra juste un moyen de passer <strong>le traitement à
+réaliser</strong>.</li>
+</ul>
+</section>
+<section id="les-fonctions-sont-des-valeurs" class="level2">
+<h2>Les fonctions sont des valeurs</h2>
+<ul>
+<li>Une fonction peut être <strong>assignée</strong> à une variable</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">cos</span><span class="p">,</span> <span class="n">pi</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">cos</span> <span class="c1"># Pas de parenthèse! On n&#39;appelle pas la fonction.</span>
+        <span class="c1"># On l&#39;assigne à la variable `a`</span>
+
+<span class="n">a</span><span class="p">(</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span> <span class="c1"># `a` fait référence à la fonction `cos`. Si on</span>
+        <span class="c1"># appelle `a`, on appelle `cos`</span>
+</pre></div>
+
+</section>
+<section id="les-fonctions-sont-des-valeurs-1" class="level2">
+<h2>Les fonctions sont des valeurs</h2>
+<ul>
+<li>On peut passer une fonction <strong>en paramètre</strong> à une
+autre fonction</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="c1"># la structure d&#39;un mapping. `processing` est la fonction</span>
+<span class="c1"># qui sera appliquée aux éléments de `L`</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">map</span><span class="p">(</span><span class="n">processing</span><span class="p">,</span> <span class="n">L</span><span class="p">):</span>
+  <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">L</span><span class="p">:</span>
+    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">processing</span><span class="p">(</span><span class="n">elem</span><span class="p">))</span>
+  <span class="k">return</span> <span class="n">results</span>
+
+<span class="c1"># transforme 1 prof</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">describe</span><span class="p">(</span><span class="n">prof</span><span class="p">):</span>
+  <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prof</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">prof</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">)&quot;</span>
+
+<span class="c1"># on transforme tous les profs</span>
+<span class="n">descriptions</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">describe</span><span class="p">,</span> <span class="n">profs</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">get_trigram</span><span class="p">(</span><span class="n">prof</span><span class="p">):</span>
+  <span class="k">return</span> <span class="n">prof</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="n">trigrams</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">get_trigram</span><span class="p">,</span> <span class="n">profs</span><span class="p">)</span>
+</pre></div>
+
+</section>
+<section id="la-fonction-map" class="level2">
+<h2>La fonction <code>map</code></h2>
+<ul>
+<li>La fonction <code>map</code> existe déjà en Python <span
+class="small">Pas besoin de la créer</span></li>
+</ul>
+</section>
+<section id="le-filtrage" class="level2">
+<h2>Le filtrage</h2>
+</section>
+<section id="laccumulation" class="level2">
+<h2>L’accumulation</h2>
+</section>
+</body>
+</html>

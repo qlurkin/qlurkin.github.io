@@ -4,697 +4,350 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=1024, user-scalable=no">
-    <title>ER4C - Chapitre 2 - Design efficace</title>
-    <script src="https://quentin.lurkin.xyz/document.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/gh/ireade/caniuse-embed/public/caniuse-embed.min.js"></script>
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab|Yellowtail&display=swap" rel="stylesheet">
+    <title>ER4C - Chapitre 2 - Accessibilité</title>
+    <script src="/document.js" defer></script>
     <style>
-      pre code {
-        font-size: 75% !important;
-      }
-    </style>
-    <style>
-      .widget {
-          width: 60%;
-          background-color: rgb(124, 170, 170);
-          margin: 1rem auto;
-          padding: 0.6em 0;
-      }
-      
-      .widget h3 {
-          font-family: 'Yellowtail', cursive;
-          margin: 1.2em;
-          margin-top: 0;
-      }
-      
-      .widget p {
-          margin: 2.5em;
-          margin-top: 0;
-          margin-bottom: 1em;
-          text-align: left;
-      }
-      
-      .widget input {
-          display: block;
-          width: 80%;
-          margin: 0.5em auto;
-          margin-top: 0;
-          line-height: 2;
-          padding: 0.5em;
-      }
-      
-      .widget button {
-          display: block;
-          width: 70%;
-          margin: 0 auto;
-          line-height: 2;
-          padding: 0.5em;
-          border: 1px solid rgb(56, 126, 97);
-          border-radius: 5px;
-          background-color: rgb(71, 156, 121);
-      }
-    </style>
-    <style>
-      .widget2 {
-          width: 60%;
-          background-color: rgb(124, 170, 170);
-          margin: 1rem auto;
-          padding: 0.6em;
-      }
-      
-      .widget2 h3 {
-          font-family: 'Yellowtail', cursive;
-          margin: 0;
-          margin-bottom: 1.2em;
-          text-align: justify;
-      }
-      
-      .widget2 p {
-          margin: 0;
-          margin-bottom: 1em;
-      }
-      
-      .widget2 input {
-          display: block;
-          width: 100%;
-          margin: 0;
-          margin-bottom: 0.5em;
-          line-height: 2;
-          padding: 0.5em;
-      }
-      
-      .widget2 button {
-          display: block;
-          width: 100%;
-          margin: 0;
-          line-height: 2;
-          padding: 0.5em;
-          border: 1px solid rgb(56, 126, 97);
-          border-radius: 5px;
-          background-color: rgb(71, 156, 121);
-      }
-    </style>
-    <style>
-      .widget3 {
-          width: 60%;
-          background-color: rgb(224,228,204);
-          margin: 1rem auto;
-          padding: 0.6em;
-      }
-      
-      .widget3 h3 {
-          font-family: 'Yellowtail', cursive;
-          margin: 0;
-          margin-bottom: 1.2em;
-          text-align: justify;
-          color: rgb(109,143,141)
-      }
-      
-      .widget3 p {
-          margin: 0;
-          margin-bottom: 1em;
-      }
-      
-      .widget3 input {
-          display: block;
-          width: 100%;
-          margin: 0;
-          margin-bottom: 0.5em;
-          line-height: 2;
-          padding: 0.5em;
-      }
-      
-      .widget3 button {
-          display: block;
-          width: 100%;
-          margin: 0;
-          line-height: 2;
-          padding: 0.5em;
-          border: 1px solid rgb(250,105,0);
-          border-radius: 5px;
-          background-color: rgb(243,134,48);
-      }
-  </style>
-  <style>
-    .widget4 {
-        width: 60%;
-        background-color: rgb(224,228,204);
-        margin: 1rem auto;
-        padding: 0.6em;
-    }
-    
-    .widget4 h3 {
-        font-family: "Roboto Slab", serif;
-        margin: 0;
-        margin-bottom: 1.2em;
-        text-align: justify;
-        color: rgb(109,143,141)
-    }
-    
-    .widget4 p {
-        margin: 0;
-        margin-bottom: 1em;
-    }
-    
-    .widget4 input {
-        display: block;
-        width: 100%;
-        margin: 0;
-        margin-bottom: 0.5em;
-        line-height: 2;
-        padding: 0.5em;
-        
-    }
-    
-    .widget4 input:placeholder-shown {
-        font-style: italic;
-    }
-    
-    .widget4 button {
-        display: block;
-        width: 100%;
-        margin: 0;
-        line-height: 2;
-        padding: 0.5em;
-        border: 1px solid rgb(250,105,0);
-        border-radius: 5px;
-        background-color: rgb(243,134,48);
-        text-transform: uppercase;
-        font-weight: bold;
-    }
-  </style>
-  <style>
-    .widget5 {
-        width: 60%;
-        background-color: rgb(224,228,204);
-        margin: 1rem auto;
-        padding: 4rem;
-        line-height: 1.5;
-        box-sizing: content-box;
-    }
-    
-    .mode-document .widget5 {
-        top: 0;
-    }
-    
-    .mode-document section {
-        margin-bottom: 1em;
-    }
-    
-    .widget5 h3 {
-        font-family: "Roboto Slab", serif;
-        margin: 0;
-        margin-bottom: 2rem;
-        text-align: justify;
-        color: rgb(109,143,141)
-    }
-    
-    .widget5 p {
-        margin: 0;
-        margin-bottom: 2rem;
-    }
-    
-    .widget5 input {
-        display: block;
-        width: 100%;
-        margin: 0;
-        margin-bottom: 2rem;
-        line-height: 2;
-        padding: 0.5em;
-        
-    }
-    
-    .widget5 input:placeholder-shown {
-        font-style: italic;
-    }
-    
-    .widget5 button {
-        display: block;
-        width: 100%;
-        margin: 0;
-        line-height: 2;
-        padding: 0.5em;
-        border: 1px solid rgb(250,105,0);
-        border-radius: 5px;
-        background-color: rgb(243,134,48);
-        text-transform: uppercase;
-        font-weight: bold;
-    }
-    </style>
-    <style>
-      .spacebar {
-      	font-size: 0.8em;
-      	text-align: center;
-      	display: inline-block;
-      	width: 1em;
-      	background-color: gray;
-      	vertical-align: bottom;
-      	border-radius: 5px;
-      	color: white;
-      }
-      
-      .colourbar {
+      button {
       	position: relative;
+      	padding: 5px 20px;
+      	line-height: 1;
+      	border-radius: 4px;
+      }
+      
+      button img{
+      	height: 1em;
+      	vertical-align: middle;
+      }
+      
+      span.accessible-hidden {
+      	position: absolute;
+      	left: -10000px;
+      }
+      
+      button:hover span.accessible-hidden {
+      	left: 50%;
+      	margin-left: -50%;
+      	top: -2.5em;
+      	display: block;
+      	color: white;
+      	background-color: rgba(0,0,0,0.7);
       	font-size: 0.6em;
+      	padding: 0.5em;
+      	border-radius: 5px;
       }
       
-      .colourbar .label {
-      	position: absolute;
-      	top: 0.5em;
-      	left: 0.5em;
-      }
-      
-      .colourbar .code {
-      	position: absolute;
-      	top: 0.5em;
-      	right: 0.5em;
-      }
-      
-    </style>
-    <style>
-      .custom-css {
-          --base-color-h: 14;
-          --base-color-s: 100%;
-          --base-color-l: 57%;
-          --base-color: hsl(var(--base-color-h),
-                            var(--base-color-s),
-                            var(--base-color-l));
-          --base-color-darken-20: hsl(var(--base-color-h),
-                                      var(--base-color-s),
-                                      calc(var(--base-color-l) - 20%));
-          --length-M: 1rem;
-          --length-L: calc(var(--length-M) * 2);
-          --length-S: calc(var(--length-M) / 2);
-      }
-
-      .custom-css .base {
-          background-color: var(--base-color);
-          height: var(--length-M);
-          margin-bottom: 1rem;
-      }
-
-      .custom-css .darken {
-          background-color: var(--base-color-darken-20);
-          height: var(--length-L);
-          margin-bottom: 1rem;
+      .display {
+      	padding-top: 1em;
+      	padding-bottom: 1em;
       }
     </style>
   </head>
   <body>
     <section>
-      <h1>ER4C - Labo 2 <small>Design efficace</small></h1>
+      <h1>ER4C - Labo 2 <small>Accessibilité</small></h1>
     </section>
+    
     <section>
-      <p>Comment créer des designs efficaces?</p>
-    </section>
-    <section class="full">
-      <h2>La Surcharge</h2>
-      <figure>
-      <img style="width: 100%" src="./surcharge.jpeg">
-      </figure>
-    </section>
-    <section>
-      <p>Le meilleur moyen d'avoir un bon design est d'éviter de surcharger la page</p>
-    </section>
-    <section>
-      <figure>
-      <div class="widget">
-        <h3 class="nocount">Inscrivez-vous à la newsletter sur le développement orienté objects efficace en Python</h3>
-        <p>Des informations hebdomadaires à propos du Python, de la programmation orienté objets et des bonnes pratiques permettant la création de réelles applications.</p>
-        <form>
-          <input placeholder="e-mail">
-          <button>Inscription</button>
-        </form>
-      </div>
-      <figcaption>Nous allons améliorer ce widget</figcaption>
-      </figure>
-    </section>
-    <section>
-      <h2>Alignement</h2>
-      <p>Même des différences d'un pixel sont inconsciement détectées.</p>
-    </section>
-    <section>
-      <figure>
-      <div class="widget">
-        <h3 class="nocount">Inscrivez-vous à la newsletter sur le développement orienté objects efficace en Python</h3>
-        <p>Des informations hebdomadaires à propos du Python, de la programmation orienté objets et des bonnes pratiques permettant la création de réelles applications.</p>
-        <form>
-          <input placeholder="e-mail">
-          <button>Inscription</button>
-        </form>
-      </div>
-      <figcaption>Avant</figcaption>
-      </figure>
-    </section>
-    <section>
-      <figure>
-      <div class="widget2">
-        <h3 class="nocount">Inscrivez-vous à la newsletter sur le développement orienté objects efficace en Python</h3>
-        <p>Des informations hebdomadaires à propos du Python, de la programmation orienté objets et des bonnes pratiques permettant la création de réelles applications.</p>
-        <form>
-          <input placeholder="e-mail">
-          <button>Inscription</button>
-        </form>
-      </div>
-      <figcaption>Après</figcaption>
-      </figure>
-    </section>
-    <section>
-      <h2>Les couleurs</h2>
-      <ul>
-        <li>Des couleurs complémentaires</li>
-        <li>Des couleurs principalement neutre</li>
-        <li>Une couleur vive pour les choses importantes</li>
-        <li>Couleurs normalisées, consistantes</li>
-        <li>http://www.colourlovers.com/</li>
+      <h2>Contenu non-textuel</h2>
+      <ul> 
+        <li>Ajouter un texte alternatif aux images
+          <pre><code class="lang-html">&lt;img src="cat.jpg" alt="Un petit chaton vraiment trop mignon" /></code></pre>
+        </li>
+        <li>Ajouter un texte alternatif aux contenus vidéo et audio</li>
       </ul>
-        <figure>
-          <div class="colourbar" style="background-color: #FF6C3D; height: 2em;">
-            <div class="label">Lighten 5%</div>
-            <div class="code">#FF6C3D</div>
-          </div>
-          <div class="colourbar" style="background-color: #FF5722; height: 10em; color: white;">
-            <div class="label">Base</div>
-            <div class="code">#FF5722</div>
-          </div>
-          <div class="colourbar" style="background-color: #EB3800; height: 2em; color: white;">
-            <div class="label">Darken 10%</div>
-            <div class="code">#EB3800</div>
-          </div>
-          <div class="colourbar" style="background-color: #B82C00; height: 2em; color: white;">
-            <div class="label">Darken 20%</div>
-            <div class="code">#B82C00</div>
-          </div>
-          <figcaption class="center">Couleur vive (+ variations)</figcaption>
-        </figure>
-        <figure>
-          <div class="colourbar" style="background-color: hsl(0, 0%, 95%); height: 2.2857em;">
-            <div class="label">Lightness 95</div>
-            <div class="code">hsl(0, 0%, 95%)	</div>
-          </div>
-          <div class="colourbar" style="background-color: hsl(0, 0%, 90%); height: 2.2857em;">
-            <div class="label">Lightness 90</div>
-            <div class="code">hsl(0, 0%, 90%)</div>
-          </div>
-          <div class="colourbar" style="background-color: hsl(0, 0%, 80%); height: 2.2857em;">
-            <div class="label">Lightness 80</div>
-            <div class="code">hsl(0, 0%, 80%)</div>
-          </div>
-          <div class="colourbar" style="background-color: hsl(0, 0%, 70%); height: 2.2857em;">
-            <div class="label">Lightness 70</div>
-            <div class="code">hsl(0, 0%, 70%)</div>
-          </div>
-          <div class="colourbar" style="background-color: hsl(0, 0%, 30%); height: 2.2857em; color: white;">
-            <div class="label">Lightness 30</div>
-            <div class="code">hsl(0, 0%, 30%)</div>
-          </div>
-          <div class="colourbar" style="background-color: hsl(0, 0%, 20%); height: 2.2857em; color: white;">
-            <div class="label">Lightness 20</div>
-            <div class="code">hsl(0, 0%, 20%)</div>
-          </div>
-          <div class="colourbar" style="background-color: hsl(0, 0%, 10%); height: 2.2857em; color: white;">
-            <div class="label">Lightness 10</div>
-            <div class="code">hsl(0, 0%, 10%)</div>
-          </div>
-          <figcaption class="center">Couleurs neutres</figcaption>
-        </figure>
+      <p><strong>Attention:</strong> Il ne sert à rien d'utiliser l'attribut <code>alt</code> pour rèpèter des informations qui sont déjà présentes dans le texte du site. Il faut décrire l'information que l'image apporte en plus du texte.</p>
     </section>
     <section>
-      <figure>
-      <div class="widget2">
-        <h3 class="nocount">Inscrivez-vous à la newsletter sur le développement orienté objects efficace en Python</h3>
-        <p>Des informations hebdomadaires à propos du Python, de la programmation orienté objets et des bonnes pratiques permettant la création de réelles applications.</p>
-        <form>
-          <input placeholder="e-mail">
-          <button>Inscription</button>
-        </form>
+      <h2>Boutons avec Icone</h2>
+      <p>Ce genre de button est inaccessible aux <em>Screen Reader</em></p>
+      <pre><code class="lang-html">&lt;button>&lt;img src="img/icon.svg"/>&lt;/button>
+</code></pre>
+      <div class="center display">
+        <button><img src="./search.svg"></button>
       </div>
-      <figcaption>Avant</figcaption>
-      </figure>
-    </section>
-    <section>
-      <figure>
-      <div class="widget3">
-        <h3 class="nocount">Inscrivez-vous à la newsletter sur le développement orienté objects efficace en Python</h3>
-        <p>Des informations hebdomadaires à propos du Python, de la programmation orienté objets et des bonnes pratiques permettant la création de réelles applications.</p>
-        <form>
-          <input placeholder="e-mail">
-          <button>Inscription</button>
-        </form>
-      </div>
-      <figcaption>Après</figcaption>
-      </figure>
-    </section>
-    <section>
-      <h2>Polices</h2>
+      <p>Solution:</p>
       <ul>
-        <li>Peu de polices différentes (2)</li>
-        <li>Limiter l'usage des polices extravagantes</li>
-        <li>Utiliser le gras, l'italique, les majuscules pour différencier le texte.</li>
-      </ul>
-    </section>
-    <section>
-      <figure>
-      <div class="widget3">
-        <h3 class="nocount">Inscrivez-vous à la newsletter sur le développement orienté objects efficace en Python</h3>
-        <p>Des informations hebdomadaires à propos du Python, de la programmation orienté objets et des bonnes pratiques permettant la création de réelles applications.</p>
-        <form>
-          <input placeholder="e-mail">
-          <button>Inscription</button>
-        </form>
-      </div>
-      <figcaption>Avant</figcaption>
-      </figure>
-    </section>
-    <section>
-      <figure>
-      <div class="widget4">
-        <h3 class="nocount">Inscrivez-vous à la newsletter sur le développement orienté objects efficace en Python</h3>
-        <p>Des informations hebdomadaires à propos du Python, de la programmation orienté objets et des bonnes pratiques permettant la création de réelles applications.</p>
-        <form>
-          <input placeholder="e-mail">
-          <button>Inscription</button>
-        </form>
-      </div>
-      <figcaption>Après</figcaption>
-      </figure>
-    </section>
-    <section>
-      <h2>Espaces blancs</h2>
-      <ul>
-        <li>Arme ultime contre la surcharge.</li>
-        <li>Normaliser les espaces (<code class="lang-css">rem</code>)</li>
-      </ul>
-      <div class="columns">
-        <div class="left">
-          <div class="center" style="margin-bottom: 1em;">
-            <div class="spacebar" style="height: 1rem;"></div>
-            <div class="spacebar" style="height: 2rem;">2</div>
-            <div class="spacebar" style="height: 3rem;">3</div>
-            <div class="spacebar" style="height: 4rem;">4</div>
-            <div class="spacebar" style="height: 5rem;">5</div>
-            <div class="spacebar" style="width: 0; height: 8rem;"></div>
-          </div>
-          <p class="center">Progression linéaire</p>
-          <figure><img src="./cross.svg" style="width: 5em;"></figure>
-        </div>
-        <div class="right">
-          <div class="center" style="margin-bottom: 1em;">
-            <div class="spacebar" style="height: 0.5rem;"></div>
-            <div class="spacebar" style="height: 1rem;"> </div>
-            <div class="spacebar" style="height: 2rem;">2</div>
-            <div class="spacebar" style="height: 4rem;">4</div>
-            <div class="spacebar" style="height: 8rem;">8</div>
-          </div>
-          <p class="center">Progression géométrique</p>
-          <figure><img src="./check.svg" style="width: 5em;"></figure>
-        </div>
-      </div>
-    </section>
-    <section>
-      <h3>Utilisations des Espaces blancs</h3>
-      <figure><img src="./space_system.png"><figcaption>Système d'espaces</figcaption></figure>
-    </section>
-    <section>
-      <figure><img src="./space_example.png"><figcaption>Application du système</figcaption></figure>
-    </section>
-    <section>
-      <figure>
-      <div class="widget4">
-        <h3 class="nocount">Inscrivez-vous à la newsletter sur le développement orienté objects efficace en Python</h3>
-        <p>Des informations hebdomadaires à propos du Python, de la programmation orienté objets et des bonnes pratiques permettant la création de réelles applications.</p>
-        <form>
-          <input placeholder="e-mail">
-          <button>Inscription</button>
-        </form>
-      </div>
-      <figcaption>Avant</figcaption>
-      </figure>
-      <figure>
-      <div class="widget5">
-        <h3 class="nocount">Inscrivez-vous à la newsletter sur le développement orienté objects efficace en Python</h3>
-        <p>Des informations hebdomadaires à propos du Python, de la programmation orienté objets et des bonnes pratiques permettant la création de réelles applications.</p>
-        <form>
-          <input placeholder="e-mail">
-          <button>Inscription</button>
-        </form>
-      </div>
-      <figcaption>Après</figcaption>
-      </figure>
-    </section>
-    <section class="custom-css">
-      <h2>Propiétés CSS personalisées <em>(Custom CSS Property)</em></h2>
-      <ul>
-        <li>Evite de répéter une même valeur dans toute la feuille de style.</li>
-        <li>Permet de changer et expérimenter facilement.</li>
-      </ul>
-      <pre>
-        <code class="lang-css">
-          :root {
-            --base-color-h: 14;
-            --base-color-s: 100%;
-            --base-color-l: 57%;
-            --base-color: hsl(var(--base-color-h),
-                              var(--base-color-s),
-                              var(--base-color-l));
-            --base-color-darken-20: hsl(var(--base-color-h),
-                                        var(--base-color-s),
-                                        calc(var(--base-color-l) - 20%));
-            --length-M: 1rem;
-            --length-L: calc(var(--length-M) * 2);
-            --length-S: calc(var(--length-M) / 2);
-          }
+        <li>L'attribut <code class="lang-html">aria-label</code> permet de définir un label à destination des <em>Screen Reader</em>
+          <pre><code class="lang-html">&lt;button aria-label="Search">&lt;img aria-hidden="true" src="img/search.svg"/>&lt;/button></code></pre>
+        </li>
+        <li> 
+          <p>On peut aussi ajouter un texte caché dans le bouton</p>
+          <pre><code class="lang-html">&lt;button>
+	&lt;img src="img/search.svg" aria-hidden="true"/>
+	&lt;span class="accessible-hidden"> Search &lt;/span> 
+&lt;/button></code></pre>
+          <pre><code class="lang-css">span.accessible-hidden {
+	position: absolute;
+	left: -1000r0px;
+}</code></pre>
+          <p>Remarquez que l'on utilise pas l'attribut CSS <code>display: none</code> car cela cache le contenu pour les <em>Screen Reader</em> également</p>
+        </li>
+        <li>
+          <p>On peut, en bonus, fournir un tooltip au survol de la souris </p>
+          <pre><code class="lang-css">button {
+	position: relative;
+}
 
-          div {
-            margin-bottom: 1rem;
-          }
+span.accessible-hidden {
+	position: absolute;
+	left: -1000r0px;
+}
 
-          .base {
-            background-color: var(--base-color);
-            height: var(--length-M);
-          }
-
-          .darken {
-            background-color: var(--base-color-darken-20);
-            height: var(--length-L);
-          }
-        </code>
-      </pre>
-      <pre><code class="lang-html">
-        &lt;div class="base">&lt;/div>
-        &lt;div class="darken">&lt;/div>
-      </code></pre>
-      <div class="base"></div>
-      <div class="darken"></div>
-    </section>
-    <section>
-      <h2>Propiétés CSS personalisées <em>(Custom CSS Properties)</em></h2>
-      <p class="ciu_embed" data-feature="css-variables" data-periods="future_1,current,past_1,past_2" data-accessible-colours="false">
-        <a href="http://caniuse.com/#feat=css-variables">
-        <picture>
-        <source type="image/webp" srcset="https://caniuse.bitsofco.de/image/css-variables.webp">
-        <img src="https://caniuse.bitsofco.de/image/css-variables.png" alt="Data on support for the css-variables feature across the major browsers from caniuse.com">
-        </picture>
-        </a>
-      </p>
-      <p class="ciu_embed" data-feature="calc" data-periods="future_1,current,past_1,past_2" data-accessible-colours="false">
-        <a href="http://caniuse.com/#feat=calc">
-        <picture>
-        <source type="image/webp" srcset="https://caniuse.bitsofco.de/image/calc.webp">
-        <img src="https://caniuse.bitsofco.de/image/calc.png" alt="Data on support for the calc feature across the major browsers from caniuse.com">
-        </picture>
-        </a>
-      </p>
-    </section>
-    <section>
-      <h2>But de la page</h2>
-      <p class="big center">Le but de la page doit être facile à trouver</p>
-      <figure>
-      <div class="widget5">
-        <h3 class="nocount">Inscrivez-vous à la newsletter sur le développement orienté objects efficace en Python</h3>
-        <p>Des informations hebdomadaires à propos du Python, de la programmation orienté objets et des bonnes pratiques permettant la création de réelles applications.</p>
-        <form>
-          <input placeholder="e-mail">
-          <button>Inscription</button>
-        </form>
-      </div>
-      <figcaption>Bouton principal dans une couleur vive</figcaption>
-      </figure>
-    </section>
-    <section>
-      <h2>Contenu</h2>
-      <p>Les utilisateurs survolent plus souvent le texte qu'ils ne le lisent</p>
-      <ul>
-        <li>Eviter les grands pavés de texte</li>
-        <li>Utiliser les listes à puces</li>
-        <li>Marquer les mots importants (gras, ...)</li>
-        <li>Droit au but</li>
-        <li>Utiliser un language humain / familier</li>
+button:hover span.accessible-hidden {
+	left: 50%;
+	margin-left: -50%;
+	top: -2.5em;
+	display: block;
+	color: white;
+	background-color: rgba(0,0,0,0.6);
+	font-size: 0.6em;
+	padding: 0.5em;
+	border-radius: 5px;
+}
+</code></pre>
+          <div class="center display">
+            <button><img src="./search.svg"><span class="accessible-hidden">Search</span></button>
+          </div>
+        </li>
       </ul>
     </section>
     <section>
-      <figure>
-      <div class="widget5">
-        <h3 class="nocount">Inscrivez-vous à la newsletter sur le développement orienté objects efficace en Python</h3>
-        <p>Des informations hebdomadaires à propos du Python, de la programmation orienté objets et des bonnes pratiques permettant la création de réelles applications.</p>
-        <form>
-          <input placeholder="e-mail">
-          <button>Inscription</button>
-        </form>
-      </div>
-      <figcaption>Avant</figcaption>
-      </figure>
+      <h2>Exercice 1</h2>
+      <p>Quels sont les problèmes d'accessibilité <a href="./exercices/ex1/index.html" download>de ce site</a> ? Corrigez les.</p>
     </section>
     <section>
-      <figure>
-      <div class="widget5">
-        <h3 class="nocount">Améliorez votre Python</h3>
-        <p>Recevez des <b>informations</b> régulières pour devenir un <b>meilleur développeur</b></p>
-        <form>
-          <input placeholder="Insérez votre e-mail">
-          <button>Inscrivez-vous</button>
-        </form>
-      </div>
-      <figcaption>Après</figcaption>
-      </figure>
-    </section>
-    <section>
-      <h2>Au final !</h2>
-      <figure>
-      <div class="widget">
-        <h3 class="nocount">Inscrivez-vous à la newsletter sur le développement orienté objects efficace en Python</h3>
-        <p>Des informations hebdomadaires à propos du Python, de la programmation orienté objets et des bonnes pratiques permettant la création de réelles applications.</p>
-        <form>
-          <input placeholder="e-mail">
-          <button>Inscription</button>
-        </form>
-      </div>
-        <figcaption>Avant</figcaption>
-      </figure>
-    </section>
-    <section>
-      <figure>
-      <div class="widget5">
-        <h3 class="nocount">Améliorez votre Python</h3>
-        <p>Recevez des <b>informations</b> régulières pour devenir un <b>meilleur développeur</b></p>
-        <form>
-          <input placeholder="Insérez votre e-mail">
-          <button>Inscrivez-vous</button>
-        </form>
-      </div>
-        <figcaption>Après</figcaption>
-      </figure>
-    </section>
-    <section>
-      <h2>Exercice</h2>
-      <p>En partant de <a href="./exercice/index.html" download>cette page</a>, écrivez une <strong>synthèse</strong> du cours d'aujourd'hui en lui donnant un style qui respecte les principes d'un <strong>design efficace</strong>.</p>
-    </section>
-    <section>
-      <h2>Crédit</h2>
+      <h2>Structure</h2>
+
       <ul>
-        <li>Présentation <em lang="en">Design Concepts For Non-Designers</em> de Tracy Osborn du DjangoCon 2016</li>
-        <li>https://medium.com/eightshapes-llc/space-in-design-systems-188bcbae0d62</li>
+        <li>
+          <p>Utiliser les bonnes balises pour chaque élément de structure de la page</p>
+          <p>Beaucoup de balises HTML ont une valeur sémantique. Par exemple, les balises de titre (<code>&lt;h1></code>, <code>&lt;h2></code>, ...) permettent de créer une structure hiérarchique à un document.</p>
+          <p>Il en existe beaucoup d'autres: <code>&lt;header></code>, <code>&lt;footer></code>, <code>&lt;main></code>, <code>&lt;nav></code>, <code>&lt;aside></code>, ...</p>
+        </li>
+        <li>Utiliser les <em>aria role</em>: <code>search</code>, <code>banner</code>, <code>navigation</code>, ...
+          <pre><code class="lang-html">&lt;div role="navigation">&lt;/div>
+&lt;nav>&lt;/nav></code></pre>
+          <p>Les <em>aria role</em> permettent d'attribuer un rôle sémantique à une balise qui n'en a pas ou d'écraser le rôle par défaut d'une balise qui en déjà un.</p>
+          <p>Attention qu'une mauvais utilisation des <em>aria role</em> peut dégrader l'accessibilité au lieu de l'améliorer:</p>
+          <p><strong>Mauvais exemple:</strong></p>
+          <pre><code class="lang-html">
+            &lt;div id="nav">
+            &lt;ul role="navigation">
+            ...
+            &lt;/ul>
+            &lt;/div>
+          </code></pre>
+          <p>Le rôle de liste de la balise <code>&lt;ul></code> a été remplacé par un rôle de navigation.</p>
+          <p><strong>Bon exemple:</strong></p>
+          <pre><code class="lang-html">
+            &lt;div role="navigation">
+            &lt;ul>
+            ...
+            &lt;/ul>
+            &lt;/div>
+          </code></pre>
+          <p>Les rôles de navigation et de liste sont préservés</p>
+          <p>Le mieux reste d'utiliser les balises dédiées lorsqu'elles sont disponibles.</p>
+          <pre><code class="lang-html">
+            &lt;nav>
+            &lt;ul>
+            ...
+            &lt;/ul>
+            &lt;/nav>
+          </code></pre>
+        </li>
       </ul>
+    </section>
+    <section>
+      <h2>Définir la langue</h2>
+      <p>Pour que les <em>Screen Reader</em> puisse utiliser l'algorithme de synthèse vocale adapté, il est important de spécifier la langue du contenu.</p>
+      <pre><code class="lang-html">&lt;html lang="fr">
+	...
+	&lt;p> Définir le &lt;em lang="en">layout&lt;/em> du site.&lt;/p>
+	...
+&lt;/html></code></pre>
+    </section>
+    <section>
+      <h2>Exercice 2</h2>
+      <p>Quels sont les problèmes d'accessibilité <a href="./exercices/ex2/index.html" download>de ce site</a> ? Corrigez les.</p>
+    </section>
+    <section>
+      <h2>Navigation sans souris</h2>
+      <p>L'utilisation de la souris n'est pas possible pour tout le monde. Il faut que la navigation au clavier soit possible et quelle soit aussi pratique que possible.</p>
+      <ul>
+        <li>Definir un ordre de navigation par tabulation logique
+          <pre><code class="lang-html">&lt;a href="https://www.w3schools.com/" tabindex="2">W3Schools&lt;/a>
+&lt;a href="http://www.google.com/" tabindex="1">Google&lt;/a>
+&lt;a href="http://www.microsoft.com/" tabindex="3">Microsoft&lt;/a></code></pre>
+        </li>
+        <li>Ajouter un lien vers le contenu principal 
+          <pre><code class="lang-html">&lt;body>
+	&lt;a href="#main">Skip to main content&lt;/a>
+	&lt;nav role='navigation'>
+		&lt;a href="/">Home&lt;/a>
+		&lt;a href="/about">About&lt;/a>
+		&lt;a href="/blog">Blog&lt;/a>
+	&lt;/nav>
+	&lt;main id="main" role="main">
+	&lt;!-- page specific content -->
+	&lt;/main>
+&lt;/body>
+</code></pre>
+        </li>
+      </ul>
+    </section>
+    <section>
+      <h2>Formulaires</h2>
+      <ul>
+        <li>Définir le l'ordre de navigation par tabulation </li>
+        <li>Ajouter des <code>&lt;label></code> à chaque élément du formulaire
+          <pre><code class="lang-html">&lt;label for="name">Name:&lt;/label>
+&lt;input id="name" type="text"></code></pre>
+          <p>ou</p>
+          <pre><code class="lang-html">&lt;label> Name:
+	&lt;input type="text">
+&lt;/label></code></pre>
+        </li>
+        <li>Utiliser les fieldset pour grouper les input liés
+          <pre><code class="lang-html">&lt;fieldset> 
+&lt;legend>Select pizza crust&lt;/legend>  
+	&lt;input type="radio" name="crust" id="crust1" value="deep" />&lt;label for="crust1">Deep dish&lt;/label>
+	&lt;input type="radio" name="crust" id="crust2" value="thick" />&lt;label for="crust2">Thick&lt;/label> 
+	&lt;input type="radio" name="crust" id="crust3" value="hand" />&lt;label for="crust3">Hand thrown&lt;/label> 
+	&lt;input type="radio" name="crust" id="crust4" value="thin" />&lt;label for="crust4">Thin&lt;/label>
+&lt;/fieldset>
+</code></pre>
+        </li>
+      </ul>
+    </section>
+    <section>
+      <h2>Couleur</h2>
+      <ul>
+        <li>Veiller à avoir suffisament de contraste entre le texte et le fond</li>
+        <li>Tester les couleur pour les différents daltonismes <a href="https://www.toptal.com/designers/colorfilter">Testeur de site</a></li>
+      </ul>
+    </section>
+    <section>
+      <h2>Exercice 3</h2>
+      <p>Quels sont les problèmes d'accessibilité <a href="./exercices/ex3/index.html" download>de ce site</a> ? Corrigez les.</p>
+    </section>
+    <section>
+      <h1>Moteur de recherche</h1>
+    </section>
+    <section>
+      <h2>Meta-data</h2>
+      <ul>
+        <li>Le titre est important
+          <pre><code class="lang-html">&lt;title>Un super titre&lt;/title></code></pre>
+        </li>
+        <li>Ajouter une description. Elle apparait directement dans les résultats de recherche
+          <pre><code class="lang-html">&lt;meta name="description" content="description du site"/>
+</code></pre>
+        </li>
+        <li>Meta robots
+          <pre><code class="lang-html">&lt;meta name="robots" content="noindex, nofollow">
+</code></pre>
+          <p><code>noindex</code>: le moteur de recherche n'indexera pas la page</p>
+          <p><code>nofollow</code>: le moteur de recherche ne suivra pas les liens de la page. Il peut être intéressant d'utiliser cet attribut sur les pages dont on ne contrôle pas le contenu (contenu produit par les utilisateurs).</p>
+        </li>
+        <li>
+          <p>Ajouter des données structurées à votre contenu.</p>
+          <p>Ces données structurées remettent aux moteurs de recherche de présenter des résultats plus riches :</p>
+          <figure>
+          <img src="./rich_result.png" alt="">
+          </figure>
+        </li>
+      </ul>
+    </section>
+    <section>
+      <h2>Données stucturée: Microdata</h2>
+      <p><a src="https://schema.org">https://schema.org</a></p>
+      <pre><code class="lang-html">&lt;div itemscope itemtype="http://schema.org/Movie">
+	&lt;h1 itemprop="name">Avatar&lt;/h1>
+	&lt;div itemprop="director" itemscope itemtype="http://schema.org/Person">
+		Director: &lt;span itemprop="name">James Cameron&lt;/span> (born &lt;span itemprop="birthDate">August 16, 1954&lt;/span>)
+	&lt;/div>
+	&lt;span itemprop="genre">Science fiction&lt;/span>
+	&lt;a href="../movies/avatar-theatrical-trailer.html" itemprop="trailer">Trailer&lt;/a>
+&lt;/div>
+</code></pre>
+    </section>
+    <section>
+      <h2>Données stucturée: JSON-LD</h2>
+      <p><a src="https://json-ld.org/">https://json-ld.org/</a></p>
+      <pre><code class="lang-html">&lt;script type="application/ld+json">
+	{
+		"@context": "https://json-ld.org/contexts/person.jsonld",
+		"@id": "http://dbpedia.org/resource/John_Lennon",
+		"name": "John Lennon",
+		"born": "1940-10-09",
+		"spouse": "http://dbpedia.org/resource/Cynthia_Lennon"
+	}
+&lt;/script>
+</code></pre>
+    </section>
+    <section>
+      <h2>Données stucturée: RDFa</h2>
+      <p><a src="https://rdfa.info/">https://rdfa.info/</a></p>
+      <pre><code class="lang-html">&lt;div vocab="http://schema.org/" typeof="Person">
+	&lt;a property="image" href="http://manu.sporny.org/images/manu.png">
+	&lt;span property="name">Manu Sporny&lt;/span>&lt;/a>, 
+	&lt;span property="jobTitle">Founder/CEO&lt;/span>
+	&lt;div>
+		Phone: &lt;span property="telephone">(540) 961-4469&lt;/span>
+	&lt;/div>
+	&lt;div>
+		E-mail: &lt;a property="email" href="mailto:msporny@digitalbazaar.com">msporny@digitalbazaar.com&lt;/a>
+	&lt;/div>
+	&lt;div>
+		Links: &lt;a property="url" href="http://manu.sporny.org/">Manu's homepage&lt;/a>
+	&lt;/div>
+&lt;/div>
+</code></pre>
+    </section>
+    <section>
+      <h2>robots.txt</h2>
+      <ul>
+        <li>A la racine du site</li>
+        <li>Inscructions pour les moteurs de recherche et autres robots</li>
+        <li><a src="http://robots-txt.com/">http://robots-txt.com/</a></li>
+      </ul>
+      <pre><code>User-agent: *
+Disallow: /repertoire-a/
+Disallow: /repertoire-b/
+Disallow: /page-a.html
+
+User-agent: Googlebot
+Disallow: /repertoire-c/
+
+Sitemap: http://www.mon-domaine.fr/sitemap.xml
+</code></pre>
+    </section>
+    <section>
+      <h2>sitemap.xml</h2>
+      <ul>
+        <li>Liste les pages du site</li>
+        <li>Donne des données supplémentaires sur les pages</li>
+        <li><a src="https://www.sitemaps.org">https://www.sitemaps.org</a></li>
+      </ul>
+      <pre><code class="lang-xml">&lt;?xml version="1.0" encoding="UTF-8"?>
+&lt;urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+	&lt;url>
+		&lt;loc>http://www.example.com/&lt;/loc>
+		&lt;lastmod>2005-01-01&lt;/lastmod>
+		&lt;changefreq>monthly&lt;/changefreq>
+		&lt;priority>0.8&lt;/priority>
+	&lt;/url>
+&lt;/urlset> </code></pre>
+    </section>
+    <!-- <section> -->
+    <!--   <h2>Exercice</h2> -->
+    <!--   <p class="center">Transformez <a href="./exercice/index.html" target="_blank">cette page</a> pour la rendre <em>accessible</em>.</p> -->
+    <!--   <p class="center"><a href="./exercice/index.html" download>Download</a></p> -->
+    <!-- </section> -->
+    <section>
+      <h2>Exercice 4</h2>
+      <p>Ajoutez des données structurées au site de l'exercice 2</p>
     </section>
   </body>
 </html>
