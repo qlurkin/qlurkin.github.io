@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Quentin Lurkin" />
+  <title>Cours 3 - Expressions régulières</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="/deck.css" />
+  <script src="/deck_only.js" defer></script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Cours 3
+<small>Expressions régulières</small>
+</h1>
+<p class="author">Quentin Lurkin</p>
+</header>
+<section id="validation-de-données" class="level2">
+<h2>Validation de données</h2>
+<ul>
+<li>Important de <strong>valider</strong> les inputs <span
+class="small">Données entrées par le user, provenant de fichiers, du
+réseau…</span></li>
+<li><strong>Formatage</strong> des données <span class="small">Via un
+parser qui produit une erreur en cas de format invalide</span></li>
+<li>Vérifier les données avec une <strong>expression régulière</strong>
+(module <code>re</code>) <span class="small">La donnée suit-elle un
+motif prédéfini ?</span></li>
+</ul>
+</section>
+<section id="exemple-numéros-de-téléphone" class="level2">
+<h2>Exemple: numéros de téléphone</h2>
+<ul>
+<li><p>Numéro de téléphone de la forme <code>xxxx/xx.xx.xx</code> <span
+class="small">Où <code>x</code> sont des chiffres</span></p>
+<div class="pygments"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+
+<span class="n">pattern</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;[0-9]</span><span class="si">{4}</span><span class="s1">/[0-9]</span><span class="si">{2}</span><span class="s1">\.[0-9]</span><span class="si">{2}</span><span class="s1">\.[0-9]</span><span class="si">{2}</span><span class="s1">&#39;</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s1">&#39;0394/83.31.41&#39;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s1">&#39;0394/83-31-41&#39;</span><span class="p">))</span>
+</pre></div>
+
+<div class="terminal">&lt;_sre.SRE_Match object; span=(0, 13), match=&#39;0394/83.31.41&#39;&gt;
+None
+</div></li>
+</ul>
+</section>
+</body>
+</html>
