@@ -929,7 +929,7 @@ __output__ = []
 expl = "<p><code>i</code> indique l'élement en cours de placement. Les éléments avant <code>i</code> sont triés. Ceux après reste à trier.</p>"
 msg = ""
 
-for i in range(len(L)):
+for i in range(1, len(L)):
   msg = f"<p>On veut placer {L[i]}.</p>"
   __output__ += slide(title, expl+msg+list_repr(L, name=name, arrows={i: "i"}) + list_repr(res, name=name2, arrows={}))
   msg = f"<p>On sauve {L[i]} dans <code>Tmp</code>.</p>"
@@ -956,6 +956,26 @@ msg = "<p>Terminé !</p>"
 __output__ += slide(title, expl+msg+list_repr(L, name=name, arrows={}) + list_repr(res, name=name2, arrows={}))
 ```
 
+## Tri par insertion _en place_: Diagramme
+
+```plantuml {.build .smaller}
+@startuml
+partition "insert_sort_in_place (**L**)" {
+start
+while (Pour chaque indice **i** de **L** en partant de 1) is (**i**)
+  :**tmp** ← **L[i]**;
+  :**j** ← **i**;
+  while (Tant que **j** est plus grand que **0** et que **L[j-1] > tmp**) is (oui)
+    :**L[j]** ← **L[j-1]**;
+    :**j** ← **j** - 1;
+  endwhile (non)
+  :**L[j]** ← **tmp**;
+endwhile (fini)
+stop
+}
+@enduml
+```
+
 ## Tri par insertion _en place_: Code {.code}
 
 ```python
@@ -967,4 +987,67 @@ def insert_sort_in_place(L):
             L[j] = L[j - 1]
             j -= 1
         L[j] = tmp
+```
+
+## `sort()` et `sorted()`
+
+- Il y a déjà des fonctions de tri en Python
+- La méthode `sort()` du type `list` fait un tri _en place_
+
+```python
+L = [3, 6, 2, 8, 1, 9, 4, 0, 7, 5]
+L.sort()
+print(L)
+# [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+```
+
+- la fonction `sorted()` fait un tri dans une nouvelle list
+
+```python
+L = [3, 6, 2, 8, 1, 9, 4, 0, 7, 5]
+L2 = sorted(L)
+print(L2)
+# [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+# `L` est inchangé
+```
+
+## `sort()` et `sorted()`
+
+- Utilisent des algorithmes plus efficaces que le tri par insertion.
+- Exécutés directement par le processeur sans interprétation.
+- Beaucoup plus rapides
+- Pour faire un tri décroissant
+
+```python
+L = [3, 6, 2, 8, 1, 9, 4, 0, 7, 5]
+L.sort(reverse=True)
+print(L)
+# [9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
+```
+
+## `sort()` et `sorted()`
+
+- Pour trier des valeurs plus complexes, on passe une fonction qui doit renvoyer
+  la clé de tri pour chaque élément
+
+```python
+profs = [
+  ['LUR', 'Quentin Lurkin'],
+  ['LRG', 'André Lorge'],
+  ['FKY', 'Martin Fockedey'],
+  ['FLE', 'Clémence Flémal'],
+]
+
+def get_trigram(prof):
+  return prof[0]
+
+# trigramme comme clé de tri
+L.sort(key=get_trigram)
+print(L)
+# profs = [
+#   ['FKY', 'Martin Fockedey'],
+#   ['FLE', 'Clémence Flémal'],
+#   ['LRG', 'André Lorge'],
+#   ['LUR', 'Quentin Lurkin'],
+# ]
 ```
