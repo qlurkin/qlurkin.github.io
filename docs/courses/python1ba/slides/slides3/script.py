@@ -96,3 +96,20 @@ def recipe_step(steps: list[str], hl_lines: list[int], wp: list[str], tbl: list[
     left = recipe(steps, hl_lines=hl_lines)
     right = work_plan(wp) + table(tbl)
     return f'<div class="row"><div class="span6 middle">{left}</div><div class="span6 middle">{right}</div></div>'
+
+
+def list_repr(L: list[str], name="", arrows: dict[int, str] = {}):
+    L = list(L)
+    if len(L) == 0 or len(L) in arrows:
+        L.append("&nbsp;")
+    res = ""
+    for i, elem in enumerate(L):
+        arrow = ""
+        if i in arrows:
+            arrow = f'<div class="list-arrow">↑<br>{arrows[i]}</div>'
+        res += (
+            f'<div class="list-elem"><div class="list-value">{elem}</div>{arrow}</div>'
+        )
+
+    res = f'<div class="list-repr"><div class="list-name">{name}</div>{res}</div>'
+    return res

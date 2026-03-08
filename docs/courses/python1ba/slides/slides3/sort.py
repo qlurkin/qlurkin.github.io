@@ -112,30 +112,57 @@ def dichotomic_search_recursive(L, x, left=0, right=None):
 
 
 if __name__ == "__main__":
-    L = list(range(8))
-    shuffle(L)
-    print(L)
+    # L = list(range(8))
+    # shuffle(L)
+    # print(L)
+    #
+    # def test_sort(fun):
+    #     LL = list(L)
+    #     fun(LL)
+    #     print(LL)
+    #
+    # test_sort(bogo_sort)
+    # test_sort(buble_sort)
+    # test_sort(select_sort)
+    # test_sort(insert_sort)
+    # print(naive_insert_sort(L))
+    #
+    # L = list(range(1000000))
+    # search(L, 2222)
+    # search(L, 8888)
+    # search(L, 9999)
+    # start = perf_counter()
+    # print(search(L, 666666), perf_counter() - start)
+    # start = perf_counter()
+    # print(dichotomic_search(L, 666666), perf_counter() - start)
+    # start = perf_counter()
+    # print(dichotomic_search_recursive(L, 666666), perf_counter() - start)
+    # print(dichotomic_search_recursive(L, -666666))
+    # print(dichotomic_search_recursive(L, 666666666))
+    # créer une grande liste triée
+    L = list(range(100000))
 
-    def test_sort(fun):
-        LL = list(L)
-        fun(LL)
-        print(LL)
+    start = perf_counter()
+    print(search(L, 90000))
+    print("Time:", perf_counter() - start)
 
-    test_sort(bogo_sort)
-    test_sort(buble_sort)
-    test_sort(select_sort)
-    test_sort(insert_sort)
-    print(naive_insert_sort(L))
+    start = perf_counter()
+    print(dichotomic_search(L, 90000))
+    print("Time:", perf_counter() - start)
 
-    L = list(range(1000000))
-    search(L, 2222)
-    search(L, 8888)
-    search(L, 9999)
-    start = perf_counter()
-    print(search(L, 666666), perf_counter() - start)
-    start = perf_counter()
-    print(dichotomic_search(L, 666666), perf_counter() - start)
-    start = perf_counter()
-    print(dichotomic_search_recursive(L, 666666), perf_counter() - start)
-    print(dichotomic_search_recursive(L, -666666))
-    print(dichotomic_search_recursive(L, 666666666))
+    from matplotlib import pyplot as plt
+    import numpy as np
+
+    n = np.linspace(1, 20, 100)
+
+    lg = np.log2(n)
+
+    plt.figure()
+    plt.plot(n, n - 1, label="t ~ n")
+    plt.plot(n, lg, label="t ~ log(n)")
+    plt.xlabel("n")
+    plt.ylabel("time")
+    plt.yticks([])
+    plt.xticks([])
+    plt.legend()
+    plt.show()

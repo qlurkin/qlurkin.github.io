@@ -138,8 +138,41 @@ em.ref {
   zoom: 150%
 }
 
+.mode-deck img.plantuml.smaller {
+  zoom: 120%
+}
+
 .code-step p.disclaimer {
   font-size: 0.6em;
   margin-bottom: 0.2em;
   text-align: center;
+}
+
+.list-elem {
+  text-align: center;
+  min-height: 5em;
+}
+
+.list-repr {
+  display: flex;
+  flex-direction: row;
+  margin: 1em 0;
+}
+
+.list-value {
+  border: 1px solid black;
+  padding: 0.2em 0.5em;
+}
+
+.list-name {
+  padding: 0.2em 1em;
+  width: 10em;
+  text-align: right;
+}
+
+.list-arrow {
+  box-sizing: border-box;
+  overflow: visible;
+  margin: 0.2em -10em;
+  padding: 0;
 }

@@ -1,6 +1,6 @@
 ---
 title: Cours 3
-subtitle: Travailler avec des listes
+subtitle: Travailler avec des listes et des fonctions
 type: deck
 css: style.css
 ---
@@ -404,29 +404,6 @@ even = filter(is_even, L)
 big = filter(is_big, L)
 ```
 
-## Une fonction peut renvoyer une fonction
-
-- La fonction `is_big` est trop spécifique [La limite des nombres _big_ devrait
-  être paramètrable]{.small}
-- Heureusement, on peut créer une fonction qui sert à **créer la fonction de
-  condition**
-
-```python
-# Cette fonction crée et renvoie la fonction condition
-def is_bigger_than(value):
-  def condition(x):
-    return x > value
-  return condition
-
-numbers = [42, 165, 69, 18, 24]
-
-is_big = is_bigger_than(60)
-is_very_big = is_bigger_than(100)
-
-big = filter(is_big, numbers)             # [165, 69]
-very_big = filter(is_very_big, numbers)   # [165]
-```
-
 ```python {.build}
 from script import code_step, slide, ref
 title = "Filter: code"
@@ -438,14 +415,10 @@ def filter(condition, L):
       res.append(item)
   return res
 
-def is_bigger_than(value):
-  def condition(x):
-    return x > value
-  return condition
+def is_big(x):
+  return x > 60
 
 numbers = [42, 165, 69, 18, 24]
-
-is_big = is_bigger_than(60)
 
 big = filter(is_big, numbers)
 print(big)
@@ -457,26 +430,15 @@ __output__ = []
 __output__ += slide(title, code_step(src, [], ram, disclaimer=disclaimer))
 ram['filter'] = ref("function1")
 __output__ += slide(title, code_step(src, [1], ram, disclaimer=disclaimer))
-ram['is_bigger_than'] = ref("function2")
+ram['is_big'] = ref("function2")
 __output__ += slide(title, code_step(src, [8], ram, disclaimer=disclaimer))
 ram['numbers'] = [42, 165, 69, 18, 24]
-__output__ += slide(title, code_step(src, [13], ram, disclaimer=disclaimer))
-fun = {}
-fun["value"] = 60
-ram['function is_bigger_than'] = fun
-__output__ += slide(title, code_step(src, [15], ram, disclaimer=disclaimer))
-fun['condition'] = ref('function3 value=60')
-__output__ += slide(title, code_step(src, [9], ram, disclaimer=disclaimer))
-fun[ref('return')] = fun['condition']
 __output__ += slide(title, code_step(src, [11], ram, disclaimer=disclaimer))
-ram["is_big"] = fun[ref('return')]
-del(ram['function is_bigger_than'])
-__output__ += slide(title, code_step(src, [15], ram, disclaimer=disclaimer))
 fun = {}
 fun['condition'] = ram['is_big']
 fun['L'] = ref('numbers')
 ram['function filter'] = fun
-__output__ += slide(title, code_step(src, [17], ram, disclaimer=disclaimer))
+__output__ += slide(title, code_step(src, [13], ram, disclaimer=disclaimer))
 fun['res'] = "[]"
 __output__ += slide(title, code_step(src, [2], ram, disclaimer=disclaimer))
 
@@ -485,12 +447,12 @@ for item in numbers:
   __output__ += slide(title, code_step(src, [3], ram, disclaimer=disclaimer))
   cond = {}
   cond['x'] = fun['item']
-  fun['function condition value=60'] = cond
+  fun['function condition'] = cond
   __output__ += slide(title, code_step(src, [4], ram, disclaimer=disclaimer))
   cond[ref('return')] = item > 60
-  __output__ += slide(title, code_step(src, [10], ram, disclaimer=disclaimer))
+  __output__ += slide(title, code_step(src, [9], ram, disclaimer=disclaimer))
   fun[ref('tmp')] = cond[ref('return')]
-  del(fun['function condition value=60'])
+  del(fun['function condition'])
   __output__ += slide(title, code_step(src, [4], ram, disclaimer=disclaimer))
   cond_res = fun[ref('tmp')]
   del(fun[ref('tmp')])
@@ -504,8 +466,8 @@ fun[ref('return')] = ref('res')
 __output__ += slide(title, code_step(src, [6], ram, disclaimer=disclaimer))
 ram['big'] = fun['res']
 del(ram['function filter'])
-__output__ += slide(title, code_step(src, [17], ram, disclaimer=disclaimer))
-__output__ += slide(title, code_step(src, [18], ram, str(ram['big']), disclaimer=disclaimer))
+__output__ += slide(title, code_step(src, [13], ram, disclaimer=disclaimer))
+__output__ += slide(title, code_step(src, [14], ram, str(ram['big']), disclaimer=disclaimer))
 ```
 
 ## La fonction `filter`
@@ -717,6 +679,11 @@ for student in students:
 mean_age = acc/count
 ```
 
+- Cette version n'est pas mauvaise
+- Mais dans la version précédente, les fonctions `map`, `filter` et `reduce`
+  nous ont permis d'aborder le problème avec un modèle mental beaucoup plus
+  simple
+
 ::::
 
 ::::span5
@@ -741,3 +708,263 @@ stop
 ::::
 
 :::
+
+## Trier une liste
+
+- Pourquoi est-il intéressant de trier une liste ?
+- Est-ce qu'un dictionnaire **non trié** par ordre alphabétique serait facile à
+  utiliser ?
+- La recherche dans un liste triée est beaucoup plus efficace.
+
+## Recherche dans une liste non triée
+
+:::row
+
+::::span6
+
+```python
+def search(L, target):
+    for i in range(len(L)):
+        if L[i] == target:
+            return i
+    return None
+```
+
+- On est obligé de tester tous les éléments un par un
+
+::::
+
+::::span6
+
+```plantuml {.build}
+@startuml
+partition "search (**L**, **target**)" {
+start
+while (Pour chaque indice de **L**) is (**i**)
+  if (**L[i]** égal à **target**) then (oui)
+    :renvoyer **i**;
+    stop
+  else (non)
+  endif
+endwhile (fini)
+:renvoyer **None**;
+stop
+}
+@enduml
+```
+
+::::
+
+:::
+
+## Recherche dans une liste triée
+
+```plantuml {.build .smaller}
+@startuml
+partition "dichotomic_search (**L**, **target**)" {
+start
+:**left** ← **0**;
+:**right** ← dernier indice de **L**;
+while (left <= right) is (oui)
+  :**mid** ← indice au milieu de **left** et **right**;
+  if (**L[mid]** égal à **target**) then (oui)
+    :renvoyer **i**;
+    stop
+  (non) elseif (L[mid] < target) then (oui)
+    :**left** ← **mid** + 1;
+  else (non)
+    :**right** ← **mid** - 1;
+  endif
+endwhile (non)
+:renvoyer **None**;
+stop
+}
+@enduml
+```
+
+## Recherche dans une liste triée
+
+```python
+def dichotomic_search(L, x):
+    left = 0
+    right = len(L) - 1
+
+    while left <= right:
+        mid = (left + right) // 2
+
+        if L[mid] == x:
+            return mid
+
+        if L[mid] < x:
+            left = mid + 1
+        else:
+            right = mid - 1
+
+    return None
+```
+
+## Speed Test
+
+```python
+from time import perf_counter
+from random import shuffle
+
+# créer une grande liste triée
+L = list(range(100000))
+
+start = perf_counter()
+print(search(L, 90000))
+print("Time:", perf_counter() - start) # Time: 0.002944834006484598
+
+start = perf_counter()
+print(dichotomic_search(L, 90000))
+print("Time:", perf_counter() - start) # Time: 6.416026735678315e-06
+```
+
+## Speed Test
+
+- Temps d'exécution de `search()` proportionnel à $n$ le nombre d'élément de la
+  liste, [$O(n)$]{.small}
+
+- Temps d'exécution de `dichotomic_search()` proportionnel à $log_2(n)$,
+  [$O(log(n))$]{.small}
+
+![Logarithmique vs linéaire](./log_time.svg)
+
+```python {.build}
+from matplotlib import pyplot as plt
+import numpy as np
+
+n = np.linspace(1, 20, 100)
+
+lg = np.log2(n)
+
+plt.figure()
+plt.plot(n, n - 1, label="time ~ $n$")
+plt.plot(n, lg, label="time ~ $log_2(n)$")
+plt.xlabel("$n$")
+plt.ylabel("time")
+plt.yticks([])
+plt.xticks([])
+plt.legend()
+plt.savefig("log_time.svg")
+```
+
+```python {.build}
+from script import slide, list_repr
+title = "Tri par insertion"
+name = "Entrée"
+name2 = "Sortie"
+L = [3, 6, 2, 8, 1, 9, 4, 0, 7, 5]
+res = []
+__output__ = []
+msg = ""
+
+for i in range(len(L)):
+  msg = f"<p>On veut placer {L[i]}.</p>"
+  __output__ += slide(title, msg+list_repr(L, name=name, arrows={i: "i"}) + list_repr(res, name=name2, arrows={}))
+  j = 0
+  msg = "<p>On cherche le bon emplacement <code>j</code> dans la sortie.</p>"
+  __output__ += slide(title, msg+list_repr(L, name=name, arrows={i: "i"}) + list_repr(res, name=name2, arrows={j: "j"}))
+  while j < len(res) and res[j] <= L[i]:
+    j += 1
+    __output__ += slide(title, msg+list_repr(L, name=name, arrows={i: "i"}) + list_repr(res, name=name2, arrows={j: "j"}))
+  msg = f"<p>On insere {L[i]} au bon endroit.</p>"
+  res.insert(j, L[i])
+  __output__ += slide(title, msg+list_repr(L, name=name, arrows={i: "i"}) + list_repr(res, name=name2, arrows={j: "j"}))
+msg = "<p>Terminé !</p>"
+__output__ += slide(title, msg+list_repr(L, name=name, arrows={}) + list_repr(res, name=name2, arrows={}))
+```
+
+## Tri par insertion: Diagramme
+
+```plantuml {.build .smaller}
+@startuml
+partition "insert_sort (**L**)" {
+start
+:**res** ← liste vide;
+while (Pour chaque **elem** de **L**) is (**elem**)
+  :**j** ← 0;
+  while (Tant que **j** est plus petit que **len(res)** et que **res[j] ≤ elem**) is (oui)
+    :**j** ← **j** + 1;
+  endwhile (non)
+  :Insèrer **elem** dans **res** à l'indice **j**;
+endwhile (fini)
+:renvoyer **res**;
+stop
+}
+@enduml
+```
+
+## Tri par insertion: Code {.code}
+
+```python
+def insert_sort(L):
+    res = []
+    for item in L:
+        j = 0
+        while j < len(res) and res[j] <= item:
+            j += 1
+        res.insert(j, item)
+    return res
+```
+
+## Tri en place
+
+- Quand on trie de grandes listes, il n'est pas toujours judicieux de créer une
+  nouvelle liste
+- Il faut donc pouvoir trier en restant dans la liste [On appelle cela un tri
+  "en place"]{.small}
+- La liste ne change pas de taille pendant le tri [On ne peut pas utiliser
+  `insert`]{.small}
+
+```python {.build}
+from script import slide, list_repr
+title = "Tri par insertion <em>en place</em>"
+name = "Liste"
+name2 = "Tmp"
+L = [3, 6, 2, 8, 1, 9, 4, 0, 7, 5]
+res = ["&nbsp;"]
+__output__ = []
+expl = "<p><code>i</code> indique l'élement en cours de placement. Les éléments avant <code>i</code> sont triés. Ceux après reste à trier.</p>"
+msg = ""
+
+for i in range(len(L)):
+  msg = f"<p>On veut placer {L[i]}.</p>"
+  __output__ += slide(title, expl+msg+list_repr(L, name=name, arrows={i: "i"}) + list_repr(res, name=name2, arrows={}))
+  msg = f"<p>On sauve {L[i]} dans <code>Tmp</code>.</p>"
+  res[0] = L[i]
+  __output__ += slide(title, expl+msg+list_repr(L, name=name, arrows={i: "i"}) + list_repr(res, name=name2, arrows={}))
+  j = i
+  msg = f"<p>On cherche le bon emplacement <code>j</code> en partant de la fin.</p>"
+  __output__ += slide(title, expl+msg+list_repr(L, name=name, arrows={i: "j=i"}) + list_repr(res, name=name2, arrows={}))
+  msg=f"<p>On cherche en décalant les valeurs pour faire une place à {res[0]}.</p>"
+  __output__ += slide(title, expl+msg+list_repr(L, name=name, arrows={i: "i", j: "j", j-1: "j-1"}) + list_repr(res, name=name2, arrows={}))
+  while j > 0 and L[j-1] > res[0]:
+    L[j] = L[j-1]
+    msg=f"<p>On décale {L[j]}</p>"
+    __output__ += slide(title, expl+msg+list_repr(L, name=name, arrows={i: "i", j: "j", j-1: "j-1"}) + list_repr(res, name=name2, arrows={}))
+    j -= 1
+    msg="<p>On continue de chercher</p>"
+    __output__ += slide(title, expl+msg+list_repr(L, name=name, arrows={i: "i", j: "j", j-1: "j-1"}) + list_repr(res, name=name2, arrows={}))
+  msg = f"<p><code>j</code> est au bon endroit.</p>"
+  __output__ += slide(title, expl+msg+list_repr(L, name=name, arrows={i: "i", j: "j"}) + list_repr(res, name=name2, arrows={}))
+  msg = f"<p>On met {res[0]} au bon endroit.</p>"
+  L[j] = res[0]
+  __output__ += slide(title, expl+msg+list_repr(L, name=name, arrows={i: "i", j: "j"}) + list_repr(res, name=name2, arrows={}))
+msg = "<p>Terminé !</p>"
+__output__ += slide(title, expl+msg+list_repr(L, name=name, arrows={}) + list_repr(res, name=name2, arrows={}))
+```
+
+## Tri par insertion _en place_: Code {.code}
+
+```python
+def insert_sort_in_place(L):
+    for i in range(1, len(L)):
+        tmp = L[i]
+        j = i
+        while j > 0 and L[j - 1] > tmp:
+            L[j] = L[j - 1]
+            j -= 1
+        L[j] = tmp
+```
