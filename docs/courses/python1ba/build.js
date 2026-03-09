@@ -5,6 +5,7 @@ build_and_index(
     'book',
     'slides',
     'exercices',
+    'installation',
     'exam',
   ],
   { title: 'Python Part 1' },
