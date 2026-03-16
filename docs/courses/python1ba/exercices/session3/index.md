@@ -19,7 +19,7 @@ typst: true
    espace. Vous ne pouvez pas utiliser la méthode `join()` des chaînes de
    caractères.
 
-5. Écrire une fonction nommée `slit()` qui reçoit une chaîne de caractères en
+5. Écrire une fonction nommée `split()` qui reçoit une chaîne de caractères en
    paramètre et qui retourne la liste des mots de la chaîne d'entrée. On définit
    que les mots sont séparés par un espace. Vous ne pouvez pas utiliser la
    méthode `split()` des chaînes de caractères.
