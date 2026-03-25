@@ -327,9 +327,113 @@ utiliser ces fonctions</p>
 </pre></div>
 
 </section>
-<section id="game-mode" class="level2">
-<h2>Game Mode</h2>
-<p>Faisons un petit jeu</p>
+<section id="game-mode-déplacements" class="level2">
+<h2>Game Mode: déplacements</h2>
+<ul>
+<li>L’état pourrait représenter la <strong>position
+<code>(x, y)</code></strong> d’un “personnage”</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">stge</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">setup</span><span class="p">():</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">loop</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">state</span>
+    <span class="n">xn</span><span class="p">,</span> <span class="n">yn</span> <span class="o">=</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span>
+
+    <span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="n">stge</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">stge</span><span class="o">.</span><span class="n">keypresses</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;q&quot;</span><span class="p">:</span>
+            <span class="n">stge</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;RIGHT&quot;</span><span class="p">:</span>
+            <span class="n">xn</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;LEFT&quot;</span><span class="p">:</span>
+            <span class="n">xn</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;UP&quot;</span><span class="p">:</span>
+            <span class="n">yn</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;DOWN&quot;</span><span class="p">:</span>
+            <span class="n">yn</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">if</span> <span class="n">xn</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">xn</span> <span class="o">&lt;</span> <span class="n">width</span> <span class="ow">and</span> <span class="n">yn</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">yn</span> <span class="o">&lt;</span> <span class="n">height</span><span class="p">:</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">xn</span><span class="p">,</span> <span class="n">yn</span>
+
+    <span class="n">stge</span><span class="o">.</span><span class="n">write_at</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s2">&quot;ጰ&quot;</span><span class="p">,</span> <span class="n">fg</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span>
+
+<span class="n">stge</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">setup</span><span class="p">,</span> <span class="n">loop</span><span class="p">)</span>
+</pre></div>
+
+</section>
+<section id="game-mode-labyrinthe" class="level2">
+<h2>Game Mode: labyrinthe</h2>
+<ul>
+<li>Ajoutons un <strong>labyrinthe</strong> pour qu’il y ait un
+challenge</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">stge</span>
+
+<span class="n">maze</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;══╦═══════════════╦═════╦═══════════╦═════╦═══════╗&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;  ║               ║     ║           ║     ║       ║&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;║ ╚═══╦══ ╔═════╗ ╚═══╗ ║ ══╗ ╔═══╗ ╚══ ║ ║ ══╦══ ║&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;║     ║   ║     ║     ║ ║   ║ ║   ║     ║ ║   ║   ║&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;╠═══╗ ║ ╔═╝ ══╗ ╠════ ║ ╚══ ║ ║ ║ ╚═╦═══╬═╩══ ║ ══╣&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;║   ║   ║     ║ ║     ║     ║   ║   ║   ║     ║   ║&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;║ ══╩═══╩═════╝ ║ ╔═══╝ ╔═══╬═══╩═╗ ║ ║ ║ ╔═══╣ ║ ║&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;║               ║ ║     ║   ║     ║   ║   ║   ║ ║ ║&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;╠══════ ╔══════ ║ ╚═════╝ ║ ║ ╔══ ║ ╔═╬═══╣ ║ ╚═╣ ║&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;║       ║       ║         ║ ║ ║   ║ ║ ║   ║ ║   ║ ║&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;║ ╔═════╝ ╔═════╩═══════╦═╣ ║ ║ ╔═╝ ║ ║ ║ ║ ╠══ ║ ║&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;║ ║       ║             ║ ║   ║ ║     ║ ║   ║   ║ ║&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;║ ╚═══╗ ══╣ ══╗ ╔═════╗ ║ ╚═╦═╝ ║ ══╦═╝ ╠═══╣ ╔═╝ ║&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;║     ║   ║   ║ ║     ║ ║   ║   ║   ║   ║   ║ ║   ║&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;║ ╔═╗ ╠══ ╚══ ║ ║ ══╗ ║ ╚═╗ ║ ══╩═╦═╝ ╔═╝ ╔═╝ ║ ══╣&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;║ ║ ║ ║       ║ ║   ║ ║   ║ ║     ║   ║   ║   ║   ║&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;║ ║ ║ ║ ╔═══╗ ╠═╩═╗ ║ ╠══ ║ ╠═══╗ ║ ╔═╣ ══╣ ══╣ ║ ║&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;║   ║ ║ ║   ║ ║   ║ ║ ║     ║   ║ ║ ║ ║   ║   ║ ║ ║&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;╠══ ║ ╚═╝ ║ ╚═╝ ║ ║ ║ ╚═════╝ ║ ║ ║ ║ ║ ║ ╚══ ╚═╝ ║&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;║   ║     ║     ║   ║         ║     ║   ║         E&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;╚═══╩═════╩═════╩═══╩═════════╩═════╩═══╩══════════&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">draw_maze</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">maze</span><span class="p">):</span>
+        <span class="n">stge</span><span class="o">.</span><span class="n">write_at</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">setup</span><span class="p">():</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">loop</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">state</span>
+    <span class="n">xn</span><span class="p">,</span> <span class="n">yn</span> <span class="o">=</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span>
+
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">stge</span><span class="o">.</span><span class="n">keypresses</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;q&quot;</span><span class="p">:</span>
+            <span class="n">stge</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;RIGHT&quot;</span><span class="p">:</span>
+            <span class="n">xn</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;LEFT&quot;</span><span class="p">:</span>
+            <span class="n">xn</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;UP&quot;</span><span class="p">:</span>
+            <span class="n">yn</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;DOWN&quot;</span><span class="p">:</span>
+            <span class="n">yn</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">if</span> <span class="n">maze</span><span class="p">[</span><span class="n">yn</span><span class="p">][</span><span class="n">xn</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot; &quot;</span><span class="p">:</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">xn</span><span class="p">,</span> <span class="n">yn</span>
+
+    <span class="n">draw_maze</span><span class="p">()</span>
+    <span class="n">stge</span><span class="o">.</span><span class="n">write_at</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s2">&quot;ጰ&quot;</span><span class="p">,</span> <span class="n">fg</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span>
+
+<span class="n">stge</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">setup</span><span class="p">,</span> <span class="n">loop</span><span class="p">)</span>
+</pre></div>
+
 </section>
 </body>
 </html>

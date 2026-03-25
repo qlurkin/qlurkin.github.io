@@ -300,6 +300,106 @@ def loop(state):
 stge.run(setup, loop)
 ```
 
-## Game Mode
+## Game Mode: déplacements
 
-Faisons un petit jeu
+- L'état pourrait représenter la **position `(x, y)`** d'un "personnage"
+
+```python
+import stge
+
+def setup():
+    return 0, 0
+
+def loop(state):
+    x, y = state
+    xn, yn = x, y
+
+    width, height = stge.size()
+
+    for key in stge.keypresses():
+        if key == "q":
+            stge.quit()
+        if key == "RIGHT":
+            xn += 1
+        if key == "LEFT":
+            xn -= 1
+        if key == "UP":
+            yn -= 1
+        if key == "DOWN":
+            yn += 1
+
+    if xn >= 0 and xn < width and yn >= 0 and yn < height:
+        x, y = xn, yn
+
+    stge.write_at(x, y, "ጰ", fg=(0, 255, 0))
+
+    return x, y
+
+stge.run(setup, loop)
+```
+
+## Game Mode: labyrinthe
+
+- Ajoutons un **labyrinthe** pour qu'il y ait un challenge
+
+```python
+import stge
+
+maze = [
+    "══╦═══════════════╦═════╦═══════════╦═════╦═══════╗",
+    "  ║               ║     ║           ║     ║       ║",
+    "║ ╚═══╦══ ╔═════╗ ╚═══╗ ║ ══╗ ╔═══╗ ╚══ ║ ║ ══╦══ ║",
+    "║     ║   ║     ║     ║ ║   ║ ║   ║     ║ ║   ║   ║",
+    "╠═══╗ ║ ╔═╝ ══╗ ╠════ ║ ╚══ ║ ║ ║ ╚═╦═══╬═╩══ ║ ══╣",
+    "║   ║   ║     ║ ║     ║     ║   ║   ║   ║     ║   ║",
+    "║ ══╩═══╩═════╝ ║ ╔═══╝ ╔═══╬═══╩═╗ ║ ║ ║ ╔═══╣ ║ ║",
+    "║               ║ ║     ║   ║     ║   ║   ║   ║ ║ ║",
+    "╠══════ ╔══════ ║ ╚═════╝ ║ ║ ╔══ ║ ╔═╬═══╣ ║ ╚═╣ ║",
+    "║       ║       ║         ║ ║ ║   ║ ║ ║   ║ ║   ║ ║",
+    "║ ╔═════╝ ╔═════╩═══════╦═╣ ║ ║ ╔═╝ ║ ║ ║ ║ ╠══ ║ ║",
+    "║ ║       ║             ║ ║   ║ ║     ║ ║   ║   ║ ║",
+    "║ ╚═══╗ ══╣ ══╗ ╔═════╗ ║ ╚═╦═╝ ║ ══╦═╝ ╠═══╣ ╔═╝ ║",
+    "║     ║   ║   ║ ║     ║ ║   ║   ║   ║   ║   ║ ║   ║",
+    "║ ╔═╗ ╠══ ╚══ ║ ║ ══╗ ║ ╚═╗ ║ ══╩═╦═╝ ╔═╝ ╔═╝ ║ ══╣",
+    "║ ║ ║ ║       ║ ║   ║ ║   ║ ║     ║   ║   ║   ║   ║",
+    "║ ║ ║ ║ ╔═══╗ ╠═╩═╗ ║ ╠══ ║ ╠═══╗ ║ ╔═╣ ══╣ ══╣ ║ ║",
+    "║   ║ ║ ║   ║ ║   ║ ║ ║     ║   ║ ║ ║ ║   ║   ║ ║ ║",
+    "╠══ ║ ╚═╝ ║ ╚═╝ ║ ║ ║ ╚═════╝ ║ ║ ║ ║ ║ ║ ╚══ ╚═╝ ║",
+    "║   ║     ║     ║   ║         ║     ║   ║         E",
+    "╚═══╩═════╩═════╩═══╩═════════╩═════╩═══╩══════════",
+]
+
+
+def draw_maze():
+    for i, line in enumerate(maze):
+        stge.write_at(0, i, line)
+
+def setup():
+    return 0, 1
+
+def loop(state):
+    x, y = state
+    xn, yn = x, y
+
+    for key in stge.keypresses():
+        if key == "q":
+            stge.quit()
+        if key == "RIGHT":
+            xn += 1
+        if key == "LEFT":
+            xn -= 1
+        if key == "UP":
+            yn -= 1
+        if key == "DOWN":
+            yn += 1
+
+    if maze[yn][xn] == " ":
+        x, y = xn, yn
+
+    draw_maze()
+    stge.write_at(x, y, "ጰ", fg=(0, 255, 0))
+
+    return x, y
+
+stge.run(setup, loop)
+```
