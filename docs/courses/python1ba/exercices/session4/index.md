@@ -1,44 +1,79 @@
 ---
 title: Exercices 4
+typst: true
 ---
 
-1. Écrire un programme qui demande un nombre de côtés et qui affiche un polygone régulier avec le nombre de côtés demandé. La fonction [`pygame.draw.line()`](https://www.pygame.org/docs/ref/draw.html#pygame.draw.line) peut vous aider.
-    
-    *Indice: un polygone régulier est inscrit dans un cercle, vous devriez connaître les équations paramétriques d'un cercle*.
+1. Créez une fonction `append()` qui prend un tuple et une valeur à ajouter à sa
+   fin. Comme les tuples sont non-modifiables, le tuple original ne peut pas
+   être modifié mais il est possible de renvoyé un nouveau tuple contenant les
+   éléments du tuple de départ et celui à ajouter.
+1. Créez un petit module de manipulation de vecteurs 2D. Dans ce module, un
+   vecteur sera un tuple de 2 `floats`. Le module devra contenir les fonctions
+   suivantes:
+   - `add()`: renvoie la somme de 2 vecteurs.
+   - `scale()`: renvoie le produit d'un vecteur par un `float`.
+   - `length()`: renvoie la norme d'un vecteur.
+   - `dot()`: renvoie le produit scalaire de 2 vecteurs.
+   - `normalize()`: renvoie le vecteur unitaire d'un vecteur.
+1. Utilisez `turtle` pour Faire une fonction nommée `plot()` qui reçoit une
+   fonction `f(x)` et qui affiche le graphique de cette fonction entre deux
+   bornes.
 
-2. Écrire un programme qui dessine une spirale.
+   ```python
+   # Exemple d'utilisation
+   def f(x):
+     return x**2 - 2*x - 2
 
-3. A partir du code suivant:
-    
-    ```python
-    import pygame
+   plot(f, -1, 3)
+   ```
 
-    # initialisation de pygame
-    pygame.init()
+   ![Résultat attendu](./plot.png)
 
-    # demande une fenêtre de 800x600 pixels
-    screen = pygame.display.set_mode((800, 600))
+   _Remarque: En plus des fonction de vues au cours, les fonction `width()`,
+   `stamp()` et `hideturtle()` du module `turtle` peuvent vous aider à améliorer
+   le style de votre graphique_
 
-    xCircle = 100
+## Défis {.nocount}
 
-    # boucle jusqu'à ce qu'on quitte
-    while not pygame.event.peek(pygame.QUIT):
+1. Faisons un programme avec [stge.py](../../slides/slides4/stge.py) qui simule
+   la propagation d'ondes à la surface d'un liquide.
 
-        # dessine un rectangle noir pour effacer l'image
-        pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(0, 0, 800, 600))
+   ![Résultat attendu](./wave.gif)
 
-        # dessine un cercle rouge centré en (xCircle, 300) de rayon 20
-        pygame.draw.circle(screen, (255, 0, 0), (xCircle, 300), 20)
-        
-        # déplace le cercle
-        xCircle += 1
+   Nous utiliserons la fonction `pixels()` de `stge` pour afficher une grille de
+   pixels de couleurs. Les couleurs (des niveaux de gris) représenteront des
+   hauteurs d'une surface de liquide.
 
-        # affiche l'image qui vient d'être dessinée
-        pygame.display.flip()
-    ```
+   La fonction `pixels()` prend une liste de liste (grille 2D) de pixels. Un
+   pixel est un tuple de 3 entiers `(rouge, vert, bleu)` entre 0 et 255. Pour
+   obtenir des niveaux de gris, les trois composantes doivent être égales. Vous
+   pouvez donc afficher 256 niveaux de gris différents.
 
-    faites bouger le cercle en x et en y et faites le rebondir sur les bords de la fenêtre.
+   Au repos, toutes les hauteurs sont à zéro. Elles oscilleront dans les
+   positifs et dans les négatifs au cours de la simulation.
 
-4. Même exercice que le précédent, mais le programme demande un nombre de cercles à l'utilisateur et anime ensuite le nombre de cercles demandé.
+   Dans la formule suivante, pour le pixel `(x, y)`, nous appelons $C_(x,y)$ la
+   hauteur à la frame courante, $P_(x, y)$ la hauteur de à la frame précédente
+   et $N_(x, y)$ la hauteur à la frame suivante:
 
-5. Écrire un programme qui permet de cliquer dans une fenêtre et qui dessine des lignes entre chaque point cliqué.
+   $$
+   N_(x, y) = 2C_(x, y) - P_(x, y) + c^2 Delta t^2(C_(x-1, y) +
+   C_(x+1, y) + C_(x, y-1) + C_(x, y+1) - 4C_(x, y))
+   $$
+
+   $c$ représente la vitesse de propagation de l'onde et $Delta t$ l'intervalle
+   de temps entre deux frames, $1/30$ de seconde par défaut.
+
+   Pour que la simulation reste stable nous vous conseillons de ne pas utiliser
+   une trop grande valeur de $c$ et d'appliquer une légère atténuation:
+
+   $$N_(x, y) = 0.99 * N_(x, y)$$
+
+   Pour les bords, vous aurez besoin d'une hauteur de voisin se trouvant en
+   dehors de la grille. Dans ces cas là, vous pouvez réutiliser la hauteur au
+   bord:
+
+   $$C_(-1, y) = C_(0, y)$$
+
+   Pour interagir avec la surface, imposez la hauteur d'un pixel à l'appui d'une
+   touche.
