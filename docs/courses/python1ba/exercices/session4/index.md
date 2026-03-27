@@ -4,8 +4,8 @@ typst: true
 ---
 
 1. Créez une fonction `append()` qui prend un tuple et une valeur à ajouter à sa
-   fin. Comme les tuples sont non-modifiables, le tuple original ne peut pas
-   être modifié mais il est possible de renvoyé un nouveau tuple contenant les
+   fin. Comme les tuples sont non modifiables, le tuple original ne peut pas
+   être modifié mais il est possible de renvoyer un nouveau tuple contenant les
    éléments du tuple de départ et celui à ajouter.
 1. Créez un petit module de manipulation de vecteurs 2D. Dans ce module, un
    vecteur sera un tuple de 2 `floats`. Le module devra contenir les fonctions
@@ -15,7 +15,7 @@ typst: true
    - `length()`: renvoie la norme d'un vecteur.
    - `dot()`: renvoie le produit scalaire de 2 vecteurs.
    - `normalize()`: renvoie le vecteur unitaire d'un vecteur.
-1. Utilisez `turtle` pour Faire une fonction nommée `plot()` qui reçoit une
+1. Utilisez `turtle` pour créer une fonction nommée `plot()` qui reçoit une
    fonction `f(x)` et qui affiche le graphique de cette fonction entre deux
    bornes.
 
@@ -29,7 +29,7 @@ typst: true
 
    ![Résultat attendu](./plot.png)
 
-   _Remarque: En plus des fonction de vues au cours, les fonction `width()`,
+   _Remarque: En plus des fonctions de vues au cours, les fonctions `width()`,
    `stamp()` et `hideturtle()` du module `turtle` peuvent vous aider à améliorer
    le style de votre graphique_
 
