@@ -15,6 +15,7 @@ typst: true
    - `length()`: renvoie la norme d'un vecteur.
    - `dot()`: renvoie le produit scalaire de 2 vecteurs.
    - `normalize()`: renvoie le vecteur unitaire d'un vecteur.
+1. Écrire un programme qui utilise le module `turtle` pour dessiner une spirale.
 1. Utilisez `turtle` pour créer une fonction nommée `plot()` qui reçoit une
    fonction `f(x)` et qui affiche le graphique de cette fonction entre deux
    bornes.

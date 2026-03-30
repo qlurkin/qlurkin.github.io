@@ -5,7 +5,7 @@ build_and_index(
     'session1',
     'session2',
     'session3',
-    // 'session4',
+    'session4',
     // 'session5',
   ],
   { title: 'Exercices' },
