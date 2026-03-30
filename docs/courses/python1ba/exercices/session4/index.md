@@ -57,8 +57,8 @@ title: Exercices 4
    et $N_{x, y}$ la hauteur à la frame suivante:
 
    $$
-   N_{x, y} = 2C_{x, y} - P_{x, y} + c^2 \Delta t^2(C_{x-1, y} +
-   C_{x+1, y} + C_{x, y-1} + C_{x, y+1} - 4C_{x, y})
+   N_{x, y} = 2C_{x, y} - P_{x, y} + c^2 \Delta t^2 \left( C_{x-1, y} +
+   C_{x+1, y} + C_{x, y-1} + C_{x, y+1} - 4C_{x, y} \right)
    $$
 
    $c$ représente la vitesse de propagation de l'onde et $\Delta t$ l'intervalle
