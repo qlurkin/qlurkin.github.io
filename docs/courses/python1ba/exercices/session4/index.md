@@ -1,6 +1,5 @@
 ---
 title: Exercices 4
-typst: true
 ---
 
 1. Créez une fonction `append()` qui prend un tuple et une valeur à ajouter à sa
@@ -53,28 +52,28 @@ typst: true
    Au repos, toutes les hauteurs sont à zéro. Elles oscilleront dans les
    positifs et dans les négatifs au cours de la simulation.
 
-   Dans la formule suivante, pour le pixel `(x, y)`, nous appelons $C_(x,y)$ la
-   hauteur à la frame courante, $P_(x, y)$ la hauteur de à la frame précédente
-   et $N_(x, y)$ la hauteur à la frame suivante:
+   Dans la formule suivante, pour le pixel `(x, y)`, nous appelons $C_{x,y}$ la
+   hauteur à la frame courante, $P_{x, y}$ la hauteur de à la frame précédente
+   et $N_{x, y}$ la hauteur à la frame suivante:
 
    $$
-   N_(x, y) = 2C_(x, y) - P_(x, y) + c^2 Delta t^2(C_(x-1, y) +
-   C_(x+1, y) + C_(x, y-1) + C_(x, y+1) - 4C_(x, y))
+   N_{x, y} = 2C_{x, y} - P_{x, y} + c^2 \Delta t^2(C_{x-1, y} +
+   C_{x+1, y} + C_{x, y-1} + C_{x, y+1} - 4C_{x, y})
    $$
 
-   $c$ représente la vitesse de propagation de l'onde et $Delta t$ l'intervalle
-   de temps entre deux frames, $1/30$ de seconde par défaut.
+   $c$ représente la vitesse de propagation de l'onde et $\Delta t$ l'intervalle
+   de temps entre deux frames, $\frac{1}{30}$ de seconde par défaut.
 
    Pour que la simulation reste stable nous vous conseillons de ne pas utiliser
    une trop grande valeur de $c$ et d'appliquer une légère atténuation:
 
-   $$N_(x, y) = 0.99 * N_(x, y)$$
+   $$N_{x, y} = 0.99 * N_{x, y}$$
 
    Pour les bords, vous aurez besoin d'une hauteur de voisin se trouvant en
    dehors de la grille. Dans ces cas là, vous pouvez réutiliser la hauteur au
    bord:
 
-   $$C_(-1, y) = C_(0, y)$$
+   $$C_{-1, y} = C_{0, y}$$
 
    Pour interagir avec la surface, imposez la hauteur d'un pixel à l'appui d'une
    touche.
