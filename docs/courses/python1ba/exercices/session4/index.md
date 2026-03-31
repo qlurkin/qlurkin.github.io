@@ -67,7 +67,7 @@ title: Exercices 4
    Pour que la simulation reste stable nous vous conseillons de ne pas utiliser
    une trop grande valeur de $c$ et d'appliquer une légère atténuation:
 
-   $$N_{x, y} = 0.99 * N_{x, y}$$
+   $$N_{x, y} = 0.99 \cdot N_{x, y}$$
 
    Pour les bords, vous aurez besoin d'une hauteur de voisin se trouvant en
    dehors de la grille. Dans ces cas là, vous pouvez réutiliser la hauteur au
