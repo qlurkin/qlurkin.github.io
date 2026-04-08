@@ -187,6 +187,23 @@ def fun(x):
   return cos(x) + cos(3 * x + 1) / 2 + cos(5 * x - 1) / 3
 ```
 
+```python {.build}
+import numpy as np
+from matplotlib import pyplot as plt
+
+def fun(x):
+    return np.cos(x) + np.cos(3 * x + 1) / 2 + np.cos(5 * x - 1) / 3
+
+
+x = np.linspace(-5, 5, 1000)
+plt.figure()
+plt.axhline(color="k")
+plt.axvline(color="k")
+plt.plot(x, fun(x))
+plt.grid()
+plt.savefig("fun_to_root.svg")
+```
+
 ![Graphique de `fun(x)`](./fun_to_root.svg)
 
 ## Racine d'une fonction: Recherche dichotomique
@@ -196,7 +213,85 @@ def fun(x):
   **différents**, il y a **au moins une solution** dans l'intervalle [Si la
   fonction est continue]{.small}
 
-![Division progressive](./fun_to_root_3.svg)
+```python {.build}
+import numpy as np
+from matplotlib import pyplot as plt
+
+def fun(x):
+    return np.cos(x) + np.cos(3 * x + 1) / 2 + np.cos(5 * x - 1) / 3
+
+x = np.linspace(-2, 0, 1000)
+plt.figure()
+plt.axhline(color="k")
+plt.plot([-2, -2], [0, fun(-2)], "r--")
+plt.plot([0, 0], [0, fun(0)], "r--")
+plt.plot(x, fun(x))
+plt.grid()
+plt.savefig("fun_to_root_1.svg")
+```
+
+![Divisions progressives](./fun_to_root_1.svg)
+
+## Racine d'une fonction: Recherche dichotomique
+
+- Dans l'intervalle `[-2, 0]`
+- Si le **signe** de `fun()` à **gauche** et à **droite** de l'intervalle sont
+  **différents**, il y a **au moins une solution** dans l'intervalle [Si la
+  fonction est continue]{.small}
+
+```python {.build}
+import numpy as np
+from matplotlib import pyplot as plt
+
+def fun(x):
+    return np.cos(x) + np.cos(3 * x + 1) / 2 + np.cos(5 * x - 1) / 3
+
+x = np.linspace(-2, 0, 1000)
+plt.figure()
+plt.axhline(color="k")
+plt.plot(x, fun(x))
+plt.plot([-2, -2], [0, fun(-2)], "r--")
+plt.plot([0, 0], [0, fun(0)], "k--")
+plt.plot([-1, -1], [0, fun(-1)], "r--")
+plt.grid()
+plt.savefig("fun_to_root_2.svg")
+```
+
+![Divisions progressives](./fun_to_root_2.svg)
+
+## Racine d'une fonction: Recherche dichotomique
+
+- Dans l'intervalle `[-2, 0]`
+- Si le **signe** de `fun()` à **gauche** et à **droite** de l'intervalle sont
+  **différents**, il y a **au moins une solution** dans l'intervalle [Si la
+  fonction est continue]{.small}
+
+```python {.build}
+import numpy as np
+from matplotlib import pyplot as plt
+
+def fun(x):
+    return np.cos(x) + np.cos(3 * x + 1) / 2 + np.cos(5 * x - 1) / 3
+
+x = np.linspace(-2, 0, 1000)
+plt.figure()
+plt.axhline(color="k")
+plt.plot(x, fun(x))
+plt.plot([-2, -2], [0, fun(-2)], "k--")
+plt.plot([0, 0], [0, fun(0)], "k--")
+plt.plot([-1, -1], [0, fun(-1)], "k--")
+plt.plot([-1.5, -1.5], [0, fun(-1.5)], "k--")
+plt.plot([-1.25, -1.25], [0, fun(-1.25)], "r--")
+plt.plot([-1.375, -1.375], [0, fun(-1.375)], "k--")
+a = (-1.375 + -1.25) / 2
+plt.plot([a, a], [0, fun(a)], "k--")
+a = (a + -1.25) / 2
+plt.plot([a, a], [0, fun(a)], "r--")
+plt.grid()
+plt.savefig("fun_to_root_3.svg")
+```
+
+![Divisions progressives](./fun_to_root_3.svg)
 
 ## Racine d'une fonction
 
@@ -247,11 +342,114 @@ print(f'<pre class="terminal">{root(fun, -2, 0)}</pre>')
 
 ## Optimisation: minimum d'une fonction
 
-- Descente de gradient
+- Le **gradient** indique la direction dans laquelle une fonction **augmente le
+  plus rapidement**.
+- Pour une fonction à une variable, le gradient se limite à une valeur dont le
+  signe indique la direction de la croissance.
+- Pour trouver un minimum:
+  1. On part d'une valeur de `x`.
+  2. On calcule le **gradient** de la fonction pour cette valeur de `x`.
+  3. On déplace `x` d'un décalage proportionnel à l'**opposé du gradient**.
+  4. On recommence à l'étape **2**.
 
-## Minimum d'une fonction {.code}
+- On appelle cette procédure la **descente de gradient**.
+
+## Descente de gradient
+
+```python {.build}
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Définition de la fonction
+def fun(x):
+    return np.cos(x) + np.cos(3 * x + 1) / 2 + np.cos(5 * x - 1) / 3
+
+# Dérivée (gradient en 1D)
+def grad(x):
+    return -np.sin(x) - (3/2)*np.sin(3*x + 1) - (5/3)*np.sin(5*x - 1)
+
+# Intervalle
+x = np.linspace(-2, 0, 400)
+y = fun(x)
+
+x0 = -1
+
+for i in range(3):
+
+# Point où on veut la pente
+  y0 = fun(x0)
+  slope = grad(x0)
+
+# Droite tangente : y = slope * (x - x0) + y0
+  tangent = slope * (x - x0) + y0
+
+# Plot
+  plt.figure()
+  plt.axhline(color="k")
+  plt.plot(x, y, label="fun(x)")
+  plt.plot(x, tangent, linestyle="--", label=f"Tangente en x = {x0:.3f}")
+  plt.plot([x0, x0], [0, y0], "k--")
+  plt.scatter([x0], [y0])  # point de tangence
+
+  plt.xlabel("x")
+  plt.ylabel("y")
+  plt.ylim([-1, 2])
+  plt.legend()
+  plt.grid()
+
+  plt.savefig(f"gradient-{i}.svg")
+  x0 = x0 - slope * 0.144
+```
+
+![Gradient](./gradient-0.svg)
+
+- Le gradient est positif, on se déplace vers les `x` négatifs
+
+## Descente de gradient
+
+![Gradient](./gradient-1.svg)
+
+- Le gradient est positif, on se déplace vers les `x` négatifs
+
+## Descente de gradient
+
+![Gradient](./gradient-2.svg)
+
+- Le gradient est presque nul, on a trouvé un minimum
+
+## Approximation de la dérivée
+
+- **Mathématiquement**, on peut définir la dérivée comme suit:
+
+$$\frac{df}{dx}(x) = \lim_{h \to 0} \frac{f(x+h) - f(x-h)}{2 \cdot h}$$
+
+- En Python, on **approximera** en choisissant un `h` très **petit**:
 
 ```python
+def diff(fun, x, h=1e-8):
+    return (fun(x + h) - fun(x - h)) / (2 * h)
+```
+
+## Minimum d'une fonction
+
+```python
+def minimize(fun, x0, step=1e-2, eps=1e-8):
+    x = x0
+    d = diff(fun, x)
+    while abs(d) > eps:
+        x = x - step * d
+        d = diff(fun, x)
+    return x
+
+print(minimize(fun, -1))
+```
+
+```python {.build}
+from math import cos
+
+def fun(x):
+  return cos(x) + cos(3 * x + 1) / 2 + cos(5 * x - 1) / 3
+
 def diff(fun, x, h=1e-8):
     return (fun(x + h) - fun(x - h)) / (2 * h)
 
@@ -262,6 +460,10 @@ def minimize(fun, x0, step=1e-2, eps=1e-8):
         x = x - step * d
         d = diff(fun, x)
     return x
+
+res = minimize(fun, -1)
+
+print(f'<pre class="terminal">{res}</pre>')
 ```
 
 ## Fonctionnement basique d'un LLM
@@ -276,15 +478,15 @@ def minimize(fun, x0, step=1e-2, eps=1e-8):
 
 ## Tokens
 
-- Un LLM est un programme et un programme travaille plus facilement avec des
-  nombres.
-- Un token est un morceau de mot portant un numéro.
-- Avant d'être traité par un LLM, un texte est tokenisé:
+- Un **LLM** est un programme et un programme travaille plus facilement avec des
+  **nombres**.
+- Un **token** est un morceau de mot portant un **numéro**.
+- Avant d'être traité par un LLM, un texte est **tokenisé**:
 
 ```python
-texte = "Te considères-tu comme vivant ?"
+text = "Te considères-tu comme vivant ?"
 
-morceaux = [
+parts = [
   "Te", " ", "cons", "id", "è", "res", "-", "tu", " ", "comme", " vivant", " ?"
 ]
 
@@ -295,16 +497,16 @@ ids = [977, 220, 9375, 2634, 293, 12, 259, 2238, 220, 12548, 5633, 30]
 
 $$Y = F(X)$$
 
-- Un modèle est une fonction
+- Un modèle est une **fonction**
 - Son but est de fournir une **prédiction** [La sortie du modèle $Y$]{.small}
-- Il calcule la prédiction sur base de valeurs d'entrée $X$
+- Il calcule la prédiction sur base de **valeurs d'entrée** $X$
 
 ## Contexte
 
 - Un **LLM** est un modèle particulier
 - Les **valeurs d'entrée** son appelée **contexte** [Les $n$ derniers
   _tokens_]{.small}
-- La **prédiction** est le prochain _token_ [probabilités pour chaque token
+- La **prédiction** est le prochain **token** [probabilités pour chaque token
   d'être le suivant]{.small}
 
 ```python
@@ -324,24 +526,26 @@ context.append(F(context)) # 13, "."
 
 ## Paramètres
 
-- Partons d'un modèle très simple, le modèle linéaire $y = m \cdot x + p$
+- Partons d'un modèle très simple, le **modèle linéaire** $y = m \cdot x + p$
 
   ```python
   def F(x):
     return m*x+p
   ```
 
-- L'entrée est `x` et les paramètres sont `m` et `p`
-- Pour utiliser ce modèle sur une relation linéaire particulière il faut choisir
-  les bons `m` et `p`.
+- L'entrée est `x` et les **paramètres** sont `m` et `p`
+- Pour utiliser ce modèle sur une relation linéaire **particulière** il faut
+  choisir les **bons** `m` et `p`.
 
 ## L'entrainement
 
-Entrainer un modèle c'est:
+**Entrainer** un modèle c'est:
 
-- Sur base de de données connues [des `x` pour lesquels on connait `y`]{.small}
+- Sur base de de données **connues** [des `x` pour lesquels on connait
+  `y`]{.small}
 - **Trouver les valeurs des paramètres**
-- Qui donnent de bonnes prédictions [des `F(x)` proches des `y` connus]{.small}
+- Qui donnent de **bonnes** prédictions [des `F(x)` proches des `y`
+  connus]{.small}
 
 ## Exemple, modèle linéaire: Les données
 
@@ -387,6 +591,7 @@ with open("the_data.csv") as f:
     X.append(float(x))
     Y.append(float(y))
 
+plt.figure()
 plt.scatter(X, Y)
 plt.xlabel("x")
 plt.ylabel("y")
@@ -402,8 +607,8 @@ print(hl(f"x = [{', '.join(map(str, X))}]\ny = [{', '.join(map(str, Y))}]"))
 
 ## La fonction de coût
 
-- pour trouver `m` et `p` on minimise la distance entre les prédictions et les
-  `y` connus
+- Pour trouver `m` et `p` on **minimise la distance** entre les prédictions et
+  les `y` connus
 
 ```python
 # Modèle paramétrique
@@ -419,7 +624,7 @@ def cost(m, p):
   return res/len(x)
 ```
 
-- Trouver `m` et `p` consiste à minimiser la fonction `cost()`
+- Trouver `m` et `p` consiste à **minimiser** la fonction `cost()`
 
 ## Minimisation à 2 variables
 
@@ -430,6 +635,7 @@ def diff(fun, x1, x2, h=1e-8):
       (fun(x1, x2 + h) - fun(x1, x2 - h)) / (2 * h),
     )
 
+# Remplace `abs()` pour le gradient à 2 composantes
 def norm(a, b):
     return (a**2 + b**2)**(0.5)
 
@@ -505,8 +711,9 @@ m, p = minimize(cost, 0, 0)
 xmin = min(X)
 xmax = max(X)
 
+plt.figure()
 plt.scatter(X, Y, label="Données d'entrainement")
-plt.plot([xmin, xmax], [m*xmin+p, m*xmax+p], label="Modèle entrainé")
+plt.plot([xmin, xmax], [m*xmin+p, m*xmax+p], "orange", label="Modèle entrainé")
 plt.xlabel("x")
 plt.ylabel("y")
 plt.grid()

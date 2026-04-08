@@ -6,7 +6,7 @@ build_and_index(
     'slides2',
     'slides3',
     'slides4',
-    // 'slides5',
+    'slides5',
   ],
   { title: 'Slides' },
 )

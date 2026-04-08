@@ -227,6 +227,7 @@ class="small">Souvent aussi proche que l’on veut</span></li>
   <span class="k">return</span> <span class="n">cos</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">cos</span><span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">cos</span><span class="p">(</span><span class="mi">5</span> <span class="o">*</span> <span class="n">x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">3</span>
 </pre></div>
 
+
 <figure>
 <img src="./fun_to_root.svg" alt="Graphique de fun(x)" />
 <figcaption aria-hidden="true">Graphique de
@@ -244,9 +245,44 @@ sont <strong>différents</strong>, il y a <strong>au moins une
 solution</strong> dans l’intervalle <span class="small">Si la fonction
 est continue</span></li>
 </ul>
+
 <figure>
-<img src="./fun_to_root_3.svg" alt="Division progressive" />
-<figcaption aria-hidden="true">Division progressive</figcaption>
+<img src="./fun_to_root_1.svg" alt="Divisions progressives" />
+<figcaption aria-hidden="true">Divisions progressives</figcaption>
+</figure>
+</section>
+<section id="racine-dune-fonction-recherche-dichotomique-1"
+class="level2">
+<h2>Racine d’une fonction: Recherche dichotomique</h2>
+<ul>
+<li>Dans l’intervalle <code>[-2, 0]</code></li>
+<li>Si le <strong>signe</strong> de <code>fun()</code> à
+<strong>gauche</strong> et à <strong>droite</strong> de l’intervalle
+sont <strong>différents</strong>, il y a <strong>au moins une
+solution</strong> dans l’intervalle <span class="small">Si la fonction
+est continue</span></li>
+</ul>
+
+<figure>
+<img src="./fun_to_root_2.svg" alt="Divisions progressives" />
+<figcaption aria-hidden="true">Divisions progressives</figcaption>
+</figure>
+</section>
+<section id="racine-dune-fonction-recherche-dichotomique-2"
+class="level2">
+<h2>Racine d’une fonction: Recherche dichotomique</h2>
+<ul>
+<li>Dans l’intervalle <code>[-2, 0]</code></li>
+<li>Si le <strong>signe</strong> de <code>fun()</code> à
+<strong>gauche</strong> et à <strong>droite</strong> de l’intervalle
+sont <strong>différents</strong>, il y a <strong>au moins une
+solution</strong> dans l’intervalle <span class="small">Si la fonction
+est continue</span></li>
+</ul>
+
+<figure>
+<img src="./fun_to_root_3.svg" alt="Divisions progressives" />
+<figcaption aria-hidden="true">Divisions progressives</figcaption>
 </figure>
 </section>
 <section id="racine-dune-fonction" class="level2">
@@ -276,22 +312,86 @@ est continue</span></li>
 <section id="optimisation-minimum-dune-fonction" class="level2">
 <h2>Optimisation: minimum d’une fonction</h2>
 <ul>
-<li>Descente de gradient</li>
+<li>Le <strong>gradient</strong> indique la direction dans laquelle une
+fonction <strong>augmente le plus rapidement</strong>.</li>
+<li>Pour une fonction à une variable, le gradient se limite à une valeur
+dont le signe indique la direction de la croissance.</li>
+<li>Pour trouver un minimum:
+<ol type="1">
+<li>On part d’une valeur de <code>x</code>.</li>
+<li>On calcule le <strong>gradient</strong> de la fonction pour cette
+valeur de <code>x</code>.</li>
+<li>On déplace <code>x</code> d’un décalage proportionnel à
+l’<strong>opposé du gradient</strong>.</li>
+<li>On recommence à l’étape <strong>2</strong>.</li>
+</ol></li>
+<li>On appelle cette procédure la <strong>descente de
+gradient</strong>.</li>
 </ul>
 </section>
-<section id="minimum-dune-fonction" class="level2 code">
-<h2 class="code">Minimum d’une fonction</h2>
+<section id="descente-de-gradient" class="level2">
+<h2>Descente de gradient</h2>
+
+<figure>
+<img src="./gradient-0.svg" alt="Gradient" />
+<figcaption aria-hidden="true">Gradient</figcaption>
+</figure>
+<ul>
+<li>Le gradient est positif, on se déplace vers les <code>x</code>
+négatifs</li>
+</ul>
+</section>
+<section id="descente-de-gradient-1" class="level2">
+<h2>Descente de gradient</h2>
+<figure>
+<img src="./gradient-1.svg" alt="Gradient" />
+<figcaption aria-hidden="true">Gradient</figcaption>
+</figure>
+<ul>
+<li>Le gradient est positif, on se déplace vers les <code>x</code>
+négatifs</li>
+</ul>
+</section>
+<section id="descente-de-gradient-2" class="level2">
+<h2>Descente de gradient</h2>
+<figure>
+<img src="./gradient-2.svg" alt="Gradient" />
+<figcaption aria-hidden="true">Gradient</figcaption>
+</figure>
+<ul>
+<li>Le gradient est presque nul, on a trouvé un minimum</li>
+</ul>
+</section>
+<section id="approximation-de-la-dérivée" class="level2">
+<h2>Approximation de la dérivée</h2>
+<ul>
+<li><strong>Mathématiquement</strong>, on peut définir la dérivée comme
+suit:</li>
+</ul>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mrow><mi>d</mi><mi>f</mi></mrow><mrow><mi>d</mi><mi>x</mi></mrow></mfrac><mo stretchy="false" form="prefix">(</mo><mi>x</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><munder><mi mathvariant="normal">lim</mi><mrow><mi>h</mi><mo>→</mo><mn>0</mn></mrow></munder><mfrac><mrow><mi>f</mi><mo stretchy="false" form="prefix">(</mo><mi>x</mi><mo>+</mo><mi>h</mi><mo stretchy="false" form="postfix">)</mo><mo>−</mo><mi>f</mi><mo stretchy="false" form="prefix">(</mo><mi>x</mi><mo>−</mo><mi>h</mi><mo stretchy="false" form="postfix">)</mo></mrow><mrow><mn>2</mn><mo>⋅</mo><mi>h</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">\frac{df}{dx}(x) = \lim_{h \to 0} \frac{f(x+h) - f(x-h)}{2 \cdot h}</annotation></semantics></math></p>
+<ul>
+<li>En Python, on <strong>approximera</strong> en choisissant un
+<code>h</code> très <strong>petit</strong>:</li>
+</ul>
 <div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">diff</span><span class="p">(</span><span class="n">fun</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">):</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">fun</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">h</span><span class="p">)</span> <span class="o">-</span> <span class="n">fun</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">h</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">h</span><span class="p">)</span>
+</pre></div>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">minimize</span><span class="p">(</span><span class="n">fun</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">1e-2</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">):</span>
+</section>
+<section id="minimum-dune-fonction" class="level2">
+<h2>Minimum d’une fonction</h2>
+<div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">minimize</span><span class="p">(</span><span class="n">fun</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">1e-2</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">):</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">x0</span>
     <span class="n">d</span> <span class="o">=</span> <span class="n">diff</span><span class="p">(</span><span class="n">fun</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
     <span class="k">while</span> <span class="nb">abs</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">eps</span><span class="p">:</span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="n">step</span> <span class="o">*</span> <span class="n">d</span>
         <span class="n">d</span> <span class="o">=</span> <span class="n">diff</span><span class="p">(</span><span class="n">fun</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">x</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">minimize</span><span class="p">(</span><span class="n">fun</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
 </pre></div>
+
+<pre class="terminal">-1.6677608168359495</pre>
 
 </section>
 <section id="fonctionnement-basique-dun-llm" class="level2">
@@ -310,14 +410,16 @@ milliards de <strong>paramètres</strong> prend en charge un
 <section id="tokens" class="level2">
 <h2>Tokens</h2>
 <ul>
-<li>Un LLM est un programme et un programme travaille plus facilement
-avec des nombres.</li>
-<li>Un token est un morceau de mot portant un numéro.</li>
-<li>Avant d’être traité par un LLM, un texte est tokenisé:</li>
+<li>Un <strong>LLM</strong> est un programme et un programme travaille
+plus facilement avec des <strong>nombres</strong>.</li>
+<li>Un <strong>token</strong> est un morceau de mot portant un
+<strong>numéro</strong>.</li>
+<li>Avant d’être traité par un LLM, un texte est
+<strong>tokenisé</strong>:</li>
 </ul>
-<div class="pygments"><pre><span></span><span class="n">texte</span> <span class="o">=</span> <span class="s2">&quot;Te considères-tu comme vivant ?&quot;</span>
+<div class="pygments"><pre><span></span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;Te considères-tu comme vivant ?&quot;</span>
 
-<span class="n">morceaux</span> <span class="o">=</span> <span class="p">[</span>
+<span class="n">parts</span> <span class="o">=</span> <span class="p">[</span>
   <span class="s2">&quot;Te&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;cons&quot;</span><span class="p">,</span> <span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;è&quot;</span><span class="p">,</span> <span class="s2">&quot;res&quot;</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="s2">&quot;tu&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;comme&quot;</span><span class="p">,</span> <span class="s2">&quot; vivant&quot;</span><span class="p">,</span> <span class="s2">&quot; ?&quot;</span>
 <span class="p">]</span>
 
@@ -329,11 +431,12 @@ avec des nombres.</li>
 <h2>Modèle</h2>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Y</mi><mo>=</mo><mi>F</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">Y = F(X)</annotation></semantics></math></p>
 <ul>
-<li>Un modèle est une fonction</li>
+<li>Un modèle est une <strong>fonction</strong></li>
 <li>Son but est de fournir une <strong>prédiction</strong> <span
 class="small">La sortie du modèle
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Y</mi><annotation encoding="application/x-tex">Y</annotation></semantics></math></span></li>
-<li>Il calcule la prédiction sur base de valeurs d’entrée
+<li>Il calcule la prédiction sur base de <strong>valeurs
+d’entrée</strong>
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math></li>
 </ul>
 </section>
@@ -345,9 +448,9 @@ class="small">La sortie du modèle
 <strong>contexte</strong> <span class="small">Les
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math>
 derniers <em>tokens</em></span></li>
-<li>La <strong>prédiction</strong> est le prochain <em>token</em> <span
-class="small">probabilités pour chaque token d’être le
-suivant</span></li>
+<li>La <strong>prédiction</strong> est le prochain
+<strong>token</strong> <span class="small">probabilités pour chaque
+token d’être le suivant</span></li>
 </ul>
 <div class="pygments"><pre><span></span><span class="n">context</span> <span class="o">=</span> <span class="p">[</span><span class="mi">977</span><span class="p">,</span> <span class="mi">220</span><span class="p">,</span> <span class="mi">9375</span><span class="p">,</span> <span class="mi">2634</span><span class="p">,</span> <span class="mi">293</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">259</span><span class="p">,</span> <span class="mi">2238</span><span class="p">,</span> <span class="mi">220</span><span class="p">,</span> <span class="mi">12548</span><span class="p">,</span> <span class="mi">5633</span><span class="p">,</span> <span class="mi">30</span><span class="p">]</span>
 
@@ -367,27 +470,31 @@ suivant</span></li>
 <section id="paramètres" class="level2">
 <h2>Paramètres</h2>
 <ul>
-<li><p>Partons d’un modèle très simple, le modèle linéaire
+<li><p>Partons d’un modèle très simple, le <strong>modèle
+linéaire</strong>
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi><mo>=</mo><mi>m</mi><mo>⋅</mo><mi>x</mi><mo>+</mo><mi>p</mi></mrow><annotation encoding="application/x-tex">y = m \cdot x + p</annotation></semantics></math></p>
 <div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">F</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
   <span class="k">return</span> <span class="n">m</span><span class="o">*</span><span class="n">x</span><span class="o">+</span><span class="n">p</span>
 </pre></div>
 </li>
-<li><p>L’entrée est <code>x</code> et les paramètres sont <code>m</code>
-et <code>p</code></p></li>
-<li><p>Pour utiliser ce modèle sur une relation linéaire particulière il
-faut choisir les bons <code>m</code> et <code>p</code>.</p></li>
+<li><p>L’entrée est <code>x</code> et les <strong>paramètres</strong>
+sont <code>m</code> et <code>p</code></p></li>
+<li><p>Pour utiliser ce modèle sur une relation linéaire
+<strong>particulière</strong> il faut choisir les <strong>bons</strong>
+<code>m</code> et <code>p</code>.</p></li>
 </ul>
 </section>
 <section id="lentrainement" class="level2">
 <h2>L’entrainement</h2>
-<p>Entrainer un modèle c’est:</p>
+<p><strong>Entrainer</strong> un modèle c’est:</p>
 <ul>
-<li>Sur base de de données connues <span class="small">des
-<code>x</code> pour lesquels on connait <code>y</code></span></li>
+<li>Sur base de de données <strong>connues</strong> <span
+class="small">des <code>x</code> pour lesquels on connait
+<code>y</code></span></li>
 <li><strong>Trouver les valeurs des paramètres</strong></li>
-<li>Qui donnent de bonnes prédictions <span class="small">des
-<code>F(x)</code> proches des <code>y</code> connus</span></li>
+<li>Qui donnent de <strong>bonnes</strong> prédictions <span
+class="small">des <code>F(x)</code> proches des <code>y</code>
+connus</span></li>
 </ul>
 </section>
 <section id="exemple-modèle-linéaire-les-données" class="level2">
@@ -413,8 +520,9 @@ faut choisir les bons <code>m</code> et <code>p</code>.</p></li>
 <section id="la-fonction-de-coût" class="level2">
 <h2>La fonction de coût</h2>
 <ul>
-<li>pour trouver <code>m</code> et <code>p</code> on minimise la
-distance entre les prédictions et les <code>y</code> connus</li>
+<li>Pour trouver <code>m</code> et <code>p</code> on <strong>minimise la
+distance</strong> entre les prédictions et les <code>y</code>
+connus</li>
 </ul>
 <div class="pygments"><pre><span></span><span class="c1"># Modèle paramétrique</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">F</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
@@ -430,8 +538,8 @@ distance entre les prédictions et les <code>y</code> connus</li>
 </pre></div>
 
 <ul>
-<li>Trouver <code>m</code> et <code>p</code> consiste à minimiser la
-fonction <code>cost()</code></li>
+<li>Trouver <code>m</code> et <code>p</code> consiste à
+<strong>minimiser</strong> la fonction <code>cost()</code></li>
 </ul>
 </section>
 <section id="minimisation-à-2-variables" class="level2">
@@ -442,6 +550,7 @@ fonction <code>cost()</code></li>
       <span class="p">(</span><span class="n">fun</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span> <span class="o">+</span> <span class="n">h</span><span class="p">)</span> <span class="o">-</span> <span class="n">fun</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span> <span class="o">-</span> <span class="n">h</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">h</span><span class="p">),</span>
     <span class="p">)</span>
 
+<span class="c1"># Remplace `abs()` pour le gradient à 2 composantes</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">norm</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">a</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">b</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
 
