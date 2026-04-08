@@ -129,62 +129,6 @@ mathématiques</strong></p>
 </pre></div>
 
 </section>
-<section id="calcul-numérique" class="level2">
-<h2>Calcul numérique</h2>
-<ul>
-<li><strong>Différent</strong> du calcul symbolique</li>
-<li>Méthodes de résolution <strong>itératives</strong> <span
-class="small">Série de valeurs qui s’approchent de la
-solution</span></li>
-<li>Solution <strong>numérique approchée</strong> <span
-class="small">Souvent aussi proche que l’on veut</span></li>
-</ul>
-</section>
-<section id="exemple-sqrt" class="level2">
-<h2>Exemple: <code>sqrt()</code></h2>
-<ul>
-<li><p>Imaginons que la fonction <code>sqrt()</code> n’existe pas.
-Comment faire pour calculer une racine carrée ?</p></li>
-<li><p>Si on divise un nombre par sa racine carrée, on obtient sa racine
-carrée:
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mi>x</mi><msqrt><mi>x</mi></msqrt></mfrac><mo>=</mo><msqrt><mi>x</mi></msqrt></mrow><annotation encoding="application/x-tex">\frac{x}{\sqrt{x}}=\sqrt{x}</annotation></semantics></math></p></li>
-<li><p>Si on divise
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>x</mi><annotation encoding="application/x-tex">x</annotation></semantics></math>
-par une <strong>approximation</strong> inférieure à
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msqrt><mi>x</mi></msqrt><annotation encoding="application/x-tex">\sqrt{x}</annotation></semantics></math>,
-on obtiendra un nombre supérieur à
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msqrt><mi>x</mi></msqrt><annotation encoding="application/x-tex">\sqrt{x}</annotation></semantics></math></p></li>
-<li><p>La vraie valeur de
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msqrt><mi>x</mi></msqrt><annotation encoding="application/x-tex">\sqrt{x}</annotation></semantics></math>
-se trouve donc entre
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mi>p</mi><mi>p</mi><mi>r</mi><mi>o</mi><msub><mi>x</mi><msqrt><mi>x</mi></msqrt></msub></mrow><annotation encoding="application/x-tex">approx_{\sqrt{x}}</annotation></semantics></math>
-et
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mfrac><mi>x</mi><mrow><mi>a</mi><mi>p</mi><mi>p</mi><mi>r</mi><mi>o</mi><msub><mi>x</mi><msqrt><mi>x</mi></msqrt></msub></mrow></mfrac><annotation encoding="application/x-tex">\frac{x}{approx_{\sqrt{x}}}</annotation></semantics></math></p></li>
-<li><p>Nous allons choisir la moyenne des deux comme nouvelle
-approximation.</p></li>
-<li><p>On fait ça en boucle jusqu’à ce que
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mi>p</mi><mi>p</mi><mi>r</mi><mi>o</mi><msub><mi>x</mi><msqrt><mi>x</mi></msqrt></msub></mrow><annotation encoding="application/x-tex">approx_{\sqrt{x}}</annotation></semantics></math>
-et
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mfrac><mi>x</mi><mrow><mi>a</mi><mi>p</mi><mi>p</mi><mi>r</mi><mi>o</mi><msub><mi>x</mi><msqrt><mi>x</mi></msqrt></msub></mrow></mfrac><annotation encoding="application/x-tex">\frac{x}{approx_{\sqrt{x}}}</annotation></semantics></math>
-soient suffisamment proches</p></li>
-</ul>
-</section>
-<section id="sqrt-code" class="level2 code">
-<h2 class="code"><code>sqrt()</code>: Code</h2>
-<div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">):</span>
-    <span class="n">approx</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="n">other</span> <span class="o">=</span> <span class="n">x</span>
-    <span class="n">mid</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">x</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
-
-    <span class="k">while</span> <span class="nb">abs</span><span class="p">(</span><span class="n">approx</span> <span class="o">-</span> <span class="n">other</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">eps</span><span class="p">:</span>
-        <span class="n">approx</span> <span class="o">=</span> <span class="n">mid</span>
-        <span class="n">other</span> <span class="o">=</span> <span class="n">x</span> <span class="o">/</span> <span class="n">left</span>
-        <span class="n">mid</span> <span class="o">=</span> <span class="p">(</span><span class="n">approx</span> <span class="o">+</span> <span class="n">other</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
-
-    <span class="k">return</span> <span class="n">mid</span>
-</pre></div>
-
-</section>
 <section id="fonctions-récursives" class="level2">
 <h2>Fonctions récursives</h2>
 <ul>
@@ -225,15 +169,88 @@ soient suffisamment proches</p></li>
 </pre></div>
 
 </section>
+<section id="calcul-numérique" class="level2">
+<h2>Calcul numérique</h2>
+<ul>
+<li><strong>Différent</strong> du calcul symbolique</li>
+<li>Méthodes de résolution <strong>itératives</strong> <span
+class="small">Série de valeurs qui s’approchent de la
+solution</span></li>
+<li>Solution <strong>numérique approchée</strong> <span
+class="small">Souvent aussi proche que l’on veut</span></li>
+</ul>
+<!-- ## Exemple: `sqrt()` -->
+<!---->
+<!-- - Imaginons que la fonction `sqrt()` n'existe pas. Comment faire pour calculer -->
+<!--   une racine carrée ? -->
+<!---->
+<!-- - Si on divise un nombre par sa racine carrée, on obtient sa racine carrée: -->
+<!--   $$\frac{x}{\sqrt{x}}=\sqrt{x}$$ -->
+<!---->
+<!-- - Si on divise $x$ par une **approximation** inférieure à $\sqrt{x}$, on -->
+<!--   obtiendra un nombre supérieur à $\sqrt{x}$ -->
+<!---->
+<!-- - La vraie valeur de $\sqrt{x}$ se trouve donc entre $approx_{\sqrt{x}}$ et -->
+<!--   $\frac{x}{approx_{\sqrt{x}}}$ -->
+<!---->
+<!-- - Nous allons choisir la moyenne des deux comme nouvelle approximation. -->
+<!---->
+<!-- - On fait ça en boucle jusqu'à ce que $approx_{\sqrt{x}}$ et -->
+<!--   $\frac{x}{approx_{\sqrt{x}}}$ soient suffisamment proches -->
+<!---->
+<!-- ## `sqrt()`: Code {.code} -->
+<!---->
+<!-- ```python -->
+<!-- def sqrt(x, eps=1e-8): -->
+<!--     approx = 1 -->
+<!--     other = x -->
+<!--     mid = (1 + x) / 2 -->
+<!---->
+<!--     while abs(approx - other) > eps: -->
+<!--         approx = mid -->
+<!--         other = x / left -->
+<!--         mid = (approx + other) / 2 -->
+<!---->
+<!--     return mid -->
+<!-- ``` -->
+</section>
 <section id="calcul-numérique-racine-dune-fonction" class="level2">
 <h2>Calcul numérique: racine d’une fonction</h2>
 <ul>
-<li>Recherche d’une racine d’une fonction entre deux bornes <span
-class="small">Recherche dichotomique</span></li>
+<li><p><strong>Recherche</strong> d’une racine d’une fonction
+<strong>entre deux bornes</strong></p></li>
+<li><p>Exemple de fonction:</p></li>
 </ul>
+<div class="pygments"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">cos</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">fun</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+  <span class="k">return</span> <span class="n">cos</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">cos</span><span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">cos</span><span class="p">(</span><span class="mi">5</span> <span class="o">*</span> <span class="n">x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">3</span>
+</pre></div>
+
+<figure>
+<img src="./fun_to_root.svg" alt="Graphique de fun(x)" />
+<figcaption aria-hidden="true">Graphique de
+<code>fun(x)</code></figcaption>
+</figure>
 </section>
-<section id="racine-dune-fonction" class="level2 code">
-<h2 class="code">Racine d’une fonction</h2>
+<section id="racine-dune-fonction-recherche-dichotomique"
+class="level2">
+<h2>Racine d’une fonction: Recherche dichotomique</h2>
+<ul>
+<li>Dans l’intervalle <code>[-2, 0]</code></li>
+<li>Si le <strong>signe</strong> de <code>fun()</code> à
+<strong>gauche</strong> et à <strong>droite</strong> de l’intervalle
+sont <strong>différents</strong>, il y a <strong>au moins une
+solution</strong> dans l’intervalle <span class="small">Si la fonction
+est continue</span></li>
+</ul>
+<figure>
+<img src="./fun_to_root_3.svg" alt="Division progressive" />
+<figcaption aria-hidden="true">Division progressive</figcaption>
+</figure>
+</section>
+<section id="racine-dune-fonction" class="level2">
+<h2>Racine d’une fonction</h2>
 <div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">root</span><span class="p">(</span><span class="n">fun</span><span class="p">,</span> <span class="nb">min</span><span class="p">,</span> <span class="nb">max</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">fun</span><span class="p">(</span><span class="nb">min</span><span class="p">)</span> <span class="o">*</span> <span class="n">fun</span><span class="p">(</span><span class="nb">max</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">None</span>
@@ -249,7 +266,11 @@ class="small">Recherche dichotomique</span></li>
         <span class="k">return</span> <span class="n">res</span>
 
     <span class="k">return</span> <span class="n">root</span><span class="p">(</span><span class="n">fun</span><span class="p">,</span> <span class="n">mid</span><span class="p">,</span> <span class="nb">max</span><span class="p">,</span> <span class="n">eps</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">root</span><span class="p">(</span><span class="n">fun</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
 </pre></div>
+
+<pre class="terminal">-1.2646564356982708</pre>
 
 </section>
 <section id="optimisation-minimum-dune-fonction" class="level2">

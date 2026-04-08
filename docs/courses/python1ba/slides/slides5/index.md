@@ -97,48 +97,6 @@ print(x*x)
 print(cmath.exp(x))             # exponentielle
 ```
 
-## Calcul numérique
-
-- **Différent** du calcul symbolique
-- Méthodes de résolution **itératives** [Série de valeurs qui s'approchent de la
-  solution]{.small}
-- Solution **numérique approchée** [Souvent aussi proche que l'on veut]{.small}
-
-## Exemple: `sqrt()`
-
-- Imaginons que la fonction `sqrt()` n'existe pas. Comment faire pour calculer
-  une racine carrée ?
-
-- Si on divise un nombre par sa racine carrée, on obtient sa racine carrée:
-  $$\frac{x}{\sqrt{x}}=\sqrt{x}$$
-
-- Si on divise $x$ par une **approximation** inférieure à $\sqrt{x}$, on
-  obtiendra un nombre supérieur à $\sqrt{x}$
-
-- La vraie valeur de $\sqrt{x}$ se trouve donc entre $approx_{\sqrt{x}}$ et
-  $\frac{x}{approx_{\sqrt{x}}}$
-
-- Nous allons choisir la moyenne des deux comme nouvelle approximation.
-
-- On fait ça en boucle jusqu'à ce que $approx_{\sqrt{x}}$ et
-  $\frac{x}{approx_{\sqrt{x}}}$ soient suffisamment proches
-
-## `sqrt()`: Code {.code}
-
-```python
-def sqrt(x, eps=1e-8):
-    approx = 1
-    other = x
-    mid = (1 + x) / 2
-
-    while abs(approx - other) > eps:
-        approx = mid
-        other = x / left
-        mid = (approx + other) / 2
-
-    return mid
-```
-
 ## Fonctions récursives
 
 - Une fonction peut s'appeler **elle-même**.
@@ -174,12 +132,73 @@ def fact(n):
     return fact(n - 1) * n   # cas récursif
 ```
 
+## Calcul numérique
+
+- **Différent** du calcul symbolique
+- Méthodes de résolution **itératives** [Série de valeurs qui s'approchent de la
+  solution]{.small}
+- Solution **numérique approchée** [Souvent aussi proche que l'on veut]{.small}
+
+<!-- ## Exemple: `sqrt()` -->
+<!---->
+<!-- - Imaginons que la fonction `sqrt()` n'existe pas. Comment faire pour calculer -->
+<!--   une racine carrée ? -->
+<!---->
+<!-- - Si on divise un nombre par sa racine carrée, on obtient sa racine carrée: -->
+<!--   $$\frac{x}{\sqrt{x}}=\sqrt{x}$$ -->
+<!---->
+<!-- - Si on divise $x$ par une **approximation** inférieure à $\sqrt{x}$, on -->
+<!--   obtiendra un nombre supérieur à $\sqrt{x}$ -->
+<!---->
+<!-- - La vraie valeur de $\sqrt{x}$ se trouve donc entre $approx_{\sqrt{x}}$ et -->
+<!--   $\frac{x}{approx_{\sqrt{x}}}$ -->
+<!---->
+<!-- - Nous allons choisir la moyenne des deux comme nouvelle approximation. -->
+<!---->
+<!-- - On fait ça en boucle jusqu'à ce que $approx_{\sqrt{x}}$ et -->
+<!--   $\frac{x}{approx_{\sqrt{x}}}$ soient suffisamment proches -->
+<!---->
+<!-- ## `sqrt()`: Code {.code} -->
+<!---->
+<!-- ```python -->
+<!-- def sqrt(x, eps=1e-8): -->
+<!--     approx = 1 -->
+<!--     other = x -->
+<!--     mid = (1 + x) / 2 -->
+<!---->
+<!--     while abs(approx - other) > eps: -->
+<!--         approx = mid -->
+<!--         other = x / left -->
+<!--         mid = (approx + other) / 2 -->
+<!---->
+<!--     return mid -->
+<!-- ``` -->
+
 ## Calcul numérique: racine d'une fonction
 
-- Recherche d'une racine d'une fonction entre deux bornes [Recherche
-  dichotomique]{.small}
+- **Recherche** d'une racine d'une fonction **entre deux bornes**
 
-## Racine d'une fonction {.code}
+- Exemple de fonction:
+
+```python
+from math import cos
+
+def fun(x):
+  return cos(x) + cos(3 * x + 1) / 2 + cos(5 * x - 1) / 3
+```
+
+![Graphique de `fun(x)`](./fun_to_root.svg)
+
+## Racine d'une fonction: Recherche dichotomique
+
+- Dans l'intervalle `[-2, 0]`
+- Si le **signe** de `fun()` à **gauche** et à **droite** de l'intervalle sont
+  **différents**, il y a **au moins une solution** dans l'intervalle [Si la
+  fonction est continue]{.small}
+
+![Division progressive](./fun_to_root_3.svg)
+
+## Racine d'une fonction
 
 ```python
 def root(fun, min, max, eps=1e-8):
@@ -197,6 +216,33 @@ def root(fun, min, max, eps=1e-8):
         return res
 
     return root(fun, mid, max, eps)
+
+print(root(fun, -2, 0))
+```
+
+```python {.build}
+from math import cos
+
+def fun(x):
+  return cos(x) + cos(3 * x + 1) / 2 + cos(5 * x - 1) / 3
+
+def root(fun, min, max, eps=1e-8):
+    if fun(min) * fun(max) > 0:
+        return None
+
+    mid = (min + max) / 2
+
+    if max - min < eps:
+        return mid
+
+    res = root(fun, min, mid, eps)
+
+    if res is not None:
+        return res
+
+    return root(fun, mid, max, eps)
+
+print(f'<pre class="terminal">{root(fun, -2, 0)}</pre>')
 ```
 
 ## Optimisation: minimum d'une fonction
