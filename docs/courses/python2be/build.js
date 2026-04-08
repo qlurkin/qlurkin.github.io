@@ -12,7 +12,7 @@ build_and_index(
     'lab2',
     'lab3',
     'lab4',
-    'project25',
+    'project26',
   ],
   {
     title: 'Python Part 3',
