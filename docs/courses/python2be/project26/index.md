@@ -57,6 +57,7 @@ du gestionnaire de partie. Elle devra contenir au minimum:
     - Bonus classement (1<sup>er</sup>: **2.5**, 2<sup>e</sup>: **2**,
       3<sup>e</sup>: **1.5**, 4<sup>e</sup>: **1**, 5<sup>e</sup>: **0.5**)
 
-**En cas de plagiat entre groupe, tout les étudiants impliqués auront 0** **En
-cas d'utilisation abusive d'outils de génération de code, des pénalités pourront
-être appliquées**
+**En cas de plagiat entre groupe, tout les étudiants impliqués auront 0**
+
+**En cas d'utilisation abusive d'outils de génération de code, des pénalités
+pourront être appliquées**
