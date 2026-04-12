@@ -13,6 +13,7 @@ import panflute as pf
 
 def plantuml(elem, doc):
     src = elem.text
+    classes = elem.classes
     pattern = re.compile(r"^title (.+)$", re.MULTILINE)
     match = pattern.search(src)
     caption = None
@@ -31,7 +32,7 @@ def plantuml(elem, doc):
     if caption is not None:
         caption_html = f"<figcaption>{caption}</figcaption>"
 
-    html = f'<figure><img class="plantuml" src="{base64}">{caption_html}</figure>'
+    html = f'<figure><img class="{" ".join(classes)}" src="{base64}">{caption_html}</figure>'
     return pf.RawBlock(html, format="html")
 
 
