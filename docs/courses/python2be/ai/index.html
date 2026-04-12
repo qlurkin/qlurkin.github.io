@@ -969,8 +969,8 @@
 			<small>On ne sait pas faire mieux que la valeur minimax actuelle</small></li>
 		<li><strong>Deux situations</strong> de simplification possibles
 			<ul>
-				<li>\(\alpha\) plus grande borne inférieure pour <code>MAX</code></li>
-				<li>\(\beta\) plus petite borne supérieure pour <code>MIN</code></li>
+				<li>\(\alpha\) plus grande borne inférieure pour <code>MAX</code><small>MAX cherche des valeurs plus grande que \(\alpha\)</small></li>
+				<li>\(\beta\) plus petite borne supérieure pour <code>MIN</code><small>MIN cherche des valeurs plus petite que \(\beta\)</small></li>
 			</ul>
 		</li>
 		<li><strong>Mémorisation des bornes</strong> durant l’exploration de l’arbre</li>
@@ -999,17 +999,63 @@
 				<li>\(\beta(n)\) plus petite valeur trouvée actuellement (\(+\infty\) au départ)</li>
 			</ul>
 		</li>
-		<li>Deux situations de <strong>pruning</strong>
-			<ul>
-				<li><strong><em>Beta cutoff</em></strong> sur noeud MAX \(n\) <br>
-					si \(\alpha(n) \geqslant \beta(i)\) pour \(i\) ancêtre MIN de \(n\)</li>
-				<li><strong><em>Alpha cutoff</em></strong> sur noeud MIN \(n\) <br>
-					si \(\beta(n) \leqslant \alpha(i)\) pour \(i\) ancêtre MAX de \(n\)</li>
-			</ul>
-		</li>
+    <li>
+      <strong>Pruning</strong> si \(\alpha \geqslant \beta\) <small>Il n'y a plus d'intersection entre les valeurs accptées par MIN et MAX</small>
+    </li>
+		<!-- <li>Deux situations de <strong>pruning</strong> -->
+		<!-- 	<ul> -->
+		<!-- 		<li><strong><em>Beta cutoff</em></strong> sur noeud MAX \(n\) <br> -->
+		<!-- 			si \(\alpha(n) \geqslant \beta(i)\) pour \(i\) ancêtre MIN de \(n\)</li> -->
+		<!-- 		<li><strong><em>Alpha cutoff</em></strong> sur noeud MIN \(n\) <br> -->
+		<!-- 			si \(\beta(n) \leqslant \alpha(i)\) pour \(i\) ancêtre MAX de \(n\)</li> -->
+		<!-- 	</ul> -->
+		<!-- </li> -->
 
 	</ul>
 </section>
+
+<section>
+  <h2>Alpha Beta Pruning</h2>
+  <figure>
+		<img src="./alpha-beta 1.svg" alt="">
+	</figure>
+</section>
+
+<section>
+  <h2>Alpha Beta Pruning</h2>
+  <figure>
+		<img src="./alpha-beta 2.svg" alt="">
+	</figure>
+</section>
+
+<section>
+  <h2>Alpha Beta Pruning</h2>
+  <figure>
+		<img src="./alpha-beta 3.svg" alt="">
+	</figure>
+</section>
+
+<section>
+  <h2>Alpha Beta Pruning</h2>
+  <figure>
+		<img src="./alpha-beta 4.svg" alt="">
+	</figure>
+</section>
+
+<section>
+  <h2>Alpha Beta Pruning</h2>
+  <figure>
+		<img src="./alpha-beta 5.svg" alt="">
+	</figure>
+</section>
+
+<section>
+  <h2>Alpha Beta Pruning</h2>
+  <figure>
+		<img src="./alpha-beta 6.svg" alt="">
+	</figure>
+</section>
+
 <section class="code">
 	<h2>Alpha Beta Pruning</h2>
 	<pre><code class="lang-python">
