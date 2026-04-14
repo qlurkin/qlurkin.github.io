@@ -1,6 +1,15 @@
 ---
 title: Exercices 5
+typst: true
 ---
+
+1. Écrire une fonction nommée `unique()` qui reçoit une liste en paramètre et
+   qui renvoie une nouvelle liste contenant une fois chaque élément de la liste
+   d'entrée, dans l'ordre d'apparition de la 1ère occurrence.
+
+1. Écrire une fonction nommée `zipper()` qui reçoit 2 listes en paramètres et
+   qui renvoie une liste contenant les éléments des deux listes alternés.
+   Attention, les deux listes peuvent être de tailles différentes.
 
 1. Écrire une fonction nommée `fibo()` qui prend un entier `n` en paramètre et
    qui renvoie le `n`<sup>ième</sup> terme de la suite de Fibonacci. La suite de
@@ -10,23 +19,10 @@ title: Exercices 5
 
 1. Écrire une fonction nommée `pgcd()` qui prend deux entiers en paramètres et
    renvoie le "Plus Grand Commun Diviseur". Le PGCD peut être calculé en
-   utilisant les relations suivantes:
+   utilisant les relations suivantes: $$ "pgcd"(a, b) = cases( a &"si" b = 0,
+   "pgcd"(b, a % b) &"sinon") $$
 
-   $$
-   pgcd(a, b) =
-   \begin{cases}
-   a                  & \text{si } b = 0, \\
-   pgcd(b, a \% b) \: & \text{sinon}.
-   \end{cases}
-   $$
-
-1. Écrire une fonction nommée `sqrt()` qui calcule la racine carrée
-   intérativement. Pour calculer la racine carrée, on peut utiliser le principe
-   suivant: si $r$ est une approximation de la racine carrée de $x$ alors
-   $\frac{r + \frac{x}{r}}{2}$ est une meilleure approximation. Comment
-   contrôler la précision du résultat ?
-
-1. Écrire un programme qui affiche la figure suivante avec `turtle`:
+1. Écrire un programme qui affiche la figure suivante&nbsp;:
 
    ![Le flocon de Koch](./vonkoch.jpg)
 
@@ -35,7 +31,7 @@ title: Exercices 5
 
    ![Construction d'un segment](./segment_vonkoch.png)
 
-## Défis {.nocount}
+   Vous pouvez utiliser <code>turtle</code> ou <code>pygame</code>.
 
 1. Écrire un programme qui résout le problème des Tours de Hanoï.
 
@@ -71,3 +67,4 @@ title: Exercices 5
    Ce qui correspond aux étapes suivantes&nbsp;:
 
    ![Resolution pour trois disques](./hanoi_steps.png)
+
