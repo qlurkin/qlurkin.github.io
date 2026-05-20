@@ -500,10 +500,10 @@ total = 318
 @startuml
 partition "find_min ( **numbers** ) " {
   start
-  :**result** ← premier éléments de *numbers*;
+  :**result** ← premier éléments de **numbers**;
   while (Pour chaque valeur **x** de la liste **numbers**) is (**x**)
     if (**x** est plus petit que **result**) then (oui)
-      :**result** ← *x*;
+      :**result** ← **x**;
     else (non)
     endif
   endwhile (fini)
