@@ -1,2 +1,3 @@
 filters_dir = "pandoc/filters"
 template = "pandoc/template.html"
+server_root = "test_build_py"
