@@ -1,8 +1,0 @@
-README.md
-pyproject.toml
-src/build_py/__init__.py
-src/build_py/main.py
-src/build_py.egg-info/PKG-INFO
-src/build_py.egg-info/SOURCES.txt
-src/build_py.egg-info/dependency_links.txt
-src/build_py.egg-info/top_level.txt
