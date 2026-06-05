@@ -5,8 +5,15 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
-    "matplotlib>=3.10.8",
-    "panflute>=2.3.1",
-    "pygments>=2.19.2",
-    "typst>=0.13.7",
+  "matplotlib>=3.10.8",
+  "panflute>=2.3.1",
+  "pygments>=2.19.2",
+  "typst>=0.13.7",
+  "build_py",
 ]
+
+[tool.uv.sources]
+build_py = { workspace = true }
+
+[tool.uv.workspace]
+members = ["build_py"]
