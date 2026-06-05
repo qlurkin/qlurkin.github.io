@@ -5,7 +5,13 @@ from pathlib import Path
 from .config import config
 
 
-def resolve_prop(
+def metadata_to_cmd_arg(key, value):
+    if isinstance(value, bool):
+        value = "true" if value else "false"
+    return f"--metadata={key}:{value}"
+
+
+def resolve_config_path(
     prop_name: str, prop_value: str | Path | None, root: Path, conf: dict
 ) -> Path | None:
     if prop_value is None:
@@ -20,18 +26,15 @@ def resolve_prop(
     return prop_value
 
 
-def markdown(
-    path: str | Path,
+def prepare_pandoc_cmd(
+    metadata: dict[str, str | bool] = {},
     template: str | Path | None = None,
     filters_dir: str | Path | None = None,
-):
+) -> list[str]:
     root, conf = config()
 
-    template = resolve_prop("template", template, root, conf)
-    filters_dir = resolve_prop("filters_dir", filters_dir, root, conf)
-
-    path = Path(path)
-    dest = path.parent / (path.stem + ".html")
+    template = resolve_config_path("template", template, root, conf)
+    filters_dir = resolve_config_path("filters_dir", filters_dir, root, conf)
 
     cmd = [
         "pandoc",
@@ -54,6 +57,24 @@ def markdown(
                 str(filters_dir / filter),
             ]
 
+    for key, value in metadata.items():
+        cmd.append(metadata_to_cmd_arg(key, value))
+
+    return cmd
+
+
+def markdown(
+    path: str | Path,
+    metadata: dict[str, str | bool] = {},
+    template: str | Path | None = None,
+    filters_dir: str | Path | None = None,
+):
+    path = Path(path)
+    dest = path.parent / (path.stem + ".html")
+
+    cmd = prepare_pandoc_cmd(
+        metadata=metadata, template=template, filters_dir=filters_dir
+    )
     cmd += ["-o", str(dest), str(path)]
 
     sp.run(cmd)
