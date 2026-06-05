@@ -7,7 +7,7 @@ def build_one(path: str | Path):
     sp.run(["python", "build.py"], cwd=path)
 
 
-def build(*paths: str):
+def build(*paths: str | Path):
     threads = []
     for path in paths:
         threads.append(Thread(target=build_one, args=(path,)))
