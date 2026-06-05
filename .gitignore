@@ -9,4 +9,4 @@ htmlcov
 *-old.zip
 *.dSYM
 .venv
-.egg-info
+*.egg-info
