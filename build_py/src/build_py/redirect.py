@@ -20,12 +20,12 @@ HTML = """
 
 
 def redirect(target: str, title: str):
-    root, conf = config()
-    server_root = root / conf["server_root"]
     if target.startswith("http"):
         link = target
         js = f"window.location.href = '{link}'"
     else:
+        root, conf = config()
+        server_root = root / conf["server_root"]
         link = Path(target).resolve().relative_to(server_root)
         js = f"window.location.pathname = '/{link}'"
     html = HTML.format(title, js)
