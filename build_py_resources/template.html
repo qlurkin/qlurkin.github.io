@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="$lang$">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+$for(author-meta)$
+  <meta name="author" content="$author-meta$" />
+$endfor$
+  <title>
+      $if(title-prefix)$$title-prefix$ – $endif$$pagetitle$$if(subtitle)$ - $subtitle$$endif$
+  </title>
+$for(css)$
+  <link rel="stylesheet" href="$css$" />
+$endfor$
+$for(header-includes)$
+  $header-includes$
+$endfor$
+$if(math)$
+  <link rel="stylesheet" href="https://fred-wang.github.io/MathFonts/NewComputerModern/mathfonts.css" />
+$endif$
+</head>
+<body>
+$for(include-before)$
+$include-before$
+$endfor$
+$if(title)$
+<header id="title-block-header">
+<h1 class="title">$title$
+$if(subtitle)$
+<small>$subtitle$</small>
+$endif$
+</h1>
+$for(author)$
+<p class="author">$author$</p>
+$endfor$
+</header>
+$endif$
+$body$
+$for(include-after)$
+$include-after$
+$endfor$
+</body>
+</html>
