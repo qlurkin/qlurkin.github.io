@@ -4,7 +4,9 @@ from threading import Thread
 
 
 def build_one(path: str | Path):
+    path = Path(path)
     sp.run(["python", "build.py"], cwd=path)
+    print(f"BUILD {path.resolve()}")
 
 
 def build(*paths: str | Path):
