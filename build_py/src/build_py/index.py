@@ -22,7 +22,7 @@ def index(
     doc = ""
 
     for path in paths:
-        doc += f"- {find_title(path)}"
+        doc += f"- [{find_title(path)}]({path})\n"
 
     proc = sp.Popen(cmd, stdin=sp.PIPE, stdout=sp.PIPE, universal_newlines=True)
     proc.communicate(doc)
