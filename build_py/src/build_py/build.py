@@ -1,19 +1,12 @@
 import subprocess as sp
 from pathlib import Path
-from threading import Thread
-
-
-def build_one(path: str | Path):
-    path = Path(path)
-    sp.run(["python", "build.py"], cwd=path)
-    print(f"BUILD {(path / 'build.py').resolve()}")
 
 
 def build(*paths: str | Path):
-    threads = []
+    procs = []
     for path in paths:
-        threads.append(Thread(target=build_one, args=(path,)))
-    for thread in threads:
-        thread.start()
-    for thread in threads:
-        thread.join()
+        path = Path(path)
+        print(f"BUILD {(path / 'build.py').resolve()}")
+        procs.append(sp.Popen(["python", "build.py"], cwd=path))
+    for proc in procs:
+        proc.wait()
