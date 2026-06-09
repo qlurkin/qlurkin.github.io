@@ -77,5 +77,5 @@ def markdown(
     )
     cmd += ["-o", str(dest), str(path)]
 
-    sp.run(cmd)
     print(f"MD {path.resolve()}")
+    sp.run(cmd)

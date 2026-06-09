@@ -20,6 +20,7 @@ HTML = """
 
 
 def redirect(target: str, title: str):
+    print(f"REDIRECT {Path.cwd()}")
     if target.startswith("http"):
         link = target
         js = f"window.location.href = '{link}'"
@@ -31,4 +32,3 @@ def redirect(target: str, title: str):
     html = HTML.format(title, js)
     with open("index.html", "w", encoding="utf8") as file:
         file.write(html)
-    print(f"REDIRECT {Path.cwd()} -> {link}")

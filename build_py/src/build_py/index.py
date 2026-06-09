@@ -24,9 +24,9 @@ def index(
     for path in paths:
         doc += f"- [{find_title(path)}]({path}/)\n"
 
+    print(f"INDEX {Path.cwd()}")
     proc = sp.Popen(cmd, stdin=sp.PIPE, stdout=sp.PIPE, universal_newlines=True)
     proc.communicate(doc)
-    print(f"INDEX {Path.cwd()}")
 
 
 def build_and_index(
