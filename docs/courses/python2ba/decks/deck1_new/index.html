@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Quentin Lurkin" />
+  <title>
+      Cours 1 - Ensembles, dictionnaires et annotations
+  </title>
+  <link rel="stylesheet" href="/css/deck.css" />
+  <script src="/js/deck_only.js" type="module" defer></script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Cours 1
+<small>Ensembles, dictionnaires et annotations</small>
+</h1>
+<p class="author">Quentin Lurkin</p>
+</header>
+<section id="ensembles" class="level2">
+<h2>Ensembles</h2>
+<ul>
+<li>Collection <strong>non ordonnée</strong> d’éléments
+<strong>distincts</strong> <span class="small">Pas de doublons et pas
+d’ordre entre les éléments</span></li>
+<li><strong>Définition</strong> d’un ensemble non vide avec
+<strong><code>{}</code></strong> <small>Opérations des séquences (sauf
+modification) applicables</small></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="n">numbers</span> <span class="o">=</span> <span class="p">{</span><span class="mi">42</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">11</span><span class="p">}</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">numbers</span><span class="p">)</span>            <span class="c1"># {0, 42, 11, -2, 7}</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">numbers</span><span class="p">))</span>       <span class="c1"># 5</span>
+<span class="nb">print</span><span class="p">(</span><span class="mi">60</span> <span class="ow">in</span> <span class="n">numbers</span><span class="p">)</span>      <span class="c1"># False</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">numbers</span><span class="p">))</span>      <span class="c1"># &lt;class &#39;set&#39;&gt;</span>
+
+<span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">numbers</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+</pre></div>
+
+</section>
+<section id="définition" class="level2">
+<h2>Définition</h2>
+<ul>
+<li>Par <strong>compréhension</strong> ou à partir d’une
+<strong>séquence</strong> <small>Élimination automatique des
+doublons</small></li>
+<li>Ensemble <strong>vide</strong> créé avec
+<strong><code>set()</code></strong></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="c1"># {0, 42, 84, 21, 63}</span>
+<span class="n">S</span> <span class="o">=</span> <span class="p">{</span><span class="n">n</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="k">if</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">7</span> <span class="o">==</span> <span class="mi">0</span><span class="p">}</span>
+
+<span class="c1"># {0, 42, 12, -1}</span>
+<span class="n">A</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="mi">12</span><span class="p">,</span> <span class="mi">42</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+
+<span class="c1"># {&#39;!&#39;, &#39;C&#39;, &#39;i&#39;, &#39;c&#39;, &#39;o&#39;, &#39;r&#39;}</span>
+<span class="n">B</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="s1">&#39;Cocorico!&#39;</span><span class="p">)</span>
+</pre></div>
+
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">{</mo><mi>n</mi><mo>∈</mo><mi mathvariant="double-struck">ℕ</mi><mrow><mspace width="0.333em"></mspace><mtext mathvariant="normal"> avec </mtext><mspace width="0.333em"></mspace></mrow><mn>0</mn><mo>≤</mo><mi>n</mi><mo>&lt;</mo><mn>100</mn><mo>∣</mo><mi>n</mi><mrow><mspace width="0.333em"></mspace><mtext mathvariant="normal"> est divisible par </mtext><mspace width="0.333em"></mspace></mrow><mn>3</mn><mrow><mspace width="0.333em"></mspace><mtext mathvariant="normal"> et </mtext><mspace width="0.333em"></mspace></mrow><mn>7</mn><mo stretchy="true" form="postfix">}</mo></mrow></mrow><annotation encoding="application/x-tex"> S = \left\{ n \in \mathbb{N} \text{ avec } 0 \leq n &lt; 100 \mid n \text{ est divisible par } 3 \text{ et } 7 \right\} </annotation></semantics></math></p>
+</section>
+<section id="modification-dun-ensemble" class="level2">
+<h2>Modification d’un ensemble</h2>
+<ul>
+<li><strong>Modification</strong> d’un ensemble par ajout/suppression
+d’éléments <small>Utilisation des méthodes <code>add</code> et
+<code>remove</code></small></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="n">S</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">}</span>
+
+<span class="n">S</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>               <span class="c1"># {2, 3, 4}</span>
+<span class="n">S</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>               <span class="c1"># {3, 4}</span>
+<span class="n">S</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>                  <span class="c1"># {3, 4, 5}</span>
+</pre></div>
+
+</section>
+<section id="opérations-ensemblistes" class="level2">
+<h2>Opérations ensemblistes</h2>
+<ul>
+<li>Trois <strong>opérations ensemblistes</strong> de base</li>
+<li>Ces opérateurs créent tous des <strong>nouveaux
+ensembles</strong></li>
+</ul>
+<figure>
+<img src="./venn.svg" style="width:25em"
+alt="Trois opérations ensemblistes" />
+<figcaption aria-hidden="true">Trois opérations
+ensemblistes</figcaption>
+</figure>
+<div class="pygments"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">}</span>
+<span class="n">B</span> <span class="o">=</span> <span class="p">{</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">}</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">A</span> <span class="o">-</span> <span class="n">B</span><span class="p">)</span>              <span class="c1"># {1, 2}            (différence)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">A</span> <span class="o">&amp;</span> <span class="n">B</span><span class="p">)</span>              <span class="c1"># {3, 4}            (intersection)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">A</span> <span class="o">|</span> <span class="n">B</span><span class="p">)</span>              <span class="c1"># {1, 2, 3, 4, 5}   (union)</span>
+</pre></div>
+
+</section>
+<section id="éléments-dun-ensemble" class="level2">
+<h2>Éléments d’un ensemble</h2>
+<ul>
+<li>Les éléments d’un ensemble doivent être <strong>uniques</strong>
+<small>Par conséquent, ils doivent être non modifiables</small></li>
+<li>On ne peut pas créer un <strong>ensemble d’ensembles</strong></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="c1"># L&#39;ensemble des sous-ensembles de {1, 2, 3}</span>
+<span class="n">A</span> <span class="o">=</span> <span class="p">{{},</span> <span class="p">{</span><span class="mi">1</span><span class="p">},</span> <span class="p">{</span><span class="mi">2</span><span class="p">},</span> <span class="p">{</span><span class="mi">3</span><span class="p">},</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">},</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">},</span> <span class="p">{</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">},</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">}}</span>
+</pre></div>
+
+<div class="terminal">Traceback (most recent call last):
+File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+    TypeError: unhashable type: &#39;set&#39;
+</div>
+</section>
+<section id="le-type-frozenset" class="level2">
+<h2>Le type <code>frozenset</code></h2>
+<ul>
+<li>Le type <code>frozenset</code> représente un <strong>ensemble non
+modifiable</strong> <small>Les opérations des ensembles (sauf
+modification) sont applicables</small></li>
+<li>On peut créer un <strong>ensemble d’ensembles non
+modifiables</strong> <small>Un <code>set</code> dont les éléments sont
+des <code>frozenset</code></small></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="c1"># L&#39;ensemble des sous-ensembles de {1, 2, 3}</span>
+<span class="n">A</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nb">frozenset</span><span class="p">(),</span>
+    <span class="nb">frozenset</span><span class="p">({</span><span class="mi">1</span><span class="p">}),</span> <span class="nb">frozenset</span><span class="p">({</span><span class="mi">2</span><span class="p">}),</span> <span class="nb">frozenset</span><span class="p">({</span><span class="mi">3</span><span class="p">}),</span>
+    <span class="nb">frozenset</span><span class="p">({</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">}),</span> <span class="nb">frozenset</span><span class="p">({</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">}),</span> <span class="nb">frozenset</span><span class="p">({</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">}),</span>
+    <span class="nb">frozenset</span><span class="p">({</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">})</span>
+<span class="p">}</span>
+</pre></div>
+
+</section>
+<section id="somme-des-éléments-dun-ensemble" class="level2 code">
+<h2 class="code">Somme des éléments d’un ensemble</h2>
+<div class="pygments"><pre><span></span><span class="n">S</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">}</span>
+
+<span class="c1"># avec un for</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">sumElements</span><span class="p">(</span><span class="n">S</span><span class="p">):</span>
+    <span class="nb">sum</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">S</span><span class="p">:</span>
+        <span class="nb">sum</span> <span class="o">+=</span> <span class="n">elem</span>
+    <span class="k">return</span> <span class="nb">sum</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">sumElements</span><span class="p">(</span><span class="n">S</span><span class="p">))</span>    <span class="c1"># 6</span>
+
+<span class="c1"># avec la fonction sum</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">S</span><span class="p">))</span>            <span class="c1"># 6</span>
+</pre></div>
+
+</section>
+<section id="plus-grande-valeur-dun-ensemble" class="level2 code">
+<h2 class="code">Plus grande valeur d’un ensemble</h2>
+<div class="pygments"><pre><span></span><span class="n">S</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">99</span><span class="p">,</span> <span class="mi">16</span><span class="p">}</span>
+
+<span class="c1"># avec un for</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">maxElement</span><span class="p">(</span><span class="n">S</span><span class="p">):</span>
+    <span class="nb">max</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;-inf&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">S</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">elem</span> <span class="o">&gt;</span> <span class="nb">max</span><span class="p">:</span>
+            <span class="nb">max</span> <span class="o">=</span> <span class="n">elem</span>
+    <span class="k">return</span> <span class="nb">max</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">maxElement</span><span class="p">(</span><span class="n">S</span><span class="p">))</span>            <span class="c1"># 99</span>
+
+<span class="c1"># avec la fonction max</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">S</span><span class="p">))</span>                   <span class="c1"># 99</span>
+</pre></div>
+
+</section>
+<section id="dictionnaire" class="level2">
+<h2>Dictionnaire</h2>
+<ul>
+<li>Ensemble de <strong>paires clé-valeur</strong> <small>Les clés sont
+uniques et non modifiables</small></li>
+<li><strong>Définition</strong> d’un dictionnaire avec
+<strong><code>{}</code></strong> <small>Opérations des séquences (sauf
+indices) applicables</small></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="n">phone</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Quentin&#39;</span><span class="p">:</span> <span class="mi">8723</span><span class="p">,</span> <span class="s1">&#39;Cédric&#39;</span><span class="p">:</span> <span class="mi">2837</span><span class="p">,</span> <span class="s1">&#39;Nathalie&#39;</span><span class="p">:</span> <span class="mi">4872</span><span class="p">}</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">phone</span><span class="p">)</span>              <span class="c1"># {&#39;Quentin&#39;: 8723, &#39;Cédric&#39;: 2837,</span>
+                          <span class="c1">#  &#39;Nathalie&#39;: 4872}</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">phone</span><span class="p">))</span>         <span class="c1"># 3</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Cédric&#39;</span> <span class="ow">in</span> <span class="n">phone</span><span class="p">)</span>  <span class="c1"># True</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">phone</span><span class="p">))</span>        <span class="c1"># &lt;class &#39;dict&#39;&gt;</span>
+</pre></div>
+
+</section>
+<section id="définition-1" class="level2">
+<h2>Définition</h2>
+<ul>
+<li>Par <strong>compréhension</strong> ou à partir d’une <strong>liste
+de paires</strong> clé-valeur <small>Élimination automatique des
+doublons</small></li>
+<li><strong>Dictionnaire vide</strong> avec <code>{}</code>
+<small>Attention à ne pas confondre avec l’ensemble vide</small></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="c1"># {1: 1, 3: 9, 9: 81, 5: 25, 7: 49}</span>
+<span class="n">square</span> <span class="o">=</span> <span class="p">{</span><span class="n">n</span> <span class="p">:</span> <span class="n">n</span> <span class="o">**</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span> <span class="k">if</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">}</span>
+
+<span class="c1"># {&#39;A&#39;: 65, &#39;C&#39;: 67, &#39;B&#39;: 66, &#39;E&#39;: 69, &#39;D&#39;: 68, &#39;F&#39;: 70}</span>
+<span class="n">mapping</span> <span class="o">=</span> <span class="p">{</span><span class="nb">chr</span><span class="p">(</span><span class="n">i</span><span class="p">):</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">65</span><span class="p">,</span> <span class="mi">71</span><span class="p">)}</span>
+</pre></div>
+
+</section>
+<section id="accès-et-modification" class="level2">
+<h2>Accès et modification</h2>
+<ul>
+<li><strong>Accès à une valeur</strong> à l’aide de la clé entre
+crochets <small>Permet également la modification d’une
+valeur</small></li>
+<li><strong>Suppression</strong> paire clé-valeur avec la fonction
+<code>del</code></li>
+<li>Deux situations si la <strong>clé n’existe pas</strong>
+<ul>
+<li>À droite de <code>=</code> : provoque une erreur
+<em>(accès)</em></li>
+<li>À gauche de <code>=</code> : ajoute une paire clé-valeur au
+dictionnaire <em>(assignation)</em></li>
+</ul></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="n">price</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;lemon&quot;</span><span class="p">:</span> <span class="mf">0.85</span><span class="p">,</span> <span class="s2">&quot;pear&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+
+<span class="n">price</span><span class="p">[</span><span class="s1">&#39;lemon&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.90</span>     <span class="c1"># {&quot;lemon&quot;: 0.90, &quot;pear&quot;: 1}</span>
+<span class="n">price</span><span class="p">[</span><span class="s1">&#39;apple&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.00</span>     <span class="c1"># {&quot;lemon&quot;: 0.90, &quot;pear&quot;: 1, &quot;apple&quot;: 1}</span>
+<span class="k">del</span><span class="p">(</span><span class="n">price</span><span class="p">[</span><span class="s1">&#39;pear&#39;</span><span class="p">])</span>        <span class="c1"># {&quot;lemon&quot;: 0.90, &quot;apple&quot;: 1}</span>
+</pre></div>
+
+</section>
+<section id="parcours-dun-dictionnaire" class="level2">
+<h2>Parcours d’un dictionnaire</h2>
+<ul>
+<li>Accès aux clés avec la méthode <code>keys()</code>, aux paires avec
+<code>items()</code> et aux valeurs avec la méthode
+<code>values()</code> <small>Renvoient de séquences que l’on peut
+convertir en liste</small></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">price</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>  <span class="c1"># [&#39;lemon&#39;, &#39;pear&#39;, &#39;apple&#39;]</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">price</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span> <span class="c1"># [(&#39;lemon&#39;, 0.9), (&#39;pear&#39;, 1.0), (&#39;apple&#39;, 1.0)]</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">price</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span><span class="c1"># [0.9, 1.0, 1.0]</span>
+
+<span class="c1"># Parcours des clés explicite</span>
+<span class="k">for</span> <span class="n">fruit</span> <span class="ow">in</span> <span class="n">price</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">fruit</span><span class="p">,</span> <span class="n">price</span><span class="p">[</span><span class="n">fruit</span><span class="p">],</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39; : &#39;</span><span class="p">)</span>
+
+<span class="c1"># Parcours des clés implicite</span>
+<span class="k">for</span> <span class="n">fruit</span> <span class="ow">in</span> <span class="n">price</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">fruit</span><span class="p">,</span> <span class="n">price</span><span class="p">[</span><span class="n">fruit</span><span class="p">],</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39; : &#39;</span><span class="p">)</span>
+
+<span class="c1"># Parcours des clés et valeurs</span>
+<span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">price</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39; : &#39;</span><span class="p">)</span>
+
+<span class="c1"># Parcours des valeurs seulement</span>
+<span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">price</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</pre></div>
+
+</section>
+<section id="collection-et-recherche" class="level2">
+<h2>Collection et recherche</h2>
+<ul>
+<li>Une collection est une <strong>structure de données</strong>
+permettant de <strong>stocker</strong> et d’<strong>organiser</strong>
+des <strong>valeurs</strong> <small>Liste, Tuples, Ensembles,
+Dictionnaires</small></li>
+<li>La <strong>recherche</strong> d’un élément se fait avec l’opérateur
+<code>in</code></li>
+<li>Chaque type de collection est <strong>optimisé différemment</strong>
+vis-à-vis des recherches :
+<ul>
+<li>Liste et tuple : complexité
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false" form="prefix">(</mo><mi>n</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></li>
+<li>Ensembles et dictionnaires : complexité
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">O(1)</annotation></semantics></math></li>
+</ul></li>
+</ul>
+</section>
+<section id="complexité" class="level2">
+<h2>Complexité</h2>
+<ul>
+<li>La complexité caractérise le temps d’exécution ou la quantité de
+mémoire utilisée d’un algorithme <strong>par rapport à la taille du
+problème</strong>
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math>)
+à résoudre.</li>
+<li>Exemples:
+<ul>
+<li>taille du problème double
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>=</mo><mo>&gt;</mo></mrow><annotation encoding="application/x-tex">=&gt;</annotation></semantics></math>
+temps d’exécution double : <strong>complexité temporelle
+linéaire</strong> (notation : <strong>“grand O de n”</strong>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false" form="prefix">(</mo><mi>n</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math>)</li>
+<li>taille du problème double
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>=</mo><mo>&gt;</mo></mrow><annotation encoding="application/x-tex">=&gt;</annotation></semantics></math>
+utilisation mémoire quadruple : <strong>complexité spatiale
+quadratique</strong>
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false" form="prefix">(</mo><msup><mi>n</mi><mn>2</mn></msup><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">O(n^2)</annotation></semantics></math>)</li>
+<li>temps d’exécution indépendant de la taille du problème :
+<strong>complexité temporelle constante</strong>
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">O(1)</annotation></semantics></math>)</li>
+</ul></li>
+</ul>
+</section>
+<section id="à-chaque-collection-son-usage" class="level2">
+<h2>À chaque collection son usage</h2>
+<ul>
+<li>Choix de la structure de données utilisée <strong>en fonction des
+besoins</strong> :
+<ul>
+<li>Listes: Ordonnée, modifiable</li>
+<li>Tuples: Ordonné, immuable</li>
+<li>Ensemble: Recherche en temps constant</li>
+<li>Dictionnaire: Recherche par clé en temps constant</li>
+</ul></li>
+</ul>
+</section>
+<section id="exemple" class="level2 code">
+<h2 class="code">Exemple</h2>
+<div class="pygments"><pre><span></span><span class="c1"># Stockage d&#39;informations d&#39;étudiants avec recherche par matricule efficace</span>
+<span class="n">students</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s2">&quot;11111&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;firstname&quot;</span><span class="p">:</span> <span class="s2">&quot;Peter&quot;</span><span class="p">,</span> <span class="s2">&quot;lastname&quot;</span><span class="p">:</span> <span class="s2">&quot;Parker&quot;</span><span class="p">},</span>
+  <span class="s2">&quot;11112&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;firstname&quot;</span><span class="p">:</span> <span class="s2">&quot;Sarah&quot;</span><span class="p">,</span> <span class="s2">&quot;lastname&quot;</span><span class="p">:</span> <span class="s2">&quot;Connor&quot;</span><span class="p">},</span>
+<span class="p">}</span>
+
+<span class="c1"># Stockage d&#39;informations d&#39;étudiants avec importance de l&#39;ordre</span>
+<span class="n">students</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">{</span><span class="s2">&quot;matricule&quot;</span><span class="p">:</span> <span class="s2">&quot;11111&quot;</span><span class="p">,</span> <span class="s2">&quot;firstname&quot;</span><span class="p">:</span> <span class="s2">&quot;Peter&quot;</span><span class="p">,</span> <span class="s2">&quot;lastname&quot;</span><span class="p">:</span> <span class="s2">&quot;Parker&quot;</span><span class="p">},</span>
+  <span class="p">{</span><span class="s2">&quot;matricule&quot;</span><span class="p">:</span> <span class="s2">&quot;11112&quot;</span><span class="p">,</span> <span class="s2">&quot;firstname&quot;</span><span class="p">:</span> <span class="s2">&quot;Sarah&quot;</span><span class="p">,</span> <span class="s2">&quot;lastname&quot;</span><span class="p">:</span> <span class="s2">&quot;Connor&quot;</span><span class="p">},</span>
+<span class="p">]</span>
+</pre></div>
+
+</section>
+<section id="annotations-de-type-problème" class="level2">
+<h2>Annotations de type: problème</h2>
+<ul>
+<li>L’éditeur <em>(Zed)</em> nous aide mais pas tout le temps</li>
+</ul>
+<div class="row">
+<div class="span6">
+<figure>
+<img src="./help.png" style="width:8em"
+alt="liste des méthodes disponibles" />
+<figcaption aria-hidden="true">liste des méthodes
+disponibles</figcaption>
+</figure>
+</div>
+<div class="span6 middle">
+<figure>
+<img src="./no_help.png" style="width:5em" alt="Aucune aide" />
+<figcaption aria-hidden="true">Aucune aide</figcaption>
+</figure>
+</div>
+</div>
+</section>
+<section id="annotations-de-type" class="level2">
+<h2>Annotations de type</h2>
+<ul>
+<li>Le type de <code>L</code> est inconnu
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>⇒</mo><annotation encoding="application/x-tex">\Rightarrow</annotation></semantics></math>
+pas d’aide</li>
+</ul>
+<figure>
+<img src="./no_help2.png" style="width:8em" alt="Type inconnu" />
+<figcaption aria-hidden="true">Type inconnu</figcaption>
+</figure>
+<ul>
+<li>Ajout d’annotation pour aider l’éditeur</li>
+</ul>
+<figure>
+<img src="./some_help.png" style="width:8em" alt="Avec annotation" />
+<figcaption aria-hidden="true">Avec annotation</figcaption>
+</figure>
+</section>
+<section id="listes" class="level2">
+<h2>Listes</h2>
+<ul>
+<li>Une collection peu contenir n’importe quoi</li>
+</ul>
+<figure>
+<img src="./no_help3.png" style="width:8em"
+alt="Type des éléments inconnu" />
+<figcaption aria-hidden="true">Type des éléments inconnu</figcaption>
+</figure>
+<figure>
+<img src="./more_help.png" style="width:10em"
+alt="Annotation pour les éléments" />
+<figcaption aria-hidden="true">Annotation pour les éléments</figcaption>
+</figure>
+</section>
+<section id="tuples" class="level2">
+<h2>Tuples</h2>
+<ul>
+<li>Tuples de taille fixe, on spécifie le type de chacun des
+éléments</li>
+</ul>
+<div class="row">
+<div class="span6">
+<figure>
+<img src="./tuple0.png" alt="premier élément" />
+<figcaption aria-hidden="true">premier élément</figcaption>
+</figure>
+</div>
+<div class="span6">
+<figure>
+<img src="./tuple1.png" alt="deuxième élément" />
+<figcaption aria-hidden="true">deuxième élément</figcaption>
+</figure>
+</div>
+</div>
+<ul>
+<li>Tuples de taille variable, on utilise un type et une ellipse</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">fun</span><span class="p">(</span><span class="n">T</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">]):</span>
+  <span class="o">...</span>
+</pre></div>
+
+</section>
+<section id="dictionnaires" class="level2">
+<h2>Dictionnaires</h2>
+<ul>
+<li>Le type des clés peut être spécifié</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">fun</span><span class="p">(</span><span class="n">D</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]):</span>
+  <span class="n">D</span><span class="p">[</span><span class="s1">&#39;un&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+</pre></div>
+
+<ul>
+<li>Les clés d’un dictionnaire doivent être non-modifiable
+(<code>Hashable</code>)</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Hashable</span><span class="p">,</span> <span class="n">Any</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">add_key_value</span><span class="p">(</span><span class="n">D</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="n">Hashable</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
+  <span class="n">D</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+</pre></div>
+
+<ul>
+<li>Le type <code>Any</code> accepte n’importe quoi.</li>
+</ul>
+</section>
+<section id="unions" class="level2">
+<h2>Unions</h2>
+<ul>
+<li>Si plusieurs types doivent être acceptés</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">bool</span><span class="p">):</span>
+  <span class="o">...</span>
+</pre></div>
+
+</section>
+<section id="options" class="level2">
+<h2>Options</h2>
+<ul>
+<li>Si <code>None</code> est accepté</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]):</span>
+  <span class="o">...</span>
+</pre></div>
+
+<ul>
+<li>Équivalent à</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">):</span>
+  <span class="o">...</span>
+</pre></div>
+
+</section>
+<section id="types-de-retour" class="level2">
+<h2>Types de retour</h2>
+<ul>
+<li>On peut aussi spécifier le type de retour</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="n">L</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+  <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">L</span><span class="p">:</span>
+    <span class="n">res</span> <span class="o">+=</span> <span class="n">elem</span>
+  <span class="k">return</span> <span class="n">res</span>
+</pre></div>
+
+</section>
+<section id="vérification-de-type" class="level2">
+<h2>Vérification de type</h2>
+<ul>
+<li>L’éditeur (Zed) vérifie que vous respectez les types que vous avez
+annoncé</li>
+</ul>
+<figure>
+<img src="./typecheck.png" alt="Erreur de type" />
+<figcaption aria-hidden="true">Erreur de type</figcaption>
+</figure>
+<ul>
+<li>L’interpréteur ne tient pas compte des annotations de type <span
+class="small">Une erreur affichée par Zed n’empêche pas le programme de
+démarrer</span></li>
+</ul>
+</section>
+<section id="documentation" class="level2">
+<h2>Documentation</h2>
+<ul>
+<li>Les fonctions prédéfinies ont une documentation intégrée que
+l’éditeur peut afficher</li>
+</ul>
+<figure>
+<img src="./docstring.png" alt="Documentation intégrée" />
+<figcaption aria-hidden="true">Documentation intégrée</figcaption>
+</figure>
+<ul>
+<li>Ce texte de documentation s’appelle le <code>docstring</code></li>
+</ul>
+</section>
+<section id="docstring" class="level2">
+<h2>Docstring</h2>
+<ul>
+<li>Dans vos fonctions, vous pouvez définir le <code>docstring</code> en
+début de fonction avec des triples <code>'</code> ou <code>"</code></li>
+</ul>
+<figure>
+<img src="./docstring2.png" alt="Définition du docstring" />
+<figcaption aria-hidden="true">Définition du
+<em>docstring</em></figcaption>
+</figure>
+</section>
+</body>
+</html>
