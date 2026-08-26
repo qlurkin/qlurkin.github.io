@@ -1,0 +1,1451 @@
+<!doctype html>
+<html lang="">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="generator" content="pandoc" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, user-scalable=yes"
+        />
+                <meta name="author" content="Quentin Lurkin" />
+                <title>
+            Cours 4            - Mécanisme d’exceptions et lecture de
+fichiers        </title>
+                <link rel="stylesheet" href="/css/deck.css" />
+        <link
+            rel="stylesheet"
+            href="https://fred-wang.github.io/MathFonts/NewComputerModern/mathfonts.css"
+        />
+          <script src="/js/deck_only.js" type="module" defer></script> 
+    </head>
+    <body>
+                 <header id="title-block-header">
+            <h1 class="title">
+                Cours 4                 <small>Mécanisme d’exceptions et
+lecture de fichiers</small>
+                            </h1>
+                        <p class="author">Quentin Lurkin</p>
+                    </header>
+         <section id="trace-derreur" class="level2">
+<h2>Trace d’erreur</h2>
+<ul>
+<li>Une erreur d'exécution imprime une <strong>trace d'erreur</strong>
+<span class="small">Chemin d'exécution complet qui a provoqué
+l'erreur</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">percentage</span><span class="p">(</span><span class="n">score</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">total</span><span class="p">:</span><span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+  <span class="k">return</span> <span class="n">score</span> <span class="o">/</span> <span class="n">total</span> <span class="o">*</span> <span class="mi">100</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Alexis a obtenu&#39;</span><span class="p">,</span> <span class="n">percentage</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="s1">&#39;%&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Sébastien a obtenu&#39;</span><span class="p">,</span> <span class="n">percentage</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="s1">&#39;%&#39;</span><span class="p">)</span>
+</pre></div>
+
+<div class="terminal">Alexis a obtenu 90.0 %
+Traceback (most recent call last):
+    File &quot;program.py&quot;, line 5, in &lt;module&gt;
+        print(&#39;Sébastien a obtenu&#39;, percentage(6, 0), &#39;%&#39;)
+    File &quot;program.py&quot;, line 2, in percentage
+        return score / total * 100
+ZeroDivisionError: division by zero
+</div>
+</section>
+<section id="trace-derreur-1" class="level2">
+<h2>Trace d’erreur</h2>
+<ul>
+<li>L'erreur a comme <strong>origine</strong> l'exécution de
+l'instruction en ligne 5</li>
+</ul>
+<div class="terminal">File &quot;program.py&quot;, line 5, in &lt;module&gt;
+    print(&#39;Sébastien a obtenu&#39;, percentage(6, 0), &#39;%&#39;)
+</div>
+<ul>
+<li>L'erreur est dans la <strong>fonction
+<code>percentage()</code></strong></li>
+</ul>
+<div class="terminal">File &quot;program.py&quot;, line 2, in percentage
+    return score / total * 100
+</div>
+<ul>
+<li>L'erreur est de type <strong>division par zéro</strong></li>
+</ul>
+<div class="pygments"><pre><span></span>ZeroDivisionError: division by zero
+</pre></div>
+
+</section>
+<section id="types-derreur" class="level2">
+<h2>Types d’erreur</h2>
+<ul>
+<li>On peut considérer <strong>trois types d'erreur</strong> possibles
+<ul>
+<li><strong>Erreur de syntaxe</strong> <span class="small">Code source
+mal formé</span></li>
+<li><strong>Erreur d'exécution</strong> <span class="small">Exécution
+d'une opération interdite</span></li>
+<li><strong>Erreur logique</strong> <span class="small">Programme ne
+calcule pas ce qu'il faut</span></li>
+</ul></li>
+<li>Le troisième type est le plus <strong>difficile à déceler</strong>
+<span class="small">Il faut pouvoir vérifier que le programme fait ce
+qu'il faut</span></li>
+</ul>
+</section>
+<section id="erreur-de-syntaxe" class="level2">
+<h2>Erreur de syntaxe</h2>
+<ul>
+<li>Erreur détectée <strong>lors de l'exécution</strong> de
+l'instruction <span class="small">Python est en effet un langage
+interprété</span></li>
+<li>Code source du programme contient des <strong>fautes de
+syntaxe</strong> <span class="small">Un peu comme l'orthographe en
+français</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="n">score</span> <span class="o">=</span> <span class="mi">12</span>
+<span class="k">if</span> <span class="n">score</span> <span class="o">&gt;</span> <span class="mi">10</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Vous avez réussi !&#39;</span><span class="p">)</span>
+</pre></div>
+
+<div class="terminal">File &quot;program.py&quot;, line 2
+    if score &gt; 10
+                ^
+SyntaxError: expected &#39;:&#39;
+</div>
+</section>
+<section id="erreur-dexécution" class="level2">
+<h2>Erreur d'exécution</h2>
+<ul>
+<li>Erreur produite <strong>durant l'exécution</strong> d'une opération
+interdite <span class="small">Division par zéro, indice en dehors d'une
+liste...</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+
+<span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">while</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+  <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+</pre></div>
+
+<div class="terminal">1
+2
+3
+Traceback (most recent call last):
+    File &quot;program.py&quot;, line 5, in &lt;module&gt;
+        print(data[i])
+IndexError: list index out of range
+</div>
+</section>
+<section id="erreur-logique" class="level2">
+<h2>Erreur logique</h2>
+<ul>
+<li>Le programme ne <strong>calcule pas ce qu'il faut</strong> <span
+class="small">Aucune erreur de syntaxe ou d'exécution ne se
+produit</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">perimeter</span><span class="p">(</span><span class="n">length</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">width</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+  <span class="k">return</span> <span class="n">length</span> <span class="o">+</span> <span class="n">width</span> <span class="o">*</span> <span class="mi">2</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">perimeter</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+</pre></div>
+
+<div class="terminal">4
+</div>
+<ul>
+<li>Il peut être utile de décrire clairement ce que la fonction devrait
+faire <span class="small">Pour s'assurer qu'il y a bien une
+erreur</span></li>
+</ul>
+</section>
+<section id="documentation" class="level2">
+<h2>Documentation</h2>
+<ul>
+<li>La <strong>documentation</strong> d'une fonction décrit le résultat
+produit <span class="small">Permet à un utilisateur d'interpréter le
+résultat de l'appel</span></li>
+<li>Description de <strong>conditions</strong> sur les paramètres <span
+class="small">Et de la valeur de retour si elles ne sont pas
+satisfaites</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">percentage</span><span class="p">(</span><span class="n">score</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">total</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Returns a grade as a percentage</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    `score`: the obtained grade. Must be positive and `&lt;= total`</span>
+<span class="sd">    `total`: the maximum grade obtainable. Must be positive</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    the computed percentage</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="k">return</span> <span class="n">score</span> <span class="o">/</span> <span class="n">total</span> <span class="o">*</span> <span class="mi">100</span>
+</pre></div>
+
+</section>
+<section id="documentation-1" class="level2">
+<h2>Documentation</h2>
+<ul>
+<li>Conditions de la documentation <strong>non-respectées</strong> <span
+class="small">Le programme continue de fonctionner avec une valeur
+illogique</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">percentage</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="s1">&#39;%&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">percentage</span><span class="p">(</span><span class="mi">22</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="s1">&#39;%&#39;</span><span class="p">)</span>
+</pre></div>
+
+<div class="terminal">75%
+110%
+</div>
+<ul>
+<li>Erreur <strong>de logique</strong></li>
+</ul>
+</section>
+<section id="programmation-défensive" class="level2">
+<h2>Programmation défensive</h2>
+<ul>
+<li>Vérification de <strong>conditions sensées être vraies</strong> avec
+<code>assert</code> <span class="small">On vérifie notamment les
+conditions sur les paramètres avec cette instruction</span></li>
+<li>Un programme <strong>doit fonctionner</strong> si on supprime les
+assertions <span class="small">Elles ne doivent pas faire partie du code
+fonctionnel</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">percentage</span><span class="p">(</span><span class="n">score</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">total</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Returns a grade as a percentage</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    `score`: the obtained grade. Must be positive and `&lt;= total`</span>
+<span class="sd">    `total`: the maximum grade obtainable. Must be positive</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    the computed percentage</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="k">assert</span> <span class="n">total</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;total must be positive&#39;</span>
+  <span class="k">assert</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">score</span><span class="p">,</span> <span class="s1">&#39;score must be positive&#39;</span>
+  <span class="k">assert</span> <span class="n">score</span> <span class="o">&lt;=</span> <span class="n">total</span><span class="p">,</span> <span class="s1">&#39;score must be &lt;= total&#39;</span>
+
+  <span class="k">return</span> <span class="n">score</span> <span class="o">/</span> <span class="n">total</span> <span class="o">*</span> <span class="mi">100</span>
+</pre></div>
+
+</section>
+<section id="instruction-assert" class="level2">
+<h2>Instruction <code>assert</code></h2>
+<ul>
+<li><strong>Arrêt du programme</strong> en cas d'erreur d'assertion
+<span class="small">Avec affichage d'un message
+d'information</span></li>
+<li>Empêche des erreurs qui <strong>ne devraient pas</strong> se
+produire <span class="small">Le programme peut être modifié pour les
+éviter</span></li>
+<li><strong>Augmente nos chances d’avoir une erreur d’exécution au lieu
+d’une erreur de logique</strong> <span class="small">Ce qui est trés
+désirable</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">percentage</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="s1">&#39;%&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">percentage</span><span class="p">(</span><span class="mi">22</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="s1">&#39;%&#39;</span><span class="p">)</span>
+</pre></div>
+
+<div class="terminal">75.0 %
+Traceback (most recent call last):
+    File &quot;program.py&quot;, line 17, in &lt;module&gt;
+        print(percentage(22, 20), &#39;%&#39;)
+    File &quot;program.py&quot;, line 13, in percentage
+        assert score &lt;= total, &#39;score must be &lt;= total&#39;
+AssertionError: score must be &lt;= total
+</div>
+<ul>
+<li>Se pratique sur du code dont vous avez <strong>le
+contrôle</strong></li>
+</ul>
+</section>
+<section id="gestion-derreurs" class="level2">
+<h2>Gestion d’erreurs</h2>
+<ul>
+<li>Prendre en compte <strong>tous les cas</strong> possibles
+d'exécution <span class="small">Utilisation de
+<code>if-else</code></span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">percentage</span><span class="p">(</span><span class="n">score</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">total</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Returns a grade as a percentage</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    `score`: the obtained grade</span>
+<span class="sd">    `total`: the maximum grade obtainable</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    the computed percentage</span>
+<span class="sd">    if `total &lt;= 0`, `score &lt; 0` or `score &gt; total`, then returns `None`</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="k">if</span> <span class="n">total</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">score</span> <span class="o">&lt;=</span> <span class="n">total</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">score</span> <span class="o">/</span> <span class="n">total</span> <span class="o">*</span> <span class="mi">100</span>
+  <span class="k">return</span> <span class="kc">None</span>
+</pre></div>
+
+<div class="terminal">Alexis a obtenu 90.0 %
+Sébastien a obtenu None %
+</div>
+<ul>
+<li>Impact sur l’<strong>annotation du type de retour</strong> de la
+fonction</li>
+<li>Doit être pratiquée pour interface avec l'extérieur <span
+class="small">Vérification de toutes données hors contrôle</span></li>
+</ul>
+</section>
+<section id="mecanisme-dexceptions" class="level2">
+<h2>Mecanisme d’exceptions</h2>
+<ul>
+<li>Gestion d’un code qui <strong>pourrait planter</strong></li>
+<li><strong>Code risqué</strong> placé dans un bloc <code>try</code>
+<span class="small">N'y placer que le code risqué et tout code qui en
+dépend</span></li>
+<li><strong>Erreurs capturées</strong> dans le bloc <code>except</code>
+<span class="small">Y placer le code à exécuter en cas de capture d'une
+erreur</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">birthyear</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;Année de naissance ? &#39;</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+  <span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+  <span class="n">age</span> <span class="o">=</span> <span class="n">now</span><span class="o">.</span><span class="n">year</span> <span class="o">-</span> <span class="nb">int</span><span class="p">(</span><span class="n">birthyear</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Tu as&#39;</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="s1">&#39;ans&#39;</span><span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Erreur&#39;</span><span class="p">)</span>
+</pre></div>
+
+</section>
+<section id="instruction-try-except" class="level2">
+<h2>Instruction <code>try-except</code></h2>
+<ul>
+<li>Si l'utilisateur entre un nombre entier, <strong>pas
+d'erreurs</strong></li>
+</ul>
+<div class="terminal">Année de naissance ? 1982
+Tu as 36 ans
+</div>
+<ul>
+<li>Si l'utilisateur n'entre pas un nombre entier, <strong>erreur
+capturée</strong></li>
+</ul>
+<div class="terminal">Année de naissance ? BLA
+Erreur
+</div>
+</section>
+<section id="validité-dune-donnée" class="level2">
+<h2>Validité d'une donnée</h2>
+<ul>
+<li>Demande d'une valeur à l'utilisateur <strong>en boucle</strong>
+<span class="small">Tant que la valeur demandée n'est pas du bon
+type</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">valid</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="k">while</span> <span class="ow">not</span> <span class="n">valid</span><span class="p">:</span>
+  <span class="n">birthyear</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;Année de naissance ? &#39;</span><span class="p">)</span>
+  <span class="k">try</span><span class="p">:</span>
+    <span class="n">birthyear</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">birthyear</span><span class="p">)</span>
+    <span class="n">valid</span> <span class="o">=</span> <span class="kc">True</span>
+  <span class="k">except</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Veuillez entrer un nombre entier&#39;</span><span class="p">)</span>
+
+<span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+<span class="n">age</span> <span class="o">=</span> <span class="n">now</span><span class="o">.</span><span class="n">year</span> <span class="o">-</span> <span class="n">birthyear</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Tu as&#39;</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="s1">&#39;ans&#39;</span><span class="p">)</span>
+</pre></div>
+
+</section>
+<section id="vérifier-le-type-derreur" class="level2">
+<h2>Vérifier le type d'erreur</h2>
+<ul>
+<li>Plusieurs <strong>types d'erreur</strong> sont possibles <span
+class="small">Division par zéro, erreur de conversion...</span></li>
+<li>Toutes les erreurs sont capturées par l'<strong>instruction
+<code>except</code></strong> <span class="small">Possibilité de capturer
+les erreurs de manière spécifique</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">try</span><span class="p">:</span>
+  <span class="n">a</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s1">&#39;a ? &#39;</span><span class="p">))</span>
+  <span class="n">b</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s1">&#39;b ? &#39;</span><span class="p">))</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="s1">&#39;=&#39;</span><span class="p">,</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span><span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Erreur&#39;</span><span class="p">)</span>
+</pre></div>
+
+</section>
+<section id="vérifier-le-type-derreur-1" class="level2">
+<h2>Vérifier le type d'erreur</h2>
+<ul>
+<li>Une <strong>exception</strong> est un objet qui représente une
+erreur <span class="small">L'objet est généralement de type
+<code>Exception</code></span></li>
+<li>Types spécifiques pour différencier les <strong>types
+d'erreurs</strong> <span class="small">ZeroDivisionError,
+ValueError...</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+
+<span class="k">try</span><span class="p">:</span>
+  <span class="n">a</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s1">&#39;a ? &#39;</span><span class="p">))</span>
+  <span class="n">b</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s1">&#39;b ? &#39;</span><span class="p">))</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="s1">&#39;=&#39;</span><span class="p">,</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+</pre></div>
+
+</section>
+<section id="vérifier-le-type-derreur-2" class="level2">
+<h2>Vérifier le type d'erreur</h2>
+<ul>
+<li>Division par zéro</li>
+</ul>
+<div class="terminal">a ? deux
+&lt;class &#39;ValueError&#39;&gt;
+invalid literal for int() with base 10: &#39;deux&#39;
+</div>
+<ul>
+<li>Erreur de conversion</li>
+</ul>
+<div class="terminal">a ? 2
+b ? 0
+&lt;class &#39;ZeroDivisionError&#39;&gt;
+division by zero
+</div>
+</section>
+<section id="capturer-une-erreur-spécifique" class="level2">
+<h2>Capturer une erreur spécifique</h2>
+<ul>
+<li><strong>Gestionnaire d'erreurs</strong> différent pour chaque type
+d'erreur <span class="small">Il suffit de déclarer un bloc
+<code>except</code> par erreur à capturer</span></li>
+<li>Attention à l'<strong>ordre de capture</strong> (de haut en bas)
+<span class="small">Il faut classer les erreurs de la plus à la moins
+spécificité</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+
+<span class="k">try</span><span class="p">:</span>
+  <span class="n">a</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s1">&#39;a ? &#39;</span><span class="p">))</span>
+  <span class="n">b</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s1">&#39;b ? &#39;</span><span class="p">))</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="s1">&#39;=&#39;</span><span class="p">,</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Erreur de conversion&#39;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">ZeroDivisionError</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Division par zéro&#39;</span><span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Autre erreur&#39;</span><span class="p">)</span>
+</pre></div>
+
+</section>
+<section id="capturer-une-erreur-spécifique-1" class="level2">
+<h2>Capturer une erreur spécifique</h2>
+<div class="pygments"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+
+<span class="k">try</span><span class="p">:</span>
+  <span class="n">a</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s1">&#39;a ? &#39;</span><span class="p">))</span>
+  <span class="n">b</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s1">&#39;b ? &#39;</span><span class="p">))</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="s1">&#39;=&#39;</span><span class="p">,</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Erreur&#39;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Erreur de conversion&#39;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">ZeroDivisionError</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Division par zéro&#39;</span><span class="p">)</span>
+</pre></div>
+
+<div class="terminal">a ? 2
+b ? 0
+Autre erreur
+</div>
+</section>
+<section id="information-sur-une-erreur" class="level2">
+<h2>Information sur une erreur</h2>
+<ul>
+<li>L'<strong>objet de l'exception</strong> peut contenir de
+l'information <span class="small">On peut accéder à des propriétés ou à
+des méthodes</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">try</span><span class="p">:</span>
+  <span class="kn">import</span><span class="w"> </span><span class="nn">mymod</span>
+<span class="k">except</span> <span class="ne">SyntaxError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;File:&#39;</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Line:&#39;</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">lineno</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Text:&#39;</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+</pre></div>
+
+<div class="terminal">can&#39;t assign to literal (mymod.py, line 1)
+File: /Users/combefis/Desktop/mymod.py
+Line: 1
+Text: 2 = x
+</div>
+</section>
+<section id="gestionnaire-derreurs-partagé" class="level2">
+<h2>Gestionnaire d'erreurs partagé</h2>
+<ul>
+<li><strong>Même gestionnaire d'erreurs</strong> pour différents types
+<span class="small">Tuple d'exception fourni à l'instruction <code
+class="lang-python">except</code></span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">try</span><span class="p">:</span>
+  <span class="n">a</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s1">&#39;a ? &#39;</span><span class="p">))</span>
+  <span class="n">b</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s1">&#39;b ? &#39;</span><span class="p">))</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">a</span> <span class="o">/</span> <span class="n">b</span><span class="p">)</span>
+<span class="k">except</span> <span class="p">(</span><span class="ne">ZeroDivisionError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">):</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Erreur de calcul&#39;</span><span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Erreur&#39;</span><span class="p">)</span>
+</pre></div>
+
+<div class="terminal">a ? 1
+b ? 0
+Erreur de calcul
+</div>
+</section>
+<section id="propagation-derreur" class="level2">
+<h2>Propagation d'erreur</h2>
+<ul>
+<li>Une <strong>erreur non capturée</strong> remonte les appels de
+fonction <span class="small">Jusqu'à être attrapée ou remonté jusqu'au
+bout</span></li>
+<li>La <strong>trace d'erreur</strong> montre le trajet pris par
+l'exception <span class="small">En la lisant à l'envers, on peut suivre
+la propagation</span></li>
+</ul>
+</section>
+<section id="propagation-derreur-1" class="level2">
+<h2>Propagation d'erreur</h2>
+<ul>
+<li><strong>Passage</strong> de <code class="lang-python">fun</code> à
+<code class="lang-python">compute</code> au programme principal</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">fun</span><span class="p">():</span>
+  <span class="nb">print</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">compute</span><span class="p">():</span>
+  <span class="n">fun</span><span class="p">()</span>
+
+<span class="n">compute</span><span class="p">()</span>
+</pre></div>
+
+<div class="terminal">Traceback (most recent call last):
+    File &quot;program.py&quot;, line 7, in &lt;module&gt;
+        compute()
+    File &quot;program.py&quot;, line 5, in compute
+        fun()
+    File &quot;program.py&quot;, line 2, in fun
+        print(1 / 0)
+ZeroDivisionError: division by zero
+</div>
+</section>
+<section id="propagation-derreur-2" class="level2">
+<h2>Propagation d'erreur</h2>
+<ul>
+<li>Exception <strong>interceptée</strong> dans la fonction <code
+class="lang-python">compute</code></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">fun</span><span class="p">():</span>
+  <span class="nb">print</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">compute</span><span class="p">():</span>
+  <span class="k">try</span><span class="p">:</span>
+    <span class="n">fun</span><span class="p">()</span>
+  <span class="k">except</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Erreur.&#39;</span><span class="p">)</span>
+
+<span class="n">compute</span><span class="p">()</span>
+</pre></div>
+
+<div class="terminal">Erreur.
+</div>
+<!--## Bloc `finally`-->
+<!---->
+<!--- Le bloc `finally`{.lang-python} s\'exécute **dans tous les cas**-->
+<!--  [Après le bloc `try`{.lang-python} ou l\'`except`{.lang-python} en-->
+<!--  cas d\'erreur]{.small}-->
+<!--- Notamment utilisé pour faire du **nettoyage** [Par exemple pour-->
+<!--  libérer des ressources qui ont été allouées]{.small}-->
+<!---->
+<!--## Bloc `finally`-->
+<!---->
+<!--- Bloc `finally` **exécuté à tous les coups** avant la-->
+<!--  fin du calcul-->
+<!---->
+<!--```python-->
+<!--print('Début du calcul.')-->
+<!--try:-->
+<!--  a = int(input('a ? '))-->
+<!--  b = int(input('b ? '))-->
+<!--  print('Résultat :', a / b)-->
+<!--except:-->
+<!--  print('Erreur.')-->
+<!--finally:-->
+<!--  print('Nettoyage de la mémoire.')-->
+<!--  print('Fin du calcul.')-->
+<!--```-->
+<!---->
+<!--```terminal-->
+<!--Début du calcul.-->
+<!--a ? 2-->
+<!--b ? 8-->
+<!--Résultat : 0.25-->
+<!--Nettoyage de la mémoire.-->
+<!--Fin du calcul.-->
+<!--```-->
+</section>
+<section id="générer-une-erreur" class="level2">
+<h2>Générer une erreur</h2>
+<ul>
+<li>L'<strong>instruction <code
+class="lang-python">raise</code></strong> permet de générer une erreur
+<span class="small">Création d'un objet du type de
+l'exception</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">fact</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Compute the factorial of `n`</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">      `n`: a positive integer</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">      The factorial of `n`</span>
+
+<span class="sd">  Raises:</span>
+<span class="sd">      ArithmeticError: if `n` is negative</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">ArithmeticError</span><span class="p">()</span>
+  <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">return</span> <span class="mi">1</span>
+  <span class="k">return</span> <span class="n">n</span> <span class="o">*</span> <span class="n">fact</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+  <span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s1">&#39;Entrez un nombre : &#39;</span><span class="p">))</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">fact</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+<span class="k">except</span> <span class="ne">ArithmeticError</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Veuillez entrer un nombre positif.&#39;</span><span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Veuillez entrer un nombre.&#39;</span><span class="p">)</span>
+</pre></div>
+
+<div class="terminal">Entrez un nombre : -12
+Veuillez entrer un nombre positif.
+</div>
+</section>
+<section id="définir-une-erreur" class="level2">
+<h2>Définir une erreur</h2>
+<ul>
+<li><strong>Définition d'une erreur</strong> en définissant une nouvelle
+classe <span class="small">La classe est créée à partir de la classe
+<code>Exception</code></span></li>
+<li>L'<strong>instruction <code>pass</code></strong> ne fait rien</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">sqrt</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">NoRootException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+  <span class="k">pass</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">trinomialroots</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Compute the real roots of a second-degree equation</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">      `a`, `b` and `c`: The coefficients of the second-degree equation</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">      A tuple with one or two real roots</span>
+
+<span class="sd">  Raises:</span>
+<span class="sd">      NoRootException: if the equation has no real roots</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">delta</span> <span class="o">=</span> <span class="n">b</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">a</span> <span class="o">*</span> <span class="n">c</span>
+  <span class="k">if</span> <span class="n">delta</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="n">NoRootException</span><span class="p">()</span>
+  <span class="k">if</span> <span class="n">delta</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">return</span> <span class="p">(</span><span class="o">-</span><span class="n">b</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">a</span><span class="p">),)</span>
+  <span class="n">x1</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">b</span> <span class="o">+</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">delta</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">a</span><span class="p">)</span>
+  <span class="n">x2</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">b</span> <span class="o">-</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">delta</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">a</span><span class="p">)</span>
+  <span class="k">return</span> <span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">)</span>
+</pre></div>
+
+</section>
+<section id="définir-une-erreur-1" class="level2">
+<h2>Définir une erreur</h2>
+<ul>
+<li><strong>Capture de la nouvelle erreur</strong> avec l'instruction
+<code class="lang-python">except</code> <span class="small">Le nouveau
+type d'erreur est maintenant connu par Python</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">try</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">trinomialroots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="k">except</span> <span class="n">NoRootException</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Pas de racine réelle.&#39;</span><span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Erreur&#39;</span><span class="p">)</span>
+</pre></div>
+
+<div class="terminal">Pas de racine réelle.
+</div>
+</section>
+<section id="exception-paramétrée" class="level2">
+<h2>Exception paramétrée</h2>
+<ul>
+<li>Stockage d'un <strong>paramètre</strong> dans l'exception</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">sqrt</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">NoRootException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+  <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delta</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">delta</span> <span class="o">=</span> <span class="n">delta</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">trinomialroots</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Compute the real roots of a second-degree equation</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">      `a`, `b` and `c`: The coefficients of the second-degree equation</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">      A tuple with one or two real roots</span>
+
+<span class="sd">  Raises:</span>
+<span class="sd">      NoRootException: if the equation has no real roots</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">delta</span> <span class="o">=</span> <span class="n">b</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">a</span> <span class="o">*</span> <span class="n">c</span>
+  <span class="k">if</span> <span class="n">delta</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="n">NoRootException</span><span class="p">(</span><span class="n">delta</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">delta</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+      <span class="k">return</span> <span class="p">(</span><span class="o">-</span><span class="n">b</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">a</span><span class="p">),)</span>
+  <span class="n">x1</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">b</span> <span class="o">+</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">delta</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">a</span><span class="p">)</span>
+  <span class="n">x2</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">b</span> <span class="o">-</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">delta</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">a</span><span class="p">)</span>
+  <span class="k">return</span> <span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">trinomialroots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="k">except</span> <span class="n">NoRootException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Pas de racine réelle (delta = </span><span class="si">{</span><span class="n">e</span><span class="o">.</span><span class="n">delta</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Erreur&#39;</span><span class="p">)</span>
+</pre></div>
+
+<div class="terminal">Pas de racine réelle (delta = -8)
+</div>
+</section>
+<section id="exception-avec-dataclass" class="level2">
+<h2>Exception avec <code>dataclass</code></h2>
+<div class="pygments"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">sqrt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">NoRootException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+  <span class="n">delta</span><span class="p">:</span> <span class="nb">float</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">trinomialroots</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Compute the real roots of a second-degree equation</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">      `a`, `b` and `c`: The coefficients of the second-degree equation</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">      A tuple with one or two real roots</span>
+
+<span class="sd">  Raises:</span>
+<span class="sd">      NoRootException: if the equation has no real roots</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">delta</span> <span class="o">=</span> <span class="n">b</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">a</span> <span class="o">*</span> <span class="n">c</span>
+  <span class="k">if</span> <span class="n">delta</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="n">NoRootException</span><span class="p">(</span><span class="n">delta</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">delta</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+      <span class="k">return</span> <span class="p">(</span><span class="o">-</span><span class="n">b</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">a</span><span class="p">),)</span>
+  <span class="n">x1</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">b</span> <span class="o">+</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">delta</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">a</span><span class="p">)</span>
+  <span class="n">x2</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">b</span> <span class="o">-</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">delta</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">a</span><span class="p">)</span>
+  <span class="k">return</span> <span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">trinomialroots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="k">except</span> <span class="n">NoRootException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Pas de racine réelle (delta = </span><span class="si">{</span><span class="n">e</span><span class="o">.</span><span class="n">delta</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Erreur&quot;</span><span class="p">)</span>
+</pre></div>
+
+</section>
+<section id="fichier" class="level2">
+<h2>Fichier</h2>
+<ul>
+<li>Un <strong>fichier</strong> stocke des informations sur le disque
+dur <span class="small">Il est créé, modifié, supprimé</span></li>
+<li>Manipulation des fichiers grâce au <strong>système
+d'exploitation</strong> <span class="small">L'interpréteur fait le
+relais avec Linux, Windows, Mac OS X...</span></li>
+<li>Des <strong>informations</strong> sont associées à un fichier <span
+class="small">Nom, taille, date de création, dernière date de
+modification...</span></li>
+</ul>
+</section>
+<section id="type-de-fichier" class="level2">
+<h2>Type de fichier</h2>
+<ul>
+<li>Au plus bas niveau, un fichier est une <strong>séquence de
+bits</strong> (<code class="lang-plaintext">0</code> et <code
+class="lang-plaintext">1</code>) <span class="small">La séquence doit
+être interprétée pour en obtenir le sens</span></li>
+<li><strong>Deux types</strong> de fichiers manipulés à des niveaux
+différents
+<ul>
+<li>Fichier texte est une séquence de caractères</li>
+<li>Fichier binaire est une séquence d'octets (8 bits)</li>
+</ul></li>
+</ul>
+</section>
+<section id="chemin" class="level2">
+<h2>Chemin</h2>
+<ul>
+<li>Fichier identifié sur une machine à l'aide de son
+<strong>chemin</strong> <span class="small">Identifie l'endroit où se
+situe le fichier</span></li>
+<li><strong>Deux façons</strong> de spécifier un chemin
+<ul>
+<li>Chemin absolu à partir de la racine <span class="small"><code
+class="lang-plaintext">C:\</code> (Windows), <code
+class="lang-plaintext">/</code> (OSX et Linux)</span></li>
+<li>Chemin relatif à partir du répertoire courant</li>
+</ul></li>
+</ul>
+<table>
+<colgroup>
+<col style="width: 39%" />
+<col style="width: 60%" />
+</colgroup>
+<thead>
+<tr>
+<th>Chemin relatif</th>
+<th>Chemin absolu</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>data.txt</td>
+<td>C:\Users\lur\Desktop\data.txt</td>
+</tr>
+<tr>
+<td>src\program.py</td>
+<td>C:\Users\lur\Desktop\src\program.py</td>
+</tr>
+<tr>
+<td>..\image.png</td>
+<td>C:\Users\lur\image.png</td>
+</tr>
+<tr>
+<td>..\movies\hamburgers.mp4</td>
+<td>C:\Users\lur\movies\hamburgers.mp4</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="navigation-en-ligne-de-commande" class="level2">
+<h2>Navigation en ligne de commande</h2>
+<p>Pour passer d'un répertoire à l'autre dans une console de
+commandes</p>
+<ul>
+<li><code class="lang-plaintext">pwd</code>: Affiche le chemin du
+répertoire courant <span class="small">Base des chemins
+relatifs</span></li>
+<li><code class="lang-plaintext">cd</code> <em>(suivi d'un chemin)</em>:
+Change de répertoire courant <span class="small"><code
+class="lang-plaintext">..</code> pour le répertoire parent</span></li>
+<li><code class="lang-plaintext">dir</code> <em>(Windows)</em> ou <code
+class="lang-plaintext">ls</code> <em>(OSX et Linux)</em>: Liste le
+contenu du répertoire</li>
+</ul>
+</section>
+<section id="ouverture-dun-fichier" class="level2">
+<h2>Ouverture d'un fichier</h2>
+<ul>
+<li>Pour manipuler un fichier, il faut d'abord l'<strong>ouvrir</strong>
+<span class="small">On utilise la fonction <code
+class="lang-python">open</code>, qui renvoie un identifiant de
+fichier</span></li>
+<li><strong>Erreurs</strong> possibles lors de l'ouverture <span
+class="small">Fichier introuvable, …</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">try</span><span class="p">:</span>
+  <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;data.txt&#39;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Le fichier est introuvable&#39;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Erreur d&#39;ouverture&quot;</span><span class="p">)</span>
+</pre></div>
+
+</section>
+<section id="mode-douverture" class="level2">
+<h2>Mode d'ouverture</h2>
+<ul>
+<li>Par défaut, fichier ouvert en <strong>lecture seule</strong> <span
+class="small">Tout ce qu'on peut faire c'est donc lire le contenu du
+fichier</span></li>
+<li>On peut spécifier le <strong>mode d'ouverture</strong> désiré <span
+class="small">Avec le deuxième paramètre de la fonction
+<code>open()</code></span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">try</span><span class="p">:</span>
+  <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;data.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>         <span class="c1"># Ouverture en écriture</span>
+<span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Erreur d&#39;ouverture&quot;</span><span class="p">)</span>
+</pre></div>
+
+</section>
+<section id="mode-douverture-1" class="level2">
+<h2>Mode d'ouverture</h2>
+<ul>
+<li>Mode d'ouverture définit avec des <strong>caractères</strong></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Caractère</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>r</code></td>
+<td>Lecture (par défaut)</td>
+</tr>
+<tr>
+<td><code>w</code></td>
+<td>Écriture (avec remise à zéro)</td>
+</tr>
+<tr>
+<td><code>x</code></td>
+<td>Création exclusive (erreur si fichier déjà existant)</td>
+</tr>
+<tr>
+<td><code>a</code></td>
+<td>Écriture (avec ajout à la fin)</td>
+</tr>
+<tr>
+<td><code>b</code></td>
+<td>Mode binaire</td>
+</tr>
+<tr>
+<td><code>t</code></td>
+<td>Mode texte (par défaut)</td>
+</tr>
+</tbody>
+</table>
+<div class="pygments"><pre><span></span><span class="k">try</span><span class="p">:</span>
+  <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;data.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;rt&#39;</span><span class="p">)</span>         <span class="c1"># Mode par défaut</span>
+<span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Le fichier est introuvable&#39;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Erreur d&#39;ouverture&quot;</span><span class="p">)</span>
+</pre></div>
+
+</section>
+<section id="fermeture-dun-fichier" class="level2">
+<h2>Fermeture d'un fichier</h2>
+<ul>
+<li>Une fois les opérations finies, il faut <strong>fermer</strong> le
+fichier <span class="small">On utilise la méthode <code>close</code>
+avec l'identifiant de fichier</span></li>
+<li><strong>Libération des ressources</strong> et sauvegarde sur disque
+<span class="small">Le système d'exploitation limite le nombre de
+fichiers ouverts</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">try</span><span class="p">:</span>
+  <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;data.txt&#39;</span><span class="p">)</span>
+  <span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>                          <span class="c1"># Fermeture du fichier</span>
+<span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Le fichier est introuvable&#39;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Erreur d&#39;ouverture&quot;</span><span class="p">)</span>
+</pre></div>
+
+</section>
+<section id="lecture" class="level2">
+<h2>Lecture</h2>
+<ul>
+<li><strong>Lecture</strong> intégrale du fichier comme une chaîne de
+caractères <span class="small">On utilise la méthode <code>read</code>
+avec l'identifiant de fichier</span></li>
+<li>La lecture peut échouer et provoquer une <strong>exception
+<code>IOError</code></strong> <span class="small">Par exemple si le
+disque est déconnecté pendant la lecture</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">try</span><span class="p">:</span>
+  <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;data.txt&#39;</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+  <span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Le fichier est introuvable&#39;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Erreur d&#39;entrée/sortie&quot;</span><span class="p">)</span>
+</pre></div>
+
+</section>
+<section id="instruction-finally" class="level2">
+<h2>Instruction <code>finally</code></h2>
+<ul>
+<li>En cas d'erreur, le fichier pourrait <strong>ne pas être
+fermé</strong> <span class="small">Car l'exécution du code saute
+directement dans l'<code>except</code></span></li>
+<li><strong>Instruction <code>finally</code></strong> exécutée dans tous
+les cas <span class="small">Après la fin du bloc <code>try</code> ou
+après un <code>except</code> éventuel</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">try</span><span class="p">:</span>
+  <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;data.txt&#39;</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+<span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Le fichier est introuvable&#39;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Erreur d&#39;ouverture&quot;</span><span class="p">)</span>
+<span class="k">finally</span><span class="p">:</span>
+  <span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+
+</section>
+<section id="instruction-finally-1" class="level2">
+<h2>Instruction <code>finally</code></h2>
+<ul>
+<li><strong>Bug</strong> dans le code précédent si le fichier n'a pas su
+être ouvert <span class="small">La variable <code>file</code> ne sera
+pas initialisée et <code>close</code> pas disponible</span></li>
+<li>On utilise une instruction <strong><code>try/finally</code></strong>
+additionnelle</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">try</span><span class="p">:</span>
+  <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;data.txt&#39;</span><span class="p">)</span>
+  <span class="k">try</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+  <span class="k">finally</span><span class="p">:</span>
+    <span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Le fichier est introuvable&#39;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Erreur d&#39;entrée/sortie&quot;</span><span class="p">)</span>
+</pre></div>
+
+</section>
+<section id="instruction-with" class="level2">
+<h2>Instruction <code>with</code></h2>
+<ul>
+<li><strong>Instruction <code>with</code></strong> pour fermeture propre
+des ressources <span class="small">L'appel à <code>close</code> sera
+fait automatiquement</span></li>
+<li>Il faut garder le <strong><code>try/except</code></strong> pour les
+<code>IOError</code></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">try</span><span class="p">:</span>
+  <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;data.txt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+<span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Le fichier est introuvable&#39;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Erreur d&#39;entrée/sortie&quot;</span><span class="p">)</span>
+</pre></div>
+
+</section>
+<section id="écriture" class="level2">
+<h2>Écriture</h2>
+<ul>
+<li><strong>Écriture</strong> en ajoutant des chaines de caractères au
+fichier <span class="small">On utilise la fonction <code>write</code>
+avec l'identifiant de fichier</span></li>
+<li>L'écriture peut échouer et provoquer une <strong>exception
+<code>IOError</code></strong> <span class="small">Par exemple si
+l'espace disque devient plein pendant l'écriture</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;out.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+  <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;Table de 10</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1"> x 10 = </span><span class="si">{</span><span class="n">i</span><span class="o">*</span><span class="mi">10</span><span class="si">}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+
+</section>
+<section id="copie-dun-fichier" class="level2">
+<h2>Copie d'un fichier</h2>
+<ul>
+<li><strong>Copie</strong> en faisant une lecture puis écriture du
+contenu lu <span class="small">Deux instruction <code>with</code>
+imbriquées</span></li>
+<li>Si le fichier destination existe déjà, il est
+<strong>effacé</strong> <span class="small">Il faut utiliser le mode
+<code>x</code> au lieu de <code>w</code> pour empêcher cela</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;data.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">src</span><span class="p">,</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;copy.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">dest</span><span class="p">:</span>
+  <span class="n">dest</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">src</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+</pre></div>
+
+</section>
+<section id="lecture-ligne-par-ligne" class="level2">
+<h2>Lecture ligne par ligne</h2>
+<ul>
+<li>Utilisation d'un <strong>itérateur</strong> sur le fichier ouvert,
+avec <code>for</code> <span class="small">Parcours ligne par ligne, avec
+le retour de ligne inclus</span></li>
+<li>Fonction <code>rstrip</code> pour retirer les caractères blancs de
+droite <span class="small">right strip</span></li>
+</ul>
+<div class="file-title">
+<p>data.txt</p>
+</div>
+<div class="pygments"><pre><span></span>Facebook:lur@ecam.be:lurk:8dj,Sj0m1
+Skype:mar@ecam.be:cedou:arduino
+Facebook:fle@ecam.be:fingerfood:b8ur,g2er
+</pre></div>
+
+<div class="pygments"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;data.txt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+  <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">file</span><span class="p">:</span>
+    <span class="n">cleaned</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
+    <span class="n">tokens</span> <span class="o">=</span> <span class="n">cleaned</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Compte </span><span class="si">{</span><span class="n">tokens</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s1"> de </span><span class="si">{</span><span class="n">tokens</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="si">}</span><span class="s1"> (mode de passe : </span><span class="si">{</span><span class="n">tokens</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
+</pre></div>
+
+<div class="terminal">Compte Facebook de lurk (mode de passe : 8dj,Sj0m1)
+Compte Skype de cedou (mode de passe : arduino)
+Compte Facebook de fingerfood (mode de passe : b8ur,g2er)
+</div>
+</section>
+<section id="lecture-ligne-par-ligne-1" class="level2">
+<h2>Lecture ligne par ligne</h2>
+<ul>
+<li>L'<strong>itérateur</strong> est un raccourci d'appel de
+<code>readline</code> <span class="small">Lis une ligne s'il en reste à
+lire dans le fichier</span></li>
+<li>Renvoie une <strong>chaine de caractères vide</strong> lorsqu'au
+bout du fichier <span class="small">Pratique lorsqu'on sait combien de
+lignes lire</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;data.txt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+  <span class="n">line</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+  <span class="k">while</span> <span class="n">line</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+    <span class="n">cleaned</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
+    <span class="n">tokens</span> <span class="o">=</span> <span class="n">cleaned</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Compte </span><span class="si">{</span><span class="n">tokens</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s1"> de </span><span class="si">{</span><span class="n">tokens</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="si">}</span><span class="s1"> (mode de passe : </span><span class="si">{</span><span class="n">tokens</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
+    <span class="n">line</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+</pre></div>
+
+</section>
+<section id="lecture-ligne-par-ligne-2" class="level2">
+<h2>Lecture ligne par ligne</h2>
+<ul>
+<li>La fonction <code>readlines</code> lis l'<strong>intégralité des
+lignes</strong> en une traite <span class="small">La fonction renvoie
+une liste de chaines de caractères</span></li>
+<li>On peut <strong>supprimer la variable</strong> <code>cleaned</code>
+inutile <span class="small">En enchainant directement les appels à
+<code>rstrip</code> et <code
+class="lang-python">split</code></span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;data.txt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+  <span class="n">content</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">content</span><span class="p">:</span>
+  <span class="n">tokens</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Compte </span><span class="si">{</span><span class="n">tokens</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s1"> de </span><span class="si">{</span><span class="n">tokens</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="si">}</span><span class="s1"> (mode de passe : </span><span class="si">{</span><span class="n">tokens</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
+</pre></div>
+
+</section>
+<section id="lecture-ligne-par-ligne-3" class="level2">
+<h2>Lecture ligne par ligne</h2>
+<ul>
+<li><strong>Amélioration du code</strong> avec une fonction de formatage
+<span class="small">On définit une fonction qui formate une
+ligne</span></li>
+<li>On définit une liste par compréhension et on joint ses éléments
+<span class="small">Jointure des éléments d'une liste réalisée avec
+fonction <code>join</code></span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">format</span><span class="p">(</span><span class="n">line</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+  <span class="n">tokens</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
+  <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;Compte </span><span class="si">{</span><span class="n">tokens</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s1"> de </span><span class="si">{</span><span class="n">tokens</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="si">}</span><span class="s1"> (mode de passe : </span><span class="si">{</span><span class="n">tokens</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="si">}</span><span class="s1">)&#39;</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;data.txt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+  <span class="n">content</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">format</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">content</span><span class="p">]))</span>
+</pre></div>
+
+</section>
+<section id="exception" class="level2">
+<h2>Exception</h2>
+<ul>
+<li>L'erreur principale d'<strong>entrée/sortie</strong> est
+<code>IOError</code> <span class="small">On peut se limiter à capturer
+cette unique erreur</span></li>
+<li>Erreur <strong>spécialisée</strong> selon le type précis
+<ul>
+<li><code>FileNotFoundError</code>, si le fichier n'est pas trouvé</li>
+<li><code>FileExistsError</code>, si le fichier existe déjà</li>
+<li><code>PermissionError</code>, si l'utilisateur n'a pas les droits
+d'accès</li>
+<li><code>IsADirectoryError</code>, si le fichier est en fait un
+dossier</li>
+</ul></li>
+</ul>
+</section>
+<section id="encodage" class="level2">
+<h2>Encodage</h2>
+<ul>
+<li>Les caractères sont <strong>stockés au format binaire</strong> dans
+l'ordinateur <span class="small">Table de correspondance associant un
+entier à chaque caractère</span></li>
+<li>La <strong>table de caractères</strong> ASCII (iso-646) contient 128
+caractères <span class="small">Table suffisante pour des textes en
+anglais</span></li>
+</ul>
+<div style="font-size: 50%; margin: 0 auto;">
+<table>
+<colgroup>
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+</colgroup>
+<thead>
+<tr>
+<th></th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+<th>D</th>
+<th>E</th>
+<th>F</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>NUL</td>
+<td>SOH</td>
+<td>STH</td>
+<td>ETH</td>
+<td>EOT</td>
+<td>ENQ</td>
+<td>ACK</td>
+<td>BEL</td>
+<td>BS</td>
+<td>HT</td>
+<td>LF</td>
+<td>VT</td>
+<td>FF</td>
+<td>CR</td>
+<td>SO</td>
+<td>SI</td>
+</tr>
+<tr>
+<td>1</td>
+<td>DLE</td>
+<td>DC1</td>
+<td>CD2</td>
+<td>DC3</td>
+<td>DC4</td>
+<td>NAK</td>
+<td>SYN</td>
+<td>ETB</td>
+<td>CAN</td>
+<td>EM</td>
+<td>SUB</td>
+<td>ESC</td>
+<td>FS</td>
+<td>GS</td>
+<td>RS</td>
+<td>US</td>
+</tr>
+<tr>
+<td>2</td>
+<td>spc</td>
+<td>!</td>
+<td>"</td>
+<td>#</td>
+<td>$</td>
+<td>%</td>
+<td>&amp;</td>
+<td>'</td>
+<td>(</td>
+<td>)</td>
+<td>*</td>
+<td>+</td>
+<td>,</td>
+<td>-</td>
+<td>.</td>
+<td>/</td>
+</tr>
+<tr>
+<td>3</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+<td>6</td>
+<td>7</td>
+<td>8</td>
+<td>9</td>
+<td>:</td>
+<td>;</td>
+<td>&lt;</td>
+<td>=</td>
+<td>&gt;</td>
+<td>?</td>
+</tr>
+<tr>
+<td>4</td>
+<td>@</td>
+<td>A</td>
+<td>B</td>
+<td>C</td>
+<td>D</td>
+<td>E</td>
+<td>F</td>
+<td>G</td>
+<td>H</td>
+<td>I</td>
+<td>J</td>
+<td>K</td>
+<td>L</td>
+<td>M</td>
+<td>N</td>
+<td>O</td>
+</tr>
+<tr>
+<td>5</td>
+<td>P</td>
+<td>Q</td>
+<td>R</td>
+<td>S</td>
+<td>T</td>
+<td>U</td>
+<td>V</td>
+<td>W</td>
+<td>X</td>
+<td>Y</td>
+<td>Z</td>
+<td>[</td>
+<td>\</td>
+<td>]</td>
+<td>^</td>
+<td>_</td>
+</tr>
+<tr>
+<td>6</td>
+<td>`</td>
+<td>a</td>
+<td>b</td>
+<td>c</td>
+<td>d</td>
+<td>e</td>
+<td>f</td>
+<td>g</td>
+<td>h</td>
+<td>i</td>
+<td>j</td>
+<td>k</td>
+<td>l</td>
+<td>m</td>
+<td>n</td>
+<td>o</td>
+</tr>
+<tr>
+<td>7</td>
+<td>p</td>
+<td>q</td>
+<td>r</td>
+<td>s</td>
+<td>t</td>
+<td>u</td>
+<td>v</td>
+<td>w</td>
+<td>x</td>
+<td>y</td>
+<td>z</td>
+<td>{</td>
+<td>|</td>
+<td>}</td>
+<td>~</td>
+<td>DEL</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="encodage-1" class="level2">
+<h2>Encodage</h2>
+<ul>
+<li>La fonction <code>ord</code> donne le <strong>code</strong> d'un
+caractère <span class="small">Sous forme d'un nombre entier</span></li>
+<li>La fonction <code>chr</code> donne le <strong>caractère</strong>
+correspondant à un code <span class="small">Sous forme d'une chaine de
+caractères</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">chr</span><span class="p">(</span><span class="mi">65</span><span class="p">))</span>           <span class="c1"># Affiche A</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;z&#39;</span><span class="p">))</span>          <span class="c1"># Affiche 90</span>
+</pre></div>
+
+</section>
+<section id="unicode-et-utf-8" class="level2">
+<h2>Unicode et UTF-8</h2>
+<ul>
+<li><strong>Unicode</strong> (ISO 10646) est un standard d'échange de
+texte <span class="small">Associe à tout caractère un nom et un
+identifiant numérique</span></li>
+<li><strong>UTF-8</strong> est un encodage pour les caractères Unicode
+<span class="small">Python travaille par défaut avec l'encodage
+UTF-8</span></li>
+</ul>
+<figure>
+<img src="images/unicode-characters.png"
+alt="Parcourir les caractères Unicode en ligne : http://unicode-table.com" />
+<figcaption aria-hidden="true">Parcourir les caractères Unicode en ligne
+: <a href="http://unicode-table.com"
+class="uri">http://unicode-table.com</a></figcaption>
+</figure>
+</section>
+<section id="choisir-lencodage" class="level2">
+<h2>Choisir l'encodage</h2>
+<ul>
+<li>On spécifie l'<strong>encodage des fichiers</strong> avec le
+paramètre <code>encoding</code></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;contains_unicode.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+  <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;😆&#39;</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;contains_unicode.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;ascii&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+</pre></div>
+
+<div class="terminal">Traceback (most recent call last):
+    File &quot;program.py&quot;, line 5, in
+        print(file.read())
+    File &quot;/Library/Frameworks/Python.framework/Versions/3.4/lib/python3.4/encodings/ascii.py&quot;, line 26, in decode
+        return codecs.ascii_decode(input, self.errors)[0]
+UnicodeDecodeError: &#39;ascii&#39; codec can&#39;t decode byte 0xf0 in position 11: ordinal not in range(128)
+</div>
+</section> 
+    </body>
+</html>

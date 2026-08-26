@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="generator" content="pandoc" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, user-scalable=yes"
+        />
+                <meta name="author" content="Quentin Lurkin" />
+                <title>
+            Cours 6            - Calculs numériques        </title>
+                <link rel="stylesheet" href="/css/deck.css" />
+        <link
+            rel="stylesheet"
+            href="https://fred-wang.github.io/MathFonts/NewComputerModern/mathfonts.css"
+        />
+          <script src="/js/deck_only.js" type="module" defer></script> 
+    </head>
+    <body>
+                 <header id="title-block-header">
+            <h1 class="title">
+                Cours 6                 <small>Calculs
+numériques</small>
+                            </h1>
+                        <p class="author">Quentin Lurkin</p>
+                    </header>
+         <section id="rappels" class="level2">
+<h2>Rappels</h2>
+<ul>
+<li>Nous avons déjà aborder le <a
+href="../../../python1ba/book/chapter6/">calcul numériques en
+1BA</a></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">ysin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">ycos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Trigono&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span>
+  <span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">3</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">],</span>
+  <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;-3pi/2&quot;</span><span class="p">,</span> <span class="s2">&quot;-pi&quot;</span><span class="p">,</span> <span class="s2">&quot;-pi/2&quot;</span><span class="p">,</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span> <span class="s2">&quot;pi/2&quot;</span><span class="p">,</span> <span class="s2">&quot;pi&quot;</span><span class="p">,</span> <span class="s2">&quot;3pi/2&quot;</span><span class="p">]</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">ysin</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;sin(x)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">ycos</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;cos(x)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+</section>
+<section id="remarque-matplotlib-deux-api" class="level2">
+<h2>Remarque <code>matplotlib</code> deux API</h2>
+<ul>
+<li>Tous les exemples de l’année passée ont été donné dans l’<strong>API
+implicite</strong> de matplotlib <span class="small">Qui ressemble plus
+à Matlab</span></li>
+<li>Voici un exemple dans l’<strong>API explicite</strong>:</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">ysin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">ycos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Trigono&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([</span><span class="o">-</span><span class="mi">3</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">3</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">],</span>
+  <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;-3pi/2&quot;</span><span class="p">,</span> <span class="s2">&quot;-pi&quot;</span><span class="p">,</span> <span class="s2">&quot;-pi/2&quot;</span><span class="p">,</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span> <span class="s2">&quot;pi/2&quot;</span><span class="p">,</span> <span class="s2">&quot;pi&quot;</span><span class="p">,</span> <span class="s2">&quot;3pi/2&quot;</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">ysin</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;sin(x)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">ycos</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;cos(x)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+<figure>
+<img src="./sin_cos.svg" alt="Sinus et Cosinus" />
+<figcaption aria-hidden="true">Sinus et Cosinus</figcaption>
+</figure>
+</section>
+<section id="deux-api" class="level2">
+<h2>Deux API</h2>
+<div class="row">
+<section id="api-implicite" class="level3 span6">
+<h3>API implicite</h3>
+<div class="pygments"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;Implicit Interface&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Boo&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+</section>
+<section id="api-explicite" class="level3 span6">
+<h3>API explicite</h3>
+<div class="pygments"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">])</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">])</span>
+
+<span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;Explicit Interface&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+  <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Boo&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+</section>
+</div>
+<figure>
+<img src="./subplot.svg" alt="Subplot" />
+<figcaption aria-hidden="true">Subplot</figcaption>
+</figure>
+</section>
+<section id="numpy-calcul-matriciel" class="level2">
+<h2><code>numpy</code>: Calcul Matriciel</h2>
+<ul>
+<li><code>numpy</code> permet aussi de travailler avec des matrices</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+              <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]])</span>
+</pre></div>
+
+</section>
+<section id="même-opérations-que-le-vecteurs" class="level2">
+<h2>Même opérations que le vecteurs</h2>
+<ul>
+<li><p>Opérations avec scalaires</p>
+<div class="pygments"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+              <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]])</span>
+<span class="mi">2</span><span class="o">*</span><span class="n">A</span>         <span class="c1">#[[2, 4],</span>
+            <span class="c1"># [6, 8]]</span>
+</pre></div>
+</li>
+<li><p>Opérations avec tableaux de même taille et produit matriciel</p>
+<div class="pygments"><pre><span></span><span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">]])</span>
+<span class="n">A</span> <span class="o">*</span> <span class="n">B</span>       <span class="c1"># produit élément par élément</span>
+<span class="n">A</span> <span class="o">@</span> <span class="n">B</span>       <span class="c1"># produit matriciel</span>
+</pre></div>
+</li>
+<li><p>Fonctions sur les tableaux</p>
+<div class="pygments"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>   <span class="c1"># [[ 0.84147098  0.90929743]</span>
+            <span class="c1">#  [ 0.14112001 -0.7568025 ]]</span>
+</pre></div>
+</li>
+</ul>
+</section>
+<section id="attributs" class="level2">
+<h2>Attributs</h2>
+<div class="pygments"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+              <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
+              <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]])</span>
+
+<span class="n">x</span><span class="o">.</span><span class="n">ndim</span>   <span class="c1"># Dimension =&gt; 2</span>
+<span class="n">x</span><span class="o">.</span><span class="n">shape</span>  <span class="c1"># Forme =&gt; (3, 2)</span>
+<span class="n">x</span><span class="o">.</span><span class="n">size</span>   <span class="c1"># Nombre total d’éléments =&gt; 6</span>
+<span class="n">x</span><span class="o">.</span><span class="n">dtype</span>  <span class="c1"># Type de données stockées =&gt; dtype(&#39;int32&#39;)</span>
+</pre></div>
+
+</section>
+<section id="indexation" class="level2">
+<h2>Indexation</h2>
+<div class="pygments"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+              <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
+              <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]])</span>
+
+<span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>                 <span class="c1"># x[0][1] =&gt; 2</span>
+
+<span class="c1"># Slice</span>
+<span class="n">x</span><span class="p">[:</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>                <span class="c1"># [2, 4]</span>
+<span class="n">x</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">:]</span>            <span class="c1"># [[1, 2], [5, 6]]</span>
+
+<span class="c1"># Indexation booléenne</span>
+<span class="n">x</span><span class="p">[[[</span><span class="kc">True</span> <span class="p">,</span> <span class="kc">False</span><span class="p">],</span>
+   <span class="p">[</span><span class="kc">False</span><span class="p">,</span> <span class="kc">True</span> <span class="p">],</span>
+   <span class="p">[</span><span class="kc">True</span> <span class="p">,</span> <span class="kc">True</span> <span class="p">]]]</span>     <span class="c1"># [1, 4, 5, 6]</span>
+<span class="n">x</span><span class="p">[</span><span class="n">x</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">]</span>                <span class="c1"># [1, 2, 3]</span>
+
+<span class="c1"># Edition conditionnelle</span>
+<span class="n">x</span><span class="p">[</span><span class="n">x</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>            <span class="c1"># [[0, 0],</span>
+                        <span class="c1">#  [0, 4],</span>
+                        <span class="c1">#  [5, 6]]</span>
+</pre></div>
+
+</section>
+<section id="méthodes" class="level2">
+<h2>Méthodes</h2>
+<div class="pygments"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+              <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
+              <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]])</span>
+<span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>  <span class="c1"># [[1, 2, 3],</span>
+                   <span class="c1">#  [4, 5, 6]]</span>
+
+<span class="n">x</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>        <span class="c1"># [1, 2, 3, 4, 5, 6]</span>
+<span class="n">x</span><span class="o">.</span><span class="n">diagonal</span><span class="p">()</span>       <span class="c1"># [1, 4]</span>
+<span class="n">x</span><span class="o">.</span><span class="n">trace</span><span class="p">()</span>          <span class="c1"># 5</span>
+<span class="n">x</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>      <span class="c1"># [3, 7, 11]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>  <span class="c1"># [[1, 3, 5],</span>
+                   <span class="c1">#  [2, 4, 6]]</span>
+</pre></div>
+
+</section>
+<section id="scipy" class="level2">
+<h2>Scipy</h2>
+<ul>
+<li><p><strong>Algorithmes</strong> et <strong>fonctions
+utilitaires</strong> construits sur numpy</p></li>
+<li><p>De <strong>nombreuses fonctionnalités</strong></p>
+<ul>
+<li>Intégration numérique</li>
+<li>Optimisation</li>
+<li>Distributions statistiques</li>
+<li>…</li>
+</ul></li>
+<li><p>Installation</p></li>
+</ul>
+<div class="terminal">$&gt; python -m pip install scipy
+</div>
+</section>
+<section id="algèbre-linéaire" class="level2">
+<h2>Algèbre Linéaire</h2>
+<div class="pygments"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">linalg</span>
+
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span> <span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="p">,</span> <span class="p">[</span><span class="mi">3</span> <span class="p">,</span> <span class="mi">4</span><span class="p">]])</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">5</span><span class="p">]</span> <span class="p">,</span> <span class="p">[</span><span class="mi">6</span><span class="p">]])</span>
+<span class="n">A</span><span class="o">.</span><span class="n">T</span>            <span class="c1"># transpose</span>
+<span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>  <span class="c1"># déterminant</span>
+<span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>  <span class="c1"># inverse</span>
+<span class="n">A</span> <span class="o">@</span> <span class="n">b</span>          <span class="c1"># produit matriciel</span>
+</pre></div>
+
+</section>
+<section id="algèbre-linéaire-1" class="level2">
+<h2>Algèbre Linéaire</h2>
+<ul>
+<li>Résolution de système d'équations linéaires</li>
+</ul>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">{</mo><mtable><mtr><mtd columnalign="left" style="text-align: left"><mn>1</mn><mi>x</mi><mo>+</mo><mn>2</mn><mi>y</mi><mo>=</mo><mn>5</mn></mtd></mtr><mtr><mtd columnalign="left" style="text-align: left"><mn>3</mn><mi>x</mi><mo>+</mo><mn>4</mn><mi>y</mi><mo>=</mo><mn>6</mn></mtd></mtr></mtable></mrow><annotation encoding="application/x-tex"> \begin{cases} 1x+2y=5 \\ 3x+4y=6 \end{cases} </annotation></semantics></math></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>2</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>3</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>4</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mi>x</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>y</mi></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>5</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>6</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex"> \begin{pmatrix} 1 &amp; 2 \\ 3 &amp; 4 \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} 5 \\ 6 \end{pmatrix} </annotation></semantics></math></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mi>x</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>y</mi></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><msup><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>2</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>3</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>4</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mi>−</mi><mn>1</mn></mrow></msup><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>5</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>6</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex"> \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} 1 &amp; 2 \\ 3 &amp; 4 \end{pmatrix}^{-1} \begin{pmatrix} 5 \\ 6 \end{pmatrix} </annotation></semantics></math></p>
+<div class="pygments"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">linalg</span>
+
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span> <span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="p">,</span> <span class="p">[</span><span class="mi">3</span> <span class="p">,</span> <span class="mi">4</span><span class="p">]])</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">5</span><span class="p">]</span> <span class="p">,</span> <span class="p">[</span><span class="mi">6</span><span class="p">]])</span>
+
+<span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">A</span><span class="p">)</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+</pre></div>
+
+</section>
+<section id="équations-différentielles" class="level2">
+<h2>Équations différentielles</h2>
+<ul>
+<li><p>Équation différentielle avec conditions initiales</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mrow><mi>d</mi><mi>y</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo></mrow><mrow><mi>d</mi><mi>t</mi></mrow></mfrac><mo>=</mo><mi>t</mi><mo>−</mo><mi>y</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex"> \frac{dy(t)}{dt} = t - y(t) </annotation></semantics></math></p></li>
+<li><p>Avec <code>scipy</code></p>
+<div class="pygments"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.integrate</span><span class="w"> </span><span class="kn">import</span> <span class="n">solve_ivp</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">fun</span><span class="p">(</span><span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+  <span class="k">return</span> <span class="n">t</span><span class="o">-</span><span class="n">y</span>
+
+<span class="n">sol</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span>
+  <span class="n">fun</span><span class="o">=</span><span class="n">fun</span><span class="p">,</span>
+  <span class="n">t_span</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">15</span><span class="p">],</span>
+  <span class="n">y0</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+  <span class="n">rtol</span> <span class="o">=</span> <span class="mf">1e-5</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;--s&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</li>
+<li><p>Résultat:</p>
+<figure>
+<img src="./first_order.svg" alt="Équation différentielle" />
+<figcaption aria-hidden="true">Équation différentielle</figcaption>
+</figure></li>
+</ul>
+</section>
+<section id="équations-différentielles-dordres-supérieurs"
+class="level2">
+<h2>Équations différentielles d’ordres supérieurs</h2>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mrow><msup><mi>d</mi><mn>2</mn></msup><mi>y</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo></mrow><mrow><mi>d</mi><msup><mi>t</mi><mn>2</mn></msup></mrow></mfrac><mo>+</mo><mfrac><mrow><mi>d</mi><mi>y</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo></mrow><mrow><mi>d</mi><mi>t</mi></mrow></mfrac><mo>+</mo><mn>2</mn><mi>y</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex"> \frac{d^2 y(t)}{dt^2} + \frac{dy(t)}{dt} + 2 y(t) = 0 </annotation></semantics></math></p>
+<ul>
+<li><p><code>solve_ivp</code> ne supporte que le <strong>premier
+ordre</strong> mais il supporte les <strong>systèmes
+d’équations</strong> différentielles</p></li>
+<li><p>Nous pouvons poser que
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>g</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mfrac><mrow><mi>d</mi><mi>y</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo></mrow><mrow><mi>d</mi><mi>t</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">g(t) = \frac{dy(t)}{dt}</annotation></semantics></math>
+et réécrire l’équation sous forme d’un <strong>système du premier
+ordre</strong></p></li>
+</ul>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">{</mo><mtable><mtr><mtd columnalign="left" style="text-align: left"><mfrac><mrow><mi>d</mi><mi>y</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo></mrow><mrow><mi>d</mi><mi>t</mi></mrow></mfrac><mo>=</mo><mi>g</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo></mtd></mtr><mtr><mtd columnalign="left" style="text-align: left"><mfrac><mrow><mi>d</mi><mi>g</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo></mrow><mrow><mi>d</mi><mi>t</mi></mrow></mfrac><mo>=</mo><mi>−</mi><mn>2</mn><mi>y</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>−</mo><mi>g</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo></mtd></mtr></mtable></mrow><annotation encoding="application/x-tex"> \begin{cases} \frac{dy(t)}{dt} = g(t) \\ \frac{dg(t)}{dt} = -2 y(t) - g(t) \end{cases} </annotation></semantics></math></p>
+<div class="pygments"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.integrate</span><span class="w"> </span><span class="kn">import</span> <span class="n">solve_ivp</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">fun</span><span class="p">(</span><span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">Y</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">  Args:</span>
+<span class="sd">    - `Y`: `Y[0]` is the value of `y(t)`</span>
+<span class="sd">           `Y[1]` is the value of `g(t)`</span>
+<span class="sd">    - `t`: is just the value of `t`</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">  A list with the value `y&#39;(t)` and `g&#39;(t)`</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="k">return</span> <span class="p">[</span><span class="n">Y</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">Y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">Y</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+
+<span class="n">sol</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span>
+  <span class="n">fun</span><span class="o">=</span><span class="n">fun</span><span class="p">,</span>
+  <span class="n">t_span</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">15</span><span class="p">],</span>
+  <span class="n">y0</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>           <span class="c1"># Conditions initiales pour y(t) et g(t)</span>
+  <span class="n">rtol</span> <span class="o">=</span> <span class="mf">1e-5</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;--s&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+<figure>
+<img src="./second_order.svg" alt="Solution" />
+<figcaption aria-hidden="true">Solution</figcaption>
+</figure>
+</section>
+<section id="opérations-sur-des-tableaux-de-données-avec-pandas"
+class="level2">
+<h2>Opérations sur des tableaux de données avec <code>pandas</code></h2>
+<ul>
+<li>Manipulation de tableau de données <span class="small">un peu comme
+Excel</span></li>
+<li>Basé sur <code>numpy</code></li>
+<li>Très utilisé dans le domaine des <em>Data Sciences</em></li>
+</ul>
+<div class="terminal">&gt; pip install pandas
+</div>
+</section>
+<section id="importer-des-données" class="level2">
+<h2>Importer des données</h2>
+<ul>
+<li><code>pandas</code> permet d’importer de <strong>multiples formats
+de données</strong>.</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ps</span>
+
+<span class="n">dataframe</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s2">&quot;foo.xlsx&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">dataframe</span><span class="p">)</span>
+</pre></div>
+
+<div class="terminal">  matricule             name  project  labs  exam
+0       LUR   Quentin Lurkin       15    20    20
+1       LRG      André Lorge       20    15    20
+2       DLH  Quentin Delhaye       20    20    15
+</div>
+</section>
+<section id="opérations-sur-les-données" class="level2">
+<h2>Opérations sur les données</h2>
+<ul>
+<li>Une fois les données dans un <em>Dataframe</em>, il est possible de
+les manipuler <strong>très efficacement</strong>.</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="n">dataframe</span><span class="p">[</span><span class="s2">&quot;total&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+  <span class="n">dataframe</span><span class="p">[</span><span class="s2">&quot;project&quot;</span><span class="p">]</span> <span class="o">+</span>
+  <span class="n">dataframe</span><span class="p">[</span><span class="s2">&quot;exam&quot;</span><span class="p">]</span> <span class="o">+</span>
+  <span class="n">dataframe</span><span class="p">[</span><span class="s2">&quot;labs&quot;</span><span class="p">]</span>
+<span class="p">)</span> <span class="o">/</span> <span class="mi">3</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">dataframe</span><span class="p">)</span>
+</pre></div>
+
+</section>
+<section id="exporter-des-données" class="level2">
+<h2>Exporter des données</h2>
+<ul>
+<li>On peut ensuite <strong>exporter</strong> les données</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="n">dataframe</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="s2">&quot;students_with_total.json&quot;</span><span class="p">)</span>
+</pre></div>
+
+</section>
+<section id="documentations" class="level2">
+<h2>Documentations</h2>
+<ul>
+<li><code>numpy</code> : <a href="https://numpy.org/doc/stable/"
+class="uri">https://numpy.org/doc/stable/</a></li>
+<li><code>matplotlib</code> : <a
+href="https://matplotlib.org/stable/index.html"
+class="uri">https://matplotlib.org/stable/index.html</a></li>
+<li><code>scipy</code> : <a href="https://docs.scipy.org/doc/scipy/"
+class="uri">https://docs.scipy.org/doc/scipy/</a></li>
+<li><code>pandas</code> : <a href="https://pandas.pydata.org/docs/"
+class="uri">https://pandas.pydata.org/docs/</a></li>
+</ul>
+</section> 
+    </body>
+</html>

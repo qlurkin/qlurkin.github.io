@@ -1,0 +1,929 @@
+<!doctype html>
+<html lang="">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="generator" content="pandoc" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, user-scalable=yes"
+        />
+                <meta name="author" content="Quentin Lurkin" />
+                <title>
+            Cours 2            - Imbrication de types, classes et
+objets        </title>
+                <link rel="stylesheet" href="/css/deck.css" />
+        <link
+            rel="stylesheet"
+            href="https://fred-wang.github.io/MathFonts/NewComputerModern/mathfonts.css"
+        />
+          <script src="/js/deck_only.js" type="module" defer></script> 
+    </head>
+    <body>
+                 <header id="title-block-header">
+            <h1 class="title">
+                Cours 2                 <small>Imbrication de types,
+classes et objets</small>
+                            </h1>
+                        <p class="author">Quentin Lurkin</p>
+                    </header>
+         <section id="imbrication-de-données" class="level2">
+<h2>Imbrication de données</h2>
+<ul>
+<li><strong>Imbriquer</strong> des données <small>Insertion d’une
+structure de données comme élément d’une autre</small></li>
+<li><strong>Contraintes</strong> selon la structure principale <span
+class="small">Éléments d’un ensemble et clés d’un dictionnaire non
+modifiables</span></li>
+<li>Représentation de <strong>données complexes</strong> <span
+class="small">Bien organiser et définir la structure de
+données</span></li>
+</ul>
+</section>
+<section id="liste-à-deux-dimensions" class="level2">
+<h2>Liste à deux dimensions</h2>
+<ul>
+<li>On peut construire une liste dont les <strong>éléments sont des
+listes</strong></li>
+<li><strong>Accès multiples</strong> à faire pour accéder aux éléments
+imbriqués</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="n">B</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="n">L</span> <span class="o">=</span> <span class="p">[</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">]</span>                <span class="c1"># Équivalent à L = [[1, 2], [3, 4, 5]]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">L</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>            <span class="c1"># 2</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">L</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span>            <span class="c1"># 5</span>
+</pre></div>
+
+<figure>
+<img src="./imbrication.svg" style="width:50.0%" alt="Liste 2D" />
+<figcaption aria-hidden="true">Liste 2D</figcaption>
+</figure>
+</section>
+<section id="parcours-dune-liste-à-deux-dimensions" class="level2">
+<h2>Parcours d’une liste à deux dimensions</h2>
+<ul>
+<li>Parcours à l’aide d’une <strong>double boucle</strong> <span
+class="small">Imbrication d’une boucle dans une autre,
+<code>while</code> ou <code>for</code></span></li>
+<li>La première boucle passe en revue les <strong>listes
+imbriquées</strong> <span class="small">La seconde boucle parcourt les
+éléments de chaque liste imbriquée</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="n">L</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]]</span>
+
+<span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">L</span><span class="p">:</span>            <span class="c1"># elem est une liste</span>
+  <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">elem</span><span class="p">:</span>       <span class="c1"># data est un nombre entier</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;| &#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+</pre></div>
+
+<div class="terminal">1 2 | 3 4 5 |
+</div>
+</section>
+<section id="représentation-dune-matrice" class="level2">
+<h2>Représentation d’une matrice</h2>
+<ul>
+<li><strong>Matrice</strong> représentée par une liste à deux dimensions
+<span class="small">Toutes les listes imbriquées ont le même nombre
+d’éléments</span></li>
+<li>Stockage d’une <strong>liste des lignes</strong> de la matrice
+<ul>
+<li>La première dimension représente les lignes</li>
+<li>Colonnes représentées par la deuxième dimension</li>
+</ul></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="n">M</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]]</span>
+</pre></div>
+
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>2</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>3</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>4</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>5</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>6</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mspace width="0.333em"></mspace><mtext mathvariant="normal"> Par exemple, M[1][0] vaut 4</mtext></mrow></mrow><annotation encoding="application/x-tex"> M = \begin{pmatrix} 1 &amp; 2 &amp; 3 \\ 4 &amp; 5 &amp; 6 \end{pmatrix} \text{ Par exemple, M[1][0] vaut 4} </annotation></semantics></math></p>
+</section>
+<section id="parcours-dune-matrice" class="level2">
+<h2>Parcours d’une matrice</h2>
+<ul>
+<li>Dimension de la matrice obtenue avec la fonction <code>len</code>
+<span class="small">La matrice a <code>len(M)</code> lignes et
+<code>len(M[0])</code> colonnes</span></li>
+<li>Parcours avec boucle <code>while</code> et indices ou avec boucle
+<code>for</code></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="c1"># Avec une boucle while</span>
+<span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">M</span><span class="p">):</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">M</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">M</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">])</span>
+        <span class="n">j</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="c1"># Avec une boucle for</span>
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">M</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">elem</span><span class="p">)</span>
+</pre></div>
+
+</section>
+<section id="structures-imbriquées" class="level2">
+<h2>Structures imbriquées</h2>
+<ul>
+<li>Imbrication d’autres structures <strong>dans des listes</strong>
+<span class="small">Liste de tuples, ensembles et
+dictionnaires</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="c1"># Liste de tuples</span>
+<span class="n">coords</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="o">-</span><span class="mi">9</span><span class="p">)]</span>
+
+<span class="c1"># Liste d&#39;ensembles</span>
+<span class="n">lunches</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">{</span><span class="s1">&#39;apple&#39;</span><span class="p">,</span> <span class="s1">&#39;banana&#39;</span><span class="p">,</span> <span class="s1">&#39;grape&#39;</span><span class="p">},</span>
+  <span class="p">{</span><span class="s1">&#39;yogurt&#39;</span><span class="p">,</span> <span class="s1">&#39;cereals&#39;</span><span class="p">},</span>
+  <span class="p">{</span><span class="s1">&#39;bread&#39;</span><span class="p">,</span> <span class="s1">&#39;cheese&#39;</span><span class="p">,</span> <span class="s1">&#39;ham&#39;</span><span class="p">},</span>
+  <span class="p">{</span><span class="s1">&#39;sausage&#39;</span><span class="p">}</span>
+<span class="p">]</span>
+
+<span class="c1"># Liste de dictionnaires</span>
+<span class="n">contacts</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">{</span><span class="s1">&#39;firstname&#39;</span><span class="p">:</span> <span class="s1">&#39;Alexis&#39;</span><span class="p">,</span> <span class="s1">&#39;lastname&#39;</span><span class="p">:</span> <span class="s1">&#39;King&#39;</span><span class="p">},</span>
+  <span class="p">{</span><span class="s1">&#39;firstname&#39;</span><span class="p">:</span> <span class="s1">&#39;Brice&#39;</span><span class="p">,</span> <span class="s1">&#39;lastname&#39;</span><span class="p">:</span> <span class="s1">&#39;Monster&#39;</span><span class="p">},</span>
+  <span class="p">{</span><span class="s1">&#39;firstname&#39;</span><span class="p">:</span> <span class="s1">&#39;Sébastien&#39;</span><span class="p">,</span> <span class="s1">&#39;lastname&#39;</span><span class="p">:</span> <span class="s1">&#39;Adams&#39;</span><span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+
+</section>
+<section id="structures-imbriquées-1" class="level2">
+<h2>Structures imbriquées</h2>
+<ul>
+<li>Structures imbriquées en <strong>clés et valeurs</strong> de
+dictionnaires <span class="small">Les clés d’un dictionnaire doivent
+être non modifiables</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="c1"># Tuples en clés d&#39;un dictionnaire</span>
+<span class="n">config</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span> <span class="s1">&#39;Arnaud&#39;</span><span class="p">,</span>
+  <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span> <span class="s1">&#39;Louis&#39;</span><span class="p">,</span>
+  <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span> <span class="s1">&#39;Marie&#39;</span><span class="p">,</span>
+  <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span> <span class="s1">&#39;Dan&#39;</span>
+<span class="p">}</span>
+
+<span class="c1"># Listes en valeurs d&#39;un dictionnaire</span>
+<span class="n">config</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span> <span class="p">[</span><span class="s1">&#39;Arnaud&#39;</span><span class="p">,</span> <span class="s1">&#39;Pierre&#39;</span><span class="p">],</span>
+  <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span> <span class="p">[</span><span class="s1">&#39;Louis&#39;</span><span class="p">],</span>
+  <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span> <span class="p">[</span><span class="s1">&#39;Marie&#39;</span><span class="p">,</span> <span class="s1">&#39;Éric&#39;</span><span class="p">,</span> <span class="s1">&#39;Tom&#39;</span><span class="p">],</span>
+  <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span> <span class="p">[</span><span class="s1">&#39;Dan&#39;</span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+
+</section>
+<section id="imbrication-complexes" class="level2">
+<h2>Imbrication complexes</h2>
+<ul>
+<li>On peut imbriquer des structures à plusieurs niveaux <span
+class="small">Des séquences, ensembles et dictionnaires</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="n">address</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;street&#39;</span><span class="p">:</span> <span class="s2">&quot;Promenade de l&#39;Alma&quot;</span><span class="p">,</span> <span class="s1">&#39;number&#39;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>
+  <span class="s1">&#39;zip&#39;</span><span class="p">:</span> <span class="mi">1200</span><span class="p">,</span> <span class="s1">&#39;city&#39;</span><span class="p">:</span> <span class="s2">&quot;Woluwé-Saint-Lambert&quot;</span><span class="p">}</span>
+<span class="n">marchand</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;firstname&#39;</span><span class="p">:</span> <span class="s2">&quot;Cédric&quot;</span><span class="p">,</span> <span class="s1">&#39;lastname&#39;</span><span class="p">:</span> <span class="s2">&quot;Marchand&quot;</span><span class="p">,</span>
+  <span class="s1">&#39;address&#39;</span><span class="p">:</span> <span class="n">address</span><span class="p">}</span>
+
+<span class="c1"># Équivalent à</span>
+<span class="c1"># marchand = {&#39;firstname&#39;: &quot;Cédric&quot;, &#39;lastname&#39;: &quot;Marchand&quot;,</span>
+<span class="c1"># &#39;address&#39;: {&#39;street&#39;: &quot;Promenade de l&#39;Alma&quot;, &#39;number&#39;: 50,</span>
+<span class="c1"># &#39;zip&#39;: 1200, &#39;city&#39;: &quot;Woluwé-Saint-Lambert&quot;}}</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">marchand</span><span class="p">[</span><span class="s1">&#39;firstname&#39;</span><span class="p">])</span>          <span class="c1"># Cédric</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">marchand</span><span class="p">[</span><span class="s1">&#39;address&#39;</span><span class="p">][</span><span class="s1">&#39;city&#39;</span><span class="p">])</span>    <span class="c1"># Woluwé-Saint-Lambert</span>
+</pre></div>
+
+</section>
+<section id="attention-aux-références" class="level2">
+<h2>Attention aux références</h2>
+<ul>
+<li><strong>Qu'affiche le code suivant</strong> après exécution ?
+<ul>
+<li><code>magic1</code> appelle une méthode sur <code>data</code></li>
+<li><code>magic2</code> modifie la variable locale
+<code>data</code></li>
+</ul></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">magic1</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]):</span>
+    <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">magic2</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]):</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+
+<span class="n">magic1</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+
+<span class="n">magic2</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+
+</section>
+<section id="copie" class="level2">
+<h2>Copie</h2>
+<ul>
+<li>Affecter une même liste à deux variables crée un
+<strong>alias</strong> <span class="small">Même chose pour les
+séquences, les ensembles et les dictionnaires</span></li>
+<li>On crée une <strong>véritable copie</strong> de liste avec la
+fonction <code>list</code> <span class="small">Ou avec les fonctions
+<code>set</code>, <code>dict</code>...</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="n">L</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">L</span>                                   <span class="c1"># A est un alias de L</span>
+<span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">42</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>                                <span class="c1"># [42, 2, 3, 4, 5]</span>
+
+<span class="n">L</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="n">B</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>                             <span class="c1"># B est une copie de L</span>
+<span class="n">B</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">42</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>                                <span class="c1"># [1, 2, 3, 4, 5]</span>
+</pre></div>
+
+</section>
+<section id="copie-1" class="level2">
+<h2>Copie</h2>
+<figure>
+<img src="alias.svg" style="width: 25em"
+alt="l’assignation ne crée pas de copie" />
+<figcaption aria-hidden="true">l’assignation ne crée pas de
+copie</figcaption>
+</figure>
+</section>
+<section id="copie-de-structures-imbriquées" class="level2">
+<h2>Copie de structures imbriquées</h2>
+<ul>
+<li>Pas de soucis de copies pour les <strong>collections non
+modifiables</strong></li>
+<li>La copie ne se fait <strong>pas en profondeur</strong> <span
+class="small">Seuls les éléments de "premier niveau" sont
+copiés</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="n">L</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]]</span>
+<span class="n">A</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+
+<span class="n">A</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">42</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>                 <span class="c1"># [[1, 2], [42, 4, 5]]</span>
+</pre></div>
+
+<figure>
+<img src="shallow.svg" style="width: 20em" alt="Shallow copy" />
+<figcaption aria-hidden="true">Shallow copy</figcaption>
+</figure>
+</section>
+<section id="module-copy" class="level2">
+<h2>Module <code>copy</code></h2>
+<ul>
+<li>Deux fonctions proposées par le <strong>module
+<code>copy</code></strong>
+<ul>
+<li><code>copy</code> pour une copie "<em>shallow</em>"</li>
+<li><code>deepcopy</code> pour une copie "<em>deep</em>"</li>
+</ul></li>
+<li>Une <strong>copie en profondeur</strong> peut prendre du temps <span
+class="small">Et aussi consommer beaucoup d'espace mémoire</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">copy</span>
+
+<span class="n">L</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]]</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>                   <span class="c1"># A est une copie shallow de L</span>
+<span class="n">B</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>               <span class="c1"># A est une copie deep de L</span>
+</pre></div>
+
+</section>
+<section id="classes-et-objets" class="level2">
+<h2>Classes et objets</h2>
+<ul>
+<li>problèmes avec l’utilisation de <strong>dictionnaires</strong> pour
+représenter des <strong>objets complexes</strong>.</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="n">address</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;street&#39;</span><span class="p">:</span> <span class="s2">&quot;Promenade de l&#39;Alma&quot;</span><span class="p">,</span> <span class="s1">&#39;number&#39;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>
+  <span class="s1">&#39;zip&#39;</span><span class="p">:</span> <span class="mi">1200</span><span class="p">,</span> <span class="s1">&#39;city&#39;</span><span class="p">:</span> <span class="s2">&quot;Woluwé-Saint-Lambert&quot;</span><span class="p">}</span>
+<span class="n">marchand</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;firstname&#39;</span><span class="p">:</span> <span class="s2">&quot;Cédric&quot;</span><span class="p">,</span> <span class="s1">&#39;lastname&#39;</span><span class="p">:</span> <span class="s2">&quot;Marchand&quot;</span><span class="p">,</span>
+  <span class="s1">&#39;address&#39;</span><span class="p">:</span> <span class="n">address</span><span class="p">}</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">address</span><span class="p">))</span>      <span class="c1"># &lt;class dict&gt;</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">marchand</span><span class="p">))</span>     <span class="c1"># &lt;class dict&gt;</span>
+</pre></div>
+
+<ul>
+<li>Le <strong>type</strong> d’un dictionnaire est <code>dict</code>
+<span class="small">Impossible de différencier les types
+d’objects</span></li>
+</ul>
+</section>
+<section id="classes-et-objects" class="level2">
+<h2>Classes et objects</h2>
+<ul>
+<li>Même problème avec les <strong>annotations de types</strong></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">fullname</span><span class="p">(</span><span class="n">person</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+  <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">person</span><span class="p">[</span><span class="s1">&#39;firstname&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">person</span><span class="p">[</span><span class="s1">&#39;lastname&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">display_address</span><span class="p">(</span><span class="n">address</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+  <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">address</span><span class="p">[</span><span class="s1">&#39;street&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">address</span><span class="p">[</span><span class="s1">&#39;number&#39;</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="n">address</span><span class="p">[</span><span class="s1">&#39;zip&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">address</span><span class="p">[</span><span class="s1">&#39;city&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">display_address</span><span class="p">(</span><span class="n">marchand</span><span class="p">))</span>  <span class="c1"># KeyError</span>
+</pre></div>
+
+<ul>
+<li>Ces annotations trop <strong>vagues</strong> ne permettent
+<strong>pas</strong> de détecter l’erreur</li>
+<li>Aucune aide pour <strong>l’auto-completion</strong> des
+<strong>clés</strong> d’un dictionnaire.</li>
+</ul>
+</section>
+<section id="classes-et-objets-1" class="level2">
+<h2>Classes et objets</h2>
+<ul>
+<li>L’idéal serait de pourvoir <strong>créer les types</strong>
+<code>Address</code> et <code>Person</code></li>
+<li><code>marchand</code> référencera alors une valeur du type
+<code>Person</code></li>
+<li><code>address</code> référencera une valeur du type
+<code>Address</code></li>
+<li>Ces types s’appellent <strong>classes</strong></li>
+<li>Les valeurs d’une classe s’appellent <strong>objets</strong> ou
+<strong>instances</strong></li>
+<li>En réalité, tous les types que nous avons vu (<code>int</code>,
+<code>float</code>, <code>str</code>, <code>list</code>, …) sont des
+classes. <span class="small">Et les valeurs des objets</span></li>
+</ul>
+</section>
+<section id="création-dune-classe" class="level2">
+<h2>Création d’une classe</h2>
+<div class="pygments"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Address</span><span class="p">:</span>
+  <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">street</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">number</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">zip</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">city</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">street</span> <span class="o">=</span> <span class="n">street</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">number</span> <span class="o">=</span> <span class="n">number</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">zip</span> <span class="o">=</span> <span class="nb">zip</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">city</span> <span class="o">=</span> <span class="n">city</span>
+
+
+<span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="s2">&quot;Promenade de l&#39;Alma&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">1200</span><span class="p">,</span> <span class="s2">&quot;Woluwé-Saint-Lambert&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">address</span><span class="o">.</span><span class="n">zip</span><span class="p">)</span>        <span class="c1"># 1200</span>
+</pre></div>
+
+<ul>
+<li>La classe <code>Address</code> contient une <strong>méthode</strong>
+nommée <code>__init__</code> qui sert à initialiser <strong>un nouvel
+objet</strong> de la classe. <span class="small">Cette méthode est aussi
+appelée <strong>le constructeur</strong> de la classe</span></li>
+<li>Le nouvel objet est dans la variable <code>self</code>.</li>
+<li>La méthode <code>__init__</code> peut recevoir autant de paramètres
+supplémentaires que l’on veut.</li>
+<li>Elle sert à initialiser les <strong>attributs</strong> de l’objet
+<span class="small"><code>street</code>, <code>number</code>,
+<code>zip</code> et <code>city</code></span></li>
+</ul>
+</section>
+<section id="fonctionnalités-dune-classe" class="level2">
+<h2>Fonctionnalités d’une classe</h2>
+<div class="pygments"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Address</span><span class="p">:</span>
+  <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">street</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">number</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">zip</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">city</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">street</span> <span class="o">=</span> <span class="n">street</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">number</span> <span class="o">=</span> <span class="n">number</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">zip</span> <span class="o">=</span> <span class="nb">zip</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">city</span> <span class="o">=</span> <span class="n">city</span>
+
+  <span class="k">def</span><span class="w"> </span><span class="nf">display</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">street</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">number</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">zip</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">city</span><span class="si">}</span><span class="s2">&quot;</span>
+
+<span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="s2">&quot;Promenade de l&#39;Alma&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">1200</span><span class="p">,</span> <span class="s2">&quot;Woluwé-Saint-Lambert&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">address</span><span class="o">.</span><span class="n">display</span><span class="p">())</span>        <span class="c1"># Promenade de l&#39;Alma, 50</span>
+                                <span class="c1"># 1200 Woluwé-Saint-Lambert</span>
+</pre></div>
+
+<ul>
+<li><p>Comme nous l’avons vu avec la classe <code>list</code>, une
+classe peut avoir des fonctionnalités. <span class="small">La
+fonctionnalité <code>append()</code> pour la classe <code>list</code>
+par exemple</span></p></li>
+<li><p>Ces fonctionnalités sont appelées <strong>méthodes</strong> et
+sont des fonctions créées dans la classe et prenant l’objet à traiter en
+paramètre (<code>self</code>).</p></li>
+</ul>
+</section>
+<section id="objet-et-classe" class="level2">
+<h2>Objet et classe</h2>
+<ul>
+<li>Un objet est une <strong>instance</strong> d'une classe <span
+class="small">Une classe est un modèle à partir duquel on construit des
+objets</span></li>
+<li>La classe définit <strong>deux éléments</strong> constitutifs des
+objets <span class="small">Les attributs et les fonctionnalités de
+l'objet</span></li>
+</ul>
+</section>
+<section id="attribut-et-fonctionnalité" class="level2">
+<h2>Attribut et fonctionnalité</h2>
+<ul>
+<li>Un attribut est une <strong>donnée</strong> stockée dans un objet
+<span class="small">Les valeurs des attributs définissent l'état de
+l'objet</span></li>
+<li>Une <strong>fonctionnalité</strong> permet d'effectuer une action
+<span class="small">Obtenir une information sur l'objet ou donner un
+ordre</span></li>
+</ul>
+</section>
+<section id="utilisation-dun-objet" class="level2">
+<h2>Utilisation d'un objet</h2>
+<ul>
+<li>Pour pouvoir créer des objets, il faut une <strong>classe</strong>
+<span class="small">Une définition unique permet de créer plusieurs
+objets</span></li>
+<li>Une fois créée, interaction avec <strong>attribut et
+fonctionnalité</strong> <span class="small">Utilisation de l'opérateur
+d'accès/appel sur l'objet</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="c1"># Construction d&#39;un objet</span>
+<span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="s2">&quot;Promenade de l&#39;Alma&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">1200</span><span class="p">,</span> <span class="s2">&quot;Woluwé-Saint-Lambert&quot;</span><span class="p">)</span>
+
+<span class="c1"># Accès à un attribut</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">address</span><span class="o">.</span><span class="n">zip</span><span class="p">)</span>              <span class="c1"># 1200</span>
+
+<span class="c1"># Appel d&#39;une méthode</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">address</span><span class="o">.</span><span class="n">display</span><span class="p">())</span>        <span class="c1"># Promenade de l&#39;Alma, 50</span>
+                                <span class="c1"># 1200 Woluwé-Saint-Lambert</span>
+</pre></div>
+
+</section>
+<section id="définir-une-classe" class="level2">
+<h2>Définir une classe</h2>
+<ul>
+<li><strong>Définition</strong> d'une classe avec le mot réservé
+<code>class</code>
+<ul>
+<li>Corps de la classe est un bloc de code indenté</li>
+<li>Le corps de la classe peut contenir des définitions de méthodes</li>
+</ul></li>
+<li>Classe minimale grâce à l'<strong>instruction
+<code>pass</code></strong> <span class="small">Aussi appelée instruction
+vide car ne fait rien</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Person</span><span class="p">:</span>
+    <span class="k">pass</span>
+</pre></div>
+
+</section>
+<section id="créer-une-instance" class="level2">
+<h2>Créer une instance</h2>
+<ul>
+<li>Un objet est une <strong>instance</strong> d'une classe <span
+class="small">À partir d'une classe, on crée autant d'objets que l'on
+veut</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">Person</span><span class="p">()</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">Person</span><span class="p">()</span>
+</pre></div>
+
+<figure>
+<img src="./objects.svg" class="half" alt="Construction d’objets" />
+<figcaption aria-hidden="true">Construction d’objets</figcaption>
+</figure>
+</section>
+<section id="définir-un-constructeur" class="level2">
+<h2>Définir un constructeur</h2>
+<ul>
+<li><strong>Initialisation</strong> d'un objet par la méthode spéciale
+<code>__init__</code> <span class="small">Admet au moins un paramètre
+qui est <code>self</code></span></li>
+<li>Le paramètre <code>self</code> référence l'<strong>objet à
+construire</strong> <span class="small">Permet d'accéder aux attributs
+et fonctionnalités de l'objet</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Person</span><span class="p">:</span>
+  <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">firstname</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">lastname</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">address</span><span class="p">:</span> <span class="n">Address</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">firstname</span> <span class="o">=</span> <span class="n">firstname</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">lastname</span> <span class="o">=</span> <span class="n">lastname</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">address</span>
+</pre></div>
+
+</section>
+<section id="appeler-un-constructeur" class="level2">
+<h2>Appeler un constructeur</h2>
+<ul>
+<li>Méthode appelée au moment de la <strong>création d'un objet</strong>
+<span class="small">Initialise l'objet, en donnant une valeur à ses
+variables</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="s2">&quot;Promenade de l&#39;Alma&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">1200</span><span class="p">,</span> <span class="s2">&quot;Woluwé-Saint-Lambert&quot;</span><span class="p">)</span>
+<span class="n">marchand</span> <span class="o">=</span> <span class="n">Person</span><span class="p">(</span><span class="s2">&quot;Cédric&quot;</span><span class="p">,</span> <span class="s2">&quot;Marchand&quot;</span><span class="p">,</span> <span class="n">address</span><span class="p">)</span>
+<span class="n">flemal</span> <span class="o">=</span> <span class="n">Person</span><span class="p">(</span><span class="s2">&quot;Clémence&quot;</span><span class="p">,</span> <span class="s2">&quot;Flemal&quot;</span><span class="p">,</span> <span class="n">address</span><span class="p">)</span>
+</pre></div>
+
+<figure>
+<img src="./person_address.svg" alt="Construction d’objets" />
+<figcaption aria-hidden="true">Construction d’objets</figcaption>
+</figure>
+</section>
+<section id="objet-et-référence" class="level2">
+<h2>Objet et référence</h2>
+<ul>
+<li>Un objet est une <strong>instance</strong> d'une classe <span
+class="small">L'instanciation d'une classe produit un objet</span></li>
+<li>Stockage d'une <strong>référence</strong> vers l'objet dans une
+variable <span class="small">L'adresse où l'objet se situe en
+mémoire</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">marchand</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">flemal</span><span class="p">)</span>
+</pre></div>
+
+<div class="terminal">&lt;__main__.Person object at 0x109678748&gt;
+&lt;__main__.Person object at 0x109678780&gt;
+</div>
+</section>
+<section id="variable-dinstance" class="level2">
+<h2>Variable d'instance</h2>
+<ul>
+<li><strong>Variables d'instance</strong> attachées à un objet
+définissent son état <span class="small">Chaque objet possède ses
+propres copies de ces variables</span></li>
+<li>Accès aux variables d'instance avec l'<strong>objet cible</strong>
+<span class="small">Ou <code>self</code> à l'intérieur du code de la
+classe</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">marchand</span><span class="o">.</span><span class="n">firstname</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">flemal</span><span class="o">.</span><span class="n">address</span><span class="o">.</span><span class="n">number</span><span class="p">)</span>
+</pre></div>
+
+<div class="terminal">Cédric
+50
+</div>
+</section>
+<section id="programmation-orientée-objet" class="level2">
+<h2>Programmation orientée objet</h2>
+<ul>
+<li>La <strong>programmation orientée objet</strong> manipule des objets
+<span class="small">Concepts et entités représentés par des
+objets</span></li>
+<li>Représenter des objets <strong>concrets ou conceptuels</strong> du
+monde réel <span class="small">Une personne, un moyen de transport, une
+date, une liste...</span></li>
+<li>Création de <strong>nouveaux types de données</strong> <span
+class="small">Permet une programmation de plus haut niveau</span></li>
+</ul>
+</section>
+<section id="état-dun-objet" class="level2">
+<h2>État d'un objet</h2>
+<ul>
+<li>Chaque objet est unique et possède son propre <strong>état</strong>
+<span class="small">Identité propre à chaque objet, avec ses propres
+attributs</span></li>
+<li>L'état d'un objet est <strong>modifiable ou non</strong> - Objet
+immuable aura toujours le même état - État d'un objet non modifiable ne
+peut être changé</li>
+</ul>
+</section>
+<section id="identité-dun-objet" class="level2">
+<h2>Identité d'un objet</h2>
+<ul>
+<li><strong>Identité</strong> d'un objet propre à chaque objet créé
+<span class="small">Caractérisée par son emplacement en
+mémoire</span></li>
+<li>Fonction prédéfinie <strong><code>id</code></strong> renvoie
+l'identité</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="n">prof</span> <span class="o">=</span> <span class="n">flemal</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">marchand</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">flemal</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">prof</span><span class="p">))</span>
+</pre></div>
+
+<div class="terminal">4302577224
+4329799752
+4329799752
+</div>
+</section>
+<section id="définir-un-vecteur-dans-le-plan" class="level2">
+<h2>Définir un vecteur dans le plan</h2>
+<ul>
+<li>Deux variables d'instance pour représenter les
+<strong>coordonnées</strong> <span class="small">Les deux variables
+<code>self.x</code> et <code>self.y</code> représentent
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><mi>x</mi><mo>,</mo><mi>y</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(x, y)</annotation></semantics></math></span></li>
+<li>Une méthode <code>norm</code> pour calculer la <strong>longueur du
+vecteur</strong> <span class="small">La norme vaut
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi><mi>q</mi><mi>r</mi><mi>t</mi><mo stretchy="false" form="prefix">(</mo><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><msup><mi>y</mi><mn>2</mn></msup><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">sqrt(x^2 + y^2)</annotation></semantics></math></span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Vector</span><span class="p">:</span>
+  <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+
+  <span class="k">def</span><span class="w"> </span><span class="nf">norm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="n">u</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">u</span><span class="o">.</span><span class="n">norm</span><span class="p">())</span>
+</pre></div>
+
+<div class="terminal">1.4142135623730951
+</div>
+</section>
+<section id="self" class="level2">
+<h2><code>self</code></h2>
+<ul>
+<li>La <strong>variable d'instance</strong> est accessible dans toute la
+classe <span class="small">Existe en mémoire pendant toute la durée de
+vie de l'objet</span></li>
+<li>Opposée à la <strong>variable locale</strong> qui n'existe que dans
+la méthode</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Vector</span><span class="p">:</span>
+  <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+  <span class="k">def</span><span class="w"> </span><span class="nf">norm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">x</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">y</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="n">u</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">u</span><span class="o">.</span><span class="n">norm</span><span class="p">())</span>
+</pre></div>
+
+<div class="terminal">Traceback (most recent call last):
+File &quot;program.py&quot;, line 38, in
+    print(u.norm())
+File &quot;program.py&quot;, line 35, in norm
+    return sqrt(x ** 2 + y ** 2)
+NameError: name &#39;x&#39; is not defined
+</div>
+</section>
+<section id="représentation-dun-objet" class="level2">
+<h2>Représentation d’un objet</h2>
+<ul>
+<li>La méthode <code>__str__</code> construit une <strong>représentation
+<code>str</code> de l’objet</strong> <span class="small">Renvoie une
+chaine de caractères lisible de l’objet</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Vector</span><span class="p">:</span>
+  <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+
+  <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="si">}</span><span class="s1">)&#39;</span>
+
+<span class="n">u</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+</pre></div>
+
+<div class="terminal">(1, -1)
+</div>
+</section>
+<section id="égalité" class="level2">
+<h2>Égalité</h2>
+<ul>
+<li>L'opérateur d'égalité <strong>compare les références</strong> des
+variables <span class="small">Le contenu des objets n'est pas
+comparé</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="n">u</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">u</span> <span class="o">==</span> <span class="n">v</span><span class="p">)</span>                  <span class="c1"># False</span>
+</pre></div>
+
+</section>
+<section id="alias" class="level2">
+<h2>Alias</h2>
+<ul>
+<li>Un <strong>alias</strong> est une copie de la référence vers un
+objet <span class="small">Il n'y a qu'une seule copie de l'objet en
+mémoire</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="n">u</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">u</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">u</span> <span class="o">==</span> <span class="n">v</span><span class="p">)</span>                  <span class="c1"># True</span>
+</pre></div>
+
+</section>
+<section id="surcharge-dopérateur" class="level2">
+<h2>Surcharge d’opérateur</h2>
+<ul>
+<li>On peut <strong>redéfinir</strong> les opérateurs de comparaison
+<span class="small"><code>__lt__</code> pour <code>&lt;</code>,
+<code>__le__</code> pour <code>&lt;=</code>, <code>__eq__</code> pour
+<code>==</code>...</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Self</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Vector</span><span class="p">:</span>
+  <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+
+  <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Self</span><span class="p">):</span>
+      <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">x</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">y</span>
+
+  <span class="c1"># ...</span>
+
+<span class="n">u</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">u</span> <span class="o">==</span> <span class="n">v</span><span class="p">)</span>                  <span class="c1"># True</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">u</span> <span class="ow">is</span> <span class="n">v</span><span class="p">)</span>                  <span class="c1"># False</span>
+</pre></div>
+
+<ul>
+<li>Surcharge de l'opérateur d'égalité pour <strong>comparer les
+objets</strong> <span class="small">Le contenu des objets sera comparé,
+et non plus les références</span></li>
+<li><strong>Comparaison des identités</strong> avec l'opérateur
+<code>is</code> <span class="small">Comparaison des références des
+objets</span></li>
+</ul>
+</section>
+<section id="surcharge-dopérateur-1" class="level2">
+<h2>Surcharge d’opérateur</h2>
+<ul>
+<li>On peut <strong>redéfinir</strong> les opérateurs arithmétiques
+<span class="small"><code>__add__</code> pour <code>+</code>,
+<code>__sub__</code> pour <code>-</code>, <code>__mul__</code> pour
+<code>*</code>...</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Self</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Vector</span><span class="p">:</span>
+  <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+
+  <span class="k">def</span><span class="w"> </span><span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">Vector</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="n">other</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="n">other</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+
+  <span class="c1"># ...</span>
+
+<span class="n">u</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">u</span> <span class="o">+</span> <span class="n">v</span><span class="p">)</span>
+</pre></div>
+
+<div class="terminal">(3, 0)
+</div>
+</section>
+<section id="composition-dobjets" class="level2">
+<h2>Composition d’objets</h2>
+<ul>
+<li>On peut <strong>composer</strong> plusieurs objets ensemble <span
+class="small">En utilisant des variables d'instance de type
+objet</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Rectangle</span><span class="p">:</span>
+  <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lowerleft</span><span class="p">:</span> <span class="n">Vector</span><span class="p">,</span> <span class="n">width</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">height</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">angle</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">lowerleft</span> <span class="o">=</span> <span class="n">lowerleft</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">width</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">height</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">angle</span> <span class="o">=</span> <span class="n">angle</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">Rectangle</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">lowerleft</span><span class="p">)</span>             <span class="c1"># (1, -1)</span>
+</pre></div>
+
+</section>
+<section id="réutilisation-de-code" class="level2">
+<h2>Réutilisation de code</h2>
+<ul>
+<li>On peut <strong>réutiliser le code</strong> définit pour les objets
+composés <span class="small">Il suffit d'appeler les méthodes des
+variables objet</span></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Rectangle</span><span class="p">:</span>
+  <span class="c1"># ...</span>
+
+  <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Rectangle en </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">lowerleft</span><span class="si">}</span><span class="s2"> + de longueur </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="si">}</span><span class="s2">&quot;</span> \
+           <span class="sa">f</span><span class="s2">&quot;et de hauteur </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">height</span><span class="si">}</span><span class="s2"> incliné de </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">angle</span><span class="si">}</span><span class="s2"> degrés&quot;</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">Rectangle</span><span class="p">(</span><span class="n">Vector</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+</pre></div>
+
+<div class="terminal">Rectangle en (1, -1) de longueur 100 et de hauteur 50 incliné
+de 0 degrés
+</div>
+<ul>
+<li>Ici l’affichage en <code>str</code> de <code>self.lowerleft</code>
+fait appel à la méthode <code>__str__</code> de la classe
+<code>Vector</code></li>
+</ul>
+</section>
+<section id="simplification" class="level2">
+<h2>Simplification</h2>
+<ul>
+<li>Reprenons la classe <code>Address</code></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Address</span><span class="p">:</span>
+  <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">street</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">number</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">zip</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">city</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">street</span> <span class="o">=</span> <span class="n">street</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">number</span> <span class="o">=</span> <span class="n">number</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">zip</span> <span class="o">=</span> <span class="nb">zip</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">city</span> <span class="o">=</span> <span class="n">city</span>
+
+  <span class="k">def</span><span class="w"> </span><span class="nf">display</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">street</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">number</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">zip</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">city</span><span class="si">}</span><span class="s2">&quot;</span>
+</pre></div>
+
+<ul>
+<li>L’écriture du constructeur semble très répétitive. <span
+class="small">C’est très souvent le cas</span></li>
+<li>Si on voulait lui ajouter une méthode <code>__eq__</code> elle
+serait aussi fort peu intéressante à écrire.</li>
+<li>Comme ce genre de classes est très courant, il existe une moyen plus
+court de les définir</li>
+</ul>
+</section>
+<section id="dataclass" class="level2">
+<h2><code>dataclass</code></h2>
+<div class="pygments"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Address</span><span class="p">:</span>
+  <span class="n">street</span><span class="p">:</span> <span class="nb">str</span>
+  <span class="n">number</span><span class="p">:</span> <span class="nb">int</span>
+  <span class="nb">zip</span><span class="p">:</span> <span class="nb">int</span>
+  <span class="n">city</span><span class="p">:</span> <span class="nb">str</span>
+
+<span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="s2">&quot;Promenade de l&#39;Alma&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">1200</span><span class="p">,</span> <span class="s2">&quot;Woluwé-Saint-Lambert&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">address</span><span class="o">.</span><span class="n">zip</span><span class="p">)</span> <span class="c1"># 1200</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">address</span><span class="p">)</span>     <span class="c1"># Address(street=&quot;Promenade de l&#39;Alma&quot;, number=50,</span>
+                   <span class="c1">#         zip=1200, city=&#39;Woluwé-Saint-Lambert&#39;)</span>
+
+<span class="n">address2</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="s2">&quot;Promenade de l&#39;Alma&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">1200</span><span class="p">,</span> <span class="s2">&quot;Woluwé-Saint-Lambert&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">address</span> <span class="o">==</span> <span class="n">address2</span><span class="p">)</span> <span class="c1"># True</span>
+</pre></div>
+
+<ul>
+<li>Une <code>dataclass</code> a automatiquement un constructeur, une
+méthode <code>__eq__</code>, une méthode <code>__str__</code> <span
+class="small">Et d’autres choses qui dépassent le cadre de ce
+cours</span></li>
+</ul>
+</section>
+<section id="dataclass-1" class="level2">
+<h2><code>dataclass</code></h2>
+<ul>
+<li>On peut bien entendu ajouter d’autres méthodes</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Address</span><span class="p">:</span>
+  <span class="n">street</span><span class="p">:</span> <span class="nb">str</span>
+  <span class="n">number</span><span class="p">:</span> <span class="nb">int</span>
+  <span class="nb">zip</span><span class="p">:</span> <span class="nb">int</span>
+  <span class="n">city</span><span class="p">:</span> <span class="nb">str</span>
+
+  <span class="k">def</span><span class="w"> </span><span class="nf">display</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">street</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">number</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">zip</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">city</span><span class="si">}</span><span class="s2">&quot;</span>
+</pre></div>
+
+<ul>
+<li>et définir notre propre <code>__str__</code></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Address</span><span class="p">:</span>
+  <span class="n">street</span><span class="p">:</span> <span class="nb">str</span>
+  <span class="n">number</span><span class="p">:</span> <span class="nb">int</span>
+  <span class="nb">zip</span><span class="p">:</span> <span class="nb">int</span>
+  <span class="n">city</span><span class="p">:</span> <span class="nb">str</span>
+
+  <span class="k">def</span><span class="w"> </span><span class="nf">display</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">street</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">number</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">zip</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">city</span><span class="si">}</span><span class="s2">&quot;</span>
+
+  <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">display</span><span class="p">()</span>
+</pre></div>
+
+</section>
+<section id="dataclass-2" class="level2">
+<h2><code>dataclass</code></h2>
+<ul>
+<li>réécrivons la classe <code>Vector</code> sous forme de
+<code>dataclass</code></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Vector</span><span class="p">:</span>
+  <span class="n">x</span><span class="p">:</span> <span class="nb">float</span>
+  <span class="n">y</span><span class="p">:</span> <span class="nb">float</span>
+
+  <span class="k">def</span><span class="w"> </span><span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">Vector</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="n">other</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="n">other</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+
+  <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="si">}</span><span class="s1">)&#39;</span>
+</pre></div>
+
+</section> 
+    </body>
+</html>
