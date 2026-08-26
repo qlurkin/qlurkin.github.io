@@ -404,6 +404,25 @@ def sum(L: list[int]) -> int:
 - L'interpréteur ne tient pas compte des annotations de type [Une erreur
   affichée par Zed n'empêche pas le programme de démarrer]{.small}
 
+## Changer de vérificateur de type
+
+- La vérification de type par défaut de Zed est très stricte.
+- Si vous voulez opter pour un vérificateur plus léger, vous pouvez le changer
+  dans le fichier de configuration de Zed.
+- Vous pourvez accéder à ce fichier dans
+
+  `File > Settings > Open Settings File`
+
+- Ajoutez ce qui suit à la fin du fichier, juste avant la dernière accollade:
+
+```json
+"languages": {
+  "Python": {
+    "language_servers": ["ty", "ruff"]
+  }
+}
+```
+
 ## Documentation
 
 - Les fonctions prédéfinies ont une documentation intégrée que l'éditeur peut

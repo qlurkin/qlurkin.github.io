@@ -501,6 +501,26 @@ class="small">Une erreur affichée par Zed n’empêche pas le programme de
 démarrer</span></li>
 </ul>
 </section>
+<section id="changer-de-vérificateur-de-type" class="level2">
+<h2>Changer de vérificateur de type</h2>
+<ul>
+<li><p>La vérification de type par défaut de Zed est très
+stricte.</p></li>
+<li><p>Si vous voulez opter pour un vérificateur plus léger, vous pouvez
+le changer dans le fichier de configuration de Zed.</p></li>
+<li><p>Vous pourvez accéder à ce fichier dans</p>
+<p><code>File &gt; Settings &gt; Open Settings File</code></p></li>
+<li><p>Ajoutez ce qui suit à la fin du fichier, juste avant la dernière
+accollade:</p></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="nt">&quot;languages&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;Python&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;language_servers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ty&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ruff&quot;</span><span class="p">]</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+</section>
 <section id="documentation" class="level2">
 <h2>Documentation</h2>
 <ul>
