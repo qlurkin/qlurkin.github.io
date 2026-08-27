@@ -7,116 +7,130 @@ author: Quentin Lurkin
 
 ## Rappels
 
-- Nous avons déjà aborder le
-  [calcul numériques en 1BA](../../../python1ba/book/chapter6/)
+Un ordinateur n'est au final qu'une grosse **calculatrice** avec plusieurs
+avantages:
+
+- Meilleur clavier
+- Meilleur écran
+- Plus de puissance
+
+Il est extrêmement commun pour un ingénieur d'utiliser un **ordinateur** pour
+effectuer des **calculs**. L'utilisation de Python dans ce domaine est très
+**répandue** dans le monde professionnel.
+
+## Rappels: Calcul numérique
+
+- **Différent** du calcul symbolique
+- Méthodes de résolution **itératives** [Série de valeurs qui s'approchent de la
+  solution]{.small}
+- Solution **numérique approchée** [Souvent aussi proche que l'on veut]{.small}
+
+## Outil: `numpy`
+
+- Bibliothèque à **installer**
+
+  ```terminal
+  > python -m pip install numpy
+  ```
+
+- Permet de travailler **très efficacement** avec des **vecteurs de nombres**
+- **Incontournable** pour le calcul numérique en Python
+
+## `numpy`
+
+- Utilisation d'un alias pour l'`import`
+
+  ```python
+  import numpy as np
+  ```
+
+- Création d'un vecteur
+
+  ```python
+  v = np.array([1, 1, 3])
+  ```
+
+- Opérations
+
+  ```python
+  print(2*v)                   # Multiplication par un scalaire
+  print(v+v)                   # Somme
+  print(v.dot(v))              # Produit scalaire
+  print(v @ v)                 # Produit scalaire
+  v2 = np.array([2, -1, 2]
+  print(np.cross(v, v2)))      # Produit vectoriel
+  print(np.linalg.norm(v))     # Norme
+  ```
+
+## Vecteurs
+
+- Plusieurs manières de créer des vecteurs de valeurs [Depuis une structure
+  Python, ou par des fonctions de Numpy]{.small}
 
 ```python
-from matplotlib import pyplot as plt
-import numpy as np
-
-x = np.linspace(-5, 5, 100)
-ysin = np.sin(x)
-ycos = np.cos(x)
-
-plt.figure()
-plt.title("Trigono")
-plt.xlabel("x")
-plt.ylabel("y")
-plt.grid()
-plt.xticks(
-  [-3*np.pi/2, -np.pi, -np.pi/2, 0, np.pi/2, np.pi, 3*np.pi/2],
-  labels=["-3pi/2", "-pi", "-pi/2", "0", "pi/2", "pi", "3pi/2"]
-)
-plt.axhline(color="k")
-plt.axvline(color="k")
-plt.plot(x, ysin, label="sin(x)")
-plt.plot(x, ycos, label="cos(x)")
-plt.legend()
-plt.show()
+np.array([1, 2, 3])
+np.zeros(5)
+np.ones(10)
+np.random.random(10)
+np.random.randn(10)
+np.linspace(0, 10, 5)
+np.arange(0, 10, 0.2)
 ```
 
-## Remarque `matplotlib` deux API
+## Opérations
 
-- Tous les exemples de l'année passée ont été donné dans l'**API implicite** de
-  matplotlib [Qui ressemble plus à Matlab]{.small}
-- Voici un exemple dans l'**API explicite**:
+- Entre vecteur et scalaire
+
+  ```python
+  a = np.array([1, 2, 3, 4])
+  a + 1       # [2, 3, 4, 5]
+  2 * a       # [2, 4, 6, 8]
+  a ** 2      # [1, 4, 9, 16]
+  1 / a       # [1.0, 0.5, 0.3333, 0.25]
+  a < 3    # [True, True, False, False]
+  ```
+
+- Entre vecteurs de même taille [élément par élément]{.small}
+
+  ```python
+  a = np.array([1, 2, 3, 4])
+  b = np.array([5, 6, 7, 8])
+  a + b    # [6, 8, 10, 12]
+  a * b    # [5, 12, 21, 32]
+  ```
+
+## Fonctions vectorisées
+
+- Fonctions qui s'applique sur tous les éléments d'un vecteur
 
 ```python
-from matplotlib import pyplot as plt
-import numpy as np
+x = np.array([1, 2, 3])
 
-x = np.linspace(-5, 5, 100)
-ysin = np.sin(x)
-ycos = np.cos(x)
+# Fonction standard ne marche pas
+y = math.sin(x) # Error
 
-fig, ax = plt.subplots()
-
-ax.set_title("Trigono")
-ax.set_xlabel("x")
-ax.set_ylabel("y")
-ax.grid()
-ax.set_xticks([-3*np.pi/2, -np.pi, -np.pi/2, 0, np.pi/2, np.pi, 3*np.pi/2],
-  labels=["-3pi/2", "-pi", "-pi/2", "0", "pi/2", "pi", "3pi/2"])
-ax.axhline(color="k")
-ax.axvline(color="k")
-ax.plot(x, ysin, label="sin(x)")
-ax.plot(x, ycos, label="cos(x)")
-ax.legend()
-
-plt.show()
+# Fonction vectorisée existe dans numpy
+y = np.sin(x)
 ```
 
-![Sinus et Cosinus](./sin_cos.svg)
+## Créer une fonction vectorisée
 
-## Deux API
+- La plupart des opérations de base sont déjà supportées par numpy.
 
-::::: row
-
-::: span6
-
-### API implicite
+- Mais il est facile de créer des fonctions vectorisées:
 
 ```python
-plt.subplot(1, 2, 1)
-plt.plot([1, 2, 3], [0, 0.5, 0.2])
+@np.vectorize
+def fun(a, b):
+  if a > b:
+    return 1
+  return -1
 
-plt.subplot(1, 2, 2)
-plt.plot([3, 2, 1], [0, 0.5, 0.2])
+x = np.array([1, 2, 3])
+y = np.array([3, 2, 1])
 
-plt.suptitle('Implicit Interface')
-
-for i in range(1, 3):
-  plt.subplot(1, 2, i)
-  plt.xlabel('Boo')
-
-plt.show()
+print(fun(x, y))
 ```
-
-:::
-
-::: span6
-
-### API explicite
-
-```python
-fig, axs = plt.subplots(1, 2)
-
-axs[0].plot([1, 2, 3], [0, 0.5, 0.2])
-axs[1].plot([3, 2, 1], [0, 0.5, 0.2])
-
-fig.suptitle('Explicit Interface')
-
-for i in range(2):
-  axs[i].set_xlabel('Boo')
-
-plt.show()
-```
-
-:::
-
-:::::
-
-![Subplot](./subplot.svg)
 
 ## `numpy`: Calcul Matriciel
 
@@ -208,6 +222,294 @@ y = x.transpose()  # [[1, 3, 5],
                    #  [2, 4, 6]]
 ```
 
+## Graphiques de fonctions
+
+- Utilisation du module `matplotlib` [à installer]{.small}
+
+```terminal
+> python -m pip install matplotlib
+```
+
+- Fonctionne en tandem avec `numpy`
+
+## Créer un graphique
+
+- Importer matplotlib
+
+  ```python
+  from matplotlib import pyplot as plt
+  ```
+
+- Importer numpy
+
+  ```python
+  import numpy as np
+  ```
+
+- Créer les abscisses des échantillons
+
+  ```python
+  # 100 valeurs entre -2 et 2
+  x = np.linspace(-5, 5, 100)
+  ```
+
+- Calculer les ordonnées
+
+  ```python
+  # np.sin est la version vectorisée de sin
+  y = np.sin(x)
+  ```
+
+- Dessiner le graphique
+
+  ```python
+  plt.figure()
+  plt.plot(x, y)
+  plt.show()
+  ```
+
+```python {.build}
+from matplotlib import pyplot as plt
+import numpy as np
+x = np.linspace(-5, 5, 100)
+y = np.sin(x)
+plt.figure()
+plt.plot(x, y)
+plt.savefig("sin.svg")
+```
+
+![Graphique `matplotlib`](./sin.svg)
+
+## Style
+
+- Toutes les parties du graphique sont paramètrables
+
+```python
+from matplotlib import pyplot as plt
+import numpy as np
+
+x = np.linspace(-5, 5, 100)
+y = np.sin(x)
+plt.figure()
+plt.title("Sinus")              # Donne un titre à la figure
+plt.xlabel("x")                 # Affiche un nom sur l'axe des x
+plt.ylabel("sin(x)")            # Affiche un nom sur l'axe des y
+plt.grid()                      # Affiche une grille
+
+# Configure les graduations de l'axe des x
+plt.xticks(
+  [-3*np.pi/2, -np.pi, -np.pi/2, 0, np.pi/2, np.pi, 3*np.pi/2], # positions
+  labels=["-3pi/2", "-pi", "-pi/2", "0", "pi/2", "pi", "3pi/2"] # étiquettes
+)
+
+plt.axhline(color="k")          # Affiche une ligne noire pour l'axe des x
+plt.axvline(color="k")          # Affiche une ligne noire pour l'axe des y
+plt.plot(x, y)
+plt.show()
+```
+
+```python {.build}
+from matplotlib import pyplot as plt
+import numpy as np
+
+x = np.linspace(-5, 5, 100)
+y = np.sin(x)
+plt.figure()
+plt.title("Sinus")
+plt.xlabel("x")
+plt.ylabel("sin(x)")
+plt.grid()
+
+plt.xticks(
+  [-3*np.pi/2, -np.pi, -np.pi/2, 0, np.pi/2, np.pi, 3*np.pi/2],
+  labels=["-3pi/2", "-pi", "-pi/2", "0", "pi/2", "pi", "3pi/2"]
+)
+
+plt.axhline(color="k")
+plt.axvline(color="k")
+plt.plot(x, y)
+plt.savefig("sin_style.svg")
+```
+
+![Graphique amélioré](./sin_style.svg)
+
+## Plusieurs courbes
+
+```python
+from matplotlib import pyplot as plt
+import numpy as np
+
+x = np.linspace(-5, 5, 100)
+ysin = np.sin(x)
+ycos = np.cos(x)
+plt.figure()
+plt.title("Trigono")
+plt.xlabel("x")
+plt.ylabel("y")
+plt.grid()
+plt.xticks(
+  [-3*np.pi/2, -np.pi, -np.pi/2, 0, np.pi/2, np.pi, 3*np.pi/2],
+  labels=["-3pi/2", "-pi", "-pi/2", "0", "pi/2", "pi", "3pi/2"]
+)
+plt.axhline(color="k")
+plt.axvline(color="k")
+plt.plot(x, ysin, label="sin(x)")     # on donne une étiquette à la courbe
+plt.plot(x, ycos, label="cos(x)")     # on donne une étiquette à la courbe
+plt.legend()                          # on demande d'afficher la légende
+plt.show()
+```
+
+```python {.build}
+from matplotlib import pyplot as plt
+import numpy as np
+
+x = np.linspace(-5, 5, 100)
+ysin = np.sin(x)
+ycos = np.cos(x)
+plt.figure()
+plt.title("Trigono")
+plt.xlabel("x")
+plt.ylabel("y")
+plt.grid()
+plt.xticks(
+  [-3*np.pi/2, -np.pi, -np.pi/2, 0, np.pi/2, np.pi, 3*np.pi/2],
+  labels=["-3pi/2", "-pi", "-pi/2", "0", "pi/2", "pi", "3pi/2"]
+)
+plt.axhline(color="k")
+plt.axvline(color="k")
+plt.plot(x, ysin, label="sin(x)")
+plt.plot(x, ycos, label="cos(x)")
+plt.legend()
+plt.savefig("sin_cos.svg")
+```
+
+![Graphique avec 2 courbes](./sin_cos.svg)
+
+## Remarque `matplotlib` deux API
+
+- Tous les exemples précédents ont été donnés dans l'**API implicite** de
+  matplotlib [Qui ressemble plus à Matlab]{.small}
+- Voici un exemple dans l'**API explicite**:
+
+```python
+from matplotlib import pyplot as plt
+import numpy as np
+
+x = np.linspace(-5, 5, 100)
+ysin = np.sin(x)
+ycos = np.cos(x)
+
+fig, ax = plt.subplots()
+
+ax.set_title("Trigono")
+ax.set_xlabel("x")
+ax.set_ylabel("y")
+ax.grid()
+ax.set_xticks([-3*np.pi/2, -np.pi, -np.pi/2, 0, np.pi/2, np.pi, 3*np.pi/2],
+  labels=["-3pi/2", "-pi", "-pi/2", "0", "pi/2", "pi", "3pi/2"])
+ax.axhline(color="k")
+ax.axvline(color="k")
+ax.plot(x, ysin, label="sin(x)")
+ax.plot(x, ycos, label="cos(x)")
+ax.legend()
+
+plt.show()
+```
+
+```python {.build}
+from matplotlib import pyplot as plt
+import numpy as np
+
+x = np.linspace(-5, 5, 100)
+ysin = np.sin(x)
+ycos = np.cos(x)
+
+fig, ax = plt.subplots()
+
+ax.set_title("Trigono")
+ax.set_xlabel("x")
+ax.set_ylabel("y")
+ax.grid()
+ax.set_xticks([-3*np.pi/2, -np.pi, -np.pi/2, 0, np.pi/2, np.pi, 3*np.pi/2],
+  labels=["-3pi/2", "-pi", "-pi/2", "0", "pi/2", "pi", "3pi/2"])
+ax.axhline(color="k")
+ax.axvline(color="k")
+ax.plot(x, ysin, label="sin(x)")
+ax.plot(x, ycos, label="cos(x)")
+ax.legend()
+
+plt.savefig("sin_cos_explicit.svg")
+```
+
+![Résultat avec l'API explicite](./sin_cos_explicit.svg)
+
+## Deux API
+
+::::: row
+
+::: span6
+
+### API implicite
+
+```python
+plt.subplot(1, 2, 1)
+plt.plot([1, 2, 3], [0, 0.5, 0.2])
+
+plt.subplot(1, 2, 2)
+plt.plot([3, 2, 1], [0, 0.5, 0.2])
+
+plt.suptitle('Implicit Interface')
+
+for i in range(1, 3):
+  plt.subplot(1, 2, i)
+  plt.xlabel('Boo')
+
+plt.show()
+```
+
+:::
+
+::: span6
+
+### API explicite
+
+```python
+fig, axs = plt.subplots(1, 2)
+
+axs[0].plot([1, 2, 3], [0, 0.5, 0.2])
+axs[1].plot([3, 2, 1], [0, 0.5, 0.2])
+
+fig.suptitle('Explicit Interface')
+
+for i in range(2):
+  axs[i].set_xlabel('Boo')
+
+plt.show()
+```
+
+:::
+
+:::::
+
+```python {.build}
+from matplotlib import pyplot as plt
+import numpy as np
+
+fig, axs = plt.subplots(1, 2)
+
+axs[0].plot([1, 2, 3], [0, 0.5, 0.2])
+axs[1].plot([3, 2, 1], [0, 0.5, 0.2])
+
+fig.suptitle('Explicit Interface')
+
+for i in range(2):
+  axs[i].set_xlabel('Boo')
+
+plt.savefig("subplot.svg")
+```
+
+![Subplot](./subplot.svg)
+
 ## Scipy
 
 - **Algorithmes** et **fonctions utilitaires** construits sur numpy
@@ -222,8 +524,122 @@ y = x.transpose()  # [[1, 3, 5],
 - Installation
 
 ```terminal
-$> python -m pip install scipy
+> python -m pip install scipy
 ```
+
+## Recherche de racine
+
+- `scipy` intègre la recherche dichotomique vue l'année passée
+
+```python
+from scipy import optimize
+
+def fun(x):
+  return np.cos(x)+np.cos(3*x+1)/2+np.cos(5*x-1)/3
+
+root = optimize.bisect(fun, -2, 0, xtol=0.00001)  # xtol = 2e-12 par défaut
+
+print(root)   # affiche -1.2646560668945312
+
+x = np.linspace(-5, 5, 1000)
+plt.figure()
+plt.plot(x, fun(x))
+plt.plot(root, 0, "o")  # affiche un point sur la figure
+plt.grid()
+plt.show()
+```
+
+```python {.build}
+import numpy as np
+from matplotlib import pyplot as plt
+from scipy import optimize
+
+def fun(x):
+  return np.cos(x)+np.cos(3*x+1)/2+np.cos(5*x-1)/3
+
+root = optimize.bisect(fun, -2, 0, xtol=0.00001)  # xtol = 2e-12 par défaut
+
+x = np.linspace(-5, 5, 1000)
+plt.figure()
+plt.plot(x, fun(x))
+plt.plot(root, 0, "o")  # affiche un point sur la figure
+plt.grid()
+plt.savefig("bisect.svg")
+```
+
+![Résultat du `bisect`](./bisect.svg)
+
+## Recherche de racine
+
+- Avec la méthode de Newton
+
+```python
+from scipy import optimize
+
+def fun(x):
+  return np.cos(x)+np.cos(3*x+1)/2+np.cos(5*x-1)/3
+
+root = optimize.newton(fun, -1)
+print(root)  # -1.2646564339411952
+```
+
+- Converge plus vite
+- Plus instable
+
+## Intégrale définie
+
+- Intégration numérique avec `integrate.quad`
+
+```python
+from scipy import integrate
+
+def fun(x):
+    return np.sqrt(1 - x**2)
+
+result = integrate.quad(fun, -1, 1)
+print(result)  # (pi/2, erreur)
+
+x = np.linspace(-1, 1, 100)
+y = fun(x)
+
+plt.figure()
+plt.fill_between(x, y, alpha=0.5) # colorie l'aire sous la courbe
+plt.plot(x, y)
+plt.grid()
+plt.axis("equal")                 # même échelle sur les 2 axes
+plt.xlim(-1.5, 1.5)               # limites de l'axe x
+plt.axhline(color="k")
+plt.axvline(color="k")
+plt.annotate(str(result[0]), xy=(0, 0.4), ha="center") # ajoute un texte
+plt.show()
+```
+
+```python {.build}
+import numpy as np
+from matplotlib import pyplot as plt
+from scipy import integrate
+
+def fun(x):
+    return np.sqrt(1 - x**2)
+
+result = integrate.quad(fun, -1, 1)
+
+x = np.linspace(-1, 1, 100)
+y = fun(x)
+
+plt.figure()
+plt.fill_between(x, y, alpha=0.5) # colorie l'aire sous la courbe
+plt.plot(x, y)
+plt.grid()
+plt.axis("equal")                 # même échelle sur les 2 axes
+plt.xlim(-1.5, 1.5)               # limites de l'axe x
+plt.axhline(color="k")
+plt.axvline(color="k")
+plt.annotate(str(result[0]), xy=(0, 0.4), ha="center") # ajoute un texte
+plt.savefig("integrate.svg")
+```
+
+![Résultat de `integrate.quad`](./integrate.svg)
 
 ## Algèbre Linéaire
 
@@ -288,9 +704,26 @@ linalg.solve(A, b)
   plt.show()
   ```
 
-- Résultat:
+```python {.build}
+from matplotlib import pyplot as plt
+from scipy.integrate import solve_ivp
+import numpy as np
 
-  ![Équation différentielle](./first_order.svg)
+def fun(t: float, y: float) -> float:
+  return t-y
+
+sol = solve_ivp(
+  fun=fun,
+  t_span=[0, 15],
+  y0=[2],
+  rtol = 1e-5
+)
+
+plt.plot(sol.t, sol.y[0], '--s')
+plt.savefig("first_order.svg")
+```
+
+![Équation différentielle](./first_order.svg)
 
 ## Équations différentielles d'ordres supérieurs
 
@@ -331,6 +764,25 @@ sol = solve_ivp(
 
 plt.plot(sol.t, sol.y[0], '--s')
 plt.show()
+```
+
+```python {.build}
+from matplotlib import pyplot as plt
+from scipy.integrate import solve_ivp
+import numpy as np
+
+def fun(t: float, Y: list[float]) -> list[float]:
+  return [Y[1], -2*Y[0]-Y[1]]
+
+sol = solve_ivp(
+  fun=fun,
+  t_span=[0, 15],
+  y0=[1, 0],
+  rtol = 1e-5
+)
+
+plt.plot(sol.t, sol.y[0], '--s')
+plt.savefig("second_order.svg")
 ```
 
 ![Solution](./second_order.svg)
