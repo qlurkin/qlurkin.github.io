@@ -1,5 +1,18 @@
 import { build_and_index } from 'build_lib'
 
-build_and_index(['example', 'janv24', 'mai24', 'sept24', 'janv25', 'mai25', 'sept25', 'juin26'], {
-  title: 'Examens précédents',
-})
+build_and_index(
+  [
+    'example',
+    'janv24',
+    'mai24',
+    'sept24',
+    'janv25',
+    'mai25',
+    'sept25',
+    'juin26',
+    'sept26',
+  ],
+  {
+    title: 'Examens précédents',
+  },
+)
