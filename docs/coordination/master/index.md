@@ -6,87 +6,97 @@ css: program.css
 
 ## Coordination
 
-- **Informatique**:
-  - Coordinateur du diplôme IN: **LUR**
-  - Coordinateur d'années 4MIN, 5MIN et 5MIC: **LUR**
-- **Électronique**:
-  - Coordinateur du diplôme EO: **DLH**
-  - Coordinateur d'années 4MEO et 5MEO: **DLH**
+- **Computer Science**:
+  - IN Degree Coordinator: **LUR**
+  - Year Coordinator for 4MIN, 5MIN and 5MIC: **LUR**
+- **Electronics**:
+  - EO Degree Coordinator: **DLH**
+  - Year Coordinator for 4MEO and 5MEO: **DLH**
 
-Rejoignez l'équipe Teams
-[**Finalités Informatique / Electronique**](https://teams.microsoft.com/l/team/19%3A51ae90943dd14492a33fd1f4a4e770f5%40thread.tacv2/conversations?groupId=004b483e-157a-4bc0-811b-d588a0821632&tenantId=e3d6f09e-9ba9-4a36-ad75-d9039be4fe29)
+Join the Teams group
+[**Finalités Informatique / Electronique**, code `nalmf23`](https://teams.microsoft.com/l/team/19%3A51ae90943dd14492a33fd1f4a4e770f5%40thread.tacv2/conversations?groupId=004b483e-157a-4bc0-811b-d588a0821632&tenantId=e3d6f09e-9ba9-4a36-ad75-d9039be4fe29)
+
+## In memoriam
+
+RIP Claco (1847 - †2026).
+
+## Welcome Moodle!
+
+New learning platform on [https://moodle.ecam.be](https://moodle.ecam.be).
+
+It will need some time to be properly propulated. We're still getting our hands on it.
 
 ## Vision Mission de l'ECAM
 
-- Notre mission est de former des ingénieur·es aux compétences **techniques** et
-  **scientifiques** approfondies, qui se distinguent par leur approche
-  **pragmatique** et **orientée solution**.
-- Grace à leur esprit **critique**, leurs aptitudes à s'adapter et à apprendre
-  de manière **autonome**, nos ingénieur·es sont des acteurs et actrices faisant
-  preuve **d’innovation** et **d’engagement** dans les défis du **futur**.
-- Capables de travailler efficacement en **équipe** pluridisciplinaire et de
-  mener à bien des **projets** complexes, nos diplômé·es collaborent et
-  communiquent étroitement avec tous les milieux **socio-professionnels**.
-- Nous nous engageons, à travers nos activités de formation, de recherche et de
-  services, en faveur de la **durabilité** et de **l'innovation** pour un impact
-  positif sur la société et l’environnement.​​​​
+- Our mission is to educate engineers with strong **technical** and
+  **scientific** competencies, distinguished by their **pragmatic** and
+  **solution-oriented** approach.
+- Thanks to their **critical thinking**, their ability to adapt and learn
+  **independently**, our engineers are key contributors demonstrating
+  **innovation** and **commitment** in addressing the challenges of the
+  **future**.
+- Able to work effectively in multidisciplinary **teams** and successfully
+  manage complex **projects**, our graduates collaborate and communicate
+  closely with all **professional and societal sectors**.
+- Through our educational, research, and service activities, we are committed
+  to **sustainability** and **innovation** for a positive impact on society
+  and the environment.
 
-## Valeurs de la communauté ECAM
+## Values of the ECAM Community
 
-- **Bienveillance​ :** La bienveillance signifie écouter, comprendre et soutenir
-  autrui avec tolérance, en créant un environnement respectueux, dans la limite
-  de mes possibilités.​
+- **Kindness (Bienveillance):** Kindness means listening to, understanding, and supporting
+  others with tolerance, while creating a respectful environment within the
+  limits of one's possibilities.
 
-- **Collaboration​ :** La collaboration implique de travailler activement avec
-  les autres, d’écouter leurs avis, de réévaluer nos points de vue, et de
-  favoriser l'échange d'idées et d’expertise dans un climat de confiance
-  réciproque.​
+- **Collaboration:** Collaboration means actively working with others,
+  listening to their opinions, reassessing our viewpoints, and encouraging the
+  exchange of ideas and expertise in a climate of mutual trust.
 
-- **Engagement​ :** L'engagement consiste à assumer ses responsabilités de
-  manière proactive, à s'investir dans son travail et dans la vie de
-  l’institution en prenant en compte les enjeux sociétaux et environnementaux.​
+- **Commitment (Engagement):** Commitment consists of proactively taking responsibility,
+  investing oneself in one's work and in the life of the institution while
+  considering societal and environmental challenges.
 
-- **Excellence​ :** L'excellence est caractérisée par la quête continue de
-  qualité et d'amélioration dans tout ce que nous entreprenons.​
+- **Excellence:** Excellence is characterized by the continuous pursuit of
+  quality and improvement in everything we undertake.
 
-- **Intégrité​ :** L'intégrité se traduit par des comportements exemplaires qui
-  reflètent les valeurs de l'ECAM, ainsi que par la communication honnête et
-  transparente des actions et décisions prises dans le respect des règles. ​
+- **Integrity:** Integrity is reflected in exemplary behavior that embodies
+  ECAM's values, as well as honest and transparent communication regarding
+  actions and decisions made in compliance with established rules.
 
-_​Liste de comportements associés à chaque valeur disponible sur Claco​_
+_The list of behaviors associated with each value is available on Moodle._
 
-## Consignes de sécurité
+## Safety Instructions
 
-- Les **consignes de sécurité** sont décrites dans le document que l'on peut
-  trouver sur **Claco**
-  ([ECAM Informations étudiant·es > Consignes de sécurité](https://claco.ecam.be/#/workspace/3c0ca032-b721-11e8-b44d-0cc47a960f96/resources/Consignes%20de%20s%C3%A9curit%C3%A9-58541))
-- **Vous êtes censés les connaître !**
+- The **safety instructions** are described in the document available on
+  **Moodle**
+  ([ECAM Informations étudiant·es > Consignes de sécurité](https://moodle.ecam.be/course/section.php?id=1278))
+- **You are expected to know them!**
 
 ## Calendar
 
-- Les **horaires** sont disponibles sur <http://calendar.ecam.be>.
-- La **calendrier CAL** contient les événements du calendrier académique
-  [vacances, journées pédagogiques, délibérations, ...]{.small}
-- Il est possible d'obtenir le calendrier d'une **série**, d'une **activité** ou
-  d'un **auditoire**.
-- Les calendriers sont **synchronisables** sur les services de calendrier
-  courants [Google Calendar, Apple Calendrier, ...]{.small}
+- The **timetables** are available at <http://calendar.ecam.be>.
+- The **CAL calendar** contains academic calendar events
+  [holidays, pedagogical days, examination boards, ...]{.small}
+- It is possible to obtain the calendar of a **group**, an **activity**, or a
+  **lecture hall**.
+- Calendars can be **synchronized** with common calendar services
+  [Google Calendar, Apple Calendar, ...]{.small}
 
-## PAE
+## Individual Study Plan (PAE)
 
 <!-- - Vous devez remplir votre **PAE** le plus tôt possible [Idéalement
   **Aujourd'hui**]{.small}
 - C'est important pour l'organisation des séries et des labos
 - Cela se fait sur **ECAM plus** <https://plus.ecam.be/pae> -->
 
-![ ](./pae.png)
+![ ](./pae.png)
 
-## Programme des cours
+## IN Curriculum
 
 <div class="program-grid">
 <section>
 <div class="block">
-4MIN (2025 - 2026)
+4MIN (2026 - 2027)
 </div>
 <div class="quadrimestre">
 Q1
@@ -101,7 +111,7 @@ Q2
 Architecture and software quality
 </div>
 <div class="ects">
-4 crédits
+4 ECTS
 </div>
 </div>
 <div class="ue q2">
@@ -109,7 +119,7 @@ Architecture and software quality
 Artificial Intelligence
 </div>
 <div class="ects">
-6 crédits
+6 ECTS
 </div>
 </div>
 <div class="ue q2">
@@ -117,7 +127,7 @@ Artificial Intelligence
 Mobile development
 </div>
 <div class="ects">
-3 crédits
+3 ECTS
 </div>
 </div>
 <div class="ue q2">
@@ -125,7 +135,7 @@ Mobile development
 Web Architecture
 </div>
 <div class="ects">
-4 crédits
+4 ECTS
 </div>
 </div>
 <div class="ue q1">
@@ -133,7 +143,7 @@ Web Architecture
 Database management system
 </div>
 <div class="ects">
-4 crédits
+4 ECTS
 </div>
 </div>
 <div class="ue q2">
@@ -141,7 +151,7 @@ Database management system
 Network management
 </div>
 <div class="ects">
-5 crédits
+5 ECTS
 </div>
 </div>
 <div class="ue q2">
@@ -149,7 +159,7 @@ Network management
 Operating Systems
 </div>
 <div class="ects">
-3 crédits
+3 ECTS
 </div>
 </div>
 <div class="ue q1">
@@ -157,7 +167,7 @@ Operating Systems
 GPU computing
 </div>
 <div class="ects">
-6 crédits
+6 ECTS
 </div>
 </div>
 <div class="ue q2">
@@ -165,15 +175,15 @@ GPU computing
 System on chip
 </div>
 <div class="ects">
-3 crédits
+3 ECTS
 </div>
 </div>
 <div class="ue all">
 <div class="name">
-Embedded Project
+Robotics Project
 </div>
 <div class="ects">
-9 crédits
+9 ECTS
 </div>
 </div>
 <div class="ue q1">
@@ -181,7 +191,7 @@ Embedded Project
 Computer Networks
 </div>
 <div class="ects">
-5 crédits
+5 ECTS
 </div>
 </div>
 <div class="ue q1">
@@ -189,7 +199,7 @@ Computer Networks
 Hardware Testing Processes
 </div>
 <div class="ects">
-2 crédits
+2 ECTS
 </div>
 </div>
 <div class="ue q1">
@@ -197,13 +207,13 @@ Hardware Testing Processes
 Gestion
 </div>
 <div class="ects">
-6 crédits
+6 ECTS
 </div>
 </div>
 </section>
 <section>
 <div class="block">
-5MIN (2025 - 2026)
+5MIN (2026 - 2027)
 </div>
 <div class="quadrimestre">
 Q1
@@ -218,7 +228,7 @@ Q2
 Distributed Systems Project
 </div>
 <div class="ects">
-4 crédits
+4 ECTS
 </div>
 </div>
 <div class="ue q1">
@@ -226,7 +236,7 @@ Distributed Systems Project
 Artificial Intelligence project
 </div>
 <div class="ects">
-4 crédits
+4 ECTS
 </div>
 </div>
 <div class="ue q1">
@@ -234,7 +244,7 @@ Artificial Intelligence project
 Data center
 </div>
 <div class="ects">
-3 crédits
+3 ECTS
 </div>
 </div>
 <div class="ue q1">
@@ -242,7 +252,7 @@ Data center
 Software licences and GDPR
 </div>
 <div class="ects">
-2 crédits
+2 ECTS
 </div>
 </div>
 <div class="ue q1">
@@ -250,7 +260,7 @@ Software licences and GDPR
 Computer security
 </div>
 <div class="ects">
-4 crédits
+4 ECTS
 </div>
 </div>
 <div class="ue q1">
@@ -258,7 +268,7 @@ Computer security
 Ethical Electronics & Informatics
 </div>
 <div class="ects">
-3 crédits
+3 ECTS
 </div>
 </div>
 <div class="ue q2">
@@ -266,7 +276,7 @@ Ethical Electronics & Informatics
 Gestion et stratégie financière
 </div>
 <div class="ects">
-4 crédits
+4 ECTS
 </div>
 </div>
 <div class="ue q2">
@@ -274,7 +284,7 @@ Gestion et stratégie financière
 Economie
 </div>
 <div class="ects">
-4 crédits
+4 ECTS
 </div>
 </div>
 <div class="ue q2">
@@ -282,7 +292,7 @@ Economie
 Langues
 </div>
 <div class="ects">
-2 crédits
+2 ECTS
 </div>
 </div>
 <div class="ue all">
@@ -290,7 +300,7 @@ Langues
 Insertion professionnelle
 </div>
 <div class="ects">
-10 crédits
+10 ECTS
 </div>
 </div>
 <div class="ue q2" style="grid-row: span 3">
@@ -298,13 +308,13 @@ Insertion professionnelle
 Travail de Fin d’études
 </div>
 <div class="ects">
-20 crédits
+20 ECTS
 </div>
 </div>
 </section>
 </div>
 
-## Programme des cours EO
+## EO Curriculum
 
 <div class="program-grid">
 <section>
@@ -324,7 +334,7 @@ Q2
 Architecture and software quality
 </div>
 <div class="ects">
-2 crédits
+2 ECTS
 </div>
 </div>
 <div class="ue q2">
@@ -332,7 +342,7 @@ Architecture and software quality
 Artificial Intelligence
 </div>
 <div class="ects">
-5 crédits
+5 ECTS
 </div>
 </div>
 <div class="ue q2">
@@ -340,7 +350,7 @@ Artificial Intelligence
 Advanced PCB Design
 </div>
 <div class="ects">
-4 crédits
+4 ECTS
 </div>
 </div>
 <div class="ue q2">
@@ -348,7 +358,7 @@ Advanced PCB Design
 Computer Vision
 </div>
 <div class="ects">
-3 crédits
+3 ECTS
 </div>
 </div>
 <div class="ue q1">
@@ -356,7 +366,7 @@ Computer Vision
 Microelectronics
 </div>
 <div class="ects">
-4 crédits
+4 ECTS
 </div>
 </div>
 <div class="ue q2">
@@ -364,7 +374,7 @@ Microelectronics
 Telecommunications
 </div>
 <div class="ects">
-5 crédits
+5 ECTS
 </div>
 </div>
 <div class="ue q2">
@@ -372,7 +382,7 @@ Telecommunications
 Operating Systems
 </div>
 <div class="ects">
-3 crédits
+3 ECTS
 </div>
 </div>
 <div class="ue q1">
@@ -380,7 +390,7 @@ Operating Systems
 Power Electronics
 </div>
 <div class="ects">
-7 crédits
+7 ECTS
 </div>
 </div>
 <div class="ue q2">
@@ -388,15 +398,15 @@ Power Electronics
 System on chip
 </div>
 <div class="ects">
-5 crédits
+5 ECTS
 </div>
 </div>
 <div class="ue all">
 <div class="name">
-Embedded Project
+Robotics Project
 </div>
 <div class="ects">
-9 crédits
+9 ECTS
 </div>
 </div>
 <div class="ue q1">
@@ -404,7 +414,7 @@ Embedded Project
 Computer Networks
 </div>
 <div class="ects">
-5 crédits
+5 ECTS
 </div>
 </div>
 <div class="ue q1">
@@ -412,7 +422,7 @@ Computer Networks
 Hardware Testing Processes
 </div>
 <div class="ects">
-2 crédits
+2 ECTS
 </div>
 </div>
 <div class="ue q1">
@@ -420,13 +430,13 @@ Hardware Testing Processes
 Gestion
 </div>
 <div class="ects">
-6 crédits
+6 ECTS
 </div>
 </div>
 </section>
 <section>
 <div class="block">
-5MEO (2025 - 2026)
+5MEO (2026 - 2027)
 </div>
 <div class="quadrimestre">
 Q1
@@ -441,7 +451,7 @@ Q2
 Biodiversity Monitoring Project
 </div>
 <div class="ects">
-4 crédits
+4 ECTS
 </div>
 </div>
 <div class="ue q1">
@@ -449,7 +459,7 @@ Biodiversity Monitoring Project
 Embedded Security Project
 </div>
 <div class="ects">
-4 crédits
+4 ECTS
 </div>
 </div>
 <div class="ue q1">
@@ -457,7 +467,7 @@ Embedded Security Project
 High Frequency Circuit Design
 </div>
 <div class="ects">
-9 crédits
+9 ECTS
 </div>
 </div>
 <div class="ue q1">
@@ -465,7 +475,7 @@ High Frequency Circuit Design
 Ethical Electronics & Informatics
 </div>
 <div class="ects">
-3 crédits
+3 ECTS
 </div>
 </div>
 <div class="ue q2">
@@ -473,7 +483,7 @@ Ethical Electronics & Informatics
 Gestion et stratégie financière
 </div>
 <div class="ects">
-4 crédits
+4 ECTS
 </div>
 </div>
 <div class="ue q2">
@@ -481,7 +491,7 @@ Gestion et stratégie financière
 Economie
 </div>
 <div class="ects">
-4 crédits
+4 ECTS
 </div>
 </div>
 <div class="ue q2">
@@ -489,7 +499,7 @@ Economie
 Langues
 </div>
 <div class="ects">
-2 crédits
+2 ECTS
 </div>
 </div>
 <div class="ue all">
@@ -497,7 +507,7 @@ Langues
 Insertion professionnelle
 </div>
 <div class="ects">
-10 crédits
+10 ECTS
 </div>
 </div>
 <div class="ue q2">
@@ -505,30 +515,40 @@ Insertion professionnelle
 Travail de Fin d’études
 </div>
 <div class="ects">
-20 crédits
+20 ECTS
 </div>
 </div>
 </section>
 </div>
 
-## Stages et TFEs
+## Internships and Master's Theses
 
-- Informations stages 5MIN/5MEO sur **Claco**
-  _([ECAM Informations étudiant·es > Stages et TFE > Stages 5MA](https://claco.ecam.be/#/workspace/3c0ca032-b721-11e8-b44d-0cc47a960f96/resources/Stages%205MA-11582))_
+- Information about 5MIN/5MEO internships on **Moodle**
+  _([ECAM - Informations pour les étudiant·es > Stages et TFE](https://moodle.ecam.be/course/section.php?id=1284))_
 
-  Prochaines échéances :
-  - **24 octobre** Vous prenez contact avec votre coordinateur pour faire le
-    point
-  - **17 novembre** Vous avez encodé votre proposition de stage.
+  Upcoming deadlines:
+  - **Around 23 octobre** Contact your coordinator to review your progress.
+  - **Around 16 novembre** You must have submitted your internship proposal.
 
-- Informations TFEs sur **Claco**
-  _([ECAM Informations étudiant·es > Stages et TFE > TFE](https://claco.ecam.be/#/workspace/3c0ca032-b721-11e8-b44d-0cc47a960f96/resources/TFE-11615))_
-- Des propositions de stages/TFEs sont publiées sur l'équipe Teams
+- Information about Master's Theses on **Moodle**
+  _([ECAM - Informations pour les étudiant·es > Stages et TFE](https://moodle.ecam.be/course/section.php?id=1284))_
+- Internship and thesis opportunities are posted in the Teams group
   [**Finalités Informatique / Electronique**](https://teams.microsoft.com/l/team/19%3A51ae90943dd14492a33fd1f4a4e770f5%40thread.tacv2/conversations?groupId=004b483e-157a-4bc0-811b-d588a0821632&tenantId=e3d6f09e-9ba9-4a36-ad75-d9039be4fe29)
-- ⚠️ Attention à ne pas créer une entreprise existante ! Si soucis de
-  coordonnées ou autre → <stages@ecam.be>
+- ⚠️ Be careful not to create a company that already exists! If you encounter
+  contact information issues or similar problems → <stages@ecam.be>
 
-## GenAI et travaux
+
+## Master's Theses Grading Scheme
+
+- Master's thesis (85%)
+  - Continuous assessment (20%): At least two mandatory meetings (end of March and end of April), evaluates how you organise your work, present your results, manage the meeting and your day-to-day work, how proactive you are, etc.
+  - Deliverables (10%): They must be clearly planned in the thesis specifications (cahier des charges), evaluated by the promoter (industry).
+  - Written manuscript (10%): Around 30 pages.
+  - Presentation (10%): 15 minutes in front of a jury composed of promoter (industry), tutor (ECAM), two external reviewers, and one moderator (ECAM). All but the moderator will have read your work and prepared questions.
+  - Defence (35%): 45 minutes.
+- Technical Maturity (15%): You get asked a broad problem to solve, then develop your solution for 25 minutes in front of a jury. We will train for it in June.
+
+## Generative AI and Coursework
 
 [Article 95 du règlement des études](https://claco.ecam.be/#/workspace/3c0ca032-b721-11e8-b44d-0cc47a960f96/resources/haute-ecole-ichec-ecam-isfsc-reglement-des-etudes-2025-2026-vf):
 
@@ -541,59 +561,79 @@ Travail de Fin d’études
 > travail et préciser l'**usage** qu'elle ou il en a fait, sous peine de
 > s’exposer aux sanctions prévues à l'article suivant.
 
-Un **guide de rédaction** avec les règles de référencement suggérées se trouve
-[sur Claco](https://claco.ecam.be/#/workspace/3c0ca032-b721-11e8-b44d-0cc47a960f96/resources/tfe-guideredactiontfe-versionmars-2025-3).
+> In all cases, the use of software such as ChatGPT or any other
+> **artificial intelligence** software may not result in a complete or partial
+> **substitution** of the student's **personal work**, under penalty of
+> academic **sanctions**. In all cases, students must explicitly **declare**
+> the use of any form of artificial intelligence within an assignment and
+> specify the **purpose** for which it was used, failing which they may be
+> subject to the sanctions provided for in the following article.
 
-## Outils "Présences" et "Séries"
+A **writing guide** containing the recommended citation rules will be available
+[on Moodle](https://moodle.ecam.be/course/section.php?id=1284).
 
-- Nouveaux outils sur [ECAM plus](https://plus.ecam.be)
-- [Mode d'emploi (ECAM Informations étudiant·es > Coordination > Séries - Etudiants - Mode d'emploi ECAM+.pdf)](https://claco.ecam.be/#/workspace/3c0ca032-b721-11e8-b44d-0cc47a960f96/resources/series-etudiants-mode-demploi-ecam-1)
+## "Attendance" and "Groups" Tools
 
-## Élections des représentant·es des étudiant·es
+- New tools available on [ECAM Plus](https://plus.ecam.be)
+- [Mode d'emploi (ECAM - Informations pour les étudiant·es > Coordinations > Mode d'emploi outil "Séries" sur ecam+)](https://moodle.ecam.be/pluginfile.php/3963/mod_resource/content/1/series_-_etudiants_-_mode_demploi_ecam.pdf)
 
-- Rôles:
-  - **Transférer** les informations entre les enseignant·es et les étudiant·es
-  - **Motiver** à participer aux activités proposées
-  - Expliquer l’utilité des **É**valuations des **E**nseignements par les
-    **É**tudiant·es
-  - **"prendre la température"** dans le groupe
-  - Réaliser des **sondages**, d’initiative personnelle ou pour répondre à une
-    question de l’école.
-  - Porter attention et transmettre proactivement les remarques et **idées**
-    étudiantes.
-  - Veiller à la **cohésion** du groupe et favoriser une ambiance constructive
-    et une dynamique positive
-  - Organiser idéalement des **activités** intra-groupe ou à plusieurs groupes
+## Courses Assessment -- EEE
 
-## Élections des représentant·e·s des étudiant·e·s
+Here is how the process goes:
+1. You get a form during the last session of the evaluated activity.
+2. You get a reminder a few weeks later.
+3. You get a second form after the evaluation.
+4. Someone in admin crafts an anonymised report.
+5. Mrs Lefèbvre summons the teaching team to analyse the report.
+6. We do something about it.
 
-- Implications:
-  - 2X/an min: **réunions** avec le bloc qu’il ou elle représente
-  - 3X/an : confection des **horaires d’examen**
-  - 1X/an : **conseil de diplôme** de leur formation respective
-  - 2X/an : **conseil de département ECAM** pour les points liés au programme de
-    cours
-  - Fonction des demandes, réaliser quelques sondages chaque année
-  - Fonction des souhaits/besoins du groupe : quelques activités pour
-    créer/soutenir la cohésion et l’ambiance constructive du groupe
+It's important we get **everybody's** opinion. Each course is only evaluated every three years.
 
-## Élections des représentant·e·s des étudiant·e·s
+## Election of Student Representatives
 
-- Qualités:
-  - Faire preuve de **proactivité**
-  - Aimer **communiquer​**
-  - Garder la **confidentialité** (personnes/informations)​
-  - Savoir **représenter** un groupe​
-  - Chercher à **fédérer** le groupe​
-  - Favoriser la **cohésion** et une ambiance constructive du groupe​
+- Responsibilities:
+  - **Relay** information between teachers and students.
+  - **Encourage** participation in proposed activities.
+  - Explain the importance of **Student Evaluations of Teaching**.
+  - **Take the pulse** of the student group.
+  - Conduct **surveys**, either on personal initiative or in response to a
+    request from the school.
+  - Pay attention to and proactively communicate student comments and
+    **ideas**.
+  - Promote group **cohesion** and foster a constructive atmosphere and
+    positive group dynamics.
+  - Ideally organize **activities** within the group or across multiple groups.
 
-## Élections des représentant·e·s des étudiant·e·s
+## Election of Student Representatives
 
-- Désignation:
-  - Envoyer **candidature** à LUR et DLH avant le **30 septembre**
-  - Si suffisamment de candidatures > élections parmi les candidat·es
-  - Sinon > élections sur base de la **liste étudiante**
+- Commitments:
+  - At least **2 meetings per year** with the cohort they represent.
+  - **3 times per year:** preparation of **exam schedules**.
+  - **Once per year:** participation in the **degree council** of their
+    program.
+  - **Twice per year:** participation in the **ECAM department council** for
+    matters related to the curriculum.
+  - Depending on requests, conduct several surveys each year.
+  - Depending on the group's wishes and needs, organize a few activities to
+    support cohesion and a constructive atmosphere.
 
-## Distribution cartes étudiant·e·s
+## Election of Student Representatives
 
-Distribution cartes étudiant·e·s
+- Qualities:
+  - Demonstrate **proactivity**.
+  - Enjoy **communication**.
+  - Maintain **confidentiality** regarding people and information.
+  - Be able to **represent** a group.
+  - Seek to **unite** the group.
+  - Promote **cohesion** and a constructive atmosphere.
+
+## Election of Student Representatives
+
+- Selection process:
+  - Send your **application** to LUR and DLH before **September 30**.
+  - If there are enough candidates, an election will be held among them.
+  - Otherwise, representatives will be selected from the **student list**.
+
+## Distribution of Student Cards
+
+Distribution of student cards.
