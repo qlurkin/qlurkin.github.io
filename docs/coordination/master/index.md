@@ -14,17 +14,19 @@ css: program.css
   - Year Coordinator for 4MEO and 5MEO: **DLH**
 
 Join the Teams group
-[**Finalités Informatique / Electronique**, code `nalmf23`](https://teams.microsoft.com/l/team/19%3A51ae90943dd14492a33fd1f4a4e770f5%40thread.tacv2/conversations?groupId=004b483e-157a-4bc0-811b-d588a0821632&tenantId=e3d6f09e-9ba9-4a36-ad75-d9039be4fe29)
+[**Finalités Informatique / Electronique**](https://teams.microsoft.com/l/team/19%3A51ae90943dd14492a33fd1f4a4e770f5%40thread.tacv2/conversations?groupId=004b483e-157a-4bc0-811b-d588a0821632&tenantId=e3d6f09e-9ba9-4a36-ad75-d9039be4fe29),
+code `nalmf23`
 
 ## In memoriam
 
 RIP Claco (1847 - †2026).
 
-## Welcome Moodle!
+## Welcome Moodle
 
 New learning platform on [https://moodle.ecam.be](https://moodle.ecam.be).
 
-It will need some time to be properly propulated. We're still getting our hands on it.
+It will need some time to be properly populated. We're still getting our hands
+on it.
 
 ## Vision Mission de l'ECAM
 
@@ -36,25 +38,25 @@ It will need some time to be properly propulated. We're still getting our hands 
   **innovation** and **commitment** in addressing the challenges of the
   **future**.
 - Able to work effectively in multidisciplinary **teams** and successfully
-  manage complex **projects**, our graduates collaborate and communicate
-  closely with all **professional and societal sectors**.
-- Through our educational, research, and service activities, we are committed
-  to **sustainability** and **innovation** for a positive impact on society
-  and the environment.
+  manage complex **projects**, our graduates collaborate and communicate closely
+  with all **professional and societal sectors**.
+- Through our educational, research, and service activities, we are committed to
+  **sustainability** and **innovation** for a positive impact on society and the
+  environment.
 
 ## Values of the ECAM Community
 
-- **Kindness (Bienveillance):** Kindness means listening to, understanding, and supporting
-  others with tolerance, while creating a respectful environment within the
-  limits of one's possibilities.
+- **Kindness (Bienveillance):** Kindness means listening to, understanding, and
+  supporting others with tolerance, while creating a respectful environment
+  within the limits of one's possibilities.
 
-- **Collaboration:** Collaboration means actively working with others,
-  listening to their opinions, reassessing our viewpoints, and encouraging the
-  exchange of ideas and expertise in a climate of mutual trust.
+- **Collaboration:** Collaboration means actively working with others, listening
+  to their opinions, reassessing our viewpoints, and encouraging the exchange of
+  ideas and expertise in a climate of mutual trust.
 
-- **Commitment (Engagement):** Commitment consists of proactively taking responsibility,
-  investing oneself in one's work and in the life of the institution while
-  considering societal and environmental challenges.
+- **Commitment (Engagement):** Commitment consists of proactively taking
+  responsibility, investing oneself in one's work and in the life of the
+  institution while considering societal and environmental challenges.
 
 - **Excellence:** Excellence is characterized by the continuous pursuit of
   quality and improvement in everything we undertake.
@@ -75,12 +77,12 @@ _The list of behaviors associated with each value is available on Moodle._
 ## Calendar
 
 - The **timetables** are available at <http://calendar.ecam.be>.
-- The **CAL calendar** contains academic calendar events
-  [holidays, pedagogical days, examination boards, ...]{.small}
+- The **CAL calendar** contains academic calendar events [holidays, pedagogical
+  days, examination boards, ...]{.small}
 - It is possible to obtain the calendar of a **group**, an **activity**, or a
   **lecture hall**.
-- Calendars can be **synchronized** with common calendar services
-  [Google Calendar, Apple Calendar, ...]{.small}
+- Calendars can be **synchronized** with common calendar services [Google
+  Calendar, Apple Calendar, ...]{.small}
 
 ## Individual Study Plan (PAE)
 
@@ -89,7 +91,7 @@ _The list of behaviors associated with each value is available on Moodle._
 - C'est important pour l'organisation des séries et des labos
 - Cela se fait sur **ECAM plus** <https://plus.ecam.be/pae> -->
 
-![ ](./pae.png)
+![&nbsp;](./pae.png)
 
 ## IN Curriculum
 
@@ -537,16 +539,22 @@ Travail de Fin d’études
 - ⚠️ Be careful not to create a company that already exists! If you encounter
   contact information issues or similar problems → <stages@ecam.be>
 
-
 ## Master's Theses Grading Scheme
 
 - Master's thesis (85%)
-  - Continuous assessment (20%): At least two mandatory meetings (end of March and end of April), evaluates how you organise your work, present your results, manage the meeting and your day-to-day work, how proactive you are, etc.
-  - Deliverables (10%): They must be clearly planned in the thesis specifications (cahier des charges), evaluated by the promoter (industry).
+  - Continuous assessment (20%): At least two mandatory meetings (end of March
+    and end of April), evaluates how you organise your work, present your
+    results, manage the meeting and your day-to-day work, how proactive you are,
+    etc.
+  - Deliverables (10%): They must be clearly planned in the thesis
+    specifications (cahier des charges), evaluated by the promoter (industry).
   - Written manuscript (10%): Around 30 pages.
-  - Presentation (10%): 15 minutes in front of a jury composed of promoter (industry), tutor (ECAM), two external reviewers, and one moderator (ECAM). All but the moderator will have read your work and prepared questions.
+  - Presentation (10%): 15 minutes in front of a jury composed of promoter
+    (industry), tutor (ECAM), two external reviewers, and one moderator (ECAM).
+    All but the moderator will have read your work and prepared questions.
   - Defence (35%): 45 minutes.
-- Technical Maturity (15%): You get asked a broad problem to solve, then develop your solution for 25 minutes in front of a jury. We will train for it in June.
+- Technical Maturity (15%): You get asked a broad problem to solve, then develop
+  your solution for 25 minutes in front of a jury. We will train for it in June.
 
 ## Generative AI and Coursework
 
@@ -561,13 +569,13 @@ Travail de Fin d’études
 > travail et préciser l'**usage** qu'elle ou il en a fait, sous peine de
 > s’exposer aux sanctions prévues à l'article suivant.
 
-> In all cases, the use of software such as ChatGPT or any other
-> **artificial intelligence** software may not result in a complete or partial
-> **substitution** of the student's **personal work**, under penalty of
-> academic **sanctions**. In all cases, students must explicitly **declare**
-> the use of any form of artificial intelligence within an assignment and
-> specify the **purpose** for which it was used, failing which they may be
-> subject to the sanctions provided for in the following article.
+> In all cases, the use of software such as ChatGPT or any other **artificial
+> intelligence** software may not result in a complete or partial
+> **substitution** of the student's **personal work**, under penalty of academic
+> **sanctions**. In all cases, students must explicitly **declare** the use of
+> any form of artificial intelligence within an assignment and specify the
+> **purpose** for which it was used, failing which they may be subject to the
+> sanctions provided for in the following article.
 
 A **writing guide** containing the recommended citation rules will be available
 [on Moodle](https://moodle.ecam.be/course/section.php?id=1284).
@@ -580,6 +588,7 @@ A **writing guide** containing the recommended citation rules will be available
 ## Courses Assessment -- EEE
 
 Here is how the process goes:
+
 1. You get a form during the last session of the evaluated activity.
 2. You get a reminder a few weeks later.
 3. You get a second form after the evaluation.
@@ -587,7 +596,8 @@ Here is how the process goes:
 5. Mrs Lefèbvre summons the teaching team to analyse the report.
 6. We do something about it.
 
-It's important we get **everybody's** opinion. Each course is only evaluated every three years.
+It's important we get **everybody's** opinion. Each course is only evaluated
+every three years.
 
 ## Election of Student Representatives
 
@@ -598,10 +608,9 @@ It's important we get **everybody's** opinion. Each course is only evaluated eve
   - **Take the pulse** of the student group.
   - Conduct **surveys**, either on personal initiative or in response to a
     request from the school.
-  - Pay attention to and proactively communicate student comments and
-    **ideas**.
-  - Promote group **cohesion** and foster a constructive atmosphere and
-    positive group dynamics.
+  - Pay attention to and proactively communicate student comments and **ideas**.
+  - Promote group **cohesion** and foster a constructive atmosphere and positive
+    group dynamics.
   - Ideally organize **activities** within the group or across multiple groups.
 
 ## Election of Student Representatives
@@ -609,8 +618,7 @@ It's important we get **everybody's** opinion. Each course is only evaluated eve
 - Commitments:
   - At least **2 meetings per year** with the cohort they represent.
   - **3 times per year:** preparation of **exam schedules**.
-  - **Once per year:** participation in the **degree council** of their
-    program.
+  - **Once per year:** participation in the **degree council** of their program.
   - **Twice per year:** participation in the **ECAM department council** for
     matters related to the curriculum.
   - Depending on requests, conduct several surveys each year.
