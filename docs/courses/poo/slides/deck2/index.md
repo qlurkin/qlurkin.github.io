@@ -6,22 +6,16 @@ type: deck
 
 ## Visibilité publique
 
-- Membre **public** accessible depuis partout [Aucune limitation à la
-  visibilité d'un membre public]{.small}
+- Membre **public** accessible depuis partout [Aucune limitation à la visibilité
+  d'un membre public]{.small}
 
 ```cs
+Foo foo = new Foo();
+Console.WriteLine (foo.x); // Accès OK
+
 public class Foo
 {
     public int x = 12;
-}
-
-public class Program
-{
-    public static void Main (string[] args)
-    {
-        Foo foo = new Foo();
-        Console.WriteLine (foo.x); // Accès OK
-    }
 }
 ```
 
@@ -49,9 +43,8 @@ public class B
 
 ## Visibilité privée
 
-- Membre **privé** accessible que depuis le **corps de la classe** [Peu
-  importe l'instance, tant qu'on est dans le corps de la
-  classe]{.small}
+- Membre **privé** accessible que depuis le **corps de la classe** [Peu importe
+  l'instance, tant qu'on est dans le corps de la classe]{.small}
 - **Erreur de compilation** si tentative d'accès à un membre privé
 
 ```cs
@@ -98,10 +91,10 @@ public class B
 
 ## Visibilité par défaut
 
-- Chaque type de membre possède une **visibilité par défaut** [Qui
-  s'applique si on ne mentionne aucun modificateur]{.small}
-- Visibilité internal par défaut des **membres de premier niveau** [Ne
-  peuvent d'ailleurs être que `public` ou `internal`]{.small}
+- Chaque type de membre possède une **visibilité par défaut** [Qui s'applique si
+  on ne mentionne aucun modificateur]{.small}
+- Visibilité internal par défaut des **membres de premier niveau** [Ne peuvent
+  d'ailleurs être que `public` ou `internal`]{.small}
 - Visibilité de **membres imbriqués** dépend du contenant
   - Membres d'une classe `private` par défaut
   - Membres d'une interface `public` par défaut _(voir cours 4)_
@@ -123,12 +116,13 @@ public class B
   - **Portée** définit où un nom de variable **existe** et peut être utilisé
 - Variable d'instance versus locale
   - **Variable d'instance** définie dans tout le corps de la **classe**
-  - **Variable locale** dans tout le corps de la **méthode** à partir de sa définition
+  - **Variable locale** dans tout le corps de la **méthode** à partir de sa
+    définition
 
 ## Encapsulation
 
-- L'encapsulation consiste à cacher les **détails d'implémentation**
-  [Contrôle de l'accès à certains membres d'une classe]{.small}
+- L'encapsulation consiste à cacher les **détails d'implémentation** [Contrôle
+  de l'accès à certains membres d'une classe]{.small}
 - Représentation **interne cachée** de l'extérieur [Un changement
   d'implémentation interne n'affecte pas les autres]{.small}
 - Manipulation de l'objet à travers des **méthodes publiques**
@@ -184,10 +178,34 @@ public class Vector
         this.y = y;
     }
 
-    public double X { get { return x; } }
+    public double X { get { return x; } } // This is a property
     public double Y { get { return y; } }
 }
 ```
+
+## Propriété
+
+```cs
+Foo f = new Foo();
+f.X = 42;
+Console.WriteLine(f.X)
+
+class Foo {
+  private int x;
+
+  public int X {
+    get {
+      return x;
+    }
+
+    set {
+      x = value
+    }
+  }
+}
+```
+
+- Remplace deux méthodes `GetX()` et `SetX(int value)`
 
 ## Avec encapsulation - après changement {.code}
 
@@ -211,23 +229,23 @@ public class Vector
 
 ## Bénéfice de l'encapsulation
 
-- Contrôle de l'**accès** aux variables d'instance d'une classe [Peuvent
-  être accessibles en lecture et/ou écriture]{.small}
-- Contrôle des **valeurs stockées** dans les variables d'instance [La
-  classe est la seule à avoir accès à sa structure interne]{.small}
-- **Indépendance** par rapport à l'utilisateur [La classe est libre de
-  modifier son implémentation]{.small}
+- Contrôle de l'**accès** aux variables d'instance d'une classe [Peuvent être
+  accessibles en lecture et/ou écriture]{.small}
+- Contrôle des **valeurs stockées** dans les variables d'instance [La classe est
+  la seule à avoir accès à sa structure interne]{.small}
+- **Indépendance** par rapport à l'utilisateur [La classe est libre de modifier
+  son implémentation]{.small}
 
 ## Interface publique
 
-- Définition de l'**interface publique** d'un objet [Seule façon
-  d'interagir avec l'objet de l'extérieur]{.small}
+- Définition de l'**interface publique** d'un objet [Seule façon d'interagir
+  avec l'objet de l'extérieur]{.small}
 - L'utilisateur fait **abstraction** de l'implémentation pour l'utiliser
-- Garantie du **résultat** de l'exécution des méthodes publiques [Ne doit
-  pas être affecté par des changements d'implémentation]{.small}
+- Garantie du **résultat** de l'exécution des méthodes publiques [Ne doit pas
+  être affecté par des changements d'implémentation]{.small}
 - L'interface publique doit être la plus **stable** possible
 
-## Soyez discrets !
+## Soyez discrets
 
 \"What you hide, you can change\"
 
@@ -253,14 +271,17 @@ Console.WriteLine("List = [{0}]", String.Join(", ", list));
 
 ## Objet immuable
 
-- Un objet est immuable si son **état** ne peut être changé [Après avoir
-  été initialisé par le constructeur]{.small}
-- Pouvoir partager une référence vers un objet de manière **sure** [Sans
-  risquer de voir l'état de l'objet modifié]{.small}
-- **Copies** de l'objet pas nécessaires [Économie de la quantité de
-  mémoire utilisée]{.small}
+- Un objet est immuable si son **état** ne peut être changé [Après avoir été
+  initialisé par le constructeur]{.small}
+- Pouvoir partager une référence vers un objet de manière **sure** [Sans risquer
+  de voir l'état de l'objet modifié]{.small}
+- **Copies** de l'objet pas nécessaires [Économie de la quantité de mémoire
+  utilisée]{.small}
 
 ## Les instances de la classe suivante sont-elles immuables?{.code}
+
+- `readonly` interdit d'assigner (`=`) une nouvelle valeur après
+  l'initialisation
 
 ```cs
 public class Mysterious
@@ -286,8 +307,8 @@ public class Mysterious
 }
 ```
 
-- Variable d'instance publique, mais constante [Sa valeur ne pourra
-  donc pas être changée, état préservé]{.small}
+- Variable d'instance publique, mais constante [Sa valeur ne pourra donc pas
+  être changée, état préservé]{.small}
 
 ## Les instances de la classe suivante sont-elles immuables?
 
@@ -315,8 +336,8 @@ public class SuperMysterious
 }
 ```
 
-- Variable d'instance publique, mais constante [La référence est
-  constante mais l\'état de l\'objet référencé peut changer !]{.small}
+- Variable d'instance publique, mais constante [La référence est constante mais
+  l\'état de l\'objet référencé peut changer !]{.small}
 - Attention lorsque les variables d'instance sont des objets
 
 ## Les instances de la classe suivante sont-elles immuables?{.code}
@@ -345,20 +366,19 @@ public class MysteriousCeption
 }
 ```
 
-- Variable d'instance publique, mais constante et immuable [Sa valeur
-  ne pourra donc pas être changée, ni son état !]{.small}
+- Variable d'instance publique, mais constante et immuable [Sa valeur ne pourra
+  donc pas être changée, ni son état !]{.small}
 
 ## Critères à vérifier
 
 - Variable d'instance privée
-- Variable d'instance publique et constante [Pour autant que le type
-  soit un primitif ou d'objet immuable]{.small}
+- Variable d'instance publique et constante [Pour autant que le type soit un
+  primitif ou d'objet immuable]{.small}
 
 ## Référence passée au constructeur
 
-- Modification d'un objet passé en paramètre au constructeur
-  [Altération de l'état si l'objet reçu par le constructeur en fait
-  partie]{.small}
+- Modification d'un objet passé en paramètre au constructeur [Altération de
+  l'état si l'objet reçu par le constructeur en fait partie]{.small}
 
 ```cs
 double[] data = {1, -1};
@@ -379,6 +399,7 @@ public class Vector
 
     public double[] Coords { get { return coords; } }
 
+    // comme __str__(self) en Python
     public override string ToString() {
         return String.Format ("({0}, {1})", coords[0], coords[1]);
     }
@@ -387,8 +408,8 @@ public class Vector
 
 ## Référence passée au constructeur
 
-- Le constructeur doit faire une copie de l'objet reçu [Pas nécessaire
-  si l'objet est immuable]{.small}
+- Le constructeur doit faire une copie de l'objet reçu [Pas nécessaire si
+  l'objet est immuable]{.small}
 
 ```cs
 double[] data = {1, -1};
@@ -422,8 +443,8 @@ public class Vector
 
 ## Renvoi d'une référence
 
-- Modification d'un objet renvoyé par une méthode [Altération de
-  l'état si l'objet renvoyé en fait partie]{.small}
+- Modification d'un objet renvoyé par une méthode [Altération de l'état si
+  l'objet renvoyé en fait partie]{.small}
 
 ```cs
 Vector u = new Vector (new double[] {1, -1});
@@ -457,8 +478,8 @@ public class Vector
 
 ## Renvoi d'une référence
 
-- La méthode doit renvoyer une copie de l'objet à renvoyer [Pas
-  nécessaire si l'objet est immuable]{.small}
+- La méthode doit renvoyer une copie de l'objet à renvoyer [Pas nécessaire si
+  l'objet est immuable]{.small}
 
 ```cs
 Vector u = new Vector (new double[] {1, -1});
@@ -500,18 +521,18 @@ public class Vector
 
 ## Critères à vérifier
 
-- **Copie** de tous les objets **mutables** reçus en paramètres [Seulement
-  pour ceux qui font partie de l'état de l'objet]{.small}
+- **Copie** de tous les objets **mutables** reçus en paramètres [Seulement pour
+  ceux qui font partie de l'état de l'objet]{.small}
 - **Copie** des objets **mutables** dont une référence est renvoyée [Seulement
   s'ils font partie de l'état de l'objet]{.small}
-- **Aucune copie** nécessaire pour les objets **immuables** [Leur état ne
-  pourra jamais être modifié]{.small}
+- **Aucune copie** nécessaire pour les objets **immuables** [Leur état ne pourra
+  jamais être modifié]{.small}
 
 ## Intérêts des objets immuables
 
 - Partage de références **sans aucun risque** [Puisque personne ne pourra
   altérer l'état de l'objet]{.small}
-- Utilisation d'un même **objet partagé** entre plusieurs threads [Aucun
-  souci de cohérence de l'état de l'objet, vu par les threads]{.small}
+- Utilisation d'un même **objet partagé** entre plusieurs threads [Aucun souci
+  de cohérence de l'état de l'objet, vu par les threads]{.small}
 - **Pas besoin d'en faire des copies** [Utilisation efficace de la
   mémoire]{.small}

@@ -3,9 +3,45 @@ title: PO3L - Labo 1
 subtitle: objets, agrégation et composition
 ---
 
-## Bases du C#
+## Installer .NET SDK
 
-1. Pour vous familiariser avec la syntaxe du C#, traduisez le programme suivant en C#&nbsp;:
+[Download .NET (Linux, macOS, and Windows)](https://dotnet.microsoft.com/en-us/download)
+
+## Créer un projet
+
+- **Visual Studio Code**:
+
+  - Installer l'extension: `C# Dev Kit`
+  - Dans l'onglet `Explorer` de la colonne de gauche, utiliser le bouton
+    `Create .NET Project`
+  - Choisissez `Console Application`
+  - Choisissez un dossier de travail
+  - Choisissez un nom pour votre projet _(Exemple: `MonSuperProjet`)_
+  - Pour exécuter le programme, utiliser le bouton `play` de l'onglet
+    `Run and Debug`
+
+- **Visual Studio**: _Attention ce n'est pas le même programme que VSCode_
+
+  Probablement `File > New Project...`, puis quelque chose de similaire à VSCode
+
+- **Terminal**:
+
+  - Utilisez `cd` pour sélectionner votre répertoire de travail puis:
+
+    ```terminal
+    > dotnet new console -n MonSuperProjet
+    ```
+
+  - Puis utilisez votre éditeur préféré pour écrire votre code
+
+  - Utilisez `dotnet run` pour exécuter votre projet
+
+## Bases du C\#
+
+1. Le code s'écrit dans le fichier `Program.cs`
+
+1. Pour vous familiariser avec la syntaxe du C#, traduisez le programme suivant
+   en C#&nbsp;:
 
    ```python
    from math import sqrt
@@ -41,38 +77,48 @@ subtitle: objets, agrégation et composition
    - construction d’expressions booléennes pour définir des conditions;
    - utilisation de l'instruction `if-else`.
 
-2. Vous devez maintenant améliorer le programme pour gérer le cas où l'utilisateur entre du texte qui n’est pas valide, c'est-à-dire qui ne représente pas un nombre. Tant qu'il n’a pas renseigné une valeur valide, le programme doit continuer à lui demander en boucle la valeur attendue. Pour cela, vous allez devoir découvrir le fonctionnement des concepts suivants&nbsp;:
+1. Vous devez maintenant améliorer le programme pour gérer le cas où
+   l'utilisateur entre du texte qui n’est pas valide, c'est-à-dire qui ne
+   représente pas un nombre. Tant qu'il n’a pas renseigné une valeur valide, le
+   programme doit continuer à lui demander en boucle la valeur attendue. Pour
+   cela, vous allez devoir découvrir le fonctionnement des concepts
+   suivants&nbsp;:
    - définition d’une fonction;
    - utilisation de l'instruction `while`;
    - utilisation du mécanisme d'exception `try-catch`.
 
 ## Agrégation et composition: Bibliothèque
 
-Nous allons modéliser une bibliothèque qui contient des livres, chaque livre étant composé de chapitres, et chaque bibliothèque ayant des abonnés.
+Nous allons modéliser une bibliothèque qui contient des livres, chaque livre
+étant composé de chapitres, et chaque bibliothèque ayant des abonnés.
 
-### Relations:
+### Relations
 
-- **Composition :** Chaque livre est composé de plusieurs chapitres. Si un livre est supprimé, ses chapitres le sont aussi. Un chapitre ne peut pas exister sans un livre.
-- **Agrégation :** Chaque bibliothèque a une liste d'abonnés (des personnes). Les abonnés peuvent exister en dehors de la bibliothèque, et peuvent être abonnés à plusieurs bibliothèques.
+- **Composition :** Chaque livre est composé de plusieurs chapitres. Si un livre
+  est supprimé, ses chapitres le sont aussi. Un chapitre ne peut pas exister
+  sans un livre.
+- **Agrégation :** Chaque bibliothèque a une liste d'abonnés (des personnes).
+  Les abonnés peuvent exister en dehors de la bibliothèque, et peuvent être
+  abonnés à plusieurs bibliothèques.
 
-### Classes:
+### Classes
 
 ```plantuml {.build}
 @startuml
 hide circle
 skinparam classAttributeIconSize 0
 class Library {
-    - library_name: String
-    + addSubscriber(subscriber: Subscriber): void
-    + addBook(book: Book): void
-    + displaySubscribers(): void
-    + displayBooks(): void
+    - name: String
+    + AddSubscriber(subscriber: Subscriber): void
+    + AddBook(book: Book): void
+    + DisplaySubscribers(): string
+    + DisplayBooks(): string
 }
 
 class Book {
-    - book_title: String
-    + addChapter(number: int, title: String): void
-    + displayChapters(): void
+    - title: String
+    + AddChapter(number: int, title: String): void
+    + DisplayChapters(): string
 }
 
 class Chapter {
@@ -92,9 +138,17 @@ Library "1" o-- "n   " Subscriber
 @enduml
 ```
 
-### Remarques :
+### Remarques
 
-- Les différents liens dans ce diagramme se matérialiseront par des attributs de type `List<...>` qui ne sont pas représentés dans le diagramme.
+- Les différents liens dans ce diagramme se matérialiseront par des attributs de
+  type `List<...>` qui ne sont pas représentés dans le diagramme.
+
+- L'instruction `foreach` peut être utile.
+
 - Il faudra sans doute ajouter quelques méthodes `ToString()`.
 
-- Écrivez aussi un programme qui construit quelques objets et montre que les méthodes fonctionnent.
+- Écrivez aussi un programme qui construit quelques objets et montre que les
+  méthodes fonctionnent.
+
+- **Si vous faites faire le travail par une IA, vous n'apprendrez pas grand
+  chose.**
