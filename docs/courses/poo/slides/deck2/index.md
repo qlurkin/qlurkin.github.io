@@ -390,7 +390,7 @@ Console.WriteLine (u);
 
 public class Vector
 {
-    public double[] coords;
+    private double[] coords;
 
     public Vector (double[] coords)
     {
@@ -421,7 +421,7 @@ Console.WriteLine (u);
 
 public class Vector
 {
-    public double[] coords;
+    private double[] coords;
 
     public Vector (double[] coords)
     {
@@ -456,7 +456,7 @@ Console.WriteLine (u);
 
 public class Vector
 {
-    public double[] coords;
+    private double[] coords;
 
     public Vector (double[] coords)
     {
@@ -491,7 +491,7 @@ Console.WriteLine (u);
 
 public class Vector
 {
-    public double[] coords;
+    private double[] coords;
 
     public Vector (double[] coords)
     {
