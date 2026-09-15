@@ -32,6 +32,21 @@ print(L[1][2])            # 5
 
 ## Parcours d'une liste à deux dimensions
 
+```plantuml {.build}
+@startuml
+:**L** ← **[[1, 2], [3, 4, 5]]**;
+:**s** ← **0**;
+while (Pour chaque **elem** dans **L**) is (**elem**)
+  while (Pour chaque **data** dans **elem**) is (**data**)
+    :**s** ← **sum** + **data**;
+  endwhile (fini)
+endwhile (fini)
+:afficher **s**;
+@enduml
+```
+
+## Parcours d'une liste à deux dimensions
+
 - Parcours à l'aide d'une **double boucle** [Imbrication d'une boucle dans une
   autre, `while` ou `for`]{.small}
 - La première boucle passe en revue les **listes imbriquées** [La seconde boucle
@@ -40,14 +55,17 @@ print(L[1][2])            # 5
 ```python
 L = [[1, 2], [3, 4, 5]]
 
+s = 0
+
 for elem in L:            # elem est une liste
   for data in elem:       # data est un nombre entier
-    print(data, end=' ')
-  print('| ', end='')
+    s += data
+
+print(s)
 ```
 
 ```terminal
-1 2 | 3 4 5 |
+15
 ```
 
 ## Représentation d'une matrice
@@ -74,16 +92,16 @@ $$ M = \begin{pmatrix} 1 & 2 & 3 \\ 4 & 5 & 6 \end{pmatrix} \text{ Par exemple, 
 # Avec une boucle while
 i = 0
 while i < len(M):
-	j = 0
-	while j < len(M[0]):
-		print(M[i][j])
-		j += 1
-	i += 1
+ j = 0
+ while j < len(M[0]):
+  print(M[i][j])
+  j += 1
+ i += 1
 
 # Avec une boucle for
 for line in M:
-	for elem in line:
-		print(elem)
+ for elem in line:
+  print(elem)
 ```
 
 ## Structures imbriquées
