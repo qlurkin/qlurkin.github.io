@@ -1,41 +1,32 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
-<head>
-  <meta charset="utf-8" />
-  <meta name="generator" content="pandoc" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <meta name="author" content="Quentin Lurkin" />
-  <title>Cours 4 - Mécanisme d’exceptions et lecture de fichiers</title>
-  <style>
-    /* Default styles provided by pandoc.
-    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
-    */
-    code{white-space: pre-wrap;}
-    span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
-    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    /* The extra [class] is a hack that increases specificity enough to
-       override a similar rule in reveal.js */
-    ul.task-list[class]{list-style: none;}
-    ul.task-list li input[type="checkbox"] {
-      font-size: inherit;
-      width: 0.8em;
-      margin: 0 0.8em 0.2em -1.6em;
-      vertical-align: middle;
-    }
-  </style>
-  <link rel="stylesheet" href="/deck.css" />
-  <script src="/deck_only.js" defer></script>
-</head>
-<body>
-<header id="title-block-header">
-<h1 class="title">Cours 4
-<small>Mécanisme d’exceptions et lecture de fichiers</small>
-</h1>
-<p class="author">Quentin Lurkin</p>
-</header>
-<section id="trace-derreur" class="level2">
+<!doctype html>
+<html lang="">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="generator" content="pandoc" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, user-scalable=yes"
+        />
+                <meta name="author" content="Quentin Lurkin" />
+                <title>
+            Cours 4            - Mécanisme d’exceptions et lecture de
+fichiers        </title>
+                <link rel="stylesheet" href="/css/deck.css" />
+        <link
+            rel="stylesheet"
+            href="https://fred-wang.github.io/MathFonts/NewComputerModern/mathfonts.css"
+        />
+          <script src="/js/deck_only.js" type="module" defer></script> 
+    </head>
+    <body>
+                 <header id="title-block-header">
+            <h1 class="title">
+                Cours 4                 <small>Mécanisme d’exceptions et
+lecture de fichiers</small>
+                            </h1>
+                        <p class="author">Quentin Lurkin</p>
+                    </header>
+         <section id="trace-derreur" class="level2">
 <h2>Trace d’erreur</h2>
 <ul>
 <li>Une erreur d'exécution imprime une <strong>trace d'erreur</strong>
@@ -1096,9 +1087,7 @@ le retour de ligne inclus</span></li>
 <li>Fonction <code>rstrip</code> pour retirer les caractères blancs de
 droite <span class="small">right strip</span></li>
 </ul>
-<div class="file-title">
-<p>data.txt</p>
-</div>
+<p>:::{.file-title} data.txt :::</p>
 <div class="pygments"><pre><span></span>Facebook:lur@ecam.be:lurk:8dj,Sj0m1
 Skype:mar@ecam.be:cedou:arduino
 Facebook:fle@ecam.be:fingerfood:b8ur,g2er
@@ -1455,6 +1444,6 @@ paramètre <code>encoding</code></li>
         return codecs.ascii_decode(input, self.errors)[0]
 UnicodeDecodeError: &#39;ascii&#39; codec can&#39;t decode byte 0xf0 in position 11: ordinal not in range(128)
 </div>
-</section>
-</body>
+</section> 
+    </body>
 </html>

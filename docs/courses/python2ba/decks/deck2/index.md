@@ -3,14 +3,16 @@ title: Cours 2
 subtitle: Imbrication de types, classes et objets
 type: deck
 author: Quentin Lurkin
-typst: true
 ---
 
 ## Imbrication de données
 
-- **Imbriquer** des données <small>Insertion d'une structure de données comme élément d'une autre</small>
-- **Contraintes** selon la structure principale [Éléments d'un ensemble et clés d'un dictionnaire non modifiables]{.small}
-- Représentation de **données complexes** [Bien organiser et définir la structure de données]{.small}
+- **Imbriquer** des données <small>Insertion d'une structure de données comme
+  élément d'une autre</small>
+- **Contraintes** selon la structure principale [Éléments d'un ensemble et clés
+  d'un dictionnaire non modifiables]{.small}
+- Représentation de **données complexes** [Bien organiser et définir la
+  structure de données]{.small}
 
 ## Liste à deux dimensions
 
@@ -30,8 +32,10 @@ print(L[1][2])            # 5
 
 ## Parcours d'une liste à deux dimensions
 
-- Parcours à l'aide d'une **double boucle** [Imbrication d'une boucle dans une autre, `while` ou `for`]{.small}
-- La première boucle passe en revue les **listes imbriquées** [La seconde boucle parcourt les éléments de chaque liste imbriquée]{.small}
+- Parcours à l'aide d'une **double boucle** [Imbrication d'une boucle dans une
+  autre, `while` ou `for`]{.small}
+- La première boucle passe en revue les **listes imbriquées** [La seconde boucle
+  parcourt les éléments de chaque liste imbriquée]{.small}
 
 ```python
 L = [[1, 2], [3, 4, 5]]
@@ -48,7 +52,8 @@ for elem in L:            # elem est une liste
 
 ## Représentation d'une matrice
 
-- **Matrice** représentée par une liste à deux dimensions [Toutes les listes imbriquées ont le même nombre d'éléments]{.small}
+- **Matrice** représentée par une liste à deux dimensions [Toutes les listes
+  imbriquées ont le même nombre d'éléments]{.small}
 - Stockage d'une **liste des lignes** de la matrice
   - La première dimension représente les lignes
   - Colonnes représentées par la deuxième dimension
@@ -57,11 +62,12 @@ for elem in L:            # elem est une liste
 M = [[1, 2, 3], [4, 5, 6]]
 ```
 
-$$ M = mat(1, 2, 3; 4, 5, 6) "Par exemple, M[1][0] vaut 4" $$
+$$ M = \begin{pmatrix} 1 & 2 & 3 \\ 4 & 5 & 6 \end{pmatrix} \text{ Par exemple, M[1][0] vaut 4} $$
 
 ## Parcours d'une matrice
 
-- Dimension de la matrice obtenue avec la fonction `len` [La matrice a `len(M)` lignes et `len(M[0])` colonnes]{.small}
+- Dimension de la matrice obtenue avec la fonction `len` [La matrice a `len(M)`
+  lignes et `len(M[0])` colonnes]{.small}
 - Parcours avec boucle `while` et indices ou avec boucle `for`
 
 ```python
@@ -82,7 +88,8 @@ for line in M:
 
 ## Structures imbriquées
 
-- Imbrication d'autres structures **dans des listes** [Liste de tuples, ensembles et dictionnaires]{.small}
+- Imbrication d'autres structures **dans des listes** [Liste de tuples,
+  ensembles et dictionnaires]{.small}
 
 ```python
 # Liste de tuples
@@ -106,7 +113,8 @@ contacts = [
 
 ## Structures imbriquées
 
-- Structures imbriquées en **clés et valeurs** de dictionnaires [Les clés d'un dictionnaire doivent être non modifiables]{.small}
+- Structures imbriquées en **clés et valeurs** de dictionnaires [Les clés d'un
+  dictionnaire doivent être non modifiables]{.small}
 
 ```python
 # Tuples en clés d'un dictionnaire
@@ -128,7 +136,8 @@ config = {
 
 ## Imbrication complexes
 
-- On peut imbriquer des structures à plusieurs niveaux [Des séquences, ensembles et dictionnaires]{.small}
+- On peut imbriquer des structures à plusieurs niveaux [Des séquences, ensembles
+  et dictionnaires]{.small}
 
 ```python
 address = {'street': "Promenade de l'Alma", 'number': 50,
@@ -170,11 +179,10 @@ print(a)
 
 ## Copie
 
-- Affecter une même liste à deux variables crée un **alias** [Même
-  chose pour les séquences, les ensembles et les
-  dictionnaires]{.small}
-- On crée une **véritable copie** de liste avec la fonction `list` [Ou
-  avec les fonctions `set`, `dict`\...]{.small}
+- Affecter une même liste à deux variables crée un **alias** [Même chose pour
+  les séquences, les ensembles et les dictionnaires]{.small}
+- On crée une **véritable copie** de liste avec la fonction `list` [Ou avec les
+  fonctions `set`, `dict`\...]{.small}
 
 ```python
 L = [1, 2, 3, 4, 5]
@@ -195,8 +203,8 @@ print(L)                                # [1, 2, 3, 4, 5]
 ## Copie de structures imbriquées
 
 - Pas de soucis de copies pour les **collections non modifiables**
-- La copie ne se fait **pas en profondeur** [Seuls les éléments de
-  \"premier niveau\" sont copiés]{.small}
+- La copie ne se fait **pas en profondeur** [Seuls les éléments de \"premier
+  niveau\" sont copiés]{.small}
 
 ```python
 L = [[1, 2], [3, 4, 5]]
@@ -213,8 +221,8 @@ print(L)                 # [[1, 2], [42, 4, 5]]
 - Deux fonctions proposées par le **module `copy`**
   - `copy` pour une copie \"_shallow_\"
   - `deepcopy` pour une copie \"_deep_\"
-- Une **copie en profondeur** peut prendre du temps [Et aussi
-  consommer beaucoup d\'espace mémoire]{.small}
+- Une **copie en profondeur** peut prendre du temps [Et aussi consommer beaucoup
+  d\'espace mémoire]{.small}
 
 ```python
 import copy
@@ -226,7 +234,8 @@ B = copy.deepcopy(L)               # A est une copie deep de L
 
 ## Classes et objets
 
-- problèmes avec l'utilisation de **dictionnaires** pour représenter des **objets complexes**.
+- problèmes avec l'utilisation de **dictionnaires** pour représenter des
+  **objets complexes**.
 
 ```python
 address = {'street': "Promenade de l'Alma", 'number': 50,
@@ -238,7 +247,8 @@ print(type(address))      # <class dict>
 print(type(marchand))     # <class dict>
 ```
 
-- Le **type** d'un dictionnaire est `dict` [Impossible de différencier les types d'objects]{.small}
+- Le **type** d'un dictionnaire est `dict` [Impossible de différencier les types
+  d'objects]{.small}
 
 ## Classes et objects
 
@@ -266,7 +276,8 @@ print(display_address(marchand))  # KeyError
 - `address` référencera une valeur du type `Address`
 - Ces types s'appellent **classes**
 - Les valeurs d'une classe s'appellent **objets** ou **instances**
-- En réalité, tous les types que nous avons vu (`int`, `float`, `str`, `list`, ...) sont des classes. [Et les valeurs des objets]{.small}
+- En réalité, tous les types que nous avons vu (`int`, `float`, `str`, `list`,
+  ...) sont des classes. [Et les valeurs des objets]{.small}
 
 ## Création d'une classe
 
@@ -283,10 +294,14 @@ address = Address("Promenade de l'Alma", 50, 1200, "Woluwé-Saint-Lambert")
 print(address.zip)        # 1200
 ```
 
-- La classe `Address` contient une **méthode** nommée `__init__` qui sert à initialiser **un nouvel objet** de la classe. [Cette méthode est aussi appelée **le constructeur** de la classe]{.small}
+- La classe `Address` contient une **méthode** nommée `__init__` qui sert à
+  initialiser **un nouvel objet** de la classe. [Cette méthode est aussi appelée
+  **le constructeur** de la classe]{.small}
 - Le nouvel objet est dans la variable `self`.
-- La méthode `__init__` peut recevoir autant de paramètres supplémentaires que l'on veut.
-- Elle sert à initialiser les **attributs** de l'objet [`street`, `number`, `zip` et `city`]{.small}
+- La méthode `__init__` peut recevoir autant de paramètres supplémentaires que
+  l'on veut.
+- Elle sert à initialiser les **attributs** de l'objet [`street`, `number`,
+  `zip` et `city`]{.small}
 
 ## Fonctionnalités d'une classe
 
@@ -306,30 +321,33 @@ print(address.display())        # Promenade de l'Alma, 50
                                 # 1200 Woluwé-Saint-Lambert
 ```
 
-- Comme nous l'avons vu avec la classe `list`, une classe peut avoir des fonctionnalités. [La fonctionnalité `append()` pour la classe `list` par exemple]{.small}
+- Comme nous l'avons vu avec la classe `list`, une classe peut avoir des
+  fonctionnalités. [La fonctionnalité `append()` pour la classe `list` par
+  exemple]{.small}
 
-- Ces fonctionnalités sont appelées **méthodes** et sont des fonctions créées dans la classe et prenant l'objet à traiter en paramètre (`self`).
+- Ces fonctionnalités sont appelées **méthodes** et sont des fonctions créées
+  dans la classe et prenant l'objet à traiter en paramètre (`self`).
 
 ## Objet et classe
 
-- Un objet est une **instance** d\'une classe [Une classe est un
-  modèle à partir duquel on construit des objets]{.small}
-- La classe définit **deux éléments** constitutifs des objets [Les
-  attributs et les fonctionnalités de l\'objet]{.small}
+- Un objet est une **instance** d\'une classe [Une classe est un modèle à partir
+  duquel on construit des objets]{.small}
+- La classe définit **deux éléments** constitutifs des objets [Les attributs et
+  les fonctionnalités de l\'objet]{.small}
 
 ## Attribut et fonctionnalité
 
-- Un attribut est une **donnée** stockée dans un objet [Les valeurs
-  des attributs définissent l\'état de l\'objet]{.small}
-- Une **fonctionnalité** permet d\'effectuer une action [Obtenir une
-  information sur l\'objet ou donner un ordre]{.small}
+- Un attribut est une **donnée** stockée dans un objet [Les valeurs des
+  attributs définissent l\'état de l\'objet]{.small}
+- Une **fonctionnalité** permet d\'effectuer une action [Obtenir une information
+  sur l\'objet ou donner un ordre]{.small}
 
 ## Utilisation d\'un objet
 
-- Pour pouvoir créer des objets, il faut une **classe** [Une
-  définition unique permet de créer plusieurs objets]{.small}
-- Une fois créée, interaction avec **attribut et fonctionnalité**
-  [Utilisation de l\'opérateur d\'accès/appel sur l\'objet]{.small}
+- Pour pouvoir créer des objets, il faut une **classe** [Une définition unique
+  permet de créer plusieurs objets]{.small}
+- Une fois créée, interaction avec **attribut et fonctionnalité** [Utilisation
+  de l\'opérateur d\'accès/appel sur l\'objet]{.small}
 
 ```python
 # Construction d'un objet
@@ -348,8 +366,8 @@ print(address.display())        # Promenade de l'Alma, 50
 - **Définition** d\'une classe avec le mot réservé `class`
   - Corps de la classe est un bloc de code indenté
   - Le corps de la classe peut contenir des définitions de méthodes
-- Classe minimale grâce à l\'**instruction `pass`** [Aussi appelée
-  instruction vide car ne fait rien]{.small}
+- Classe minimale grâce à l\'**instruction `pass`** [Aussi appelée instruction
+  vide car ne fait rien]{.small}
 
 ```python
 class Person:
@@ -358,8 +376,8 @@ class Person:
 
 ## Créer une instance
 
-- Un objet est une **instance** d\'une classe [À partir d\'une classe,
-  on crée autant d\'objets que l\'on veut]{.small}
+- Un objet est une **instance** d\'une classe [À partir d\'une classe, on crée
+  autant d\'objets que l\'on veut]{.small}
 
 ```python
 a = Person()
@@ -371,10 +389,10 @@ b = Person()
 
 ## Définir un constructeur
 
-- **Initialisation** d\'un objet par la méthode spéciale `__init__`
-  [Admet au moins un paramètre qui est `self`]{.small}
-- Le paramètre `self` référence l\'**objet à construire** [Permet
-  d\'accéder aux attributs et fonctionnalités de l\'objet]{.small}
+- **Initialisation** d\'un objet par la méthode spéciale `__init__` [Admet au
+  moins un paramètre qui est `self`]{.small}
+- Le paramètre `self` référence l\'**objet à construire** [Permet d\'accéder aux
+  attributs et fonctionnalités de l\'objet]{.small}
 
 ```python
 class Person:
@@ -386,8 +404,8 @@ class Person:
 
 ## Appeler un constructeur
 
-- Méthode appelée au moment de la **création d\'un objet** [Initialise
-  l\'objet, en donnant une valeur à ses variables]{.small}
+- Méthode appelée au moment de la **création d\'un objet** [Initialise l\'objet,
+  en donnant une valeur à ses variables]{.small}
 
 ```python
 address = Address("Promenade de l'Alma", 50, 1200, "Woluwé-Saint-Lambert")
@@ -399,10 +417,10 @@ flemal = Person("Clémence", "Flemal", address)
 
 ## Objet et référence
 
-- Un objet est une **instance** d\'une classe [L\'instanciation d\'une
-  classe produit un objet]{.small}
-- Stockage d\'une **référence** vers l\'objet dans une variable
-  [L\'adresse où l\'objet se situe en mémoire]{.small}
+- Un objet est une **instance** d\'une classe [L\'instanciation d\'une classe
+  produit un objet]{.small}
+- Stockage d\'une **référence** vers l\'objet dans une variable [L\'adresse où
+  l\'objet se situe en mémoire]{.small}
 
 ```python
 print(marchand)
@@ -416,8 +434,8 @@ print(flemal)
 
 ## Variable d\'instance
 
-- **Variables d\'instance** attachées à un objet définissent son état
-  [Chaque objet possède ses propres copies de ces variables]{.small}
+- **Variables d\'instance** attachées à un objet définissent son état [Chaque
+  objet possède ses propres copies de ces variables]{.small}
 - Accès aux variables d\'instance avec l\'**objet cible** [Ou `self` à
   l\'intérieur du code de la classe]{.small}
 
@@ -433,24 +451,24 @@ Cédric
 
 ## Programmation orientée objet
 
-- La **programmation orientée objet** manipule des objets [Concepts et
-  entités représentés par des objets]{.small}
-- Représenter des objets **concrets ou conceptuels** du monde réel
-  [Une personne, un moyen de transport, une date, une
-  liste\...]{.small}
-- Création de **nouveaux types de données** [Permet une programmation
-  de plus haut niveau]{.small}
+- La **programmation orientée objet** manipule des objets [Concepts et entités
+  représentés par des objets]{.small}
+- Représenter des objets **concrets ou conceptuels** du monde réel [Une
+  personne, un moyen de transport, une date, une liste\...]{.small}
+- Création de **nouveaux types de données** [Permet une programmation de plus
+  haut niveau]{.small}
 
 ## État d\'un objet
 
-- Chaque objet est unique et possède son propre **état** [Identité
-  propre à chaque objet, avec ses propres attributs]{.small}
-- L\'état d\'un objet est **modifiable ou non** - Objet immuable aura toujours le même état - État d\'un objet non modifiable ne peut être changé
+- Chaque objet est unique et possède son propre **état** [Identité propre à
+  chaque objet, avec ses propres attributs]{.small}
+- L\'état d\'un objet est **modifiable ou non** - Objet immuable aura toujours
+  le même état - État d\'un objet non modifiable ne peut être changé
 
 ## Identité d\'un objet
 
-- **Identité** d\'un objet propre à chaque objet créé [Caractérisée
-  par son emplacement en mémoire]{.small}
+- **Identité** d\'un objet propre à chaque objet créé [Caractérisée par son
+  emplacement en mémoire]{.small}
 - Fonction prédéfinie **`id`** renvoie l\'identité
 
 ```python
@@ -468,10 +486,10 @@ print(id(prof))
 
 ## Définir un vecteur dans le plan
 
-- Deux variables d\'instance pour représenter les **coordonnées** [Les
-  deux variables `self.x` et `self.y` représentent $(x, y)$]{.small}
-- Une méthode `norm` pour calculer la **longueur du vecteur** [La
-  norme vaut $sqrt(x^2 + y^2)$]{.small}
+- Deux variables d\'instance pour représenter les **coordonnées** [Les deux
+  variables `self.x` et `self.y` représentent $(x, y)$]{.small}
+- Une méthode `norm` pour calculer la **longueur du vecteur** [La norme vaut
+  $sqrt(x^2 + y^2)$]{.small}
 
 ```python
 class Vector:
@@ -492,9 +510,8 @@ print(u.norm())
 
 ## `self`
 
-- La **variable d\'instance** est accessible dans toute la classe
-  [Existe en mémoire pendant toute la durée de vie de
-  l\'objet]{.small}
+- La **variable d\'instance** est accessible dans toute la classe [Existe en
+  mémoire pendant toute la durée de vie de l\'objet]{.small}
 - Opposée à la **variable locale** qui n\'existe que dans la méthode
 
 ```python
@@ -542,8 +559,8 @@ print(u)
 
 ## Égalité
 
-- L\'opérateur d\'égalité **compare les références** des variables [Le
-  contenu des objets n\'est pas comparé]{.small}
+- L\'opérateur d\'égalité **compare les références** des variables [Le contenu
+  des objets n\'est pas comparé]{.small}
 
 ```python
 u = Vector(1, -1)
@@ -553,8 +570,8 @@ print(u == v)                  # False
 
 ## Alias
 
-- Un **alias** est une copie de la référence vers un objet [Il n\'y a
-  qu\'une seule copie de l\'objet en mémoire]{.small}
+- Un **alias** est une copie de la référence vers un objet [Il n\'y a qu\'une
+  seule copie de l\'objet en mémoire]{.small}
 
 ```python
 u = Vector(1, -1)
@@ -564,8 +581,8 @@ print(u == v)                  # True
 
 ## Surcharge d'opérateur
 
-- On peut **redéfinir** les opérateurs de comparaison [`__lt__` pour
-  `<`, `__le__` pour `<=`, `__eq__` pour `==`\...]{.small}
+- On peut **redéfinir** les opérateurs de comparaison [`__lt__` pour `<`,
+  `__le__` pour `<=`, `__eq__` pour `==`\...]{.small}
 
 ```python
 from typing import Self
@@ -586,16 +603,15 @@ print(u == v)                  # True
 print(u is v)                  # False
 ```
 
-- Surcharge de l\'opérateur d\'égalité pour **comparer les objets**
-  [Le contenu des objets sera comparé, et non plus les
-  références]{.small}
-- **Comparaison des identités** avec l\'opérateur `is` [Comparaison
-  des références des objets]{.small}
+- Surcharge de l\'opérateur d\'égalité pour **comparer les objets** [Le contenu
+  des objets sera comparé, et non plus les références]{.small}
+- **Comparaison des identités** avec l\'opérateur `is` [Comparaison des
+  références des objets]{.small}
 
 ## Surcharge d'opérateur
 
-- On peut **redéfinir** les opérateurs arithmétiques [`__add__` pour
-  `+`, `__sub__` pour `-`, `__mul__` pour `*`\...]{.small}
+- On peut **redéfinir** les opérateurs arithmétiques [`__add__` pour `+`,
+  `__sub__` pour `-`, `__mul__` pour `*`\...]{.small}
 
 ```python
 from typing import Self
@@ -622,8 +638,8 @@ print(u + v)
 
 ## Composition d'objets
 
-- On peut **composer** plusieurs objets ensemble [En utilisant des
-  variables d\'instance de type objet]{.small}
+- On peut **composer** plusieurs objets ensemble [En utilisant des variables
+  d\'instance de type objet]{.small}
 
 ```python
 class Rectangle:
@@ -640,8 +656,8 @@ print(r.lowerleft)             # (1, -1)
 
 ## Réutilisation de code
 
-- On peut **réutiliser le code** définit pour les objets composés [Il
-  suffit d\'appeler les méthodes des variables objet]{.small}
+- On peut **réutiliser le code** définit pour les objets composés [Il suffit
+  d\'appeler les méthodes des variables objet]{.small}
 
 ```python
 class Rectangle:
@@ -660,7 +676,8 @@ Rectangle en (1, -1) de longueur 100 et de hauteur 50 incliné
 de 0 degrés
 ```
 
-- Ici l'affichage en `str` de `self.lowerleft` fait appel à la méthode `__str__` de la classe `Vector`
+- Ici l'affichage en `str` de `self.lowerleft` fait appel à la méthode `__str__`
+  de la classe `Vector`
 
 ## Simplification
 
@@ -678,9 +695,12 @@ class Address:
     return f"{self.street}, {self.number}\n{self.zip} {self.city}"
 ```
 
-- L'écriture du constructeur semble très répétitive. [C'est très souvent le cas]{.small}
-- Si on voulait lui ajouter une méthode `__eq__` elle serait aussi fort peu intéressante à écrire.
-- Comme ce genre de classes est très courant, il existe une moyen plus court de les définir
+- L'écriture du constructeur semble très répétitive. [C'est très souvent le
+  cas]{.small}
+- Si on voulait lui ajouter une méthode `__eq__` elle serait aussi fort peu
+  intéressante à écrire.
+- Comme ce genre de classes est très courant, il existe une moyen plus court de
+  les définir
 
 ## `dataclass`
 
@@ -703,7 +723,9 @@ address2 = Address("Promenade de l'Alma", 50, 1200, "Woluwé-Saint-Lambert")
 print(address == address2) # True
 ```
 
-- Une `dataclass` a automatiquement un constructeur, une méthode `__eq__`, une méthode `__str__` [Et d'autres choses qui dépassent le cadre de ce cours]{.small}
+- Une `dataclass` a automatiquement un constructeur, une méthode `__eq__`, une
+  méthode `__str__` [Et d'autres choses qui dépassent le cadre de ce
+  cours]{.small}
 
 ## `dataclass`
 

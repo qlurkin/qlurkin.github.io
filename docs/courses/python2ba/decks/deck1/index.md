@@ -3,13 +3,14 @@ title: Cours 1
 subtitle: Ensembles, dictionnaires et annotations
 type: deck
 author: Quentin Lurkin
-typst: true
 ---
 
 ## Ensembles
 
-- Collection **non ordonnée** d'éléments **distincts** [Pas de doublons et pas d'ordre entre les éléments]{.small}
-- **Définition** d'un ensemble non vide avec **`{}`** <small>Opérations des séquences (sauf modification) applicables</small>
+- Collection **non ordonnée** d'éléments **distincts** [Pas de doublons et pas
+  d'ordre entre les éléments]{.small}
+- **Définition** d'un ensemble non vide avec **`{}`** <small>Opérations des
+  séquences (sauf modification) applicables</small>
 
 ```python
 numbers = {42, -2, 0, 7, 11}
@@ -25,7 +26,8 @@ for element in numbers:
 
 ## Définition
 
-- Par **compréhension** ou à partir d'une **séquence** <small>Élimination automatique des doublons</small>
+- Par **compréhension** ou à partir d'une **séquence** <small>Élimination
+  automatique des doublons</small>
 - Ensemble **vide** créé avec **`set()`**
 
 ```python
@@ -39,11 +41,12 @@ A = set([12, 42, 0, 12, 0, -1, 0])
 B = set('Cocorico!')
 ```
 
-$$ S = { n in NN "avec" 0 <= n < 100 | n "est divisible par" 3 "et" 7 } $$
+$$ S = \left\{ n \in \mathbb{N} \text{ avec } 0 \leq n < 100 \mid n \text{ est divisible par } 3 \text{ et } 7 \right\} $$
 
 ## Modification d'un ensemble
 
-- **Modification** d'un ensemble par ajout/suppression d'éléments <small>Utilisation des méthodes `add` et `remove`</small>
+- **Modification** d'un ensemble par ajout/suppression d'éléments
+  <small>Utilisation des méthodes `add` et `remove`</small>
 
 ```python
 S = {1, 2, 3, 4}
@@ -71,7 +74,8 @@ print(A | B)              # {1, 2, 3, 4, 5}   (union)
 
 ## Éléments d'un ensemble
 
-- Les éléments d'un ensemble doivent être **uniques** <small>Par conséquent, ils doivent être non modifiables</small>
+- Les éléments d'un ensemble doivent être **uniques** <small>Par conséquent, ils
+  doivent être non modifiables</small>
 - On ne peut pas créer un **ensemble d'ensembles**
 
 ```python
@@ -87,8 +91,10 @@ File "<stdin>", line 1, in <module>
 
 ## Le type `frozenset`
 
-- Le type `frozenset` représente un **ensemble non modifiable** <small>Les opérations des ensembles (sauf modification) sont applicables</small>
-- On peut créer un **ensemble d'ensembles non modifiables** <small>Un `set` dont les éléments sont des `frozenset`</small>
+- Le type `frozenset` représente un **ensemble non modifiable** <small>Les
+  opérations des ensembles (sauf modification) sont applicables</small>
+- On peut créer un **ensemble d'ensembles non modifiables** <small>Un `set` dont
+  les éléments sont des `frozenset`</small>
 
 ```python
 # L'ensemble des sous-ensembles de {1, 2, 3}
@@ -139,8 +145,10 @@ print(max(S))                   # 99
 
 ## Dictionnaire
 
-- Ensemble de **paires clé-valeur** <small>Les clés sont uniques et non modifiables</small>
-- **Définition** d'un dictionnaire avec **`{}`** <small>Opérations des séquences (sauf indices) applicables</small>
+- Ensemble de **paires clé-valeur** <small>Les clés sont uniques et non
+  modifiables</small>
+- **Définition** d'un dictionnaire avec **`{}`** <small>Opérations des séquences
+  (sauf indices) applicables</small>
 
 ```python
 phone = {'Quentin': 8723, 'Cédric': 2837, 'Nathalie': 4872}
@@ -154,8 +162,10 @@ print(type(phone))        # <class 'dict'>
 
 ## Définition
 
-- Par **compréhension** ou à partir d'une **liste de paires** clé-valeur <small>Élimination automatique des doublons</small>
-- **Dictionnaire vide** avec `{}` <small>Attention à ne pas confondre avec l'ensemble vide</small>
+- Par **compréhension** ou à partir d'une **liste de paires** clé-valeur
+  <small>Élimination automatique des doublons</small>
+- **Dictionnaire vide** avec `{}` <small>Attention à ne pas confondre avec
+  l'ensemble vide</small>
 
 ```python
 # {1: 1, 3: 9, 9: 81, 5: 25, 7: 49}
@@ -167,11 +177,13 @@ mapping = {chr(i): i for i in range(65, 71)}
 
 ## Accès et modification
 
-- **Accès à une valeur** à l'aide de la clé entre crochets <small>Permet également la modification d'une valeur</small>
+- **Accès à une valeur** à l'aide de la clé entre crochets <small>Permet
+  également la modification d'une valeur</small>
 - **Suppression** paire clé-valeur avec la fonction `del`
 - Deux situations si la **clé n'existe pas**
   - À droite de `=` : provoque une erreur _(accès)_
-  - À gauche de `=` : ajoute une paire clé-valeur au dictionnaire _(assignation)_
+  - À gauche de `=` : ajoute une paire clé-valeur au dictionnaire
+    _(assignation)_
 
 ```python
 price = {"lemon": 0.85, "pear": 1}
@@ -183,7 +195,9 @@ del(price['pear'])        # {"lemon": 0.90, "apple": 1}
 
 ## Parcours d'un dictionnaire
 
-- Accès aux clés avec la méthode `keys()`, aux paires avec `items()` et aux valeurs avec la méthode `values()` <small>Renvoient de séquences que l'on peut convertir en liste</small>
+- Accès aux clés avec la méthode `keys()`, aux paires avec `items()` et aux
+  valeurs avec la méthode `values()` <small>Renvoient de séquences que l'on peut
+  convertir en liste</small>
 
 ```python
 
@@ -210,19 +224,27 @@ for value in price.values():
 
 ## Collection et recherche
 
-- Une collection est une **structure de données** permettant de **stocker** et d'**organiser** des **valeurs** <small>Liste, Tuples, Ensembles, Dictionnaires</small>
+- Une collection est une **structure de données** permettant de **stocker** et
+  d'**organiser** des **valeurs** <small>Liste, Tuples, Ensembles,
+  Dictionnaires</small>
 - La **recherche** d'un élément se fait avec l'opérateur `in`
-- Chaque type de collection est **optimisé différemment** vis-à-vis des recherches :
+- Chaque type de collection est **optimisé différemment** vis-à-vis des
+  recherches :
   - Liste et tuple : complexité $O(n)$
   - Ensembles et dictionnaires : complexité $O(1)$
 
 ## Complexité
 
-- La complexité caractérise le temps d'exécution ou la quantité de mémoire utilisée d'un algorithme **par rapport à la taille du problème** ($n$) à résoudre.
+- La complexité caractérise le temps d'exécution ou la quantité de mémoire
+  utilisée d'un algorithme **par rapport à la taille du problème** ($n$) à
+  résoudre.
 - Exemples:
-  - taille du problème double $=>$ temps d'exécution double : **complexité temporelle linéaire** (notation : **"grand O de n"**, $O(n)$)
-  - taille du problème double $=>$ utilisation mémoire quadruple : **complexité spatiale quadratique** ($O(n^2)$)
-  - temps d'exécution indépendant de la taille du problème : **complexité temporelle constante** ($O(1)$)
+  - taille du problème double $=>$ temps d'exécution double : **complexité
+    temporelle linéaire** (notation : **"grand O de n"**, $O(n)$)
+  - taille du problème double $=>$ utilisation mémoire quadruple : **complexité
+    spatiale quadratique** ($O(n^2)$)
+  - temps d'exécution indépendant de la taille du problème : **complexité
+    temporelle constante** ($O(1)$)
 
 ## À chaque collection son usage
 
@@ -250,24 +272,27 @@ students = [
 
 ## Annotations de type: problème
 
-- L'éditeur _(VSCode)_ nous aide mais pas tout le temps
+- L'éditeur _(Zed)_ nous aide mais pas tout le temps
 
 :::row
+
 :::span6
 
 ![liste des méthodes disponibles](./help.png){width=8em}
 
 :::
+
 :::{.span6 .middle}
 
 ![Aucune aide](./no_help.png){width=5em}
 
 :::
+
 :::
 
 ## Annotations de type
 
-- Le type de `L` est inconnu $=>$ pas d'aide
+- Le type de `L` est inconnu $\Rightarrow$ pas d'aide
 
 ![Type inconnu](./no_help2.png){width=8em}
 
@@ -281,25 +306,32 @@ students = [
 
 ![Type des éléments inconnu](./no_help3.png){width=8em}
 
-![Annotation pour les éléments](./more_help.png){width=14em}
+![Annotation pour les éléments](./more_help.png){width=10em}
 
 ## Tuples
 
 - Tuples de taille fixe, on spécifie le type de chacun des éléments
 
 :::row
+
 :::span6
+
 ![premier élément](./tuple0.png)
+
 :::
+
 :::span6
+
 ![deuxième élément](./tuple1.png)
+
 :::
+
 :::
 
 - Tuples de taille variable, on utilise un type et une ellipse
 
 ```python
-def sum(T: tuple[int, ...]):
+def fun(T: tuple[int, ...]):
   ...
 ```
 
@@ -365,13 +397,36 @@ def sum(L: list[int]) -> int:
 
 ## Vérification de type
 
-- L'éditeur peut aussi vérifier qu'on respecte bien les types
+- L'éditeur (Zed) vérifie que vous respectez les types que vous avez annoncé
 
-![Activer la vérification de types](./typecheck.png)
+![Erreur de type](./typecheck.png)
+
+- L'interpréteur ne tient pas compte des annotations de type [Une erreur
+  affichée par Zed n'empêche pas le programme de démarrer]{.small}
+
+## Changer de vérificateur de type
+
+- La vérification de type par défaut de Zed est très stricte.
+- Si vous voulez opter pour un vérificateur plus léger, vous pouvez le changer
+  dans le fichier de configuration de Zed.
+- Vous pourvez accéder à ce fichier dans
+
+  `File > Settings > Open Settings File`
+
+- Ajoutez ce qui suit à la fin du fichier, juste avant la dernière accollade:
+
+```json
+"languages": {
+  "Python": {
+    "language_servers": ["ty", "ruff"]
+  }
+}
+```
 
 ## Documentation
 
-- Les fonctions prédéfinies ont une documentation intégrée que l'éditeur peut afficher
+- Les fonctions prédéfinies ont une documentation intégrée que l'éditeur peut
+  afficher
 
 ![Documentation intégrée](./docstring.png)
 
@@ -379,6 +434,7 @@ def sum(L: list[int]) -> int:
 
 ## Docstring
 
-- Dans vos fonctions, vous pouvez définir le `docstring` en début de fonction avec des triples `'` ou `"`
+- Dans vos fonctions, vous pouvez définir le `docstring` en début de fonction
+  avec des triples `'` ou `"`
 
 ![Définition du *docstring*](./docstring2.png)

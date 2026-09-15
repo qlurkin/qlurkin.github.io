@@ -5,7 +5,6 @@ type: deck
 author:
   - Quentin Lurkin
   - Sébastien Combéfis
-typst: true
 ---
 
 ## Manipuler le système de fichiers
@@ -48,7 +47,9 @@ print(os.getcwd())
 
 - Fonctions de manipulation de **répertoires**
   - `os.mkdir(path)` : crée un nouveau répertoire
-  - `os.makedirs(path)` : crée un nouveau répertoire. [Crée tous les répertoires de niveau intermédiaire nécessaires pour contenir le répertoire "feuille"]{.small}
+  - `os.makedirs(path)` : crée un nouveau répertoire. [Crée tous les répertoires
+    de niveau intermédiaire nécessaires pour contenir le répertoire
+    "feuille"]{.small}
   - `os.rmdir(path)` : supprime un répertoire (doit être vide)
   - `os.listdir(path)` : renvoie la liste du contenu d’un répertoire
 
@@ -96,7 +97,8 @@ FileNotFoundError: [Errno 2] No such file or directory: 'hello.txt'
 
 ## Module `os.path`
 
-- Fonctions pour manipuler des chemins de fichier/répertoire [Opérations spécifiques au système (posixpath, ntpath, macpath)]{.small}
+- Fonctions pour manipuler des chemins de fichier/répertoire [Opérations
+  spécifiques au système (posixpath, ntpath, macpath)]{.small}
 - Construction d’un chemin **spécifique**
   - `os.path.join(paths, ...)` : construit un chemin avec plusieurs
   - `os.path.split(path)` : découpe un chemin en deux
@@ -211,17 +213,17 @@ True
   - `shutil.copy(src, dst)` : copie un fichier dans un répertoire
   - `shutil.copytree(src, dst)` : copie un répertoire
   - `shutil.rmtree(src, dst)` : supprime un répertoire
-  - `shutil.move(src, dst)` : déplace un fichier/répertoire [Sera aussi utilisé pour renommer]{.small}
+  - `shutil.move(src, dst)` : déplace un fichier/répertoire [Sera aussi utilisé
+    pour renommer]{.small}
 
 ## JavaScript Object Notation (JSON)
 
-- Permet de **représenter des objets** [Notation issue de la notation
-  des objets Javascript]{.small}
-- Ensemble de **paires** (étiquette, valeur) [Étiquette entre
-  guillemets, deux-points et valeur]{.small}
-- **Valeurs** sont soit une simple valeur, soit une liste de valeurs
-  [Liste de valeurs délimitée par des crochets
-  `[]`]{.small}
+- Permet de **représenter des objets** [Notation issue de la notation des objets
+  Javascript]{.small}
+- Ensemble de **paires** (étiquette, valeur) [Étiquette entre guillemets,
+  deux-points et valeur]{.small}
+- **Valeurs** sont soit une simple valeur, soit une liste de valeurs [Liste de
+  valeurs délimitée par des crochets `[]`]{.small}
 
 ## JavaScript Object Notation (JSON)
 
@@ -250,11 +252,10 @@ True
 
 ## Avec des `dict` et des `list`
 
-- **Sérialisation** d\'un dictionnaire en document JSON [Dictionnaire
-  Python (`dict`) → document JSON
-  (`str`)]{.small}
-- Fonction **`dumps`** du module `json`
-  [Renvoie une chaine de caractères]{.small}
+- **Sérialisation** d\'un dictionnaire en document JSON [Dictionnaire Python
+  (`dict`) → document JSON (`str`)]{.small}
+- Fonction **`dumps`** du module `json` [Renvoie une chaine de
+  caractères]{.small}
 
 ```python
 import json
@@ -268,11 +269,9 @@ document = json.dumps(tvshows, indent=4)
 
 ## Avec des `dict` et des `list`
 
-- **Désérialisation** d\'un document JSON en dictionnaire [Document
-  JSON (`str`) → dictionnaire Python
-  (`dict`)]{.small}
-- Fonction **`loads`** du module `json`
-  [Renvoie un dictionnaire]{.small}
+- **Désérialisation** d\'un document JSON en dictionnaire [Document JSON (`str`)
+  → dictionnaire Python (`dict`)]{.small}
+- Fonction **`loads`** du module `json` [Renvoie un dictionnaire]{.small}
 
 ```python
 import json
@@ -331,7 +330,8 @@ print(document)
 - Pour la conversion inverse, il faut:
   - **"deviner"** la classe
   - appeler le **constructeur**
-- fonction `object_hook` est appelée sur tous les "objets JSON" _(aka `dict` Python)_
+- fonction `object_hook` est appelée sur tous les "objets JSON" _(aka `dict`
+  Python)_
 
 ```python
 def decoder(dct: dict) -> Any:
@@ -408,8 +408,10 @@ print(json.loads(r_json, object_hook=decoder))
 
 ## Manipulation de documents CSV
 
-- Un **enregistrement** par ligne, valeurs séparées par des virgules [Entête sur la première ligne]{.small}
-- **Séparateur décimal** est par défaut le point [Convention anglaise de notation des nombres]{.small}
+- Un **enregistrement** par ligne, valeurs séparées par des virgules [Entête sur
+  la première ligne]{.small}
+- **Séparateur décimal** est par défaut le point [Convention anglaise de
+  notation des nombres]{.small}
 
 ```csv
 Nom,Prix,Code
@@ -441,7 +443,8 @@ Prix total : 16.97 €
 
 ## Module `csv`
 
-- Lecture avec un `csv.DictReader` [Les entêtes sont utilisés pour créer des dictionnaires]{.small}
+- Lecture avec un `csv.DictReader` [Les entêtes sont utilisés pour créer des
+  dictionnaires]{.small}
 
 ```python
 import csv
@@ -461,8 +464,10 @@ Prix total : 16.97 €
 
 ## Autre format CSV
 
-- En Belgique, comme nous utilisons la `,` comme **séparateur décimal**, le `;` est souvent utilisé comme **délimiteur de CSV**.
-- Voici un fichier CSV créé avec **Excel** [CSV UTF-8 (délimité par des virgules) (.csv)]{.small}
+- En Belgique, comme nous utilisons la `,` comme **séparateur décimal**, le `;`
+  est souvent utilisé comme **délimiteur de CSV**.
+- Voici un fichier CSV créé avec **Excel** [CSV UTF-8 (délimité par des
+  virgules) (.csv)]{.small}
 
 ```csv
 Titre;Auteur;Editeur;Prix
@@ -489,7 +494,8 @@ with open(src, encoding="utf-8-sig") as file:
   print(f"Prix total : {totalprice} €")
 ```
 
-- `encoding="utf-8-sig"` : Excel utilise une variante de l'UTF-8 [UTF-8 avec BOM (Byte Order Mark)]{.small}
+- `encoding="utf-8-sig"` : Excel utilise une variante de l'UTF-8 [UTF-8 avec BOM
+  (Byte Order Mark)]{.small}
 - `delimiter=";"` : Le délimiteur est le `;`
 - `.replace(",", ".")` : On remplace les séparateurs décimaux
 
@@ -508,12 +514,14 @@ with open('result.csv', 'w', encoding='utf-8-sig') as file:
   csvwriter.writerow(['Poire', str(7.99).replace('.', ','), 170])
 ```
 
-- Les champs non-string sont convertis avec `str()` par défaut [Il faut quand même faire attention au séparateur décimal]{.small}
+- Les champs non-string sont convertis avec `str()` par défaut [Il faut quand
+  même faire attention au séparateur décimal]{.small}
 
 ## Manipulation de documents XLSX
 
 - `pip install openpyxl`
-- **Document Excel** (XLSX) représente des tableurs [Contient principalement des données et des formules]{.small}
+- **Document Excel** (XLSX) représente des tableurs [Contient principalement des
+  données et des formules]{.small}
 - **Structure** d’un document XLSX
   - Un document Excel est appelé un `workbook`
   - Possède plusieurs `worksheets` (feuille)
@@ -546,7 +554,9 @@ wb.save('results.xlsx')
 
 ## Lire un document XLSX
 
-- Ouverture d’un **Workbook** en mode brut ou données [L'option `data_only=True` permet de récupérer les résultats des formules **calculés et sauvés** par Excel]{.small}
+- Ouverture d’un **Workbook** en mode brut ou données [L'option `data_only=True`
+  permet de récupérer les résultats des formules **calculés et sauvés** par
+  Excel]{.small}
 
 ```python
 import openpyxl
@@ -566,12 +576,14 @@ None Labo Examen Moyenne
 Cell D2 : None
 ```
 
-- La valeur de `D2` est `None` car le fichier n'a pas encore été ouvert et sauvé par Excel
+- La valeur de `D2` est `None` car le fichier n'a pas encore été ouvert et sauvé
+  par Excel
 
 ## Manipulation de document DOCX
 
 - `pip install python-docx`
-- **Document Word** (DOCX) représente des documents texte [Contient principalement du texte avec du style et des images]{.small}
+- **Document Word** (DOCX) représente des documents texte [Contient
+  principalement du texte avec du style et des images]{.small}
 - **Structure** d’un document DOCX
   - Un document est constitué de `paragraph`
   - Un paragraphe est composé de `runs`
@@ -627,8 +639,8 @@ document.save('demo.docx')
 
 ## Manipulation de PDF
 
-- **Portable Document Format** (PDF) représente des textes [Fichier au format binaire, pas manipulable directement
-  ]{.small}
+- **Portable Document Format** (PDF) représente des textes [Fichier au format
+  binaire, pas manipulable directement ]{.small}
 
 - Contient **plusieurs éléments**
   - Du texte
@@ -638,8 +650,10 @@ document.save('demo.docx')
 ## Module `pypdf`
 
 - `pip install pypdf`
-- **Extraction** du texte d’un document PDF [Aussi bien que possible, extraction pas parfaite]{.small}
-- **Création** d’un nouveau PDF à partir d’un existant [Récupération de page, rotation, recouvrement]{.small}
+- **Extraction** du texte d’un document PDF [Aussi bien que possible, extraction
+  pas parfaite]{.small}
+- **Création** d’un nouveau PDF à partir d’un existant [Récupération de page,
+  rotation, recouvrement]{.small}
 
 ```python
 import pypdf
@@ -679,7 +693,8 @@ with open(src, "rb") as file1, open("topsecret.pdf", "rb") as file2:
 ## Module `fpdf2`
 
 - `pip install fpdf2`
-- Possibilité de **créer un document** PDF [Similaire à une librairie de dessin des éléments à insérer]{.small}
+- Possibilité de **créer un document** PDF [Similaire à une librairie de dessin
+  des éléments à insérer]{.small}
 - **Trois étapes** à suivre
   - Ajout d’une page dans le document
   - Définition du style à appliquer
@@ -698,7 +713,8 @@ pdf.output("hello_world.pdf")
 ## Manipulation d’images
 
 - `pip install pillow`
-- Utilisation de la librairie `pillow` [Chargement, obtention d’information et modification d’images]{.small}
+- Utilisation de la librairie `pillow` [Chargement, obtention d’information et
+  modification d’images]{.small}
 - **Découpe sous-image** avec `crop(left, upper, right, lower)`
 
 ```python
@@ -709,18 +725,13 @@ cropped = image.crop((100, 50, 200, 150))
 cropped.save("cropped-cat.jpg")
 ```
 
-:::row
-::::span6
-![cute-cat.jpg](./images/cute-cat.jpg)
-::::
-::::{.span6}
-![cropped-cat.jpg](./images/cropped-cat.jpg)
-::::
-:::
+:::row ::::span6 ![cute-cat.jpg](./images/cute-cat.jpg) :::: ::::{.span6}
+![cropped-cat.jpg](./images/cropped-cat.jpg) :::: :::
 
 ## Création d’une mosaïque
 
-- **Coller** des images sur une autre avec `paste` [Découpe d’une sous-image pour création d’une mosaique]{.small}
+- **Coller** des images sur une autre avec `paste` [Découpe d’une sous-image
+  pour création d’une mosaique]{.small}
 
 ```python
 from PIL import Image

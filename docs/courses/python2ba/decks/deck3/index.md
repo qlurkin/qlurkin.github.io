@@ -3,7 +3,6 @@ title: Cours 3
 subtitle: Interface graphique
 type: deck
 author: Quentin Lurkin
-typst: true
 ---
 
 ## Rappel: programmation graphique

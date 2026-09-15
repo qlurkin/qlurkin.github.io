@@ -3,12 +3,12 @@ title: Cours 4
 subtitle: Mécanisme d'exceptions et lecture de fichiers
 type: deck
 author: Quentin Lurkin
-typst: true
 ---
 
 ## Trace d'erreur
 
-- Une erreur d\'exécution imprime une **trace d\'erreur** [Chemin d\'exécution complet qui a provoqué l\'erreur]{.small}
+- Une erreur d\'exécution imprime une **trace d\'erreur** [Chemin d\'exécution
+  complet qui a provoqué l\'erreur]{.small}
 
 ```python
 def percentage(score: float, total:int) -> float:
@@ -30,8 +30,7 @@ ZeroDivisionError: division by zero
 
 ## Trace d'erreur
 
-- L\'erreur a comme **origine** l\'exécution de l\'instruction en
-  ligne 5
+- L\'erreur a comme **origine** l\'exécution de l\'instruction en ligne 5
 
 ```terminal
 File "program.py", line 5, in <module>
@@ -55,19 +54,17 @@ ZeroDivisionError: division by zero
 
 - On peut considérer **trois types d\'erreur** possibles
   - **Erreur de syntaxe** [Code source mal formé]{.small}
-  - **Erreur d\'exécution** [Exécution d\'une opération
-    interdite]{.small}
-  - **Erreur logique** [Programme ne calcule pas ce qu\'il
-    faut]{.small}
-- Le troisième type est le plus **difficile à déceler** [Il faut
-  pouvoir vérifier que le programme fait ce qu\'il faut]{.small}
+  - **Erreur d\'exécution** [Exécution d\'une opération interdite]{.small}
+  - **Erreur logique** [Programme ne calcule pas ce qu\'il faut]{.small}
+- Le troisième type est le plus **difficile à déceler** [Il faut pouvoir
+  vérifier que le programme fait ce qu\'il faut]{.small}
 
 ## Erreur de syntaxe
 
-- Erreur détectée **lors de l\'exécution** de l\'instruction [Python
-  est en effet un langage interprété]{.small}
-- Code source du programme contient des **fautes de syntaxe** [Un peu
-  comme l\'orthographe en français]{.small}
+- Erreur détectée **lors de l\'exécution** de l\'instruction [Python est en
+  effet un langage interprété]{.small}
+- Code source du programme contient des **fautes de syntaxe** [Un peu comme
+  l\'orthographe en français]{.small}
 
 ```python
 score = 12
@@ -84,8 +81,8 @@ SyntaxError: expected ':'
 
 ## Erreur d\'exécution
 
-- Erreur produite **durant l\'exécution** d\'une opération interdite
-  [Division par zéro, indice en dehors d\'une liste\...]{.small}
+- Erreur produite **durant l\'exécution** d\'une opération interdite [Division
+  par zéro, indice en dehors d\'une liste\...]{.small}
 
 ```python
 data = [1, 2, 3]
@@ -108,8 +105,8 @@ IndexError: list index out of range
 
 ## Erreur logique
 
-- Le programme ne **calcule pas ce qu\'il faut** [Aucune erreur de
-  syntaxe ou d\'exécution ne se produit]{.small}
+- Le programme ne **calcule pas ce qu\'il faut** [Aucune erreur de syntaxe ou
+  d\'exécution ne se produit]{.small}
 
 ```python
 def perimeter(length: float, width: float) -> float:
@@ -122,16 +119,15 @@ print(perimeter(2, 1))
 4
 ```
 
-- Il peut être utile de décrire clairement ce que la fonction devrait
-  faire [Pour s\'assurer qu\'il y a bien une erreur]{.small}
+- Il peut être utile de décrire clairement ce que la fonction devrait faire
+  [Pour s\'assurer qu\'il y a bien une erreur]{.small}
 
 ## Documentation
 
-- La **documentation** d\'une fonction décrit le résultat produit
-  [Permet à un utilisateur d\'interpréter le résultat de
-  l\'appel]{.small}
-- Description de **conditions** sur les paramètres [Et de la valeur de
-  retour si elles ne sont pas satisfaites]{.small}
+- La **documentation** d\'une fonction décrit le résultat produit [Permet à un
+  utilisateur d\'interpréter le résultat de l\'appel]{.small}
+- Description de **conditions** sur les paramètres [Et de la valeur de retour si
+  elles ne sont pas satisfaites]{.small}
 
 ```python
 def percentage(score: float, total: int) -> Optional[float]:
@@ -149,7 +145,8 @@ def percentage(score: float, total: int) -> Optional[float]:
 
 ## Documentation
 
-- Conditions de la documentation **non-respectées** [Le programme continue de fonctionner avec une valeur illogique]{.small}
+- Conditions de la documentation **non-respectées** [Le programme continue de
+  fonctionner avec une valeur illogique]{.small}
 
 ```python
 print(percentage(15, 20), '%')
@@ -165,11 +162,10 @@ print(percentage(22, 20), '%')
 
 ## Programmation défensive
 
-- Vérification de **conditions sensées être vraies** avec
-  `assert` [On vérifie notamment les conditions sur les
-  paramètres avec cette instruction]{.small}
-- Un programme **doit fonctionner** si on supprime les assertions
-  [Elles ne doivent pas faire partie du code fonctionnel]{.small}
+- Vérification de **conditions sensées être vraies** avec `assert` [On vérifie
+  notamment les conditions sur les paramètres avec cette instruction]{.small}
+- Un programme **doit fonctionner** si on supprime les assertions [Elles ne
+  doivent pas faire partie du code fonctionnel]{.small}
 
 ```python
 def percentage(score: float, total: int) -> float:
@@ -191,11 +187,12 @@ def percentage(score: float, total: int) -> float:
 
 ## Instruction `assert`
 
-- **Arrêt du programme** en cas d\'erreur d\'assertion [Avec affichage
-  d\'un message d\'information]{.small}
-- Empêche des erreurs qui **ne devraient pas** se produire [Le
-  programme peut être modifié pour les éviter]{.small}
-- **Augmente nos chances d'avoir une erreur d'exécution au lieu d'une erreur de logique** [Ce qui est trés désirable]{.small}
+- **Arrêt du programme** en cas d\'erreur d\'assertion [Avec affichage d\'un
+  message d\'information]{.small}
+- Empêche des erreurs qui **ne devraient pas** se produire [Le programme peut
+  être modifié pour les éviter]{.small}
+- **Augmente nos chances d'avoir une erreur d'exécution au lieu d'une erreur de
+  logique** [Ce qui est trés désirable]{.small}
 
 ```python
 print(percentage(15, 20), '%')
@@ -216,7 +213,8 @@ AssertionError: score must be <= total
 
 ## Gestion d'erreurs
 
-- Prendre en compte **tous les cas** possibles d\'exécution [Utilisation de `if-else`]{.small}
+- Prendre en compte **tous les cas** possibles d\'exécution [Utilisation de
+  `if-else`]{.small}
 
 ```python
 from typing import Optional
@@ -243,15 +241,16 @@ Sébastien a obtenu None %
 ```
 
 - Impact sur l'**annotation du type de retour** de la fonction
-- Doit être pratiquée pour interface avec l\'extérieur [Vérification de toutes données hors contrôle]{.small}
+- Doit être pratiquée pour interface avec l\'extérieur [Vérification de toutes
+  données hors contrôle]{.small}
 
 ## Mecanisme d'exceptions
 
 - Gestion d'un code qui **pourrait planter**
-- **Code risqué** placé dans un bloc `try` [N\'y placer
-  que le code risqué et tout code qui en dépend]{.small}
-- **Erreurs capturées** dans le bloc `except` [Y placer
-  le code à exécuter en cas de capture d\'une erreur]{.small}
+- **Code risqué** placé dans un bloc `try` [N\'y placer que le code risqué et
+  tout code qui en dépend]{.small}
+- **Erreurs capturées** dans le bloc `except` [Y placer le code à exécuter en
+  cas de capture d\'une erreur]{.small}
 
 ```python
 from datetime import *
@@ -284,8 +283,8 @@ Erreur
 
 ## Validité d\'une donnée
 
-- Demande d\'une valeur à l\'utilisateur **en boucle** [Tant que la
-  valeur demandée n\'est pas du bon type]{.small}
+- Demande d\'une valeur à l\'utilisateur **en boucle** [Tant que la valeur
+  demandée n\'est pas du bon type]{.small}
 
 ```python
 from datetime import *
@@ -306,11 +305,10 @@ print('Tu as', age, 'ans')
 
 ## Vérifier le type d\'erreur
 
-- Plusieurs **types d\'erreur** sont possibles [Division par zéro,
-  erreur de conversion\...]{.small}
-- Toutes les erreurs sont capturées par l\'**instruction
-  `except`** [Possibilité de capturer les erreurs de
-  manière spécifique]{.small}
+- Plusieurs **types d\'erreur** sont possibles [Division par zéro, erreur de
+  conversion\...]{.small}
+- Toutes les erreurs sont capturées par l\'**instruction `except`** [Possibilité
+  de capturer les erreurs de manière spécifique]{.small}
 
 ```python
 try:
@@ -323,8 +321,8 @@ except:
 
 ## Vérifier le type d\'erreur
 
-- Une **exception** est un objet qui représente une erreur [L\'objet
-  est généralement de type `Exception`]{.small}
+- Une **exception** est un objet qui représente une erreur [L\'objet est
+  généralement de type `Exception`]{.small}
 - Types spécifiques pour différencier les **types d\'erreurs**
   [ZeroDivisionError, ValueError\...]{.small}
 
@@ -361,11 +359,10 @@ division by zero
 
 ## Capturer une erreur spécifique
 
-- **Gestionnaire d\'erreurs** différent pour chaque type d\'erreur [Il
-  suffit de déclarer un bloc `except` par erreur à
-  capturer]{.small}
-- Attention à l\'**ordre de capture** (de haut en bas) [Il faut
-  classer les erreurs de la plus à la moins spécificité]{.small}
+- **Gestionnaire d\'erreurs** différent pour chaque type d\'erreur [Il suffit de
+  déclarer un bloc `except` par erreur à capturer]{.small}
+- Attention à l\'**ordre de capture** (de haut en bas) [Il faut classer les
+  erreurs de la plus à la moins spécificité]{.small}
 
 ```python
 import sys
@@ -407,8 +404,8 @@ Autre erreur
 
 ## Information sur une erreur
 
-- L\'**objet de l\'exception** peut contenir de l\'information [On
-  peut accéder à des propriétés ou à des méthodes]{.small}
+- L\'**objet de l\'exception** peut contenir de l\'information [On peut accéder
+  à des propriétés ou à des méthodes]{.small}
 
 ```python
 try:
@@ -429,8 +426,8 @@ Text: 2 = x
 
 ## Gestionnaire d\'erreurs partagé
 
-- **Même gestionnaire d\'erreurs** pour différents types [Tuple
-  d\'exception fourni à l\'instruction `except`{.lang-python}]{.small}
+- **Même gestionnaire d\'erreurs** pour différents types [Tuple d\'exception
+  fourni à l\'instruction `except`{.lang-python}]{.small}
 
 ```python
 try:
@@ -451,15 +448,15 @@ Erreur de calcul
 
 ## Propagation d\'erreur
 
-- Une **erreur non capturée** remonte les appels de fonction [Jusqu\'à
-  être attrapée ou remonté jusqu\'au bout]{.small}
-- La **trace d\'erreur** montre le trajet pris par l\'exception [En la
-  lisant à l\'envers, on peut suivre la propagation]{.small}
+- Une **erreur non capturée** remonte les appels de fonction [Jusqu\'à être
+  attrapée ou remonté jusqu\'au bout]{.small}
+- La **trace d\'erreur** montre le trajet pris par l\'exception [En la lisant à
+  l\'envers, on peut suivre la propagation]{.small}
 
 ## Propagation d\'erreur
 
-- **Passage** de `fun`{.lang-python} à `compute`{.lang-python} au
-  programme principal
+- **Passage** de `fun`{.lang-python} à `compute`{.lang-python} au programme
+  principal
 
 ```python
 def fun():
@@ -540,8 +537,8 @@ Erreur.
 
 ## Générer une erreur
 
-- L\'**instruction `raise`{.lang-python}** permet de générer une
-  erreur [Création d\'un objet du type de l\'exception]{.small}
+- L\'**instruction `raise`{.lang-python}** permet de générer une erreur
+  [Création d\'un objet du type de l\'exception]{.small}
 
 ```python
 def fact(n: int) -> int:
@@ -578,9 +575,8 @@ Veuillez entrer un nombre positif.
 
 ## Définir une erreur
 
-- **Définition d\'une erreur** en définissant une nouvelle classe [La
-  classe est créée à partir de la classe
-  `Exception`]{.small}
+- **Définition d\'une erreur** en définissant une nouvelle classe [La classe est
+  créée à partir de la classe `Exception`]{.small}
 - L\'**instruction `pass`** ne fait rien
 
 ```python
@@ -613,9 +609,8 @@ def trinomialroots(a: float, b: float, c: float) -> tuple[float, ...]:
 
 ## Définir une erreur
 
-- **Capture de la nouvelle erreur** avec l\'instruction
-  `except`{.lang-python} [Le nouveau type d\'erreur est maintenant
-  connu par Python]{.small}
+- **Capture de la nouvelle erreur** avec l\'instruction `except`{.lang-python}
+  [Le nouveau type d\'erreur est maintenant connu par Python]{.small}
 
 ```python
 try:
@@ -716,30 +711,29 @@ except:
 
 ## Fichier
 
-- Un **fichier** stocke des informations sur le disque dur [Il est
-  créé, modifié, supprimé]{.small}
+- Un **fichier** stocke des informations sur le disque dur [Il est créé,
+  modifié, supprimé]{.small}
 - Manipulation des fichiers grâce au **système d\'exploitation**
-  [L\'interpréteur fait le relais avec Linux, Windows, Mac OS
-  X\...]{.small}
-- Des **informations** sont associées à un fichier [Nom, taille, date
-  de création, dernière date de modification\...]{.small}
+  [L\'interpréteur fait le relais avec Linux, Windows, Mac OS X\...]{.small}
+- Des **informations** sont associées à un fichier [Nom, taille, date de
+  création, dernière date de modification\...]{.small}
 
 ## Type de fichier
 
 - Au plus bas niveau, un fichier est une **séquence de bits**
-  (`0`{.lang-plaintext} et `1`{.lang-plaintext}) [La séquence doit
-  être interprétée pour en obtenir le sens]{.small}
+  (`0`{.lang-plaintext} et `1`{.lang-plaintext}) [La séquence doit être
+  interprétée pour en obtenir le sens]{.small}
 - **Deux types** de fichiers manipulés à des niveaux différents
   - Fichier texte est une séquence de caractères
   - Fichier binaire est une séquence d\'octets (8 bits)
 
 ## Chemin
 
-- Fichier identifié sur une machine à l\'aide de son **chemin**
-  [Identifie l\'endroit où se situe le fichier]{.small}
+- Fichier identifié sur une machine à l\'aide de son **chemin** [Identifie
+  l\'endroit où se situe le fichier]{.small}
 - **Deux façons** de spécifier un chemin
-  - Chemin absolu à partir de la racine [`C:\`{.lang-plaintext}
-    (Windows), `/`{.lang-plaintext} (OSX et Linux)]{.small}
+  - Chemin absolu à partir de la racine [`C:\`{.lang-plaintext} (Windows),
+    `/`{.lang-plaintext} (OSX et Linux)]{.small}
   - Chemin relatif à partir du répertoire courant
 
 | Chemin relatif             | Chemin absolu                            |
@@ -753,18 +747,17 @@ except:
 
 Pour passer d\'un répertoire à l\'autre dans une console de commandes
 
-- `pwd`{.lang-plaintext}: Affiche le chemin du répertoire courant
-  [Base des chemins relatifs]{.small}
-- `cd`{.lang-plaintext} _(suivi d\'un chemin)_: Change de répertoire
-  courant [`..`{.lang-plaintext} pour le répertoire parent]{.small}
-- `dir`{.lang-plaintext} _(Windows)_ ou `ls`{.lang-plaintext} _(OSX et
-  Linux)_: Liste le contenu du répertoire
+- `pwd`{.lang-plaintext}: Affiche le chemin du répertoire courant [Base des
+  chemins relatifs]{.small}
+- `cd`{.lang-plaintext} _(suivi d\'un chemin)_: Change de répertoire courant
+  [`..`{.lang-plaintext} pour le répertoire parent]{.small}
+- `dir`{.lang-plaintext} _(Windows)_ ou `ls`{.lang-plaintext} _(OSX et Linux)_:
+  Liste le contenu du répertoire
 
 ## Ouverture d\'un fichier
 
-- Pour manipuler un fichier, il faut d\'abord l\'**ouvrir** [On
-  utilise la fonction `open`{.lang-python}, qui renvoie un identifiant
-  de fichier]{.small}
+- Pour manipuler un fichier, il faut d\'abord l\'**ouvrir** [On utilise la
+  fonction `open`{.lang-python}, qui renvoie un identifiant de fichier]{.small}
 - **Erreurs** possibles lors de l\'ouverture [Fichier introuvable, ...]{.small}
 
 ```python
@@ -778,10 +771,10 @@ except IOError:
 
 ## Mode d\'ouverture
 
-- Par défaut, fichier ouvert en **lecture seule** [Tout ce qu\'on peut
-  faire c\'est donc lire le contenu du fichier]{.small}
-- On peut spécifier le **mode d\'ouverture** désiré [Avec le deuxième
-  paramètre de la fonction `open()`]{.small}
+- Par défaut, fichier ouvert en **lecture seule** [Tout ce qu\'on peut faire
+  c\'est donc lire le contenu du fichier]{.small}
+- On peut spécifier le **mode d\'ouverture** désiré [Avec le deuxième paramètre
+  de la fonction `open()`]{.small}
 
 ```python
 try:
@@ -814,9 +807,8 @@ except IOError:
 
 ## Fermeture d\'un fichier
 
-- Une fois les opérations finies, il faut **fermer** le fichier [On
-  utilise la méthode `close` avec l\'identifiant de
-  fichier]{.small}
+- Une fois les opérations finies, il faut **fermer** le fichier [On utilise la
+  méthode `close` avec l\'identifiant de fichier]{.small}
 - **Libération des ressources** et sauvegarde sur disque [Le système
   d\'exploitation limite le nombre de fichiers ouverts]{.small}
 
@@ -832,12 +824,10 @@ except IOError:
 
 ## Lecture
 
-- **Lecture** intégrale du fichier comme une chaîne de caractères [On
-  utilise la méthode `read` avec l\'identifiant de
-  fichier]{.small}
-- La lecture peut échouer et provoquer une **exception
-  `IOError`** [Par exemple si le disque est déconnecté
-  pendant la lecture]{.small}
+- **Lecture** intégrale du fichier comme une chaîne de caractères [On utilise la
+  méthode `read` avec l\'identifiant de fichier]{.small}
+- La lecture peut échouer et provoquer une **exception `IOError`** [Par exemple
+  si le disque est déconnecté pendant la lecture]{.small}
 
 ```python
 try:
@@ -852,12 +842,10 @@ except IOError:
 
 ## Instruction `finally`
 
-- En cas d\'erreur, le fichier pourrait **ne pas être fermé** [Car
-  l\'exécution du code saute directement dans
-  l\'`except`]{.small}
-- **Instruction `finally`** exécutée dans tous les cas
-  [Après la fin du bloc `try` ou après un
-  `except` éventuel]{.small}
+- En cas d\'erreur, le fichier pourrait **ne pas être fermé** [Car l\'exécution
+  du code saute directement dans l\'`except`]{.small}
+- **Instruction `finally`** exécutée dans tous les cas [Après la fin du bloc
+  `try` ou après un `except` éventuel]{.small}
 
 ```python
 try:
@@ -873,11 +861,9 @@ finally:
 
 ## Instruction `finally`
 
-- **Bug** dans le code précédent si le fichier n\'a pas su être ouvert
-  [La variable `file` ne sera pas initialisée et
-  `close` pas disponible]{.small}
-- On utilise une instruction **`try/finally`**
-  additionnelle
+- **Bug** dans le code précédent si le fichier n\'a pas su être ouvert [La
+  variable `file` ne sera pas initialisée et `close` pas disponible]{.small}
+- On utilise une instruction **`try/finally`** additionnelle
 
 ```python
 try:
@@ -894,9 +880,8 @@ except IOError:
 
 ## Instruction `with`
 
-- **Instruction `with`** pour fermeture propre des
-  ressources [L\'appel à `close` sera fait
-  automatiquement]{.small}
+- **Instruction `with`** pour fermeture propre des ressources [L\'appel à
+  `close` sera fait automatiquement]{.small}
 - Il faut garder le **`try/except`** pour les `IOError`
 
 ```python
@@ -911,12 +896,10 @@ except IOError:
 
 ## Écriture
 
-- **Écriture** en ajoutant des chaines de caractères au fichier [On
-  utilise la fonction `write` avec l\'identifiant de
-  fichier]{.small}
-- L\'écriture peut échouer et provoquer une **exception
-  `IOError`** [Par exemple si l\'espace disque devient
-  plein pendant l\'écriture]{.small}
+- **Écriture** en ajoutant des chaines de caractères au fichier [On utilise la
+  fonction `write` avec l\'identifiant de fichier]{.small}
+- L\'écriture peut échouer et provoquer une **exception `IOError`** [Par exemple
+  si l\'espace disque devient plein pendant l\'écriture]{.small}
 
 ```python
 with open('out.txt', 'w') as file:
@@ -927,11 +910,10 @@ with open('out.txt', 'w') as file:
 
 ## Copie d\'un fichier
 
-- **Copie** en faisant une lecture puis écriture du contenu lu [Deux
-  instruction `with` imbriquées]{.small}
-- Si le fichier destination existe déjà, il est **effacé** [Il faut
-  utiliser le mode `x` au lieu de `w` pour
-  empêcher cela]{.small}
+- **Copie** en faisant une lecture puis écriture du contenu lu [Deux instruction
+  `with` imbriquées]{.small}
+- Si le fichier destination existe déjà, il est **effacé** [Il faut utiliser le
+  mode `x` au lieu de `w` pour empêcher cela]{.small}
 
 ```python
 with open('data.txt', 'r') as src, open('copy.txt', 'w') as dest:
@@ -940,15 +922,12 @@ with open('data.txt', 'r') as src, open('copy.txt', 'w') as dest:
 
 ## Lecture ligne par ligne
 
-- Utilisation d\'un **itérateur** sur le fichier ouvert, avec
-  `for` [Parcours ligne par ligne, avec le retour de
-  ligne inclus]{.small}
-- Fonction `rstrip` pour retirer les caractères blancs
-  de droite [right strip]{.small}
+- Utilisation d\'un **itérateur** sur le fichier ouvert, avec `for` [Parcours
+  ligne par ligne, avec le retour de ligne inclus]{.small}
+- Fonction `rstrip` pour retirer les caractères blancs de droite [right
+  strip]{.small}
 
-:::{.file-title}
-data.txt
-:::
+:::{.file-title} data.txt :::
 
 ```plain
 Facebook:lur@ecam.be:lurk:8dj,Sj0m1
@@ -972,11 +951,10 @@ Compte Facebook de fingerfood (mode de passe : b8ur,g2er)
 
 ## Lecture ligne par ligne
 
-- L\'**itérateur** est un raccourci d\'appel de
-  `readline` [Lis une ligne s\'il en reste à lire dans
-  le fichier]{.small}
-- Renvoie une **chaine de caractères vide** lorsqu\'au bout du fichier
-  [Pratique lorsqu\'on sait combien de lignes lire]{.small}
+- L\'**itérateur** est un raccourci d\'appel de `readline` [Lis une ligne s\'il
+  en reste à lire dans le fichier]{.small}
+- Renvoie une **chaine de caractères vide** lorsqu\'au bout du fichier [Pratique
+  lorsqu\'on sait combien de lignes lire]{.small}
 
 ```python
 with open('data.txt') as file:
@@ -990,12 +968,10 @@ with open('data.txt') as file:
 
 ## Lecture ligne par ligne
 
-- La fonction `readlines` lis l\'**intégralité des
-  lignes** en une traite [La fonction renvoie une liste de chaines de
-  caractères]{.small}
-- On peut **supprimer la variable** `cleaned` inutile
-  [En enchainant directement les appels à `rstrip` et
-  `split`{.lang-python}]{.small}
+- La fonction `readlines` lis l\'**intégralité des lignes** en une traite [La
+  fonction renvoie une liste de chaines de caractères]{.small}
+- On peut **supprimer la variable** `cleaned` inutile [En enchainant directement
+  les appels à `rstrip` et `split`{.lang-python}]{.small}
 
 ```python
 with open('data.txt') as file:
@@ -1008,11 +984,10 @@ for line in content:
 
 ## Lecture ligne par ligne
 
-- **Amélioration du code** avec une fonction de formatage [On définit
-  une fonction qui formate une ligne]{.small}
-- On définit une liste par compréhension et on joint ses éléments
-  [Jointure des éléments d\'une liste réalisée avec fonction
-  `join`]{.small}
+- **Amélioration du code** avec une fonction de formatage [On définit une
+  fonction qui formate une ligne]{.small}
+- On définit une liste par compréhension et on joint ses éléments [Jointure des
+  éléments d\'une liste réalisée avec fonction `join`]{.small}
 
 ```python
 def format(line: str) -> str:
@@ -1027,25 +1002,20 @@ print('\n'.join([format(line) for line in content]))
 
 ## Exception
 
-- L\'erreur principale d\'**entrée/sortie** est
-  `IOError` [On peut se limiter à capturer cette unique
-  erreur]{.small}
+- L\'erreur principale d\'**entrée/sortie** est `IOError` [On peut se limiter à
+  capturer cette unique erreur]{.small}
 - Erreur **spécialisée** selon le type précis
-  - `FileNotFoundError`, si le fichier n\'est pas
-    trouvé
+  - `FileNotFoundError`, si le fichier n\'est pas trouvé
   - `FileExistsError`, si le fichier existe déjà
-  - `PermissionError`, si l\'utilisateur n\'a pas les
-    droits d\'accès
-  - `IsADirectoryError`, si le fichier est en fait un
-    dossier
+  - `PermissionError`, si l\'utilisateur n\'a pas les droits d\'accès
+  - `IsADirectoryError`, si le fichier est en fait un dossier
 
 ## Encodage
 
-- Les caractères sont **stockés au format binaire** dans l\'ordinateur
-  [Table de correspondance associant un entier à chaque
-  caractère]{.small}
-- La **table de caractères** ASCII (iso-646) contient 128 caractères
-  [Table suffisante pour des textes en anglais]{.small}
+- Les caractères sont **stockés au format binaire** dans l\'ordinateur [Table de
+  correspondance associant un entier à chaque caractère]{.small}
+- La **table de caractères** ASCII (iso-646) contient 128 caractères [Table
+  suffisante pour des textes en anglais]{.small}
 
 <div style="font-size: 50%; margin: 0 auto;">
 
@@ -1064,10 +1034,10 @@ print('\n'.join([format(line) for line in content]))
 
 ## Encodage
 
-- La fonction `ord` donne le **code** d\'un caractère
-  [Sous forme d\'un nombre entier]{.small}
-- La fonction `chr` donne le **caractère** correspondant
-  à un code [Sous forme d\'une chaine de caractères]{.small}
+- La fonction `ord` donne le **code** d\'un caractère [Sous forme d\'un nombre
+  entier]{.small}
+- La fonction `chr` donne le **caractère** correspondant à un code [Sous forme
+  d\'une chaine de caractères]{.small}
 
 ```python
 print(chr(65))           # Affiche A
@@ -1076,18 +1046,17 @@ print(ord('z'))          # Affiche 90
 
 ## Unicode et UTF-8
 
-- **Unicode** (ISO 10646) est un standard d\'échange de texte [Associe
-  à tout caractère un nom et un identifiant numérique]{.small}
-- **UTF-8** est un encodage pour les caractères Unicode [Python
-  travaille par défaut avec l\'encodage UTF-8]{.small}
+- **Unicode** (ISO 10646) est un standard d\'échange de texte [Associe à tout
+  caractère un nom et un identifiant numérique]{.small}
+- **UTF-8** est un encodage pour les caractères Unicode [Python travaille par
+  défaut avec l\'encodage UTF-8]{.small}
 
 ![Parcourir les caractères Unicode en ligne :
 <http://unicode-table.com>](images/unicode-characters.png)
 
 ## Choisir l\'encodage
 
-- On spécifie l\'**encodage des fichiers** avec le paramètre
-  `encoding`
+- On spécifie l\'**encodage des fichiers** avec le paramètre `encoding`
 
 ```python
 with open('contains_unicode.txt', 'w', encoding='utf8') as file:
