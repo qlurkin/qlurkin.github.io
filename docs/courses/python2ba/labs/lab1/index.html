@@ -9,10 +9,13 @@
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
     */
-    code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     /* The extra [class] is a hack that increases specificity enough to
        override a similar rule in reveal.js */
@@ -25,6 +28,7 @@
     }
   </style>
   <link rel="stylesheet" href="/document.css" />
+  <link rel="stylesheet" href="https://fred-wang.github.io/MathFonts/NewComputerModern/mathfonts.css" />
 </head>
 <body>
 <header id="title-block-header">
@@ -32,15 +36,6 @@
 <small>Ensembles, dictionnaires et annotations</small>
 </h1>
 </header>
-<section id="annotations-de-types" class="level2">
-<h2>Annotations de types</h2>
-<p>Activez la vérification de types dans <strong>Visual Studio
-Code</strong> (ou dans tout autre éditeur que vous utiliseriez).</p>
-<figure>
-<img src="./typecheck.png" alt="Dans Visual Studio Code" />
-<figcaption aria-hidden="true">Dans Visual Studio Code</figcaption>
-</figure>
-</section>
 <section id="ensemble-et-dictionnaires" class="level2">
 <h2>Ensemble et dictionnaires</h2>
 <ol type="1">

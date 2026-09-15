@@ -4,13 +4,6 @@ subtitle: Ensembles, dictionnaires et annotations
 typst: true
 ---
 
-## Annotations de types
-
-Activez la vérification de types dans **Visual Studio Code** (ou dans tout autre
-éditeur que vous utiliseriez).
-
-![Dans Visual Studio Code](./typecheck.png)
-
 ## Ensemble et dictionnaires
 
 1. Définir un ensemble qui contient:
