@@ -1,12 +1,22 @@
+import re
 import subprocess as sp
 from pathlib import Path
 
 from .build import build
 from .markdown import prepare_pandoc_cmd
 
+title_pattern = re.compile(r"<title>(.+)</title>", re.DOTALL)
+
 
 def find_title(path):
-    return f"title {path}"
+    path = Path(path)
+    with open(path / "index.html", encoding="utf8") as file:
+        content = file.read()
+    res = title_pattern.search(content)
+    if res is None:
+        return path
+    else:
+        return res.group(1).strip()
 
 
 def index(
