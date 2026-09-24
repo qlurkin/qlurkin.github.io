@@ -89,7 +89,7 @@ css: style.css
 
 <div class="program-grid">
 <section>
-<div class="block">2BE (2025 - 2026)</div>
+<div class="block">2BE (2026 - 2027)</div>
 <div class="quadrimestre">Q1</div>
 <div class="quadrimestre">Q2</div>
 <div class="ruler"></div>
@@ -151,7 +151,7 @@ css: style.css
 </div>
 </section>
 <section>
-<div class="block">3BE (2025 - 2026)</div>
+<div class="block">3BE (2026 - 2027)</div>
 <div class="quadrimestre">Q1</div>
 <div class="quadrimestre">Q2</div>
 <div class="ruler"></div>
@@ -205,7 +205,7 @@ css: style.css
 </div>
 </section>
 <section>
-<div class="block">4MIN (2025 - 2026)</div>
+<div class="block">4MIN (2026 - 2027)</div>
 <div class="quadrimestre">Q1</div>
 <div class="quadrimestre">Q2</div>
 <div class="ruler">
@@ -247,7 +247,7 @@ css: style.css
 <div class="ects">3 crédits</div>
 </div>
 <div class="ue all hl">
-<div class="name">Embedded Project</div>
+<div class="name">Robotics Project</div>
 <div class="ects">9 crédits</div>
 </div>
 <div class="ue q1">
@@ -264,7 +264,7 @@ css: style.css
 </div>
 </section>
 <section>
-<div class="block">5MIN (2025 - 2026)</div>
+<div class="block">5MIN (2026 - 2027)</div>
 <div class="quadrimestre">Q1</div>
 <div class="quadrimestre">Q2</div>
 <div class="ruler">
@@ -301,7 +301,7 @@ css: style.css
 <div class="name">Economie</div>
 <div class="ects">4 crédits</div>
 </div>
-<div class="ue q2">
+<div class="ue all">
 <div class="name">Langues</div>
 <div class="ects">2 crédits</div>
 </div>
@@ -309,7 +309,7 @@ css: style.css
 <div class="name">Insertion professionnelle</div>
 <div class="ects">10 crédits</div>
 </div>
-<div class="ue q2" style="grid-row: span 3">
+<div class="ue q2" style="grid-row: span 4">
 <div class="name">Travail de Fin d’études</div>
 <div class="ects">20 crédits</div>
 </div>
@@ -378,7 +378,7 @@ css: style.css
 
 <div class="program-grid">
 <section>
-<div class="block">2BE (2025 - 2026)</div>
+<div class="block">2BE (2026 - 2027)</div>
 <div class="quadrimestre">Q1</div>
 <div class="quadrimestre">Q2</div>
 <div class="ruler"></div>
@@ -440,7 +440,7 @@ css: style.css
 </div>
 </section>
 <section>
-<div class="block">3BE (2025 - 2026)</div>
+<div class="block">3BE (2026 - 2027)</div>
 <div class="quadrimestre">Q1</div>
 <div class="quadrimestre">Q2</div>
 <div class="ruler"></div>
@@ -494,7 +494,7 @@ css: style.css
 </div>
 </section>
 <section>
-<div class="block">4MIN (2025 - 2026)</div>
+<div class="block">4MIN (2026 - 2027)</div>
 <div class="quadrimestre">Q1</div>
 <div class="quadrimestre">Q2</div>
 <div class="ruler">
@@ -536,7 +536,7 @@ css: style.css
 <div class="ects">3 crédits</div>
 </div>
 <div class="ue all">
-<div class="name">Embedded Project</div>
+<div class="name">Robotics Project</div>
 <div class="ects">9 crédits</div>
 </div>
 <div class="ue q1 hl">
@@ -553,7 +553,7 @@ css: style.css
 </div>
 </section>
 <section>
-<div class="block">5MIN (2025 - 2026)</div>
+<div class="block">5MIN (2026 - 2027)</div>
 <div class="quadrimestre">Q1</div>
 <div class="quadrimestre">Q2</div>
 <div class="ruler">
@@ -590,7 +590,7 @@ css: style.css
 <div class="name">Economie</div>
 <div class="ects">4 crédits</div>
 </div>
-<div class="ue q2">
+<div class="ue all">
 <div class="name">Langues</div>
 <div class="ects">2 crédits</div>
 </div>
@@ -598,7 +598,7 @@ css: style.css
 <div class="name">Insertion professionnelle</div>
 <div class="ects">10 crédits</div>
 </div>
-<div class="ue q2" style="grid-row: span 3">
+<div class="ue q2" style="grid-row: span 4">
 <div class="name">Travail de Fin d’études</div>
 <div class="ects">20 crédits</div>
 </div>
@@ -648,7 +648,7 @@ css: style.css
 
 <div class="program-grid">
 <section>
-<div class="block">2BE (2025 - 2026)</div>
+<div class="block">2BE (2026 - 2027)</div>
 <div class="quadrimestre">Q1</div>
 <div class="quadrimestre">Q2</div>
 <div class="ruler"></div>
@@ -710,7 +710,7 @@ css: style.css
 </div>
 </section>
 <section>
-<div class="block">3BE (2025 - 2026)</div>
+<div class="block">3BE (2026 - 2027)</div>
 <div class="quadrimestre">Q1</div>
 <div class="quadrimestre">Q2</div>
 <div class="ruler"></div>
@@ -764,7 +764,7 @@ css: style.css
 </div>
 </section>
 <section>
-<div class="block">4MIN (2025 - 2026)</div>
+<div class="block">4MIN (2026 - 2027)</div>
 <div class="quadrimestre">Q1</div>
 <div class="quadrimestre">Q2</div>
 <div class="ruler">
@@ -806,7 +806,7 @@ css: style.css
 <div class="ects">3 crédits</div>
 </div>
 <div class="ue all">
-<div class="name">Embedded Project</div>
+<div class="name">Robotics Project</div>
 <div class="ects">9 crédits</div>
 </div>
 <div class="ue q1">
@@ -823,7 +823,7 @@ css: style.css
 </div>
 </section>
 <section>
-<div class="block">5MIN (2025 - 2026)</div>
+<div class="block">5MIN (2026 - 2027)</div>
 <div class="quadrimestre">Q1</div>
 <div class="quadrimestre">Q2</div>
 <div class="ruler">
@@ -860,7 +860,7 @@ css: style.css
 <div class="name">Economie</div>
 <div class="ects">4 crédits</div>
 </div>
-<div class="ue q2">
+<div class="ue all">
 <div class="name">Langues</div>
 <div class="ects">2 crédits</div>
 </div>
@@ -868,7 +868,7 @@ css: style.css
 <div class="name">Insertion professionnelle</div>
 <div class="ects">10 crédits</div>
 </div>
-<div class="ue q2" style="grid-row: span 3">
+<div class="ue q2" style="grid-row: span 4">
 <div class="name">Travail de Fin d’études</div>
 <div class="ects">20 crédits</div>
 </div>
@@ -896,7 +896,7 @@ css: style.css
 
 <div class="program-grid">
 <section>
-<div class="block">2BE (2025 - 2026)</div>
+<div class="block">2BE (2026 - 2027)</div>
 <div class="quadrimestre">Q1</div>
 <div class="quadrimestre">Q2</div>
 <div class="ruler"></div>
@@ -958,7 +958,7 @@ css: style.css
 </div>
 </section>
 <section>
-<div class="block">3BE (2025 - 2026)</div>
+<div class="block">3BE (2026 - 2027)</div>
 <div class="quadrimestre">Q1</div>
 <div class="quadrimestre">Q2</div>
 <div class="ruler"></div>
@@ -1012,7 +1012,7 @@ css: style.css
 </div>
 </section>
 <section>
-<div class="block">4MIN (2025 - 2026)</div>
+<div class="block">4MIN (2026 - 2027)</div>
 <div class="quadrimestre">Q1</div>
 <div class="quadrimestre">Q2</div>
 <div class="ruler">
@@ -1054,7 +1054,7 @@ css: style.css
 <div class="ects">3 crédits</div>
 </div>
 <div class="ue all hl">
-<div class="name">Embedded Project</div>
+<div class="name">Robotics Project</div>
 <div class="ects">9 crédits</div>
 </div>
 <div class="ue q1 hl">
@@ -1071,7 +1071,7 @@ css: style.css
 </div>
 </section>
 <section>
-<div class="block">5MIN (2025 - 2026)</div>
+<div class="block">5MIN (2026 - 2027)</div>
 <div class="quadrimestre">Q1</div>
 <div class="quadrimestre">Q2</div>
 <div class="ruler">
@@ -1108,7 +1108,7 @@ css: style.css
 <div class="name">Economie</div>
 <div class="ects">4 crédits</div>
 </div>
-<div class="ue q2">
+<div class="ue all">
 <div class="name">Langues</div>
 <div class="ects">2 crédits</div>
 </div>
@@ -1116,7 +1116,7 @@ css: style.css
 <div class="name">Insertion professionnelle</div>
 <div class="ects">10 crédits</div>
 </div>
-<div class="ue q2" style="grid-row: span 3">
+<div class="ue q2" style="grid-row: span 4">
 <div class="name">Travail de Fin d’études</div>
 <div class="ects">20 crédits</div>
 </div>
