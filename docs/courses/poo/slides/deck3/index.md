@@ -704,7 +704,7 @@ Point p = new ColouredPoint(1, 2, Color.Red);
 ## Polymorphisme
 
 - Tester le type de l'**objet référencé** à partir d'une variable [Test de la
-  relation *is-a*]{.small}
+  relation _is-a_]{.small}
 - Opérateur de test de la **compatibilité de type** [Variable contient une
   référence vers un objet d'un type donné]{.small}
 
@@ -776,7 +776,7 @@ public class Program
   l'objet vers un type ?]{.small}
 
 ```cs
-Point p = new Point(1, 2, Color.Red);
+Point p = new Point(1, 2);
 ColouredPoint cp = new ColouredPoint(1, 2, Color.Red);
 
 Console.WriteLine((cp is Point)+" / "+(cp is ColouredPoint));
