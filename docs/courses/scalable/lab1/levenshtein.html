@@ -9,10 +9,13 @@
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
     */
-    code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     /* The extra [class] is a hack that increases specificity enough to
        override a similar rule in reveal.js */
@@ -25,10 +28,7 @@
     }
   </style>
   <link rel="stylesheet" href="/document.css" />
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script
-  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
-  type="text/javascript"></script>
+  <link rel="stylesheet" href="https://fred-wang.github.io/MathFonts/NewComputerModern/mathfonts.css" />
 </head>
 <body>
 <header id="title-block-header">
@@ -47,22 +47,26 @@ The allowed operations are:</p>
 </ul>
 <section id="recursive-definition" class="level2">
 <h2>Recursive Definition</h2>
-<p>Let <span class="math inline">\(s[1 \dots i]\)</span> and <span
-class="math inline">\(t[1 \dots j]\)</span> be prefixes of two strings
-<span class="math inline">\(s\)</span> and <span
-class="math inline">\(t\)</span>.<br />
-We define the distance function <span class="math inline">\(D(i,
-j)\)</span> as:</p>
-<p><span class="math display">\[
+<p>Let
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi><mo stretchy="false" form="prefix">[</mo><mn>1</mn><mi>…</mi><mi>i</mi><mo stretchy="false" form="postfix">]</mo></mrow><annotation encoding="application/x-tex">s[1 \dots i]</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo stretchy="false" form="prefix">[</mo><mn>1</mn><mi>…</mi><mi>j</mi><mo stretchy="false" form="postfix">]</mo></mrow><annotation encoding="application/x-tex">t[1 \dots j]</annotation></semantics></math>
+be prefixes of two strings
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>s</mi><annotation encoding="application/x-tex">s</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>.<br />
+We define the distance function
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>D</mi><mo stretchy="false" form="prefix">(</mo><mi>i</mi><mo>,</mo><mi>j</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">D(i, j)</annotation></semantics></math>
+as:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>D</mi><mo stretchy="false" form="prefix">(</mo><mi>i</mi><mo>,</mo><mi>j</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mrow><mo stretchy="true" form="prefix">{</mo><mtable><mtr><mtd columnalign="left" style="text-align: left"><mi>i</mi></mtd><mtd columnalign="left" style="text-align: left"><mrow><mtext mathvariant="normal">if </mtext><mspace width="0.333em"></mspace></mrow><mi>j</mi><mo>=</mo><mn>0</mn></mtd></mtr><mtr><mtd columnalign="left" style="text-align: left"><mi>j</mi></mtd><mtd columnalign="left" style="text-align: left"><mrow><mtext mathvariant="normal">if </mtext><mspace width="0.333em"></mspace></mrow><mi>i</mi><mo>=</mo><mn>0</mn></mtd></mtr><mtr><mtd columnalign="left" style="text-align: left"><mi>D</mi><mo stretchy="false" form="prefix">(</mo><mi>i</mi><mo>−</mo><mn>1</mn><mo>,</mo><mi>j</mi><mo>−</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left"><mrow><mtext mathvariant="normal">if </mtext><mspace width="0.333em"></mspace></mrow><mi>s</mi><mo stretchy="false" form="prefix">[</mo><mi>i</mi><mo stretchy="false" form="postfix">]</mo><mo>=</mo><mi>t</mi><mo stretchy="false" form="prefix">[</mo><mi>j</mi><mo stretchy="false" form="postfix">]</mo></mtd></mtr><mtr><mtd columnalign="left" style="text-align: left"><mn>1</mn><mo>+</mo><mrow><mi mathvariant="normal">min</mi><mo>&#8289;</mo></mrow><mo minsize="120%" maxsize="120%" stretchy="true" form="prefix">(</mo><mi>D</mi><mo stretchy="false" form="prefix">(</mo><mi>i</mi><mo>−</mo><mn>1</mn><mo>,</mo><mi>j</mi><mo stretchy="false" form="postfix">)</mo><mo>,</mo><mi>D</mi><mo stretchy="false" form="prefix">(</mo><mi>i</mi><mo>,</mo><mi>j</mi><mo>−</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo><mo>,</mo><mi>D</mi><mo stretchy="false" form="prefix">(</mo><mi>i</mi><mo>−</mo><mn>1</mn><mo>,</mo><mi>j</mi><mo>−</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo><mo minsize="120%" maxsize="120%" stretchy="true" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left"><mtext mathvariant="normal">otherwise</mtext></mtd></mtr></mtable></mrow></mrow><annotation encoding="application/x-tex">
 D(i, j) =
 \begin{cases}
 i &amp; \text{if } j = 0 \\
 j &amp; \text{if } i = 0 \\
 D(i-1, j-1) &amp; \text{if } s[i] = t[j] \\
-1 + \min \big(D(i-1, j), D(i, j-1), D(i-1, j-1)\big) &amp;
-\text{otherwise}
+1 + \min \big(D(i-1, j), D(i, j-1), D(i-1, j-1)\big) &amp; \text{otherwise}
 \end{cases}
-\]</span></p>
+</annotation></semantics></math></p>
 </section>
 <section id="goals" class="level2">
 <h2>Goals</h2>
@@ -77,7 +81,7 @@ Levenshtein distance between two strings.
 (caching the results of already solved subproblems).
 <ul>
 <li>This reduces the complexity from exponential to<br />
-<span class="math display">\[O(|s| \cdot |t|)\]</span></li>
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false" form="prefix">(</mo><mo stretchy="false" form="prefix">|</mo><mi>s</mi><mo stretchy="false" form="prefix">|</mo><mi>⋅</mi><mo stretchy="false" form="prefix">|</mo><mi>t</mi><mo stretchy="false" form="prefix">|</mo><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">O(|s| \cdot |t|)</annotation></semantics></math></li>
 <li>Compare the execution times with the naïve version.</li>
 </ul></li>
 <li>Plot a graph of the execution time as a function of the input size

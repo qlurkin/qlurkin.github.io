@@ -9,10 +9,13 @@
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
     */
-    code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     /* The extra [class] is a hack that increases specificity enough to
        override a similar rule in reveal.js */
@@ -25,10 +28,7 @@
     }
   </style>
   <link rel="stylesheet" href="/document.css" />
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script
-  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
-  type="text/javascript"></script>
+  <link rel="stylesheet" href="https://fred-wang.github.io/MathFonts/NewComputerModern/mathfonts.css" />
 </head>
 <body>
 <header id="title-block-header">
@@ -44,36 +44,41 @@ image:</p>
 <img src="./mandel.png"
 alt="The complex numbers of the Mandelbrot Set (in black). n_{max} = 30" />
 <figcaption aria-hidden="true">The complex numbers of the Mandelbrot Set
-(in black). <span class="math inline">\(n_{max} =
-30\)</span></figcaption>
+(in black).
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>n</mi><mrow><mi>m</mi><mi>a</mi><mi>x</mi></mrow></msub><mo>=</mo><mn>30</mn></mrow><annotation encoding="application/x-tex">n_{max} = 30</annotation></semantics></math></figcaption>
 </figure>
-<p>A complex number <span class="math inline">\(c\)</span> belongs to
-the Mandelbrot Set if the following sequence is bounded:</p>
-<p><span class="math display">\[
-z_n = \begin{cases} 0 &amp; \text{if } n = 1 \\ z_{n-1}^2 + c &amp;
-\text{otherwise}
+<p>A complex number
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>c</mi><annotation encoding="application/x-tex">c</annotation></semantics></math>
+belongs to the Mandelbrot Set if the following sequence is bounded:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>z</mi><mi>n</mi></msub><mo>=</mo><mrow><mo stretchy="true" form="prefix">{</mo><mtable><mtr><mtd columnalign="left" style="text-align: left"><mn>0</mn></mtd><mtd columnalign="left" style="text-align: left"><mrow><mtext mathvariant="normal">if </mtext><mspace width="0.333em"></mspace></mrow><mi>n</mi><mo>=</mo><mn>1</mn></mtd></mtr><mtr><mtd columnalign="left" style="text-align: left"><msubsup><mi>z</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow><mn>2</mn></msubsup><mo>+</mo><mi>c</mi></mtd><mtd columnalign="left" style="text-align: left"><mtext mathvariant="normal">otherwise</mtext></mtd></mtr></mtable></mrow></mrow><annotation encoding="application/x-tex">
+z_n = \begin{cases} 0 &amp; \text{if } n = 1 \\ z_{n-1}^2 + c &amp; \text{otherwise}
 \end{cases}
-\]</span></p>
+</annotation></semantics></math></p>
 <p>Unfortunately, there is no quick way to determine whether the
-sequence is bounded for a given value of <span
-class="math inline">\(c\)</span>. However, it has been proven that if
-the modulus of <span class="math inline">\(z_n\)</span> exceeds 2, then
-the sequence diverges.</p>
-<p>The procedure to determine whether a complex number <span
-class="math inline">\(c\)</span> belongs to the Mandelbrot set is
-straightforward: compute the sequence until either</p>
+sequence is bounded for a given value of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>c</mi><annotation encoding="application/x-tex">c</annotation></semantics></math>.
+However, it has been proven that if the modulus of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>z</mi><mi>n</mi></msub><annotation encoding="application/x-tex">z_n</annotation></semantics></math>
+exceeds 2, then the sequence diverges.</p>
+<p>The procedure to determine whether a complex number
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>c</mi><annotation encoding="application/x-tex">c</annotation></semantics></math>
+belongs to the Mandelbrot set is straightforward: compute the sequence
+until either</p>
 <ul>
-<li>the modulus of <span class="math inline">\(z_n\)</span> exceeds 2,
-or</li>
-<li>a maximum iteration count <span
-class="math inline">\(n_{max}\)</span> (defined in advance) is
-reached.</li>
+<li>the modulus of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>z</mi><mi>n</mi></msub><annotation encoding="application/x-tex">z_n</annotation></semantics></math>
+exceeds 2, or</li>
+<li>a maximum iteration count
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>n</mi><mrow><mi>m</mi><mi>a</mi><mi>x</mi></mrow></msub><annotation encoding="application/x-tex">n_{max}</annotation></semantics></math>
+(defined in advance) is reached.</li>
 </ul>
-<p>In the first case, <span class="math inline">\(c\)</span> does not
-belong to the set. In the second case, <span
-class="math inline">\(c\)</span> is considered part of the set. The
-larger the maximum number of iterations, the more accurate the
-representation of the Mandelbrot set will be.</p>
+<p>In the first case,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>c</mi><annotation encoding="application/x-tex">c</annotation></semantics></math>
+does not belong to the set. In the second case,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>c</mi><annotation encoding="application/x-tex">c</annotation></semantics></math>
+is considered part of the set. The larger the maximum number of
+iterations, the more accurate the representation of the Mandelbrot set
+will be.</p>
 <section id="goal" class="level2">
 <h2>Goal</h2>
 <p>Create a program that generates an image of the Mandelbrot set. At
