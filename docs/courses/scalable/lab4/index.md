@@ -161,7 +161,7 @@ spec:
 
 ## Replication vs Sharding (2)
 
-- Sharing
+- Sharding
   - **Purpose:** Scale database for **large data volumes and high write
     throughput**
   - **Data:** Split across multiple **shards**, each storing only a portion of
