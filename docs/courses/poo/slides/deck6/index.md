@@ -658,6 +658,124 @@ public partial class MainWindow : Window
 }
 ```
 
+## `NoteCount`
+
+- Pour bien comprendre les `INotifyPropertyChanged`, ajoutons une propriété
+  `NoteCount` à la classe `NoteManager`
+- La valeur de cette propriété dépend du nombre de notes. Elle n'a donc **pas**
+  de `set` pour déclencher le `Invoke`.
+- Il faudra donc **écouter** les changements de l'`ObservableCollection` pour
+  déclencher les `Invoke`.
+
+```cs
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+
+namespace Notes;
+
+public class NoteManager : INotifyPropertyChanged
+{
+    public ObservableCollection<Note> Notes { get; } = new();
+
+    public int NoteCount => Notes.Count;
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    public NoteManager()
+    {
+        // Subscription to the change of the collection
+        Notes.CollectionChanged += (_, _) =>
+        {
+            PropertyChanged?.Invoke(
+                this,
+                new PropertyChangedEventArgs(nameof(NoteCount)));
+        };
+    }
+
+    public void Add(string text)
+    {
+        Notes.Add(new Note(text));
+    }
+
+    public void Remove(Note note) {
+        Notes.Remove(note);
+    }
+}
+```
+
+## And in the XAML ?
+
+- L'intérêt d'une propriété observable c'est qu'elle peut déclencher les mises à
+  jour de l'interface.
+- Ajoutons un `TextBlock` lié à la propriété `NoteCount`
+
+```xml
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="using:Notes"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="Notes.MainWindow"
+        x:DataType="local:NoteManager"
+        Title="Mes notes"
+        Width="400"
+        Height="450">
+
+    <StackPanel Margin="20" Spacing="12">
+
+        <TextBlock Text="Mes notes"
+                   FontSize="26"
+                   FontWeight="Bold" />
+
+        <TextBox x:Name="NoteTextBox"
+                 PlaceholderText="Saisissez une note..."
+                 AcceptsReturn="False" />
+
+        <Button Content="Ajouter"
+                HorizontalAlignment="Stretch"
+                Click="AddButton_Click" />
+
+        <TextBlock Text="Liste des notes"
+                   FontSize="18"
+                   FontWeight="SemiBold"
+                   Margin="0,10,0,0" />
+
+        <ListBox x:Name="NotesList"
+                 Height="180" />
+
+        <Button Content="Supprimer la note sélectionnée"
+                HorizontalAlignment="Stretch"
+                Click="DeleteButton_Click" />
+
+        <TextBlock x:Name="StatusText"
+                   Text="Prêt."
+                   Opacity="0.7"
+                   TextWrapping="Wrap" />
+
+        <TextBlock Text="{Binding NoteCount,
+                   StringFormat='Nombre de notes : {0}'}" />
+
+    </StackPanel>
+</Window>
+```
+
+- Pour savoir à quel objet la propriété `NoteCount` appartient, il faut définir
+  le `DataContext` de `MainWindow`
+- Remarquez que nous avons aussi dû spécifier le `DataType` dans le XAML pour
+  que le type du _Binding_ puisse être vérifié à la compilation
+
+```cs
+// Contructor
+public MainWindow()
+{
+    InitializeComponent();
+
+    DataContext = manager;
+    NotesList.ItemsSource = manager.Notes;
+}
+```
+
 <!-- ## Le pattern MVVM -->
 <!---->
 <!-- - Model View ViewModel -->
