@@ -4,15 +4,18 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>PO3L - Labo 3 - Dessiner avec des Bindings</title>
+  <title>PO3L - Labo 3 - Avalonia UI, XAML et Bindings</title>
   <style>
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
     */
-    code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     /* The extra [class] is a hack that increases specificity enough to
        override a similar rule in reveal.js */
@@ -25,24 +28,61 @@
     }
   </style>
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://fred-wang.github.io/MathFonts/NewComputerModern/mathfonts.css" />
   <link rel="stylesheet" href="/document.css" />
+  <link rel="stylesheet" href="https://fred-wang.github.io/MathFonts/NewComputerModern/mathfonts.css" />
 </head>
 <body>
 <header id="title-block-header">
 <h1 class="title">PO3L - Labo 3
-<small>Dessiner avec des Bindings</small>
+<small>Avalonia UI, XAML et Bindings</small>
 </h1>
 </header>
-<ol type="1">
-<li><p>Sur base de ce que nous avons vu au cours, analysez le projet
-<em>Pong</em> ce trouvant <a
-href="https://github.com/qlurkin/AvaloniaGameBase">dans ce dépôt
-git</a>. Essayez de comprendre comment il fonctionne.</p></li>
-<li><p>Modifiez le projet <em>Pong</em> pour ajouter deux
-<em>“raquettes”</em> et faire en sorte que deux joueurs puissent se
-renvoyer la balle.</p></li>
-</ol>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/5Cge1bVB9h0?si=WcSN1Ao5T9Y55yQ2" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
-</iframe>
+<section id="application-de-gestion-de-tâches" class="level2">
+<h2>Application de gestion de tâches</h2>
+<p>Vous devez développer une application de bureau permettant à un
+utilisateur de gérer une liste de tâches à réaliser.</p>
+<p>L’utilisateur doit pouvoir ajouter une tâche, consulter les tâches
+existantes, marquer une tâche comme terminée et supprimer une tâche.</p>
+<p>L’interface sera développée avec <strong>Avalonia UI</strong> et
+<strong>XAML</strong>. Les données et les règles métier devront être
+<strong>séparées de l’interface graphique</strong>. Les modifications
+des données devront être <strong>répercutées automatiquement</strong>
+dans l’interface grâce aux mécanismes de <strong>binding
+d’Avalonia</strong>.</p>
+</section>
+<section id="fonctionnalités-attendues" class="level2">
+<h2>Fonctionnalités attendues</h2>
+<p>L’application doit proposer les fonctionnalités suivantes :</p>
+<ul>
+<li><strong>Ajouter une tâche</strong> : l’utilisateur saisit son
+intitulé et clique sur un bouton “Ajouter”.</li>
+<li><strong>Afficher les tâches</strong> : les tâches sont présentées
+dans une liste.</li>
+<li><strong>Terminer une tâche</strong> : l’utilisateur peut indiquer
+qu’une tâche est terminée.</li>
+<li><strong>Supprimer une tâche</strong> : l’utilisateur sélectionne une
+tâche et clique sur un bouton “Supprimer”.</li>
+<li><strong>Afficher le nombre de tâches</strong> : l’interface indique
+le nombre total de tâches enregistrées.</li>
+<li><strong>Actualiser automatiquement l’interface</strong> : lorsqu’une
+donnée change, l’interface doit refléter ce changement sans devoir
+reconstruire manuellement la liste.</li>
+</ul>
+</section>
+<section id="projet-c" class="level2">
+<h2>Projet C#</h2>
+<p>Démarrer votre projet avec le template
+<code>Avalonia .NET App</code></p>
+</section>
+<section id="extensions-facultatives" class="level2">
+<h2>Extensions facultatives</h2>
+<ul>
+<li>Ajouter un compteur distinct pour les tâches terminées.</li>
+<li>Permettre de modifier l’intitulé d’une tâche.</li>
+<li>Ajouter un filtre permettant d’afficher toutes les tâches,
+uniquement les tâches en cours ou uniquement les tâches terminées.</li>
+</ul>
+</section>
 </body>
 </html>

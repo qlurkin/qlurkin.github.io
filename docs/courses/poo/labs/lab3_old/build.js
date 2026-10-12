@@ -1,3 +1,3 @@
-import { build } from 'build_lib'
+import { pandoc } from 'build_lib'
 
-build('index.md')
+pandoc('index.md')

@@ -1,11 +1,46 @@
 ---
 title: PO3L - Labo 3
-subtitle: Dessiner avec des Bindings
+subtitle: Avalonia UI, XAML et Bindings
 css: style.css
 ---
 
-1. Sur base de ce que nous avons vu au cours, analysez le projet _Pong_ ce trouvant [dans ce dépôt git](https://github.com/qlurkin/AvaloniaGameBase). Essayez de comprendre comment il fonctionne.
+## Application de gestion de tâches
 
-2. Modifiez le projet _Pong_ pour ajouter deux _"raquettes"_ et faire en sorte que deux joueurs puissent se renvoyer la balle.
+Vous devez développer une application de bureau permettant à un utilisateur de
+gérer une liste de tâches à réaliser.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/5Cge1bVB9h0?si=WcSN1Ao5T9Y55yQ2" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+L'utilisateur doit pouvoir ajouter une tâche, consulter les tâches existantes,
+marquer une tâche comme terminée et supprimer une tâche.
+
+L'interface sera développée avec **Avalonia UI** et **XAML**. Les données et les
+règles métier devront être **séparées de l'interface graphique**. Les
+modifications des données devront être **répercutées automatiquement** dans
+l'interface grâce aux mécanismes de **binding d'Avalonia**.
+
+## Fonctionnalités attendues
+
+L'application doit proposer les fonctionnalités suivantes :
+
+- **Ajouter une tâche** : l'utilisateur saisit son intitulé et clique sur un
+  bouton "Ajouter".
+- **Afficher les tâches** : les tâches sont présentées dans une liste.
+- **Terminer une tâche** : l'utilisateur peut indiquer qu'une tâche est
+  terminée.
+- **Supprimer une tâche** : l'utilisateur sélectionne une tâche et clique sur un
+  bouton "Supprimer".
+- **Afficher le nombre de tâches** : l'interface indique le nombre total de
+  tâches enregistrées.
+- **Actualiser automatiquement l'interface** : lorsqu'une donnée change,
+  l'interface doit refléter ce changement sans devoir reconstruire manuellement
+  la liste.
+
+## Projet C\#
+
+Démarrer votre projet avec le template `Avalonia .NET App`
+
+## Extensions facultatives
+
+- Ajouter un compteur distinct pour les tâches terminées.
+- Permettre de modifier l'intitulé d'une tâche.
+- Ajouter un filtre permettant d'afficher toutes les tâches, uniquement les
+  tâches en cours ou uniquement les tâches terminées.
