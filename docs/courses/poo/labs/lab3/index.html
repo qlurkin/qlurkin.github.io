@@ -70,10 +70,22 @@ donnée change, l’interface doit refléter ce changement sans devoir
 reconstruire manuellement la liste.</li>
 </ul>
 </section>
-<section id="projet-c" class="level2">
-<h2>Projet C#</h2>
-<p>Démarrer votre projet avec le template
-<code>Avalonia .NET App</code></p>
+<section id="remarques" class="level2">
+<h2>Remarques</h2>
+<ul>
+<li><p>Démarrer votre projet avec le template
+<code>Avalonia .NET App</code></p></li>
+<li><p>Les <code>ListBox</code> peuvent définir un <a
+href="https://docs.avaloniaui.net/docs/data-templates/introduction-to-data-templates"><code>DataTemplate</code>
+dans leur <code>ItemTemplate</code></a> pour définir comment un
+<em>Item</em> doit être affiché</p></li>
+<li><p>Une <code>CheckBox</code> peut utiliser un <em>Binding</em> en
+mode <code>TwoWay</code> pour que la synchronisation avec le DataContext
+se fasse dans les deux sens:</p>
+<div class="pygments"><pre><span></span><span class="nt">&lt;CheckBox</span><span class="w"> </span><span class="na">IsChecked=</span><span class="s">&quot;{Binding IsCompleted, Mode=TwoWay}&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+</pre></div>
+</li>
+</ul>
 </section>
 <section id="extensions-facultatives" class="level2">
 <h2>Extensions facultatives</h2>

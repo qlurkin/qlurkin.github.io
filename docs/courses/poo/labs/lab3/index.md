@@ -34,9 +34,18 @@ L'application doit proposer les fonctionnalités suivantes :
   l'interface doit refléter ce changement sans devoir reconstruire manuellement
   la liste.
 
-## Projet C\#
+## Remarques
 
-Démarrer votre projet avec le template `Avalonia .NET App`
+- Démarrer votre projet avec le template `Avalonia .NET App`
+- Les `ListBox` peuvent définir un
+  [`DataTemplate` dans leur `ItemTemplate`](https://docs.avaloniaui.net/docs/data-templates/introduction-to-data-templates)
+  pour définir comment un _Item_ doit être affiché
+- Une `CheckBox` peut utiliser un _Binding_ en mode `TwoWay` pour que la
+  synchronisation avec le DataContext se fasse dans les deux sens:
+
+  ```xml
+  <CheckBox IsChecked="{Binding IsCompleted, Mode=TwoWay}" />
+  ```
 
 ## Extensions facultatives
 

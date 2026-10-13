@@ -602,6 +602,37 @@ public class NoteManager
 }
 ```
 
+## `ReadOnlyObservableCollection`
+
+- Pour ne pas exposer notre `ObservableCollection` et permettre d'outrepasser
+  nos méthode `Add` et `Remove`
+
+```cs
+using System.Collections.ObjectModel;
+
+namespace Notes;
+
+public class NoteManager
+{
+    private ObservableCollection<Note> notes = new();
+
+    public ReadOnlyObservableCollection<Note> Notes { get; }
+
+    public NoteManager() {
+        Notes = new ReadOnlyObservableCollection<Note>(notes);
+    }
+
+    public void Add(string text)
+    {
+        notes.Add(new Note(text));
+    }
+
+    public void Remove(Note note) {
+        notes.Remove(note);
+    }
+}
+```
+
 ## Simplifions la `MainWindown`
 
 - Les `ListBox` (`NotesList`) gère directement les `ObservableCollection` via
@@ -675,7 +706,9 @@ namespace Notes;
 
 public class NoteManager : INotifyPropertyChanged
 {
-    public ObservableCollection<Note> Notes { get; } = new();
+    private ObservableCollection<Note> notes = new();
+
+    public ReadOnlyObservableCollection<Note> Notes { get; }
 
     public int NoteCount => Notes.Count;
 
@@ -683,22 +716,22 @@ public class NoteManager : INotifyPropertyChanged
 
     public NoteManager()
     {
+        Notes = new ReadOnlyObservableCollection<Note>(notes);
+
         // Subscription to the change of the collection
-        Notes.CollectionChanged += (_, _) =>
+        notes.CollectionChanged += (_, _) =>
         {
-            PropertyChanged?.Invoke(
-                this,
-                new PropertyChangedEventArgs(nameof(NoteCount)));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(NoteCount)));
         };
     }
 
     public void Add(string text)
     {
-        Notes.Add(new Note(text));
+        notes.Add(new Note(text));
     }
 
     public void Remove(Note note) {
-        Notes.Remove(note);
+        notes.Remove(note);
     }
 }
 ```
