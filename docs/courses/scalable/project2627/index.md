@@ -1,6 +1,6 @@
 ---
 title: 'Project 2026'
-subtitle: 'Kubernetes Deployment Pipeline: A Photo Service'
+subtitle: 'A Photo Service'
 ---
 
 ## Project Goal
