@@ -1,1169 +1,765 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PO3T - Cours 7 - Principes SOLID</title>
-    <script src="https://quentin.lurkin.xyz/deck.js" defer></script>
-    <style>
-      .letter {
-        display: inline-block;
-        border: 1px solid blue;
-        color: blue;
-        width: 1.2em;
-        text-align: center;
-        margin-right: 0.1em;
-      }
-    </style>
-  </head>
-  <body>
-    <section>
-      <h1>PO3T - Cours 7 <small>Principes SOLID</small></h1>
-      <p>Quentin Lurkin</p>
-    </section>
-    <section>
-      <h2>SOLID</h2>
-
-      <ul>
-        <li>
-          <strong>Cinq principes</strong> en design d’applications avec
-          l’orienté objet
-        </li>
-        <li>
-          Permet une application plus facilement <strong>maintenable</strong>
-        </li>
-        <li>
-          Les cinq principes à retenir avec l’acronyme SOLID
-          <ul>
-            <li>
-              <span class="letter">S</span>ingle Responsibility Principle (SRP)
-            </li>
-            <li><span class="letter">O</span>pen/closed principle (OCP)</li>
-            <li>
-              <span class="letter">L</span>iskov Substitution Principle (LSP)
-            </li>
-            <li>
-              <span class="letter">I</span>nterface Segregation Principle (ISP)
-            </li>
-            <li>
-              <span class="letter">D</span>ependency Inversion Principle (DIP)
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>Application exemple</h2>
-
-      <ul>
-        <li>Application de vente fictive</li>
-      </ul>
-    </section>
-
-    <section class="code">
-      <h2>Classe Item</h2>
-      <pre><code class="lang-csharp">
-        namespace solid {
-            class Item {
-                private String name;
-                private double price;
-                public String Name { get { return name; } }
-                public double Price { get { return price; } }
-        
-                public Item(String name, double price) {
-                    this.name = name;
-                    this.price = price;
-                }
-            }
-        }
-    </code></pre>
-    </section>
-
-    <section class="code">
-      <h2>Classe Order</h2>
-      <pre><code class="lang-csharp">
-        namespace solid {
-            class Order {
-                class OrderItem {
-                    private Item item;
-                    private int quantity;
-        
-                    public Item Item { get { return item; }}
-        
-                    public int Quantity { get { return quantity; } }
-        
-                    public OrderItem(Item item, int quantity) {
-                        this.item = item;
-                        this.quantity = quantity;
-                    }
-                }
-        
-                public enum OrderStatus {
-                    Open,
-                    Paid
-                }
-        
-                private List&lt;OrderItem> items;
-                private OrderStatus status;
-        
-                public OrderStatus Status { get { return status; } }
-        
-                public Order() {
-                    items = new List&lt;OrderItem>();
-                    status = OrderStatus.Open;
-                }
-        
-                public void Add_item(Item item, int quantity) {
-                    items.Add(new OrderItem(item, quantity));
-                }
-        
-                public double Total_price() {
-                    double total = 0;
-                    foreach(OrderItem oi in items) {
-                        total += oi.Item.Price * oi.Quantity;
-                    }
-                    return total;
-                }
-        
-                public void Pay(String payment_type, String security_code) {
-                    if(payment_type == "debit") {
-                        Console.WriteLine("Processing Debit Payment");
-                        Console.WriteLine("Verifying Security Code: {0}", security_code);
-                        status = OrderStatus.Paid;
-                    }
-                    else if(payment_type == "credit") {
-                        Console.WriteLine("Processing Credit Payment");
-                        Console.WriteLine("Verifying Security Code: {0}", security_code);
-                        status = OrderStatus.Paid;
-                    }
-                    else {
-                        throw new Exception(String.Format("Unknown Payment Type: {0}", payment_type));
-                    }
-                }
-            }
-        }
-    </code></pre>
-    </section>
-
-    <section>
-      <h2>Utilisation</h2>
-      <pre><code class="lang-csharp">
-        namespace solid {
-            class Program {
-                public static void Main() {
-                    Order order = new Order();
-        
-                    order.Add_item(new Item("Keyboard", 50), 1);
-                    order.Add_item(new Item("SSD", 150), 1);
-                    order.Add_item(new Item("USB Cable", 2), 5);
-        
-                    Console.WriteLine(order.Total_price());
-                    order.Pay("credit", "7683625");
-                    Console.WriteLine(order.Status);
-                }
-            }
-        }
-    </code></pre>
-      <pre class="terminal">
-        <strong>$> dotnet run</strong>
-        210
-        Processing Credit Payment
-        Verifying Security Code: 7683625
-        Paid
-    </pre>
-    </section>
-
-    <section>
-      <h1>Single Responsibility Principle</h1>
-    </section>
-
-    <section>
-      <h2>Single Responsibility Principle</h2>
-
-      <ul>
-        <li>
-          Les classes et les méthodes ne doivent être responsables que d'une
-          chose
-        </li>
-        <li>Cela permet d'avoir une grande cohésion</li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>Problème dans l'application exemple</h2>
-      <ul>
-        <li>La classe <code>Order</code> fait trop de chose</li>
-        <li>Construire la commande</li>
-        <li>Exécute le paiement</li>
-        <li>
-          Il faut la diviser
-          <small>Création de la classe <code>PaymentProcessor</code></small>
-        </li>
-      </ul>
-    </section>
-
-    <section class="code">
-      <h2>Classe PaymentProcessor</h2>
-      <pre><code class="lang-csharp">
-            namespace solid {
-                class PaymentProcessor {
-                    public void Pay_credit(Order order, String security_code) {
-                        Console.WriteLine("Processing Credit Payment");
-                        Console.WriteLine("Verifying Security Code: {0}", security_code);
-                        order.Status = Order.OrderStatus.Paid;
-                    }
-            
-                    public void Pay_debit(Order order, String security_code) {
-                        Console.WriteLine("Processing Debit Payment");
-                        Console.WriteLine("Verifying Security Code: {0}", security_code);
-                        order.Status = Order.OrderStatus.Paid;
-                    }
-                }
-            }
-        </code></pre>
-    </section>
-
-    <section class="code">
-      <h2>Classe Order</h2>
-      <pre><code class="lang-csharp">
-        namespace solid {
-            class Order {
-                class OrderItem {
-                    private Item item;
-                    private int quantity;
-        
-                    public Item Item { get { return item; }}
-        
-                    public int Quantity { get { return quantity; } }
-        
-                    public OrderItem(Item item, int quantity) {
-                        this.item = item;
-                        this.quantity = quantity;
-                    }
-                }
-        
-                public enum OrderStatus {
-                    Open,
-                    Paid
-                }
-        
-                private List&lt;OrderItem> items;
-                private OrderStatus status;
-        
-                public OrderStatus Status {
-                    get { return status; }
-                    set { status = value; }
-                }
-        
-                public Order() {
-                    items = new List&lt;OrderItem>();
-                    status = OrderStatus.Open;
-                }
-        
-                public void Add_item(Item item, int quantity) {
-                    items.Add(new OrderItem(item, quantity));
-                }
-        
-                public double Total_price() {
-                    double total = 0;
-                    foreach(OrderItem oi in items) {
-                        total += oi.Item.Price * oi.Quantity;
-                    }
-                    return total;
-                }
-            }
-        }
-    </code></pre>
-    </section>
-
-    <section>
-      <h2>Utilisation</h2>
-      <pre><code class="lang-csharp">
-        namespace solid {
-            class Program {
-                public static void Main() {
-                    Order order = new Order();
-        
-                    order.Add_item(new Item("Keyboard", 50), 1);
-                    order.Add_item(new Item("SSD", 150), 1);
-                    order.Add_item(new Item("USB Cable", 2), 5);
-        
-                    Console.WriteLine(order.Total_price());
-                    new PaymentProcessor().Pay_credit(order, "7683625");
-                    Console.WriteLine(order.Status);
-                }
-            }
-        }
-    </code></pre>
-      <pre class="terminal">
-        <strong>$> dotnet run</strong>
-        210
-        Processing Credit Payment
-        Verifying Security Code: 7683625
-        Paid
-    </pre>
-    </section>
-
-    <section>
-      <h1>Open/closed Principle</h1>
-    </section>
-
-    <section>
-      <h2>Open/closed Principle</h2>
-      <ul>
-        <li>
-          Open: Le code doit être ouvert aux extensions
-          <small> On doit pouvoir ajouter des fonctionnalités </small>
-        </li>
-        <li>
-          Closed: le code doit être fermé aux modifications
-          <small> Sans modifier le code existant </small>
-        </li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>Problème dans l'application exemple</h2>
-      <ul>
-        <li>
-          L'ajout d'un type de paiement nécessite de modifier le code de
-          <code>PaymentProcessor</code>
-        </li>
-        <li>Nous allons utiliser une interface et des sous-classes</li>
-      </ul>
-    </section>
-
-    <section class="code">
-      <h2>Interface PaymentProcessor</h2>
-      <pre><code class="lang-csharp">
-        namespace solid {
-            interface PaymentProcessor {
-                void Pay(Order order, String security_code);
-            }
-        }
-    </code></pre>
-    </section>
-
-    <section class="code">
-      <h2>Classe CreditPaymentProcessor</h2>
-      <pre><code class="lang-csharp">
-        namespace solid {
-            class CreditPaymentProcessor : PaymentProcessor {
-                public void Pay(Order order, String security_code) {
-                    Console.WriteLine("Processing Credit Payment");
-                    Console.WriteLine("Verifying Security Code: {0}", security_code);
-                    order.Status = Order.OrderStatus.Paid;
-                }
-            }
-        }
-    </code></pre>
-    </section>
-
-    <section class="code">
-      <h2>Classe DebitPaymentProcessor</h2>
-      <pre><code class="lang-csharp">
-        namespace solid {
-            class DebitPaymentProcessor : PaymentProcessor {
-                public void Pay(Order order, String security_code) {
-                    Console.WriteLine("Processing Debit Payment");
-                    Console.WriteLine("Verifying Security Code: {0}", security_code);
-                    order.Status = Order.OrderStatus.Paid;
-                }
-            }
-        }
-    </code></pre>
-    </section>
-
-    <section>
-      <h2>Open/Closed Principle</h2>
-      <ul>
-        <li>Ajoutons Paypal</li>
-      </ul>
-      <pre><code class="lang-csharp">
-        namespace solid {
-            class PaypalPaymentProcessor : PaymentProcessor {
-                public void Pay(Order order, String security_code) {
-                    Console.WriteLine("Processing Paypal Payment");
-                    Console.WriteLine("Verifying Email Address: {0}", security_code);
-                    order.Status = Order.OrderStatus.Paid;
-                }
-            }
-        }
-    </code></pre>
-    </section>
-
-    <section>
-      <h2>Utilisation</h2>
-      <pre><code class="lang-csharp">
-        namespace solid {
-            class Program {
-                public static void Main() {
-                    Order order = new Order();
-        
-                    order.Add_item(new Item("Keyboard", 50), 1);
-                    order.Add_item(new Item("SSD", 150), 1);
-                    order.Add_item(new Item("USB Cable", 2), 5);
-        
-                    Console.WriteLine(order.Total_price());
-                    new PaypalPaymentProcessor().Pay(order, "lur@ecam.be");
-                    Console.WriteLine(order.Status);
-                }
-            }
-        }
-    </code></pre>
-      <pre class="terminal">
-        <strong>$> dotnet run</strong>
-        210
-        Processing Paypal Payment
-        Verifying Email Address: lur@ecam.be
-        Paid
-    </pre>
-    </section>
-
-    <section>
-      <h1>Liskov Substitution Principle</h1>
-    </section>
-
-    <section>
-      <h2>Liskov Substitution Principle</h2>
-      <ul>
-        <li>
-          Un type devrait pouvoir être remplacé par un sous-type
-          <small>Sans que le programme devienne sémantiquement incorrect</small>
-        </li>
-        <li>
-          <strong
-            >Attention: syntaxiquement, un sous-type peut toujours remplacer un
-            de ses types de base</strong
-          >
-        </li>
-        <li>
-          LSP impose qu'un remplacement par un sous-type doit toujours
-          <strong>avoir du sens</strong>.
-        </li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>Problème dans l'application exemple</h2>
-      <ul>
-        <li>
-          La class PaypalPaymentProcessor prend l'adresse email dans un
-          paramètre destiné à un code de sécurité.
-        </li>
-        <li>
-          Déplaçons les informations propre à la méthode de paiement dans le
-          constructeur
-        </li>
-      </ul>
-    </section>
-
-    <section class="code">
-      <h2>Interface PaymentProcessor</h2>
-      <pre><code class="lang-csharp">
-        namespace solid {
-            interface PaymentProcessor {
-                void Pay(Order order);
-            }
-        }
-    </code></pre>
-    </section>
-
-    <section class="code">
-      <h2>Class PaypalPaymentProcessor</h2>
-      <pre><code class="lang-csharp">
-        namespace solid {
-            class PaypalPaymentProcessor : PaymentProcessor {
-                private String email;
-        
-                public PaypalPaymentProcessor(String email) {
-                    this.email = email;
-                }
-        
-                public void Pay(Order order) {
-                    Console.WriteLine("Processing Paypal Payment");
-                    Console.WriteLine("Verifying Email Address: {0}", email);
-                    order.Status = Order.OrderStatus.Paid;
-                }
-            }
-        }
-    </code></pre>
-    </section>
-
-    <section class="code">
-      <h2>Class CreditPaymentProcessor</h2>
-      <pre><code class="lang-csharp">
-        namespace solid {
-            class CreditPaymentProcessor : PaymentProcessor {
-                private String security_code;
-        
-                public CreditPaymentProcessor(string security_code) {
-                    this.security_code = security_code;
-                }
-        
-                public void Pay(Order order) {
-                    Console.WriteLine("Processing Credit Payment");
-                    Console.WriteLine("Verifying Security Code: {0}", security_code);
-                    order.Status = Order.OrderStatus.Paid;
-                }
-            }
-        }
-    </code></pre>
-    </section>
-
-    <section class="code">
-      <h2>Class DebitPaymentProcessor</h2>
-      <pre><code class="lang-csharp">
-        namespace solid {
-            class DebitPaymentProcessor : PaymentProcessor {
-                private String security_code;
-        
-                public DebitPaymentProcessor(string security_code) {
-                    this.security_code = security_code;
-                }
-                
-                public void Pay(Order order) {
-                    Console.WriteLine("Processing Debit Payment");
-                    Console.WriteLine("Verifying Security Code: {0}", security_code);
-                    order.Status = Order.OrderStatus.Paid;
-                }
-            }
-        }
-    </code></pre>
-    </section>
-
-    <section>
-      <h2>Utilisation</h2>
-      <pre><code class="lang-csharp">
-        namespace solid {
-            class Program {
-                public static void Main() {
-                    Order order = new Order();
-        
-                    order.Add_item(new Item("Keyboard", 50), 1);
-                    order.Add_item(new Item("SSD", 150), 1);
-                    order.Add_item(new Item("USB Cable", 2), 5);
-        
-                    Console.WriteLine(order.Total_price());
-                    new PaypalPaymentProcessor("lur@ecam.be").Pay(order);
-                    Console.WriteLine(order.Status);
-                }
-            }
-        }
-    </code></pre>
-      <pre class="terminal">
-        <strong>$> dotnet run</strong>
-        210
-        Processing Paypal Payment
-        Verifying Email Address: lur@ecam.be
-        Paid
-    </pre>
-    </section>
-
-    <section>
-      <h1>Interface Segregation Principle</h1>
-    </section>
-
-    <section>
-      <h2>Application Exemple</h2>
-      <ul>
-        <li>Ajout: authentification à 2 facteurs</li>
-        <li>
-          Ajout de la méthode nécessaire à <code>PaymentProcessor</code>
-          <pre><code class="lang-csharp">
-                    namespace solid {
-                        interface PaymentProcessor {
-                            void Auth_sms(string code);   // Nouvelle méthode
-                            void Pay(Order order);
-                        }
-                    }
-                </code></pre>
-        </li>
-        <li>Besoin de modifier les sous-classes</li>
-      </ul>
-    </section>
-
-    <section class="code">
-      <h2>PaypalPaymentProcessor</h2>
-      <pre><code class="lang-csharp">
-            namespace solid {
-                class PaypalPaymentProcessor : PaymentProcessor {
-                    private String email;
-                    private bool verified;
-            
-                    public PaypalPaymentProcessor(String email) {
-                        this.email = email;
-                        verified = false;
-                    }
-            
-                    public void Auth_sms(string code) {
-                        Console.WriteLine("Verifying SMS code: {0}", code);
-                        verified = true;
-                    }
-            
-                    public void Pay(Order order) {
-                        if(!verified) {
-                            throw new System.Exception("Not authorized");
-                        }
-                        Console.WriteLine("Processing Paypal Payment");
-                        Console.WriteLine("Verifying Email Address: {0}", email);
-                        order.Status = Order.OrderStatus.Paid;
-                    }
-                }
-            }
-        </code></pre>
-    </section>
-
-    <section class="code">
-      <h2>DebitPaymentProcessor</h2>
-      <pre><code class="lang-csharp">
-            namespace solid {
-                class DebitPaymentProcessor : PaymentProcessor {
-                    private String security_code;
-                    private bool verified;
-            
-                    public DebitPaymentProcessor(string security_code) {
-                        this.security_code = security_code;
-                        verified = false;
-                    }
-            
-                    public void Auth_sms(string code) {
-                        Console.WriteLine("Verifying SMS code: {0}", code);
-                        verified = true;
-                    }
-                    
-                    public void Pay(Order order) {
-                        if(!verified) {
-                            throw new System.Exception("Not authorized");
-                        }
-                        Console.WriteLine("Processing Debit Payment");
-                        Console.WriteLine("Verifying Security Code: {0}", security_code);
-                        order.Status = Order.OrderStatus.Paid;
-                    }
-                }
-            }
-        </code></pre>
-    </section>
-
-    <section class="code">
-      <h2>CreditPaymentProcessor</h2>
-      <pre><code class="lang-csharp">
-            namespace solid {
-                class CreditPaymentProcessor : PaymentProcessor {
-                    private String security_code;
-            
-                    public CreditPaymentProcessor(string security_code) {
-                        this.security_code = security_code;
-                    }
-            
-                    // Ce type de paiements ne supporte pas l'autorisation par SMS 
-                    public void Auth_sms(string code) {
-                        throw new System.Exception("Credit card payments don't support SMS code authorization");
-                    }
-            
-                    public void Pay(Order order) {
-                        Console.WriteLine("Processing Credit Payment");
-                        Console.WriteLine("Verifying Security Code: {0}", security_code);
-                        order.Status = Order.OrderStatus.Paid;
-                    }
-                }
-            }
-        </code></pre>
-    </section>
-
-    <section>
-      <h2>Le problème</h2>
-      <ul>
-        <li>
-          L'interface <code>PaymentProcessor</code> nous oblige à implémenter
-          une méthode <code>Auth_sms</code> dans
-          <code>CreditPaymentProcessor.</code>
-        </li>
-        <li>
-          Cette méthode n'a pas de raison d'exister. Il faut donc inventer
-          quelque chose.
-        </li>
-        <li>Il y a ici une violation du LSP.</li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>Interface Segregation Principle</h2>
-      <ul>
-        <li>Éviter les grosses interfaces généralistes</li>
-        <li>Ne pas forcer à implémenter des méthode inutile.</li>
-        <li>On evite comme ça d'introduire du couplage inutile.</li>
-        <li>Le respect du SCP aide à naturellement à valider l'ISP</li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>Solution</h2>
-      <ul>
-        <li>Creation d'une classe <code>SMSAuthorizer</code></li>
-        <li>
-          Ajout d'un <code>SMSAuthorizer</code> aux classes
-          <strong>qui en ont besoin</strong>
-        </li>
-      </ul>
-    </section>
-
-    <section class="code">
-      <h2>SMSAuthorizer</h2>
-      <pre><code class="lang-csharp">
-            namespace solid {
-                class SMSAuthorizer {
-                    private bool authorized;
-            
-                    public SMSAuthorizer() {
-                        authorized = false;
-                    }
-            
-                    public void Verify(string code) {
-                        Console.WriteLine("Verifying SMS code: {0}", code);
-                        authorized = true;
-                    }
-            
-                    public bool Authorized {
-                        get { return authorized; }
-                    }
-                }
-            }
-        </code></pre>
-    </section>
-
-    <section class="code">
-      <h2>PaymentProcessor</h2>
-      <pre><code class="lang-csharp">
-            namespace solid {
-                // Disparition de la méthode d’autorisation
-                interface PaymentProcessor {
-                    void Pay(Order order);
-                }
-            }
-        </code></pre>
-    </section>
-
-    <section class="code">
-      <h2>PaypalPaymentProcessor</h2>
-      <pre><code class="lang-csharp">
-            namespace solid {
-                class PaypalPaymentProcessor : PaymentProcessor {
-                    private String email;
-                    private SMSAuthorizer authorizer;
-            
-                    public PaypalPaymentProcessor(String email, SMSAuthorizer authorizer) {
-                        this.authorizer = authorizer;
-                        this.email = email;
-                    }
-            
-                    public void Pay(Order order) {
-                        if(!authorizer.Authorized) {
-                            throw new System.Exception("Not authorized");
-                        }
-                        Console.WriteLine("Processing Paypal Payment");
-                        Console.WriteLine("Verifying Email Address: {0}", email);
-                        order.Status = Order.OrderStatus.Paid;
-                    }
-                }
-            }
-        </code></pre>
-    </section>
-
-    <section class="code">
-      <h2>DebitPaymentProcessor</h2>
-      <pre><code class="lang-csharp">
-            namespace solid {
-                class DebitPaymentProcessor : PaymentProcessor {
-                    private String security_code;
-                    private SMSAuthorizer authorizer;
-            
-                    public DebitPaymentProcessor(string security_code, SMSAuthorizer authorizer) {
-                        this.authorizer = authorizer;
-                        this.security_code = security_code;
-                    }
-                    
-                    public void Pay(Order order) {
-                        if(!authorizer.Authorized) {
-                            throw new System.Exception("Not authorized");
-                        }
-                        Console.WriteLine("Processing Debit Payment");
-                        Console.WriteLine("Verifying Security Code: {0}", security_code);
-                        order.Status = Order.OrderStatus.Paid;
-                    }
-                }
-            }
-        </code></pre>
-    </section>
-
-    <section class="code">
-      <h2>CreditPaymentProcessor</h2>
-      <pre><code class="lang-csharp">
-            namespace solid {
-                // Pas d'authorizer ici :-)
-                class CreditPaymentProcessor : PaymentProcessor {
-                    private String security_code;
-            
-                    public CreditPaymentProcessor(string security_code) {
-                        this.security_code = security_code;
-                    }
-            
-                    public void Pay(Order order) {
-                        Console.WriteLine("Processing Credit Payment");
-                        Console.WriteLine("Verifying Security Code: {0}", security_code);
-                        order.Status = Order.OrderStatus.Paid;
-                    }
-                }
-            }
-        </code></pre>
-    </section>
-
-    <section>
-      <h2>Utilisation</h2>
-      <pre><code class="lang-csharp">
-            namespace solid {
-                class Program {
-                    public static void Main() {
-                        Order order = new Order();
-            
-                        order.Add_item(new Item("Keyboard", 50), 1);
-                        order.Add_item(new Item("SSD", 150), 1);
-                        order.Add_item(new Item("USB Cable", 2), 5);
-            
-                        Console.WriteLine(order.Total_price());
-            
-                        SMSAuthorizer authorizer = new SMSAuthorizer();
-                        PaymentProcessor processor =  new PaypalPaymentProcessor("lur@ecam.be", authorizer);
-                        authorizer.Verify("4269");
-                        processor.Pay(order);
-                        Console.WriteLine(order.Status);
-                    }
-                }
-            }
-        </code></pre>
-      <pre class="terminal">
-            <strong>$> dotnet run</strong>
-            210
-            Verifying SMS code: 4269
-            Processing Paypal Payment
-            Verifying Email Address: lur@ecam.be
-            Paid
-        </pre>
-    </section>
-
-    <section>
-      <h1>Dependency Inversion Principle</h1>
-    </section>
-
-    <section>
-      <h2>Dependency Inversion Principle</h2>
-      <ul>
-        <li>On en devrait dépendre que de classe abstraite</li>
-        <li>Cela aide à maintenir l'OCP</li>
-        <li>
-          Problème dans l'application exemple:
-          <code>DebitPaymentProcessor</code> et
-          <code>PaypalPaymentProcessor</code> dépendent de la classe concrète
-          <code>SMSAuthorizer</code>
-        </li>
-        <li>
-          Solution: création d'une interface <code>Authorizer</code>
-          <pre><code class="lang-csharp">
-                    namespace solid {
-                        interface Authorizer {
-                            bool Authorized { get; }
-                        }
-                    }
-                </code></pre>
-        </li>
-      </ul>
-    </section>
-
-    <section class="code">
-      <h2>SMSAuthorizer</h2>
-      <pre><code class="lang-csharp">
-            namespace solid {
-                class SMSAuthorizer : Authorizer {
-                    private bool authorized;
-            
-                    public SMSAuthorizer() {
-                        authorized = false;
-                    }
-            
-                    public void Verify(string code) {
-                        Console.WriteLine("Verifying SMS code: {0}", code);
-                        authorized = true;
-                    }
-            
-                    public bool Authorized {
-                        get { return authorized; }
-                    }
-                }
-            }
-        </code></pre>
-    </section>
-
-    <section class="code">
-      <h2>PaypalPaymentProcessor</h2>
-      <pre><code class="lang-csharp">
-            namespace solid {
-                class PaypalPaymentProcessor : PaymentProcessor {
-                    private String email;
-                    private Authorizer authorizer;
-            
-                    public PaypalPaymentProcessor(String email, Authorizer authorizer) {
-                        this.authorizer = authorizer;
-                        this.email = email;
-                    }
-            
-                    public void Pay(Order order) {
-                        if(!authorizer.Authorized) {
-                            throw new System.Exception("Not authorized");
-                        }
-                        Console.WriteLine("Processing Paypal Payment");
-                        Console.WriteLine("Verifying Email Address: {0}", email);
-                        order.Status = Order.OrderStatus.Paid;
-                    }
-                }
-            }
-        </code></pre>
-    </section>
-
-    <section class="code">
-      <h2>DebitPaymentProcessor</h2>
-      <pre><code class="lang-csharp">
-            namespace solid {
-                class DebitPaymentProcessor : PaymentProcessor {
-                    private String security_code;
-                    private Authorizer authorizer;
-            
-                    public DebitPaymentProcessor(string security_code, Authorizer authorizer) {
-                        this.authorizer = authorizer;
-                        this.security_code = security_code;
-                    }
-                    
-                    public void Pay(Order order) {
-                        if(!authorizer.Authorized) {
-                            throw new System.Exception("Not authorized");
-                        }
-                        Console.WriteLine("Processing Debit Payment");
-                        Console.WriteLine("Verifying Security Code: {0}", security_code);
-                        order.Status = Order.OrderStatus.Paid;
-                    }
-                }
-            }
-        </code></pre>
-    </section>
-
-    <section class="code">
-      <h2>NotRobotAuthorizer</h2>
-      <ul>
-        <li>On peut créer d'autres <code>Authorizer</code></li>
-      </ul>
-      <pre><code class="lang-csharp">
-            namespace solid {
-                class NotRobotAuthorizer : Authorizer {
-                    private bool authorized;
-            
-                    public NotRobotAuthorizer() {
-                        authorized = false;
-                    }
-            
-                    public void Turing_test() {
-                        Console.WriteLine("Are you a Robot ? Naaaa...");
-                        authorized = true;
-                    }
-            
-                    public bool Authorized {
-                        get { return authorized; }
-                    }
-                }
-            }
-        </code></pre>
-    </section>
-
-    <section>
-      <h2>Utilisation</h2>
-      <pre><code class="lang-csharp">
-            namespace solid {
-                class Program {
-                    public static void Main() {
-                        Order order = new Order();
-            
-                        order.Add_item(new Item("Keyboard", 50), 1);
-                        order.Add_item(new Item("SSD", 150), 1);
-                        order.Add_item(new Item("USB Cable", 2), 5);
-            
-                        Console.WriteLine(order.Total_price());
-            
-                        NotRobotAuthorizer authorizer = new NotRobotAuthorizer();
-                        PaymentProcessor processor =  new PaypalPaymentProcessor("lur@ecam.be", authorizer);
-                        authorizer.Turing_test();
-                        processor.Pay(order);
-                        Console.WriteLine(order.Status);
-                    }
-                }
-            }
-        </code></pre>
-      <pre class="terminal">
-            <strong>$> dotnet run</strong>
-            210
-            Are you a Robot ? Naaaa...
-            Processing Paypal Payment
-            Verifying Email Address: lur@ecam.be
-            Paid
-        </pre>
-    </section>
-
-    <section>
-      <h1>Principes STUPID</h1>
-    </section>
-
-    <section>
-      <h2>STUPID</h2>
-      <ul>
-        <li>
-          Les six principes à retenir avec l’acronyme <strong>STUPID</strong>
-          <ul>
-            <li><span class="letter">S</span>ingleton</li>
-            <li><span class="letter">T</span>ight Coupling</li>
-            <li><span class="letter">U</span>ntestability</li>
-            <li><span class="letter">P</span>remature Optimization</li>
-            <li><span class="letter">I</span>ndescriptive Naming</li>
-            <li><span class="letter">D</span>uplication</li>
-          </ul>
-        </li>
-      </ul>
-    </section>
-
-    <section>
-      <h1>Singleton</h1>
-    </section>
-
-    <section>
-      <h2>Singleton</h2>
-      <ul>
-        <li>
-          Singleton parfois considéré comme un anti-pattern
-          <small
-            >Pas un problème en soi, mais symptôme d’éventuels problèmes</small
-          >
-        </li>
-        <li>
-          Deux majeures difficultés avec le singleton
-          <ul>
-            <li>Difficulté à tester un programme avec un état global</li>
-            <li>Dépendances cachées</li>
-          </ul>
-        </li>
-      </ul>
-    </section>
-
-    <section>
-      <h1>Tight Coupling</h1>
-    </section>
-
-    <section>
-      <h2>Tight Coupling</h2>
-      <ul>
-        <li>Le couplage fort est à éviter</li>
-        <li>On le dit depuis le premier cours</li>
-        <li>Très difficile à réutiliser, et aussi à tester</li>
-        <li>Changer un module ne doit pas nécessiter d’en changer d’autres</li>
-      </ul>
-    </section>
-
-    <section>
-      <h1>Untestability</h1>
-    </section>
-
-    <section>
-      <h2>Untestability</h2>
-      <ul>
-        <li>Tester un programme ne doit pas être difficile</li>
-        <li>Code fortement couplé très difficile à tester</li>
-      </ul>
-    </section>
-
-    <section>
-      <h1>Premature Optimization</h1>
-    </section>
-
-    <section>
-      <h2>Premature Optimization</h2>
-      <p style="font-style: italic" class="center">
-        « Premature optimization is the root of all evil. » — Sir Tony Hoare
-      </p>
-      <ul>
-        <li>
-          Optimiser à l’avance n’aura que des coûts, aucun bénéfice
-          <ul>
-            <li>Plus complexe</li>
-            <li>Plus lent à développer</li>
-            <li>Plus de chance de faire des erreurs</li>
-            <li>Keep It Simple, Stupid (KISS)</li>
-          </ul>
-        </li>
-        <li>
-          Deux règles de l’optimisation d’un programme :
-          <ol>
-            <li>Don’t do it</li>
-            <li>(for experts only !) Don’t do it yet.</li>
-          </ol>
-        </li>
-      </ul>
-    </section>
-
-    <section>
-      <h1>Indescriptive Naming</h1>
-    </section>
-
-    <section>
-      <h2>Indescriptive Naming</h2>
-      <ul>
-        <li>
-          Noms appropriés pour classes, méthodes, attributs, variables...
-          <small>Et ne pas faire d’abréviations !</small>
-        </li>
-        <li>
-          Les langages de programmation sont pour les humains
-          <small
-            >On ne code pas pour l’ordinateur, il ne comprend que les 0 et
-            1...</small
-          >
-        </li>
-      </ul>
-    </section>
-
-    <section>
-      <h1>Duplication</h1>
-    </section>
-
-    <section>
-      <h2>Duplication</h2>
-      <ul>
-        <li>
-          Be lazy the right way - write code only once !
-          <small>Don’t Repeat Yourself (DRY)</small>
-        </li>
-        <li>
-          Attention à tous les types de duplications
-          <small>De code, de données, de logique, de design...</small>
-        </li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>Crédit</h2>
-      <ul>
-        <li>
-          <a href="https://www.youtube.com/watch?v=pTB30aXS77U"
-            >https://www.youtube.com/watch?v=pTB30aXS77U</a
-          >
-        </li>
-      </ul>
-    </section>
-  </body>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>PO3T - Cours 7 - Avalonia UI - MVVM</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="/deck.css" />
+  <link rel="stylesheet" href="https://fred-wang.github.io/MathFonts/NewComputerModern/mathfonts.css" />
+  <script src="/deck_only.js" defer></script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">PO3T - Cours 7
+<small>Avalonia UI - MVVM</small>
+</h1>
+</header>
+<section id="le-problème" class="level2">
+<h2>Le Problème</h2>
+<div class="pygments"><pre><span></span><span class="c1">// Ce gestionnaire d&#39;événements de MainWindow</span>
+<span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">AddButton_Click</span><span class="p">(</span><span class="kt">object?</span><span class="w"> </span><span class="n">sender</span><span class="p">,</span><span class="w"> </span><span class="n">RoutedEventArgs</span><span class="w"> </span><span class="n">e</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">string</span><span class="w"> </span><span class="n">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NoteTextBox</span><span class="p">.</span><span class="n">Text</span><span class="w"> </span><span class="o">??</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="kt">string</span><span class="p">.</span><span class="n">IsNullOrWhiteSpace</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">StatusText</span><span class="p">.</span><span class="n">Text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Veuillez saisir une note.&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="k">return</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">_noteManager</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">text</span><span class="p">);</span>
+<span class="w">    </span><span class="n">NoteTextBox</span><span class="p">.</span><span class="n">Text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">StatusText</span><span class="p">.</span><span class="n">Text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Note ajoutée.&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+<ul>
+<li>La classe <code>MainWindow</code> mélange toujours <strong>plusieurs
+responsabilités</strong>:
+<ul>
+<li>elle récupère le texte depuis un contrôle graphique.</li>
+<li>elle vérifie si la saisie est valide.</li>
+<li>elle demande au gestionnaire d’ajouter une note.</li>
+<li>elle vide le champ de saisie.</li>
+<li>elle modifie le message affiché à l’utilisateur.</li>
+</ul></li>
+<li>Certaines opérations concernent les <strong>données</strong> et les
+<strong>règles de gestion</strong>; d’autres concernent
+l’<strong>interface</strong>.</li>
+</ul>
+</section>
+<section id="le-viewmodel" class="level2">
+<h2>Le <em>ViewModel</em></h2>
+<ul>
+<li><p>le <em>ViewModel</em> permet de séparer ce que l’interface doit
+<strong>afficher et faire</strong> de la manière dont cette interface
+<strong>est construite</strong>.</p></li>
+<li><p>Le <em>ViewModel</em> s’occupe de l’état propre à l’écran</p>
+<ul>
+<li>Quel texte est actuellement saisi ?</li>
+<li>Quelle tâche est sélectionnée ?</li>
+<li>Quel message faut-il afficher ?</li>
+<li>Que doit-il se passer lorsque l’utilisateur demande l’ajout d’une
+tâche ?</li>
+</ul></li>
+<li><p>Ces informations ne sont pas vraiment des règles métier. Elles
+concernent la <strong>manière dont l’utilisateur interagit avec
+l’application</strong>.</p></li>
+<li><p>Le <em>ViewModel</em> expose à l’interface les
+<strong>données</strong> et les <strong>actions</strong> dont elle a
+besoin.</p></li>
+</ul>
+</section>
+<section id="le-viewmodel---concrètement" class="level2">
+<h2>Le ViewModel - Concrètement</h2>
+<ul>
+<li><p>Il est utilisé comment <code>DataContext</code> de la
+vue</p></li>
+<li><p>Il offre des propriété que la vue peut observer
+(<em>Binding</em>) et modifier (<em>Two Way Binding</em>)</p></li>
+<li><p>Le <em>ViewModel</em> ne connait pas la vue. Il ne peut pas
+accéder aux contrôles (<em>widgets</em>)</p>
+<p>Le code suivant de notre gestionnaire de click:</p>
+<div class="pygments"><pre><span></span><span class="kt">string</span><span class="w"> </span><span class="n">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NoteTextBox</span><span class="p">.</span><span class="n">Text</span><span class="w"> </span><span class="o">??</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">;</span>
+</pre></div>
+
+<p>deviendra une propriété dans le <em>ViewModel</em>:</p>
+<div class="pygments"><pre><span></span><span class="k">public</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">NewNoteText</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">;</span>
+</pre></div>
+
+<p>Et la vue l’utilisera:</p>
+<div class="pygments"><pre><span></span><span class="nt">&lt;TextBox</span><span class="w"> </span><span class="na">Text=</span><span class="s">&quot;{Binding NewNoteText, Mode=TwoWay}&quot;</span>
+<span class="w">       </span><span class="na">PlaceholderText=</span><span class="s">&quot;Saisissez une note...&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+</pre></div>
+</li>
+</ul>
+</section>
+<section id="le-viewmodel---action" class="level2">
+<h2>Le <em>ViewModel</em> - Action</h2>
+<ul>
+<li>Le <em>ViewModel</em> peut ensuite proposer une action :</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">AddNote</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="kt">string</span><span class="p">.</span><span class="n">IsNullOrWhiteSpace</span><span class="p">(</span><span class="n">NewNoteText</span><span class="p">))</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">StatusMessage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Veuillez saisir une note.&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="k">return</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">manager</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">NewNoteText</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">NewNoteText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="n">StatusMessage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Note ajoutée.&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+<ul>
+<li>Sans aucune référence à la vue</li>
+</ul>
+</section>
+<section id="le-viewmodel---tests" class="level2">
+<h2>Le <em>ViewModel</em> - Tests</h2>
+<ul>
+<li><p>Sans <em>ViewModel</em>, pour tester l’ajout d’une tâche, on
+pourrait être obligé de lancer la fenêtre et de simuler des
+clics.</p></li>
+<li><p>Avec un <em>ViewModel</em>, on peut tester directement :</p></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="kt">var</span><span class="w"> </span><span class="n">viewModel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">MainWindowViewModel</span><span class="p">();</span>
+
+<span class="n">viewModel</span><span class="p">.</span><span class="n">NewNoteText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Préparer le cours&quot;</span><span class="p">;</span>
+<span class="n">viewModel</span><span class="p">.</span><span class="n">AddNote</span><span class="p">();</span>
+
+<span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">viewModel</span><span class="p">.</span><span class="n">manager</span><span class="p">.</span><span class="n">NoteCount</span><span class="p">);</span>
+<span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">viewModel</span><span class="p">.</span><span class="n">StatusMessage</span><span class="p">);</span>
+</pre></div>
+
+<ul>
+<li>la logique de présentation peut être testée <strong>indépendamment
+de l’interface graphique</strong>.</li>
+</ul>
+</section>
+<section id="viewmodel-pour-la-mainwindow" class="level2 code">
+<h2 class="code"><em>ViewModel</em> pour la <code>MainWindow</code></h2>
+<div class="pygments"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="nn">System.ComponentModel</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">System.Runtime.CompilerServices</span><span class="p">;</span>
+
+<span class="k">namespace</span><span class="w"> </span><span class="nn">Notes</span><span class="p">;</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">MainWindowViewModel</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">INotifyPropertyChanged</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">NoteManager</span><span class="w"> </span><span class="n">Manager</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="p">();</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">newNoteText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">NewNoteText</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">get</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">newNoteText</span><span class="p">;</span>
+<span class="w">        </span><span class="k">set</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">newNoteText</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="k">value</span><span class="p">)</span>
+<span class="w">                </span><span class="k">return</span><span class="p">;</span>
+
+<span class="w">            </span><span class="n">newNoteText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">value</span><span class="p">;</span>
+<span class="w">            </span><span class="n">OnPropertyChanged</span><span class="p">();</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">Note</span><span class="o">?</span><span class="w"> </span><span class="n">selectedNote</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">Note</span><span class="o">?</span><span class="w"> </span><span class="n">SelectedNote</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">get</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">selectedNote</span><span class="p">;</span>
+<span class="w">        </span><span class="k">set</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">selectedNote</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="k">value</span><span class="p">)</span>
+<span class="w">                </span><span class="k">return</span><span class="p">;</span>
+
+<span class="w">            </span><span class="n">selectedNote</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">value</span><span class="p">;</span>
+<span class="w">            </span><span class="n">OnPropertyChanged</span><span class="p">();</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">statusMessage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Prêt.&quot;</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">StatusMessage</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">get</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">statusMessage</span><span class="p">;</span>
+<span class="w">        </span><span class="k">set</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">statusMessage</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="k">value</span><span class="p">)</span>
+<span class="w">                </span><span class="k">return</span><span class="p">;</span>
+
+<span class="w">            </span><span class="n">statusMessage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">value</span><span class="p">;</span>
+<span class="w">            </span><span class="n">OnPropertyChanged</span><span class="p">();</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">AddNote</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="kt">string</span><span class="p">.</span><span class="n">IsNullOrWhiteSpace</span><span class="p">(</span><span class="n">NewNoteText</span><span class="p">))</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">StatusMessage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Veuillez saisir une note.&quot;</span><span class="p">;</span>
+<span class="w">            </span><span class="k">return</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="n">Manager</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">NewNoteText</span><span class="p">);</span>
+
+<span class="w">        </span><span class="n">NewNoteText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="n">StatusMessage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Note ajoutée.&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">DeleteSelectedNote</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">SelectedNote</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="k">null</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">StatusMessage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Veuillez sélectionner une note.&quot;</span><span class="p">;</span>
+<span class="w">            </span><span class="k">return</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="n">Manager</span><span class="p">.</span><span class="n">Remove</span><span class="p">(</span><span class="n">SelectedNote</span><span class="p">);</span>
+<span class="w">        </span><span class="n">SelectedNote</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">null</span><span class="p">;</span>
+<span class="w">        </span><span class="n">StatusMessage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Tâche supprimée.&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">event</span><span class="w"> </span><span class="n">PropertyChangedEventHandler</span><span class="o">?</span><span class="w"> </span><span class="n">PropertyChanged</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">// Permet de recevoir le nom de la propriété appelante automatiquement</span>
+<span class="w">    </span><span class="k">protected</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnPropertyChanged</span><span class="p">([</span><span class="n">CallerMemberName</span><span class="p">]</span><span class="w"> </span><span class="kt">string?</span><span class="w"> </span><span class="n">propertyName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">null</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">PropertyChanged</span><span class="o">?.</span><span class="n">Invoke</span><span class="p">(</span><span class="k">this</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">PropertyChangedEventArgs</span><span class="p">(</span><span class="n">propertyName</span><span class="p">));</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+</section>
+<section id="et-la-mainwindow" class="level2">
+<h2>Et la <code>MainWindow</code></h2>
+<ul>
+<li>Le C#</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="nn">Avalonia.Controls</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">Avalonia.Interactivity</span><span class="p">;</span>
+
+<span class="k">namespace</span><span class="w"> </span><span class="nn">demo</span><span class="p">;</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">partial</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">MainWindow</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Window</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">readonly</span><span class="w"> </span><span class="n">MainWindowViewModel</span><span class="w"> </span><span class="n">viewModel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="p">();</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="nf">MainWindow</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">InitializeComponent</span><span class="p">();</span>
+
+<span class="w">        </span><span class="n">DataContext</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">viewModel</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">AddButton_Click</span><span class="p">(</span><span class="kt">object?</span><span class="w"> </span><span class="n">sender</span><span class="p">,</span><span class="w"> </span><span class="n">RoutedEventArgs</span><span class="w"> </span><span class="n">e</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">viewModel</span><span class="p">.</span><span class="n">AddNote</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">DeleteButton_Click</span><span class="p">(</span><span class="kt">object?</span><span class="w"> </span><span class="n">sender</span><span class="p">,</span><span class="w"> </span><span class="n">RoutedEventArgs</span><span class="w"> </span><span class="n">e</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">viewModel</span><span class="p">.</span><span class="n">DeleteSelectedNote</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<ul>
+<li>Le XAML</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="nt">&lt;Window</span><span class="w"> </span><span class="na">xmlns=</span><span class="s">&quot;https://github.com/avaloniaui&quot;</span>
+<span class="w">        </span><span class="na">xmlns:x=</span><span class="s">&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;</span>
+<span class="w">        </span><span class="na">xmlns:d=</span><span class="s">&quot;http://schemas.microsoft.com/expression/blend/2008&quot;</span>
+<span class="w">        </span><span class="na">xmlns:mc=</span><span class="s">&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;</span>
+<span class="w">        </span><span class="na">xmlns:local=</span><span class="s">&quot;using:Notes&quot;</span>
+<span class="w">        </span><span class="na">mc:Ignorable=</span><span class="s">&quot;d&quot;</span><span class="w"> </span><span class="na">d:DesignWidth=</span><span class="s">&quot;350&quot;</span><span class="w"> </span><span class="na">d:DesignHeight=</span><span class="s">&quot;200&quot;</span>
+<span class="w">        </span><span class="na">x:Class=</span><span class="s">&quot;Notes.MainWindow&quot;</span>
+<span class="w">        </span><span class="na">x:DataType=</span><span class="s">&quot;local:MainWindowViewModel&quot;</span>
+<span class="w">        </span><span class="na">Title=</span><span class="s">&quot;Mes notes&quot;</span>
+<span class="w">        </span><span class="na">Width=</span><span class="s">&quot;400&quot;</span>
+<span class="w">        </span><span class="na">Height=</span><span class="s">&quot;450&quot;</span><span class="nt">&gt;</span>
+
+<span class="w">        </span><span class="nt">&lt;StackPanel</span><span class="w"> </span><span class="na">Margin=</span><span class="s">&quot;20&quot;</span><span class="w"> </span><span class="na">Spacing=</span><span class="s">&quot;12&quot;</span><span class="nt">&gt;</span>
+
+<span class="w">        </span><span class="nt">&lt;TextBlock</span><span class="w"> </span><span class="na">Text=</span><span class="s">&quot;Mes notes&quot;</span>
+<span class="w">                   </span><span class="na">FontSize=</span><span class="s">&quot;26&quot;</span>
+<span class="w">                   </span><span class="na">FontWeight=</span><span class="s">&quot;Bold&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+
+<span class="w">        </span><span class="nt">&lt;TextBox</span><span class="w"> </span><span class="na">x:Name=</span><span class="s">&quot;NoteTextBox&quot;</span>
+<span class="w">                 </span><span class="na">Text=</span><span class="s">&quot;{Binding NewNoteText, Mode=TwoWay}&quot;</span>
+<span class="w">                 </span><span class="na">PlaceholderText=</span><span class="s">&quot;Saisissez une note...&quot;</span>
+<span class="w">                 </span><span class="na">AcceptsReturn=</span><span class="s">&quot;False&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+
+<span class="w">        </span><span class="nt">&lt;Button</span><span class="w"> </span><span class="na">Content=</span><span class="s">&quot;Ajouter&quot;</span>
+<span class="w">                </span><span class="na">HorizontalAlignment=</span><span class="s">&quot;Stretch&quot;</span>
+<span class="w">                </span><span class="na">Click=</span><span class="s">&quot;AddButton_Click&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+
+<span class="w">        </span><span class="nt">&lt;TextBlock</span><span class="w"> </span><span class="na">Text=</span><span class="s">&quot;Liste des notes&quot;</span>
+<span class="w">                   </span><span class="na">FontSize=</span><span class="s">&quot;18&quot;</span>
+<span class="w">                   </span><span class="na">FontWeight=</span><span class="s">&quot;SemiBold&quot;</span>
+<span class="w">                   </span><span class="na">Margin=</span><span class="s">&quot;0,10,0,0&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+
+<span class="w">        </span><span class="nt">&lt;ListBox</span><span class="w"> </span><span class="na">x:Name=</span><span class="s">&quot;NotesList&quot;</span>
+<span class="w">                 </span><span class="na">ItemsSource=</span><span class="s">&quot;{Binding Manager.Notes}&quot;</span>
+<span class="w">                 </span><span class="na">SelectedItem=</span><span class="s">&quot;{Binding SelectedNote, Mode=TwoWay}&quot;</span>
+<span class="w">                 </span><span class="na">Height=</span><span class="s">&quot;180&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+
+<span class="w">        </span><span class="nt">&lt;Button</span><span class="w"> </span><span class="na">Content=</span><span class="s">&quot;Supprimer la note sélectionnée&quot;</span>
+<span class="w">                </span><span class="na">HorizontalAlignment=</span><span class="s">&quot;Stretch&quot;</span>
+<span class="w">                </span><span class="na">Click=</span><span class="s">&quot;DeleteButton_Click&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+
+<span class="w">        </span><span class="nt">&lt;TextBlock</span><span class="w"> </span><span class="na">x:Name=</span><span class="s">&quot;StatusText&quot;</span>
+<span class="w">                   </span><span class="na">Text=</span><span class="s">&quot;{Binding StatusMessage, Mode=TwoWay}&quot;</span>
+<span class="w">                   </span><span class="na">Opacity=</span><span class="s">&quot;0.7&quot;</span>
+<span class="w">                   </span><span class="na">TextWrapping=</span><span class="s">&quot;Wrap&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="w">        </span><span class="nt">&lt;TextBlock</span>
+<span class="w">                   </span><span class="na">Text=</span><span class="s">&quot;{Binding Manager.NoteCount}&quot;</span>
+<span class="w">                   </span><span class="na">Opacity=</span><span class="s">&quot;0.7&quot;</span>
+<span class="w">                   </span><span class="na">TextWrapping=</span><span class="s">&quot;Wrap&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+
+<span class="w">    </span><span class="nt">&lt;/StackPanel&gt;</span>
+
+<span class="nt">&lt;/Window&gt;</span>
+</pre></div>
+
+</section>
+<section id="les-commandes" class="level2">
+<h2>Les Commandes</h2>
+<ul>
+<li><p>Dommage qu’on ne puisse pas directement relier les méthodes du
+<em>ViewModel</em> aux contrôles du XAML…</p></li>
+<li><p>Utilisons les <code>ICommand</code> de .NET !</p></li>
+<li><p><code>ICommand</code> est une interface qui correspond à
+ceci:</p></li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">public</span><span class="w"> </span><span class="k">interface</span><span class="w"> </span><span class="n">ICommand</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">event</span><span class="w"> </span><span class="n">EventHandler</span><span class="o">?</span><span class="w"> </span><span class="n">CanExecuteChanged</span><span class="p">;</span>
+
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="nf">CanExecute</span><span class="p">(</span><span class="kt">object?</span><span class="w"> </span><span class="n">parameter</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">Execute</span><span class="p">(</span><span class="kt">object?</span><span class="w"> </span><span class="n">parameter</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+
+<ul>
+<li>On peut les lier dans le XAML:</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="nt">&lt;Button</span><span class="w"> </span><span class="na">Content=</span><span class="s">&quot;Ajouter&quot;</span>
+<span class="w">        </span><span class="na">Command=</span><span class="s">&quot;{Binding AddNoteCommand}&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+</pre></div>
+
+</section>
+<section id="relaycommand" class="level2 code">
+<h2 class="code"><code>RelayCommand</code></h2>
+<div class="pygments"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">System.Windows.Input</span><span class="p">;</span>
+
+<span class="k">namespace</span><span class="w"> </span><span class="nn">Notes</span><span class="p">;</span>
+
+<span class="c1">// ICommand est une interface, il nous faut une implémentation</span>
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">RelayCommand</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">ICommand</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">readonly</span><span class="w"> </span><span class="n">Action</span><span class="w"> </span><span class="n">execute</span><span class="p">;</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">readonly</span><span class="w"> </span><span class="n">Func</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;?</span><span class="w"> </span><span class="n">canExecute</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="nf">RelayCommand</span><span class="p">(</span>
+<span class="w">        </span><span class="n">Action</span><span class="w"> </span><span class="n">execute</span><span class="p">,</span>
+<span class="w">        </span><span class="n">Func</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;?</span><span class="w"> </span><span class="n">canExecute</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">null</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="n">execute</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">execute</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="n">canExecute</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">canExecute</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="nf">CanExecute</span><span class="p">(</span><span class="kt">object?</span><span class="w"> </span><span class="n">parameter</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">canExecute</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="k">null</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">canExecute</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Execute</span><span class="p">(</span><span class="kt">object?</span><span class="w"> </span><span class="n">parameter</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">execute</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">event</span><span class="w"> </span><span class="n">EventHandler</span><span class="o">?</span><span class="w"> </span><span class="n">CanExecuteChanged</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">RaiseCanExecuteChanged</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">CanExecuteChanged</span><span class="o">?.</span><span class="n">Invoke</span><span class="p">(</span><span class="k">this</span><span class="p">,</span><span class="w"> </span><span class="n">EventArgs</span><span class="p">.</span><span class="n">Empty</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+</section>
+<section id="commandes-dans-le-viewmodel" class="level2 code">
+<h2 class="code">Commandes dans le <em>ViewModel</em></h2>
+<div class="pygments"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="nn">System.ComponentModel</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">System.Runtime.CompilerServices</span><span class="p">;</span>
+
+<span class="k">namespace</span><span class="w"> </span><span class="nn">Notes</span><span class="p">;</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">MainWindowViewModel</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">INotifyPropertyChanged</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">NoteManager</span><span class="w"> </span><span class="n">Manager</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="p">();</span>
+
+<span class="w">    </span><span class="c1">// Propriétés des commandes</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">RelayCommand</span><span class="w"> </span><span class="n">AddNoteCommand</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">RelayCommand</span><span class="w"> </span><span class="n">DeleteSelectedNoteCommand</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">newNoteText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">NewNoteText</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">get</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">newNoteText</span><span class="p">;</span>
+<span class="w">        </span><span class="k">set</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">newNoteText</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="k">value</span><span class="p">)</span>
+<span class="w">                </span><span class="k">return</span><span class="p">;</span>
+
+<span class="w">            </span><span class="n">newNoteText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">value</span><span class="p">;</span>
+<span class="w">            </span><span class="n">OnPropertyChanged</span><span class="p">();</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">Note</span><span class="o">?</span><span class="w"> </span><span class="n">selectedNote</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">Note</span><span class="o">?</span><span class="w"> </span><span class="n">SelectedNote</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">get</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">selectedNote</span><span class="p">;</span>
+<span class="w">        </span><span class="k">set</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">selectedNote</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="k">value</span><span class="p">)</span>
+<span class="w">                </span><span class="k">return</span><span class="p">;</span>
+
+<span class="w">            </span><span class="n">selectedNote</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">value</span><span class="p">;</span>
+<span class="w">            </span><span class="n">OnPropertyChanged</span><span class="p">();</span>
+<span class="w">            </span><span class="c1">// Le CanExecute de la commande DeleteSelectedNoteCommand</span>
+<span class="w">            </span><span class="c1">// doit être réévalué</span>
+<span class="w">            </span><span class="n">DeleteSelectedNoteCommand</span><span class="p">.</span><span class="n">RaiseCanExecuteChanged</span><span class="p">();</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">statusMessage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Prêt.&quot;</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">StatusMessage</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">get</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">statusMessage</span><span class="p">;</span>
+<span class="w">        </span><span class="k">set</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">statusMessage</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="k">value</span><span class="p">)</span>
+<span class="w">                </span><span class="k">return</span><span class="p">;</span>
+
+<span class="w">            </span><span class="n">statusMessage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">value</span><span class="p">;</span>
+<span class="w">            </span><span class="n">OnPropertyChanged</span><span class="p">();</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="nf">MainWindowViewModel</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Initialisation des commandes</span>
+<span class="w">        </span><span class="n">AddNoteCommand</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">RelayCommand</span><span class="p">(</span><span class="n">AddNote</span><span class="p">);</span>
+
+<span class="w">        </span><span class="n">DeleteSelectedNoteCommand</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">RelayCommand</span><span class="p">(</span>
+<span class="w">            </span><span class="n">DeleteSelectedNote</span><span class="p">,</span>
+<span class="w">            </span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">SelectedNote</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">null</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">AddNote</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="kt">string</span><span class="p">.</span><span class="n">IsNullOrWhiteSpace</span><span class="p">(</span><span class="n">NewNoteText</span><span class="p">))</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">StatusMessage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Veuillez saisir une note.&quot;</span><span class="p">;</span>
+<span class="w">            </span><span class="k">return</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="n">Manager</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">NewNoteText</span><span class="p">);</span>
+
+<span class="w">        </span><span class="n">NewNoteText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="n">StatusMessage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Note ajoutée.&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">DeleteSelectedNote</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">SelectedNote</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="k">null</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">StatusMessage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Veuillez sélectionner une note.&quot;</span><span class="p">;</span>
+<span class="w">            </span><span class="k">return</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="n">Manager</span><span class="p">.</span><span class="n">Remove</span><span class="p">(</span><span class="n">SelectedNote</span><span class="p">);</span>
+<span class="w">        </span><span class="n">SelectedNote</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">null</span><span class="p">;</span>
+<span class="w">        </span><span class="n">StatusMessage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Tâche supprimée.&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">event</span><span class="w"> </span><span class="n">PropertyChangedEventHandler</span><span class="o">?</span><span class="w"> </span><span class="n">PropertyChanged</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">protected</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnPropertyChanged</span><span class="p">(</span>
+<span class="w">        </span><span class="na">[CallerMemberName]</span><span class="w"> </span><span class="kt">string?</span><span class="w"> </span><span class="n">propertyName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">null</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">PropertyChanged</span><span class="o">?.</span><span class="n">Invoke</span><span class="p">(</span>
+<span class="w">            </span><span class="k">this</span><span class="p">,</span>
+<span class="w">            </span><span class="k">new</span><span class="w"> </span><span class="nf">PropertyChangedEventArgs</span><span class="p">(</span><span class="n">propertyName</span><span class="p">));</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+</section>
+<section id="distinction-importante" class="level2">
+<h2>Distinction importante</h2>
+<ul>
+<li><code>AddNote()</code> est une méthode qui exécute une
+opération.</li>
+<li><code>AddNoteCommand</code> est un objet qui représente cette action
+pour l’interface, avec la possibilité de déterminer si elle est
+autorisée.</li>
+</ul>
+</section>
+<section id="commandes-dans-la-mainwindow" class="level2">
+<h2>Commandes dans la <code>MainWindow</code></h2>
+<ul>
+<li>Le XAML</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="nt">&lt;Window</span><span class="w"> </span><span class="na">xmlns=</span><span class="s">&quot;https://github.com/avaloniaui&quot;</span>
+<span class="w">        </span><span class="na">xmlns:x=</span><span class="s">&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;</span>
+<span class="w">        </span><span class="na">xmlns:d=</span><span class="s">&quot;http://schemas.microsoft.com/expression/blend/2008&quot;</span>
+<span class="w">        </span><span class="na">xmlns:mc=</span><span class="s">&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;</span>
+<span class="w">        </span><span class="na">xmlns:local=</span><span class="s">&quot;using:Notes&quot;</span>
+<span class="w">        </span><span class="na">mc:Ignorable=</span><span class="s">&quot;d&quot;</span><span class="w"> </span><span class="na">d:DesignWidth=</span><span class="s">&quot;350&quot;</span><span class="w"> </span><span class="na">d:DesignHeight=</span><span class="s">&quot;200&quot;</span>
+<span class="w">        </span><span class="na">x:Class=</span><span class="s">&quot;Notes.MainWindow&quot;</span>
+<span class="w">        </span><span class="na">x:DataType=</span><span class="s">&quot;local:MainWindowViewModel&quot;</span>
+<span class="w">        </span><span class="na">Title=</span><span class="s">&quot;Mes notes&quot;</span>
+<span class="w">        </span><span class="na">Width=</span><span class="s">&quot;400&quot;</span>
+<span class="w">        </span><span class="na">Height=</span><span class="s">&quot;450&quot;</span><span class="nt">&gt;</span>
+
+<span class="w">        </span><span class="nt">&lt;StackPanel</span><span class="w"> </span><span class="na">Margin=</span><span class="s">&quot;20&quot;</span><span class="w"> </span><span class="na">Spacing=</span><span class="s">&quot;12&quot;</span><span class="nt">&gt;</span>
+
+<span class="w">        </span><span class="nt">&lt;TextBlock</span><span class="w"> </span><span class="na">Text=</span><span class="s">&quot;Mes notes&quot;</span>
+<span class="w">                   </span><span class="na">FontSize=</span><span class="s">&quot;26&quot;</span>
+<span class="w">                   </span><span class="na">FontWeight=</span><span class="s">&quot;Bold&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+
+<span class="w">        </span><span class="nt">&lt;TextBox</span><span class="w"> </span><span class="na">x:Name=</span><span class="s">&quot;NoteTextBox&quot;</span>
+<span class="w">                 </span><span class="na">Text=</span><span class="s">&quot;{Binding NewNoteText, Mode=TwoWay}&quot;</span>
+<span class="w">                 </span><span class="na">PlaceholderText=</span><span class="s">&quot;Saisissez une note...&quot;</span>
+<span class="w">                 </span><span class="na">AcceptsReturn=</span><span class="s">&quot;False&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+
+<span class="w">        </span><span class="nt">&lt;Button</span><span class="w"> </span><span class="na">Content=</span><span class="s">&quot;Ajouter&quot;</span>
+<span class="w">                </span><span class="na">HorizontalAlignment=</span><span class="s">&quot;Stretch&quot;</span>
+<span class="w">                </span><span class="na">Command=</span><span class="s">&quot;{Binding AddNoteCommand}&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+
+<span class="w">        </span><span class="nt">&lt;TextBlock</span><span class="w"> </span><span class="na">Text=</span><span class="s">&quot;Liste des notes&quot;</span>
+<span class="w">                   </span><span class="na">FontSize=</span><span class="s">&quot;18&quot;</span>
+<span class="w">                   </span><span class="na">FontWeight=</span><span class="s">&quot;SemiBold&quot;</span>
+<span class="w">                   </span><span class="na">Margin=</span><span class="s">&quot;0,10,0,0&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+
+<span class="w">        </span><span class="nt">&lt;ListBox</span><span class="w"> </span><span class="na">x:Name=</span><span class="s">&quot;NotesList&quot;</span>
+<span class="w">                 </span><span class="na">ItemsSource=</span><span class="s">&quot;{Binding Manager.Notes}&quot;</span>
+<span class="w">                 </span><span class="na">SelectedItem=</span><span class="s">&quot;{Binding SelectedNote, Mode=TwoWay}&quot;</span>
+<span class="w">                 </span><span class="na">Height=</span><span class="s">&quot;180&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+
+<span class="w">        </span><span class="nt">&lt;Button</span><span class="w"> </span><span class="na">Content=</span><span class="s">&quot;Supprimer la note sélectionnée&quot;</span>
+<span class="w">                </span><span class="na">HorizontalAlignment=</span><span class="s">&quot;Stretch&quot;</span>
+<span class="w">                </span><span class="na">Command=</span><span class="s">&quot;{Binding DeleteSelectedNoteCommand}&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+
+<span class="w">        </span><span class="nt">&lt;TextBlock</span><span class="w"> </span><span class="na">x:Name=</span><span class="s">&quot;StatusText&quot;</span>
+<span class="w">                   </span><span class="na">Text=</span><span class="s">&quot;{Binding StatusMessage, Mode=TwoWay}&quot;</span>
+<span class="w">                   </span><span class="na">Opacity=</span><span class="s">&quot;0.7&quot;</span>
+<span class="w">                   </span><span class="na">TextWrapping=</span><span class="s">&quot;Wrap&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="w">        </span><span class="nt">&lt;TextBlock</span>
+<span class="w">                   </span><span class="na">Text=</span><span class="s">&quot;{Binding Manager.NoteCount}&quot;</span>
+<span class="w">                   </span><span class="na">Opacity=</span><span class="s">&quot;0.7&quot;</span>
+<span class="w">                   </span><span class="na">TextWrapping=</span><span class="s">&quot;Wrap&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+
+<span class="w">    </span><span class="nt">&lt;/StackPanel&gt;</span>
+
+<span class="nt">&lt;/Window&gt;</span>
+</pre></div>
+
+<ul>
+<li>Le C#</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="nn">Avalonia.Controls</span><span class="p">;</span>
+
+<span class="k">namespace</span><span class="w"> </span><span class="nn">Notes</span><span class="p">;</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">partial</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">MainWindow</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Window</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">readonly</span><span class="w"> </span><span class="n">MainWindowViewModel</span><span class="w"> </span><span class="n">viewModel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="p">();</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="nf">MainWindow</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">InitializeComponent</span><span class="p">();</span>
+
+<span class="w">        </span><span class="n">DataContext</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">viewModel</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// C&#39;est devenu super vide</span>
+<span class="p">}</span>
+</pre></div>
+
+</section>
+<section id="le-pattern-mvvm" class="level2">
+<h2>Le pattern MVVM</h2>
+<ul>
+<li>Model View ViewModel</li>
+<li>Pattern d’architecture software</li>
+<li>3 parties:
+<ul>
+<li><strong>Model</strong>: stocke et gère les données, ne connait rien
+de la <em>View</em> ou du <em>ViewModel</em></li>
+<li><strong>View</strong>: représente l’interface utilisateur, interagit
+avec le <em>ViewModel</em></li>
+<li><strong>ViewModel</strong>: est entre le <em>Model</em> et la
+<em>View</em>, ne connait rien de la <em>View</em>, interagit avec le
+<em>Model</em></li>
+</ul></li>
+</ul>
+<figure><img class="plantuml build" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBjb250ZW50U3R5bGVUeXBlPSJ0ZXh0L2NzcyIgZGF0YS1kaWFncmFtLXR5cGU9IlNFUVVFTkNFIiBoZWlnaHQ9IjM4NXB4IiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBzdHlsZT0id2lkdGg6Njk5cHg7aGVpZ2h0OjM4NXB4O2JhY2tncm91bmQ6I0ZGRkZGRjsiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDY5OSAzODUiIHdpZHRoPSI2OTlweCIgem9vbUFuZFBhbj0ibWFnbmlmeSI+PD9wbGFudHVtbCAxLjIwMjYuNj8+PGRlZnMvPjxnPjxnPjx0aXRsZT5WaWV3PC90aXRsZT48cmVjdCBmaWxsPSIjRkZGRkZGIiBoZWlnaHQ9Ijc1LjEwOTQiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiIHdpZHRoPSIxMCIgeD0iMjcwLjE5MzQiIHk9IjEyOC4xMDk0Ii8+PC9nPjxnPjx0aXRsZT5WaWV3PC90aXRsZT48cmVjdCBmaWxsPSIjRkZGRkZGIiBoZWlnaHQ9IjM3LjU1NDciIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiIHdpZHRoPSIxMCIgeD0iMjcwLjE5MzQiIHk9IjI0MC43NzM0Ii8+PC9nPjxnPjx0aXRsZT5WaWV3TW9kZWw8L3RpdGxlPjxyZWN0IGZpbGw9IiNGRkZGRkYiIGhlaWdodD0iNzUuMTA5NCIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIgd2lkdGg9IjEwIiB4PSI1MTcuOTkyMiIgeT0iMTY1LjY2NDEiLz48L2c+PGc+PHRpdGxlPk1vZGVsPC90aXRsZT48cmVjdCBmaWxsPSIjRkZGRkZGIiBoZWlnaHQ9IjM3LjU1NDciIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiIHdpZHRoPSIxMCIgeD0iNjQ2Ljk1MzEiIHk9IjIwMy4yMTg4Ii8+PC9nPjxnIGNsYXNzPSJwYXJ0aWNpcGFudC1saWZlbGluZSIgZGF0YS1lbnRpdHktdWlkPSJwYXJ0MSIgZGF0YS1xdWFsaWZpZWQtbmFtZT0iVXNlciIgZGF0YS1zb3VyY2UtbGluZT0iMiIgaWQ9InBhcnQxLWxpZmVsaW5lIj48Zz48dGl0bGU+VXNlcjwvdGl0bGU+PHJlY3QgZmlsbD0iIzAwMDAwMCIgZmlsbC1vcGFjaXR5PSIwLjAwMDAwIiBoZWlnaHQ9IjIwNy43NzM0IiB3aWR0aD0iOCIgeD0iMjUuNjg5NSIgeT0iODguNTU0NyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41O3N0cm9rZS1kYXNoYXJyYXk6NSw1OyIgeDE9IjI5IiB4Mj0iMjkiIHkxPSI4OC41NTQ3IiB5Mj0iMjk2LjMyODEiLz48L2c+PC9nPjxnIGNsYXNzPSJwYXJ0aWNpcGFudC1saWZlbGluZSIgZGF0YS1lbnRpdHktdWlkPSJwYXJ0MiIgZGF0YS1xdWFsaWZpZWQtbmFtZT0iVmlldyIgZGF0YS1zb3VyY2UtbGluZT0iMyIgaWQ9InBhcnQyLWxpZmVsaW5lIj48Zz48dGl0bGU+VmlldzwvdGl0bGU+PHJlY3QgZmlsbD0iIzAwMDAwMCIgZmlsbC1vcGFjaXR5PSIwLjAwMDAwIiBoZWlnaHQ9IjIwNy43NzM0IiB3aWR0aD0iOCIgeD0iMjcxLjE5MzQiIHk9Ijg4LjU1NDciLz48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTtzdHJva2UtZGFzaGFycmF5OjUsNTsiIHgxPSIyNzQuNDg4MyIgeDI9IjI3NC40ODgzIiB5MT0iODguNTU0NyIgeTI9IjI5Ni4zMjgxIi8+PC9nPjwvZz48ZyBjbGFzcz0icGFydGljaXBhbnQtbGlmZWxpbmUiIGRhdGEtZW50aXR5LXVpZD0icGFydDMiIGRhdGEtcXVhbGlmaWVkLW5hbWU9IlZpZXdNb2RlbCIgZGF0YS1zb3VyY2UtbGluZT0iNCIgaWQ9InBhcnQzLWxpZmVsaW5lIj48Zz48dGl0bGU+Vmlld01vZGVsPC90aXRsZT48cmVjdCBmaWxsPSIjMDAwMDAwIiBmaWxsLW9wYWNpdHk9IjAuMDAwMDAiIGhlaWdodD0iMjA3Ljc3MzQiIHdpZHRoPSI4IiB4PSI1MTguOTkyMiIgeT0iODguNTU0NyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41O3N0cm9rZS1kYXNoYXJyYXk6NSw1OyIgeDE9IjUyMi43NzU0IiB4Mj0iNTIyLjc3NTQiIHkxPSI4OC41NTQ3IiB5Mj0iMjk2LjMyODEiLz48L2c+PC9nPjxnIGNsYXNzPSJwYXJ0aWNpcGFudC1saWZlbGluZSIgZGF0YS1lbnRpdHktdWlkPSJwYXJ0NCIgZGF0YS1xdWFsaWZpZWQtbmFtZT0iTW9kZWwiIGRhdGEtc291cmNlLWxpbmU9IjUiIGlkPSJwYXJ0NC1saWZlbGluZSI+PGc+PHRpdGxlPk1vZGVsPC90aXRsZT48cmVjdCBmaWxsPSIjMDAwMDAwIiBmaWxsLW9wYWNpdHk9IjAuMDAwMDAiIGhlaWdodD0iMjA3Ljc3MzQiIHdpZHRoPSI4IiB4PSI2NDcuOTUzMSIgeT0iODguNTU0NyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41O3N0cm9rZS1kYXNoYXJyYXk6NSw1OyIgeDE9IjY1MS40NDE0IiB4Mj0iNjUxLjQ0MTQiIHkxPSI4OC41NTQ3IiB5Mj0iMjk2LjMyODEiLz48L2c+PC9nPjxnIGNsYXNzPSJwYXJ0aWNpcGFudCBwYXJ0aWNpcGFudC1oZWFkIiBkYXRhLWVudGl0eS11aWQ9InBhcnQxIiBkYXRhLXF1YWxpZmllZC1uYW1lPSJVc2VyIiBkYXRhLXNvdXJjZS1saW5lPSIyIiBpZD0icGFydDEtaGVhZCI+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjAiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iNDMuMzc4OSIgeD0iNSIgeT0iODQuMzM1OSI+VXNlcjwvdGV4dD48ZWxsaXBzZSBjeD0iMjkuNjg5NSIgY3k9IjEzLjUiIGZpbGw9IiNFMkUyRjAiIHJ4PSI4IiByeT0iOCIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7Ii8+PHBhdGggZD0iTTI5LjY4OTUsMjEuNSBMMjkuNjg5NSw0OC41IE0xNi42ODk1LDI5LjUgTDQyLjY4OTUsMjkuNSBNMjkuNjg5NSw0OC41IEwxNi42ODk1LDYzLjUgTTI5LjY4OTUsNDguNSBMNDIuNjg5NSw2My41IiBmaWxsPSJub25lIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiLz48L2c+PGcgY2xhc3M9InBhcnRpY2lwYW50IHBhcnRpY2lwYW50LXRhaWwiIGRhdGEtZW50aXR5LXVpZD0icGFydDEiIGRhdGEtcXVhbGlmaWVkLW5hbWU9IlVzZXIiIGRhdGEtc291cmNlLWxpbmU9IjIiIGlkPSJwYXJ0MS10YWlsIj48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIyMCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI0My4zNzg5IiB4PSI1IiB5PSIzMTQuNjY0MSI+VXNlcjwvdGV4dD48ZWxsaXBzZSBjeD0iMjkuNjg5NSIgY3k9IjMyNy4zODI4IiBmaWxsPSIjRTJFMkYwIiByeD0iOCIgcnk9IjgiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIvPjxwYXRoIGQ9Ik0yOS42ODk1LDMzNS4zODI4IEwyOS42ODk1LDM2Mi4zODI4IE0xNi42ODk1LDM0My4zODI4IEw0Mi42ODk1LDM0My4zODI4IE0yOS42ODk1LDM2Mi4zODI4IEwxNi42ODk1LDM3Ny4zODI4IE0yOS42ODk1LDM2Mi4zODI4IEw0Mi42ODk1LDM3Ny4zODI4IiBmaWxsPSJub25lIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiLz48L2c+PGcgY2xhc3M9InBhcnRpY2lwYW50IHBhcnRpY2lwYW50LWhlYWQiIGRhdGEtZW50aXR5LXVpZD0icGFydDIiIGRhdGEtcXVhbGlmaWVkLW5hbWU9IlZpZXciIGRhdGEtc291cmNlLWxpbmU9IjMiIGlkPSJwYXJ0Mi1oZWFkIj48cmVjdCBmaWxsPSIjRTJFMkYwIiBoZWlnaHQ9IjM3LjU1NDciIHJ4PSIyLjUiIHJ5PSIyLjUiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgd2lkdGg9IjU5LjQxMDIiIHg9IjI0NS40ODgzIiB5PSI1MCIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjIwIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjQ1LjQxMDIiIHg9IjI1Mi40ODgzIiB5PSI3Ni4zMzU5Ij5WaWV3PC90ZXh0PjwvZz48ZyBjbGFzcz0icGFydGljaXBhbnQgcGFydGljaXBhbnQtdGFpbCIgZGF0YS1lbnRpdHktdWlkPSJwYXJ0MiIgZGF0YS1xdWFsaWZpZWQtbmFtZT0iVmlldyIgZGF0YS1zb3VyY2UtbGluZT0iMyIgaWQ9InBhcnQyLXRhaWwiPjxyZWN0IGZpbGw9IiNFMkUyRjAiIGhlaWdodD0iMzcuNTU0NyIgcng9IjIuNSIgcnk9IjIuNSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB3aWR0aD0iNTkuNDEwMiIgeD0iMjQ1LjQ4ODMiIHk9IjI5NS4zMjgxIi8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjAiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iNDUuNDEwMiIgeD0iMjUyLjQ4ODMiIHk9IjMyMS42NjQxIj5WaWV3PC90ZXh0PjwvZz48ZyBjbGFzcz0icGFydGljaXBhbnQgcGFydGljaXBhbnQtaGVhZCIgZGF0YS1lbnRpdHktdWlkPSJwYXJ0MyIgZGF0YS1xdWFsaWZpZWQtbmFtZT0iVmlld01vZGVsIiBkYXRhLXNvdXJjZS1saW5lPSI0IiBpZD0icGFydDMtaGVhZCI+PHJlY3QgZmlsbD0iI0UyRTJGMCIgaGVpZ2h0PSIzNy41NTQ3IiByeD0iMi41IiByeT0iMi41IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHdpZHRoPSIxMTguNDMzNiIgeD0iNDYzLjc3NTQiIHk9IjUwIi8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjAiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMTA0LjQzMzYiIHg9IjQ3MC43NzU0IiB5PSI3Ni4zMzU5Ij5WaWV3TW9kZWw8L3RleHQ+PC9nPjxnIGNsYXNzPSJwYXJ0aWNpcGFudCBwYXJ0aWNpcGFudC10YWlsIiBkYXRhLWVudGl0eS11aWQ9InBhcnQzIiBkYXRhLXF1YWxpZmllZC1uYW1lPSJWaWV3TW9kZWwiIGRhdGEtc291cmNlLWxpbmU9IjQiIGlkPSJwYXJ0My10YWlsIj48cmVjdCBmaWxsPSIjRTJFMkYwIiBoZWlnaHQ9IjM3LjU1NDciIHJ4PSIyLjUiIHJ5PSIyLjUiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgd2lkdGg9IjExOC40MzM2IiB4PSI0NjMuNzc1NCIgeT0iMjk1LjMyODEiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIyMCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxMDQuNDMzNiIgeD0iNDcwLjc3NTQiIHk9IjMyMS42NjQxIj5WaWV3TW9kZWw8L3RleHQ+PC9nPjxnIGNsYXNzPSJwYXJ0aWNpcGFudCBwYXJ0aWNpcGFudC1oZWFkIiBkYXRhLWVudGl0eS11aWQ9InBhcnQ0IiBkYXRhLXF1YWxpZmllZC1uYW1lPSJNb2RlbCIgZGF0YS1zb3VyY2UtbGluZT0iNSIgaWQ9InBhcnQ0LWhlYWQiPjxyZWN0IGZpbGw9IiNFMkUyRjAiIGhlaWdodD0iMzcuNTU0NyIgcng9IjIuNSIgcnk9IjIuNSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB3aWR0aD0iNzMuMDIzNCIgeD0iNjE1LjQ0MTQiIHk9IjUwIi8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjAiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iNTkuMDIzNCIgeD0iNjIyLjQ0MTQiIHk9Ijc2LjMzNTkiPk1vZGVsPC90ZXh0PjwvZz48ZyBjbGFzcz0icGFydGljaXBhbnQgcGFydGljaXBhbnQtdGFpbCIgZGF0YS1lbnRpdHktdWlkPSJwYXJ0NCIgZGF0YS1xdWFsaWZpZWQtbmFtZT0iTW9kZWwiIGRhdGEtc291cmNlLWxpbmU9IjUiIGlkPSJwYXJ0NC10YWlsIj48cmVjdCBmaWxsPSIjRTJFMkYwIiBoZWlnaHQ9IjM3LjU1NDciIHJ4PSIyLjUiIHJ5PSIyLjUiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgd2lkdGg9IjczLjAyMzQiIHg9IjYxNS40NDE0IiB5PSIyOTUuMzI4MSIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjIwIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjU5LjAyMzQiIHg9IjYyMi40NDE0IiB5PSIzMjEuNjY0MSI+TW9kZWw8L3RleHQ+PC9nPjxnPjx0aXRsZT5WaWV3PC90aXRsZT48cmVjdCBmaWxsPSIjRkZGRkZGIiBoZWlnaHQ9Ijc1LjEwOTQiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiIHdpZHRoPSIxMCIgeD0iMjcwLjE5MzQiIHk9IjEyOC4xMDk0Ii8+PC9nPjxnPjx0aXRsZT5WaWV3PC90aXRsZT48cmVjdCBmaWxsPSIjRkZGRkZGIiBoZWlnaHQ9IjM3LjU1NDciIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiIHdpZHRoPSIxMCIgeD0iMjcwLjE5MzQiIHk9IjI0MC43NzM0Ii8+PC9nPjxnPjx0aXRsZT5WaWV3TW9kZWw8L3RpdGxlPjxyZWN0IGZpbGw9IiNGRkZGRkYiIGhlaWdodD0iNzUuMTA5NCIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIgd2lkdGg9IjEwIiB4PSI1MTcuOTkyMiIgeT0iMTY1LjY2NDEiLz48L2c+PGc+PHRpdGxlPk1vZGVsPC90aXRsZT48cmVjdCBmaWxsPSIjRkZGRkZGIiBoZWlnaHQ9IjM3LjU1NDciIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiIHdpZHRoPSIxMCIgeD0iNjQ2Ljk1MzEiIHk9IjIwMy4yMTg4Ii8+PC9nPjxnIGNsYXNzPSJtZXNzYWdlIiBkYXRhLWVudGl0eS0xPSJwYXJ0MSIgZGF0YS1lbnRpdHktMj0icGFydDIiIGRhdGEtc291cmNlLWxpbmU9IjciIGlkPSJtc2cxIj48cG9seWdvbiBmaWxsPSIjMTgxODE4IiBwb2ludHM9IjI1OC4xOTM0LDEyNC4xMDk0LDI2OC4xOTM0LDEyOC4xMDk0LDI1OC4xOTM0LDEzMi4xMDk0LDI2Mi4xOTM0LDEyOC4xMDk0IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7c3Ryb2tlLWxpbmVqb2luOm1pdGVyO3N0cm9rZS1taXRlcmxpbWl0OjEwOyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiIHgxPSIyOS42ODk1IiB4Mj0iMjY0LjE5MzQiIHkxPSIxMjguMTA5NCIgeTI9IjEyOC4xMDk0Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjAiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMTU1LjY3MzgiIHg9IjM2LjY4OTUiIHk9IjEyMS44OTA2Ij4mIzIzMztkaXRlIHVuZSB2YWxldXI8L3RleHQ+PC9nPjxnIGNsYXNzPSJtZXNzYWdlIiBkYXRhLWVudGl0eS0xPSJwYXJ0MiIgZGF0YS1lbnRpdHktMj0icGFydDMiIGRhdGEtc291cmNlLWxpbmU9IjkiIGlkPSJtc2cyIj48cG9seWdvbiBmaWxsPSIjMTgxODE4IiBwb2ludHM9IjUwNS45OTIyLDE2MS42NjQxLDUxNS45OTIyLDE2NS42NjQxLDUwNS45OTIyLDE2OS42NjQxLDUwOS45OTIyLDE2NS42NjQxIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7c3Ryb2tlLWxpbmVqb2luOm1pdGVyO3N0cm9rZS1taXRlcmxpbWl0OjEwOyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiIHgxPSIyODAuMTkzNCIgeDI9IjUxMS45OTIyIiB5MT0iMTY1LjY2NDEiIHkyPSIxNjUuNjY0MSIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjIwIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjIxOC43OTg4IiB4PSIyODcuMTkzNCIgeT0iMTU5LjQ0NTMiPmVudm9pZSB1bmUgY29tbWFuZGU8L3RleHQ+PC9nPjxnIGNsYXNzPSJtZXNzYWdlIiBkYXRhLWVudGl0eS0xPSJwYXJ0MyIgZGF0YS1lbnRpdHktMj0icGFydDQiIGRhdGEtc291cmNlLWxpbmU9IjExIiBpZD0ibXNnMyI+PHBvbHlnb24gZmlsbD0iIzE4MTgxOCIgcG9pbnRzPSI2MzQuOTUzMSwxOTkuMjE4OCw2NDQuOTUzMSwyMDMuMjE4OCw2MzQuOTUzMSwyMDcuMjE4OCw2MzguOTUzMSwyMDMuMjE4OCIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxO3N0cm9rZS1saW5lam9pbjptaXRlcjtzdHJva2UtbWl0ZXJsaW1pdDoxMDsiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7IiB4MT0iNTI3Ljk5MjIiIHgyPSI2NDAuOTUzMSIgeTE9IjIwMy4yMTg4IiB5Mj0iMjAzLjIxODgiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIyMCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI5OS45NjA5IiB4PSI1MzQuOTkyMiIgeT0iMTk3Ij5tZXQgJiMyMjQ7IGpvdXI8L3RleHQ+PC9nPjxnIGNsYXNzPSJtZXNzYWdlIiBkYXRhLWVudGl0eS0xPSJwYXJ0MyIgZGF0YS1lbnRpdHktMj0icGFydDIiIGRhdGEtc291cmNlLWxpbmU9IjE0IiBpZD0ibXNnNCI+PHBvbHlnb24gZmlsbD0iIzE4MTgxOCIgcG9pbnRzPSIyOTEuMTkzNCwyMzYuNzczNCwyODEuMTkzNCwyNDAuNzczNCwyOTEuMTkzNCwyNDQuNzczNCwyODcuMTkzNCwyNDAuNzczNCIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxO3N0cm9rZS1saW5lam9pbjptaXRlcjtzdHJva2UtbWl0ZXJsaW1pdDoxMDsiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7IiB4MT0iMjg1LjE5MzQiIHgyPSI1MjEuOTkyMiIgeTE9IjI0MC43NzM0IiB5Mj0iMjQwLjc3MzQiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIyMCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI2Mi4yMzYzIiB4PSIyOTcuMTkzNCIgeT0iMjM0LjU1NDciPm5vdGlmaWU8L3RleHQ+PC9nPjxnIGNsYXNzPSJtZXNzYWdlIiBkYXRhLWVudGl0eS0xPSJwYXJ0MiIgZGF0YS1lbnRpdHktMj0icGFydDEiIGRhdGEtc291cmNlLWxpbmU9IjE4IiBpZD0ibXNnNSI+PHBvbHlnb24gZmlsbD0iIzE4MTgxOCIgcG9pbnRzPSI0MC42ODk1LDI3NC4zMjgxLDMwLjY4OTUsMjc4LjMyODEsNDAuNjg5NSwyODIuMzI4MSwzNi42ODk1LDI3OC4zMjgxIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7c3Ryb2tlLWxpbmVqb2luOm1pdGVyO3N0cm9rZS1taXRlcmxpbWl0OjEwOyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiIHgxPSIzNC42ODk1IiB4Mj0iMjc0LjE5MzQiIHkxPSIyNzguMzI4MSIgeTI9IjI3OC4zMjgxIi8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjAiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMjE2LjUwMzkiIHg9IjQ2LjY4OTUiIHk9IjI3Mi4xMDk0Ij5hZmZpY2hlIGRvbm4mIzIzMztlcyAmIzIyNDsgam91cjwvdGV4dD48L2c+PD9wbGFudHVtbC1zcmMgVE95bjNpOG0zNE50ZGk4Tkc0QUM3SFpQYzEzaUxrQzhHLURLZ0xpYUppRlFTX0hZRDBySzVDZUk5S19fdlRscmJRTjJXMHVDTU1uQXROZEgwenk5RGtpQzJfSzFaWk01UkNXZTVyb1hBOW9PUlp6V3htc0xDdmY4NWRMT1JTVEczZHJkTTBhUThNWW5mMlI0NGN2bk9FRXR5Tllkbm16bzg2YXo5d05tcGc0T2Nha2ZRQmY1X1FLd0trV1ZTRjUzWnc1dnFfSFFxREVpdWZLanF4VVB5WHltV1VLenVsT3ZlQkxTZDBjQzUtYXhnbHlEekdHMD8+PC9nPjwvc3ZnPg=="></figure>
+</section>
+<section id="communitytoolkit.mvvm" class="level2">
+<h2><code>CommunityToolkit.Mvvm</code></h2>
+<ul>
+<li>Les <code>INotifyPropertyChanged</code> et les
+<code>ICommand</code>, c’est un peu lourd quand même…</li>
+<li>Il existe des packages pour nous simplifier la vies</li>
+</ul>
+<div class="terminal">dotnet add package CommunityToolkit.Mvvm
+</div>
+</section>
+<section id="mainwindowviewmodel-avec-communitytoolkit.mvvm"
+class="level2 code">
+<h2 class="code"><code>MainWindowViewModel</code> avec
+<code>CommunityToolkit.Mvvm</code></h2>
+<div class="pygments"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="nn">CommunityToolkit.Mvvm.ComponentModel</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">CommunityToolkit.Mvvm.Input</span><span class="p">;</span>
+
+<span class="k">namespace</span><span class="w"> </span><span class="nn">Notes</span><span class="p">;</span>
+
+<span class="c1">// La classe doit être partial</span>
+<span class="k">public</span><span class="w"> </span><span class="k">partial</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">MainWindowViewModel</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">ObservableObject</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">NoteManager</span><span class="w"> </span><span class="n">Manager</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="p">();</span>
+
+<span class="w">    </span><span class="c1">// La propriété publique observable sera générée automatiquement</span>
+<span class="w">    </span><span class="na">[ObservableProperty]</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">newNoteText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">// Cette propriété doit notifier que le CanExecute</span>
+<span class="w">    </span><span class="c1">// de DeleteSelectedNoteCommand doit être réévalué</span>
+<span class="w">    </span><span class="na">[ObservableProperty]</span>
+<span class="w">    </span><span class="na">[NotifyCanExecuteChangedFor(nameof(DeleteSelectedNoteCommand))]</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">Note</span><span class="o">?</span><span class="w"> </span><span class="n">selectedNote</span><span class="p">;</span>
+
+<span class="w">    </span><span class="na">[ObservableProperty]</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">statusMessage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Prêt.&quot;</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">// On peut supprimer notre implémentation de RelayCommand</span>
+<span class="w">    </span><span class="c1">// car il existe déjà dans CommunityToolkit.Mvvm</span>
+<span class="w">    </span><span class="c1">// La création de la commande sera faite automatiquement</span>
+<span class="w">    </span><span class="na">[RelayCommand]</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">AddNote</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="kt">string</span><span class="p">.</span><span class="n">IsNullOrWhiteSpace</span><span class="p">(</span><span class="n">NewNoteText</span><span class="p">))</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">StatusMessage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Veuillez saisir une note.&quot;</span><span class="p">;</span>
+<span class="w">            </span><span class="k">return</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="n">Manager</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">NewNoteText</span><span class="p">);</span>
+
+<span class="w">        </span><span class="n">NewNoteText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="n">StatusMessage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Note ajoutée.&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="nf">CanDeleteNote</span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">SelectedNote</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">null</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">// Ici avec un CanExecute</span>
+<span class="w">    </span><span class="na">[RelayCommand (CanExecute = nameof(CanDeleteNote))]</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">DeleteSelectedNote</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">SelectedNote</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="k">null</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">StatusMessage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Veuillez sélectionner une note.&quot;</span><span class="p">;</span>
+<span class="w">            </span><span class="k">return</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="n">Manager</span><span class="p">.</span><span class="n">Remove</span><span class="p">(</span><span class="n">SelectedNote</span><span class="p">);</span>
+<span class="w">        </span><span class="n">SelectedNote</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">null</span><span class="p">;</span>
+<span class="w">        </span><span class="n">StatusMessage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Tâche supprimée.&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+</section>
+<section id="notemanager-avec-communitytoolkit.mvvm"
+class="level2 code">
+<h2 class="code"><code>NoteManager</code> avec
+<code>CommunityToolkit.Mvvm</code></h2>
+<div class="pygments"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="nn">System.Collections.ObjectModel</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">CommunityToolkit.Mvvm.ComponentModel</span><span class="p">;</span>
+
+<span class="k">namespace</span><span class="w"> </span><span class="nn">demo</span><span class="p">;</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">partial</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">NoteManager</span><span class="w">  </span><span class="p">:</span><span class="w"> </span><span class="n">ObservableObject</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">ObservableCollection</span><span class="o">&lt;</span><span class="n">Note</span><span class="o">&gt;</span><span class="w"> </span><span class="n">notes</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="p">();</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">ReadOnlyObservableCollection</span><span class="o">&lt;</span><span class="n">Note</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Notes</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">NoteCount</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">get</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">Notes</span><span class="p">.</span><span class="n">Count</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="nf">NoteManager</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Notes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ReadOnlyObservableCollection</span><span class="o">&lt;</span><span class="n">Note</span><span class="o">&gt;</span><span class="p">(</span><span class="n">notes</span><span class="p">);</span>
+
+<span class="w">        </span><span class="c1">// Subscription to the change of the collection</span>
+<span class="w">        </span><span class="n">notes</span><span class="p">.</span><span class="n">CollectionChanged</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="p">(</span><span class="n">_</span><span class="p">,</span><span class="w"> </span><span class="n">_</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">OnPropertyChanged</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">NoteCount</span><span class="p">));</span>
+<span class="w">        </span><span class="p">};</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Add</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">text</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">notes</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">Note</span><span class="p">(</span><span class="n">text</span><span class="p">));</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Remove</span><span class="p">(</span><span class="n">Note</span><span class="w"> </span><span class="n">note</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">notes</span><span class="p">.</span><span class="n">Remove</span><span class="p">(</span><span class="n">note</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+</section>
+</body>
 </html>

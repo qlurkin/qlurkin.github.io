@@ -1,3 +1,3 @@
-import { pandoc } from 'build_lib'
+import { redirect } from "build_lib";
 
-pandoc('index.md')
+redirect("uml.pdf", { title: "PO3T - Cours 9 - Modélisation UML" });

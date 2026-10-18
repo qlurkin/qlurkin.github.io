@@ -1,5 +1,5 @@
 ---
-title: PO3T - Cours 9 & 10
+title: PO3T - Cours 10
 subtitle: Design Patterns
 type: deck
 ---
@@ -7,11 +7,13 @@ type: deck
 ## Source
 
 :::row
+
 ::::span6
 
 ![Le livre](./book.jpg){.third2}
 
 ::::
+
 ::::span6
 
 - 1994
@@ -28,6 +30,7 @@ type: deck
 - Ce n'est pas une Bible !
 
 ::::
+
 :::
 
 ## Types
@@ -130,7 +133,8 @@ ConcreteCreator .left.> ConcreteProductB
 ```
 
 - Utile quand:
-  - Une classe abstraite veut déléguer la construction d'une instance à ses concrétions.
+  - Une classe abstraite veut déléguer la construction d'une instance à ses
+    concrétions.
   - Le type concret à créer ne peut être déterminé que durant l'exécution.
 
 ## Exemple {.code}
@@ -243,7 +247,8 @@ end note
 ```
 
 - Utile quand:
-  - La construction de l'objet implique plusieurs étapes dont le nombre et l'ordre peuvent varier
+  - La construction de l'objet implique plusieurs étapes dont le nombre et
+    l'ordre peuvent varier
   - Le constructeur peut être passer à une autre fonction/méthode/instance.
 
 ## Exemple {.code}
@@ -411,7 +416,8 @@ note left of ConcreteDecoratorB::Operation
 end note
 ```
 
-- Utile pour ajouter un comportement de façon dynamique et plus flexible qu'avec un héritage
+- Utile pour ajouter un comportement de façon dynamique et plus flexible qu'avec
+  un héritage
 
 ## Exemple {.code}
 
@@ -807,7 +813,8 @@ class Program
 ## Iterator
 
 - _Behavioral Pattern_
-- Fournit un moyen d'accéder aux élément d'une collection sans exposer sa représentation interne.
+- Fournit un moyen d'accéder aux élément d'une collection sans exposer sa
+  représentation interne.
 
 ```plantuml {.build}
 abstract class AbstractList {
@@ -873,7 +880,8 @@ class Program
 ## Strategy
 
 - _Behavioral Pattern_
-- Définit une famille d'algorithme pour les encapsuler et les rendre interchangeable.
+- Définit une famille d'algorithme pour les encapsuler et les rendre
+  interchangeable.
 
 ## Exemple {.code}
 
