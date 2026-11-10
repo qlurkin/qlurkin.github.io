@@ -204,8 +204,16 @@ l’exécution.</li>
 <span class="w">    </span><span class="p">}</span>
 <span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">render</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">top</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">height</span><span class="p">)</span>
 <span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="n">Console</span><span class="p">.</span><span class="n">SetCursorPosition</span><span class="p">(</span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="n">top</span><span class="p">);</span>
-<span class="w">        </span><span class="n">Console</span><span class="p">.</span><span class="n">Write</span><span class="p">(</span><span class="s">&quot;{0}&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">value</span><span class="p">);</span>
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">txt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Convert</span><span class="p">.</span><span class="n">ToString</span><span class="p">(</span><span class="k">value</span><span class="p">);</span>
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">lines</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">txt</span><span class="p">.</span><span class="n">Split</span><span class="p">(</span><span class="k">new</span><span class="p">[]</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s">&quot;\r\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;\r&quot;</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="n">StringSplitOptions</span><span class="p">.</span><span class="n">None</span><span class="p">);</span>
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">top</span><span class="p">;</span>
+<span class="w">        </span><span class="k">foreach</span><span class="p">(</span><span class="kt">var</span><span class="w"> </span><span class="n">line</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">lines</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">Console</span><span class="p">.</span><span class="n">SetCursorPosition</span><span class="p">(</span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">);</span>
+<span class="w">            </span><span class="n">Console</span><span class="p">.</span><span class="n">Write</span><span class="p">(</span><span class="s">&quot;{0}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">line</span><span class="p">);</span>
+<span class="w">            </span><span class="n">y</span><span class="o">++</span><span class="p">;</span>
+<span class="w">            </span><span class="k">if</span><span class="p">(</span><span class="n">y</span><span class="o">&gt;</span><span class="n">top</span><span class="o">+</span><span class="n">height</span><span class="p">)</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 
@@ -312,36 +320,36 @@ fonction/méthode/instance.</li>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">HTMLBuilder</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">DocumentBuilder</span>
 <span class="p">{</span>
-<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">content</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;&lt;html&gt;&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">content</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;&lt;html&gt;\n&quot;</span><span class="p">;</span>
 
 <span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">DocumentBuilder</span><span class="w"> </span><span class="nf">add_title</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">title</span><span class="p">)</span>
 <span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="n">content</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s">&quot;&lt;h1&gt;&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">title</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;&lt;/h1&gt;&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="n">content</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s">&quot;&lt;h1&gt;&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">title</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;&lt;/h1&gt;\n&quot;</span><span class="p">;</span>
 <span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">;</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">DocumentBuilder</span><span class="w"> </span><span class="nf">add_par</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">par</span><span class="p">)</span>
 <span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="n">content</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s">&quot;&lt;p&gt;&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">par</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;&lt;/p&gt;&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="n">content</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s">&quot;&lt;p&gt;&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">par</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;&lt;/p&gt;\n&quot;</span><span class="p">;</span>
 <span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">;</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">DocumentBuilder</span><span class="w"> </span><span class="nf">start_list</span><span class="p">()</span>
 <span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="n">content</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s">&quot;&lt;ul&gt;&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="n">content</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s">&quot;&lt;ul&gt;\n&quot;</span><span class="p">;</span>
 <span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">;</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">DocumentBuilder</span><span class="w"> </span><span class="nf">add_bullet</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">Bullet</span><span class="p">)</span>
 <span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="n">content</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s">&quot;&lt;li&gt;&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Bullet</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;&lt;/li&gt;&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="n">content</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s">&quot;  &lt;li&gt;&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Bullet</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;&lt;/li&gt;\n&quot;</span><span class="p">;</span>
 <span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">;</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">DocumentBuilder</span><span class="w"> </span><span class="nf">end_list</span><span class="p">()</span>
 <span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="n">content</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s">&quot;&lt;/li&gt;&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="n">content</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s">&quot;&lt;/ul&gt;\n&quot;</span><span class="p">;</span>
 <span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">;</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">build</span><span class="p">()</span>
 <span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="n">content</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s">&quot;&lt;/html&gt;&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="n">content</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s">&quot;&lt;/html&gt;\n&quot;</span><span class="p">;</span>
 <span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">content</span><span class="p">;</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>

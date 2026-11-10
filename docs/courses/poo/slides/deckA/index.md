@@ -192,8 +192,16 @@ class ValueWidget<T> : Widget {
     }
     public override void render(int left, int top, int width, int height)
     {
-        Console.SetCursorPosition(left, top);
-        Console.Write("{0}", value);
+        var txt = Convert.ToString(value);
+        var lines = txt.Split(new[] { "\r\n", "\n", "\r" }, StringSplitOptions.None);
+        var y = top;
+        foreach(var line in lines)
+        {
+            Console.SetCursorPosition(left, y);
+            Console.Write("{0}", line);
+            y++;
+            if(y>top+height) break;
+        }
     }
 }
 
@@ -323,36 +331,36 @@ class MDBuilder : DocumentBuilder
 
 class HTMLBuilder : DocumentBuilder
 {
-    private String content = "<html>";
+    private String content = "<html>\n";
 
     public DocumentBuilder add_title(String title)
     {
-        content += "<h1>" + title + "</h1>";
+        content += "<h1>" + title + "</h1>\n";
         return this;
     }
     public DocumentBuilder add_par(String par)
     {
-        content += "<p>" + par + "</p>";
+        content += "<p>" + par + "</p>\n";
         return this;
     }
     public DocumentBuilder start_list()
     {
-        content += "<ul>";
+        content += "<ul>\n";
         return this;
     }
     public DocumentBuilder add_bullet(String Bullet)
     {
-        content += "<li>" + Bullet + "</li>";
+        content += "  <li>" + Bullet + "</li>\n";
         return this;
     }
     public DocumentBuilder end_list()
     {
-        content += "</li>";
+        content += "</ul>\n";
         return this;
     }
     public String build()
     {
-        content += "</html>";
+        content += "</html>\n";
         return content;
     }
 }
