@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Projet 2026 - Tower Defense</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="/document.css" />
+  <link rel="stylesheet" href="https://fred-wang.github.io/MathFonts/NewComputerModern/mathfonts.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Projet 2026
+<small>Tower Defense</small>
+</h1>
+</header>
+<section id="description" class="level2">
+<h2>Description</h2>
+<p>On vous demande de réaliser un jeu de type <strong>Tower
+Defense</strong> en C# avec <strong>Avalonia UI</strong>. Le joueur doit
+empêcher des vagues d’ennemis d’atteindre la <strong>base</strong> du
+joueur, située au bout du chemin, en construisant et en améliorant des
+tours défensives.</p>
+<p>Le jeu permettra:</p>
+<ul>
+<li>de charger et d’afficher une <strong>carte</strong> composée de
+cases (chemin des ennemis, emplacements constructibles, point
+d’apparition des ennemis et base à défendre),</li>
+<li>de <strong>construire</strong>, <strong>améliorer</strong> et
+<strong>revendre</strong> des <strong>tours</strong> avec une économie
+(or gagné en éliminant des ennemis),</li>
+<li>d’avoir <strong>au moins trois types de tours</strong> aux
+comportements différents (par exemple: tir simple, dégâts de zone,
+ralentissement),</li>
+<li>d’avoir <strong>au moins trois types d’ennemis</strong> (par
+exemple: rapide, résistant, volant) avec des déplacements et résistances
+distincts,</li>
+<li>de gérer des <strong>vagues</strong> d’ennemis successives, à
+difficulté croissante, définies de façon <strong>configurable</strong>
+(fichier, pas codées en dur),</li>
+<li>de gérer les <strong>points de vie</strong> de la base (chaque
+ennemi qui l’atteint disparaît et lui inflige des dégâts selon son
+type), la <strong>victoire</strong> (toutes les vagues éliminées) et la
+<strong>défaite</strong> (base détruite),</li>
+<li>de proposer plusieurs <strong>stratégies de ciblage</strong> des
+tours (le plus proche, le plus faible, le plus avancé, …) modifiables en
+cours de partie,</li>
+<li>de <strong>sauvegarder</strong> les <strong>meilleurs
+scores</strong> de façon <strong>persistante</strong>,</li>
+<li>d’utiliser une <strong>fonctionnalité supplémentaire</strong> que
+vous pouvez choisir (par exemple: sorts du joueur, boss, éditeur de
+cartes, mode sans fin, effets de statut, etc.).</li>
+</ul>
+<p>Le jeu tourne en <strong>temps réel</strong> via une boucle de jeu
+(game loop) qui met à jour l’état du modèle, que l’interface se contente
+d’afficher. Vous veillerez à <strong>séparer clairement la logique du
+jeu de l’interface</strong> (par exemple avec le pattern MVVM): la
+logique doit pouvoir être testée sans Avalonia.</p>
+<p>Enfin, vous souhaitez pouvoir <strong>ajouter facilement</strong> de
+nouveaux types de tours, d’ennemis, d’effets ou de cartes, <strong>sans
+modifier le code existant</strong>.</p>
+<section id="aide-pour-avalonia" class="level3">
+<h3>Aide pour Avalonia</h3>
+<p>Aucune connaissance avancée n’est requise. Un affichage simple suffit
+(<code>Canvas</code>, <code>Grid</code> ou <code>ItemsControl</code>
+avec des formes et images basiques) et une boucle de jeu basée sur un
+<code>DispatcherTimer</code>. La qualité graphique n’est pas
+évaluée.</p>
+</section>
+</section>
+<section id="contraintes-techniques" class="level2">
+<h2>Contraintes techniques</h2>
+<ul>
+<li>Utilisation justifiée d’au moins <strong>deux design
+patterns</strong>.</li>
+<li>Respect des principes <strong>SOLID</strong>.</li>
+</ul>
+</section>
+<section id="délivrable" class="level2">
+<h2>Délivrable</h2>
+<p><strong>Dans un dépôt GitHub</strong> vous remettrez:</p>
+<ul>
+<li><p><strong>Un projet C# Avalonia UI</strong> correspondant à la
+description ci-dessus, avec un <code>README</code> expliquant comment
+lancer le jeu.</p></li>
+<li><p>Un <strong>Rapport</strong> comprenant :</p>
+<ul>
+<li>une introduction avec une mise en contexte du projet,</li>
+<li>une description de la fonctionnalité supplémentaire choisie,</li>
+<li>un diagramme de classes,</li>
+<li>un diagramme de séquences,</li>
+<li>un diagramme d’activité,</li>
+<li>une description (avec justifications) d’au moins <strong>deux design
+patterns</strong> utilisés et des problèmes qu’ils résolvent,</li>
+<li>une description (avec justifications) d’au moins <strong>deux
+principes SOLID</strong> utilisés dans le projet,</li>
+<li>une démonstration de l’extensibilité: comment ajouter un nouveau
+type de tour ou d’ennemi,</li>
+<li>une conclusion.</li>
+</ul>
+<p>Le rapport sera inclus dans le dépôt GitHub au format
+<strong>Markdown</strong>.</p></li>
+</ul>
+<p>Les liens de vos dépôts sont à remettre pour le <strong>18 décembre
+2026</strong> dans un fichier Excel partagé sur le groupe Teams du
+cours. Tous les commits ultérieurs seront ignorés.</p>
+<p>Le projet est à faire en <strong>binôme</strong>.</p>
+</section>
+<section id="grille-dévaluation" class="level2">
+<h2>Grille d’évaluation</h2>
+<ul>
+<li>Carte, affichage et boucle de jeu: 2 points</li>
+<li>Tours (construction, amélioration, revente, types, ciblage): 3
+points</li>
+<li>Ennemis et vagues configurables: 3 points</li>
+<li>victoire/défaite: 1 point</li>
+<li>Sauvegarde et meilleurs scores: 1 point</li>
+<li>Pertinence de l’historique Git: 2 points</li>
+<li>Extensibilité et usage des design patterns: 3 points</li>
+<li>Rapport: 5 points</li>
+</ul>
+</section>
+</body>
+</html>
