@@ -9,10 +9,13 @@
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
     */
-    code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     /* The extra [class] is a hack that increases specificity enough to
        override a similar rule in reveal.js */
@@ -25,6 +28,7 @@
     }
   </style>
   <link rel="stylesheet" href="/document.css" />
+  <link rel="stylesheet" href="https://fred-wang.github.io/MathFonts/NewComputerModern/mathfonts.css" />
 </head>
 <body>
 <header id="title-block-header">
@@ -54,8 +58,8 @@ point.</li>
 <li>Veillez à renvoyer le bon type (<code>"True" != True</code>).</li>
 <li>Les fichiers complétés doivent être remis dans une archive ZIP sur
 claco.</li>
-<li>Vous pouvez utilisez vos notes et les sites de documentation
-officiels de Python des bibliothèques vues au cours:
+<li>Vous pouvez utiliser les sites de documentation officiels de Python
+des bibliothèques vues au cours:
 <ul>
 <li><a href="https://docs.python.org/3/"
 class="uri">https://docs.python.org/3/</a></li>
