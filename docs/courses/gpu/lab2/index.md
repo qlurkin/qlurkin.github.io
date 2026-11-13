@@ -216,11 +216,14 @@ print(f"Total = {total}")
 3. Do not exceed shared memory limit
 
 4. Occupancy and Performance
-   - A very large workgroup:
-     - May not use all compute units
+   - Workgroup too large:
+     - May limit the number of workgroups that can run simultaneously on each
+       Compute Unit.
+     - Can reduce GPU occupancy and leave some Compute Units underutilized.
 
-   - A too small workgroup:
-     - Each compute unit has not enough to do
+   - Workgroup too small:
+     - May not provide enough threads to keep Compute Units busy.
+     - Can waste GPU resources due to inefficient hardware utilization.
 
 5. Typical practical ranges:
    - 64 to 256 threads per workgroup

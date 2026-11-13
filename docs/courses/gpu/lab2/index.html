@@ -9,10 +9,13 @@
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
     */
-    code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     /* The extra [class] is a hack that increases specificity enough to
        override a similar rule in reveal.js */
@@ -25,6 +28,7 @@
     }
   </style>
   <link rel="stylesheet" href="/deck.css" />
+  <link rel="stylesheet" href="https://fred-wang.github.io/MathFonts/NewComputerModern/mathfonts.css" />
   <script src="/deck_only.js" defer></script>
 </head>
 <body>
@@ -278,13 +282,18 @@ of the warp/wavefront size</strong></li>
 <li><p>Do not exceed shared memory limit</p></li>
 <li><p>Occupancy and Performance</p>
 <ul>
-<li>A very large workgroup:
+<li>Workgroup too large:
 <ul>
-<li>May not use all compute units</li>
+<li>May limit the number of workgroups that can run simultaneously on
+each Compute Unit.</li>
+<li>Can reduce GPU occupancy and leave some Compute Units
+underutilized.</li>
 </ul></li>
-<li>A too small workgroup:
+<li>Workgroup too small:
 <ul>
-<li>Each compute unit has not enough to do</li>
+<li>May not provide enough threads to keep Compute Units busy.</li>
+<li>Can waste GPU resources due to inefficient hardware
+utilization.</li>
 </ul></li>
 </ul></li>
 <li><p>Typical practical ranges:</p>
