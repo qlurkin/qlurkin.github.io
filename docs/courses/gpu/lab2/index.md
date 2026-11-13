@@ -59,7 +59,7 @@ var<workgroup> sharedData : array<u32, 256>;
 - Can be queried (Python example):
 
 ```python
-device.limits["max_compute_workgroup_storage_size"]
+device.limits["max-compute-workgroup-storage-size"]
 ```
 
 - If exceeded:
@@ -202,9 +202,9 @@ print(f"Total = {total}")
 ## Choosing the Workgroup Size
 
 1. Hardware Limits
-   - `max_compute_workgroup_size_x`
-   - `max_compute_invocations_per_workgroup`
-   - `max_compute_workgroup_storage_size`
+   - `max-compute-workgroup-size-x`
+   - `max-compute-invocations-per-workgroup`
+   - `max-compute-workgroup-storage-size`
 
 2. Warp/Wavefront Alignment
    - GPUs execute threads in fixed-sized groups:
