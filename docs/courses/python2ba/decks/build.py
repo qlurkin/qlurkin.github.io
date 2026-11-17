@@ -7,6 +7,7 @@ build_and_index(
     "deck4",
     "deck5",
     "deck6",
+    "deck7",
     metadata={
         "title": "Slides",
     },

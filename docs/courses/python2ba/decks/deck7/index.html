@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="generator" content="pandoc" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, user-scalable=yes"
+        />
+                <meta name="author" content="Quentin Lurkin" />
+                <title>
+            Cours 7            - Programmer avec l’IA        </title>
+                <link rel="stylesheet" href="/css/deck.css" />
+        <link
+            rel="stylesheet"
+            href="https://fred-wang.github.io/MathFonts/NewComputerModern/mathfonts.css"
+        />
+          <script src="/js/deck_only.js" type="module" defer></script> 
+    </head>
+    <body>
+                 <header id="title-block-header">
+            <h1 class="title">
+                Cours 7                 <small>Programmer avec
+l’IA</small>
+                            </h1>
+                        <p class="author">Quentin Lurkin</p>
+                    </header>
+         <section id="moteur-davion" class="level2">
+<h2>Moteur d’avion</h2>
+<figure>
+<img src="./img/engine.jpg" class="third2" alt="Turbo réacteur" />
+<figcaption aria-hidden="true">Turbo réacteur</figcaption>
+</figure>
+</section>
+<section id="turbo-réacteur" class="level2">
+<h2>Turbo réacteur</h2>
+<figure>
+<img src="./img/coupe.jpeg" alt="Coupe" />
+<figcaption aria-hidden="true">Coupe</figcaption>
+</figure>
+</section>
+<section id="injection" class="level2">
+<h2>Injection</h2>
+<figure>
+<img src="./img/schema.jpg" alt="Alimentation en kérosène" />
+<figcaption aria-hidden="true">Alimentation en kérosène</figcaption>
+</figure>
+</section>
+<section id="vacances" class="level2">
+<h2>Vacances</h2>
+<ul>
+<li>Imaginez que vous montiez dans cet avion</li>
+</ul>
+<figure>
+<img src="./img/vacances.webp" class="third2" alt="Départ en famille" />
+<figcaption aria-hidden="true">Départ en famille</figcaption>
+</figure>
+</section>
+<section id="lingénieur" class="level2">
+<h2>L’ingénieur</h2>
+<ul>
+<li>Alors que :</li>
+</ul>
+<figure>
+<img src="./img/vibe.png" class="third2"
+alt="Conception de l’injection…" />
+<figcaption aria-hidden="true">Conception de l’injection…</figcaption>
+</figure>
+</section>
+<section id="responsabilité" class="level2">
+<h2>Responsabilité</h2>
+<ul>
+<li><p>Vous êtes <strong>responsable</strong> des solutions que vous
+concevez</p></li>
+<li><p><strong>Aucune IA</strong> ne prendra cette responsabilité à
+votre place</p></li>
+<li><p>Vous devez <strong>maitriser</strong> votre code <span
+class="small">juste comprendre ne suffit pas</span></p></li>
+</ul>
+</section>
+<section id="deux-usages-deux-situations" class="level2">
+<h2>Deux usages, deux situations</h2>
+<ul>
+<li><p>Pour apprendre — votre situation aujourd’hui</p>
+<ul>
+<li>Vous ne savez pas encore résoudre seul le problème.</li>
+<li>Vous demandez des <strong>explications</strong>, des
+<strong>indices</strong> ou des <strong>exercices</strong>
+similaires.</li>
+<li>L’objectif principal est <strong>votre progression</strong>.</li>
+<li><strong>L’IA ne doit pas vous priver de l’effort qui vous fait
+apprendre.</strong></li>
+</ul></li>
+<li><p>Pour développer — situation d’un développeur</p>
+<ul>
+<li>Le développeur comprend le besoin et sait évaluer une solution.</li>
+<li>Il peut demander une <strong>proposition</strong> de code, un test
+ou une relecture.</li>
+<li>Il <strong>guide</strong> l’outil, intègre les changements et
+<strong>vérifie</strong> le résultat.</li>
+<li>L’objectif est de produire un logiciel <strong>utile, maintenable et
+correct</strong>.</li>
+</ul></li>
+</ul>
+</section>
+<section id="ce-que-lia-ne-sait-pas-garantir" class="level2">
+<h2>Ce que l’IA ne sait pas garantir</h2>
+<ul>
+<li>Une réponse <strong>plausible</strong> n’est pas forcément
+<strong>vraie</strong>.</li>
+<li>Le code peut sembler correct et échouer sur un <strong>cas
+limite</strong>.</li>
+<li>L’IA peut inventer des choses ou mal interpréter la question.</li>
+<li>Le modèle ne connaît pas forcément les consignes, votre cours ni
+votre environnement.</li>
+<li>L’IA aura toujours l’air confiante de ce qu’elle avance.</li>
+</ul>
+<p><strong>Règle :</strong> traitez chaque réponse comme une
+<strong>proposition</strong> à examiner, pas comme une vérité.</p>
+<!-- ## Des outils gratuits, avec prudence -->
+<!---->
+<!-- - Utilisez un service grand public proposant un accès gratuit : par exemple -->
+<!--   ChatGPT, Microsoft Copilot, Google Gemini ou Claude, selon les offres -->
+<!--   disponibles dans votre région. -->
+<!-- - Les offres, limites d'usage, fonctionnalités et règles de confidentialité -->
+<!--   changent : vérifiez les conditions au moment de l'utilisation. -->
+<!-- - Un compte ou une connexion peut être demandé ; une option gratuite n'implique -->
+<!--   pas que tout soit disponible gratuitement. -->
+<!-- - N'envoyez pas de données personnelles, de mots de passe, de code confidentiel -->
+<!--   ou de données d'entreprise. -->
+<!-- - Pour un exercice, fournissez un énoncé générique et des données fictives. -->
+</section>
+<section id="lia-dans-le-travail-dun-développeur" class="level2">
+<h2>L’IA dans le travail d’un développeur</h2>
+<p>Un développeur peut utiliser l’IA pour :</p>
+<ul>
+<li>explorer une documentation ou obtenir un exemple de départ ;</li>
+<li>générer des tests à partir de règles qu’il a définies ;</li>
+<li>expliquer une erreur ou proposer des pistes de débogage ;</li>
+<li>relire du code pour sa lisibilité ou repérer des cas oubliés.</li>
+</ul>
+<p>Mais le développeur doit pouvoir :</p>
+<ul>
+<li>définir le comportement attendu et les contraintes ;</li>
+<li>lire et comprendre chaque modification ;</li>
+<li>exécuter des tests et examiner les résultats ;</li>
+<li>maintenir, corriger et assumer le code livré.</li>
+</ul>
+</section>
+<section id="pour-apprendre-faire-travailler-lia-comme-tuteur"
+class="level2">
+<h2>Pour apprendre : faire travailler l’IA comme tuteur</h2>
+<p>Essayez de demander, dans cet ordre :</p>
+<ol type="1">
+<li><strong>Clarifier</strong> : reformuler l’énoncé et expliquer le
+vocabulaire.</li>
+<li><strong>Questionner</strong> : m’aider à identifier entrées, sorties
+et cas limites.</li>
+<li><strong>Guider</strong> : donner un indice, sans écrire la
+solution.</li>
+<li><strong>Expliquer</strong> : commenter une notion avec un petit
+exemple différent.</li>
+<li><strong>Vérifier</strong> : examiner mon raisonnement et me poser
+une question pour tester ma compréhension.</li>
+</ol>
+<p>Gardez du temps pour réfléchir et écrire vous-même.</p>
+</section>
+<section id="un-prompt-utile" class="level2">
+<h2>Un prompt utile</h2>
+<p>Un bon prompt précise :</p>
+<ul>
+<li><strong>Contexte</strong> : ce que vous apprenez et ce que vous
+savez déjà ;</li>
+<li><strong>But</strong> : l’aide exacte que vous demandez ;</li>
+<li><strong>Contraintes</strong> : par exemple Python débutant, pas de
+bibliothèque externe ;</li>
+<li><strong>Format</strong> : un indice, des questions, une explication
+courte ;</li>
+<li><strong>Limite</strong> : ce que l’IA ne doit pas faire.</li>
+</ul>
+</section>
+<section id="démarrer-en-posant-le-contexte" class="level2">
+<h2>Démarrer en posant le contexte</h2>
+<div class="pygments"><pre><span></span>Je suis étudiant en programmation en Python. Je sais déjà utiliser [notions].
+Tu vas m&#39;assister dans mon apprentissage.
+Ne donne pas de solution complète, seulemenmt des explications et des indices.
+</pre></div>
+
+</section>
+<section id="exercice-1-calculer-une-moyenne" class="level2">
+<h2>Exercice 1 — Calculer une moyenne</h2>
+<p><strong>Énoncé :</strong> écrire une fonction
+<code>moyenne(notes)</code> qui renvoie la moyenne d’une liste de notes.
+Décidez ce qu’il faut faire si la liste est vide.</p>
+<p>Avant de demander de l’aide :</p>
+<ul>
+<li>Quelles sont les données d’entrée et la valeur renvoyée ?</li>
+<li>Quelle règle appliquer à une liste vide ? Est-ce précisé ?</li>
+<li>Quels exemples simples permettent de vérifier le résultat ?</li>
+</ul>
+<p>N’écrivez pas immédiatement le code : formulez d’abord le
+comportement attendu.</p>
+</section>
+<section id="exercice-1-prompts-pour-progresser" class="level2">
+<h2>Exercice 1 — Prompts pour progresser</h2>
+<p><strong>Pour clarifier :</strong></p>
+<div class="pygments"><pre><span></span>Je travaille sur une fonction moyenne(notes) en Python.
+aide-moi à préciser les entrées, la sortie
+et les questions à se poser à propos d&#39;une liste vide.
+</pre></div>
+
+<p>Une fois que vous avez bien compris ce qu’il faut faire, vous pouvez
+<strong>formaliser</strong> cela en écrivant des <strong>tests
+unitaires</strong></p>
+</section>
+<section id="écrire-des-tests-unitaires" class="level2">
+<h2>Écrire des tests unitaires</h2>
+<ul>
+<li>Un test est un programme qui teste une partie de votre
+programme</li>
+</ul>
+<div class="pygments"><pre><span></span><span class="k">assert</span> <span class="n">moyenne</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">14</span><span class="p">])</span> <span class="o">==</span> <span class="mi">12</span>
+</pre></div>
+
+<ul>
+<li>Écrire des tests vous force à comprendre :
+<ul>
+<li>quelles sont les entrées</li>
+<li>quel est le résultat attendu</li>
+<li>ce que la fonction doit faire</li>
+</ul></li>
+<li>Les tests aident :
+<ul>
+<li>à détecter une erreur</li>
+<li>à éviter qu’une modification en introduise une nouvelle.</li>
+</ul></li>
+</ul>
+<p><strong>Un test réussi est une preuve pour un cas testé, pas une
+preuve que le programme est toujours correct.</strong></p>
+</section>
+<section id="exercice-1-tester-et-garder-la-maîtrise" class="level2">
+<h2>Exercice 1 — Tester et garder la maîtrise</h2>
+<ul>
+<li>Tester plusieurs cas :
+<ul>
+<li><code>moyenne([10, 14])</code> : un cas “normal”</li>
+<li>une liste d’un seul élément ;</li>
+<li>une liste vide : que faire dans ce cas ?</li>
+</ul></li>
+<li>Demander à l’IA de proposer <strong>d’autres cas de test</strong>.
+<ul>
+<li>Exécutez les tests.</li>
+<li>Si un résultat diffère, expliquez pourquoi avant de modifier le
+code.</li>
+</ul></li>
+</ul>
+</section>
+<section id="exercice-2-déboguer" class="level2">
+<h2>Exercice 2 — Déboguer</h2>
+<p>Cette fonction qui devrait compter les nombres positifs :</p>
+<div class="pygments"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">compter_positifs</span><span class="p">(</span><span class="n">valeurs</span><span class="p">):</span>
+    <span class="n">compteur</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">valeur</span> <span class="ow">in</span> <span class="n">valeurs</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">valeur</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">compteur</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">compteur</span>
+</pre></div>
+
+<ul>
+<li>Qu’obtient-on pour <code>[2, -1, 4]</code> et <code>[-3, 0]</code>
+?</li>
+<li>Que devrait-on obtenir ?</li>
+<li>Quelle ligne qui pourrait expliquer la différence.</li>
+<li>Demandez une piste à l’IA, pas une réécriture complète.</li>
+</ul>
+</section>
+<section id="exercice-2-prompts-de-débogage" class="level2">
+<h2>Exercice 2 — Prompts de débogage</h2>
+<p>Sans oublier de poser le contexte, vous pouvez demander de l’aide à
+l’IA:</p>
+<div class="pygments"><pre><span></span>Cette fonction devrait compter
+les valeurs positives :
+[coller le code].
+Avec [2, -1, 4], j&#39;attends 2 mais j&#39;obtiens 1.
+Explique ce que fait le code pas à pas et donne une piste,
+sans fournir la fonction corrigée.
+</pre></div>
+
+<!-- ## Exercice 3 — Concevoir avant de coder -->
+<!---->
+<!-- Écrire un programme qui demande un nombre à l'utilisateur et affiche s'il est -->
+<!-- pair ou impair. -->
+<!---->
+<!-- Avant le code, décrivez : -->
+<!---->
+<!-- - l'entrée et le résultat attendu ; -->
+<!-- - la règle mathématique à utiliser ; -->
+<!-- - les cas à tester, par exemple `0`, `7` et `-4` ; -->
+<!-- - les notions Python nécessaires (`input`, conversion, condition). -->
+<!---->
+<!-- Commencez par concevoir seul. Demandez ensuite à l'IA de vous interroger sur -->
+<!-- votre plan. -->
+<!---->
+<!-- ## Exercice 3 — Un prompt qui préserve l'effort -->
+<!---->
+<!-- ```text -->
+<!-- Je dois écrire un programme Python qui indique si un entier est pair -->
+<!-- ou impair. Je connais les conditions et l'opérateur modulo. -->
+<!-- Ne donne pas le code. Demande-moi quelles étapes je propose, -->
+<!-- puis signale une question ou un cas limite que j'aurais oublié. -->
+<!-- ``` -->
+<!---->
+<!-- Une fois votre version écrite : -->
+<!---->
+<!-- ```text -->
+<!-- Voici mon programme : [coller le code]. Explique chaque ligne -->
+<!-- et vérifie si mes tests [liste des entrées] couvrent le comportement. -->
+<!-- Ne modifie pas le code avant de m'avoir indiqué le problème éventuel. -->
+<!-- ``` -->
+</section>
+<section id="quand-demander-une-solution-complète" class="level2">
+<h2>Quand demander une solution complète ?</h2>
+<p>Pour apprendre, demandez d’abord des explications, des indices et des
+tests similaires. Une solution complète peut être utile <strong>après
+avoir réussi</strong> l’exercice pour comparer à votre solution.</p>
+</section>
+<section id="lire-le-code-proposé-par-lia" class="level2">
+<h2>Lire le code proposé par l’IA</h2>
+<p>Pour chaque ligne, demandez-vous :</p>
+<ul>
+<li>Est-ce que je comprends ce qu’elle fait ?</li>
+<li>Est-elle nécessaire pour répondre à l’énoncé ?</li>
+<li>Utilise-t-elle une notion ou une bibliothèque que nous n’avons pas
+étudiée ?</li>
+<li>Que se passe-t-il avec une entrée inhabituelle ou invalide ?</li>
+<li>Puis-je le vérifier avec un exemple ou un test ?</li>
+</ul>
+<p><strong>Ne collez pas et n’exécutez pas aveuglément</strong> du code
+inconnu, surtout s’il touche aux fichiers, au réseau ou au système.</p>
+</section>
+<section id="vérifier-une-réponse-une-routine-simple" class="level2">
+<h2>Vérifier une réponse : une routine simple</h2>
+<ol type="1">
+<li><strong>Relire</strong> : comparer avec la consigne et les
+contraintes.</li>
+<li><strong>Expliquer</strong> : reformuler le raisonnement avec ses
+propres mots.</li>
+<li><strong>Tester</strong> : choisir des cas ordinaires, limites et
+inattendus.</li>
+<li><strong>Exécuter</strong> : lancer le code et lire les erreurs ; un
+test réussi ne prouve pas tout.</li>
+<li><strong>Comparer</strong> : consulter les notes de cours ou la
+documentation officielle.</li>
+<li><strong>Décider</strong> : garder, adapter ou rejeter la
+proposition, en sachant pourquoi.</li>
+</ol>
+</section>
+<section id="les-erreurs-à-éviter" class="level2">
+<h2>Les erreurs à éviter</h2>
+<ul>
+<li>Demander « fais mon exercice » puis rendre le résultat sans le
+comprendre.</li>
+<li>Poser une question vague et accepter la première réponse.</li>
+<li>Confondre « ça s’exécute » et « c’est correct ».</li>
+<li>Ajouter une bibliothèque ou une complexité inutile.</li>
+<li>Copier des données personnelles ou confidentielles dans un service
+en ligne.</li>
+</ul>
+</section>
+<section id="à-retenir" class="level2">
+<h2>À retenir</h2>
+<ul>
+<li><strong>En apprentissage</strong>, faites-vous guider : l’effort de
+réflexion vous appartient.</li>
+<li><strong>En développement</strong>, l’IA peut accélérer le travail ;
+le développeur reste responsable.</li>
+<li>Un bon prompt donne du contexte, des contraintes et une demande
+précise.</li>
+<li>Le code proposé doit être lu, expliqué, testé et adapté.</li>
+<li>La mesure de la réussite n’est pas « l’IA a répondu », mais
+<strong>« je comprends et je peux défendre ma solution »</strong>.</li>
+</ul>
+</section>
+<section id="examen" class="level2">
+<h2>Examen</h2>
+<ul>
+<li>L’IA peut être utilisée pour vous aider à progresser.</li>
+<li>Il est important que vous appreniez progressivement à résoudre des
+exercices sans elle.</li>
+<li>Vous n’y aurez pas accès le jour de l’examen</li>
+</ul>
+</section>
+<section id="demo-time" class="level2">
+<h2>Demo time</h2>
+<p>Réaliser un Pong</p>
+<figure>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/N4mYYGykz7E?si=CNHLf13Atoq4HoZ6&amp;controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+</iframe>
+</figure>
+</section>
+<section id="décomposer-le-problème" class="level2">
+<h2>Décomposer le problème</h2>
+<ul>
+<li><p>Quels <strong>sous-problèmes</strong> peut-on identifier
+?</p></li>
+<li><p>Chaque étape est plus simple à <strong>comprendre</strong> et à
+<strong>tester</strong> que le problème complet.</p></li>
+</ul>
+</section> 
+    </body>
+</html>
